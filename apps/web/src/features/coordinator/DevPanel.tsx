@@ -20,7 +20,7 @@ export function DevPanel({ open, onClose, onAuthChange }: { open: boolean; onClo
         <label className="gp-check"><input type="checkbox" checked={mapBroken.value} onChange={(e) => { mapBroken.value = e.target.checked; force((x) => x + 1); location.reload(); }} />{t('dev.map')} (перезагрузит страницу)</label>
         <fieldset className="gp-fieldset">
           <legend>{t('dev.role')}</legend>
-          {(['coordinator', 'admin', 'foreman', 'worker', 'anonymous'] as const).map((r) => (
+          {(['coordinator', 'admin', 'viewer', 'foreman', 'worker', 'anonymous'] as const).map((r) => (
             <label key={r} className="gp-check"><input type="radio" name="dev-role" checked={c.role === r} onChange={() => { setMockControls({ role: r }); onAuthChange(); bump(); }} />{r === 'anonymous' ? t('dev.anon') : t(`shell.role.${r}`)}</label>
           ))}
         </fieldset>

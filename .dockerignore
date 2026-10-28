@@ -1,0 +1,8 @@
+node_modules
+**/node_modules
+apps/web/dist
+apps/web/dist-scripts
+.git
+*.zip
+hackathon-prompts
+Green-Pavlodar-Team-Prompts

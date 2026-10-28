@@ -101,6 +101,8 @@ export interface CandidateSite {
     busStops300m?: number | null;
     nearestMajorRoadM?: number | null;
     hints?: string[];
+    buildings200m?: number | null;
+    greenShare200m?: number | null;
   } | null;
   /** (v1.1) Зоны, где размещение запрещено без явного разбора конфликта. */
   exclusionZones?: ExclusionZone[];
@@ -195,7 +197,8 @@ export interface CarePolicy {
   isDemo: boolean;
 }
 
-export type Role = 'coordinator' | 'worker' | 'foreman' | 'admin';
+/** coordinator = «Специалист» по ТЗ; admin = «Администратор»; viewer = «Просмотр». */
+export type Role = 'coordinator' | 'worker' | 'foreman' | 'admin' | 'viewer';
 
 export interface Worker {
   id: ID;

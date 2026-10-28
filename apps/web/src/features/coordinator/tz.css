@@ -1,0 +1,97 @@
+/* Экраны по ТЗ акимата: панель зоны, слои, проблемы, приоритеты, ассистент, отчёт. Только gp-*. */
+.gp-nav__sep { align-self: center; padding: 0 4px 0 12px; font-size: 11px; color: var(--gp-muted); text-transform: uppercase; letter-spacing: .08em; white-space: nowrap; border-left: 1px solid var(--gp-border); margin-left: 6px; }
+.gp-nav a.gp-nav__works { font-weight: 500; color: var(--gp-muted); }
+
+/* Вкладки зоны */
+.gp-zonetabs { display: flex; gap: 0; overflow-x: auto; border-bottom: 1px solid var(--gp-border); margin: 6px 0 10px; scrollbar-width: none; }
+.gp-zonetabs button { border: 0; background: transparent; padding: 8px 10px; font: inherit; font-size: 13.5px; font-weight: 600; color: var(--gp-muted); border-bottom: 3px solid transparent; cursor: pointer; white-space: nowrap; }
+.gp-zonetabs button[aria-selected='true'] { color: var(--gp-text); border-bottom-color: var(--gp-olive-600); }
+.gp-zone__facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 6px 12px; margin: 0 0 10px; padding: 8px 10px; background: var(--gp-surface-2); border: 1px solid var(--gp-border); font-size: 13px; }
+.gp-zone__facts dt { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--gp-muted); }
+.gp-zone__facts dd { margin: 0; }
+.gp-input--inline { width: auto; min-height: 30px; padding: 3px 6px; display: inline-block; }
+.gp-zone__controls { align-items: center; margin: 6px 0; }
+.gp-zone__notes { margin: 12px 0; font-size: 13px; }
+.gp-zone__notes summary { cursor: pointer; color: var(--gp-muted); }
+.gp-rank { list-style: none; padding: 0; margin: 6px 0; display: grid; gap: 6px; }
+.gp-rank__row { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 8px; align-items: start; padding: 6px; border: 1px solid var(--gp-border); background: var(--gp-surface); }
+.gp-rank__title { display: flex; gap: 6px; align-items: baseline; flex-wrap: wrap; }
+.gp-rank__score { margin-left: auto; font-family: var(--gp-display); font-size: 20px; color: var(--gp-olive-600); }
+.gp-rank__actions { display: grid; gap: 2px; }
+.gp-rank__actions .gp-btn { min-height: 28px; padding: 2px 8px; font-size: 12.5px; }
+.gp-chip--btn { cursor: pointer; font: inherit; font-size: 12.5px; }
+.gp-num { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.gp-bigstats { display: flex; flex-wrap: wrap; gap: 8px 24px; margin: 6px 0 8px; }
+.gp-bigstats > div { display: grid; }
+.gp-bigstats__v { font-family: var(--gp-display); font-size: 34px; line-height: 1; color: var(--gp-olive-800); }
+.gp-measures { list-style: none; padding: 0; display: grid; gap: 6px; }
+.gp-measures li { display: flex; justify-content: space-between; gap: 8px; align-items: center; padding: 6px 8px; border: 1px dashed var(--gp-olive-300); background: var(--gp-green-soft); font-size: 13.5px; }
+.gp-carecal { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 6px; }
+.gp-carecal__m { border: 1px solid var(--gp-border); background: var(--gp-surface); padding: 6px; font-size: 12.5px; display: grid; gap: 4px; align-content: start; }
+.gp-carecal__m.is-empty { opacity: .55; }
+.gp-carecal__op { display: grid; border-left: 3px solid var(--gp-olive-600); padding-left: 6px; }
+.gp-beforeafter { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 6px 0 10px; }
+.gp-beforeafter > div { display: grid; padding: 8px 12px; border: 1px solid var(--gp-border); background: var(--gp-surface); min-width: 150px; }
+.gp-beforeafter strong { font-family: var(--gp-display); font-size: 20px; font-weight: 500; }
+.gp-compare td:first-child { color: var(--gp-muted); }
+
+/* Слои карты */
+.gp-layers { position: absolute; z-index: 5; right: 10px; top: 120px; margin: 0; padding: 6px 10px 8px; background: rgb(250 251 246 / 95%); display: grid; gap: 2px; font-size: 13px; max-width: 240px; }
+.gp-layers legend { font-weight: 700; padding: 0 4px; display: flex; gap: 6px; align-items: center; }
+.gp-layers .gp-check { font-size: 13px; }
+.gp-layers .gp-badge { margin-left: 4px; }
+
+/* Проблемы, приоритеты */
+.gp-tiles--compact { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); margin-bottom: 10px; }
+.gp-tile--btn { min-height: 90px; text-align: left; font: inherit; cursor: pointer; }
+.gp-tile--btn::after { content: none; }
+.gp-tile--btn.is-active { border-color: var(--gp-olive-600); background: var(--gp-green-soft); }
+.gp-rank-item.is-chosen { border-left: 4px solid var(--gp-olive-600); }
+.gp-roadmap-sum { border: 1px solid var(--gp-olive-300); background: var(--gp-green-soft); padding: 8px 10px; margin-top: 8px; }
+.gp-roadmap-sum p { margin: 2px 0; }
+.gp-import { display: flex; gap: 10px; align-items: center; padding: 12px; margin-bottom: 12px; }
+.gp-import__pick { cursor: pointer; }
+.gp-import__res { padding: 12px; }
+
+/* Ассистент */
+.gp-assist-fab { position: fixed; z-index: 45; right: 18px; bottom: 18px; border: 0; background: var(--gp-olive-800); color: #fafbf6; font: inherit; font-weight: 700; padding: 12px 18px; box-shadow: 0 6px 20px rgb(0 0 0 / 22%); cursor: pointer; letter-spacing: .03em; }
+.gp-assist-fab:hover { background: var(--gp-olive-600); }
+.gp-assist { position: fixed; z-index: 46; right: 0; top: 0; bottom: 0; width: min(400px, 100%); background: var(--gp-surface); border-left: 1px solid var(--gp-border); box-shadow: -10px 0 30px rgb(0 0 0 / 15%); display: flex; flex-direction: column; padding: 10px 12px; }
+.gp-assist__head { display: flex; align-items: center; gap: 8px; }
+.gp-assist__head strong { font-family: var(--gp-display); text-transform: uppercase; font-size: 18px; font-weight: 600; }
+.gp-assist__head .gp-icon-btn { margin-left: auto; }
+.gp-assist__list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding: 6px 0; }
+.gp-assist__hello { display: flex; flex-wrap: wrap; gap: 4px; }
+.gp-assist__msg { padding: 8px 10px; font-size: 14px; max-width: 92%; }
+.gp-assist__msg p { margin: 0 0 4px; }
+.gp-assist__msg--user { align-self: flex-end; background: var(--gp-olive-600); color: #fafbf6; }
+.gp-assist__msg--bot { align-self: flex-start; background: var(--gp-surface-2); border: 1px solid var(--gp-border); }
+.gp-assist__msg.is-error { border-color: var(--gp-amber-line); background: var(--gp-amber-soft); }
+.gp-assist__zones { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+.gp-assist__zones a { text-decoration: none; color: var(--gp-text); }
+.gp-assist__form { display: grid; grid-template-columns: 1fr auto; gap: 6px; align-items: end; border-top: 1px solid var(--gp-border); padding-top: 8px; }
+
+/* Отчёт: печать в PDF */
+.gp-report-doc { background: #fff; padding: 24px; border: 1px solid var(--gp-border); max-width: 980px; margin: 12px auto; font-size: 13.5px; }
+.gp-report-doc h1 { font-size: 24px; margin-bottom: 8px !important; }
+.gp-report-doc h2 { font-family: var(--gp-display); text-transform: uppercase; font-size: 17px; margin: 18px 0 6px !important; }
+.gp-report-doc table { width: 100%; border-collapse: collapse; margin: 6px 0; }
+.gp-report-doc th, .gp-report-doc td { border: 1px solid #cfd4c2; padding: 4px 6px; text-align: left; vertical-align: top; }
+.gp-report-doc th { background: #eef1e4; }
+@media print {
+  .gp-header, .gp-subbar, .gp-noprint, .gp-assist, .gp-assist-fab, .gp-skip { display: none !important; }
+  body, .gp-app { background: #fff; }
+  .gp-report-doc { border: 0; padding: 0; margin: 0; max-width: none; }
+  .gp-page { padding: 0; }
+}
+@media (max-width: 760px) {
+  .gp-layers { right: auto; left: 10px; top: 56px; max-width: 200px; }
+  .gp-rank__row { grid-template-columns: 44px minmax(0, 1fr); }
+  .gp-rank__actions { grid-column: 1 / -1; display: flex; }
+  .gp-assist-fab { bottom: 70px; }
+}
+
+/* Карточка зоны на узком экране: таблицы прокручиваются внутри, поля не выходят за край. */
+.gp-zone table { display: block; overflow-x: auto; max-width: 100%; }
+.gp-zone__facts .gp-input--inline, .gp-zone .gp-input--inline { max-width: 100%; }
+.gp-zone__facts { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); }

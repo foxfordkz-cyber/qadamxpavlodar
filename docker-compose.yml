@@ -1,0 +1,11 @@
+# Запуск одной командой (ТЗ 4): docker compose up --build → http://localhost:8080
+services:
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      args:
+        DATA_SOURCE: mock
+    ports:
+      - "8080:80"
+    restart: unless-stopped

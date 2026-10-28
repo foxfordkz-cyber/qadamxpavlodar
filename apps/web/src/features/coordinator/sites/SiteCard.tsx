@@ -10,6 +10,8 @@ import { CHECK_KEYS, eligibilityOf, lastCheckAt } from './eligibility';
 import { ChecksForm } from './ChecksForm';
 import { PlantSelectionPanel } from './PlantSelectionPanel';
 import { TaskForm, type TaskDraft } from '../tasks/TaskForm';
+import { ZoneAnalysisView, ZONE_TABS, type ZoneTab } from '../zone/ZoneAnalysisView';
+import type { PlanOptions } from '../../../shared/analytics/plan';
 
 const FACTOR_KEYS: FactorKey[] = ['greeneryGap', 'publicUsePriority', 'waterAvailability', 'maintenanceFeasibility'];
 
@@ -30,6 +32,9 @@ export function SiteCard({ id, tasks, onClose, onChanged, context, projects, pla
   const [modal, setModal] = useState<null | 'checks' | 'select' | 'task'>(null);
   const [draft, setDraft] = useState<TaskDraft | null>(null);
   const [copied, setCopied] = useState(false);
+  // Вкладка и параметры плана общие для всех вкладок анализа (ТЗ: кросс-модульный пересчёт).
+  const [tab, setTab] = useState<'overview' | ZoneTab>('overview');
+  const [planOptions, setPlanOptions] = useState<Partial<PlanOptions>>({});
   const s = site.data;
 
   const openTask = (d: TaskDraft) => {
@@ -68,6 +73,12 @@ export function SiteCard({ id, tasks, onClose, onChanged, context, projects, pla
               <span className="gp-muted gp-small">{s.id} · {t('site.version', { v: s.version })}</span>
             </div>
             <Freshness updatedAt={site.updatedAt} error={site.error} loading={site.loading} onRefresh={site.reload} />
+            <div className="gp-zonetabs" role="tablist" aria-label="Разделы зоны">
+              {([['overview', 'Обзор'], ...ZONE_TABS] as ['overview' | ZoneTab, string][]).map(([k, label]) => (
+                <button key={k} role="tab" aria-selected={tab === k} onClick={() => setTab(k)}>{label}</button>
+              ))}
+            </div>
+            {tab !== 'overview' ? <ZoneAnalysisView site={s} tab={tab} options={planOptions} setOptions={setPlanOptions} /> : (<>
 
             <div className="gp-btn-row gp-sitecard__actions">
               <Button variant="primary" onClick={() => openTask({ objectId: s.id, action: 'inspect', priority: 'medium', description: 'Обследовать участок: границы, доступ, видимые сети, почва. Сделать фото.' })}>＋ {t('site.createSurvey')}</Button>
@@ -173,6 +184,7 @@ export function SiteCard({ id, tasks, onClose, onChanged, context, projects, pla
               <EvidenceList ids={s.evidenceIds} />
             </Section>
 
+            </>)}
             <Modal open={modal === 'checks'} title={t('checks.title')} onClose={() => setModal(null)}>
               <ChecksForm site={s} onSaved={done} onCancel={() => setModal(null)} />
             </Modal>

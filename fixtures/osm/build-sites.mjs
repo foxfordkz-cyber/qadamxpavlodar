@@ -55,6 +55,7 @@ const clamp = (v) => Math.max(0, Math.min(100, Math.round(v)));
 
 // Зелёные зоны (парки, скверы, лес, рядовые посадки) — для дефицита озеленения.
 const greenRings = green.elements.filter((e) => e.type === 'way').map(ringOf).filter((r) => r.length > 1);
+const greenClosed = green.elements.filter((e) => e.type === 'way' && /park|garden|forest|wood/.test(`${e.tags?.leisure ?? ''}${e.tags?.landuse ?? ''}${e.tags?.natural ?? ''}`)).map(ringOf).filter(closed);
 const greenPts = greenRings.flatMap((r) => r.map(([lng, lat]) => ({ lat, lng })));
 const treePts = ctx.elements.filter((e) => e.type === 'node' && e.tags?.natural === 'tree').map((e) => ({ lat: e.lat, lng: e.lon }));
 const centerOf = (e) => (e.type === 'node' ? { lat: e.lat, lng: e.lon } : e.center ? { lat: e.center.lat, lng: e.center.lon } : null);
@@ -133,7 +134,18 @@ const raw_ = candidates.map(({ el, ring, area, c }) => {
   const dMajor = nearest(majorRoads.map((r) => r.p), c);
   const namedRoad = roads.filter((r) => r.name).sort((a, b) => distM(a.p, c) - distM(b.p, c))[0];
   const dLine = nearest(lines, c);
-  return { el, ring, area, c, dGreen, trees150, social400, stops300, bld200, dRoad, dMajor, namedRoad, dLine };
+  // Доля зелени (парки, скверы, лес OSM) в круге 200 м: выборка точек сетки 10 м.
+  let inGreen = 0, total = 0;
+  const kLat = 1 / 111320, kLng = 1 / (111320 * Math.cos(rad(c.lat)));
+  for (let dx = -200; dx <= 200; dx += 10)
+    for (let dy = -200; dy <= 200; dy += 10) {
+      if (dx * dx + dy * dy > 40000) continue;
+      total++;
+      const p = { lat: c.lat + dy * kLat, lng: c.lng + dx * kLng };
+      if (greenClosed.some((g) => pointInRing(p, g))) inGreen++;
+    }
+  const greenShare = total ? inGreen / total : 0;
+  return { el, ring, area, c, dGreen, trees150, social400, stops300, bld200, dRoad, dMajor, namedRoad, dLine, greenShare };
 });
 const maxBld = Math.max(1, ...raw_.map((r) => r.bld200));
 
@@ -178,6 +190,8 @@ const sites = raw_.map((r, i) => {
       osmTrees150m: r.trees150,
       socialWithin400m: socialNames,
       busStops300m: r.stops300,
+      buildings200m: r.bld200,
+      greenShare200m: Math.round(r.greenShare * 1000) / 1000,
       nearestMajorRoadM: Number.isFinite(r.dMajor) ? Math.round(r.dMajor) : null,
       hints,
     },
@@ -193,6 +207,13 @@ const sites = raw_.map((r, i) => {
 });
 
 sites.sort((a, b) => b.areaM2 - a.areaM2);
+// Одинаковые названия (несколько газонов у одной улицы) различаем номером — для списков и ассистента.
+const seenNames = new Map();
+for (const s of sites) {
+  const n = (seenNames.get(s.name) ?? 0) + 1;
+  seenNames.set(s.name, n);
+  if (n > 1) s.name = `${s.name} — ${n}`;
+}
 const out = {
   generatedAt: new Date().toISOString(),
   source: 'OpenStreetMap via Overpass API',

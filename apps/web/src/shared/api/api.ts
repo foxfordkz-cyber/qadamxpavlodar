@@ -3,6 +3,14 @@ import type {
   Brigade, CandidateSite, CheckKey, CheckState, DashboardMetric, DayPlan, DayPlanSummary, EvidenceRef, ID, Issue, Me, Plant, PlantingProject, PlantSelection,
   Priority, ProjectItem, RankWeights, Report, SiteContext, SiteRanking, Species, Task, TaskAction, TaskStatus, Upload, Worker,
 } from './types';
+import type { PlanOptions, Variant, ZoneAnalysis } from '../analytics/plan';
+import type { PriorityFactor, PriorityItem, Problem } from '../analytics/city';
+import type { RateEntry } from '../analytics/rates';
+import type { AssistantReply } from '../analytics/assistant';
+
+export interface VariantSummary { variant: Variant; label: string; careYears: number; plants: number; cost: number; survival: { y1: number; y2: number; y3: number }; co2t20: number; coolingC: number; rainM3: number; costPerTonCo2: number | null }
+export interface ImportPreview { format: string; total: number; valid: number; invalid: number; issues: { row: number; level: 'error' | 'warning'; text: string }[]; committed: boolean; note: string }
+type FC = { type: 'FeatureCollection'; features: { type: 'Feature'; properties: Record<string, unknown>; geometry: { type: string; coordinates: unknown } }[] };
 
 export interface TaskFilters {
   objectId?: ID;
@@ -82,6 +90,18 @@ export function createApi(t: Transport) {
     reviewProject: (id: ID, body: { decision: 'approved' | 'returned'; comment: string; expectedVersion: number }) =>
       d(t.request<PlantingProject>('POST', `/projects/${encodeURIComponent(id)}/review`, { body, idempotencyKey: `review-${id}-${body.decision}-v${body.expectedVersion}` })),
     dayPlan: (date: string) => d(t.request<{ plan: DayPlan | null; preview: DayPlanSummary }>('GET', '/plans', { query: { date } })),
+    // --- ТЗ акимата ---
+    zoneAnalysis: (id: ID, options: Partial<PlanOptions>) => d(t.request<ZoneAnalysis>('POST', `/zones/${encodeURIComponent(id)}/analysis`, { body: { options } })),
+    zoneVariants: (id: ID, options: Partial<PlanOptions>) => d(t.request<VariantSummary[]>('POST', `/zones/${encodeURIComponent(id)}/variants`, { body: { options } })),
+    problems: () => t.request<{ problems: Problem[]; notDetectable: string[] }>('GET', '/problems'),
+    priorities: (weights: Record<PriorityFactor, number>, budget: number | null) => d(t.request<{ items: PriorityItem[]; roadmap: { chosen: PriorityItem[]; spent: number; left: number; co2t20: number; method: string } | null }>('POST', '/priorities', { body: { weights, budget } })),
+    rates: () => d(t.request<{ rates: RateEntry[]; version: number }>('GET', '/rates')),
+    patchRate: (body: { key: string; value: number | null; source: string; expectedVersion: number }) => d(t.request<{ rates: RateEntry[]; version: number }>('PATCH', '/rates', { body })),
+    soilsLayer: () => t.request<FC>('GET', '/layers/soils'),
+    greeneryLayer: () => t.request<FC>('GET', '/layers/greenery'),
+    ask: (message: string, siteId: ID | null) => d(t.request<AssistantReply>('POST', '/assistant', { body: { message, siteId } })),
+    assistantHistory: () => d(t.request<{ at: string; q: string; intent: string; zones: string[] }[]>('GET', '/assistant/history')),
+    importPreview: (format: string, features: unknown[]) => d(t.request<ImportPreview>('POST', '/imports/preview', { body: { format, features } })),
     approveDayPlan: (date: string, expectedVersion: number | null) =>
       d(t.request<DayPlan>('POST', `/plans/${date}/approve`, { body: { expectedVersion }, idempotencyKey: `plan-${date}-v${expectedVersion ?? 0}` })),
   };

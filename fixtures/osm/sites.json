@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-27T16:07:43.790Z",
+ "generatedAt": "2026-10-28T13:34:04.463Z",
  "source": "OpenStreetMap via Overpass API",
  "license": "ODbL 1.0 — © OpenStreetMap contributors",
  "bbox": "52.268,76.926,52.300,76.974",
@@ -152,6 +152,8 @@
      "школа «Средняя школа №29»"
     ],
     "busStops300m": 3,
+    "buildings200m": 12,
+    "greenShare200m": 0,
     "nearestMajorRoadM": 142,
     "hints": []
    },
@@ -370,6 +372,8 @@
      "школа «Жас дарын»"
     ],
     "busStops300m": 0,
+    "buildings200m": 2,
+    "greenShare200m": 0.146,
     "nearestMajorRoadM": 331,
     "hints": []
    },
@@ -565,6 +569,8 @@
      "вуз «Торайгыров Университет»"
     ],
     "busStops300m": 3,
+    "buildings200m": 3,
+    "greenShare200m": 0.036,
     "nearestMajorRoadM": 468,
     "hints": []
    },
@@ -708,6 +714,8 @@
      "детсад"
     ],
     "busStops300m": 6,
+    "buildings200m": 23,
+    "greenShare200m": 0.025,
     "nearestMajorRoadM": 383,
     "hints": []
    },
@@ -908,6 +916,8 @@
      "колледж «Павлодарский высший экономический колледж Казпотребсоюза»"
     ],
     "busStops300m": 4,
+    "buildings200m": 14,
+    "greenShare200m": 0.022,
     "nearestMajorRoadM": 34,
     "hints": [
      "Магистральная улица примерно в 34 м — вероятны соль, пыль и газ; нужны устойчивые виды."
@@ -938,7 +948,7 @@
   },
   {
    "id": "site-osm-1569303529",
-   "name": "Газон у улица Катаева",
+   "name": "Газон у улица Катаева — 2",
    "osmId": "way/1569303529",
    "osmTags": {
     "landuse": "grass"
@@ -1049,6 +1059,8 @@
      "детсад"
     ],
     "busStops300m": 5,
+    "buildings200m": 20,
+    "greenShare200m": 0.027,
     "nearestMajorRoadM": 359,
     "hints": []
    },
@@ -1232,6 +1244,8 @@
      "колледж «Колледж Павлодарского государственного университета им. С. Торайгырова»"
     ],
     "busStops300m": 5,
+    "buildings200m": 15,
+    "greenShare200m": 0.022,
     "nearestMajorRoadM": 232,
     "hints": []
    },
@@ -1373,6 +1387,8 @@
      "школа"
     ],
     "busStops300m": 3,
+    "buildings200m": 25,
+    "greenShare200m": 0.073,
     "nearestMajorRoadM": 64,
     "hints": []
    },
@@ -1522,6 +1538,8 @@
      "поликлиника «Поликлиника №2»"
     ],
     "busStops300m": 2,
+    "buildings200m": 18,
+    "greenShare200m": 0,
     "nearestMajorRoadM": 71,
     "hints": []
    },
@@ -1550,7 +1568,7 @@
   },
   {
    "id": "site-osm-1569303571",
-   "name": "Газон у улица Кабдеша Нуркина",
+   "name": "Газон у улица Кабдеша Нуркина — 2",
    "osmId": "way/1569303571",
    "osmTags": {
     "landuse": "grass"
@@ -1662,6 +1680,8 @@
      "колледж «Колледж Павлодарского государственного университета им. С. Торайгырова»"
     ],
     "busStops300m": 3,
+    "buildings200m": 21,
+    "greenShare200m": 0.036,
     "nearestMajorRoadM": 393,
     "hints": []
    },
@@ -1882,6 +1902,8 @@
     "osmTrees150m": 0,
     "socialWithin400m": [],
     "busStops300m": 0,
+    "buildings200m": 7,
+    "greenShare200m": 0.217,
     "nearestMajorRoadM": 95,
     "hints": []
    },
@@ -1910,7 +1932,7 @@
   },
   {
    "id": "site-osm-1569303531",
-   "name": "Газон у улица Толстого",
+   "name": "Газон у улица Толстого — 2",
    "osmId": "way/1569303531",
    "osmTags": {
     "landuse": "grass"
@@ -2053,6 +2075,8 @@
      "колледж «Колледж Павлодарского государственного университета им. С. Торайгырова»"
     ],
     "busStops300m": 5,
+    "buildings200m": 14,
+    "greenShare200m": 0.019,
     "nearestMajorRoadM": 186,
     "hints": []
    },
@@ -2081,7 +2105,7 @@
   },
   {
    "id": "site-osm-1569993032",
-   "name": "Газон у улица Катаева",
+   "name": "Газон у улица Катаева — 3",
    "osmId": "way/1569993032",
    "osmTags": {
     "landuse": "grass"
@@ -2200,6 +2224,8 @@
      "детсад"
     ],
     "busStops300m": 3,
+    "buildings200m": 20,
+    "greenShare200m": 0.033,
     "nearestMajorRoadM": 310,
     "hints": []
    },
@@ -2356,6 +2382,8 @@
      "колледж «Павлодарский высший экономический колледж Казпотребсоюза»"
     ],
     "busStops300m": 3,
+    "buildings200m": 21,
+    "greenShare200m": 0.018,
     "nearestMajorRoadM": 92,
     "hints": []
    },
@@ -2524,6 +2552,8 @@
     "osmTrees150m": 8,
     "socialWithin400m": [],
     "busStops300m": 2,
+    "buildings200m": 30,
+    "greenShare200m": 0.058,
     "nearestMajorRoadM": 58,
     "hints": []
    },
@@ -2656,6 +2686,8 @@
      "детсад «Специальный ясли-сад №82»"
     ],
     "busStops300m": 3,
+    "buildings200m": 12,
+    "greenShare200m": 0.357,
     "nearestMajorRoadM": 73,
     "hints": []
    },
@@ -2684,7 +2716,7 @@
   },
   {
    "id": "site-osm-1569303533",
-   "name": "Газон у улица Толстого",
+   "name": "Газон у улица Толстого — 3",
    "osmId": "way/1569303533",
    "osmTags": {
     "landuse": "grass"
@@ -2824,6 +2856,8 @@
      "колледж «Колледж Павлодарского государственного университета им. С. Торайгырова»"
     ],
     "busStops300m": 7,
+    "buildings200m": 17,
+    "greenShare200m": 0.014,
     "nearestMajorRoadM": 133,
     "hints": []
    },
@@ -2852,7 +2886,7 @@
   },
   {
    "id": "site-osm-1568677740",
-   "name": "Газон у улица Лермонтова",
+   "name": "Газон у улица Лермонтова — 2",
    "osmId": "way/1568677740",
    "osmTags": {
     "landuse": "grass"
@@ -3001,6 +3035,8 @@
      "детсад «Детский сад №85»"
     ],
     "busStops300m": 5,
+    "buildings200m": 18,
+    "greenShare200m": 0.151,
     "nearestMajorRoadM": 40,
     "hints": []
    },
@@ -3029,7 +3065,7 @@
   },
   {
    "id": "site-osm-1480655995",
-   "name": "Газон у улица Олжабай батыра",
+   "name": "Газон у улица Олжабай батыра — 2",
    "osmId": "way/1480655995",
    "osmTags": {
     "landuse": "grass"
@@ -3153,6 +3189,8 @@
      "вуз «Павлодарский педагогический университет»"
     ],
     "busStops300m": 1,
+    "buildings200m": 28,
+    "greenShare200m": 0.009,
     "nearestMajorRoadM": 35,
     "hints": [
      "Магистральная улица примерно в 35 м — вероятны соль, пыль и газ; нужны устойчивые виды."
@@ -3183,7 +3221,7 @@
   },
   {
    "id": "site-osm-542085418",
-   "name": "Газон у Каирбаевский спуск",
+   "name": "Газон у Каирбаевский спуск — 2",
    "osmId": "way/542085418",
    "osmTags": {
     "landuse": "grass"
@@ -3371,6 +3409,8 @@
     "osmTrees150m": 0,
     "socialWithin400m": [],
     "busStops300m": 0,
+    "buildings200m": 6,
+    "greenShare200m": 0.181,
     "nearestMajorRoadM": 131,
     "hints": []
    },
@@ -3399,7 +3439,7 @@
   },
   {
    "id": "site-osm-1480655992",
-   "name": "Газон у улица Торайгырова",
+   "name": "Газон у улица Торайгырова — 2",
    "osmId": "way/1480655992",
    "osmTags": {
     "landuse": "grass"
@@ -3529,6 +3569,8 @@
      "школа"
     ],
     "busStops300m": 2,
+    "buildings200m": 31,
+    "greenShare200m": 0.025,
     "nearestMajorRoadM": 149,
     "hints": []
    },
@@ -3557,7 +3599,7 @@
   },
   {
    "id": "site-osm-1480655989",
-   "name": "Газон у улица Олжабай батыра",
+   "name": "Газон у улица Олжабай батыра — 3",
    "osmId": "way/1480655989",
    "osmTags": {
     "landuse": "grass"
@@ -3676,6 +3718,8 @@
      "вуз «Павлодарский педагогический университет»"
     ],
     "busStops300m": 1,
+    "buildings200m": 30,
+    "greenShare200m": 0.027,
     "nearestMajorRoadM": 59,
     "hints": []
    },
@@ -3704,7 +3748,7 @@
   },
   {
    "id": "site-osm-1569303537",
-   "name": "Газон у улица Толстого",
+   "name": "Газон у улица Толстого — 4",
    "osmId": "way/1569303537",
    "osmTags": {
     "landuse": "grass"
@@ -3827,6 +3871,8 @@
      "колледж «Колледж Павлодарского государственного университета им. С. Торайгырова»"
     ],
     "busStops300m": 3,
+    "buildings200m": 18,
+    "greenShare200m": 0.023,
     "nearestMajorRoadM": 288,
     "hints": []
    },
@@ -3855,7 +3901,7 @@
   },
   {
    "id": "site-osm-1566875266",
-   "name": "Газон у улица Естая",
+   "name": "Газон у улица Естая — 2",
    "osmId": "way/1566875266",
    "osmTags": {
     "landuse": "grass"
@@ -3979,6 +4025,8 @@
      "колледж «Павлодарский высший экономический колледж Казпотребсоюза»"
     ],
     "busStops300m": 3,
+    "buildings200m": 20,
+    "greenShare200m": 0.162,
     "nearestMajorRoadM": 81,
     "hints": []
    },
@@ -4007,7 +4055,7 @@
   },
   {
    "id": "site-osm-542269630",
-   "name": "Газон у улица Торайгырова",
+   "name": "Газон у улица Торайгырова — 3",
    "osmId": "way/542269630",
    "osmTags": {
     "landuse": "grass"
@@ -4149,6 +4197,8 @@
      "школа «Школа-лицей №8 для одарённых детей»"
     ],
     "busStops300m": 0,
+    "buildings200m": 12,
+    "greenShare200m": 0.298,
     "nearestMajorRoadM": 157,
     "hints": []
    },
@@ -4177,7 +4227,7 @@
   },
   {
    "id": "site-osm-1480655990",
-   "name": "Газон у улица Олжабай батыра",
+   "name": "Газон у улица Олжабай батыра — 4",
    "osmId": "way/1480655990",
    "osmTags": {
     "landuse": "grass"
@@ -4316,6 +4366,8 @@
      "вуз «Павлодарский педагогический университет»"
     ],
     "busStops300m": 2,
+    "buildings200m": 30,
+    "greenShare200m": 0.031,
     "nearestMajorRoadM": 224,
     "hints": []
    },
@@ -4344,7 +4396,7 @@
   },
   {
    "id": "site-osm-1568677756",
-   "name": "Газон у улица Торайгырова",
+   "name": "Газон у улица Торайгырова — 4",
    "osmId": "way/1568677756",
    "osmTags": {
     "landuse": "grass"
@@ -4458,6 +4510,8 @@
      "детсад"
     ],
     "busStops300m": 1,
+    "buildings200m": 21,
+    "greenShare200m": 0.072,
     "nearestMajorRoadM": 87,
     "hints": []
    },
@@ -4618,6 +4672,8 @@
     "osmTrees150m": 0,
     "socialWithin400m": [],
     "busStops300m": 0,
+    "buildings200m": 7,
+    "greenShare200m": 0.257,
     "nearestMajorRoadM": 54,
     "hints": []
    },
@@ -4646,7 +4702,7 @@
   },
   {
    "id": "site-osm-1569993023",
-   "name": "Газон у улица Катаева",
+   "name": "Газон у улица Катаева — 4",
    "osmId": "way/1569993023",
    "osmTags": {
     "landuse": "grass"
@@ -4777,6 +4833,8 @@
      "детсад"
     ],
     "busStops300m": 3,
+    "buildings200m": 20,
+    "greenShare200m": 0.021,
     "nearestMajorRoadM": 348,
     "hints": []
    },
@@ -4805,7 +4863,7 @@
   },
   {
    "id": "site-osm-1546881092",
-   "name": "Газон у улица Лермонтова",
+   "name": "Газон у улица Лермонтова — 3",
    "osmId": "way/1546881092",
    "osmTags": {
     "landuse": "grass"
@@ -4926,6 +4984,8 @@
      "поликлиника"
     ],
     "busStops300m": 3,
+    "buildings200m": 31,
+    "greenShare200m": 0.075,
     "nearestMajorRoadM": 33,
     "hints": [
      "Магистральная улица примерно в 33 м — вероятны соль, пыль и газ; нужны устойчивые виды."
@@ -4956,7 +5016,7 @@
   },
   {
    "id": "site-osm-582244955",
-   "name": "Газон у улица Астана",
+   "name": "Газон у улица Астана — 2",
    "osmId": "way/582244955",
    "osmTags": {
     "landuse": "grass"
@@ -5088,6 +5148,8 @@
     "osmTrees150m": 0,
     "socialWithin400m": [],
     "busStops300m": 0,
+    "buildings200m": 8,
+    "greenShare200m": 0.291,
     "nearestMajorRoadM": 53,
     "hints": []
    },
@@ -5116,7 +5178,7 @@
   },
   {
    "id": "site-osm-1375034907",
-   "name": "Газон у улица Астана",
+   "name": "Газон у улица Астана — 3",
    "osmId": "way/1375034907",
    "osmTags": {
     "landuse": "grass"
@@ -5218,6 +5280,8 @@
      "школа «Жас дарын»"
     ],
     "busStops300m": 1,
+    "buildings200m": 8,
+    "greenShare200m": 0.195,
     "nearestMajorRoadM": 198,
     "hints": []
    },
@@ -5370,6 +5434,8 @@
      "детсад «Детский сад №93»"
     ],
     "busStops300m": 4,
+    "buildings200m": 31,
+    "greenShare200m": 0.008,
     "nearestMajorRoadM": 143,
     "hints": []
    },
@@ -5523,6 +5589,8 @@
      "детсад «Детский сад №93»"
     ],
     "busStops300m": 6,
+    "buildings200m": 32,
+    "greenShare200m": 0.061,
     "nearestMajorRoadM": 97,
     "hints": []
    },
@@ -5551,7 +5619,7 @@
   },
   {
    "id": "site-osm-1375007556",
-   "name": "Газон у Каирбаевский спуск",
+   "name": "Газон у Каирбаевский спуск — 3",
    "osmId": "way/1375007556",
    "osmTags": {
     "landuse": "grass"
@@ -5663,6 +5731,8 @@
     "osmTrees150m": 0,
     "socialWithin400m": [],
     "busStops300m": 0,
+    "buildings200m": 8,
+    "greenShare200m": 0.282,
     "nearestMajorRoadM": 101,
     "hints": []
    },
@@ -5793,6 +5863,8 @@
      "школа «Средняя школа №11»"
     ],
     "busStops300m": 0,
+    "buildings200m": 13,
+    "greenShare200m": 0.18,
     "nearestMajorRoadM": 106,
     "hints": []
    },
@@ -5821,7 +5893,7 @@
   },
   {
    "id": "site-osm-1346008059",
-   "name": "Газон у улица Торайгырова",
+   "name": "Газон у улица Торайгырова — 5",
    "osmId": "way/1346008059",
    "osmTags": {
     "landuse": "grass"
@@ -5930,6 +6002,8 @@
      "поликлиника «Поликлиника №2»"
     ],
     "busStops300m": 0,
+    "buildings200m": 17,
+    "greenShare200m": 0.08,
     "nearestMajorRoadM": 180,
     "hints": []
    },
@@ -5958,7 +6032,7 @@
   },
   {
    "id": "site-osm-542085416",
-   "name": "Газон у улица Астана",
+   "name": "Газон у улица Астана — 4",
    "osmId": "way/542085416",
    "osmTags": {
     "landuse": "grass"
@@ -6116,6 +6190,8 @@
      "школа «Жас дарын»"
     ],
     "busStops300m": 0,
+    "buildings200m": 8,
+    "greenShare200m": 0.146,
     "nearestMajorRoadM": 165,
     "hints": []
    },
@@ -6144,7 +6220,7 @@
   },
   {
    "id": "site-osm-544985070",
-   "name": "Газон у улица Астана",
+   "name": "Газон у улица Астана — 5",
    "osmId": "way/544985070",
    "osmTags": {
     "landuse": "grass"
@@ -6270,6 +6346,8 @@
      "школа «Жас дарын»"
     ],
     "busStops300m": 2,
+    "buildings200m": 9,
+    "greenShare200m": 0.263,
     "nearestMajorRoadM": 136,
     "hints": []
    },
@@ -6298,7 +6376,7 @@
   },
   {
    "id": "site-osm-542269629",
-   "name": "Газон у улица Торайгырова",
+   "name": "Газон у улица Торайгырова — 6",
    "osmId": "way/542269629",
    "osmTags": {
     "landuse": "grass"
@@ -6440,6 +6518,8 @@
      "школа «Школа-лицей №8 для одарённых детей»"
     ],
     "busStops300m": 0,
+    "buildings200m": 11,
+    "greenShare200m": 0.305,
     "nearestMajorRoadM": 239,
     "hints": []
    },
@@ -6468,7 +6548,7 @@
   },
   {
    "id": "site-osm-544985071",
-   "name": "Газон у улица Астана",
+   "name": "Газон у улица Астана — 6",
    "osmId": "way/544985071",
    "osmTags": {
     "landuse": "grass"
@@ -6566,6 +6646,8 @@
      "школа «Жас дарын»"
     ],
     "busStops300m": 1,
+    "buildings200m": 10,
+    "greenShare200m": 0.24,
     "nearestMajorRoadM": 120,
     "hints": []
    },
@@ -6594,7 +6676,7 @@
   },
   {
    "id": "site-osm-542269631",
-   "name": "Газон у улица Торайгырова",
+   "name": "Газон у улица Торайгырова — 7",
    "osmId": "way/542269631",
    "osmTags": {
     "landuse": "grass"
@@ -6739,6 +6821,8 @@
      "школа «Школа-лицей №8 для одарённых детей»"
     ],
     "busStops300m": 0,
+    "buildings200m": 16,
+    "greenShare200m": 0.194,
     "nearestMajorRoadM": 116,
     "hints": []
    },
@@ -6767,7 +6851,7 @@
   },
   {
    "id": "site-osm-1546881095",
-   "name": "Газон у улица Лермонтова",
+   "name": "Газон у улица Лермонтова — 4",
    "osmId": "way/1546881095",
    "osmTags": {
     "landuse": "grass"
@@ -6892,6 +6976,8 @@
      "школа"
     ],
     "busStops300m": 2,
+    "buildings200m": 26,
+    "greenShare200m": 0.005,
     "nearestMajorRoadM": 148,
     "hints": []
    },
@@ -6920,7 +7006,7 @@
   },
   {
    "id": "site-osm-1546881080",
-   "name": "Газон у улица Лермонтова",
+   "name": "Газон у улица Лермонтова — 5",
    "osmId": "way/1546881080",
    "osmTags": {
     "landuse": "grass"
@@ -7037,6 +7123,8 @@
      "школа «Школа \"Стикс\"»"
     ],
     "busStops300m": 4,
+    "buildings200m": 19,
+    "greenShare200m": 0.126,
     "nearestMajorRoadM": 153,
     "hints": []
    },
@@ -7065,7 +7153,7 @@
   },
   {
    "id": "site-osm-1569303545",
-   "name": "Газон у проспект Нурсултана Назарбаева",
+   "name": "Газон у проспект Нурсултана Назарбаева — 2",
    "osmId": "way/1569303545",
    "osmTags": {
     "landuse": "grass"
@@ -7178,6 +7266,8 @@
      "колледж «Павлодарский высший экономический колледж Казпотребсоюза»"
     ],
     "busStops300m": 3,
+    "buildings200m": 21,
+    "greenShare200m": 0.003,
     "nearestMajorRoadM": 139,
     "hints": []
    },
@@ -7310,6 +7400,8 @@
      "школа «Жас дарын»"
     ],
     "busStops300m": 2,
+    "buildings200m": 15,
+    "greenShare200m": 0.229,
     "nearestMajorRoadM": 101,
     "hints": []
    },
@@ -7338,7 +7430,7 @@
   },
   {
    "id": "site-osm-1569303570",
-   "name": "Газон у улица Лермонтова",
+   "name": "Газон у улица Лермонтова — 6",
    "osmId": "way/1569303570",
    "osmTags": {
     "landuse": "grass"
@@ -7459,6 +7551,8 @@
      "детсад «Детский сад №85»"
     ],
     "busStops300m": 5,
+    "buildings200m": 19,
+    "greenShare200m": 0.151,
     "nearestMajorRoadM": 20,
     "hints": [
      "Магистральная улица примерно в 20 м — вероятны соль, пыль и газ; нужны устойчивые виды."
@@ -7489,7 +7583,7 @@
   },
   {
    "id": "site-osm-355268439",
-   "name": "Газон у улица Каирбаева",
+   "name": "Газон у улица Каирбаева — 2",
    "osmId": "way/355268439",
    "osmTags": {
     "landuse": "grass"
@@ -7592,6 +7686,8 @@
      "школа «Средняя школа №11»"
     ],
     "busStops300m": 1,
+    "buildings200m": 11,
+    "greenShare200m": 0.293,
     "nearestMajorRoadM": 143,
     "hints": []
    },
@@ -7740,6 +7836,8 @@
     "osmTrees150m": 0,
     "socialWithin400m": [],
     "busStops300m": 0,
+    "buildings200m": 0,
+    "greenShare200m": 0.098,
     "nearestMajorRoadM": 314,
     "hints": []
    },
@@ -7768,7 +7866,7 @@
   },
   {
    "id": "site-osm-355268424",
-   "name": "Газон у улица Каирбаева",
+   "name": "Газон у улица Каирбаева — 3",
    "osmId": "way/355268424",
    "osmTags": {
     "landuse": "grass"
@@ -7894,6 +7992,8 @@
      "школа «Средняя школа №11»"
     ],
     "busStops300m": 0,
+    "buildings200m": 12,
+    "greenShare200m": 0.263,
     "nearestMajorRoadM": 151,
     "hints": []
    },
@@ -7922,7 +8022,7 @@
   },
   {
    "id": "site-osm-1569993036",
-   "name": "Газон у улица Толстого",
+   "name": "Газон у улица Толстого — 5",
    "osmId": "way/1569993036",
    "osmTags": {
     "landuse": "grass"
@@ -8038,6 +8138,8 @@
      "колледж «Колледж Павлодарского государственного университета им. С. Торайгырова»"
     ],
     "busStops300m": 7,
+    "buildings200m": 12,
+    "greenShare200m": 0.012,
     "nearestMajorRoadM": 114,
     "hints": []
    },
@@ -8066,7 +8168,7 @@
   },
   {
    "id": "site-osm-1569303524",
-   "name": "Газон у улица Кабдеша Нуркина",
+   "name": "Газон у улица Кабдеша Нуркина — 3",
    "osmId": "way/1569303524",
    "osmTags": {
     "landuse": "grass"
@@ -8177,6 +8279,8 @@
      "вуз «Торайгыров Университет»"
     ],
     "busStops300m": 3,
+    "buildings200m": 5,
+    "greenShare200m": 0.037,
     "nearestMajorRoadM": 453,
     "hints": []
    },
@@ -8205,7 +8309,7 @@
   },
   {
    "id": "site-osm-355268423",
-   "name": "Газон у улица Каирбаева",
+   "name": "Газон у улица Каирбаева — 4",
    "osmId": "way/355268423",
    "osmTags": {
     "landuse": "grass"
@@ -8307,6 +8411,8 @@
      "школа «Средняя школа №11»"
     ],
     "busStops300m": 0,
+    "buildings200m": 12,
+    "greenShare200m": 0.23,
     "nearestMajorRoadM": 96,
     "hints": []
    },
@@ -8335,7 +8441,7 @@
   },
   {
    "id": "site-osm-544985078",
-   "name": "Газон у улица Астана",
+   "name": "Газон у улица Астана — 7",
    "osmId": "way/544985078",
    "osmTags": {
     "landuse": "grass"
@@ -8431,6 +8537,8 @@
     "osmTrees150m": 0,
     "socialWithin400m": [],
     "busStops300m": 0,
+    "buildings200m": 8,
+    "greenShare200m": 0.278,
     "nearestMajorRoadM": 16,
     "hints": [
      "Магистральная улица примерно в 16 м — вероятны соль, пыль и газ; нужны устойчивые виды."
@@ -8461,7 +8569,7 @@
   },
   {
    "id": "site-osm-1569993060",
-   "name": "Газон у проспект Нурсултана Назарбаева",
+   "name": "Газон у проспект Нурсултана Назарбаева — 3",
    "osmId": "way/1569993060",
    "osmTags": {
     "landuse": "grass"
@@ -8585,6 +8693,8 @@
      "школа «Средняя школа №29»"
     ],
     "busStops300m": 2,
+    "buildings200m": 13,
+    "greenShare200m": 0,
     "nearestMajorRoadM": 225,
     "hints": []
    },
@@ -8613,7 +8723,7 @@
   },
   {
    "id": "site-osm-1546881070",
-   "name": "Газон у улица Лермонтова",
+   "name": "Газон у улица Лермонтова — 7",
    "osmId": "way/1546881070",
    "osmTags": {
     "landuse": "grass"
@@ -8730,6 +8840,8 @@
      "поликлиника"
     ],
     "busStops300m": 4,
+    "buildings200m": 29,
+    "greenShare200m": 0.09,
     "nearestMajorRoadM": 61,
     "hints": []
    },
@@ -8758,7 +8870,7 @@
   },
   {
    "id": "site-osm-544985072",
-   "name": "Газон у улица Астана",
+   "name": "Газон у улица Астана — 8",
    "osmId": "way/544985072",
    "osmTags": {
     "landuse": "grass"
@@ -8856,6 +8968,8 @@
      "школа «Жас дарын»"
     ],
     "busStops300m": 2,
+    "buildings200m": 8,
+    "greenShare200m": 0.271,
     "nearestMajorRoadM": 101,
     "hints": []
    },
@@ -8884,7 +8998,7 @@
   },
   {
    "id": "site-osm-1568677751",
-   "name": "Газон у улица Торайгырова",
+   "name": "Газон у улица Торайгырова — 8",
    "osmId": "way/1568677751",
    "osmTags": {
     "landuse": "grass"
@@ -9019,6 +9133,8 @@
      "детсад «Детский сад №85»"
     ],
     "busStops300m": 2,
+    "buildings200m": 16,
+    "greenShare200m": 0.23,
     "nearestMajorRoadM": 257,
     "hints": []
    },
@@ -9047,7 +9163,7 @@
   },
   {
    "id": "site-osm-1563058202",
-   "name": "Газон у улица Торайгырова",
+   "name": "Газон у улица Торайгырова — 9",
    "osmId": "way/1563058202",
    "osmTags": {
     "landuse": "grass"
@@ -9173,6 +9289,8 @@
      "школа"
     ],
     "busStops300m": 2,
+    "buildings200m": 30,
+    "greenShare200m": 0.025,
     "nearestMajorRoadM": 167,
     "hints": []
    },
@@ -9305,6 +9423,8 @@
      "школа «Жас дарын»"
     ],
     "busStops300m": 2,
+    "buildings200m": 15,
+    "greenShare200m": 0.257,
     "nearestMajorRoadM": 133,
     "hints": []
    },
@@ -9333,7 +9453,7 @@
   },
   {
    "id": "site-osm-1569993058",
-   "name": "Газон у улица Толстого",
+   "name": "Газон у улица Толстого — 6",
    "osmId": "way/1569993058",
    "osmTags": {
     "landuse": "grass"
@@ -9442,6 +9562,8 @@
      "колледж «Колледж Павлодарского государственного университета им. С. Торайгырова»"
     ],
     "busStops300m": 5,
+    "buildings200m": 15,
+    "greenShare200m": 0,
     "nearestMajorRoadM": 173,
     "hints": []
    },
@@ -9573,6 +9695,8 @@
      "детсад"
     ],
     "busStops300m": 3,
+    "buildings200m": 15,
+    "greenShare200m": 0.024,
     "nearestMajorRoadM": 384,
     "hints": []
    },
@@ -9601,7 +9725,7 @@
   },
   {
    "id": "site-osm-1546881061",
-   "name": "Газон у улица Лермонтова",
+   "name": "Газон у улица Лермонтова — 8",
    "osmId": "way/1546881061",
    "osmTags": {
     "landuse": "grass"
@@ -9729,6 +9853,8 @@
      "школа «Lingua»"
     ],
     "busStops300m": 2,
+    "buildings200m": 32,
+    "greenShare200m": 0,
     "nearestMajorRoadM": 209,
     "hints": []
    },
@@ -9757,7 +9883,7 @@
   },
   {
    "id": "site-osm-355268431",
-   "name": "Газон у улица Каирбаева",
+   "name": "Газон у улица Каирбаева — 5",
    "osmId": "way/355268431",
    "osmTags": {
     "landuse": "grass"
@@ -9876,6 +10002,8 @@
      "школа «Средняя школа №11»"
     ],
     "busStops300m": 0,
+    "buildings200m": 15,
+    "greenShare200m": 0.242,
     "nearestMajorRoadM": 127,
     "hints": []
    },
@@ -10044,6 +10172,8 @@
      "детсад «Детский сад №85»"
     ],
     "busStops300m": 4,
+    "buildings200m": 19,
+    "greenShare200m": 0.131,
     "nearestMajorRoadM": 40,
     "hints": []
    },
@@ -10072,7 +10202,7 @@
   },
   {
    "id": "site-osm-1569993044",
-   "name": "Газон у улица Толстого",
+   "name": "Газон у улица Толстого — 7",
    "osmId": "way/1569993044",
    "osmTags": {
     "landuse": "grass"
@@ -10188,6 +10318,8 @@
      "колледж «Колледж Павлодарского государственного университета им. С. Торайгырова»"
     ],
     "busStops300m": 6,
+    "buildings200m": 17,
+    "greenShare200m": 0.007,
     "nearestMajorRoadM": 74,
     "hints": []
    },
@@ -10319,6 +10451,8 @@
      "детсад"
     ],
     "busStops300m": 0,
+    "buildings200m": 52,
+    "greenShare200m": 0.066,
     "nearestMajorRoadM": 141,
     "hints": []
    },
@@ -10347,7 +10481,7 @@
   },
   {
    "id": "site-osm-542269633",
-   "name": "Газон у улица Торайгырова",
+   "name": "Газон у улица Торайгырова — 10",
    "osmId": "way/542269633",
    "osmTags": {
     "landuse": "grass"
@@ -10458,6 +10592,8 @@
      "школа «Школа-лицей №8 для одарённых детей»"
     ],
     "busStops300m": 0,
+    "buildings200m": 11,
+    "greenShare200m": 0.299,
     "nearestMajorRoadM": 195,
     "hints": []
    },
@@ -10486,7 +10622,7 @@
   },
   {
    "id": "site-osm-542269628",
-   "name": "Газон у улица Торайгырова",
+   "name": "Газон у улица Торайгырова — 11",
    "osmId": "way/542269628",
    "osmTags": {
     "landuse": "grass"
@@ -10680,6 +10816,8 @@
      "школа «Школа-лицей №8 для одарённых детей»"
     ],
     "busStops300m": 0,
+    "buildings200m": 12,
+    "greenShare200m": 0.255,
     "nearestMajorRoadM": 230,
     "hints": []
    },
@@ -10708,7 +10846,7 @@
   },
   {
    "id": "site-osm-544985073",
-   "name": "Газон у улица Астана",
+   "name": "Газон у улица Астана — 9",
    "osmId": "way/544985073",
    "osmTags": {
     "landuse": "grass"
@@ -10838,6 +10976,8 @@
      "школа «Жас дарын»"
     ],
     "busStops300m": 0,
+    "buildings200m": 10,
+    "greenShare200m": 0.264,
     "nearestMajorRoadM": 82,
     "hints": []
    },
@@ -10866,7 +11006,7 @@
   },
   {
    "id": "site-osm-544985077",
-   "name": "Газон у улица Астана",
+   "name": "Газон у улица Астана — 10",
    "osmId": "way/544985077",
    "osmTags": {
     "landuse": "grass"
@@ -10982,6 +11122,8 @@
     "osmTrees150m": 0,
     "socialWithin400m": [],
     "busStops300m": 0,
+    "buildings200m": 11,
+    "greenShare200m": 0.25,
     "nearestMajorRoadM": 29,
     "hints": [
      "Магистральная улица примерно в 29 м — вероятны соль, пыль и газ; нужны устойчивые виды."
@@ -11012,7 +11154,7 @@
   },
   {
    "id": "site-osm-1563354612",
-   "name": "Газон у улица Олжабай батыра",
+   "name": "Газон у улица Олжабай батыра — 5",
    "osmId": "way/1563354612",
    "osmTags": {
     "landuse": "grass"
@@ -11115,6 +11257,8 @@
      "вуз «Павлодарский педагогический университет»"
     ],
     "busStops300m": 1,
+    "buildings200m": 32,
+    "greenShare200m": 0.005,
     "nearestMajorRoadM": 56,
     "hints": []
    },
@@ -11143,7 +11287,7 @@
   },
   {
    "id": "site-osm-355267646",
-   "name": "Газон у улица Каирбаева",
+   "name": "Газон у улица Каирбаева — 6",
    "osmId": "way/355267646",
    "osmTags": {
     "landuse": "grass"
@@ -11245,6 +11389,8 @@
      "школа «Средняя школа №11»"
     ],
     "busStops300m": 0,
+    "buildings200m": 11,
+    "greenShare200m": 0.255,
     "nearestMajorRoadM": 130,
     "hints": []
    },
@@ -11273,7 +11419,7 @@
   },
   {
    "id": "site-osm-1568677761",
-   "name": "Газон у улица Торайгырова",
+   "name": "Газон у улица Торайгырова — 12",
    "osmId": "way/1568677761",
    "osmTags": {
     "landuse": "grass"
@@ -11373,6 +11519,8 @@
     "osmTrees150m": 8,
     "socialWithin400m": [],
     "busStops300m": 1,
+    "buildings200m": 20,
+    "greenShare200m": 0,
     "nearestMajorRoadM": 43,
     "hints": []
    },
@@ -11401,7 +11549,7 @@
   },
   {
    "id": "site-osm-1569993020",
-   "name": "Газон у улица Катаева",
+   "name": "Газон у улица Катаева — 5",
    "osmId": "way/1569993020",
    "osmTags": {
     "landuse": "grass"
@@ -11509,6 +11657,8 @@
      "вуз «Торайгыров Университет»"
     ],
     "busStops300m": 4,
+    "buildings200m": 19,
+    "greenShare200m": 0.028,
     "nearestMajorRoadM": 407,
     "hints": []
    },
@@ -11537,7 +11687,7 @@
   },
   {
    "id": "site-osm-544985074",
-   "name": "Газон у улица Астана",
+   "name": "Газон у улица Астана — 11",
    "osmId": "way/544985074",
    "osmTags": {
     "landuse": "grass"
@@ -11655,6 +11805,8 @@
      "школа «Жас дарын»"
     ],
     "busStops300m": 2,
+    "buildings200m": 9,
+    "greenShare200m": 0.257,
     "nearestMajorRoadM": 64,
     "hints": []
    },
@@ -11790,6 +11942,8 @@
      "детсад"
     ],
     "busStops300m": 0,
+    "buildings200m": 102,
+    "greenShare200m": 0,
     "nearestMajorRoadM": 313,
     "hints": []
    },
@@ -11818,7 +11972,7 @@
   },
   {
    "id": "site-osm-1569993059",
-   "name": "Газон у улица Толстого",
+   "name": "Газон у улица Толстого — 8",
    "osmId": "way/1569993059",
    "osmTags": {
     "landuse": "grass"
@@ -11930,6 +12084,8 @@
      "школа «Средняя школа №29»"
     ],
     "busStops300m": 3,
+    "buildings200m": 13,
+    "greenShare200m": 0,
     "nearestMajorRoadM": 241,
     "hints": []
    },
@@ -11958,7 +12114,7 @@
   },
   {
    "id": "site-osm-355267643",
-   "name": "Газон у улица Академика Маргулана",
+   "name": "Газон у улица Академика Маргулана — 2",
    "osmId": "way/355267643",
    "osmTags": {
     "landuse": "grass"
@@ -12062,6 +12218,8 @@
      "школа «Жас дарын»"
     ],
     "busStops300m": 2,
+    "buildings200m": 9,
+    "greenShare200m": 0.299,
     "nearestMajorRoadM": 154,
     "hints": []
    },
@@ -12090,7 +12248,7 @@
   },
   {
    "id": "site-osm-1569993063",
-   "name": "Газон у проспект Нурсултана Назарбаева",
+   "name": "Газон у проспект Нурсултана Назарбаева — 4",
    "osmId": "way/1569993063",
    "osmTags": {
     "landuse": "grass"
@@ -12227,6 +12385,8 @@
      "школа «Средняя школа №29»"
     ],
     "busStops300m": 3,
+    "buildings200m": 14,
+    "greenShare200m": 0,
     "nearestMajorRoadM": 163,
     "hints": []
    },
@@ -12255,7 +12415,7 @@
   },
   {
    "id": "site-osm-1346008058",
-   "name": "Газон у улица Торайгырова",
+   "name": "Газон у улица Торайгырова — 13",
    "osmId": "way/1346008058",
    "osmTags": {
     "landuse": "grass"
@@ -12356,6 +12516,8 @@
      "поликлиника"
     ],
     "busStops300m": 0,
+    "buildings200m": 15,
+    "greenShare200m": 0.095,
     "nearestMajorRoadM": 150,
     "hints": []
    },
@@ -12384,7 +12546,7 @@
   },
   {
    "id": "site-osm-355267644",
-   "name": "Газон у улица Каирбаева",
+   "name": "Газон у улица Каирбаева — 7",
    "osmId": "way/355267644",
    "osmTags": {
     "landuse": "grass"
@@ -12487,6 +12649,8 @@
      "школа «Средняя школа №11»"
     ],
     "busStops300m": 2,
+    "buildings200m": 10,
+    "greenShare200m": 0.296,
     "nearestMajorRoadM": 148,
     "hints": []
    },
@@ -12515,7 +12679,7 @@
   },
   {
    "id": "site-osm-1569993065",
-   "name": "Газон у проспект Нурсултана Назарбаева",
+   "name": "Газон у проспект Нурсултана Назарбаева — 5",
    "osmId": "way/1569993065",
    "osmTags": {
     "landuse": "grass"
@@ -12620,6 +12784,8 @@
      "школа «Средняя школа №29»"
     ],
     "busStops300m": 2,
+    "buildings200m": 11,
+    "greenShare200m": 0,
     "nearestMajorRoadM": 153,
     "hints": []
    },
@@ -12648,7 +12814,7 @@
   },
   {
    "id": "site-osm-355644803",
-   "name": "Газон у улица Бухар жырау",
+   "name": "Газон у улица Бухар жырау — 2",
    "osmId": "way/355644803",
    "osmTags": {
     "landuse": "grass"
@@ -12751,6 +12917,8 @@
      "детсад"
     ],
     "busStops300m": 0,
+    "buildings200m": 34,
+    "greenShare200m": 0.101,
     "nearestMajorRoadM": 135,
     "hints": []
    },
@@ -12779,7 +12947,7 @@
   },
   {
    "id": "site-osm-1546881044",
-   "name": "Газон у улица Академика Бектурова",
+   "name": "Газон у улица Академика Бектурова — 2",
    "osmId": "way/1546881044",
    "osmTags": {
     "landuse": "grass"
@@ -12896,6 +13064,8 @@
      "детсад «Детский сад №93»"
     ],
     "busStops300m": 4,
+    "buildings200m": 33,
+    "greenShare200m": 0.012,
     "nearestMajorRoadM": 77,
     "hints": []
    },
@@ -12924,7 +13094,7 @@
   },
   {
    "id": "site-osm-1546881046",
-   "name": "Газон у улица Академика Бектурова",
+   "name": "Газон у улица Академика Бектурова — 3",
    "osmId": "way/1546881046",
    "osmTags": {
     "landuse": "grass"
@@ -13032,6 +13202,8 @@
      "детсад «Детский сад №93»"
     ],
     "busStops300m": 4,
+    "buildings200m": 28,
+    "greenShare200m": 0.006,
     "nearestMajorRoadM": 145,
     "hints": []
    },
@@ -13060,7 +13232,7 @@
   },
   {
    "id": "site-osm-355268433",
-   "name": "Газон у улица Каирбаева",
+   "name": "Газон у улица Каирбаева — 8",
    "osmId": "way/355268433",
    "osmTags": {
     "landuse": "grass"
@@ -13171,6 +13343,8 @@
      "школа «Средняя школа №11»"
     ],
     "busStops300m": 0,
+    "buildings200m": 15,
+    "greenShare200m": 0.267,
     "nearestMajorRoadM": 100,
     "hints": []
    },
@@ -13199,7 +13373,7 @@
   },
   {
    "id": "site-osm-355268432",
-   "name": "Газон у улица Каирбаева",
+   "name": "Газон у улица Каирбаева — 9",
    "osmId": "way/355268432",
    "osmTags": {
     "landuse": "grass"
@@ -13310,6 +13484,8 @@
      "школа «Средняя школа №11»"
     ],
     "busStops300m": 0,
+    "buildings200m": 15,
+    "greenShare200m": 0.252,
     "nearestMajorRoadM": 95,
     "hints": []
    },
@@ -13338,7 +13514,7 @@
   },
   {
    "id": "site-osm-542083010",
-   "name": "Газон у улица Каирбаева",
+   "name": "Газон у улица Каирбаева — 10",
    "osmId": "way/542083010",
    "osmTags": {
     "landuse": "grass"
@@ -13464,6 +13640,8 @@
      "школа «Средняя школа №11»"
     ],
     "busStops300m": 0,
+    "buildings200m": 7,
+    "greenShare200m": 0.278,
     "nearestMajorRoadM": 8,
     "hints": [
      "Магистральная улица примерно в 8 м — вероятны соль, пыль и газ; нужны устойчивые виды."
@@ -13494,7 +13672,7 @@
   },
   {
    "id": "site-osm-1346008060",
-   "name": "Газон у улица Торайгырова",
+   "name": "Газон у улица Торайгырова — 14",
    "osmId": "way/1346008060",
    "osmTags": {
     "landuse": "grass"
@@ -13606,6 +13784,8 @@
      "детсад"
     ],
     "busStops300m": 0,
+    "buildings200m": 17,
+    "greenShare200m": 0.132,
     "nearestMajorRoadM": 97,
     "hints": []
    },
@@ -13754,6 +13934,8 @@
      "школа «Lingua»"
     ],
     "busStops300m": 3,
+    "buildings200m": 32,
+    "greenShare200m": 0,
     "nearestMajorRoadM": 285,
     "hints": []
    },
@@ -13782,7 +13964,7 @@
   },
   {
    "id": "site-osm-1546881093",
-   "name": "Газон у улица Лермонтова",
+   "name": "Газон у улица Лермонтова — 9",
    "osmId": "way/1546881093",
    "osmTags": {
     "landuse": "grass"
@@ -13903,6 +14085,8 @@
      "поликлиника"
     ],
     "busStops300m": 3,
+    "buildings200m": 28,
+    "greenShare200m": 0.068,
     "nearestMajorRoadM": 38,
     "hints": [
      "Магистральная улица примерно в 38 м — вероятны соль, пыль и газ; нужны устойчивые виды."
@@ -13933,7 +14117,7 @@
   },
   {
    "id": "site-osm-1375007555",
-   "name": "Газон у Каирбаевский спуск",
+   "name": "Газон у Каирбаевский спуск — 4",
    "osmId": "way/1375007555",
    "osmTags": {
     "landuse": "grass"
@@ -14045,6 +14229,8 @@
     "osmTrees150m": 0,
     "socialWithin400m": [],
     "busStops300m": 0,
+    "buildings200m": 7,
+    "greenShare200m": 0.248,
     "nearestMajorRoadM": 154,
     "hints": []
    },
@@ -14073,7 +14259,7 @@
   },
   {
    "id": "site-osm-1546881035",
-   "name": "Газон у улица Машхура Жусупа",
+   "name": "Газон у улица Машхура Жусупа — 2",
    "osmId": "way/1546881035",
    "osmTags": {
     "landuse": "grass"
@@ -14197,6 +14383,8 @@
      "детсад «Детский сад №93»"
     ],
     "busStops300m": 5,
+    "buildings200m": 29,
+    "greenShare200m": 0.032,
     "nearestMajorRoadM": 145,
     "hints": []
    },
@@ -14225,7 +14413,7 @@
   },
   {
    "id": "site-osm-1563058216",
-   "name": "Газон у улица Торайгырова",
+   "name": "Газон у улица Торайгырова — 15",
    "osmId": "way/1563058216",
    "osmTags": {
     "landuse": "grass"
@@ -14327,6 +14515,8 @@
      "школа"
     ],
     "busStops300m": 2,
+    "buildings200m": 29,
+    "greenShare200m": 0.033,
     "nearestMajorRoadM": 275,
     "hints": []
    },
@@ -14355,7 +14545,7 @@
   },
   {
    "id": "site-osm-1546881096",
-   "name": "Газон у улица Лермонтова",
+   "name": "Газон у улица Лермонтова — 10",
    "osmId": "way/1546881096",
    "osmTags": {
     "landuse": "grass"
@@ -14464,6 +14654,8 @@
      "школа"
     ],
     "busStops300m": 3,
+    "buildings200m": 26,
+    "greenShare200m": 0.042,
     "nearestMajorRoadM": 97,
     "hints": []
    },
@@ -14492,7 +14684,7 @@
   },
   {
    "id": "site-osm-1546881023",
-   "name": "Газон у улица Лермонтова",
+   "name": "Газон у улица Лермонтова — 11",
    "osmId": "way/1546881023",
    "osmTags": {
     "landuse": "grass"
@@ -14607,6 +14799,8 @@
      "школа «Средняя школа №11»"
     ],
     "busStops300m": 2,
+    "buildings200m": 26,
+    "greenShare200m": 0.016,
     "nearestMajorRoadM": 130,
     "hints": []
    },
@@ -14635,7 +14829,7 @@
   },
   {
    "id": "site-osm-542083011",
-   "name": "Газон у улица Каирбаева",
+   "name": "Газон у улица Каирбаева — 11",
    "osmId": "way/542083011",
    "osmTags": {
     "landuse": "grass"
@@ -14745,6 +14939,8 @@
      "школа «Средняя школа №11»"
     ],
     "busStops300m": 0,
+    "buildings200m": 10,
+    "greenShare200m": 0.314,
     "nearestMajorRoadM": 53,
     "hints": []
    },
@@ -14773,7 +14969,7 @@
   },
   {
    "id": "site-osm-1563058191",
-   "name": "Газон у улица Олжабай батыра",
+   "name": "Газон у улица Олжабай батыра — 6",
    "osmId": "way/1563058191",
    "osmTags": {
     "landuse": "grass"
@@ -14875,6 +15071,8 @@
      "школа"
     ],
     "busStops300m": 2,
+    "buildings200m": 32,
+    "greenShare200m": 0.029,
     "nearestMajorRoadM": 288,
     "hints": []
    },
@@ -14903,7 +15101,7 @@
   },
   {
    "id": "site-osm-355267628",
-   "name": "Газон у улица Академика Маргулана",
+   "name": "Газон у улица Академика Маргулана — 3",
    "osmId": "way/355267628",
    "osmTags": {
     "landuse": "grass"
@@ -15023,6 +15221,8 @@
      "школа «Средняя школа №11»"
     ],
     "busStops300m": 2,
+    "buildings200m": 9,
+    "greenShare200m": 0.307,
     "nearestMajorRoadM": 145,
     "hints": []
    },
@@ -15051,7 +15251,7 @@
   },
   {
    "id": "site-osm-1546881022",
-   "name": "Газон у улица Лермонтова",
+   "name": "Газон у улица Лермонтова — 12",
    "osmId": "way/1546881022",
    "osmTags": {
     "landuse": "grass"
@@ -15153,6 +15353,8 @@
      "детсад"
     ],
     "busStops300m": 2,
+    "buildings200m": 25,
+    "greenShare200m": 0.008,
     "nearestMajorRoadM": 17,
     "hints": [
      "Магистральная улица примерно в 17 м — вероятны соль, пыль и газ; нужны устойчивые виды."
@@ -15183,7 +15385,7 @@
   },
   {
    "id": "site-osm-355267626",
-   "name": "Газон у улица Академика Маргулана",
+   "name": "Газон у улица Академика Маргулана — 4",
    "osmId": "way/355267626",
    "osmTags": {
     "landuse": "grass"
@@ -15288,6 +15490,8 @@
      "школа «Жас дарын»"
     ],
     "busStops300m": 2,
+    "buildings200m": 13,
+    "greenShare200m": 0.294,
     "nearestMajorRoadM": 139,
     "hints": []
    },
@@ -15316,7 +15520,7 @@
   },
   {
    "id": "site-osm-542089654",
-   "name": "Газон у Каирбаевский спуск",
+   "name": "Газон у Каирбаевский спуск — 5",
    "osmId": "way/542089654",
    "osmTags": {
     "landuse": "grass"
@@ -15416,6 +15620,8 @@
     "osmTrees150m": 0,
     "socialWithin400m": [],
     "busStops300m": 0,
+    "buildings200m": 6,
+    "greenShare200m": 0.1,
     "nearestMajorRoadM": 160,
     "hints": []
    },
@@ -15444,7 +15650,7 @@
   },
   {
    "id": "site-osm-1546881000",
-   "name": "Газон у улица Лермонтова",
+   "name": "Газон у улица Лермонтова — 13",
    "osmId": "way/1546881000",
    "osmTags": {
     "landuse": "grass"
@@ -15567,6 +15773,8 @@
      "школа «Школа-лицей №8 для одарённых детей»"
     ],
     "busStops300m": 0,
+    "buildings200m": 23,
+    "greenShare200m": 0.168,
     "nearestMajorRoadM": 103,
     "hints": []
    },
@@ -15595,7 +15803,7 @@
   },
   {
    "id": "site-osm-1546881045",
-   "name": "Газон у улица Академика Бектурова",
+   "name": "Газон у улица Академика Бектурова — 4",
    "osmId": "way/1546881045",
    "osmTags": {
     "landuse": "grass"
@@ -15703,6 +15911,8 @@
      "детсад «Детский сад №93»"
     ],
     "busStops300m": 4,
+    "buildings200m": 31,
+    "greenShare200m": 0.01,
     "nearestMajorRoadM": 116,
     "hints": []
    },
@@ -15731,7 +15941,7 @@
   },
   {
    "id": "site-osm-1563058215",
-   "name": "Газон у улица Торайгырова",
+   "name": "Газон у улица Торайгырова — 16",
    "osmId": "way/1563058215",
    "osmTags": {
     "landuse": "grass"
@@ -15833,6 +16043,8 @@
      "школа"
     ],
     "busStops300m": 2,
+    "buildings200m": 32,
+    "greenShare200m": 0.029,
     "nearestMajorRoadM": 284,
     "hints": []
    },
@@ -15861,7 +16073,7 @@
   },
   {
    "id": "site-osm-617200834",
-   "name": "Газон у улица Естая",
+   "name": "Газон у улица Естая — 3",
    "osmId": "way/617200834",
    "osmTags": {
     "landuse": "grass"
@@ -15981,6 +16193,8 @@
      "колледж «Павлодарский высший экономический колледж Казпотребсоюза»"
     ],
     "busStops300m": 1,
+    "buildings200m": 15,
+    "greenShare200m": 0.269,
     "nearestMajorRoadM": 33,
     "hints": [
      "Магистральная улица примерно в 33 м — вероятны соль, пыль и газ; нужны устойчивые виды."
@@ -16011,7 +16225,7 @@
   },
   {
    "id": "site-osm-1565718651",
-   "name": "Газон у Гоголя улица",
+   "name": "Газон у Гоголя улица — 2",
    "osmId": "way/1565718651",
    "osmTags": {
     "landuse": "grass"
@@ -16118,6 +16332,8 @@
      "детсад"
     ],
     "busStops300m": 0,
+    "buildings200m": 132,
+    "greenShare200m": 0,
     "nearestMajorRoadM": 245,
     "hints": []
    },
@@ -16146,7 +16362,7 @@
   },
   {
    "id": "site-osm-542089655",
-   "name": "Газон у Каирбаевский спуск",
+   "name": "Газон у Каирбаевский спуск — 6",
    "osmId": "way/542089655",
    "osmTags": {
     "landuse": "grass"
@@ -16246,6 +16462,8 @@
     "osmTrees150m": 0,
     "socialWithin400m": [],
     "busStops300m": 0,
+    "buildings200m": 6,
+    "greenShare200m": 0.109,
     "nearestMajorRoadM": 161,
     "hints": []
    },
@@ -16274,7 +16492,7 @@
   },
   {
    "id": "site-osm-541690275",
-   "name": "Травяной участок у улица Лермонтова",
+   "name": "Травяной участок у улица Лермонтова — 2",
    "osmId": "way/541690275",
    "osmTags": {
     "natural": "grassland"
@@ -16423,6 +16641,8 @@
      "детсад «Детский сад №85»"
     ],
     "busStops300m": 5,
+    "buildings200m": 18,
+    "greenShare200m": 0.126,
     "nearestMajorRoadM": 65,
     "hints": []
    },
@@ -16451,7 +16671,7 @@
   },
   {
    "id": "site-osm-1546881060",
-   "name": "Газон у улица Академика Сатпаева",
+   "name": "Газон у улица Академика Сатпаева — 2",
    "osmId": "way/1546881060",
    "osmTags": {
     "landuse": "grass"
@@ -16555,6 +16775,8 @@
      "школа «Lingua»"
     ],
     "busStops300m": 2,
+    "buildings200m": 32,
+    "greenShare200m": 0,
     "nearestMajorRoadM": 264,
     "hints": []
    },
@@ -16583,7 +16805,7 @@
   },
   {
    "id": "site-osm-355267627",
-   "name": "Газон у улица Академика Маргулана",
+   "name": "Газон у улица Академика Маргулана — 5",
    "osmId": "way/355267627",
    "osmTags": {
     "landuse": "grass"
@@ -16688,6 +16910,8 @@
      "школа «Жас дарын»"
     ],
     "busStops300m": 2,
+    "buildings200m": 14,
+    "greenShare200m": 0.294,
     "nearestMajorRoadM": 129,
     "hints": []
    },
@@ -16716,7 +16940,7 @@
   },
   {
    "id": "site-osm-1565718652",
-   "name": "Газон у Гоголя улица",
+   "name": "Газон у Гоголя улица — 3",
    "osmId": "way/1565718652",
    "osmTags": {
     "landuse": "grass"
@@ -16820,6 +17044,8 @@
      "школа «Средняя общеобразовательная школа-гимназия имени Шапыка Шокина»"
     ],
     "busStops300m": 0,
+    "buildings200m": 81,
+    "greenShare200m": 0,
     "nearestMajorRoadM": 400,
     "hints": []
    },
@@ -16848,7 +17074,7 @@
   },
   {
    "id": "site-osm-1568405606",
-   "name": "Газон у улица Олжабай батыра",
+   "name": "Газон у улица Олжабай батыра — 7",
    "osmId": "way/1568405606",
    "osmTags": {
     "landuse": "grass"
@@ -16953,6 +17179,8 @@
      "поликлиника «Поликлиника №2»"
     ],
     "busStops300m": 0,
+    "buildings200m": 13,
+    "greenShare200m": 0,
     "nearestMajorRoadM": 244,
     "hints": []
    },
