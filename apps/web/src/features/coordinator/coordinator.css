@@ -1,0 +1,154 @@
+/* Раскладка кабинета координатора. Только классы gp-*, глобальных правил нет. */
+.gp-h1 { font-size: 22px; }
+.gp-subhead { margin: 14px 0 6px !important; }
+.gp-caution { color: var(--gp-red); }
+.gp-fieldset { border: 1px solid var(--gp-border); border-radius: 8px; padding: 8px 12px 4px; margin: 0 0 10px; min-width: 0; }
+.gp-fieldset legend { font-weight: 600; padding: 0 4px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.gp-input--short { max-width: 140px; }
+.gp-input--search { max-width: 320px; }
+.gp-quote { margin: 0; padding: 8px 12px; border-left: 3px solid var(--gp-border); background: var(--gp-surface-2); border-radius: 0 8px 8px 0; white-space: pre-wrap; }
+
+/* Экран карты: список | карта | карточка */
+.gp-sites { display: grid; grid-template-columns: minmax(300px, 360px) minmax(0, 1fr); gap: 12px; padding: 12px; height: calc(100dvh - var(--gp-header-h) - 8px); min-height: 520px; }
+.gp-sites--card { grid-template-columns: minmax(280px, 340px) minmax(0, 1fr) minmax(340px, 420px); }
+.gp-sites__list { display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+.gp-sites__filters { padding: 12px; border-bottom: 1px solid var(--gp-border); display: grid; gap: 8px; }
+.gp-filters-grid .gp-field { margin-bottom: 0; }
+.gp-filters-grid { gap: 8px 10px; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); }
+.gp-filters-hints { grid-column: 1 / -1; }
+.gp-sites__count { display: flex; justify-content: space-between; align-items: center; gap: 6px; flex-wrap: wrap; }
+.gp-sites__items { overflow-y: auto; flex: 1; min-height: 0; }
+.gp-sites__list .gp-state { flex: 1; }
+.gp-sites__foot { border-top: 1px solid var(--gp-border); padding: 4px 8px; }
+.gp-sites__map { position: relative; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 8px; }
+.gp-sites__card { overflow-y: auto; min-height: 0; }
+.gp-sites__tabs { display: none; }
+.gp-metrics-compact { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin: 0; }
+.gp-metrics-compact > div { background: var(--gp-surface-2); border-radius: 8px; padding: 4px 6px; text-align: center; }
+.gp-metrics-compact dt { font-size: 11px; color: var(--gp-muted); line-height: 1.2; }
+.gp-metrics-compact dd { margin: 0; font-weight: 700; font-size: 17px; }
+
+/* Карта */
+.gp-map { position: relative; flex: 1; min-height: 320px; display: flex; flex-direction: column; border-radius: var(--gp-radius); overflow: hidden; border: 1px solid var(--gp-border); background: var(--gp-surface); }
+.gp-map__canvas { flex: 1; min-height: 300px; }
+.gp-map__toolbar { position: absolute; z-index: 5; top: 10px; left: 10px; display: flex; gap: 6px; flex-wrap: wrap; background: rgb(245 246 240 / 94%); border-radius: 10px; padding: 4px; box-shadow: var(--gp-shadow); }
+.gp-map__toolbar .gp-btn { min-height: 32px; padding: 4px 10px; }
+.gp-map__alert { position: absolute; z-index: 6; top: 58px; left: 10px; right: 60px; margin: 0; }
+.gp-map .maplibregl-ctrl-attrib { font-size: 11px; }
+.gp-scheme { margin: 0; flex: 1; overflow: auto; padding: 56px 8px 8px; }
+.gp-scheme svg { width: 100%; height: auto; display: block; border: 1px solid var(--gp-border); border-radius: 8px; }
+.gp-scheme g[role='button']:focus-visible { outline: none; }
+.gp-scheme g[role='button']:focus-visible polygon, .gp-scheme g[role='button']:focus-visible circle { stroke: #1f5d99; stroke-width: 4; }
+.gp-legend { position: absolute; z-index: 4; left: 10px; bottom: 34px; max-width: min(320px, calc(100% - 20px)); padding: 6px 10px; font-size: 13px; }
+.gp-legend summary { cursor: pointer; font-weight: 600; }
+.gp-legend ul { list-style: none; padding: 0; margin: 6px 0; display: grid; gap: 3px; }
+.gp-legend li { display: flex; gap: 8px; align-items: center; }
+.gp-legend p { margin: 4px 0 0; }
+.gp-swatch { width: 22px; height: 14px; border-radius: 3px; flex: none; }
+.gp-swatch--survey { background: rgb(216 154 28 / 30%); border: 2px dashed #8a5a00; }
+.gp-swatch--blocked { border: 2px solid #b3261e; background: repeating-linear-gradient(45deg, rgb(179 38 30 / 55%) 0 2px, transparent 2px 6px), repeating-linear-gradient(-45deg, rgb(179 38 30 / 55%) 0 2px, transparent 2px 6px); }
+.gp-swatch--cleared { background: rgb(47 122 62 / 30%); border: 2px solid #2f7a3e; }
+.gp-swatch--selected { border: 3px solid #1f5d99; }
+.gp-swatch--building { background: hsl(35 8% 85%); border: 1px solid #b5aea4; box-shadow: 3px -3px 0 hsl(35 8% 75%); }
+
+/* Карточка участка */
+.gp-sitecard__head { position: sticky; top: 0; background: var(--gp-surface); z-index: 2; display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; padding: 12px 12px 8px 16px; border-bottom: 1px solid var(--gp-border); }
+.gp-sitecard__body { padding: 8px 16px 16px; }
+.gp-sitecard__badges { margin-bottom: 4px; align-items: center; }
+.gp-sitecard__actions { margin: 8px 0; }
+.gp-checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.gp-checks__row { display: flex; justify-content: space-between; gap: 8px; align-items: center; flex-wrap: wrap; }
+.gp-factors { margin: 0; display: grid; gap: 10px; }
+.gp-factor dt { display: flex; justify-content: space-between; gap: 6px; font-size: 14px; }
+.gp-factor dd { margin: 4px 0 0; }
+.gp-taskhist li, .gp-issue { padding: 8px 0; border-bottom: 1px solid var(--gp-border); }
+
+/* Подбор растений */
+.gp-species-list { list-style: none; padding: 0; margin: 10px 0; display: grid; gap: 8px; }
+.gp-species-item { padding: 10px 12px; box-shadow: none; }
+.gp-species-item__head { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; cursor: pointer; margin-bottom: 4px; }
+.gp-species-item__head input { width: 18px; height: 18px; }
+.gp-excluded { margin: 8px 0; }
+.gp-excluded summary { cursor: pointer; font-weight: 600; }
+.gp-selection__foot { position: sticky; bottom: -16px; background: var(--gp-surface); border-top: 1px solid var(--gp-border); padding: 10px 0; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.gp-selection__foot p { flex-basis: 100%; margin: 0; }
+.gp-level { white-space: nowrap; }
+.gp-level--low { color: var(--gp-amber); }
+.gp-level--high { color: var(--gp-green); }
+.gp-species-filters { margin: 12px 0; align-items: center; }
+
+/* Рейтинг */
+.gp-ranking { display: grid; grid-template-columns: minmax(260px, 320px) minmax(0, 1fr); gap: 16px; align-items: start; }
+.gp-ranking__weights { padding: 14px; position: sticky; top: calc(var(--gp-header-h) + 12px); }
+.gp-weight { display: grid; gap: 2px; margin: 10px 0; }
+.gp-weight label { display: flex; justify-content: space-between; font-size: 14px; }
+.gp-weight input { width: 100%; accent-color: var(--gp-green); }
+.gp-rank-group { margin-bottom: 20px; }
+.gp-rank-group > h2 { margin-top: 8px; }
+.gp-rank-list { list-style: none; padding: 0; margin: 8px 0; display: grid; gap: 8px; }
+.gp-rank-item { padding: 10px 12px; box-shadow: none; }
+.gp-rank-item__head { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; }
+.gp-rank-item__pos { width: 26px; height: 26px; border-radius: 50%; background: var(--gp-surface-2); display: grid; place-items: center; font-weight: 700; font-size: 13px; }
+.gp-rank-item__score { margin-left: auto; white-space: nowrap; }
+.gp-rank-item details { margin-top: 6px; }
+.gp-rank-item summary { cursor: pointer; font-size: 13.5px; color: var(--gp-blue); }
+
+/* Задания */
+.gp-tasks { display: grid; grid-template-columns: minmax(300px, 420px) minmax(0, 1fr); gap: 16px; align-items: start; }
+.gp-tasks__unassigned { padding: 12px; border-left: 4px solid var(--gp-amber-line); }
+.gp-tasks__workers { display: grid; gap: 10px; }
+.gp-taskrow { padding: 10px 0; border-bottom: 1px solid var(--gp-border); }
+.gp-taskrow p { margin: 4px 0; }
+.gp-assign { display: grid; grid-template-columns: 1fr 1fr auto; gap: 6px; }
+.gp-worker { padding: 12px; }
+.gp-worker__head { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; align-items: center; }
+.gp-worker__load { display: grid; gap: 4px; margin: 8px 0; }
+.gp-timeline { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.gp-timeline__item { display: grid; grid-template-columns: 96px 1fr; gap: 8px; padding: 6px 8px; border-radius: 8px; background: var(--gp-surface-2); border-left: 3px solid var(--gp-blue); }
+.gp-timeline__item--verified { border-left-color: var(--gp-green); }
+.gp-timeline__item--submitted { border-left-color: var(--gp-amber-line); }
+.gp-timeline__time { font-variant-numeric: tabular-nums; font-size: 13px; color: var(--gp-muted); }
+
+/* Отчёты */
+.gp-reports { display: grid; grid-template-columns: minmax(280px, 360px) minmax(0, 1fr); gap: 16px; align-items: start; }
+.gp-reports__list { padding: 10px 0; }
+.gp-reports__list .gp-segment { margin: 0 10px 8px; }
+.gp-reports__detail { padding: 16px; min-height: 300px; }
+.gp-photos { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; }
+.gp-photo { margin: 0; }
+.gp-photo img { width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--gp-border); display: block; }
+.gp-review { border-top: 1px solid var(--gp-border); margin-top: 12px; padding-top: 4px; }
+
+.gp-login { max-width: 380px; margin: 40px auto; padding: 20px; }
+.gp-dev { display: grid; gap: 10px; }
+.gp-svcs { gap: 8px; flex-wrap: wrap; }
+.gp-svc { margin: 0; white-space: nowrap; }
+.gp-svc--ok span { color: var(--gp-green); }
+.gp-svc--down { color: var(--gp-red); font-weight: 600; }
+.gp-svc--unknown span { color: var(--gp-muted); }
+
+@media (max-width: 1100px) {
+  .gp-sites--card { grid-template-columns: minmax(280px, 340px) minmax(0, 1fr); }
+  .gp-sites--card .gp-sites__card { position: fixed; z-index: 40; right: 0; top: 0; bottom: 0; width: min(440px, 100vw); border-radius: 0; box-shadow: -8px 0 30px rgb(0 0 0 / 18%); }
+}
+@media (max-width: 900px) {
+  .gp-ranking, .gp-tasks, .gp-reports { grid-template-columns: 1fr; }
+  .gp-ranking__weights { position: static; }
+}
+@media (max-width: 760px) {
+  .gp-sites, .gp-sites--card { display: block; height: auto; padding: 8px 8px 64px; }
+  .gp-sites[data-tab='map'] .gp-sites__list { display: none; }
+  .gp-sites[data-tab='list'] .gp-sites__map { display: none; }
+  .gp-sites__list { max-height: none; overflow: visible; }
+  .gp-sites__items { overflow: visible; }
+  .gp-sites__map { height: calc(100dvh - 190px); }
+  .gp-sites--card .gp-sites__card { left: 0; right: 0; width: auto; }
+  .gp-status-row { font-size: 12px; gap: 2px 10px; }
+  .gp-status-row .gp-btn { min-height: 30px; padding: 2px 8px; }
+  .gp-sites__tabs { display: grid; grid-template-columns: 1fr 1fr; position: fixed; z-index: 25; bottom: 0; left: 0; right: 0; background: var(--gp-surface); border-top: 1px solid var(--gp-border); }
+  .gp-sites__tabs button { font: inherit; font-weight: 600; border: 0; background: transparent; padding: 14px; color: var(--gp-text); }
+  .gp-sites__tabs button[aria-selected='true'] { color: var(--gp-green); box-shadow: inset 0 3px 0 var(--gp-green); }
+  .gp-legend { bottom: 30px; }
+  .gp-assign { grid-template-columns: 1fr; }
+  .gp-metrics-compact { grid-template-columns: repeat(2, 1fr); }
+}
