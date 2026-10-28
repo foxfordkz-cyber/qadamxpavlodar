@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="ru">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#254d39"><title>Green Pavlodar — кабинет работника · локальное демо</title><meta name="description" content="Локальный шаблон рабочего кабинета Green Pavlodar. Учебные данные, имитация AI, без подключения к муниципальным системам."><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23254d39'/%3E%3Cpath d='M25 7C12 5 5 13 9 20c7 6 15-2 16-13Z' fill='%23dce8c1'/%3E%3Cpath d='M7 26 21 11' stroke='%23fff' fill='none'/%3E%3C/svg%3E"><link rel="stylesheet" href="/tools/worker-demo/demo/preview.css"></head>
+<body><green-worker></green-worker>
+<details class="demo-tools" id="demo-tools"><summary>⚙ Проверка демо</summary><div class="tools-body">
+  <h2>Тестовый стенд</h2><p>Эта панель имитирует действия координатора и сбои. Она не входит в кабинет работника.</p>
+  <label for="account">Учебный аккаунт</label><select id="account"><option value="demo-worker-1">Алия С. · бригада 01</option><option value="demo-worker-2">Данияр К. · бригада 02</option><option value="demo-empty">Без заданий</option></select>
+  <button id="login" type="button">Открыть сессию</button>
+  <label for="locale">Язык интерфейса</label><select id="locale"><option value="ru">Русский</option><option value="kk-draft">Қазақша · непроверенный черновик</option></select>
+  <fieldset><legend>Сбои тестового источника</legend>
+    <label><input type="checkbox" data-fault="offline"> Нет связи с источником</label>
+    <label><input type="checkbox" data-fault="loseResponse"> Потерять ответ после сохранения</label>
+    <label><input type="checkbox" data-fault="failUpload"> Ошибка загрузки фото</label>
+    <label><input type="checkbox" data-fault="aiTimeout"> Таймаут AI (6 секунд)</label>
+    <label><input type="checkbox" data-fault="failStart"> Ошибка начала задания</label>
+  </fieldset>
+  <label for="review-task">Отчёт для проверки (роль координатора)</label><select id="review-task"></select>
+  <label for="review-comment">Комментарий координатора</label><textarea id="review-comment">Добавьте общий снимок: результат работы должен быть виден целиком.</textarea>
+  <div class="tool-row"><button id="return-report" type="button">Вернуть выбранный отчёт</button><button id="accept-report" type="button">Принять выбранный отчёт</button></div>
+  <output id="demo-stats"></output><div id="demo-notifications"></div><p id="tool-message" role="status"></p>
+  <hr><p>Восстановление затрагивает только учебный набор этой версии и его черновики. Чужие ключи хранилища не удаляются.</p><button id="reset-demo" type="button">Восстановить демо-набор</button>
+</div></details><script type="module" src="/tools/worker-demo/demo/preview.mjs"></script></body></html>

@@ -1,0 +1,8 @@
+{
+  "name": "green-pavlodar-worker-template",
+  "private": true,
+  "type": "module",
+  "version": "0.2.0",
+  "scripts": { "dev": "node scripts/preview.mjs", "test": "node --test tests/core.test.mjs tests/v2.test.mjs" },
+  "description": "Локальные кабинеты бригадира и работника по предложению контракта V2. Без публикации."
+}
