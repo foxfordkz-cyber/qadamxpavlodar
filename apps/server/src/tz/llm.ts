@@ -37,11 +37,14 @@ const SYSTEM = `Ты — ассистент специалиста акимат�
 Правила:
 1. Отвечай по-русски, коротко: 3–8 предложений или короткий список.
 2. Любое число, площадь, цену, процент, балл бери ТОЛЬКО из результатов функций. Сам ничего не считай и не оценивай. Нужна цифра — вызови функцию.
+   Факторы приоритета и пригодность видов — баллы 0–100, а не проценты; проценты — только приживаемость.
+   Не добавляй фактов, которых нет в результатах функций (какие именно объекты рядом, причины, названия).
 3. Если данных нет или функция вернула ошибку — прямо скажи, каких данных не хватает. Не придумывай.
 4. Все сметы, приживаемость и экоэффект — оценки по правилам и демо-расценкам; так и говори.
 5. Называй зоны по названию из результатов функций. Если пользователь говорит «эта зона», а выбранной зоны нет — попроси выбрать её на карте или найди через search_zones.
 6. На вопросы «почему», «откуда цифра», «что за вид» используй search_knowledge и называй источник.
-7. Не давай юридических разрешений: посадку согласует специалист после проверок участка.`;
+7. Не давай юридических разрешений: посадку согласует специалист после проверок участка.
+8. Пиши простым текстом: без Markdown, таблиц и звёздочек; список — каждый пункт с новой строки, начиная с «• ». id зон не пиши — только названия.`;
 
 const ZONE = { type: 'string', description: 'id зоны, например site-osm-1546881092' };
 const tool = (name: string, description: string, properties: Json, required: string[] = []) =>
@@ -96,13 +99,13 @@ export function createTools(s: Store) {
       const r = analyze(site, ref, opts);
       return {
         zone: zoneOf(site.id, ctx), options: r.options, areaM2: r.facts.areaM2, purpose: r.facts.purposeLabel, soil: r.facts.soil,
-        topSpecies: r.ranked.filter((x: Json) => !x.excludedBy).slice(0, 6).map((x: Json) => ({ id: x.speciesId, name: names.get(x.speciesId), score: x.score, reasons: x.reasons.slice(0, 2) })),
-        excludedSpecies: r.ranked.filter((x: Json) => x.excludedBy).slice(0, 5).map((x: Json) => ({ id: x.speciesId, name: names.get(x.speciesId), why: x.excludedBy })),
+        topSpecies: r.ranked.filter((x: Json) => !x.excludedBy).slice(0, 5).map((x: Json) => ({ id: x.speciesId, name: names.get(x.speciesId), score: x.score, reason: x.reasons[0] ?? null })),
+        excludedSpecies: r.ranked.filter((x: Json) => x.excludedBy).slice(0, 3).map((x: Json) => ({ name: names.get(x.speciesId), why: x.excludedBy })),
         scheme: r.scheme.map((x: Json) => ({ id: x.speciesId, name: names.get(x.speciesId), tier: x.tier, quantity: x.quantity })),
         cost: { totalKzt: r.cost.total, perM2Kzt: r.cost.perM2, items: r.cost.items.map((x: Json) => ({ label: x.label, amountKzt: x.amount, dataClass: x.dataClass })) },
         survivalPercent: r.survivalAvg, care: { visitsPerYear: r.care.reduce((n: number, x: Json) => n + x.visits, 0), warnings: r.careWarnings },
         effect: r.effect.map((x: Json) => ({ years: x.years, co2TonsPerYear: x.co2t, coolingC: x.coolingC, rainM3: x.rainM3 })),
-        costPerTonCo2Kzt: r.costPerTonCo2, missingData: r.missing, note: 'Оценки по правилам; расценки — демо, пока администратор не заменит их в справочнике.',
+        costPerTonCo2Kzt: r.costPerTonCo2, missingData: r.missing.slice(0, 4), note: 'Оценки по правилам; расценки — демо, пока администратор не заменит их в справочнике.',
       };
     },
     compare_variants: (a, ctx) => {
@@ -111,7 +114,7 @@ export function createTools(s: Store) {
     },
     top_priorities: (a, ctx) => {
       const items = priorities(candidates(s), reference(s), a.weights ?? web.DEFAULT_PRIORITY_WEIGHTS);
-      return { weights: a.weights ?? web.DEFAULT_PRIORITY_WEIGHTS, items: items.slice(0, Math.min(20, Number(a.limit ?? 5))).map((x) => ({ zone: zoneOf(x.siteId, ctx), index: x.index, explanation: x.explanation, costKzt: Math.round(x.cost), co2t20: x.co2t20 })),
+      return { items: items.slice(0, Math.min(20, Number(a.limit ?? 5))).map((x) => ({ zone: zoneOf(x.siteId, ctx), index: x.index, explanation: x.explanation.slice(0, 2), costKzt: Math.round(x.cost), co2t20: x.co2t20 })),
         note: 'Плотность населения заменена плотностью застройки: данных о населении нет.' };
     },
     budget_roadmap: (a, ctx) => {
@@ -119,14 +122,14 @@ export function createTools(s: Store) {
       if (!Number.isFinite(budget) || budget <= 0) return { error: 'budgetKzt должен быть положительным числом в тенге' };
       const rm = web.roadmap(priorities(candidates(s), reference(s), web.DEFAULT_PRIORITY_WEIGHTS), budget);
       return { budgetKzt: budget, zonesCount: rm.chosen.length, spentKzt: Math.round(rm.spent), leftKzt: Math.round(rm.left), co2t20: rm.co2t20, method: rm.method,
-        zones: rm.chosen.slice(0, 10).map((x: Json) => ({ zone: zoneOf(x.siteId, ctx), index: x.index, costKzt: Math.round(x.cost) })) };
+        zones: rm.chosen.slice(0, 8).map((x: Json) => ({ zone: zoneOf(x.siteId, ctx), index: x.index, costKzt: Math.round(x.cost) })) };
     },
     find_problems: (a, ctx) => {
       const { problems, notDetectable } = web.detectProblems(candidates(s));
       const list = problems.filter((p) => (!a.type || p.type === a.type) && (!a.severity || p.severity === a.severity));
       const counts = Object.fromEntries(['deficit', 'soil', 'heat', 'unprotected'].map((t) => [t, problems.filter((p) => p.type === t).length]));
       return { total: problems.length, countsByType: counts, matched: list.length, notDetectable,
-        items: list.slice(0, Math.min(20, Number(a.limit ?? 8))).map((p) => ({ zone: zoneOf(p.siteId, ctx), type: p.type, severity: p.severity, cause: p.cause, action: p.action, dataNote: p.dataNote })) };
+        items: list.slice(0, Math.min(20, Number(a.limit ?? 6))).map((p) => ({ zone: zoneOf(p.siteId, ctx), type: p.type, severity: p.severity, cause: p.cause, action: p.action })) };
     },
     search_knowledge: (a, ctx) => {
       const keys = stems(String(a.query ?? ''));
@@ -137,7 +140,7 @@ export function createTools(s: Store) {
       ];
       const hits = docs.map((d) => ({ d, n: score(norm(`${d.title} ${d.text}`), keys) * 2 + score(norm(d.title), keys) })).filter((x) => x.n > 0).sort((x, y) => y.n - x.n).slice(0, Math.min(8, Number(a.limit ?? 5)));
       for (const { d } of hits) d.sourceIds.forEach((id) => ctx.evidence.add(id));
-      return { results: hits.map(({ d }) => ({ id: d.id, kind: d.kind, title: d.title, text: clip(d.text), sourceIds: d.sourceIds })), note: hits.length ? undefined : 'В справочниках ничего не нашлось.' };
+      return { results: hits.map(({ d }) => ({ id: d.id, kind: d.kind, title: d.title, text: clip(d.text, 220), sourceIds: d.sourceIds })), note: hits.length ? undefined : 'В справочниках ничего не нашлось.' };
     },
   };
   return (name: string, args: Json, ctx: Ctx): Json => {
