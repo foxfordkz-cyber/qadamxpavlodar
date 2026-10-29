@@ -31,10 +31,16 @@ export const getLang = () => lang;
 // Static legacy labels can also come from pure analytics dictionaries shared with the server.
 // Keep those data contracts in Russian; translate only their display in the specialist UI.
 const textKeys = new Map(Object.entries(ru).map(([key, value]) => [value as string, key as Key]));
-export function tr(text: string): string { const key = textKeys.get(text); return key ? t(key) : text; }
+export function trFor(language: Lang, text: string): string { const key = textKeys.get(text); return key ? tFor(language, key) : text; }
+export function tr(text: string): string { return trFor(lang, text); }
 
 /** t('key', {n: 3}) — подстановка {n}. Отсутствующий казахский ключ падает на русский. */
 export function t(key: Key, params?: Record<string, string | number>): string {
-  const s = (lang === 'kk' ? kk[key] : undefined) ?? ru[key] ?? key;
+  return tFor(lang, key, params);
+}
+
+/** A document can use a different language without changing the UI or a concurrent export. */
+export function tFor(language: Lang, key: Key, params?: Record<string, string | number>): string {
+  const s = (language === 'kk' ? kk[key] : undefined) ?? ru[key] ?? key;
   return params ? s.replace(/\{(\w+)\}/g, (_, k) => String(params[k] ?? '')) : s;
 }

@@ -1,7 +1,7 @@
 import { t, type Key } from '../../../shared/i18n';
 import type { HighlightTitleKey } from '../sites/highlightTitle';
 import { useEffect, useRef, useState } from 'react';
-import { useData } from '../../../shared/api/DataProvider';
+import { useData, useResource } from '../../../shared/api/DataProvider';
 import { ApiError } from '../../../shared/api/transport';
 import type { AssistantReply } from '../../../shared/analytics/assistant';
 import { MethodLine, MethodTag } from '../../../shared/ui/components';
@@ -56,6 +56,9 @@ export function AssistantPanel() {
   const route = useRoute();
   const siteId = route.path === '/map' ? route.params.get('site') : null;
   const [open, setOpen] = useState(false);
+  const zone = useResource(() => open && siteId ? api.site(siteId) : Promise.resolve(null), [open, siteId]);
+  // useResource retains old data while loading: never label a new selection with the previous name.
+  const zoneName = zone.data?.id === siteId ? zone.data?.name : null;
   const [msgs, setMsgs] = useState<Msg[]>([]);
   const [q, setQ] = useState('');
   const [busy, setBusy] = useState(false);
@@ -96,7 +99,7 @@ export function AssistantPanel() {
     <aside className="gp-assist" aria-label={t('assistant.label')}>
       <div className="gp-assist__head">
         <strong>{t('assistant.title')}</strong>
-        <span className="gp-small gp-muted">{siteId ? t('assistant.zone', { id: siteId }) : t('assistant.noZone')}</span>
+        <span className="gp-small gp-muted gp-assist__zone">{siteId ? t('assistant.zone', { name: zoneName || t(zone.loading ? 'state.loading' : 'assistant.zoneUnavailable') }) : t('assistant.noZone')}</span>
         <button className="gp-icon-btn" onClick={() => setOpen(false)} aria-label={t('assistant.close')}>✕</button>
       </div>
       <MethodLine method={[...msgs].reverse().find((m) => m.reply)?.reply?.method ?? 'rules'} />

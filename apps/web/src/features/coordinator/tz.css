@@ -73,6 +73,8 @@
 .gp-assist__head { display: flex; align-items: center; gap: 8px; }
 .gp-assist__head strong { font-family: var(--gp-display); text-transform: uppercase; font-size: 18px; font-weight: 600; }
 .gp-assist__head .gp-icon-btn { margin-left: auto; }
+.gp-assist__zone { min-width: 0; flex: 1; overflow-wrap: anywhere; }
+.gp-assist__head > strong, .gp-assist__head > .gp-icon-btn { flex-shrink: 0; }
 .gp-assist__list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding: 6px 0; }
 .gp-assist__hello { display: flex; flex-wrap: wrap; gap: 4px; }
 .gp-assist__msg { padding: 8px 10px; font-size: 14px; max-width: 92%; }

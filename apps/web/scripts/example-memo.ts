@@ -6,6 +6,10 @@ import { analyzeZone } from '../src/shared/analytics/plan';
 import { DEFAULT_RATES, ratesMap } from '../src/shared/analytics/rates';
 import { buildMemoDocx } from '../src/shared/export/memo';
 const site = osm.sites[0] as unknown as CandidateSite;
-const bytes = buildMemoDocx({ zones: [{ site, analysis: analyzeZone(site, species, ratesMap(DEFAULT_RATES)) }], species, evidence: [], rates: DEFAULT_RATES, source: 'mock', generatedAt: new Date().toISOString() });
-writeFileSync('dist-scripts/example-memo.docx', bytes);
-console.log(`dist-scripts/example-memo.docx: ${bytes.length} bytes`);
+const input = { zones: [{ site, analysis: analyzeZone(site, species, ratesMap(DEFAULT_RATES)) }], species, evidence: [], rates: DEFAULT_RATES, source: 'mock' as const, generatedAt: new Date().toISOString() };
+for (const language of ['ru', 'kk'] as const) {
+  const bytes = buildMemoDocx(input, language);
+  const path = `dist-scripts/example-memo-${language}.docx`;
+  writeFileSync(path, bytes);
+  console.log(`${path}: ${bytes.length} bytes`);
+}
