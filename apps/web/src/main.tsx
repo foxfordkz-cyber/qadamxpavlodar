@@ -5,8 +5,8 @@ import { createRoot } from 'react-dom/client';
 import { DataProvider } from './shared/api/DataProvider';
 import { CoordinatorApp } from './features/coordinator/CoordinatorApp';
 
-// Кабинет работника (участник 4) подключается здесь же отдельным маршрутом/ролью,
-// используя DataProvider и shared/ui.
+// Кабинет бригадира и работника открывается внутри Shell на маршруте #/worker
+// для этих ролей (features/worker/WorkerPage.tsx).
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <DataProvider>

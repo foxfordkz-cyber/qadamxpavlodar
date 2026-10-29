@@ -1,5 +1,5 @@
 GREEN PAVLODAR / ИНТЕГРАЦИЯ УЧАСТНИКА 4 / V2
-Основание: неизменённые docs/worker/team-input/05-SHARED-CONTRACT.txt и 04-WORKER-AND-DEMO.txt.
+Основание: исходное предложение docs/worker/team-input и фактические строгие схемы origin/server/srv-03-06 (1fa8e2f), сверка 29.10.2026.
 Это модуль для общего приложения. Сервер, auth, shared UI и packages/contracts принадлежат другим участникам.
 
 ФАЙЛЫ И ПОДКЛЮЧЕНИЕ
@@ -7,22 +7,23 @@ GREEN PAVLODAR / ИНТЕГРАЦИЯ УЧАСТНИКА 4 / V2
 worker.mjs регистрирует <green-worker>. Его configure принимает gateway, user, scope, date, demo, locale, embedded.
 embedded:true скрывает демонстрационную боковую панель и верхнюю шапку, чтобы не дублировать общую оболочку.
 Общие цвета передаются CSS-переменными --gp-ink, --gp-muted, --gp-green, --gp-paper, --gp-line и другими --gp-*.
-React-обёртка: WorkerCabinet.tsx. Проверка TypeScript и общая сборка codex/coordinator прошли 28.10.2026; встраивание в маршрут и браузерный сценарий ещё не проверены. Зависимости общей сборки не изменены, пакет демо расположен отдельно в tools/worker-demo/package.json.
+React-обёртка: WorkerCabinet.tsx. Маршрут #/worker: WorkerPage.tsx, его показывает Shell для ролей бригадира и работника. В режиме mock кабинет берёт данные из учебного источника tools/worker-demo (demo-gateway.mjs, загружается лениво), в режиме api — из маршрутов V2 через createV2Transport. Зависимости общей сборки не изменены, пакет демо расположен отдельно в tools/worker-demo/package.json.
 Пример подключения с настоящим транспортом: docs/worker/integration-example.mjs.
 Настоящий вход и выход выполняет общий сервер. worker-logout сообщает оболочке, что нужно завершить общую сессию.
-После смены пользователя configure вызывается заново. scope обязан различать организацию, демо и production.
+После смены пользователя configure вызывается заново. organizationId необязателен; по умолчанию pavlodar-demo. scope различает demo/production, черновики дополнительно разделены userId.
 
 ОДИН СЛОЙ ДАННЫХ
 contract-v2.mjs содержит createContractGateway и createV2Transport.
 createV2Transport отправляет fetch в /api/v1 с same-origin cookie, принимает {data,meta?}, преобразует {error} в исключение с status/code/requestId.
 Idempotency-Key передаётся заголовком. Изменяемые сущности передают expectedVersion.
+POST/PUT/PATCH получают X-CSRF-Token из login/me. При 403 CSRF_REQUIRED transport обновляет /auth/me и повторяет запрос ровно один раз с прежним телом и ключом; прочие 403 не повторяются.
 Локальный tools/worker-demo/demo/v2-source.mjs реализует тестовый транспорт на этой же границе. Это не реализация сервера участника 3.
 TaskStatus строго draft/assigned/in_progress/submitted/verified. reviewStatus строго pending/accepted/changes_requested.
 UI section current/submitted/confirmed — группа списка, не новый серверный статус.
 После возврата submitted -> assigned, нужно повторно начать исправление. Подтверждённая работа не начинается заново.
 
 ИСПОЛЬЗУЕМЫЕ МАРШРУТЫ V2
-GET /tasks?date=YYYY-MM-DD, GET /tasks/:id
+GET /tasks?limit=200&offset=0 (дальнейшие страницы по meta), GET /tasks/:id. Дата фильтруется локально по scheduledStart в UTC+5.
 GET /plants/:id, GET /sites/:id, GET /sites/:id/context
 GET /crews, GET /workers, GET /resources
 GET /designs/:id, GET /plant-catalog
@@ -36,22 +37,22 @@ POST /tasks/:id/issues
 POST /observations/interpret
 В тестовой панели: POST /reports/:id/review. В production этот экран принадлежит участнику 2.
 
-ТЕЛА ЗАПРОСОВ, КОТОРЫЕ НУЖНО СОГЛАСОВАТЬ
-V2 определяет сущности и маршруты, но не все формы запросов. Следующие детали — рабочие допущения локального адаптера, а не молчаливое изменение общего контракта:
-1. listTasks: фильтр date, listReports: фильтр taskId. Списки пока ожидают массив в data без пагинации.
-2. GET /workers для бригадира возвращает User с profile:WorkerProfile и crewIds. В общем контракте точная форма ответа не закреплена.
-3. assign-workers: {workerIds,responsibleUserId,scheduledStart,scheduledEnd,expectedVersion}. Поле ответственного не перечислено в Task V2 и требует согласования владельца контракта.
-4. uploads: multipart file + taskId, ответ data:{id,name}. Поле multipart и механизм выдачи защищённых ссылок подтвердит участник 3.
-5. report-draft: {id,taskId,version,contributions:[]}. Contribution содержит id,authorId,photoIds,note,actualPlantingItems,createdAt.
-6. contributions передают expectedVersion черновика. Итог передаёт expectedVersion задачи и expectedDraftVersion общего черновика, а также foremanChecked:true. Сервер фиксирует foremanCheckedAt/By самостоятельно.
-7. confirmedObservation включает ObservationDraft и provenance с исходным текстом, первоначальным предложением, методом, временем и подтверждённой версией. Точный формат происхождения согласовать с участником 1.
-8. revisionOf связывает исправление с возвращённым отчётом. В итоговой серверной схеме возможен другой согласованный способ связи.
-9. Показ исторической согласованной версии проекта: пока GET /designs/:id должен вернуть нужную revision. Если вернулась другая, UI блокирует посадку. Адрес получения исторической версии уточнить у сервера.
-10. Чтение истории фото: нужен защищённый URL для каждого photoId. Демо может хранить data URL только для файлов меньше 600 КБ. Транспорт production не должен отдавать произвольные публичные ссылки.
+ФАКТИЧЕСКИЙ КОНТРАКТ СЕРВЕРА
+1. Сессия: {data:{user,csrfToken}}; organizationId отсутствует. Shell понимает и эту форму, и прямой Me из mock.
+2. Все списки: {data,meta:{limit,offset,total}}, максимум limit=200. Адаптер догружает страницы и не передаёт неподдерживаемый tasks?date.
+3. Состав бригады берётся из crews.members; бригадир также является участником. API assign-workers принимает только {expectedVersion,workerIds}; расписание и ответственный назначаются координатором.
+4. uploads: multipart file + taskId, в ответе contentUrl. GET /uploads/:id возвращает image/webp по cookie сессии. Это источник img, а не JSON. Максимальный файл — 5 MiB.
+5. Вклад: {expectedVersion,expectedDraftVersion,note,photoIds,location,confirmedObservation}. expectedVersion — задача; expectedDraftVersion — черновик, включая 0. Не более 10 фото. Ответ — черновик с taskId/version, без обязательного id.
+6. Итог: {expectedVersion,note,photoIds,actualWorkerIds,actualPlantingItems,location,confirmedObservation}; групповой итог также expectedDraftVersion. actualWorkerIds содержит хотя бы одного участника, фото не более 20. Ответ — {data:{report,task}}.
+7. Проблема: {expectedVersion,text,confirmedObservation}; text составляется из причины и заметки. Поля фото этот маршрут не принимает.
+8. Подтверждённое наблюдение: {category,extractedFacts,proposedAction:null|action,evidenceIds,missingData,confirmed:true}. Неподтверждённый анализ не отправляется. Интерпретация заметки принимает {taskId,text} и Idempotency-Key.
+9. revisionOf, deviceTime, foremanChecked и contributorIds не отправляются в теле отчёта. Сервер фиксирует происхождение и связь исправления самостоятельно; capturedAt допускается внутри location.
+10. GET /designs/:id возвращает {id,revisions}; выбирается только approvedDesignId + approvedDesignVersion со статусом approved. При отсутствии этой ревизии начало/отчёт посадки блокируются. Работник не вызывает запрещённый plant-catalog; бригадир видит только позиции выбранной ревизии.
+11. Фактическая посадка содержит plantingItemId,catalogItemId,quantity>0,geometry Point/MultiPoint и необязательный note. Число фактических точек равно quantity. Вклад работника не содержит фактические количества.
 
 ОТЧЁТЫ И ВЕРСИИ
 Одиночная задача: назначенный исполнитель загружает фото и отправляет итог.
-Совместная задача: участник загружает собственное фото, заметку и количества, затем получает «Материалы добавлены». Статус задачи остаётся in_progress.
+Совместная задача: участник загружает собственное фото и заметку, затем получает «Материалы добавлены». Статус задачи остаётся in_progress.
 Бригадир проверяет общий черновик, отмечает фактических участников и вручную задаёт итоговые количества. Количества материалов не суммируются автоматически, чтобы два человека не удвоили один объект.
 Итог получает pending, задача submitted. Только coordinator принимает итог. Предварительная проверка бригадира не заменяет приёмку.
 Неполные количества можно зафиксировать в отчёте, но приёмка полной посадки должна отказать и потребовать исправления/согласования.
@@ -71,5 +72,5 @@ IndexedDB хранит Blob и ключ под [scope,userId,taskId,kind]. Эт�
 Участник 1 подтверждает общий контракт и React/Vite-каркас.
 Участник 3 подтверждает перечисленные тела запросов, auth, ссылки фото, сохраняемые версии и реальные ограничения.
 Участник 2 предоставляет общую оболочку/стили и отображение согласованной схемы, подключает обновления карты после приёмки.
-Участник 4 копирует только каталог feature, согласует адаптер, выполняет tools/worker-demo/qa/acceptance.txt на реальном API и телефоне.
+Изменения интегрируются Git-коммитами/PR без копирования папок между ветками. Приёмка: tools/worker-demo/qa/acceptance.txt на реальном API и телефоне.
 Базу, административную панель, планировщик и редактор проекта этот модуль не дублирует.
