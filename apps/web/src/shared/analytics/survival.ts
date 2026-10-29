@@ -1,5 +1,5 @@
 import raw from './survivalModel.json';
-import { probability, sigmoid } from './logistic';
+import { calibrationRange, probability, sigmoid } from './logistic';
 import { SURVIVAL_FEATURES, survivalFeatures, type SurvivalConditions } from './survivalFeatures';
 import type { Species } from '../api/types';
 import { ru } from '../i18n/ru';
@@ -23,7 +23,10 @@ export function predictSurvival(sp: Species, conditions: SurvivalConditions) {
     if (Math.abs(pp) >= 0.05) risks.push({ label: ru[`survival.feature.${SURVIVAL_FEATURES[i]}` as keyof typeof ru] ?? SURVIVAL_FEATURES[i], pp: Math.round(pp * 10) / 10 });
     z = next;
   }
-  const spread = raw.residualRmse * 100;
+  const range = calibrationRange(p, raw.calibration);
+  const warnings: string[] = [];
+  if (conditions.salinity === null) warnings.push(ru['survival.unknownSalinity']);
+  if (!range.n) warnings.push(ru['survival.emptyBin']);
   const y1 = Math.round(p * 100);
-  return { y1, low: Math.max(0, Math.round(p * 100 - spread)), high: Math.min(100, Math.round(p * 100 + spread)), risks };
+  return { y1, low: Math.floor(range.low * 100), high: Math.ceil(range.high * 100), risks, warnings };
 }

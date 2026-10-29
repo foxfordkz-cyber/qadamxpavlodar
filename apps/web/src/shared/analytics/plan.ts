@@ -33,7 +33,7 @@ export interface ScoredSpecies {
 
 export interface SchemeRow { speciesId: string; tier: 'tree' | 'shrub' | 'flower'; quantity: number; locked: boolean; replacedFrom?: string }
 export interface CostItem { key: string; label: string; amount: number; formula: string; dataClass: 'demo' | 'estimate' }
-export interface SurvivalRow { speciesId: string; y1: number; y2: number; y3: number; low: number; high: number; risks: { label: string; pp: number }[] }
+export interface SurvivalRow { speciesId: string; y1: number; y2: number; y3: number; low: number; high: number; risks: { label: string; pp: number }[]; warnings?: string[] }
 export interface Measure { label: string; effect: string; apply: Partial<PlanOptions> | { replace: [string, string] } }
 export interface CareRow { month: number; operation: string; detail: string; visits: number; taskAction?: 'inspect' | 'water' | 'weed'; waterLitersPerVisit?: number | null }
 export interface EffectRow { years: 5 | 10 | 20; co2t: number; o2t: number; rainM3: number; coolingC: number; canopyM2: number; dustKg: number | null }

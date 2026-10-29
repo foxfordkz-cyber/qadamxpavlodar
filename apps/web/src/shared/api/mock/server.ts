@@ -12,7 +12,7 @@ import { detectProblems, priorities, roadmap, DEFAULT_PRIORITY_WEIGHTS, type Pri
 import { ratesMap } from '../../analytics/rates';
 import { answer } from '../../analytics/assistant';
 import { soilFor } from '../../analytics/zone';
-import { catalog, osmMeta, seed, type MockDb } from './fixtures';
+import { addCareDemoPlants, catalog, osmMeta, seed, type MockDb } from './fixtures';
 import { CHECKS, rankSites, selectPlants } from './rules';
 import { demoPhoto } from './photo';
 import { previewImport, type ImportFeature } from './imports';
@@ -49,7 +49,13 @@ let db: MockDb = load();
 function load(): MockDb {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw) as MockDb;
+    if (raw) {
+      const saved = JSON.parse(raw) as MockDb;
+      if (addCareDemoPlants(saved)) {
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(saved)); } catch { /* keep migrated data in memory */ }
+      }
+      return saved;
+    }
   } catch {
     /* хранилище недоступно — работаем в памяти */
   }

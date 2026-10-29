@@ -14,19 +14,22 @@ export interface SurvivalConditions {
 // Stable order is part of the persisted model contract. No species ID/name is a feature.
 export const SURVIVAL_FEATURES = [
   'intercept', 'shrub', 'flower', 'frostMedium', 'frostLow', 'droughtVulnerability',
-  'saltVulnerability', 'salinity', 'saltDeficit', 'rareWatering', 'noWatering',
+  'saltVulnerability', 'saltDeficit', 'rareWatering', 'noWatering',
   'droughtRare', 'droughtNone', 'waterUnknown', 'unknownWaterVulnerable',
   'nearRoadSensitive', 'roadUnknown', 'alkalineSensitive', 'phUnknown',
   'largeTree', 'soilImproved', 'saltWithoutWater', 'salinityWaterStress', 'salinityUnknown',
 ] as const;
 export type SurvivalFeature = typeof SURVIVAL_FEATURES[number];
+// These features are nondecreasing in salinity. Nonpositive coefficients guarantee monotonic risk.
+export const SALT_RISK_FEATURES: SurvivalFeature[] = ['saltDeficit', 'saltWithoutWater', 'salinityWaterStress'];
 const level = { low: 0, medium: 1, high: 2 };
 const salinity = { none: 0, low: 1, medium: 2, high: 3 };
 
 export function survivalFeatures(sp: Species, c: SurvivalConditions): number[] {
   const drought = (2 - level[sp.droughtTolerance]) / 2;
   const salt = (2 - level[sp.saltTolerance]) / 2;
-  const sal = c.salinity === null ? 0 : salinity[c.salinity];
+  // Unknown is a missing measurement, not a nonsaline sample. The indicator is trained separately.
+  const sal = c.salinity === null ? salinity.medium : salinity[c.salinity];
   const deficit = Math.max(0, sal - (c.improveSoil ? 1 : 0) - [0, 2, 3][level[sp.saltTolerance]]) / 3;
   const rare = Number(c.watering === 'rare'), none = Number(c.watering === 'none');
   const unknownWater = Number(!c.waterKnown);
@@ -34,7 +37,7 @@ export function survivalFeatures(sp: Species, c: SurvivalConditions): number[] {
     intercept: 1, shrub: Number(sp.form === 'shrub'), flower: Number(sp.form === 'flower'),
     frostMedium: Number(sp.frostHardiness === 'medium'),
     frostLow: Number(sp.frostHardiness === 'low' && sp.form !== 'flower'),
-    droughtVulnerability: drought, saltVulnerability: salt, salinity: sal / 3,
+    droughtVulnerability: drought, saltVulnerability: salt,
     saltDeficit: deficit, rareWatering: rare, noWatering: none,
     droughtRare: drought * rare, droughtNone: drought * none,
     waterUnknown: unknownWater, unknownWaterVulnerable: unknownWater * drought,

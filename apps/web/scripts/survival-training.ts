@@ -1,5 +1,5 @@
 import type { Species } from '../src/shared/api/types';
-import { survivalFeatures, type SurvivalConditions } from '../src/shared/analytics/survivalFeatures';
+import { SALT_RISK_FEATURES, SURVIVAL_FEATURES, survivalFeatures, type SurvivalConditions } from '../src/shared/analytics/survivalFeatures';
 import { evaluate, fitLogistic, type TrainingRow } from '../src/shared/analytics/logistic';
 
 export const SEED = 20261029;
@@ -19,14 +19,18 @@ export interface SyntheticRow extends TrainingRow { conditions: SurvivalConditio
 export function syntheticRows(catalog: Species[], base: number, bases = new Map<string, number>(), seed = SEED): SyntheticRow[] {
   const rng = random(seed), choose = <T,>(xs: readonly T[]) => xs[Math.floor(rng() * xs.length)];
   const rows: SyntheticRow[] = [];
-  for (const sp of [...catalog].sort((a, b) => a.id.localeCompare(b.id))) {
+  for (const template of [...catalog].sort((a, b) => a.id.localeCompare(b.id))) {
     for (let i = 0; i < 240; i++) {
+      // Synthetic stress augmentation, not a change to botanical catalog facts.
+      const sp: Species = i % 12 === 0 && template.form !== 'flower' ? { ...template, frostHardiness: 'low' } : template;
+      const actualSalinity = choose(['none', 'low', 'medium', 'high'] as const);
       const c: SurvivalConditions = {
-        salinity: choose(['low', 'medium', 'high'] as const), ph: rng() < 0.08 ? null : 6.2 + rng() * 2.8,
+        salinity: rng() < 0.08 ? null : actualSalinity, ph: rng() < 0.08 ? null : 6.2 + rng() * 2.8,
         waterKnown: rng() < 0.5, watering: choose(['regular', 'rare', 'none'] as const),
         roadM: rng() < 0.1 ? null : rng() * 160, variant: choose(['econom', 'optimal', 'max'] as const), improveSoil: rng() < 0.5,
       };
-      const sal = { none: 0, low: 1, medium: 2, high: 3 }[c.salinity!];
+      // Hidden salinity still affects the outcome when its measurement is missing from x.
+      const sal = { none: 0, low: 1, medium: 2, high: 3 }[actualSalinity];
       const deficit = Math.max(0, sal - Number(c.improveSoil) - { low: 0, medium: 2, high: 3 }[sp.saltTolerance]);
       let pp = (bases.get(sp.id) ?? base) - 8 * deficit;
       if (c.watering === 'none') pp -= { high: 6, medium: 14, low: 25 }[sp.droughtTolerance];
@@ -55,6 +59,6 @@ export function syntheticRows(catalog: Species[], base: number, bases = new Map<
 export function train(catalog: Species[], base: number, bases = new Map<string, number>(), seed = SEED) {
   const rows = syntheticRows(catalog, base, bases, seed), split = Math.floor(rows.length * 0.8);
   const training = rows.slice(0, split), validation = rows.slice(split);
-  const coefficients = fitLogistic(training);
+  const coefficients = fitLogistic(training, 600, 0.035, 0.0002, SALT_RISK_FEATURES.map(f => SURVIVAL_FEATURES.indexOf(f)));
   return { coefficients, n: rows.length, trainingN: training.length, validationN: validation.length, ...evaluate(validation, coefficients) };
 }

@@ -52,6 +52,7 @@ export function buildCareSchedule(site: CandidateSite, plants: Plant[], catalog:
       const rows: CareRow[] = calendar?.filter(c => c.month === m + 1) ?? [{ month: m + 1, operation: ru['care.inspect'], detail: ru['care.inspectDetail'], visits: 1, taskAction: 'inspect' }];
       for (const [rowIndex, row] of rows.entries()) {
         const action = plant ? row.taskAction ?? 'inspect' : 'inspect';
+        const descriptionKey = action !== 'inspect' ? 'care.task' : row.operation.startsWith('Осмотр') ? 'care.directInspectTask' : 'care.inspectTask';
         if (calendar && !row.taskAction && !row.operation.startsWith('Осмотр')) warnings.add(ru['care.unsupported']);
         const water = action === 'water' && (row.waterLitersPerVisit ?? 0) > 0 ? row.waterLitersPerVisit! : null;
         if (action === 'water' && water === null) warnings.add(ru['care.noWater']);
@@ -60,7 +61,7 @@ export function buildCareSchedule(site: CandidateSite, plants: Plant[], catalog:
           const dueAt = new Date(Date.UTC(y, m, day, 7)).toISOString();
           tasks.push({ id: `${site.id}:${plant?.id ?? 'site'}:${y}-${m + 1}:${rowIndex}:${visit}`, objectName: plant?.name ?? site.name,
             objectType: plant ? 'plant' : 'candidate_site', objectId: plant?.id ?? site.id, action,
-            description: msg(action === 'inspect' ? 'care.inspectTask' : 'care.task', { operation: row.operation, detail: row.detail }),
+            description: msg(descriptionKey, { operation: row.operation, detail: row.detail.trim().replace(/[.!?…]+$/, '') }),
             priority: 'medium', dueAt, estimatedMinutes: action === 'inspect' ? 15 : 20, requiredWaterLiters: water,
             evidenceIds: [...new Set(plant?.evidenceIds ?? site.evidenceIds)], estimatedCostKzt: null, dataClass: 'estimate' });
         }

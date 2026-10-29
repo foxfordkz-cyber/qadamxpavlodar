@@ -6,7 +6,7 @@ import type { PlanOptions } from '../../../shared/analytics/plan';
 import { VARIANT_LABEL } from '../../../shared/analytics/plan';
 import { SALINITY_LABEL } from '../../../shared/analytics/zone';
 import { StateView } from '../../../shared/ui/components';
-import { fmtDateTime } from '../../../shared/format';
+import { fmtDateTime, fmtPp } from '../../../shared/format';
 import { hrefFor, useRoute } from '../../../shared/router';
 import { download } from '../sites/filters';
 
@@ -67,7 +67,7 @@ export function ReportPage() {
             <SurvivalMethod model={r.survivalModel} />
             <button className="gp-btn gp-noprint" aria-pressed={compare} onClick={() => setCompare(!compare)}>{t(compare ? 'survival.hideRules' : 'survival.compare')}</button>
             <table><thead><tr><th>Вид</th><th>1 год, %</th>{compare && <th>{t('survival.rulesColumn')}</th>}<th>2 года, %</th><th>3 года, %</th><th>Диапазон 1-го года</th><th>Факторы риска</th></tr></thead><tbody>
-              {r.survival.map((x) => <tr key={x.speciesId}><td>{byId.get(x.speciesId)?.nameRu}</td><td>{x.y1}</td>{compare && <td>{r.survivalRules.find(v => v.speciesId === x.speciesId)?.y1 ?? '—'}</td>}<td>{x.y2 || '—'}</td><td>{x.y3 || '—'}</td><td>{x.low}–{x.high}</td><td>{x.risks.map((k) => `${k.label} ${k.pp} п.п.`).join('; ') || 'нет'}</td></tr>)}
+              {r.survival.map((x) => <tr key={x.speciesId}><td>{byId.get(x.speciesId)?.nameRu}</td><td>{x.y1}</td>{compare && <td>{r.survivalRules.find(v => v.speciesId === x.speciesId)?.y1 ?? '—'}</td>}<td>{x.y2 || '—'}</td><td>{x.y3 || '—'}</td><td>{x.low}–{x.high}</td><td>{x.risks.map((k) => `${k.label} ${fmtPp(k.pp)}`).join('; ') || 'нет'}{x.warnings?.map(w => <p key={w}>{w}</p>)}</td></tr>)}
             </tbody></table>
             <p>Средняя по зоне: {r.survivalAvg.y1}% / {r.survivalAvg.y2}% / {r.survivalAvg.y3}%.{r.measures.length ? ` Меры: ${r.measures.map((m) => `${m.label} (${m.effect})`).join('; ')}.` : ''}</p>
             <h2>5. План ухода</h2>

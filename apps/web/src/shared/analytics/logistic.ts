@@ -7,7 +7,7 @@ export function probability(x: number[], coefficients: number[]): number {
 export interface TrainingRow { x: number[]; y: 0 | 1 }
 
 /** Full-batch Adam, fixed iterations and L2; no validation-set fitting or tuning. */
-export function fitLogistic(rows: TrainingRow[], iterations = 600, learningRate = 0.035, l2 = 0.0002): number[] {
+export function fitLogistic(rows: TrainingRow[], iterations = 600, learningRate = 0.035, l2 = 0.0002, nonpositive: number[] = []): number[] {
   const d = rows[0].x.length;
   const w = Array<number>(d).fill(0), m = [...w], v = [...w];
   for (let step = 1; step <= iterations; step++) {
@@ -21,9 +21,29 @@ export function fitLogistic(rows: TrainingRow[], iterations = 600, learningRate 
       m[j] = 0.9 * m[j] + 0.1 * g;
       v[j] = 0.999 * v[j] + 0.001 * g * g;
       w[j] -= learningRate * (m[j] / (1 - 0.9 ** step)) / (Math.sqrt(v[j] / (1 - 0.999 ** step)) + 1e-8);
+      if (nonpositive.includes(j)) w[j] = Math.min(0, w[j]);
     }
   }
   return w;
+}
+
+export interface CalibrationBin { lower: number; upper: number; n: number; predicted: number | null; observed: number | null }
+
+/** 95% Wilson interval for a bin's Bernoulli event probability, not for an individual outcome. */
+export function wilsonInterval(observed: number, n: number): [number, number] {
+  const z = 1.959963984540054, z2 = z * z, denominator = 1 + z2 / n;
+  const center = (observed + z2 / (2 * n)) / denominator;
+  const half = z * Math.sqrt(observed * (1 - observed) / n + z2 / (4 * n * n)) / denominator;
+  return [Math.max(0, center - half), Math.min(1, center + half)];
+}
+
+/** Calibration uncertainty envelope around p; Wilson confidence applies only to the bin frequency. */
+export function calibrationRange(p: number, bins: CalibrationBin[]) {
+  const bin = bins[Math.min(9, Math.floor(p * 10))];
+  if (!bin || !bin.n || bin.predicted === null || bin.observed === null) return { low: 0, high: 1, n: 0 };
+  const [lower, upper] = wilsonInterval(bin.observed, bin.n);
+  const radius = Math.max(Math.abs(bin.predicted - lower), Math.abs(upper - bin.predicted));
+  return { low: Math.max(0, p - radius), high: Math.min(1, p + radius), n: bin.n };
 }
 
 /** Mann–Whitney AUC with average ranks for ties. null for a single-class sample. */

@@ -10,6 +10,7 @@ import { SpeciesPhoto } from '../species/SpeciesCardGrid';
 import { SurvivalMethod } from './SurvivalMethod';
 import { CareDrafts } from './CareDrafts';
 import { t } from '../../../shared/i18n';
+import { fmtPp } from '../../../shared/format';
 
 export type ZoneTab = 'plants' | 'cost' | 'survival' | 'care' | 'effect';
 export const ZONE_TABS: [ZoneTab, string][] = [['plants', 'Растения'], ['cost', 'Смета'], ['survival', 'Приживаемость'], ['care', 'Уход'], ['effect', 'Эффект']];
@@ -217,7 +218,7 @@ function SurvivalTab({ a, byId, options, set }: { a: ZoneAnalysis; byId: Map<str
             {compare && <td>{a.survivalRules.find(x => x.speciesId === r.speciesId)?.y1 ?? '—'}%</td>}
             <td>{r.y2 ? `${r.y2}%` : 'однолетник'}</td>
             <td>{r.y3 ? `${r.y3}%` : '—'}</td>
-            <td>{r.risks.length ? r.risks.map((x) => <div key={x.label}>{x.label}: <span className="gp-caution">{x.pp} п.п.</span></div>) : <span className="gp-muted">нет</span>}</td>
+            <td>{r.risks.length ? r.risks.map((x) => <div key={x.label}>{x.label}: <span className="gp-caution">{fmtPp(x.pp)}</span></div>) : <span className="gp-muted">нет</span>}{r.warnings?.map(w => <p className="gp-caution" key={w}>{w}</p>)}</td>
           </tr>
         ))}</tbody>
       </table>
