@@ -1,17 +1,21 @@
-import { useCallback, useMemo, useState } from 'react';
+import { Fragment, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { useData, useResource } from '../../../shared/api/DataProvider';
 import type { CandidateSite, PlantingProject, Task } from '../../../shared/api/types';
 import { Button, EligBadge, Freshness, StateView } from '../../../shared/ui/components';
 import { t, type Key } from '../../../shared/i18n';
 import { fmtArea } from '../../../shared/format';
-import { navigate, useRoute } from '../../../shared/router';
+import { hrefFor, navigate, useRoute } from '../../../shared/router';
 import { LazySiteMap as SiteMap } from '../map/LazySiteMap';
 import { validateSiteGeometry } from '../map/geo';
 import { applyFilters, download, emptyFilters, isFiltered, sitesToCsv, type SiteFilters } from './filters';
 import { eligibilityOf } from './eligibility';
 import { SiteCard } from './SiteCard';
 import { Metrics } from '../dashboard/Metrics';
-import { DEFAULT_PRIORITY_WEIGHTS } from '../../../shared/analytics/city';
+import type { PriorityItem } from '../../../shared/analytics/city';
+import { usePriorityWeights, WeightSliders } from '../tz/PriorityWeights';
+import { DrawBar, MapSearch } from '../map/MapTools';
+import { useMe } from '../me';
+import type { GeoHit } from '../../../shared/api/geocode';
 
 export function SitesPage() {
   const { api } = useData();
@@ -40,7 +44,9 @@ export function SitesPage() {
   const soilsRes = useResource(() => (layers.soils ? api.soilsLayer() : Promise.resolve(null)), [layers.soils]);
   const greenRes = useResource(() => (layers.greenery ? api.greeneryLayer() : Promise.resolve(null)), [layers.greenery]);
   const problemsRes = useResource(() => (layers.problems ? api.problems() : Promise.resolve(null)), [layers.problems]);
-  const prioRes = useResource(() => (layers.priority ? api.priorities(DEFAULT_PRIORITY_WEIGHTS, null) : Promise.resolve(null)), [layers.priority]);
+  // Веса двигаются прямо на карте: слой перекрашивается после паузы 300 мс (сервер кэширует расчёт по весам).
+  const prio = usePriorityWeights();
+  const prioRes = useResource(() => (layers.priority ? api.priorities(prio.debounced, null) : Promise.resolve(null)), [layers.priority, JSON.stringify(prio.debounced)]);
   const zoneTint = useMemo(() => {
     if (layers.problems && problemsRes.data) {
       const sev: Record<string, number> = {};
@@ -53,13 +59,53 @@ export function SitesPage() {
   }, [layers.problems, layers.priority, problemsRes.data, prioRes.data]);
   const planned = useMemo(() => (layers.proposed ? plannedPoints(projectsRes.data?.data ?? []) : []), [projectsRes.data, layers.proposed]);
 
+  // Клик по зоне на карте камеру не двигает; выбор из списка и переходы извне (ассистент, «Проблемы»,
+  // «Приоритеты», ссылка на карточку) приводят камеру к зоне.
+  const pickedHere = useRef<string | null>(null);
   const select = (id: string, fromList: boolean) => {
+    pickedHere.current = id;
     navigate('/map', { site: id }, true);
     if (fromList) {
       setFocusSeq((x) => x + 1);
       setTab('map');
     }
   };
+  useEffect(() => {
+    if (selectedId && selectedId !== pickedHere.current) setFocusSeq((x) => x + 1);
+    pickedHere.current = null;
+  }, [selectedId]);
+  const names = useMemo(() => new Map(sites.map((s) => [s.id, s.name])), [sites]);
+
+  // ТЗ 3.1.4: поиск по адресу и рисование зоны. Рисует специалист; сервер повторяет проверку роли и контура.
+  const me = useMe();
+  const canDraw = me.role === 'coordinator';
+  const [drawPoints, setDrawPoints] = useState<[number, number][] | null>(null);
+  const [target, setTarget] = useState<{ lng: number; lat: number; bbox?: [number, number, number, number]; label: string; seq: number } | null>(null);
+  const [savedNote, setSavedNote] = useState<string | null>(null);
+  const pickPlace = (h: GeoHit) => {
+    if (h.zoneId) { setTarget(null); select(h.zoneId, true); return; }
+    setTarget((prev) => ({ lng: h.lng, lat: h.lat, ...(h.bbox ? { bbox: h.bbox } : {}), label: h.label, seq: (prev?.seq ?? 0) + 1 }));
+    setTab('map');
+  };
+  const toolbarExtra = drawPoints ? (
+    <DrawBar points={drawPoints} onUndo={() => setDrawPoints((p) => (p ? p.slice(0, -1) : p))} onCancel={() => setDrawPoints(null)}
+      onSaved={(site, note) => {
+        setDrawPoints(null);
+        setSavedNote(`Зона «${site.name}» сохранена (${site.id}).${note ? ` ${note}` : ''}`);
+        sitesRes.reload();
+        select(site.id, true);
+      }} />
+  ) : (
+    <>
+      <MapSearch onPick={pickPlace} />
+      {canDraw && <button type="button" className="gp-btn gp-btn--secondary" onClick={() => { setSavedNote(null); setDrawPoints([]); setTab('map'); }} title="Обвести участок на карте: углы контура — кликами">✎ Нарисовать зону</button>}
+    </>
+  );
+  useEffect(() => {
+    if (!savedNote) return;
+    const id = setTimeout(() => setSavedNote(null), 8000);
+    return () => clearTimeout(id);
+  }, [savedNote]);
   const set = <K extends keyof SiteFilters>(k: K, v: SiteFilters[K]) => setF((p) => ({ ...p, [k]: v }));
   const osmMeta = sitesRes.data?.meta?.osm as { osmBase?: string } | undefined;
 
@@ -118,8 +164,11 @@ export function SitesPage() {
         {badGeometry.length > 0 && (
           <div className="gp-alert gp-alert--bad" role="alert">Не показаны на карте из-за координат: {badGeometry.map(([s, e]) => `${s.id} (${e})`).join('; ')}</div>
         )}
-        <SiteMap sites={validSites} eligibility={elig} selectedId={selectedId} onSelect={(id) => select(id, false)} focusSeq={focusSeq} context={ctxRes.data} plants={layers.greenery ? plantsRes.data?.data ?? [] : []} planned={planned} soils={layers.soils ? (soilsRes.data?.data as never) : null} greenery={layers.greenery ? (greenRes.data?.data as never) : null} zoneTint={zoneTint} />
-        <LayerPanel layers={layers} toggle={toggleLayer} loading={soilsRes.loading || greenRes.loading || problemsRes.loading || prioRes.loading} />
+        <SiteMap sites={validSites} eligibility={elig} selectedId={selectedId} onSelect={(id) => select(id, false)} focusSeq={focusSeq} context={ctxRes.data} plants={layers.greenery ? plantsRes.data?.data ?? [] : []} planned={planned} soils={layers.soils ? (soilsRes.data?.data as never) : null} greenery={layers.greenery ? (greenRes.data?.data as never) : null} zoneTint={zoneTint}
+          drawPoints={drawPoints} onDrawPoint={(p) => setDrawPoints((prev) => (prev ? [...prev, p] : prev))} target={target} toolbarExtra={toolbarExtra} />
+        {savedNote && <div className="gp-alert gp-alert--ok gp-map__saved" role="status">{savedNote}</div>}
+        <LayerPanel layers={layers} toggle={toggleLayer} loading={soilsRes.loading || greenRes.loading || problemsRes.loading || prioRes.loading}
+          priority={layers.priority ? <PriorityControls prio={prio} items={prioRes.data?.items ?? null} names={names} onPick={(id) => select(id, true)} /> : null} />
         <MapLegend osmBase={osmMeta?.osmBase} />
       </section>
 
@@ -160,8 +209,36 @@ function readLayers(): LayerState {
 }
 const prioColor = (i: number) => (i >= 70 ? '#1f6e3a' : i >= 55 ? '#4f9a3f' : i >= 40 ? '#9cc45a' : '#d9e8a8');
 
+const PRIO_SCALE: [string, string][] = [['#1f6e3a', '70+'], ['#4f9a3f', '55–69'], ['#9cc45a', '40–54'], ['#d9e8a8', '<40']];
+
+/** ТЗ 3.7.2 на карте: веса факторов, шкала цвета и лидеры рейтинга при текущих весах. */
+function PriorityControls({ prio, items, names, onPick }: { prio: ReturnType<typeof usePriorityWeights>; items: PriorityItem[] | null; names: Map<string, string>; onPick: (id: string) => void }) {
+  return (
+    <div className="gp-layers__prio">
+      <div className="gp-layers__scale" aria-label="Шкала индекса приоритета">
+        {PRIO_SCALE.map(([c, l]) => <span key={l}><i style={{ background: c }} aria-hidden="true" />{l}</span>)}
+      </div>
+      <details open>
+        <summary>Веса факторов</summary>
+        <WeightSliders weights={prio.weights} onChange={prio.setWeights} idPrefix="mw" />
+        <div className="gp-layers__row">
+          {!prio.isDefault && <button className="gp-btn gp-btn--ghost" onClick={prio.reset}>По умолчанию</button>}
+          <a className="gp-small" href={hrefFor('/priorities')}>Бюджет и дорожная карта →</a>
+        </div>
+      </details>
+      {items && items.length > 0 && (
+        <ol className="gp-layers__top" aria-label="Первые по приоритету">
+          {items.slice(0, 3).map((it) => (
+            <li key={it.siteId}><button className="gp-link" onClick={() => onPick(it.siteId)}>{names.get(it.siteId) ?? it.siteId}</button> <strong>{it.index}</strong></li>
+          ))}
+        </ol>
+      )}
+    </div>
+  );
+}
+
 /** ТЗ 3.1.3: многослойная карта — пользователь включает и отключает слои. */
-function LayerPanel({ layers, toggle, loading }: { layers: LayerState; toggle: (k: keyof LayerState) => void; loading: boolean }) {
+function LayerPanel({ layers, toggle, loading, priority }: { layers: LayerState; toggle: (k: keyof LayerState) => void; loading: boolean; priority?: ReactNode }) {
   const rows: [keyof LayerState, string, string][] = [
     ['soils', 'Почвы (засоление)', 'синтетический слой до карты почв организатора'],
     ['greenery', 'Существующая зелень', 'OSM: парки, скверы, деревья'],
@@ -173,7 +250,10 @@ function LayerPanel({ layers, toggle, loading }: { layers: LayerState; toggle: (
     <details className="gp-layers gp-card" open={!matchMedia('(max-width: 760px)').matches}>
       <summary><strong>Слои</strong> {loading && <span className="gp-spinner" aria-label="Загрузка слоя" />}</summary>
       {rows.map(([k, label, hint]) => (
-        <label key={k} className="gp-check" title={hint}><input type="checkbox" checked={layers[k]} onChange={() => toggle(k)} />{label}{k === 'soils' && <span className="gp-badge gp-badge--demo">синтетика</span>}</label>
+        <Fragment key={k}>
+          <label className="gp-check" title={hint}><input type="checkbox" checked={layers[k]} onChange={() => toggle(k)} />{label}{k === 'soils' && <span className="gp-badge gp-badge--demo">синтетика</span>}</label>
+          {k === 'priority' && priority}
+        </Fragment>
       ))}
     </details>
   );

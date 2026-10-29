@@ -6,3 +6,9 @@ apps/web/dist-scripts
 *.zip
 hackathon-prompts
 Green-Pavlodar-Team-Prompts
+apps/server/data
+apps/server/uploads
+apps/server/dist
+apps/server/.env
+**/.env
+.claude

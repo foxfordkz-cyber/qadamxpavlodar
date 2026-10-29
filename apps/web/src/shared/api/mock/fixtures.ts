@@ -6,6 +6,7 @@ import { pavlodarEvidence, priceEvidence, species, speciesEvidence } from './spe
 import { contextEvidence } from './context';
 import { centroidXY, makeProjection, type XY } from '../../geo';
 import { DEFAULT_RATES, type RateEntry } from '../../analytics/rates';
+import { pavlodarSources } from '../pavlodar';
 
 export interface MockDb {
   seededAt: string;
@@ -35,6 +36,8 @@ const demoEvidence: EvidenceRef[] = [
   priceEvidence,
   ...pavlodarEvidence,
   contextEvidence,
+  // Проверенные открытые источники о Павлодаре (исследование 29.10.2026, fixtures/pavlodar).
+  ...pavlodarSources,
   { id: 'ev-demo-zones', sourceType: 'fixture', sourceLabel: 'Демо: зоны исключения нарисованы командой', dataClass: 'demo', note: 'Не схема сетей. Нужны для проверки, что редактор не даёт сажать в запретной зоне без разбора.' },
 ];
 

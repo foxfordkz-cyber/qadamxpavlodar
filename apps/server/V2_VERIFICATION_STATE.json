@@ -1,0 +1,73 @@
+{
+  "checkedAt": "2026-10-28T02:55:00.079Z",
+  "schemaVersion": 3,
+  "legacyTablesPreserved": {
+    "ai_proposals": 0,
+    "candidate_sites": 6,
+    "evidence_refs": 30,
+    "experimental_photos": 0,
+    "experimental_reports": 0,
+    "experimental_task_history": 0,
+    "experimental_tasks": 0,
+    "idempotency_keys": 3,
+    "observations": 0,
+    "photos": 0,
+    "plants": 30,
+    "reports": 1,
+    "task_history": 18,
+    "tasks": 16,
+    "users": 4
+  },
+  "integrity": "ok",
+  "foreignKeys": [],
+  "v2": {
+    "users": 8,
+    "crews": 2,
+    "plants": 30,
+    "tasks": 12
+  },
+  "files": {
+    "changed": [
+      "AI_INTEGRATION_CONTRACT.md",
+      "BACKEND_HANDOFF.md",
+      "FRONTEND_API_HANDOFF.md",
+      "HACKATHON_BACKEND_READY.md",
+      "package.json",
+      "README.md",
+      "src\\app.ts",
+      "src\\db.ts",
+      "tests\\integration.test.ts"
+    ],
+    "added": [
+      "BACKEND_V2_COMPLIANCE.md",
+      "BACKEND_V2_HANDOFF.md",
+      "BACKEND_V2_VERIFICATION.md",
+      "contracts-source\\03-BACKEND-AND-DATA.txt",
+      "contracts-source\\05-SHARED-CONTRACT.txt",
+      "contracts-source\\sha256.json",
+      "openapi-v2.json",
+      "scripts\\demo-v2.mjs",
+      "src\\v2\\admin-ui.ts",
+      "src\\v2\\auth.ts",
+      "src\\v2\\core.ts",
+      "src\\v2\\data.ts",
+      "src\\v2\\designs.ts",
+      "src\\v2\\domain-routes.ts",
+      "src\\v2\\intelligence.ts",
+      "src\\v2\\migration.ts",
+      "src\\v2\\people.ts",
+      "src\\v2\\report-routes.ts",
+      "src\\v2\\reports.ts",
+      "src\\v2\\responses.ts",
+      "src\\v2\\router.ts",
+      "src\\v2\\seed.ts",
+      "src\\v2\\tasks.ts",
+      "src\\v2\\uploads.ts",
+      "src\\v2\\visualizations.ts",
+      "src\\v2-seed-cli.ts",
+      "tests\\v2.test.ts",
+      "V2_VERIFICATION_STATE.json"
+    ],
+    "removed": []
+  }
+}
