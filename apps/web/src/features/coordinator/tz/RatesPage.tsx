@@ -71,13 +71,13 @@ function PavlodarFacts() {
               </table>
             </div>
             <SourceLinks ids={data.climate.evidenceIds.slice(0, 2)} byId={byId} />
-            <div className="gp-facts">
+            <div className="gp-pvlfacts">
               {topics.map(([topic, list]) => (
-                <div key={topic} className="gp-card gp-facts__topic">
+                <div key={topic} className="gp-card gp-pvlfacts__topic">
                   <h3 className="gp-subhead">{TOPIC_LABEL[topic]}</h3>
                   <ul className="gp-list">
                     {list.map((f) => (
-                      <li key={f.id} className="gp-facts__item">
+                      <li key={f.id} className="gp-pvlfacts__item">
                         <strong>{f.title}</strong> {f.gap ? <Badge tone="demo">нет данных</Badge> : f.dataClass === 'estimate' ? <Badge tone="neutral">оценка</Badge> : null}
                         <p className="gp-small">{f.text}</p>
                         <SourceLinks ids={f.evidenceIds} byId={byId} />

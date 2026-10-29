@@ -6,7 +6,7 @@ import type {
 import type { PlanOptions, Variant, ZoneAnalysis } from '../analytics/plan';
 import type { PriorityFactor, PriorityItem, Problem } from '../analytics/city';
 import type { RateEntry } from '../analytics/rates';
-import type { AssistantReply } from '../analytics/assistant';
+import type { AskContext, AssistantReply } from '../analytics/assistant';
 import type { referenceFacts } from './pavlodar';
 import type { CareRequest, CareSchedule } from '../analytics/careSchedule';
 import type { GeoHit } from './geocode';
@@ -106,7 +106,7 @@ export function createApi(t: Transport) {
     patchRate: (body: { key: string; value: number | null; source: string; expectedVersion: number }) => d(t.request<{ rates: RateEntry[]; version: number }>('PATCH', '/rates', { body, idempotencyKey: newIdempotencyKey() })),
     soilsLayer: () => t.request<FC>('GET', '/layers/soils'),
     greeneryLayer: () => t.request<FC>('GET', '/layers/greenery'),
-    ask: (message: string, siteId: ID | null) => d(t.request<AssistantReply>('POST', '/assistant', { body: { message, siteId } })),
+    ask: (message: string, siteId: ID | null, extra: Pick<AskContext, 'history' | 'view'> = {}) => d(t.request<AssistantReply>('POST', '/assistant', { body: { message, siteId, ...extra } })),
     assistantHistory: () => d(t.request<{ at: string; q: string; intent: string; zones: string[] }[]>('GET', '/assistant/history')),
     /** (ТЗ 3.1.4) Поиск по адресу, улице, месту или названию зоны — по снимку OSM района прототипа. */
     geocode: (q: string) => t.request<GeoHit[]>('GET', '/geocode', { query: { q } }),

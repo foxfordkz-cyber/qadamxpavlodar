@@ -113,12 +113,14 @@
 .gp-zone__facts { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); }
 
 /* Проверенные данные о Павлодаре на странице «Справочники» */
-.gp-facts { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; margin-top: 12px; }
-.gp-facts__topic { padding: 12px 14px; }
-.gp-facts__topic .gp-subhead { margin-top: 0; }
-.gp-facts__item { padding: 8px 0; border-bottom: 1px dashed var(--gp-border); }
-.gp-facts__item:last-child { border-bottom: 0; }
-.gp-facts__item p { margin: 4px 0; }
+/* Факты о Павлодаре в «Справочниках»: своё имя — .gp-facts из v2.css делает строку flex и крупный заголовок. */
+.gp-pvlfacts { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; margin-top: 12px; align-items: start; }
+.gp-pvlfacts__topic { padding: 12px 14px; }
+.gp-pvlfacts__topic .gp-subhead { margin-top: 0; }
+.gp-pvlfacts__item { display: block; padding: 8px 0; border-bottom: 1px dashed var(--gp-border); }
+.gp-pvlfacts__item:last-child { border-bottom: 0; }
+.gp-pvlfacts__item > strong { font-size: 15px; margin-right: 6px; }
+.gp-pvlfacts__item p { margin: 4px 0; overflow-wrap: anywhere; }
 
 /* ТЗ 3.1.4: поиск по адресу и рисование зоны в панели инструментов карты */
 .gp-map__toolbar { max-width: calc(100% - 64px); align-items: center; }
@@ -187,3 +189,10 @@
 .gp-present .gp-assist { width: min(480px, 100%); }
 .gp-present-pill { position: fixed; z-index: 60; left: 12px; bottom: 12px; border: 0; border-radius: 999px; padding: 6px 12px; background: rgb(31 47 31 / 85%); color: #fff; font: inherit; font-size: 13px; cursor: pointer; }
 @media print { .gp-present-pill { display: none; } }
+
+/* Сводка на «Обзоре»: число и подпись сверху, определение — мелко ниже. */
+.gp-tile--metric { justify-content: flex-start; gap: 8px; min-height: 120px; }
+.gp-tile__head { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.gp-tile--metric .gp-tile__value { font-size: 40px; }
+.gp-tile--metric .gp-tile__label { font-size: 16px; line-height: 1.25; }
+.gp-tile__def { flex: 1; line-height: 1.35; }

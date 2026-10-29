@@ -8,6 +8,7 @@ import { t } from '../../../shared/i18n';
 import { CENTER, siteBounds, siteCenter } from './geo';
 import { SchemeView } from './SchemeView';
 import { mapBroken } from './mapFlags';
+import { mapView } from './mapView';
 import type { GrowthFrame } from '../zone/timeMachine';
 import type { SceneInput } from '../projects/scene3d';
 
@@ -208,6 +209,7 @@ export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, co
     });
     map.on('moveend', () => {
       const c = map.getCenter();
+      mapView.center = { lat: +c.lat.toFixed(6), lng: +c.lng.toFixed(6) };
       camera.current = { center: [c.lng, c.lat], zoom: map.getZoom(), pitch: map.getPitch(), bearing: map.getBearing() };
     });
     map.on('load', () => {

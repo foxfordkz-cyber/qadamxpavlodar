@@ -4,6 +4,7 @@ import { ApiError } from '../../../shared/api/transport';
 import type { AssistantReply } from '../../../shared/analytics/assistant';
 import { MethodLine, MethodTag } from '../../../shared/ui/components';
 import { hrefFor, navigate, useRoute } from '../../../shared/router';
+import { mapView } from '../map/mapView';
 
 const EXAMPLES = [
   'Какие участки требуют озеленения в первую очередь?',
@@ -26,7 +27,7 @@ interface Msg { role: 'user' | 'bot'; text: string; reply?: AssistantReply; erro
 
 const TOOL_LABEL: Record<string, string> = {
   search_zones: 'поиск зон', analyze_zone: 'расчёт зоны', compare_variants: 'сравнение вариантов', top_priorities: 'приоритеты',
-  budget_roadmap: 'дорожная карта под бюджет', find_problems: 'проблемные зоны', search_knowledge: 'поиск по справочникам',
+  budget_roadmap: 'дорожная карта под бюджет', find_problems: 'проблемные зоны', search_knowledge: 'поиск по справочникам', find_place: 'поиск места',
 };
 
 /** Чем подтверждён ответ: метод, вызванные расчёты и источники — видно под каждым ответом. */
@@ -73,7 +74,10 @@ export function AssistantPanel() {
     setQ('');
     setBusy(true);
     try {
-      const reply = await api.ask(text, siteId);
+      // Последние реплики — чтобы короткий ответ («Едиге би 1») продолжал вопрос; центр карты — если зона не выбрана.
+      const history = msgs.filter((m) => !m.error).slice(-6).map((m) => ({ role: m.role === 'user' ? 'user' as const : 'assistant' as const, text: m.text.slice(0, 600) }));
+      const view = route.path === '/map' && !siteId ? mapView.center : null;
+      const reply = await api.ask(text, siteId, { history, ...(view ? { view } : {}) });
       setMsgs((m) => [...m, { role: 'bot', text: reply.text, reply }]);
       // Уже на карте — зоны из ответа сразу появляются на ней с номерами; выбранная зона остаётся открытой.
       if (route.path === '/map' && reply.zones.length >= 2) navigate('/map', { site: siteId, ...mapParams(reply) }, true);
