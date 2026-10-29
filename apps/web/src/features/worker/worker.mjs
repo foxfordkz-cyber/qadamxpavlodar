@@ -128,6 +128,7 @@ export class GreenWorker extends HTMLElement {
     if (action === 'tab') { this.section = id; this.selected = this.tasks.find(t => t.section === id) || null; this.draft = null; this.mobileDetail = false; this.message = null; this.setPreview(null); this.render(); return; }
     if (action === 'select') { const version = this.contextVersion; const task = await this.gateway.getTask(id); if (version !== this.contextVersion || !task.visibleToCurrentUser && task.assignedTo !== this.user?.id) return; this.selected = task; this.assignmentDraft=null; this.mobileDetail = true; this.draft = null; this.suggestion = null; this.message = null; this.setPreview(null); this.render(); this.root.querySelector('.detail-panel h2')?.focus(); return; }
     if (action === 'back') { const taskId = this.selected?.id; this.mobileDetail = false; this.draft = null; this.setPreview(null); this.render(); [...this.root.querySelectorAll('[data-action="select"]')].find(button => button.dataset.id === taskId)?.focus(); return; }
+    if (action === 'goto-assignment') { const panel = this.root.querySelector('.assignment'); panel?.scrollIntoView({ behavior: 'smooth', block: 'start' }); panel?.querySelector('input:not([disabled]), select:not([disabled])')?.focus({ preventScroll: true }); return; }
     if (action === 'open-report' || action === 'open-issue') return this.openDraft(action === 'open-report' ? 'report' : 'issue');
     if (action === 'open-draft') {
       const entry = this.queue.find(x => x.storageKey === id); if (!entry) return;
@@ -200,7 +201,9 @@ export class GreenWorker extends HTMLElement {
   historyCards(history, task) { return history.length ? `<div class="history-list">${[...history].reverse().map(item => `<article class="history-card"><div class="row"><strong>${item.type === 'issue' ? this.t.issue : this.t.report}</strong><span class="badge">${escape(item.reviewLabel)}</span></div><small>${escape(dateTime(item.time))}</small>${item.reason ? `<p><strong>${escape(item.reason)}</strong></p>` : ''}<p>${escape(item.note || this.t.emptyNote)}</p>${item.photoName ? `<small>${icon('photo')} ${this.t.photoAttached}: ${escape(item.photoName)}</small>${safePhotoURL(item.photoUrl) ? `<img src="${escape(safePhotoURL(item.photoUrl))}" alt="${escape(this.t.photoAttached)}" loading="lazy">` : `<small>${this.demo ? this.t.previewUnavailable : ''}</small>`}` : ''}${item.analysis ? `<p><strong>${this.t.confirmedAnalysis}: ${escape(item.analysis.category)}</strong><br>${item.analysis.facts.map(escape).join('<br>')}</p><small>${this.t.origin}: ${escape(item.analysis.provenance?.provider)} · ${escape(item.analysis.decision)}</small>` : ''}${item.geo ? `<p>${Number(item.geo.latitude).toFixed(5)}, ${Number(item.geo.longitude).toFixed(5)} · ±${Math.round(item.geo.accuracy)} м</p><small>${this.t.geoEvidence}</small>` : ''}${reportHistoryAmounts(task,item,this.crewWorkspace,this.t)}${item.coordinatorComment ? `<blockquote><strong>${this.t.reviewComment}</strong><br>${escape(item.coordinatorComment)}</blockquote>` : ''}</article>`).join('')}</div>` : `<p class="small muted">${this.t.noHistory}</p>`; }
   detail() {
     const task = this.selected, t = this.t; if (!task) return '';
+    const needsCrew = this.user.role === 'foreman' && task.status === 'assigned' && !task.assignedWorkerIds?.length && !!this.crewWorkspace?.crews.some(c => c.id === task.assignedCrewId);
     const actions = !this.draft ? [
+      needsCrew ? this.button('goto-assignment', t.goAssign, 'primary', 'arrow') : '',
       task.permissions.start ? this.button('start', this.busy ? t.starting : t.start, 'primary', 'arrow', '', this.busy) : '',
       task.permissions.report ? this.button('open-report', task.reportMode === 'contribution' ? t.addMaterials : task.reportMode === 'final' ? t.prepareFinal : task.coordinatorComment ? t.fixReport : t.writeReport, 'primary', 'photo') : '',
       task.permissions.issue ? this.button('open-issue', t.cannot, 'secondary', 'alert') : ''
@@ -208,7 +211,7 @@ export class GreenWorker extends HTMLElement {
     return `<section class="detail-panel" aria-label="${t.detail}">
       <header class="detail-hero"><div class="row"><span class="task-code">${t.workSheet} / ${escape(task.id)}</span>${this.badge(task)}</div><h2 tabindex="-1">${escape(task.place)}</h2><p class="detail-action">${escape(task.action)}</p><div class="sheet-meta"><span>${escape(task.objectLabel)}</span><span>${escape(task.due)}</span><span>${escape(task.duration || t.noData)}</span></div></header>
       ${task.coordinatorComment ? `<div class="note-box return-note"><strong>${t.returnTitle}</strong><p>${escape(task.coordinatorComment)}</p></div>` : ''}
-      ${actions ? `<div class="detail-footer">${actions}${task.permissions.start ? `<p class="small muted">${t.startHint}</p>` : ''}</div>` : ''}
+      ${actions ? `<div class="detail-footer">${actions}${needsCrew ? `<p class="small muted">${t.unconfirmedCrew}</p>` : ''}${task.permissions.start ? `<p class="small muted">${t.startHint}</p>` : ''}</div>` : ''}
       <div class="work-columns"><div class="detail-body">
         <section class="instruction-section"><p class="section-label">${t.instruction}</p><p class="body-text">${escape(task.instruction)}</p></section>
         ${scheme(task,t)}

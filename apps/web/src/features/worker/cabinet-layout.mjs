@@ -73,12 +73,14 @@ export function cabinetLayout(app, css) {
   if (!['worker','foreman'].includes(app.user.role)) return `${css}<section class="signed-out">${brand}<h1>${e(t.unsupportedRole)}</h1><p>${e(t.unsupportedRoleText)}</p><p>${e(app.user.displayName)} · ${e(ROLE_LABELS[app.user.role])}</p></section>`;
   const isDetail = app.page === 'tasks' && app.mobileDetail && app.selected;
   const content = app.page === 'profile' ? profile(app) : app.page === 'history' ? journal(app) : isDetail ? `<div class="detail-navigation">${app.button('back',t.back,'plain','back')}<span>${e(t.workSheet)} / ${e(app.selected.id)}</span></div>${app.detail()}` : `${app.user.role === 'foreman' ? crewSummary(app.crewWorkspace,t) : ''}${list(app)}`;
+  const queue = isDetail ? app.queue.filter(entry => entry.taskId !== app.selected.id) : app.queue;
+  const queueBlock = queue.length ? `<section class="queue"><div><strong>${e(t.localOnly)} <span class="queue-count">${queue.length}</span></strong><p>${e(t.queueHelp)}</p><div class="draft-links">${queue.map(entry => app.button('open-draft',`${t.draftOpen}: ${entry.taskId} · ${entry.kind === 'issue' ? t.issue : t.report}`,'plain','',entry.storageKey)).join('')}</div></div>${queue.some(entry => entry.frozen && entry.delivery !== 'conflict') ? app.button('sync',t.synchronize,'secondary','cloud','',app.busy) : ''}</section>` : '';
   return `${css}<div class="shell"><header class="topbar">${brand}<nav class="nav" aria-label="${e(t.workerSpace)}">${app.nav()}</nav><div class="identity"><strong>${e(app.user.name)}</strong><span>${e(ROLE_LABELS[app.user.role])}</span></div></header>
     ${app.demo ? `<div class="demo-line"><span class="demo-tag">${e(t.demo)}</span><span>${e(t.demoNotice)}</span></div>` : ''}
     ${app.locale === 'kk-draft' ? `<div class="language-note">${e(t.languageNote)}</div>` : ''}
     <main class="main ${isDetail ? 'work-detail' : ''}">${isDetail ? '' : heading(app)}
       ${app.message ? `<div class="toast ${e(app.message.tone || '')}" role="${app.message.tone === 'error' ? 'alert' : 'status'}">${icon(app.message.tone === 'error' ? 'alert' : 'check')}<span>${e(app.message.text)}</span></div>` : ''}
-      ${app.queue.length ? `<section class="queue"><div><strong>${e(t.localOnly)} <span class="queue-count">${app.queue.length}</span></strong><p>${e(t.queueHelp)}</p><div class="draft-links">${app.queue.map(entry => app.button('open-draft',`${t.draftOpen}: ${entry.taskId} · ${entry.kind === 'issue' ? t.issue : t.report}`,'plain','',entry.storageKey)).join('')}</div></div>${app.button('sync',t.synchronize,'secondary','cloud','',app.busy)}</section>` : ''}
-      ${content}<footer class="page-footer"><span>GREEN PAVLODAR / ${e(t.fieldJournal)}</span><span>${e(t.helpText)}</span></footer>
+      ${isDetail ? '' : queueBlock}
+      ${content}${isDetail ? queueBlock : ''}<footer class="page-footer"><span>GREEN PAVLODAR / ${e(t.fieldJournal)}</span><span>${e(t.helpText)}</span></footer>
     </main><nav class="mobile-nav" aria-label="${e(t.workerSpace)}">${app.nav()}</nav></div>`;
 }
