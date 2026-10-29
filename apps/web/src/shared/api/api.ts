@@ -8,6 +8,7 @@ import type { PriorityFactor, PriorityItem, Problem } from '../analytics/city';
 import type { RateEntry } from '../analytics/rates';
 import type { AssistantReply } from '../analytics/assistant';
 import type { referenceFacts } from './pavlodar';
+import type { GeoHit } from './geocode';
 
 export interface VariantSummary { variant: Variant; label: string; careYears: number; plants: number; cost: number; survival: { y1: number; y2: number; y3: number }; co2t20: number; coolingC: number; rainM3: number; costPerTonCo2: number | null }
 export interface ImportPreview { format: string; total: number; valid: number; invalid: number; issues: { row: number; level: 'error' | 'warning'; text: string }[]; committed: boolean; note: string }
@@ -105,6 +106,8 @@ export function createApi(t: Transport) {
     greeneryLayer: () => t.request<FC>('GET', '/layers/greenery'),
     ask: (message: string, siteId: ID | null) => d(t.request<AssistantReply>('POST', '/assistant', { body: { message, siteId } })),
     assistantHistory: () => d(t.request<{ at: string; q: string; intent: string; zones: string[] }[]>('GET', '/assistant/history')),
+    /** (ТЗ 3.1.4) Поиск по адресу, улице, месту или названию зоны — по снимку OSM района прототипа. */
+    geocode: (q: string) => t.request<GeoHit[]>('GET', '/geocode', { query: { q } }),
     /** Проверенные данные о Павлодаре: факты со ссылками на источники, источники, климатические нормы. */
     referenceFacts: () => t.request<ReturnType<typeof referenceFacts>['data']>('GET', '/reference/facts'),
     importPreview: (format: string, features: unknown[]) => d(t.request<ImportPreview>('POST', '/imports/preview', { body: { format, features } })),

@@ -13,6 +13,9 @@ import { SiteCard } from './SiteCard';
 import { Metrics } from '../dashboard/Metrics';
 import type { PriorityItem } from '../../../shared/analytics/city';
 import { usePriorityWeights, WeightSliders } from '../tz/PriorityWeights';
+import { DrawBar, MapSearch } from '../map/MapTools';
+import { useMe } from '../me';
+import type { GeoHit } from '../../../shared/api/geocode';
 
 export function SitesPage() {
   const { api } = useData();
@@ -72,6 +75,37 @@ export function SitesPage() {
     pickedHere.current = null;
   }, [selectedId]);
   const names = useMemo(() => new Map(sites.map((s) => [s.id, s.name])), [sites]);
+
+  // ТЗ 3.1.4: поиск по адресу и рисование зоны. Рисует специалист; сервер повторяет проверку роли и контура.
+  const me = useMe();
+  const canDraw = me.role === 'coordinator';
+  const [drawPoints, setDrawPoints] = useState<[number, number][] | null>(null);
+  const [target, setTarget] = useState<{ lng: number; lat: number; bbox?: [number, number, number, number]; label: string; seq: number } | null>(null);
+  const [savedNote, setSavedNote] = useState<string | null>(null);
+  const pickPlace = (h: GeoHit) => {
+    if (h.zoneId) { setTarget(null); select(h.zoneId, true); return; }
+    setTarget((prev) => ({ lng: h.lng, lat: h.lat, ...(h.bbox ? { bbox: h.bbox } : {}), label: h.label, seq: (prev?.seq ?? 0) + 1 }));
+    setTab('map');
+  };
+  const toolbarExtra = drawPoints ? (
+    <DrawBar points={drawPoints} onUndo={() => setDrawPoints((p) => (p ? p.slice(0, -1) : p))} onCancel={() => setDrawPoints(null)}
+      onSaved={(site, note) => {
+        setDrawPoints(null);
+        setSavedNote(`Зона «${site.name}» сохранена (${site.id}).${note ? ` ${note}` : ''}`);
+        sitesRes.reload();
+        select(site.id, true);
+      }} />
+  ) : (
+    <>
+      <MapSearch onPick={pickPlace} />
+      {canDraw && <button type="button" className="gp-btn gp-btn--secondary" onClick={() => { setSavedNote(null); setDrawPoints([]); setTab('map'); }} title="Обвести участок на карте: углы контура — кликами">✎ Нарисовать зону</button>}
+    </>
+  );
+  useEffect(() => {
+    if (!savedNote) return;
+    const id = setTimeout(() => setSavedNote(null), 8000);
+    return () => clearTimeout(id);
+  }, [savedNote]);
   const set = <K extends keyof SiteFilters>(k: K, v: SiteFilters[K]) => setF((p) => ({ ...p, [k]: v }));
   const osmMeta = sitesRes.data?.meta?.osm as { osmBase?: string } | undefined;
 
@@ -130,7 +164,9 @@ export function SitesPage() {
         {badGeometry.length > 0 && (
           <div className="gp-alert gp-alert--bad" role="alert">Не показаны на карте из-за координат: {badGeometry.map(([s, e]) => `${s.id} (${e})`).join('; ')}</div>
         )}
-        <SiteMap sites={validSites} eligibility={elig} selectedId={selectedId} onSelect={(id) => select(id, false)} focusSeq={focusSeq} context={ctxRes.data} plants={layers.greenery ? plantsRes.data?.data ?? [] : []} planned={planned} soils={layers.soils ? (soilsRes.data?.data as never) : null} greenery={layers.greenery ? (greenRes.data?.data as never) : null} zoneTint={zoneTint} />
+        <SiteMap sites={validSites} eligibility={elig} selectedId={selectedId} onSelect={(id) => select(id, false)} focusSeq={focusSeq} context={ctxRes.data} plants={layers.greenery ? plantsRes.data?.data ?? [] : []} planned={planned} soils={layers.soils ? (soilsRes.data?.data as never) : null} greenery={layers.greenery ? (greenRes.data?.data as never) : null} zoneTint={zoneTint}
+          drawPoints={drawPoints} onDrawPoint={(p) => setDrawPoints((prev) => (prev ? [...prev, p] : prev))} target={target} toolbarExtra={toolbarExtra} />
+        {savedNote && <div className="gp-alert gp-alert--ok gp-map__saved" role="status">{savedNote}</div>}
         <LayerPanel layers={layers} toggle={toggleLayer} loading={soilsRes.loading || greenRes.loading || problemsRes.loading || prioRes.loading}
           priority={layers.priority ? <PriorityControls prio={prio} items={prioRes.data?.items ?? null} names={names} onPick={(id) => select(id, true)} /> : null} />
         <MapLegend osmBase={osmMeta?.osmBase} />
