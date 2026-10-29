@@ -4,7 +4,7 @@ import type { FactorKey, Plant, PlantingProject, SiteContext, Task, Worker } fro
 import { hrefFor } from '../../../shared/router';
 import { ProjectStatusBadge } from '../projects/status';
 import { Bar, Button, CheckBadge, DataClassTag, EligBadge, ErrorNote, EvidenceList, Freshness, MissingList, Modal, PriorityBadge, Section, StateView, TaskStatusBadge } from '../../../shared/ui/components';
-import { t, type Key } from '../../../shared/i18n';
+import { t, tr, type Key } from '../../../shared/i18n';
 import { fmtArea, fmtCoord, fmtDate, fmtDateTime, fmtTime } from '../../../shared/format';
 import { CHECK_KEYS, eligibilityOf, lastCheckAt } from './eligibility';
 import { ChecksForm } from './ChecksForm';
@@ -73,15 +73,15 @@ export function SiteCard({ id, tasks, onClose, onChanged, context, projects, pla
               <span className="gp-muted gp-small">{s.id} · {t('site.version', { v: s.version })}</span>
             </div>
             <Freshness updatedAt={site.updatedAt} error={site.error} loading={site.loading} onRefresh={site.reload} />
-            <div className="gp-zonetabs" role="tablist" aria-label="Разделы зоны">
+            <div className="gp-zonetabs" role="tablist" aria-label={t('site.sections')}>
               {([['overview', 'Обзор'], ...ZONE_TABS] as ['overview' | ZoneTab, string][]).map(([k, label]) => (
-                <button key={k} role="tab" aria-selected={tab === k} onClick={() => setTab(k)}>{label}</button>
+                <button key={k} role="tab" aria-selected={tab === k} onClick={() => setTab(k)}>{tr(label)}</button>
               ))}
             </div>
             {tab !== 'overview' ? <ZoneAnalysisView site={s} tab={tab} options={planOptions} setOptions={setPlanOptions} /> : (<>
 
             <div className="gp-btn-row gp-sitecard__actions">
-              <Button variant="primary" onClick={() => openTask({ objectId: s.id, action: 'inspect', priority: 'medium', description: 'Обследовать участок: границы, доступ, видимые сети, почва. Сделать фото.' })}>＋ {t('site.createSurvey')}</Button>
+              <Button variant="primary" onClick={() => openTask({ objectId: s.id, action: 'inspect', priority: 'medium', description: t('site.surveyDraft') })}>＋ {t('site.createSurvey')}</Button>
               <Button onClick={() => setModal('select')}>❀ {t('site.selectPlants')}</Button>
               <Button onClick={() => setModal('checks')}>✓ {t('site.editChecks')}</Button>
               <Button variant="ghost" onClick={copyLink}>🔗 {copied ? t('site.copied') : t('site.link')}</Button>
@@ -136,7 +136,7 @@ export function SiteCard({ id, tasks, onClose, onChanged, context, projects, pla
               {s.factors.waterAvailability.value === null && <Button variant="ghost" onClick={() => setModal('checks')}>✎ {t('site.water.edit')}</Button>}
             </Section>
 
-            <Section title="Сведения" id="sec-facts">
+            <Section title={t('site.facts')} id="sec-facts">
               <dl className="gp-dl">
                 <dt>{t('site.area')}</dt><dd>{fmtArea(s.areaM2)} <span className="gp-muted gp-small">({t('site.areaMethod')})</span></dd>
                 {s.centroid && <><dt>{t('site.coords')}</dt><dd><code>{fmtCoord(s.centroid.lat, s.centroid.lng)}</code></dd></>}
@@ -148,8 +148,8 @@ export function SiteCard({ id, tasks, onClose, onChanged, context, projects, pla
                   <h4 className="gp-subhead">{t('site.context')}</h4>
                   <dl className="gp-dl gp-small">
                     <dt>{t('site.toGreen')}</dt><dd>{s.context.distanceToGreenM != null ? t('common.m', { n: s.context.distanceToGreenM }) : t('common.unknown')}</dd>
-                    <dt>{t('site.trees')}</dt><dd>{s.context.osmTrees150m ?? t('common.unknown')} <span className="gp-muted">(в OSM деревья нанесены неполно)</span></dd>
-                    <dt>{t('site.social')}</dt><dd>{s.context.socialWithin400m?.length ? s.context.socialWithin400m.join(', ') : 'нет в OSM'}</dd>
+                    <dt>{t('site.trees')}</dt><dd>{s.context.osmTrees150m ?? t('common.unknown')} <span className="gp-muted">{t('site.osmTreesIncomplete')}</span></dd>
+                    <dt>{t('site.social')}</dt><dd>{s.context.socialWithin400m?.length ? s.context.socialWithin400m.join(', ') : t('site.notInOsm')}</dd>
                     <dt>{t('site.stops')}</dt><dd>{s.context.busStops300m ?? t('common.unknown')}</dd>
                   </dl>
                 </>
@@ -167,13 +167,13 @@ export function SiteCard({ id, tasks, onClose, onChanged, context, projects, pla
             </Section>
 
             <Section title={t('site.issues')} id="sec-issues">
-              <StateView loading={issues.loading} error={issues.error} hasData={!!issues.data} onRetry={issues.reload} empty={!!issues.data && issues.data.length === 0} emptyText="Сообщений нет.">
+              <StateView loading={issues.loading} error={issues.error} hasData={!!issues.data} onRetry={issues.reload} empty={!!issues.data && issues.data.length === 0} emptyText={t('site.noIssues')}>
                 <ul className="gp-list">
                   {(issues.data ?? []).map((i) => (
                     <li key={i.id} className="gp-issue">
-                      <div><strong>{i.confirmedObservation ? t(`obs.${i.confirmedObservation.category}` as Key) : 'Сообщение'}</strong> · <span className="gp-muted gp-small">{fmtDateTime(i.createdAt)}, {workers.data?.find((w) => w.id === i.authorId)?.displayName ?? i.authorId}</span></div>
+                      <div><strong>{i.confirmedObservation ? t(`obs.${i.confirmedObservation.category}` as Key) : t('site.issue')}</strong> · <span className="gp-muted gp-small">{fmtDateTime(i.createdAt)}, {workers.data?.find((w) => w.id === i.authorId)?.displayName ?? i.authorId}</span></div>
                       <div>{i.text}</div>
-                      <div className="gp-small gp-muted">Наблюдение работника — не проверка участка. Задание: {i.taskId}</div>
+                      <div className="gp-small gp-muted">{t('site.observationTask', { id: i.taskId })}</div>
                     </li>
                   ))}
                 </ul>

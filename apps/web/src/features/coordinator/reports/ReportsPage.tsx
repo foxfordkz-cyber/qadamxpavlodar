@@ -34,7 +34,7 @@ export function ReportsPage() {
             <label><input type="radio" name="rtab" checked={tab === 'pending'} onChange={() => setTab('pending')} />{t('reports.pending')} ({all.filter((r) => r.reviewStatus === 'pending').length})</label>
             <label><input type="radio" name="rtab" checked={tab === 'reviewed'} onChange={() => setTab('reviewed')} />{t('reports.reviewed')}</label>
           </div>
-          <StateView loading={reports.loading} error={reports.error} hasData={!!reports.data} onRetry={reports.reload} empty={!!reports.data && shown.length === 0} emptyText={t('reports.empty')} emptyAction={<a className="gp-btn" href={hrefFor('/tasks')}>План работ: назначить задание</a>}>
+          <StateView loading={reports.loading} error={reports.error} hasData={!!reports.data} onRetry={reports.reload} empty={!!reports.data && shown.length === 0} emptyText={t('reports.empty')} emptyAction={<a className="gp-btn" href={hrefFor('/tasks')}>{t('empty.assignTask')}</a>}>
             <ul className="gp-list">
               {shown.map((r) => {
                 const task = taskOf(r);

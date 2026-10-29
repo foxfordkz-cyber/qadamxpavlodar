@@ -28,7 +28,7 @@ function ProjectList() {
   return (
     <div className="gp-page">
       <PageHeader eyebrow={t('projects.eyebrow')} title={t('projects.title')} lead={t('projects.howTo')} actions={<><a className="gp-btn" href={hrefFor('/guide')}>{t('nav.guide')}</a><a className="gp-btn gp-btn--primary" href={hrefFor('/map')}>{t('projects.pickOnMap')}</a><Freshness updatedAt={projects.updatedAt} error={projects.error} loading={projects.loading} onRefresh={projects.reload} /></>} />
-      <StateView loading={projects.loading} error={projects.error} hasData={!!projects.data} onRetry={projects.reload} empty={!!projects.data && list.length === 0} emptyText={t('projects.empty')} emptyAction={<a className="gp-btn gp-btn--primary" href={hrefFor('/map')}>Выбрать участок на карте</a>}>
+      <StateView loading={projects.loading} error={projects.error} hasData={!!projects.data} onRetry={projects.reload} empty={!!projects.data && list.length === 0} emptyText={t('projects.empty')} emptyAction={<a className="gp-btn gp-btn--primary" href={hrefFor('/map')}>{t('empty.chooseSite')}</a>}>
         <div className="gp-tiles">
           {list.map((p) => <ProjectTile key={p.id} p={p} site={siteName.get(p.siteId) ?? p.siteId} />)}
         </div>

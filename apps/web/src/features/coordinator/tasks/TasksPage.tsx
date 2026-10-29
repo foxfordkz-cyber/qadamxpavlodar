@@ -48,7 +48,7 @@ export function TasksPage() {
           <section className="gp-card gp-tasks__unassigned" aria-labelledby="unassigned-h">
             <div className="gp-section__head"><h2 id="unassigned-h"><span aria-hidden="true">⚠ </span>{t('tasks.unassigned')}: {unassigned.length}</h2></div>
             <p className="gp-small gp-muted">{t('tasks.unassignedNote')}</p>
-            {unassigned.length === 0 ? <p className="gp-muted">{t('tasks.empty')} <a href={hrefFor('/map')}>Задание на обследование создаётся в карточке участка на карте →</a></p> : (
+            {unassigned.length === 0 ? <p className="gp-muted">{t('tasks.empty')} <a href={hrefFor('/map')}>{t('empty.surveyTask')}</a></p> : (
               <ul className="gp-list">
                 {unassigned.map((x) => <TaskRow key={x.id} task={x} site={siteById.get(x.objectId)} brigades={brigades.data ?? []} onChanged={() => { tasks.reload(); plan.reload(); }} reason={t('tasks.reason.noBrigade')} />)}
               </ul>
@@ -147,7 +147,7 @@ function BrigadeColumn({ brigade, people, tasks, siteById, date, changed }: { br
       </div>
       <dl className="gp-dl gp-small">
         <dt>{t('tasks.foreman')}</dt><dd>{nm(brigade.foremanId)}</dd>
-        <dt>{t('tasks.members')}</dt><dd>{brigade.memberIds.map((id) => `${nm(id)}${people.get(id)?.active === false ? ' (нет смены)' : ''}`).join(', ')}</dd>
+        <dt>{t('tasks.members')}</dt><dd>{brigade.memberIds.map((id) => `${nm(id)}${people.get(id)?.active === false ? ` (${t('tasks.noShift')})` : ''}`).join(', ')}</dd>
         <dt>{t('form.equipment')}</dt><dd>{brigade.equipment.join(', ') || t('common.unknown')}</dd>
       </dl>
       <div className="gp-worker__load">
@@ -221,7 +221,7 @@ function TaskRow({ task, site, brigades, onChanged, reason }: { task: Task; site
           <label className="gp-sr" htmlFor={`as-${task.id}`}>{t('form.brigade')}</label>
           <select id={`as-${task.id}`} className="gp-input" value={brigadeId} onChange={(e) => setBrigadeId(e.target.value)}>
             <option value="">{t('form.brigade')}…</option>
-            {brigades.map((b) => <option key={b.id} value={b.id} disabled={!b.active || !b.skills.includes(task.action)}>{b.name}{!b.skills.includes(task.action) ? ' — нет навыка' : ''}</option>)}
+            {brigades.map((b) => <option key={b.id} value={b.id} disabled={!b.active || !b.skills.includes(task.action)}>{b.name}{!b.skills.includes(task.action) ? ` — ${t('tasks.noSkill')}` : ''}</option>)}
           </select>
           <label className="gp-sr" htmlFor={`mc-${task.id}`}>{t('form.minCrew')}</label>
           <input id={`mc-${task.id}`} className="gp-input" inputMode="numeric" value={minCrew} onChange={(e) => setMinCrew(e.target.value)} aria-label={t('form.minCrew')} title={t('form.minCrew')} />

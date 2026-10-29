@@ -33,7 +33,7 @@ export function ApprovalPage() {
         <aside className="gp-card gp-reports__list">
           <StateView loading={projects.loading} error={projects.error} hasData={!!projects.data} onRetry={projects.reload}>
             <h2 className="gp-eyebrow gp-pad">{t('approval.queue')} · {queue.length}</h2>
-            {queue.length === 0 && <p className="gp-muted gp-pad">{t('approval.empty')} <a href={hrefFor('/projects')}>Все проекты озеленения →</a></p>}
+            {queue.length === 0 && <p className="gp-muted gp-pad">{t('approval.empty')} <a href={hrefFor('/projects')}>{t('empty.allProjects')}</a></p>}
             <ul className="gp-list">{queue.map((p) => <Row key={p.id} p={p} site={siteName(p.siteId)} selected={p.id === selected?.id} />)}</ul>
             {done.length > 0 && <><h2 className="gp-eyebrow gp-pad">{t('approval.done')}</h2><ul className="gp-list">{done.map((p) => <Row key={p.id} p={p} site={siteName(p.siteId)} selected={p.id === selected?.id} />)}</ul></>}
           </StateView>

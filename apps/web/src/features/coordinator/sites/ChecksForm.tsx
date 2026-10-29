@@ -31,8 +31,8 @@ export function ChecksForm({ site, onSaved, onCancel }: { site: CandidateSite; o
     for (const k of changedChecks) if (draft[k].state !== 'unknown' && !draft[k].comment.trim()) e[k] = t('checks.commentRequired');
     if (waterChanged) {
       const v = Number(water);
-      if (water.trim() && (!Number.isFinite(v) || v < 0 || v > 100)) e.water = '0–100 или пусто';
-      if (!waterNote.trim()) e.waterNote = 'Укажите источник значения.';
+      if (water.trim() && (!Number.isFinite(v) || v < 0 || v > 100)) e.water = t('checks.waterRange');
+      if (!waterNote.trim()) e.waterNote = t('checks.waterSource');
     }
     setErrors(e);
     return !Object.keys(e).length;
@@ -81,16 +81,16 @@ export function ChecksForm({ site, onSaved, onCancel }: { site: CandidateSite; o
           <strong>{t('conflict.title')}.</strong> {t('conflict.text', { v: conflict.version })}
           <ul className="gp-small">
             {CHECK_KEYS.filter((k) => conflict.checks[k].state !== base.checks[k].state || conflict.checks[k].comment !== base.checks[k].comment).map((k) => (
-              <li key={k}>{t(`check.${k}` as Key)}: на сервере <CheckBadge state={conflict.checks[k].state} /> {conflict.checks[k].comment ?? ''} ({conflict.checks[k].checkedBy ?? '—'})</li>
+              <li key={k}>{t(`check.${k}` as Key)}: {t('checks.onServer')} <CheckBadge state={conflict.checks[k].state} /> {conflict.checks[k].comment ?? ''} ({conflict.checks[k].checkedBy ?? '—'})</li>
             ))}
           </ul>
           <Button type="button" onClick={() => { setBase(conflict); setConflict(null); setError(null); }}>{t('conflict.reload')}</Button>
-          <div className="gp-small">{t('conflict.reloadHint')} Ваши введённые значения сохранены в форме.</div>
+          <div className="gp-small">{t('conflict.reloadHint')} {t('checks.keptInputs')}</div>
         </div>
       )}
       {CHECK_KEYS.map((k) => (
         <fieldset key={k} className="gp-fieldset">
-          <legend>{t(`check.${k}` as Key)} <span className="gp-muted gp-small">· сейчас: </span><CheckBadge state={base.checks[k].state} /></legend>
+          <legend>{t(`check.${k}` as Key)} <span className="gp-muted gp-small">· {t('checks.current')} </span><CheckBadge state={base.checks[k].state} /></legend>
           <div className="gp-segment" role="radiogroup" aria-label={t(`check.${k}` as Key)}>
             {(['unknown', 'cleared', 'blocked'] as CheckState[]).map((st) => (
               <label key={st}>
@@ -107,11 +107,11 @@ export function ChecksForm({ site, onSaved, onCancel }: { site: CandidateSite; o
       <fieldset className="gp-fieldset">
         <legend>{t('factor.waterAvailability')}</legend>
         <div className="gp-grid-2">
-          <Field label={t('checks.water')} error={errors.water} hint="Оставьте пустым, если неизвестно — это не ноль.">
+          <Field label={t('checks.water')} error={errors.water} hint={t('checks.waterUnknown')}>
             {(id, d) => <input id={id} aria-describedby={d} className="gp-input" inputMode="numeric" value={water} onChange={(e) => setWater(e.target.value)} />}
           </Field>
           <Field label={t('checks.waterNote')} required={waterChanged} error={errors.waterNote}>
-            {(id, d) => <input id={id} aria-describedby={d} className="gp-input" value={waterNote} onChange={(e) => setWaterNote(e.target.value)} placeholder="Например: осмотр 27.10, кран во дворе" />}
+            {(id, d) => <input id={id} aria-describedby={d} className="gp-input" value={waterNote} onChange={(e) => setWaterNote(e.target.value)} placeholder={t('checks.waterExample')} />}
           </Field>
         </div>
       </fieldset>

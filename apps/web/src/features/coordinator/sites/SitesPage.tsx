@@ -9,6 +9,7 @@ import { LazySiteMap as SiteMap } from '../map/LazySiteMap';
 import { validateSiteGeometry } from '../map/geo';
 import { applyFilters, download, emptyFilters, isFiltered, sitesToCsv, type SiteFilters } from './filters';
 import { eligibilityOf } from './eligibility';
+import { highlightTitle } from './highlightTitle';
 import { SiteCard } from './SiteCard';
 import { Metrics } from '../dashboard/Metrics';
 import type { PriorityItem } from '../../../shared/analytics/city';
@@ -24,12 +25,12 @@ export function SitesPage() {
   const selectedId = route.params.get('site');
   // Зоны из ответа ассистента или дорожной карты (#/map?hl=id1,id2&hlt=заголовок) — подсветка переживает выбор зоны.
   const hlKey = route.params.get('hl') ?? '';
-  const hlTitle = route.params.get('hlt') || 'Зоны из ответа ассистента';
+  const hlTitle = highlightTitle(route.params.get('hlt'), route.params.get('hlb'));
   const hlIds = useMemo(() => hlKey.split(',').filter(Boolean).slice(0, 30), [hlKey]);
   const [hlSeq, setHlSeq] = useState(0);
   useEffect(() => { if (hlKey) setHlSeq((x) => x + 1); }, [hlKey]);
   const highlight = useMemo(() => (hlIds.length ? { ids: hlIds, seq: hlSeq } : null), [hlIds, hlSeq]);
-  const keepHl = hlKey ? { hl: hlKey, hlt: route.params.get('hlt') } : {};
+  const keepHl = hlKey ? { hl: hlKey, hlt: route.params.get('hlt'), hlb: route.params.get('hlb') } : {};
   const clearHl = () => navigate('/map', { site: selectedId }, true);
   // Машина времени включается во вкладке «Эффект» карточки, а посадка растёт здесь, на карте, — только у открытой зоны.
   const tm = useTimeMachine();
@@ -106,14 +107,14 @@ export function SitesPage() {
     <DrawBar points={drawPoints} onUndo={() => setDrawPoints((p) => (p ? p.slice(0, -1) : p))} onCancel={() => setDrawPoints(null)}
       onSaved={(site, note) => {
         setDrawPoints(null);
-        setSavedNote(`Зона «${site.name}» сохранена (${site.id}).${note ? ` ${note}` : ''}`);
+        setSavedNote(t('sites.saved', { name: site.name, id: site.id }) + (note ? ` ${note}` : ''));
         sitesRes.reload();
         select(site.id, true);
       }} />
   ) : (
     <>
       <MapSearch onPick={pickPlace} />
-      {canDraw && <button type="button" className="gp-btn gp-btn--secondary" onClick={() => { setSavedNote(null); setDrawPoints([]); setTab('map'); }} title="Обвести участок на карте: углы контура — кликами">✎ Нарисовать зону</button>}
+      {canDraw && <button type="button" className="gp-btn gp-btn--secondary" onClick={() => { setSavedNote(null); setDrawPoints([]); setTab('map'); }} title={t('sites.drawTitle')}>✎ {t('sites.draw')}</button>}
     </>
   );
   useEffect(() => {
@@ -178,24 +179,24 @@ export function SitesPage() {
 
       <section className="gp-sites__map" aria-label={t('map.title')}>
         {badGeometry.length > 0 && (
-          <div className="gp-alert gp-alert--bad" role="alert">Не показаны на карте из-за координат: {badGeometry.map(([s, e]) => `${s.id} (${e})`).join('; ')}</div>
+          <div className="gp-alert gp-alert--bad" role="alert">{t('sites.badGeometry', { list: badGeometry.map(([s, e]) => `${s.id} (${e})`).join('; ') })}</div>
         )}
         <SiteMap sites={validSites} eligibility={elig} selectedId={selectedId} onSelect={(id) => select(id, false)} focusSeq={focusSeq} context={ctxRes.data} plants={layers.greenery ? plantsRes.data?.data ?? [] : []} planned={planned} soils={layers.soils ? (soilsRes.data?.data as never) : null} greenery={layers.greenery ? (greenRes.data?.data as never) : null} zoneTint={zoneTint}
           drawPoints={drawPoints} onDrawPoint={(p) => setDrawPoints((prev) => (prev ? [...prev, p] : prev))} target={target} toolbarExtra={toolbarExtra} highlight={highlight} growth={growth} />
         {savedNote && <div className="gp-alert gp-alert--ok gp-map__saved" role="status">{savedNote}</div>}
         {growth && (
-          <div className="gp-tm-bar gp-card" role="group" aria-label="Машина времени: год после посадки">
+          <div className="gp-tm-bar gp-card" role="group" aria-label={t('timeMachine.barLabel')}>
             <strong aria-hidden="true">⏳</strong>
             <div className="gp-segment">
-              {GROWTH_YEARS.map((y) => <label key={y}><input type="radio" name="tm-bar" checked={tm.year === y} onChange={() => timeMachine.setYear(y)} />{YEAR_LABEL[y]}</label>)}
+              {GROWTH_YEARS.map((y) => <label key={y}><input type="radio" name="tm-bar" checked={tm.year === y} onChange={() => timeMachine.setYear(y)} />{t(YEAR_LABEL[y])}</label>)}
             </div>
-            <button className="gp-icon-btn" onClick={() => timeMachine.hide()} aria-label="Скрыть машину времени">✕</button>
+            <button className="gp-icon-btn" onClick={() => timeMachine.hide()} aria-label={t('timeMachine.hide')}>✕</button>
           </div>
         )}
         {highlight && (
           <div className="gp-hl-pill gp-card" role="status">
             <span className="gp-hl__n" aria-hidden="true">{hlIds.length}</span><span>{hlTitle}</span>
-            <button className="gp-icon-btn" onClick={clearHl} aria-label="Убрать подсветку зон">✕</button>
+            <button className="gp-icon-btn" onClick={clearHl} aria-label={t('highlight.clearLabel')}>✕</button>
           </div>
         )}
         <LayerPanel layers={layers} toggle={toggleLayer} loading={soilsRes.loading || greenRes.loading || problemsRes.loading || prioRes.loading}
@@ -207,7 +208,7 @@ export function SitesPage() {
       {selectedId && (
         <aside className={`gp-sites__card gp-card ${sheetFull ? 'is-full' : ''}`} aria-label={t('site.card')}>
           <button className="gp-sheet__handle" aria-expanded={sheetFull} onClick={() => setSheetFull((v) => !v)}>
-            <span aria-hidden="true" />{sheetFull ? 'Свернуть карточку — показать карту' : 'Развернуть карточку'}
+            <span aria-hidden="true" />{sheetFull ? t('sites.sheetCollapse') : t('sites.sheetExpand')}
           </button>
           <SiteCard id={selectedId} tasks={tasks.filter((x) => x.objectId === selectedId)} onClose={() => navigate('/map', keepHl, true)} onChanged={() => { sitesRes.reload(); tasksRes.reload(); }}
             context={{ data: ctxRes.data ?? null, error: ctxRes.error, loading: ctxRes.loading, radius, setRadius, reload: ctxRes.reload }}
@@ -215,9 +216,9 @@ export function SitesPage() {
         </aside>
       )}
 
-      <div className="gp-sites__tabs" role="tablist" aria-label="Вид">
-        <button role="tab" aria-selected={tab === 'list'} onClick={() => setTab('list')}>☰ Список</button>
-        <button role="tab" aria-selected={tab === 'map'} onClick={() => setTab('map')}>◫ Карта</button>
+      <div className="gp-sites__tabs" role="tablist" aria-label={t('sites.view')}>
+        <button role="tab" aria-selected={tab === 'list'} onClick={() => setTab('list')}>☰ {t('sites.list')}</button>
+        <button role="tab" aria-selected={tab === 'map'} onClick={() => setTab('map')}>◫ {t('sites.map')}</button>
       </div>
     </div>
   );
@@ -244,15 +245,15 @@ function FirstRunHint({ canDraw }: { canDraw: boolean }) {
   if (!open) return null;
   return (
     <section className="gp-firstrun gp-card" aria-labelledby="firstrun-h">
-      <h2 id="firstrun-h" className="gp-subhead">Три шага, чтобы начать</h2>
+      <h2 id="firstrun-h" className="gp-subhead">{t('firstRun.title')}</h2>
       <ol>
-        <li><strong>Выберите зону</strong> на карте или в списке{canDraw ? ' — или обведите свою кнопкой «✎ Нарисовать зону»' : ''}. Адрес ищется строкой над картой.</li>
-        <li><strong>Посмотрите расчёт</strong> в карточке: растения, смета, приживаемость, уход, эффект. В «Эффекте» машина времени покажет зону через 20 лет.</li>
-        <li><strong>Спросите ассистента</strong> (✦ внизу справа), например «Что озеленить на 50 млн?» — зоны появятся на карте с номерами очереди.</li>
+        <li><strong>{t('firstRun.chooseTitle')}</strong> {t('firstRun.choose')}{canDraw && <> {t('firstRun.draw')}</>}</li>
+        <li><strong>{t('firstRun.analysisTitle')}</strong> {t('firstRun.analysis')}</li>
+        <li><strong>{t('firstRun.askTitle')}</strong> {t('firstRun.ask')}</li>
       </ol>
       <div className="gp-btn-row">
-        <button className="gp-btn gp-btn--primary" onClick={close} autoFocus>Понятно, начать</button>
-        <a className="gp-btn gp-btn--ghost" href={hrefFor('/guide')} onClick={close}>Подробный гайд</a>
+        <button className="gp-btn gp-btn--primary" onClick={close} autoFocus>{t('firstRun.start')}</button>
+        <a className="gp-btn gp-btn--ghost" href={hrefFor('/guide')} onClick={close}>{t('firstRun.guide')}</a>
       </div>
     </section>
   );
@@ -264,7 +265,7 @@ function HighlightList({ title, ids, names, selectedId, onPick, onClear }: { tit
     <section className="gp-hl" aria-label={title}>
       <div className="gp-hl__head">
         <strong>{title}</strong>
-        <button className="gp-btn gp-btn--ghost" onClick={onClear}>✕ Убрать с карты</button>
+        <button className="gp-btn gp-btn--ghost" onClick={onClear}>✕ {t('highlight.clear')}</button>
       </div>
       <ol className="gp-hl__list">
         {ids.map((id, i) => (
@@ -304,19 +305,19 @@ const PRIO_SCALE: [string, string][] = [['#1f6e3a', '70+'], ['#4f9a3f', '55–69
 function PriorityControls({ prio, items, names, onPick }: { prio: ReturnType<typeof usePriorityWeights>; items: PriorityItem[] | null; names: Map<string, string>; onPick: (id: string) => void }) {
   return (
     <div className="gp-layers__prio">
-      <div className="gp-layers__scale" aria-label="Шкала индекса приоритета">
+      <div className="gp-layers__scale" aria-label={t('layers.priorityScale')}>
         {PRIO_SCALE.map(([c, l]) => <span key={l}><i style={{ background: c }} aria-hidden="true" />{l}</span>)}
       </div>
       <details open>
-        <summary>Веса факторов</summary>
+        <summary>{t('layers.weights')}</summary>
         <WeightSliders weights={prio.weights} onChange={prio.setWeights} idPrefix="mw" />
         <div className="gp-layers__row">
-          {!prio.isDefault && <button className="gp-btn gp-btn--ghost" onClick={prio.reset}>По умолчанию</button>}
-          <a className="gp-small" href={hrefFor('/priorities')}>Бюджет и дорожная карта →</a>
+          {!prio.isDefault && <button className="gp-btn gp-btn--ghost" onClick={prio.reset}>{t('layers.default')}</button>}
+          <a className="gp-small" href={hrefFor('/priorities')}>{t('layers.budget')}</a>
         </div>
       </details>
       {items && items.length > 0 && (
-        <ol className="gp-layers__top" aria-label="Первые по приоритету">
+        <ol className="gp-layers__top" aria-label={t('highlight.priority')}>
           {items.slice(0, 3).map((it) => (
             <li key={it.siteId}><button className="gp-link" onClick={() => onPick(it.siteId)}>{names.get(it.siteId) ?? it.siteId}</button> <strong>{it.index}</strong></li>
           ))}
@@ -329,18 +330,18 @@ function PriorityControls({ prio, items, names, onPick }: { prio: ReturnType<typ
 /** ТЗ 3.1.3: многослойная карта — пользователь включает и отключает слои. */
 function LayerPanel({ layers, toggle, loading, priority }: { layers: LayerState; toggle: (k: keyof LayerState) => void; loading: boolean; priority?: ReactNode }) {
   const rows: [keyof LayerState, string, string][] = [
-    ['soils', 'Почвы (засоление)', 'синтетический слой до карты почв организатора'],
-    ['greenery', 'Существующая зелень', 'OSM: парки, скверы, деревья'],
-    ['problems', 'Проблемные зоны', 'красный — высокая, оранжевый — средняя острота'],
-    ['priority', 'Приоритет', 'темнее — выше индекс'],
-    ['proposed', 'Предлагаемые посадки', 'позиции проектов, ещё не посаженные'],
+    ['soils', t('layers.soils'), t('layers.soilsHint')],
+    ['greenery', t('layers.greenery'), t('layers.greeneryHint')],
+    ['problems', t('highlight.problems'), t('layers.problemsHint')],
+    ['priority', t('layers.priority'), t('layers.priorityHint')],
+    ['proposed', t('layers.proposed'), t('layers.proposedHint')],
   ];
   return (
     <details className="gp-layers gp-card" open={!matchMedia('(max-width: 760px)').matches}>
-      <summary><strong>Слои</strong> {loading && <span className="gp-spinner" aria-label="Загрузка слоя" />}</summary>
+      <summary><strong>{t('layers.title')}</strong> {loading && <span className="gp-spinner" aria-label={t('layers.loading')} />}</summary>
       {rows.map(([k, label, hint]) => (
         <Fragment key={k}>
-          <label className="gp-check" title={hint}><input type="checkbox" checked={layers[k]} onChange={() => toggle(k)} />{label}{k === 'soils' && <span className="gp-badge gp-badge--demo">синтетика</span>}</label>
+          <label className="gp-check" title={hint}><input type="checkbox" checked={layers[k]} onChange={() => toggle(k)} />{label}{k === 'soils' && <span className="gp-badge gp-badge--demo">{t('layers.synthetic')}</span>}</label>
           {k === 'priority' && priority}
         </Fragment>
       ))}
@@ -357,9 +358,9 @@ function SiteRow({ s, tasks, selected, onSelect }: { s: CandidateSite; tasks: Ta
         <span className="gp-list-item__meta">
           <span>{fmtArea(s.areaM2)}</span>
           <span>· {s.id}</span>
-          {open > 0 && <span>· заданий: {open}</span>}
-          {!!s.context?.hints?.length && <span title={s.context.hints.join(' ')}>· <span aria-hidden="true">⚠</span> подсказки: {s.context.hints.length}</span>}
-          {s.isDemo && <span>· демо</span>}
+          {open > 0 && <span>· {t('sites.taskCount', { n: open })}</span>}
+          {!!s.context?.hints?.length && <span title={s.context.hints.join(' ')}>· <span aria-hidden="true">⚠</span> {t('sites.hintCount', { n: s.context.hints.length })}</span>}
+          {s.isDemo && <span>· {t('data.demo')}</span>}
         </span>
       </button>
     </li>
@@ -421,7 +422,7 @@ function MapLegend({ osmBase }: { osmBase?: string }) {
           <li key={sw}><span className={`gp-swatch gp-swatch--${sw}`} aria-hidden="true" /> {t(mode === 'full' ? full : short)}</li>
         ))}
       </ul>
-      {mode === 'full' && <p className="gp-small gp-muted">{t('map.osmCandidatesNote')}{osmBase ? ` Снимок OSM: ${osmBase.slice(0, 10)}.` : ''} {t('legend.resizeHint')}</p>}
+      {mode === 'full' && <p className="gp-small gp-muted">{t('map.osmCandidatesNote')}{osmBase ? t('sites.osmSnapshot', { date: osmBase.slice(0, 10) }) : ''} {t('legend.resizeHint')}</p>}
     </section>
   );
 }

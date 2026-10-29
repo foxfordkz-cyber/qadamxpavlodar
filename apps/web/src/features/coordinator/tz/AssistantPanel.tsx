@@ -1,3 +1,5 @@
+import { t, type Key } from '../../../shared/i18n';
+import type { HighlightTitleKey } from '../sites/highlightTitle';
 import { useEffect, useRef, useState } from 'react';
 import { useData } from '../../../shared/api/DataProvider';
 import { ApiError } from '../../../shared/api/transport';
@@ -6,42 +8,42 @@ import { MethodLine, MethodTag } from '../../../shared/ui/components';
 import { hrefFor, navigate, useRoute } from '../../../shared/router';
 import { mapView } from '../map/mapView';
 
-const EXAMPLES = [
-  'Какие участки требуют озеленения в первую очередь?',
-  'Подбери растения для этой зоны и посчитай стоимость на 3 года',
-  'Какая будет приживаемость, если заменить сирень на карагану?',
-  'Что можно озеленить на 50 млн при максимальном эффекте?',
-  'Где проблемные зоны?',
-  'Бірінші кезекте қай аумақтарды көгалдандыру керек?',
+const EXAMPLES: Key[] = [
+  'assistant.example1',
+  'assistant.example2',
+  'assistant.example3',
+  'assistant.example4',
+  'assistant.example5',
+  'assistant.example6',
 ];
 
 // Заголовок подсветки на карте — по тому, что посчитано (правила: intent; модель: первая вызванная функция).
-const MAP_TITLE: Record<string, string> = {
-  budget: 'Дорожная карта бюджета', budget_roadmap: 'Дорожная карта бюджета', priority: 'Первые по приоритету', top_priorities: 'Первые по приоритету',
-  problems: 'Проблемные зоны', find_problems: 'Проблемные зоны', search_zones: 'Найденные зоны',
+const MAP_TITLE: Record<string, HighlightTitleKey> = {
+  budget: 'highlight.budget', budget_roadmap: 'highlight.budget', priority: 'highlight.priority', top_priorities: 'highlight.priority',
+  problems: 'highlight.problems', find_problems: 'highlight.problems', search_zones: 'highlight.found',
 };
 /** Параметры карты для зон ответа: номера на карте идут в порядке ответа (очередь, рейтинг). */
-const mapParams = (reply: AssistantReply) => ({ hl: reply.zones.map((z) => z.id).join(','), hlt: MAP_TITLE[reply.intent] ?? 'Зоны из ответа ассистента' });
+const mapParams = (reply: AssistantReply) => ({ hl: reply.zones.map((z) => z.id).join(','), hlt: MAP_TITLE[reply.intent] ?? 'highlight.assistant' });
 
 interface Msg { role: 'user' | 'bot'; text: string; reply?: AssistantReply; error?: boolean }
 
-const TOOL_LABEL: Record<string, string> = {
-  search_zones: 'поиск зон', analyze_zone: 'расчёт зоны', compare_variants: 'сравнение вариантов', top_priorities: 'приоритеты',
-  budget_roadmap: 'дорожная карта под бюджет', find_problems: 'проблемные зоны', search_knowledge: 'поиск по справочникам', find_place: 'поиск места',
+const TOOL_LABEL: Record<string, Key> = {
+  search_zones: 'assistant.tool.search', analyze_zone: 'assistant.tool.analyze', compare_variants: 'assistant.tool.compare', top_priorities: 'assistant.tool.priorities',
+  budget_roadmap: 'assistant.tool.budget', find_problems: 'assistant.tool.problems', search_knowledge: 'assistant.tool.knowledge', find_place: 'assistant.tool.place',
 };
 
 /** Чем подтверждён ответ: метод, вызванные расчёты и источники — видно под каждым ответом. */
 function ReplyProof({ reply }: { reply: AssistantReply }) {
-  const calls = [...new Set((reply.toolCalls ?? []).map((c) => TOOL_LABEL[c.name] ?? c.name))];
+  const calls = [...new Set((reply.toolCalls ?? []).map((c) => TOOL_LABEL[c.name] ? t(TOOL_LABEL[c.name]) : c.name))];
   return (
     <div className="gp-assist__proof gp-small">
       <MethodTag method={reply.method} />
-      {reply.method === 'model' && <span className="gp-muted">{reply.model ? `${reply.model} · ` : ''}цифры — из расчётов системы</span>}
+      {reply.method === 'model' && <span className="gp-muted">{reply.model ? `${reply.model} · ` : ''}{t('assistant.systemFigures')}</span>}
       {reply.reserveReason && <p className="gp-muted">{reply.reserveReason}</p>}
       {reply.fallbackReason && <p className="gp-muted">{reply.fallbackReason}</p>}
-      {calls.length > 0 && <p>Посчитано: {calls.join(', ')}.</p>}
+      {calls.length > 0 && <p>{t('assistant.calculated', { calls: calls.join(', ') })}</p>}
       {!!reply.sources?.length && (
-        <p>Источники: {reply.sources.map((s, i) => <span key={s.id}>{i > 0 && '; '}{s.url ? <a href={s.url} target="_blank" rel="noreferrer noopener">{s.label}</a> : s.label}</span>)}</p>
+        <p>{t('assistant.sources')} {reply.sources.map((s, i) => <span key={s.id}>{i > 0 && '; '}{s.url ? <a href={s.url} target="_blank" rel="noreferrer noopener">{s.label}</a> : s.label}</span>)}</p>
       )}
     </div>
   );
@@ -82,27 +84,27 @@ export function AssistantPanel() {
       // Уже на карте — зоны из ответа сразу появляются на ней с номерами; выбранная зона остаётся открытой.
       if (route.path === '/map' && reply.zones.length >= 2) navigate('/map', { site: siteId, ...mapParams(reply) }, true);
     } catch (e) {
-      const msg = e instanceof ApiError && e.status === 503 ? 'Ассистент недоступен. Все разделы — карта, подбор, смета, приоритеты — работают вручную.' : `Не удалось получить ответ: ${(e as Error).message}`;
+      const msg = e instanceof ApiError && e.status === 503 ? t('assistant.unavailable') : t('assistant.error', { error: (e as Error).message });
       setMsgs((m) => [...m, { role: 'bot', text: msg, error: true }]);
     } finally {
       setBusy(false);
     }
   };
 
-  if (!open) return <button className="gp-assist-fab" onClick={() => setOpen(true)} aria-label="Открыть ассистента">✦ Ассистент</button>;
+  if (!open) return <button className="gp-assist-fab" onClick={() => setOpen(true)} aria-label={t('assistant.open')}>✦ {t('assistant.title')}</button>;
   return (
-    <aside className="gp-assist" aria-label="Ассистент по озеленению">
+    <aside className="gp-assist" aria-label={t('assistant.label')}>
       <div className="gp-assist__head">
-        <strong>Ассистент</strong>
-        <span className="gp-small gp-muted">{siteId ? `зона: ${siteId}` : 'зона не выбрана'}</span>
-        <button className="gp-icon-btn" onClick={() => setOpen(false)} aria-label="Закрыть ассистента">✕</button>
+        <strong>{t('assistant.title')}</strong>
+        <span className="gp-small gp-muted">{siteId ? t('assistant.zone', { id: siteId }) : t('assistant.noZone')}</span>
+        <button className="gp-icon-btn" onClick={() => setOpen(false)} aria-label={t('assistant.close')}>✕</button>
       </div>
       <MethodLine method={[...msgs].reverse().find((m) => m.reply)?.reply?.method ?? 'rules'} />
       <div ref={list} className="gp-assist__list" aria-live="polite">
         {msgs.length === 0 && (
           <div className="gp-assist__hello">
-            <p className="gp-small">Спросите про приоритеты, подбор, смету, приживаемость, эффект или бюджет. Отвечаю только цифрами из модулей системы; если данных нет — скажу об этом.</p>
-            {EXAMPLES.map((e) => <button key={e} className="gp-chip gp-chip--btn" onClick={() => send(e)}>{e}</button>)}
+            <p className="gp-small">{t('assistant.hello')}</p>
+            {EXAMPLES.map((e) => <button key={e} className="gp-chip gp-chip--btn" onClick={() => send(t(e))}>{t(e)}</button>)}
           </div>
         )}
         {msgs.map((m, i) => (
@@ -110,19 +112,19 @@ export function AssistantPanel() {
             {m.text.split('\n').map((l, j) => <p key={j}>{l}</p>)}
             {!!m.reply?.zones.length && (
               <div className="gp-assist__zones">
-                {m.reply.zones.map((z, n) => <a key={z.id} className="gp-chip" href={hrefFor('/map', { site: z.id, ...(m.reply!.zones.length >= 2 ? mapParams(m.reply!) : {}) })} title="Открыть карточку зоны">{m.reply!.zones.length >= 2 ? `${n + 1}.` : '📍'} {z.name}</a>)}
-                {m.reply.zones.length >= 2 && <button className="gp-btn gp-btn--secondary gp-assist__map" onClick={() => navigate('/map', mapParams(m.reply!))}>🗺 Показать все на карте ({m.reply.zones.length})</button>}
+                {m.reply.zones.map((z, n) => <a key={z.id} className="gp-chip" href={hrefFor('/map', { site: z.id, ...(m.reply!.zones.length >= 2 ? mapParams(m.reply!) : {}) })} title={t('assistant.openZone')}>{m.reply!.zones.length >= 2 ? `${n + 1}.` : '📍'} {z.name}</a>)}
+                {m.reply.zones.length >= 2 && <button className="gp-btn gp-btn--secondary gp-assist__map" onClick={() => navigate('/map', mapParams(m.reply!))}>🗺 {t('assistant.showMap', { n: m.reply.zones.length })}</button>}
               </div>
             )}
             {m.reply && <ReplyProof reply={m.reply} />}
           </div>
         ))}
-        {busy && <div className="gp-assist__msg gp-assist__msg--bot"><span className="gp-spinner" aria-label="Ассистент думает" /></div>}
+        {busy && <div className="gp-assist__msg gp-assist__msg--bot"><span className="gp-spinner" aria-label={t('assistant.thinking')} /></div>}
       </div>
       <form className="gp-assist__form" onSubmit={(e) => { e.preventDefault(); send(q); }}>
-        <label className="gp-sr" htmlFor="assist-q">Вопрос ассистенту</label>
-        <textarea id="assist-q" ref={input} className="gp-input" rows={2} value={q} placeholder="Например: подбери растения для сквера" onChange={(e) => setQ(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(q); } }} />
-        <button className="gp-btn gp-btn--primary" type="submit" disabled={busy || !q.trim()}>Спросить</button>
+        <label className="gp-sr" htmlFor="assist-q">{t('assistant.question')}</label>
+        <textarea id="assist-q" ref={input} className="gp-input" rows={2} value={q} placeholder={t('assistant.placeholder')} onChange={(e) => setQ(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(q); } }} />
+        <button className="gp-btn gp-btn--primary" type="submit" disabled={busy || !q.trim()}>{t('assistant.ask')}</button>
       </form>
     </aside>
   );

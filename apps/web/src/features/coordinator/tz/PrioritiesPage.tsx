@@ -1,3 +1,4 @@
+import type { HighlightTitleKey } from '../sites/highlightTitle';
 import { t } from '../../../shared/i18n';
 import { tr } from '../../../shared/i18n';
 import { useMemo, useState } from 'react';
@@ -23,12 +24,12 @@ export function PrioritiesPage() {
   const items = res.data?.items ?? [];
   const chosen = new Set((res.data?.roadmap?.chosen ?? []).map((c) => c.siteId));
   // Номера на карте — место в рейтинге или в очереди дорожной карты.
-  const showOnMap = (ids: string[], title: string) => navigate('/map', { hl: ids.slice(0, 30).join(','), hlt: title });
+  const showOnMap = (ids: string[], title: HighlightTitleKey, budget?: string) => navigate('/map', { hl: ids.slice(0, 30).join(','), hlt: title, hlb: budget });
   const csv = () => download('priorities.csv', '﻿' + ['Место;Зона;ID;Индекс;' + FACTORS.map((f) => tr(PRIORITY_LABEL[f])).join(';') + ';Смета, ₸;CO₂ через 20 лет, т/год;В дорожной карте', ...items.map((it, i) => [i + 1, name.get(it.siteId), it.siteId, it.index, ...FACTORS.map((f) => it.factors[f]), Math.round(it.cost), it.co2t20.toFixed(2), chosen.has(it.siteId) ? tr("да") : tr("нет")].join(';'))].join('\n'));
 
   return (
     <div className="gp-page">
-      <PageHeader eyebrow={tr("Очерёдность озеленения")} title={tr("Приоритеты")} lead={tr("Индекс приоритета 0–100 по факторам ТЗ. Меняйте веса — рейтинг пересчитывается сразу. Задайте бюджет — система предложит, какие зоны озеленить в первую очередь.")} actions={<><button className="gp-btn gp-btn--secondary" disabled={!items.length} onClick={() => showOnMap(items.slice(0, 10).map((it) => it.siteId), 'Первые 10 по приоритету')}>🗺 Топ-10 на карте</button><button className="gp-btn" onClick={csv}>⤓ Excel (CSV)</button></>} />
+      <PageHeader eyebrow={tr("Очерёдность озеленения")} title={tr("Приоритеты")} lead={tr("Индекс приоритета 0–100 по факторам ТЗ. Меняйте веса — рейтинг пересчитывается сразу. Задайте бюджет — система предложит, какие зоны озеленить в первую очередь.")} actions={<><button className="gp-btn gp-btn--secondary" disabled={!items.length} onClick={() => showOnMap(items.slice(0, 10).map((it) => it.siteId), 'highlight.top10')}>🗺 {t('priorities.topMap')}</button><button className="gp-btn" onClick={csv}>⤓ Excel (CSV)</button></>} />
       <div className="gp-ranking">
         <section className="gp-card gp-ranking__weights" aria-labelledby="w-h">
           <h2 id="w-h">{tr("Веса факторов")}</h2>
@@ -44,7 +45,7 @@ export function PrioritiesPage() {
               <p><strong>{res.data.roadmap.chosen.length}</strong>{" "}{tr("зон за")}{" "}<strong>{money(res.data.roadmap.spent)}</strong>{tr(", остаток")}{" "}{money(res.data.roadmap.left)}.</p>
               <p className="gp-small">{tr("CO₂ через 20 лет: ≈")}{res.data.roadmap.co2t20.toFixed(1)}{" "}{tr("т/год (оценка).")}</p>
               <p className="gp-small gp-muted">{res.data.roadmap.method}{" "}{tr("Сметы — вариант «оптимальный», демо-расценки.")}</p>
-              {res.data.roadmap.chosen.length > 0 && <Button variant="primary" onClick={() => showOnMap(res.data!.roadmap!.chosen.map((c) => c.siteId), `Дорожная карта · ${budget} млн ₸`)}>🗺 Показать очередь на карте</Button>}
+              {res.data.roadmap.chosen.length > 0 && <Button variant="primary" onClick={() => showOnMap(res.data!.roadmap!.chosen.map((c) => c.siteId), 'highlight.roadmap', budget)}>🗺 {t('priorities.queueMap')}</Button>}
             </div>
           )}
         </section>
