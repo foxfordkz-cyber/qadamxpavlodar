@@ -1,10 +1,14 @@
-// Local preparation only. Reject outgoing non-loopback TCP and all UDP/DNS queries.
+// Reject outgoing non-loopback TCP and all UDP/DNS queries, except explicit model hosts.
+// LLM_ALLOWED_HOSTS=api.example.com,other.example — exact host names only (assistant of participant 3).
 // This is a Node API guard, not an OS sandbox or a production security boundary.
 import net from 'node:net';
 import dns from 'node:dns';
 import dgram from 'node:dgram';
 import { syncBuiltinESMExports } from 'node:module';
-const allowed = new Set(['127.0.0.1','localhost','::1','[::1]']);
+const llmHosts = (process.env.LLM_ALLOWED_HOSTS ?? '').split(',').map(h => h.trim().toLowerCase()).filter(Boolean);
+// Точные имена: api.x.ai или имя сервиса в docker compose (ollama). IP-адреса и шаблоны не принимаются.
+for (const h of llmHosts) if (!/^[a-z0-9-]+(\.[a-z0-9-]+)*$/.test(h) || /^[\d.]+$/.test(h)) throw new Error(`LLM_ALLOWED_HOSTS: use exact DNS names, got ${h}`);
+const allowed = new Set(['127.0.0.1','localhost','::1','[::1]',...llmHosts]);
 const blocked = [];
 function deny(destination) {
   blocked.push(String(destination));

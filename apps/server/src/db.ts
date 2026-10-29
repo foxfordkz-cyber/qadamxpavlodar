@@ -3,8 +3,8 @@ import { mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
 import { schema } from './schema.js';
 import { migration2 } from './migrations.js';
-import { migration4 } from './municipal/migration.js';
-import { migration3 } from './v2/migration.js';
+import { migration4 as municipalMigration4 } from './municipal/migration.js';
+import { migration3, migration4 as tzMigration4 } from './v2/migration.js';
 
 export type Row = Record<string, string | number | null>;
 export function present(row: Row) {
@@ -18,7 +18,8 @@ export class Store {
     if (path !== ':memory:') mkdirSync(dirname(path), { recursive: true });
     this.db = new DatabaseSync(path);
     try {
-      this.db.exec('PRAGMA foreign_keys=ON; PRAGMA busy_timeout=3000; PRAGMA journal_mode=WAL;');
+      // Migrations run with foreign keys OFF (migration 4 rebuilds v2_users); integrity is checked before COMMIT.
+      this.db.exec('PRAGMA foreign_keys=OFF; PRAGMA busy_timeout=3000; PRAGMA journal_mode=WAL;');
       this.transaction(() => {
         let version = this.get('PRAGMA user_version')?.user_version;
         if (version === 0) {
@@ -36,11 +37,20 @@ export class Store {
           this.db.exec('PRAGMA user_version=3;');
           version = 3;
         }
-        if(version===3){this.db.exec(migration4);this.db.exec('PRAGMA user_version=4');version=4;}
-        if (version !== 4) {
+        if(version===3){this.db.exec(tzMigration4);this.db.exec('PRAGMA user_version=4');version=4;}
+        // Both feature branches published different schema 4s. Detect the actual tables,
+        // then add the missing branch inside this transaction; never reset either database.
+        if(version===4){
+          if(!this.get("SELECT name FROM sqlite_master WHERE type='table' AND name='tz_species'"))this.db.exec(tzMigration4);
+          if(!this.get("SELECT name FROM sqlite_master WHERE type='table' AND name='municipal_state'"))this.db.exec(municipalMigration4);
+          this.db.exec('PRAGMA user_version=5');version=5;
+        }
+        if (version !== 5) {
           throw new Error('Unsupported local schema version; do not reset or overwrite this database.');
         }
+        if (this.all('PRAGMA foreign_key_check').length) throw new Error('Foreign key check failed during migration');
       });
+      this.db.exec('PRAGMA foreign_keys=ON;');
     } catch (error) {
       this.db.close();
       throw error;

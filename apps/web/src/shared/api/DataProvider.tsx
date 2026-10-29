@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { createApi, type Api } from './api';
 import { ApiError, createHttpTransport, type Transport } from './transport';
+import { createV2CompatTransport } from './v2compat';
 
 // Тестовый источник (с данными OSM) грузится отдельным чанком только в режиме mock.
 function createLazyMockTransport(): Transport {
@@ -49,7 +50,8 @@ export function DataProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const api = useMemo(() => {
-    const base: Transport = mode === 'mock' ? createLazyMockTransport() : createHttpTransport();
+    // Режим api: сервер apps/server (контракт V2) через слой соответствий v2compat.ts.
+    const base: Transport = mode === 'mock' ? createLazyMockTransport() : createV2CompatTransport(createHttpTransport());
     // Обёртка отмечает доступность сервера по фактическим ответам.
     const observed: Transport = {
       kind: base.kind,
@@ -61,7 +63,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
         } catch (e) {
           if (e instanceof ApiError) {
             reportService('api', e.status === 0 ? 'down' : 'ok');
-            if (path.includes('plant-selection')) reportService('ai', e.status === 503 ? 'down' : 'ok');
+            if (path.includes('plant-selection') || path === '/assistant') reportService('ai', e.status === 503 ? 'down' : 'ok');
           }
           throw e;
         }

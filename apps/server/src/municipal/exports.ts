@@ -20,7 +20,7 @@ export async function exportAnalysis(a:Analysis,format:'pdf'|'xlsx'):Promise<Buf
     for(const[name,rows]of sections(a)){const sheet=book.addWorksheet(name);for(const row of rows)sheet.addRow(row);sheet.getRow(1).font={bold:true};sheet.views=[{state:'frozen',ySplit:1}];sheet.columns.forEach(c=>{c.width=32;});sheet.eachRow(r=>{r.alignment={wrapText:true,vertical:'top'};});}
     return Buffer.from(await book.xlsx.writeBuffer());
   }
-  const font=[process.env.REPORT_FONT,'/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf','C:/Windows/Fonts/arial.ttf'].find(p=>p&&existsSync(p));
+  const font=[process.env.REPORT_FONT,'/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf','/usr/share/fonts/dejavu/DejaVuSans.ttf','C:/Windows/Fonts/arial.ttf'].find(p=>p&&existsSync(p));
   if(!font)fail('REPORT_FONT_MISSING','Install DejaVu Sans or set REPORT_FONT to a Unicode TTF',503);
   return new Promise((resolve,reject)=>{const doc=new PDFDocument({size:'A4',margin:36}),chunks:Buffer[]=[];doc.on('data',c=>chunks.push(c));doc.on('error',reject);doc.on('end',()=>resolve(Buffer.concat(chunks)));doc.font(font).fontSize(18).text('Green Pavlodar — Zone report');
     for(const[name,rows]of sections(a)){doc.moveDown().fontSize(14).text(name);doc.fontSize(9);for(const row of rows)doc.text(row.map(x=>x===null?'Unknown':String(x)).join(' | '));}doc.end();});

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { AttributionControl, Map as MlMap, NavigationControl, ScaleControl, setWorkerUrl, type GeoJSONSource, type MapLayerMouseEvent } from 'maplibre-gl';
 import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
 import 'maplibre-gl/dist/maplibre-gl.css';
@@ -12,7 +12,29 @@ import { mapBroken } from './mapFlags';
 // Векторная подложка OpenFreeMap (OSM). Без ключа; атрибуция обязательна — её задаёт сам стиль
 // («OpenFreeMap © OpenMapTiles Data from OpenStreetMap»), контрол показывает её всегда развёрнутой.
 // Массовое скачивание тайлов для офлайн-показа не делаем — резерв это SchemeView.
-const STYLE_URL = 'https://tiles.openfreemap.org/styles/liberty';
+// По умолчанию светлая приглушённая подложка: на ней слои ТЗ (почвы, проблемы, приоритет) не сливаются с дорогами.
+const STYLES = { light: 'https://tiles.openfreemap.org/styles/positron', color: 'https://tiles.openfreemap.org/styles/liberty' } as const;
+type Basemap = keyof typeof STYLES;
+const BASEMAP_KEY = 'gp-basemap';
+function readBasemap(): Basemap {
+  try {
+    const v = localStorage.getItem(BASEMAP_KEY);
+    if (v === 'light' || v === 'color') return v;
+  } catch {
+    /* без хранилища — светлая */
+  }
+  return 'light';
+}
+
+/** У светлой подложки нет объёмных зданий — добавляем их из того же источника OpenMapTiles, под подписями. */
+function add3dBuildings(map: MlMap) {
+  const layers = map.getStyle().layers;
+  if (layers.some((l) => l.type === 'fill-extrusion') || !map.getSource('openmaptiles')) return;
+  map.addLayer({
+    id: 'building-3d', type: 'fill-extrusion', source: 'openmaptiles', 'source-layer': 'building', minzoom: 14, filter: ['!', ['has', 'hide_3d']] as never,
+    paint: { 'fill-extrusion-base': ['get', 'render_min_height'] as never, 'fill-extrusion-height': ['get', 'render_height'] as never, 'fill-extrusion-color': '#d7dbe0', 'fill-extrusion-opacity': 0.8 },
+  }, layers.find((l) => l.type === 'symbol')?.id);
+}
 
 // MapLibre 6 ищет воркер рядом со своим файлом; после сборки Vite он лежит отдельно.
 setWorkerUrl(workerUrl);
@@ -37,6 +59,13 @@ interface Props {
   greenery?: { type: 'FeatureCollection'; features: unknown[] } | null;
   /** Окраска зон по проблемам или приоритету: id → цвет. */
   zoneTint?: Record<string, string> | null;
+  /** ТЗ 3.1.4: рисование зоны — углы контура [lng, lat]; null — рисование выключено. */
+  drawPoints?: [number, number][] | null;
+  onDrawPoint?: (p: [number, number]) => void;
+  /** Найденное место (поиск по адресу): метка и перелёт; seq меняется при каждом выборе. */
+  target?: { lng: number; lat: number; bbox?: [number, number, number, number]; label: string; seq: number } | null;
+  /** Поиск и кнопка рисования — в панели инструментов карты. */
+  toolbarExtra?: ReactNode;
 }
 
 const EMPTY = { type: 'FeatureCollection' as const, features: [] as { type: 'Feature'; properties: Record<string, unknown>; geometry: unknown }[] };
@@ -53,6 +82,20 @@ function contextGeoJson(ctx: SiteContext | null | undefined) {
     ],
   };
 }
+/** Рисуемый контур: заливка с трёх углов, линия, углы (первый — крупнее, по нему видно начало). */
+function drawGeoJson(pts: [number, number][] | null | undefined) {
+  if (!pts?.length) return EMPTY;
+  const ring = pts.length >= 3 ? [...pts, pts[0]!] : pts;
+  return {
+    type: 'FeatureCollection' as const,
+    features: [
+      ...(pts.length >= 3 ? [{ type: 'Feature' as const, properties: { t: 'poly' }, geometry: { type: 'Polygon' as const, coordinates: [ring] } }] : []),
+      ...(pts.length >= 2 ? [{ type: 'Feature' as const, properties: { t: 'line' }, geometry: { type: 'LineString' as const, coordinates: ring } }] : []),
+      ...pts.map((p, i) => ({ type: 'Feature' as const, properties: { t: 'vertex', first: i === 0 ? 1 : 0 }, geometry: { type: 'Point' as const, coordinates: p } })),
+    ],
+  };
+}
+const pinGeoJson = (target: Props['target']) => (target ? pointsGeoJson([{ lng: target.lng, lat: target.lat, label: target.label }]) : EMPTY);
 const pointsGeoJson = (pts: { lng: number; lat: number; label: string }[]) => ({
   type: 'FeatureCollection' as const,
   features: pts.map((p) => ({ type: 'Feature' as const, properties: { label: p.label }, geometry: { type: 'Point' as const, coordinates: [p.lng, p.lat] } })),
@@ -85,7 +128,7 @@ function hatchImage(color: string) {
   return { width: size, height: size, data };
 }
 
-export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, context, plants = [], planned = [], soils = null, greenery = null, zoneTint = null }: Props) {
+export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, context, plants = [], planned = [], soils = null, greenery = null, zoneTint = null, drawPoints = null, onDrawPoint, target = null, toolbarExtra }: Props) {
   const box = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MlMap | null>(null);
   const ready = useRef(false);
@@ -93,10 +136,23 @@ export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, co
   const [failed, setFailed] = useState<string | null>(null);
   const [view, setView] = useState<'map' | 'scheme'>('map');
   const [pitched, setPitched] = useState(true);
+  const [basemap, setBasemapState] = useState<Basemap>(readBasemap);
+  const setBasemap = (b: Basemap) => {
+    setBasemapState(b);
+    try {
+      localStorage.setItem(BASEMAP_KEY, b);
+    } catch {
+      /* не сохраняется — не страшно */
+    }
+  };
+  // Камера переживает смену подложки (карта пересоздаётся со своим стилем).
+  const camera = useRef({ center: CENTER, zoom: 14.2, pitch: 50, bearing: -15 });
   const onSelectRef = useRef(onSelect);
   onSelectRef.current = onSelect;
-  const dataRef = useRef({ sites, eligibility, selectedId, context, plants, planned, soils, greenery, zoneTint });
-  dataRef.current = { sites, eligibility, selectedId, context, plants, planned, soils, greenery, zoneTint };
+  const onDrawRef = useRef(onDrawPoint);
+  onDrawRef.current = onDrawPoint;
+  const dataRef = useRef({ sites, eligibility, selectedId, context, plants, planned, soils, greenery, zoneTint, drawPoints, target });
+  dataRef.current = { sites, eligibility, selectedId, context, plants, planned, soils, greenery, zoneTint, drawPoints, target };
 
   useEffect(() => {
     if (!box.current || view !== 'map') return;
@@ -104,11 +160,8 @@ export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, co
     try {
       map = new MlMap({
         container: box.current,
-        style: mapBroken.value ? 'https://invalid.localhost/style.json' : STYLE_URL,
-        center: CENTER,
-        zoom: 14.2,
-        pitch: 50,
-        bearing: -15,
+        style: mapBroken.value ? 'https://invalid.localhost/style.json' : STYLES[basemap],
+        ...camera.current,
         maxPitch: 70,
         attributionControl: false,
       });
@@ -134,10 +187,15 @@ export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, co
         reportService('map', 'down');
       }
     });
+    map.on('moveend', () => {
+      const c = map.getCenter();
+      camera.current = { center: [c.lng, c.lat], zoom: map.getZoom(), pitch: map.getPitch(), bearing: map.getBearing() };
+    });
     map.on('load', () => {
       ready.current = true;
       clearTimeout(timeout);
       reportService('map', 'ok');
+      add3dBuildings(map);
       map.addImage('hatch-blocked', hatchImage('#b3261e'));
       const { sites, eligibility, selectedId } = dataRef.current;
       const empty = { type: 'FeatureCollection' as const, features: [] };
@@ -160,7 +218,8 @@ export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, co
       map.addLayer({ id: 'sites-line-solid', type: 'line', source: 'sites', filter: ['all', isPoly, ['!=', ['get', 'elig'], 'survey_needed']] as never, paint: { 'line-color': color, 'line-width': 2.5 } });
       map.addLayer({ id: 'sites-selected', type: 'line', source: 'sites', filter: ['all', isPoly, ['==', ['get', 'selected'], 1]] as never, paint: { 'line-color': '#1f5d99', 'line-width': 4 } });
       // Точки-центры видны на мелком масштабе, где полигоны слишком малы.
-      map.addLayer({ id: 'sites-dot', type: 'circle', source: 'sites', filter: ['==', ['get', 'centroid'], 1] as never, maxzoom: 15.5, paint: { 'circle-radius': ['case', ['==', ['get', 'selected'], 1], 8, 5], 'circle-color': color, 'circle-stroke-color': ['case', ['==', ['get', 'selected'], 1], '#1f5d99', '#ffffff'], 'circle-stroke-width': 2, 'circle-opacity': 0.9 } });
+      // Окраска слоя «Приоритет» или «Проблемы» видна и на точках, иначе на мелком масштабе её не разглядеть.
+      map.addLayer({ id: 'sites-dot', type: 'circle', source: 'sites', filter: ['==', ['get', 'centroid'], 1] as never, maxzoom: 15.5, paint: { 'circle-radius': ['case', ['==', ['get', 'selected'], 1], 8, ['has', 'tint'], 6, 5] as never, 'circle-color': ['case', ['has', 'tint'], ['get', 'tint'], color] as never, 'circle-stroke-color': ['case', ['==', ['get', 'selected'], 1], '#1f5d99', '#ffffff'], 'circle-stroke-width': 2, 'circle-opacity': 0.9 } });
       // Подпись только у выбранного участка — без десятков наложенных надписей.
       map.addLayer({ id: 'sites-label', type: 'symbol', source: 'sites', filter: ['all', ['==', ['get', 'centroid'], 1], ['==', ['get', 'selected'], 1]] as never, layout: { 'text-field': ['get', 'name'], 'text-font': ['Noto Sans Bold'], 'text-size': 13, 'text-offset': [0, 1.4], 'text-anchor': 'top', 'text-max-width': 14 }, paint: { 'text-color': '#0f2f4f', 'text-halo-color': '#ffffff', 'text-halo-width': 2 } });
       // Окружение выбранного участка: поверх 3D-зданий подсвечиваются контуры в выбранном радиусе.
@@ -176,14 +235,27 @@ export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, co
       map.addLayer({ id: 'plants-existing', type: 'circle', source: 'plants', paint: { 'circle-radius': ['interpolate', ['linear'], ['zoom'], 14, 3, 18, 7], 'circle-color': '#2f4f2a', 'circle-stroke-color': '#fff', 'circle-stroke-width': 1.5 } });
       map.addSource('planned', { type: 'geojson', data: pointsGeoJson(d.planned) });
       map.addLayer({ id: 'plants-planned', type: 'circle', source: 'planned', paint: { 'circle-radius': ['interpolate', ['linear'], ['zoom'], 14, 3, 18, 7], 'circle-color': 'rgba(0,0,0,0)', 'circle-stroke-color': '#7b8f1f', 'circle-stroke-width': 2 } });
+      // Найденное по адресу место и рисуемый контур — поверх всех слоёв.
+      map.addSource('pin', { type: 'geojson', data: pinGeoJson(d.target) });
+      map.addLayer({ id: 'pin-halo', type: 'circle', source: 'pin', paint: { 'circle-radius': 14, 'circle-color': '#1f5d99', 'circle-opacity': 0.18 } });
+      map.addLayer({ id: 'pin-dot', type: 'circle', source: 'pin', paint: { 'circle-radius': 6, 'circle-color': '#1f5d99', 'circle-stroke-color': '#fff', 'circle-stroke-width': 2 } });
+      map.addLayer({ id: 'pin-label', type: 'symbol', source: 'pin', layout: { 'text-field': ['get', 'label'], 'text-font': ['Noto Sans Bold'], 'text-size': 12, 'text-offset': [0, 1.3], 'text-anchor': 'top', 'text-max-width': 16 }, paint: { 'text-color': '#0f2f4f', 'text-halo-color': '#fff', 'text-halo-width': 2 } });
+      map.addSource('draw', { type: 'geojson', data: drawGeoJson(d.drawPoints) });
+      map.addLayer({ id: 'draw-fill', type: 'fill', source: 'draw', filter: ['==', ['get', 't'], 'poly'] as never, paint: { 'fill-color': '#1f5d99', 'fill-opacity': 0.18 } });
+      map.addLayer({ id: 'draw-line', type: 'line', source: 'draw', filter: ['==', ['get', 't'], 'line'] as never, paint: { 'line-color': '#1f5d99', 'line-width': 3, 'line-dasharray': [2, 1] } });
+      map.addLayer({ id: 'draw-vertex', type: 'circle', source: 'draw', filter: ['==', ['get', 't'], 'vertex'] as never, paint: { 'circle-radius': ['case', ['==', ['get', 'first'], 1], 7, 5] as never, 'circle-color': '#fff', 'circle-stroke-color': '#1f5d99', 'circle-stroke-width': 2.5 } });
+      // В режиме рисования клик ставит угол контура, а не открывает зону.
+      map.on('click', (e) => { if (dataRef.current.drawPoints) onDrawRef.current?.([+e.lngLat.lng.toFixed(7), +e.lngLat.lat.toFixed(7)]); });
       for (const layer of ['sites-fill', 'sites-dot']) {
         map.on('click', layer, (e: MapLayerMouseEvent) => {
+          if (dataRef.current.drawPoints) return;
           const id = e.features?.[0]?.properties?.id;
           if (id) onSelectRef.current(String(id));
         });
-        map.on('mouseenter', layer, () => (map.getCanvas().style.cursor = 'pointer'));
-        map.on('mouseleave', layer, () => (map.getCanvas().style.cursor = ''));
+        map.on('mouseenter', layer, () => { if (!dataRef.current.drawPoints) map.getCanvas().style.cursor = 'pointer'; });
+        map.on('mouseleave', layer, () => { if (!dataRef.current.drawPoints) map.getCanvas().style.cursor = ''; });
       }
+      focusRef.current();
     });
     return () => {
       clearTimeout(timeout);
@@ -191,7 +263,7 @@ export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, co
       map.remove();
       mapRef.current = null;
     };
-  }, [view, reportService]);
+  }, [view, basemap, reportService]);
 
   useEffect(() => {
     const m = mapRef.current;
@@ -215,13 +287,39 @@ export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, co
     (m.getSource('greenery') as GeoJSONSource | undefined)?.setData((greenery ?? empty) as never);
   }, [soils, greenery]);
 
+  // Рисование: контур, курсор-крестик; двойной клик не приближает карту, пока ставим углы.
+  const drawing = drawPoints !== null;
   useEffect(() => {
+    const m = mapRef.current;
+    if (!ready.current || !m) return;
+    (m.getSource('draw') as GeoJSONSource | undefined)?.setData(drawGeoJson(drawPoints));
+    m.getCanvas().style.cursor = drawing ? 'crosshair' : '';
+    if (drawing) m.doubleClickZoom.disable(); else m.doubleClickZoom.enable();
+  }, [drawPoints, drawing]);
+
+  // Найденное по адресу место: метка и перелёт (улица — по её габаритам, дом и место — крупно).
+  useEffect(() => {
+    const m = mapRef.current;
+    if (!ready.current || !m) return;
+    (m.getSource('pin') as GeoJSONSource | undefined)?.setData(pinGeoJson(target));
+    if (!target) return;
+    if (target.bbox) m.fitBounds([[target.bbox[0], target.bbox[1]], [target.bbox[2], target.bbox[3]]], { padding: 60, maxZoom: 16.5, duration: 1200 });
+    else m.flyTo({ center: [target.lng, target.lat], zoom: 17, duration: 1200 });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [target?.seq]);
+
+  // Перелёт к выбранной зоне (из списка, по ссылке ассистента, со страниц «Проблемы» и «Приоритеты»).
+  // Если карта или участки ещё грузятся — перелёт выполнится, когда они будут готовы, один раз на focusSeq.
+  const focusDone = useRef(0);
+  const focusRef = useRef(() => {});
+  focusRef.current = () => {
     const map = mapRef.current;
     const s = sites.find((x) => x.id === selectedId);
-    if (!map || !s || !focusSeq) return;
-    map.fitBounds(siteBounds(s), { padding: 80, maxZoom: 17, pitch: pitched ? 50 : 0, duration: 800 });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [focusSeq]);
+    if (!map || !ready.current || !s || !focusSeq || focusDone.current === focusSeq) return;
+    focusDone.current = focusSeq;
+    map.fitBounds(siteBounds(s), { padding: 80, maxZoom: 17, pitch: pitched ? 50 : 0, duration: 1200 });
+  };
+  useEffect(() => focusRef.current(), [focusSeq, sites, selectedId]);
 
   const toggle3d = () => {
     const next = !pitched;
@@ -242,6 +340,13 @@ export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, co
             {pitched ? t('map.3d') : t('map.2d')}
           </button>
         )}
+        {!showScheme && (
+          <div className="gp-segment" role="radiogroup" aria-label={t('map.base.label')}>
+            <label title={t('map.base.lightHint')}><input type="radio" name="basemap" checked={basemap === 'light'} onChange={() => setBasemap('light')} />{t('map.base.light')}</label>
+            <label title={t('map.base.colorHint')}><input type="radio" name="basemap" checked={basemap === 'color'} onChange={() => setBasemap('color')} />{t('map.base.color')}</label>
+          </div>
+        )}
+        {!showScheme && toolbarExtra}
       </div>
       {failed && (
         <div className="gp-alert gp-alert--warn gp-map__alert" role="status">

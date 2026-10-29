@@ -1,3 +1,5 @@
+> Исторический отчёт до merge (checkpoint 9be77df). Актуальное объединённое состояние: [BACKEND_MERGE_VERIFICATION.md](BACKEND_MERGE_VERIFICATION.md).
+
 # Backend municipal extension — 29.10.2026
 
 Продолжение V2 в `feature/backend-preparation`. Backend не пересоздавался. Миграция 4 добавляет таблицы к существующей схеме; прежние API, тесты, DEMO и experimental mock сохранены. Новые изменения локальные: без commit, push, PR, merge и deploy.

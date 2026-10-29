@@ -1,0 +1,97 @@
+[
+  {
+    "name": "Усольский",
+    "nameKk": null,
+    "kind": "microdistrict",
+    "center": null,
+    "population": null,
+    "populationYear": null,
+    "evidenceIds": [
+      "ev-pvl-micro-ru"
+    ],
+    "dataClass": "real",
+    "note": "Класс real относится к названиям. Центр, граница и население не найдены. Список неполный; отсутствующее nameKk не переводится автоматически."
+  },
+  {
+    "name": "Достык",
+    "nameKk": "Достық",
+    "kind": "microdistrict",
+    "center": null,
+    "population": null,
+    "populationYear": null,
+    "evidenceIds": [
+      "ev-pvl-micro-ru",
+      "ev-pvl-micro-report-kk"
+    ],
+    "dataClass": "real",
+    "note": "Класс real относится к названиям. Центр, граница и население не найдены. Список неполный; отсутствующее nameKk не переводится автоматически."
+  },
+  {
+    "name": "Восточный",
+    "nameKk": null,
+    "kind": "microdistrict",
+    "center": null,
+    "population": null,
+    "populationYear": null,
+    "evidenceIds": [
+      "ev-pvl-micro-ru"
+    ],
+    "dataClass": "real",
+    "note": "Класс real относится к названиям. Центр, граница и население не найдены. Список неполный; отсутствующее nameKk не переводится автоматически."
+  },
+  {
+    "name": "Зеленстрой",
+    "nameKk": "Зеленстрой",
+    "kind": "microdistrict",
+    "center": null,
+    "population": null,
+    "populationYear": null,
+    "evidenceIds": [
+      "ev-pvl-micro-ru",
+      "ev-pvl-zelenstroy-kk"
+    ],
+    "dataClass": "real",
+    "note": "Класс real относится к названиям. Центр, граница и население не найдены. Список неполный; отсутствующее nameKk не переводится автоматически."
+  },
+  {
+    "name": "Сарыарка",
+    "nameKk": "Сарыарқа",
+    "kind": "microdistrict",
+    "center": null,
+    "population": null,
+    "populationYear": null,
+    "evidenceIds": [
+      "ev-pvl-micro-report-ru",
+      "ev-pvl-micro-report-kk"
+    ],
+    "dataClass": "real",
+    "note": "Класс real относится к названиям. Центр, граница и население не найдены. Список неполный; отсутствующее nameKk не переводится автоматически."
+  },
+  {
+    "name": "Авиагородок",
+    "nameKk": "Әуеқалашық",
+    "kind": "microdistrict",
+    "center": null,
+    "population": null,
+    "populationYear": null,
+    "evidenceIds": [
+      "ev-pvl-micro-report-ru",
+      "ev-pvl-micro-report-kk"
+    ],
+    "dataClass": "real",
+    "note": "Класс real относится к названиям. Центр, граница и население не найдены. Список неполный; отсутствующее nameKk не переводится автоматически."
+  },
+  {
+    "name": "Радиозавод",
+    "nameKk": null,
+    "kind": "microdistrict",
+    "center": null,
+    "population": null,
+    "populationYear": null,
+    "evidenceIds": [
+      "ev-pvl-schools"
+    ],
+    "dataClass": "real",
+    "note": "Класс real относится к названиям. Центр, граница и население не найдены. Список неполный; отсутствующее nameKk не переводится автоматически."
+  }
+]

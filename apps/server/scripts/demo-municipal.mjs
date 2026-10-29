@@ -7,16 +7,18 @@ import { mkdirSync,writeFileSync,createWriteStream } from 'node:fs';
 import { resolve,join } from 'node:path';
 import { Store } from '../dist/db.js';
 import { seed } from '../dist/seed.js';
-import { seedV2,DEMO_PASSWORD } from '../dist/v2/seed.js';
-import { seedMunicipal } from '../dist/municipal/data.js';
+import { seedV2,demoPassword } from '../dist/v2/seed.js';
+import { seedMunicipal,syncMunicipalZones } from '../dist/municipal/data.js';
+import { seedTz } from '../dist/tz/seed.js';
+const DEMO_PASSWORD=demoPassword();
 const name=process.argv[2]??`verification-${Date.now()}`;
 assert(/^[a-zA-Z0-9_-]{1,50}$/.test(name));
 const dir=resolve('data','municipal-demo',name),dbPath=join(dir,'demo.sqlite'),uploads=resolve('uploads','municipal-demo',name);
 mkdirSync(dir,{recursive:true});mkdirSync(uploads,{recursive:true});
-let store=new Store(dbPath);seed(store);await seedV2(store);await seedMunicipal(store);store.close();
+let store=new Store(dbPath);seed(store);await seedV2(store);seedTz(store);await seedMunicipal(store);store.transaction(()=>syncMunicipalZones(store));store.close();
 const probe=createServer();probe.listen(0,'127.0.0.1');await once(probe,'listening');const port=probe.address().port;await new Promise(done=>probe.close(done));
 const base=`http://127.0.0.1:${port}`;let server,iteration=0;
-async function launch(){server=spawn(process.execPath,['--import','./scripts/local-network-guard.mjs','dist/server.js'],{cwd:process.cwd(),windowsHide:true,env:{...process.env,NODE_ENV:'development',PORT:String(port),DB_PATH:dbPath,UPLOADS_PATH:uploads},stdio:['ignore','pipe','pipe']});
+async function launch(){server=spawn(process.execPath,['--import','./scripts/local-network-guard.mjs','--import','tsx','dist/server.js'],{cwd:process.cwd(),windowsHide:true,env:{...process.env,NODE_ENV:'development',PORT:String(port),DB_PATH:dbPath,UPLOADS_PATH:uploads},stdio:['ignore','pipe','pipe']});
  server.stdout.pipe(createWriteStream(join(dir,`server-${++iteration}.log`)));server.stderr.pipe(createWriteStream(join(dir,`server-${iteration}.error.log`)));
  for(let n=0;n<100;n++){if(server.exitCode!==null)throw Error('Server exited');try{if((await fetch(base+'/health')).ok)return;}catch{}await new Promise(done=>setTimeout(done,100));}throw Error('Server startup timeout');}
 async function stop(){const child=server;server=undefined;if(child&&child.exitCode===null&&child.signalCode===null){const done=once(child,'exit');child.kill();await done;}}
@@ -49,12 +51,13 @@ try{
  // Run this script with --import tsx to load the team's frontend TypeScript.
  const {createApi}=await import('../../web/src/shared/api/api.ts');
  const {createHttpTransport}=await import('../../web/src/shared/api/transport.ts');
+ const {createV2CompatTransport}=await import('../../web/src/shared/api/v2compat.ts');
  const nativeFetch=globalThis.fetch;let browserCookie='';const transportRequests=[];
  globalThis.fetch=async(input,init={})=>{const url=new URL(String(input),base);assert.equal(url.origin,base);const headers=new Headers(init.headers);if(browserCookie)headers.set('Cookie',browserCookie);const response=await nativeFetch(url,{...init,headers});const setCookie=response.headers.get('set-cookie');if(setCookie)browserCookie=setCookie.split(';')[0];transportRequests.push(`${init.method??'GET'} ${url.pathname}`);return response;};
- try{const client=createApi(createHttpTransport());assert.equal(client.kind,'api');
+ try{const client=createApi(createV2CompatTransport(createHttpTransport()));assert.equal(client.kind,'api');
   assert.equal((await client.login('specialist',DEMO_PASSWORD)).role,'coordinator');assert.equal((await client.me()).role,'coordinator');
-  assert.equal((await client.sites()).data.length,baseline+1);assert.equal((await client.site(zone)).id,zone);
-  assert(await client.siteContext(zone,100));assert((await client.species()).length>=50);assert((await client.evidence([])).length>0);
+  const currentSites=(await client.sites()).data;assert.equal(currentSites.filter(s=>s.id.startsWith('site-osm-')).length,114);assert(currentSites.length>=baseline+1);assert.equal((await client.site(zone)).id,zone);
+  assert(await client.siteContext(zone,100));assert((await client.species()).length>=50);assert((await client.evidence(['demo-v2-evidence'])).length>0);
   assert.equal((await client.zoneAnalysis(zone,{})).siteId,zone);assert.equal((await client.zoneVariants(zone,{})).length,3);
   assert(Array.isArray((await client.problems()).data.problems));assert.equal((await client.priorities({deficit:.25,density:.15,social:.2,load:.15,soil:.1,benefit:.15},0)).roadmap.chosen.length,0);
   assert.equal((await client.soilsLayer()).data.type,'FeatureCollection');assert.equal((await client.greeneryLayer()).data.type,'FeatureCollection');assert((await client.dashboard()).data.length>0);

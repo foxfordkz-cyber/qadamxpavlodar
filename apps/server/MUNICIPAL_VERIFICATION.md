@@ -1,3 +1,5 @@
+> Исторический отчёт до merge (checkpoint 9be77df). Актуальное объединённое состояние: [BACKEND_MERGE_VERIFICATION.md](BACKEND_MERGE_VERIFICATION.md).
+
 # Итог локальной проверки — 29 октября 2026, UTC+5
 
 Рабочая ветка `feature/backend-preparation`, исходный HEAD `9c3e73437d99996d03a6e1c27e985a56653cd678`. Работа продолжена поверх V2. Новые изменения не закоммичены и не опубликованы. Push, PR, merge и deploy не выполнялись.

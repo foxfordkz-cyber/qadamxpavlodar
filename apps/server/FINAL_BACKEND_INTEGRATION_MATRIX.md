@@ -1,3 +1,5 @@
+> Исторический отчёт до merge (checkpoint 9be77df). Актуальное объединённое состояние: [BACKEND_MERGE_VERIFICATION.md](BACKEND_MERGE_VERIFICATION.md).
+
 # Final backend integration matrix — 29.10.2026
 
 Ветка: `feature/backend-preparation`, базовый HEAD `9c3e73437d99996d03a6e1c27e985a56653cd678`. Backend продолжен, React не редактировался в этом этапе. Все пути ниже относительно `/api/v1`, если не указано иное.

@@ -1,17 +1,27 @@
+import { randomBytes } from 'node:crypto';
 import { Store } from '../db.js';
 import { hashPassword } from './auth.js';
 import { now } from './core.js';
 import { checkNames } from './data.js';
-export const DEMO_PASSWORD='DEMO-only-2026!';
-export const demoAccounts=[['demo-admin-1','admin','admin'],['demo-coordinator-1','coordinator','coordinator'],
-  ['demo-foreman-1','foreman1','foreman'],['demo-foreman-2','foreman2','foreman'],
-  ...[1,2,3,4].map(i=>[`demo-worker-${i}`,`worker${i}`,'worker'])] as const;
+// Пароль демо-аккаунтов — только из окружения (apps/server/.env, образец в .env.example), не из кода.
+// Если его нет, seed генерирует случайный и возвращает его один раз (печатает seed-cli).
+export const DEMO_PASSWORD=process.env.DEMO_PASSWORD??'';
+export function demoPassword(){
+  if(DEMO_PASSWORD&&DEMO_PASSWORD.length<12)throw new Error('DEMO_PASSWORD must be at least 12 characters');
+  return DEMO_PASSWORD||generated;
+}
+const generated=`demo-${randomBytes(9).toString('base64url')}`;
+// [id, login, role, displayName]: три роли ТЗ (Администратор, Специалист, Просмотр) и кабинеты бригады.
+export const demoAccounts=[['demo-admin-1','admin','admin','Администратор (демо)'],['demo-coordinator-1','coordinator','coordinator','Специалист (демо)'],
+  ['demo-viewer-1','viewer','viewer','Просмотр (демо)'],
+  ['demo-foreman-1','foreman1','foreman','Бригадир 1 (демо)'],['demo-foreman-2','foreman2','foreman','Бригадир 2 (демо)'],
+  ...[1,2,3,4].map(i=>[`demo-worker-${i}`,`worker${i}`,'worker',`Работник ${i} (демо)`])] as const;
 export async function seedV2(s:Store) {
   const credentials=new Map<string,string>();
-  for(const[userId]of demoAccounts)if(!s.get('SELECT id FROM v2_users WHERE id=?',userId))credentials.set(userId!,await hashPassword(DEMO_PASSWORD));
+  for(const[userId,login]of demoAccounts)if(!s.get('SELECT id FROM v2_users WHERE id=? OR login=? COLLATE NOCASE',userId,login))credentials.set(userId!,await hashPassword(demoPassword()));
   s.transaction(()=>{
-    for(const[userId,login,role]of demoAccounts){
-      if(credentials.has(userId!))s.run('INSERT INTO v2_users VALUES (?,?,?,?,1,?,1,?,?)',userId!,login!,`DEMO ${login}`,role!,credentials.get(userId!)!,now(),now());
+    for(const[userId,login,role,displayName]of demoAccounts){
+      if(credentials.has(userId!))s.run('INSERT INTO v2_users VALUES (?,?,?,?,1,?,1,?,?)',userId!,login!,displayName!,role!,credentials.get(userId!)!,now(),now());
       if(role==='worker'||role==='foreman'){
         const p={userId,shiftStart:'2026-10-28T03:00:00.000Z',shiftEnd:login==='worker4'?'2026-10-28T07:00:00.000Z':'2026-10-28T12:00:00.000Z',capacityMinutes:login==='worker4'?240:480,skills:['inspect','plant','water','weed'],unavailableIntervals:[],startLocation:null,version:1};
         s.run('INSERT INTO v2_profiles VALUES (?,?,1) ON CONFLICT(user_id) DO NOTHING',userId!,JSON.stringify(p));
@@ -36,7 +46,7 @@ export async function seedV2(s:Store) {
     add('resource',{id:'demo-water',label:'DEMO shared water 100 L',type:'water',ownerCrewId:null,capacity:100,unit:'L',availableIntervals:[{start:'2026-10-28T03:00:00.000Z',end:'2026-10-28T12:00:00.000Z'}],evidenceIds:['demo-v2-evidence'],version:1});
     add('resource',{id:'demo-vehicle',label:'DEMO shared vehicle',type:'vehicle',ownerCrewId:null,capacity:1,unit:'vehicle',availableIntervals:[{start:'2026-10-28T03:00:00.000Z',end:'2026-10-28T12:00:00.000Z'}],evidenceIds:['demo-v2-evidence'],version:1});
   });
-  return{mode:'DEMO',accounts:demoAccounts.map(([id,login,role])=>({id,login,role})),crews:2};
+  return{mode:'DEMO',accounts:demoAccounts.map(([id,login,role])=>({id,login,role})),crews:2,generatedPassword:credentials.size&&!DEMO_PASSWORD?generated:null};
 }
 // Opt-in scenario rows for the demo CLI. Tests compose their own risky scenarios.
 export function seedV2Scenario(s:Store){s.transaction(()=>{

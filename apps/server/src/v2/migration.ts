@@ -79,3 +79,29 @@ CREATE TABLE v2_idempotency (
  created_at TEXT NOT NULL, PRIMARY KEY(actor_id,method,path,key)
 ) STRICT;
 `;
+
+// Migration 4 (SRV-04): role «viewer» (ТЗ: «Просмотр», read only) and TZ reference tables.
+// The role list lives in a CHECK, so v2_users is rebuilt by the SQLite 12-step procedure.
+// Store runs migrations with foreign_keys=OFF and calls foreign_key_check before COMMIT.
+export const migration4 = `
+CREATE TABLE v2_users_new (
+ id TEXT PRIMARY KEY, login TEXT NOT NULL UNIQUE COLLATE NOCASE, display_name TEXT NOT NULL,
+ role TEXT NOT NULL CHECK(role IN ('admin','coordinator','viewer','foreman','worker')),
+ active INTEGER NOT NULL CHECK(active IN (0,1)), password_hash TEXT NOT NULL,
+ version INTEGER NOT NULL CHECK(version>0), created_at TEXT NOT NULL, updated_at TEXT NOT NULL
+) STRICT;
+INSERT INTO v2_users_new SELECT id,login,display_name,role,active,password_hash,version,created_at,updated_at FROM v2_users;
+DROP TABLE v2_users;
+ALTER TABLE v2_users_new RENAME TO v2_users;
+CREATE TABLE tz_species (id TEXT PRIMARY KEY, data TEXT NOT NULL CHECK(json_valid(data)), version INTEGER NOT NULL CHECK(version>0)) STRICT;
+CREATE TABLE tz_rates (key TEXT PRIMARY KEY, position INTEGER NOT NULL, data TEXT NOT NULL CHECK(json_valid(data))) STRICT;
+CREATE TABLE tz_rate_history (
+ version INTEGER PRIMARY KEY CHECK(version>1), rate_key TEXT NOT NULL REFERENCES tz_rates(key), actor_id TEXT NOT NULL REFERENCES v2_users(id),
+ before_json TEXT NOT NULL CHECK(json_valid(before_json)), after_json TEXT NOT NULL CHECK(json_valid(after_json)), created_at TEXT NOT NULL
+) STRICT;
+CREATE TABLE tz_assistant_history (
+ id TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES v2_users(id), at TEXT NOT NULL, question TEXT NOT NULL,
+ intent TEXT NOT NULL, method TEXT NOT NULL, zones TEXT NOT NULL CHECK(json_valid(zones))
+) STRICT;
+CREATE INDEX tz_assistant_user ON tz_assistant_history(user_id,at);
+`;

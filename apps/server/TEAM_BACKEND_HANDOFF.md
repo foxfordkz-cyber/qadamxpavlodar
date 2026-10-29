@@ -1,3 +1,5 @@
+> Исторический отчёт до merge (checkpoint 9be77df). Актуальное объединённое состояние: [BACKEND_MERGE_VERIFICATION.md](BACKEND_MERGE_VERIFICATION.md).
+
 # Передача backend участникам 1, 2 и 4
 
 Дата: 29.10.2026. Ветка `feature/backend-preparation`; изменения локальные. Swagger: **90 операций**, `GET /api/v1/openapi.json`, UI `/api/v1/docs`. Все пути далее относительно `/api/v1`. Реальные HTTP-сессии, SQLite и загрузка файлов работают; весь frontend ещё не совместим. Подробный аудит каждого вызова: [FINAL_BACKEND_INTEGRATION_MATRIX.md](FINAL_BACKEND_INTEGRATION_MATRIX.md). Проверки и ограничения: [FINAL_BACKEND_TEST_RESULTS.md](FINAL_BACKEND_TEST_RESULTS.md).

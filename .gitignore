@@ -6,3 +6,4 @@ dist/
 *.tsbuildinfo
 apps/server/LOCAL_GIT_STATUS.txt
 apps/server/LOCAL_REVIEW_STATE.json
+dist-scripts/

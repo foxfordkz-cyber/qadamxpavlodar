@@ -1,0 +1,342 @@
+[
+  {
+    "id": "ev-pvl-population-month",
+    "sourceType": "municipal",
+    "sourceLabel": "БНС: Численность населения Павлодарской области, месячный ряд",
+    "sourceUrl": "https://stat.gov.kz/api/iblock/element/region/19513/file/ru/",
+    "publishedAt": "2026-10-15",
+    "observedAt": "2026-10-29",
+    "dataClass": "real",
+    "note": "Лист Показатель: строка Павлодар г.а.; отдельно все, городское и сельское население. Последняя дата 01.09.2026. Не приравнивать г.а. к городу. Дата выпуска проверена в каталоге БНС."
+  },
+  {
+    "id": "ev-pvl-population-year",
+    "sourceType": "municipal",
+    "sourceLabel": "БНС: Численность населения по годам",
+    "sourceUrl": "https://stat.gov.kz/api/iblock/element/region/14053/file/ru/",
+    "publishedAt": "2026-04-10",
+    "observedAt": "2026-10-29",
+    "dataClass": "real",
+    "note": "Лист Все население, строка Павлодар г.а.; годовой и месячный ряды расходятся на 01.01.2026. Причина не установлена."
+  },
+  {
+    "id": "ev-pvl-bns-catalog",
+    "sourceType": "municipal",
+    "sourceLabel": "БНС: каталог динамических рядов по населению Павлодарской области",
+    "sourceUrl": "https://stat.gov.kz/ru/region/pavlodar/dynamic-tables/38/",
+    "publishedAt": null,
+    "observedAt": "2026-10-29",
+    "dataClass": "real",
+    "note": "Дата публикации страницы не указана; указаны даты выпуска файлов."
+  },
+  {
+    "id": "ev-pvl-passport",
+    "sourceType": "municipal",
+    "sourceLabel": "Паспорт города Павлодара на 1 февраля 2023 года",
+    "sourceUrl": "https://www.gov.kz/org/pavlodar-pvl/press/article/details/117599?lang=ru",
+    "publishedAt": "2023-03-09",
+    "observedAt": "2026-10-29",
+    "dataClass": "real",
+    "note": "Пункт 1.2: общая территория 633 км², город 352 км², сельская зона 281 км². Строка гектаров содержит 63 и выглядит ошибочной; она исключена. Актуальные границы не приложены."
+  },
+  {
+    "id": "ev-pvl-micro-ru",
+    "sourceType": "municipal",
+    "sourceLabel": "ДЧС: В Павлодарской области проведен брифинг",
+    "sourceUrl": "https://www.gov.kz/org/emer-pavlodar/press/news/details/591280?lang=ru",
+    "publishedAt": "2023-07-20",
+    "observedAt": "2026-10-29",
+    "dataClass": "real",
+    "note": "В тексте о городе названы Усольский, Достык, Восточный, Зеленстрой. Границ и населения нет."
+  },
+  {
+    "id": "ev-pvl-micro-report-ru",
+    "sourceType": "municipal",
+    "sourceLabel": "Итоги социально-экономического развития города Павлодара за сентябрь 2021 года",
+    "sourceUrl": "https://www.gov.kz/org/pavlodar-pvl/press/article/details/80090?lang=ru",
+    "publishedAt": "2021-10-18",
+    "observedAt": "2026-10-29",
+    "dataClass": "real",
+    "note": "Подтверждает названия Сарыарка, Достык, Авиагородок; не реестр микрорайонов."
+  },
+  {
+    "id": "ev-pvl-micro-report-kk",
+    "sourceType": "municipal",
+    "sourceLabel": "Павлодар қаласының 2021 жылғы қыркүйек айындағы әлеуметтік-экономикалық даму қорытындылары",
+    "sourceUrl": "https://www.gov.kz/org/pavlodar-pvl/press/article/details/80090?lang=kk",
+    "publishedAt": null,
+    "observedAt": "2026-10-29",
+    "dataClass": "real",
+    "note": "Казахская версия того же материала: Сарыарқа, Достық, Әуеқалашық. Дата на казахской странице не найдена; русская версия опубликована 18.10.2021."
+  },
+  {
+    "id": "ev-pvl-zelenstroy-kk",
+    "sourceType": "municipal",
+    "sourceLabel": "Сообщение акимата о встрече с жителями микрорайона Зеленстрой",
+    "sourceUrl": "https://www.gov.kz/org/pavlodar-pvl/press/news/details/153348?lang=kk",
+    "publishedAt": "2021-01-26",
+    "observedAt": "2026-10-29",
+    "dataClass": "real",
+    "note": "В казахском тексте используется название Зеленстрой. Граница и население не опубликованы."
+  },
+  {
+    "id": "ev-pvl-schools",
+    "sourceType": "municipal",
+    "sourceLabel": "Управление образования: общее среднее образование",
+    "sourceUrl": "https://www.gov.kz/org/pavlodar-bilim/activities/6615?lang=ru",
+    "publishedAt": null,
+    "observedAt": "2026-10-29",
+    "dataClass": "real",
+    "note": "Данные 2024–2025 учебного года: 48 школ, включая сельскую зону. Дата публикации не указана. Это не количество внутри городской черты."
+  },
+  {
+    "id": "ev-pvl-school34",
+    "sourceType": "municipal",
+    "sourceLabel": "Образовательный портал Павлодара: почтовый адрес школы №34",
+    "sourceUrl": "https://goo.kz/content/view/44/7788?version=easy",
+    "publishedAt": null,
+    "observedAt": "2026-10-29",
+    "dataClass": "real",
+    "note": "Адрес: Лермонтова, 93/1. Дата публикации не найдена. Адрес учреждения; персональные сведения не извлекаются."
+  },
+  {
+    "id": "ev-pvl-school4",
+    "sourceType": "municipal",
+    "sourceLabel": "Образовательный портал Павлодара: о школе №4",
+    "sourceUrl": "https://goo.kz/content/view/19/14294?lang=ru&version=easy",
+    "publishedAt": null,
+    "observedAt": "2026-10-29",
+    "dataClass": "real",
+    "note": "Адрес: Гагарина, 58. Дата публикации не найдена."
+  },
+  {
+    "id": "ev-pvl-kindergarten7",
+    "sourceType": "municipal",
+    "sourceLabel": "Образовательный портал Павлодара: о яслях-саде №7",
+    "sourceUrl": "https://goo.kz/content/viewall?lang=ru&page=114&version=easy",
+    "publishedAt": null,
+    "observedAt": "2026-10-29",
+    "dataClass": "real",
+    "note": "Адрес: Минина, 31. Дата публикации не найдена; страница списка, не полный городской реестр."
+  },
+  {
+    "id": "ev-pvl-health",
+    "sourceType": "municipal",
+    "sourceLabel": "Управление здравоохранения: сведения о государственных услугах и медицинских организациях",
+    "sourceUrl": "https://depzdravgov.kz/content/view/1/2011",
+    "publishedAt": null,
+    "observedAt": "2026-10-29",
+    "dataClass": "real",
+    "note": "Из областного каталога отобраны только адреса города Павлодара. Дата публикации не найдена; статус работы учреждений на 2026 год отдельно не подтвержден."
+  },
+  {
+    "id": "ev-pvl-jma",
+    "sourceType": "weather",
+    "sourceLabel": "Japan Meteorological Agency, ClimatView: PAVLODAR, Monthly Normal",
+    "sourceUrl": "https://www.data.jma.go.jp/tcc/tcc/products/climate/climatview/graph_mkhtml_nrm.php?e=6&k=0&m=9&n=36003&r=1&s=1&y=2026",
+    "publishedAt": null,
+    "observedAt": "2026-10-29",
+    "dataClass": "real",
+    "note": "Станция Павлодар, месячные нормы температуры и осадков. Период 1991–2020 подтвержден ev-pvl-jma-method. Дата публикации таблицы не указана; параметры URL не являются периодом нормы."
+  },
+  {
+    "id": "ev-pvl-jma-method",
+    "sourceType": "weather",
+    "sourceLabel": "Japan Meteorological Agency: Outline of ClimatView",
+    "sourceUrl": "https://www.data.jma.go.jp/tcc/tcc/products/climate/climatview/outline.html",
+    "publishedAt": null,
+    "observedAt": "2026-10-29",
+    "dataClass": "real",
+    "note": "Подтверждает норму 1991–2020, использование CLIMAT и GHCN. Дата публикации текущей редакции не указана."
+  },
+  {
+    "id": "ev-pvl-sp-climate",
+    "sourceType": "weather",
+    "sourceLabel": "СП РК 2.04-01-2017: Строительная климатология, официальное издание 2025",
+    "sourceUrl": "https://new-shop.ksm.kz/media/egfntd/ntdgo/%D0%A1%D0%9F_%D0%A0%D0%9A_2.04-01-2017.pdf",
+    "publishedAt": null,
+    "observedAt": "2026-10-29",
+    "dataClass": "real",
+    "note": "Издание 2025; изменения 13.05.2025 №71-НҚ, точная дата публикации PDF не найдена. Табл.3.3: температура, период по п.3.6 — 1971–2011. Табл.3.1/3.2: ветры и экстремумы. Табл.3.9: снег. Экстремумы расходятся с Казгидрометом."
+  },
+  {
+    "id": "ev-pvl-extremes",
+    "sourceType": "weather",
+    "sourceLabel": "Казгидромет: Климатическая характеристика города Павлодар",
+    "sourceUrl": "https://www.kazhydromet.kz/ru/uinfos/18",
+    "publishedAt": "2026-06-12",
+    "observedAt": "2026-10-29",
+    "dataClass": "real",
+    "note": "Минимум -47.0°C (1907), максимум 42.0°C (1973). Для абсолютных экстремумов выбран этот прямой источник; значения СП сохранены как альтернативные."
+  },
+  {
+    "id": "ev-pvl-frost-reference",
+    "sourceType": "care_reference",
+    "sourceLabel": "Экологический портал: заявление о намечаемой деятельности KZ09RYS00637499",
+    "sourceUrl": "https://ecoportal.kz/Rubric/RubService/LoadFile/40882",
+    "publishedAt": null,
+    "observedAt": "2026-10-29",
+    "dataClass": "estimate",
+    "note": "Документ датирован 21.05.2024, точная дата публикации не найдена. Проект в Северной промзоне города Павлодара. В климатическом описании 130 суток безморозного периода; исходный ряд и период осреднения не указаны. Справочный ориентир, не подтвержденная климатическая норма."
+  },
+  {
+    "id": "ev-pvl-soil",
+    "sourceType": "care_reference",
+    "sourceLabel": "Эколого-геохимическая оценка почвенного покрова техногенных территорий северо-востока Казахстана",
+    "sourceUrl": "https://s.fundamental-research.ru/pdf/2014/9-4/34928.pdf",
+    "publishedAt": null,
+    "observedAt": "2026-10-29",
+    "dataClass": "estimate",
+    "note": "Фундаментальные исследования, 2014, №9; точный день публикации не найден. Таблица 1, с.790: отдельно г.Павлодар, pH 6.2–8.2. Выборочные измерения, не карта всего города; год отбора в используемой таблице не указан."
+  },
+  {
+    "id": "ev-pvl-green-inventory",
+    "sourceType": "municipal",
+    "sourceLabel": "В Доме Дружбы прошло заседание Экологического совета области",
+    "sourceUrl": "https://www.gov.kz/org/pavlodar/press/news/details/753021?lang=ru",
+    "publishedAt": "2024-04-18",
+    "observedAt": "2026-10-29",
+    "dataClass": "real",
+    "note": "Для Павлодара 200000 деревьев и кустарников вместе; не количество одних деревьев. План посадок по городским участкам 1660. Зеленый пояс выделен отдельно; граница города не проверена."
+  },
+  {
+    "id": "ev-pvl-green-species",
+    "sourceType": "municipal",
+    "sourceLabel": "Подрядчики городского отдела ЖКХ продолжают высадку в Павлодаре деревьев и цветов",
+    "sourceUrl": "https://www.gov.kz/org/pavlodar-pvl/press/news/details/786001?lang=ru",
+    "publishedAt": "2024-06-05",
+    "observedAt": "2026-10-29",
+    "dataClass": "real",
+    "note": "Городские улицы: высажено 1080 саженцев; цветники почти 30000 м². Виды перечислены в статье. Это промежуточный отчет, не весь зеленый фонд."
+  },
+  {
+    "id": "ev-pvl-green-2025",
+    "sourceType": "municipal",
+    "sourceLabel": "Акимат: весенняя высадка лип в Павлодаре",
+    "sourceUrl": "https://www.gov.kz/org/pavlodar/press/news/details/975086?lang=ru",
+    "publishedAt": "2025-04-13",
+    "observedAt": "2026-10-29",
+    "dataClass": "real",
+    "note": "План лип: 360 весной и 640 осенью. Упоминается хорошая приживаемость на пересечении Астана–М.Исиналиева, без измеренного процента. План не подтверждает исполнение."
+  },
+  {
+    "id": "ev-pvl-green-2026",
+    "sourceType": "municipal",
+    "sourceLabel": "Акимат: рабочий объезд Павлодара, благоустройство и озеленение",
+    "sourceUrl": "https://www.gov.kz/org/pavlodar/press/news/details/1211156?lang=ru",
+    "publishedAt": "2026-04-29",
+    "observedAt": "2026-10-29",
+    "dataClass": "real",
+    "note": "План: почти 900 крупномерных лип в городе; около 17000 саженцев за Щербактинским мостом в зеленом поясе. Последний участок не отнесен к городской черте без проверки границ."
+  },
+  {
+    "id": "ev-pvl-air",
+    "sourceType": "weather",
+    "sourceLabel": "Казгидромет: информационный бюллетень о состоянии окружающей среды Павлодарской области за 2025 год",
+    "sourceUrl": "https://www.kazhydromet.kz/uploads/calendar/269/year_file/6977408450a87byulleten-2025g-rus.pdf",
+    "publishedAt": null,
+    "observedAt": "2026-10-29",
+    "dataClass": "real",
+    "note": "Использован только городской раздел Павлодара, с.4–7. Год отчета 2025, точная дата публикации не найдена. Посты и индексы относятся к 2025 году. ИЗА, НП и СИ характеризуют разные аспекты загрязнения."
+  },
+  {
+    "id": "ev-pvl-snow-study",
+    "sourceType": "care_reference",
+    "sourceLabel": "PLOS One: Assessing the spatial distribution and sources of heavy metal pollution in the snow cover: A case study from Pavlodar, Northeastern Kazakhstan",
+    "sourceUrl": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0322300",
+    "publishedAt": "2025-05-12",
+    "observedAt": "2026-10-29",
+    "dataClass": "estimate",
+    "note": "Исследование снега, не почвенная карта. Описание индустрии и почвенного фона. Выборка включает город и пригородные села; агрегаты всей выборки не используются как показатели города."
+  },
+  {
+    "id": "ev-pvl-worldbank",
+    "sourceType": "care_reference",
+    "sourceLabel": "World Bank: Reimagining Central Asian Cities for a Resilient and Low-Carbon Future",
+    "sourceUrl": "https://documents1.worldbank.org/curated/en/099020525094063731/pdf/P178094-54b5c2d0-0be0-45ac-848a-584494de67e3.pdf",
+    "publishedAt": null,
+    "observedAt": "2026-10-29",
+    "dataClass": "estimate",
+    "note": "На документе июнь 2024; точный день публикации не найден. Рис.2.7 и 2.8 содержат Павлодар. Числа с длины столбиков не считывались; точные значения оставлены null. Это не готовый проверенный слой Landsat/Sentinel для города."
+  },
+  {
+    "id": "ev-pvl-rules",
+    "sourceType": "care_reference",
+    "sourceLabel": "Правила создания, содержания и защиты зеленых насаждений населенных пунктов Павлодарской области, решение №52/4",
+    "sourceUrl": "https://old.adilet.zan.kz/rus/docs/G23P000524M",
+    "publishedAt": "2023-09-20",
+    "observedAt": "2026-10-29",
+    "dataClass": "real",
+    "note": "Принято 11.09.2023; дата официальной публикации подтверждена вкладкой info. Использован актуализированный текст с изменениями 26.03.2026. Областные правила применяются к Павлодару."
+  },
+  {
+    "id": "ev-pvl-rules-2026",
+    "sourceType": "care_reference",
+    "sourceLabel": "Изменения в правила озеленения, решение Павлодарского областного маслихата №257/29",
+    "sourceUrl": "https://old.adilet.zan.kz/rus/docs/G26P025729M",
+    "publishedAt": "2026-04-09",
+    "observedAt": "2026-10-29",
+    "dataClass": "real",
+    "note": "Принято 26.03.2026; официальная публикация подтверждена вкладкой info. Изменены пункты 39,58,59; учтено при чтении действующих правил."
+  },
+  {
+    "id": "ev-pvl-sp-planning",
+    "sourceType": "care_reference",
+    "sourceLabel": "СП РК 3.01-101-2013: Градостроительство. Планировка и застройка городских и сельских населенных пунктов",
+    "sourceUrl": "https://new-shop.ksm.kz/media/egfntd/ntdgo/%D0%A1%D0%9F_%D0%A0%D0%9A_3.01-101-2013-3.pdf",
+    "publishedAt": null,
+    "observedAt": "2026-10-29",
+    "dataClass": "real",
+    "note": "Официальное издание 2025; точный день публикации не найден. П.6.10, табл.1-3, с.21–22; п.8.2.9, с.39–40. Отступы до оси ствола/кустарника; примечания обязательны."
+  },
+  {
+    "id": "ev-pvl-price-plan",
+    "sourceType": "municipal",
+    "sourceLabel": "Госзакупки: объявление 17085072-1, лоты",
+    "sourceUrl": "https://old.goszakup.gov.kz/ru/announce/index/17085072?tab=lots",
+    "publishedAt": "2026-05-28",
+    "observedAt": "2026-10-29",
+    "dataClass": "real",
+    "note": "Плановые цены без НДС: петуния с посадкой 215.52, тагетес с посадкой 344.83 KZT/шт. Пункты плана 86432123 и 86432253. Это не цены договора."
+  },
+  {
+    "id": "ev-pvl-price-contract",
+    "sourceType": "municipal",
+    "sourceLabel": "Госзакупки: договор 990240004445/260510/00",
+    "sourceUrl": "https://old.goszakup.gov.kz/ru/egzcontract/cpublic/show/25372050",
+    "publishedAt": null,
+    "observedAt": "2026-10-29",
+    "dataClass": "real",
+    "note": "Договор заключен 03.06.2026; создан 02.06.2026, точная дата публикации отдельно не указана. Статус Исполнен; фактическая дата 15.06.2026, общая сумма 550500 KZT."
+  },
+  {
+    "id": "ev-pvl-price-units",
+    "sourceType": "municipal",
+    "sourceLabel": "Госзакупки: предметы договора 990240004445/260510/00",
+    "sourceUrl": "https://old.goszakup.gov.kz/ru/egzcontract/cpublic/units/25372050",
+    "publishedAt": null,
+    "observedAt": "2026-10-29",
+    "dataClass": "real",
+    "note": "Договор от 03.06.2026. Предметы 57255978: петуния с посадкой 175 KZT/шт; 57255979: тагетес с посадкой 288 KZT/шт. Открыты детализации: доставка Щедрина,63, г.Павлодар; НДС по обоим предметам 0. Точная дата публикации не указана. Сумма 288000 во вкладке договоров объявления относится к предмету, общая карточка дает 550500."
+  },
+  {
+    "id": "ev-pvl-complaints",
+    "sourceType": "manual",
+    "sourceLabel": "Obozrenie: Почему акимат скрывает дендроплан Павлодара от общественности?",
+    "sourceUrl": "https://obozrenie.kz/17363-pochemu-akimat-skryvaet-dendroplan-pavlodara-ot-obschestvennosti.html",
+    "publishedAt": "2025-10-02",
+    "observedAt": "2026-10-29",
+    "dataClass": "estimate",
+    "note": "Сообщения о состоянии лип и вырубках на улицах Астана, Ак.Бектурова, Ак.Чокина и пр.Назарбаева. Жалобы — сигнал для обследования, не подтвержденный диагноз и не замер обеспеченности зеленью."
+  },
+  {
+    "id": "ev-pvl-complaints-time",
+    "sourceType": "manual",
+    "sourceLabel": "Время: Когда деревья стали больными",
+    "sourceUrl": "https://time.kz/articles/risk/2025/07/02/kogda-derevya-stali-bolnymi",
+    "publishedAt": "2025-07-02",
+    "observedAt": "2026-10-29",
+    "dataClass": "estimate",
+    "note": "Сообщение о жалобе на опасное дерево на улице Павлова и спорах о реновации улиц Бектурова и Астана. Номера домов, заявители и персональные данные не извлекаются."
+  }
+]

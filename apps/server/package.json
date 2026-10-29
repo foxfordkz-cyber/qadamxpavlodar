@@ -11,15 +11,18 @@
     "dev": "node --env-file-if-exists=.env --import ./scripts/local-network-guard.mjs --import tsx src/server.ts",
     "typecheck": "tsc --noEmit",
     "build": "tsc -p tsconfig.build.json",
-    "start": "node --env-file-if-exists=.env --import ./scripts/local-network-guard.mjs dist/server.js",
+    "start": "node --env-file-if-exists=.env --import ./scripts/local-network-guard.mjs --import tsx src/server.ts",
     "seed": "node --env-file-if-exists=.env --import tsx src/seed-cli.ts",
-    "test": "node --import ./scripts/local-network-guard.mjs --import tsx --test tests/*.test.ts",
+    "test": "node --import ./scripts/local-network-guard.mjs --import ./tests/setup-env.mjs --import tsx --test tests/*.test.ts",
     "smoke": "node --import ./scripts/local-network-guard.mjs scripts/smoke.mjs",
     "demo:integration": "pwsh -NoProfile -File scripts/demo-integration.ps1",
     "seed:v2": "node --env-file-if-exists=.env --import ./scripts/local-network-guard.mjs --import tsx src/v2-seed-cli.ts",
-    "test:v2": "node --import ./scripts/local-network-guard.mjs --import tsx --test tests/v2.test.ts",
-    "demo:v2": "node --import ./scripts/local-network-guard.mjs scripts/demo-v2.mjs",
-    "test:municipal": "node --import ./scripts/local-network-guard.mjs --import tsx --test tests/municipal.test.ts"
+    "test:v2": "node --import ./scripts/local-network-guard.mjs --import ./tests/setup-env.mjs --import tsx --test tests/v2.test.ts",
+    "demo:v2": "node --env-file-if-exists=.env --import ./scripts/local-network-guard.mjs scripts/demo-v2.mjs",
+    "test:municipal": "node --import ./scripts/local-network-guard.mjs --import ./tests/setup-env.mjs --import tsx --test tests/municipal.test.ts",
+    "demo:municipal": "node --import ./scripts/local-network-guard.mjs --import tsx scripts/demo-municipal.mjs",
+    "seed:tz": "node --env-file-if-exists=.env --import ./scripts/local-network-guard.mjs --import tsx src/tz/seed-cli.ts",
+    "llm:check": "node --env-file-if-exists=.env --import ./scripts/local-network-guard.mjs --import tsx src/tz/llm-check-cli.ts"
   },
   "dependencies": {
     "@turf/turf": "^7.4.0",

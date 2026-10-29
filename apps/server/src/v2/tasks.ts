@@ -8,7 +8,8 @@ import { requireSiteCleared } from './data.js';
 import { localDayRange } from '../time.js';
 export const taskCreate=z.object({objectType:z.enum(['plant','candidate_site']),objectId:id,action:z.enum(['inspect','water','weed','plant']),description:text,priority:z.enum(['low','medium','high','critical']).default('medium'),priorityWeight:z.number().min(0).max(100).default(50),dueAt:timestamp.nullable().default(null),estimatedMinutes:z.number().int().positive().max(1440),requiredWaterLiters:z.number().positive().nullable().default(null),minWorkers:z.number().int().min(1).max(20).default(1),requiredSkills:z.array(text).max(20).default([]),evidenceIds:uniqueIds.min(1)}).strict();
 export const designTasks=z.object({expectedVersion:version,revision:version,estimatedMinutes:z.number().int().positive().max(1440),minWorkers:z.number().int().min(1).max(20),requiredSkills:z.array(text).max(20).default(['plant'])}).strict();
-export const assignInput=z.object({expectedVersion:version,crewId:id,scheduledStart:timestamp,scheduledEnd:timestamp,resourceIds:uniqueIds.default([])}).strict().refine(b=>b.scheduledStart<b.scheduledEnd,'Invalid assignment interval');
+// minWorkers (необязательно): минимальный состав задаёт специалист при назначении бригады; людей выбирает бригадир.
+export const assignInput=z.object({expectedVersion:version,crewId:id,scheduledStart:timestamp,scheduledEnd:timestamp,resourceIds:uniqueIds.default([]),minWorkers:z.number().int().min(1).max(20).optional()}).strict().refine(b=>b.scheduledStart<b.scheduledEnd,'Invalid assignment interval');
 export const assignWorkersInput=z.object({expectedVersion:version,workerIds:uniqueIds.min(1)}).strict();
 export const taskQuery=z.object({status:z.enum(['draft','assigned','in_progress','submitted','verified']).optional(),crewId:id.optional(),workerId:id.optional(),objectId:id.optional(),date:z.iso.date().optional(),limit:z.coerce.number().int().min(1).max(200).default(100),offset:z.coerce.number().int().nonnegative().default(0)}).strict();
 export function allTasks(s:Store){return s.all('SELECT data FROM v2_tasks ORDER BY id').map(r=>parseRow(r));}
@@ -78,7 +79,7 @@ export function validateAssignment(s:Store,t:Doc,workerIds:string[],requireWorke
 }
 export function assign(s:Store,a:User,taskId:string,b:z.infer<typeof assignInput>){
   allow(a,'coordinator');const before=task(s,a,taskId);matchVersion(before,b.expectedVersion);if(!['draft','assigned'].includes(before.status))fail('INVALID_TRANSITION','Only unstarted tasks can be assigned');
-  const after={...before,status:'assigned',assignedCrewId:b.crewId,assignedWorkerIds:[],scheduledStart:b.scheduledStart,scheduledEnd:b.scheduledEnd,resourceIds:b.resourceIds};
+  const after={...before,status:'assigned',assignedCrewId:b.crewId,assignedWorkerIds:[],scheduledStart:b.scheduledStart,scheduledEnd:b.scheduledEnd,resourceIds:b.resourceIds,minWorkers:b.minWorkers??before.minWorkers};
   validateAssignment(s,after,[],false);return saveTask(s,a,before,after,'assign_crew');
 }
 export function assignWorkers(s:Store,a:User,taskId:string,b:z.infer<typeof assignWorkersInput>){

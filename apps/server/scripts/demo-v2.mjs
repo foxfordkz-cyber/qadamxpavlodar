@@ -7,7 +7,8 @@ import { resolve,join } from 'node:path';
 import sharp from 'sharp';
 import { Store } from '../dist/db.js';
 import { seed } from '../dist/seed.js';
-import { seedV2,seedV2Scenario,DEMO_PASSWORD } from '../dist/v2/seed.js';
+import { seedV2,seedV2Scenario,demoPassword } from '../dist/v2/seed.js';
+const DEMO_PASSWORD=demoPassword();
 const name=process.argv[2]??'verification-v2';
 assert(/^[a-zA-Z0-9_-]{1,40}$/.test(name),'Run name must contain safe characters');
 const dir=resolve('data','v2-demo',name),dbPath=join(dir,'demo.sqlite'),uploads=resolve('uploads','v2-demo',name);
@@ -16,7 +17,7 @@ let store=new Store(dbPath);seed(store);await seedV2(store);seedV2Scenario(store
 const probe=createServer();probe.listen(0,'127.0.0.1');await once(probe,'listening');const port=probe.address().port;await new Promise(done=>probe.close(done));
 const base=`http://127.0.0.1:${port}`;let server;let iteration=0;
 async function launch(){
-  server=spawn(process.execPath,['--import','./scripts/local-network-guard.mjs','dist/server.js'],{cwd:process.cwd(),windowsHide:true,env:{...process.env,NODE_ENV:'development',PORT:String(port),DB_PATH:dbPath,UPLOADS_PATH:uploads},stdio:['ignore','pipe','pipe']});
+  server=spawn(process.execPath,['--import','./scripts/local-network-guard.mjs','--import','tsx','dist/server.js'],{cwd:process.cwd(),windowsHide:true,env:{...process.env,NODE_ENV:'development',PORT:String(port),DB_PATH:dbPath,UPLOADS_PATH:uploads},stdio:['ignore','pipe','pipe']});
   server.stdout.pipe(createWriteStream(join(dir,`server-${++iteration}.log`),{flags:'a'}));server.stderr.pipe(createWriteStream(join(dir,`server-${iteration}.error.log`),{flags:'a'}));
   for(let n=0;n<100;n++){if(server.exitCode!==null)throw Error('Demo server exited');try{const r=await fetch(base+'/health');if(r.ok)return;}catch{}await new Promise(done=>setTimeout(done,100));}throw Error('Server startup timeout');
 }

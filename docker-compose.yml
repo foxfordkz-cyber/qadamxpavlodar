@@ -1,25 +1,38 @@
 # Запуск одной командой (ТЗ 4): docker compose up --build → http://localhost:8080
+# Пароль демо-аккаунтов и ключи — только в apps/server/.env (скопируйте из .env.example).
+# Без .env сервер сгенерирует пароль сам и напечатает его в журнале: docker compose logs server
 services:
-  server:
-    build:
-      context: .
-      dockerfile: apps/server/Dockerfile
-    volumes:
-      - backend-data:/app/data
-      - backend-uploads:/app/uploads
-    restart: unless-stopped
   web:
     build:
       context: .
       dockerfile: apps/web/Dockerfile
       args:
-        DATA_SOURCE: api
+        # mock, пока весь сценарий ТЗ не пройдёт с ?source=api; потом — api.
+        # Режим можно сменить и без пересборки: http://localhost:8080/?source=api
+        DATA_SOURCE: mock
     ports:
-      - "127.0.0.1:8080:80"
+      - "8080:80"
     depends_on:
-      server:
-        condition: service_healthy
+      - server
+    restart: unless-stopped
+  server:
+    build:
+      context: .
+      dockerfile: apps/server/Dockerfile
+    env_file:
+      - path: apps/server/.env
+        required: false
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: "3100"
+      STORAGE_ROOT: /data
+      TRUST_PROXY: uniquelocal
+    volumes:
+      - gp-data:/data
+    # Наружу не публикуется: браузер ходит через nginx (/api → server:3100).
+    expose:
+      - "3100"
     restart: unless-stopped
 volumes:
-  backend-data:
-  backend-uploads:
+  gp-data:

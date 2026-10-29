@@ -40,6 +40,19 @@
 .gp-layers legend { font-weight: 700; padding: 0 4px; display: flex; gap: 6px; align-items: center; }
 .gp-layers .gp-check { font-size: 13px; }
 .gp-layers .gp-badge { margin-left: 4px; }
+/* Веса приоритета прямо на карте (ТЗ 3.7.2): панель прокручивается, если не помещается по высоте. */
+.gp-layers { max-height: calc(100% - 140px); overflow-y: auto; }
+.gp-layers__prio { display: grid; gap: 4px; margin: 2px 0 6px 22px; padding-left: 8px; border-left: 2px solid var(--gp-green); }
+.gp-layers__prio summary { cursor: pointer; font-weight: 600; }
+.gp-layers__prio .gp-weight { margin: 4px 0; }
+.gp-layers__prio .gp-weight label { font-size: 12px; gap: 6px; }
+.gp-layers__scale { display: flex; flex-wrap: wrap; gap: 6px; font-size: 11px; color: var(--gp-muted); }
+.gp-layers__scale span { display: inline-flex; align-items: center; gap: 3px; }
+.gp-layers__scale i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; border: 1px solid rgb(0 0 0 / 15%); }
+.gp-layers__row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: space-between; }
+.gp-layers__top { margin: 2px 0 0; padding-left: 18px; font-size: 12px; }
+.gp-layers__top li { margin: 2px 0; }
+.gp-layers__top .gp-link { background: none; border: 0; padding: 0; color: inherit; text-decoration: underline; cursor: pointer; font: inherit; text-align: left; }
 
 /* Проблемы, приоритеты */
 .gp-tiles--compact { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); margin-bottom: 10px; }
@@ -69,6 +82,8 @@
 .gp-assist__msg.is-error { border-color: var(--gp-amber-line); background: var(--gp-amber-soft); }
 .gp-assist__zones { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
 .gp-assist__zones a { text-decoration: none; color: var(--gp-text); }
+.gp-assist__proof { margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--gp-border); display: grid; gap: 2px; justify-items: start; }
+.gp-assist__proof p { margin: 0; }
 .gp-assist__form { display: grid; grid-template-columns: 1fr auto; gap: 6px; align-items: end; border-top: 1px solid var(--gp-border); padding-top: 8px; }
 
 /* Отчёт: печать в PDF */
@@ -85,7 +100,8 @@
   .gp-page { padding: 0; }
 }
 @media (max-width: 760px) {
-  .gp-layers { right: auto; left: 10px; top: 56px; max-width: 200px; }
+  /* На телефоне панель инструментов карты в несколько строк — «Слои» идут под картой, а не поверх неё. */
+  .gp-layers { position: static; max-width: none; max-height: none; margin: 8px 0 0; }
   .gp-rank__row { grid-template-columns: 44px minmax(0, 1fr); }
   .gp-rank__actions { grid-column: 1 / -1; display: flex; }
   .gp-assist-fab { bottom: 70px; }
@@ -95,3 +111,25 @@
 .gp-zone table { display: block; overflow-x: auto; max-width: 100%; }
 .gp-zone__facts .gp-input--inline, .gp-zone .gp-input--inline { max-width: 100%; }
 .gp-zone__facts { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); }
+
+/* Проверенные данные о Павлодаре на странице «Справочники» */
+.gp-facts { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; margin-top: 12px; }
+.gp-facts__topic { padding: 12px 14px; }
+.gp-facts__topic .gp-subhead { margin-top: 0; }
+.gp-facts__item { padding: 8px 0; border-bottom: 1px dashed var(--gp-border); }
+.gp-facts__item:last-child { border-bottom: 0; }
+.gp-facts__item p { margin: 4px 0; }
+
+/* ТЗ 3.1.4: поиск по адресу и рисование зоны в панели инструментов карты */
+.gp-map__toolbar { max-width: calc(100% - 64px); align-items: center; }
+.gp-mapsearch { position: relative; flex: 1 1 220px; min-width: 180px; max-width: 320px; }
+.gp-mapsearch .gp-input { min-height: 32px; padding: 4px 10px; width: 100%; }
+.gp-mapsearch__list { position: absolute; z-index: 20; top: calc(100% + 4px); left: 0; right: 0; margin: 0; padding: 4px; list-style: none; max-height: 300px; overflow-y: auto; background: var(--gp-surface, #fff); box-shadow: var(--gp-shadow); }
+.gp-mapsearch__list button { display: block; width: 100%; text-align: left; background: none; border: 0; padding: 6px 8px; font: inherit; font-size: 13px; cursor: pointer; color: inherit; }
+.gp-mapsearch__list [aria-selected="true"] button { background: var(--gp-green-soft, #e0e7c9); }
+.gp-mapsearch__list .gp-badge { margin-right: 4px; }
+.gp-mapsearch__empty { padding: 6px 8px; }
+.gp-drawbar { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.gp-drawbar__form { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.gp-drawbar__form .gp-input { min-height: 32px; padding: 4px 10px; width: 220px; }
+.gp-map__saved { position: absolute; z-index: 6; left: 50%; transform: translateX(-50%); bottom: 44px; max-width: min(520px, 90%); margin: 0; }

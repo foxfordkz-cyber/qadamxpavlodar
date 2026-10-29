@@ -42,7 +42,7 @@ function parseFile(name: string, text: string): { format: string; features: Feat
 export function ImportPage() {
   const { api, mode, bump } = useData();
   const [layer,setLayer]=useState("zones"); const [source,setSource]=useState(""); const [ack,setAck]=useState(false);
-  const [dataClass,setDataClass]=useState('demo');
+  const [dataClass,setDataClass]=useState<'real'|'demo'|'estimate'>('demo');
   const [file, setFile] = useState<string | null>(null);
   const [preview, setPreview] = useState<ImportPreview | null>(null);
   const [error, setError] = useState<unknown>(null);
@@ -68,7 +68,7 @@ export function ImportPage() {
       <div className="gp-card gp-import">
         <label>Слой <select value={layer} onChange={e=>setLayer(e.target.value)}><option value="zones">Зоны</option><option value="soils">Почвы</option><option value="greenery">Насаждения</option><option value="city">Город</option><option value="catalog">Каталог растений</option></select></label>
         <label>Источник и дата <input value={source} onChange={e=>setSource(e.target.value)} placeholder="Организатор, название файла, дата" /></label>
-        <label>Происхождение данных <select value={dataClass} onChange={e=>setDataClass(e.target.value)}><option value="demo">Тестовые данные</option><option value="estimate">Оценка</option><option value="real">Реальный источник (указан пользователем)</option></select></label>
+        <label>Происхождение данных <select value={dataClass} onChange={e=>setDataClass(e.target.value as 'real'|'demo'|'estimate')}><option value="demo">Тестовые данные</option><option value="estimate">Оценка</option><option value="real">Реальный источник (указан пользователем)</option></select></label>
         <label className="gp-btn gp-btn--primary gp-import__pick">
           Выбрать файл
           <input type="file" accept=".geojson,.json,.kml,.csv,.zip" className="gp-sr" onChange={(e) => e.target.files?.[0] && onFile(e.target.files[0])} />

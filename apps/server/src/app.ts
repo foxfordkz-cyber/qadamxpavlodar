@@ -16,10 +16,12 @@ import { localDayRange } from './time.js';
 import { buildOpenApi, routes, type RouteName, type RouteSpec } from './contracts.js';
 import { createV2Router } from './v2/router.js';
 import { type V2Adapters } from './v2/intelligence.js';
+import { type TzOptions } from './tz/routes.js';
 
 const require = createRequire(import.meta.url);
 const swaggerRoot = dirname(require.resolve('swagger-ui-dist/swagger-ui-bundle.js'));
-export type AppOptions = { uploadsPath?: string; frontendOrigins?: string[]; aiAdapter?: ai.AiAdapter; v2Adapters?:V2Adapters };
+export type AppOptions = { uploadsPath?: string; frontendOrigins?: string[]; allowedHosts?: string[]; trustProxy?: false | 'loopback' | 'uniquelocal';
+  aiAdapter?: ai.AiAdapter; v2Adapters?:V2Adapters; tz?: TzOptions };
 export function createApp(store: Store, options: AppOptions = {}) {
   const app = express();
   const photos = new PhotoStorage(options.uploadsPath ?? join(dirname(store.path), 'uploads'));
@@ -42,12 +44,13 @@ export function createApp(store: Store, options: AppOptions = {}) {
     res.set('Idempotency-Replayed', String(result.replayed)).status(result.status).json(result.body);
   }
   app.disable('x-powered-by');
-  app.set('trust proxy', false);
+  app.set('trust proxy', options.trustProxy ?? false);
+  const allowedHosts = options.allowedHosts ?? ['127.0.0.1','localhost','[::1]'];
   app.use((req, res, next) => {
     res.locals.requestId = randomUUID();
     res.set({ 'X-Request-Id': res.locals.requestId, 'X-API-Contract': req.path.startsWith('/experimental') ? 'PROPOSED' : 'draft',
       'X-Data-Mode': 'DEMO', 'X-Content-Type-Options': 'nosniff', 'Cache-Control': 'no-store', 'Referrer-Policy': 'no-referrer' });
-    if (!['127.0.0.1','localhost','[::1]'].includes(req.hostname)) return next(new ApiError(403, 'LOCAL_ONLY', 'Loopback Host required'));
+    if (!allowedHosts.includes(req.hostname)) return next(new ApiError(403, 'LOCAL_ONLY', 'Host is not in ALLOWED_HOSTS (loopback by default)'));
     const origin = req.get('Origin');
     if (origin) {
       if (origin !== `http://${req.get('Host')}` && !(options.frontendOrigins ?? []).includes(origin)) {
@@ -76,7 +79,7 @@ export function createApp(store: Store, options: AppOptions = {}) {
   });
   app.use('/api/v1/imports/preview',express.json({limit:'8mb',strict:true}));
   app.use(express.json({ limit: '32kb', strict: true }));
-  app.use('/api/v1', createV2Router(store, join(photos.root,'v2'),options.v2Adapters));
+  app.use('/api/v1', createV2Router(store, join(photos.root,'v2'),options.v2Adapters,options.tz));
   route('health', (_req, res) => {
     try { if (store.get('SELECT 1 AS ok')?.ok !== 1) throw new Error('Database check failed'); }
     catch { throw new ApiError(503, 'DATABASE_UNAVAILABLE', 'Local database unavailable'); }
@@ -167,7 +170,7 @@ export function createApp(store: Store, options: AppOptions = {}) {
   app.use((_req,_res,next) => next(new ApiError(404,'NOT_FOUND','Route not found')));
   const errors: ErrorRequestHandler = (error: unknown,_req,res,_next) => {
     let status = 500, code = 'INTERNAL_ERROR', message = 'Unexpected local server error'; let details: unknown;
-    if (error instanceof ApiError) ({ status,code,message } = error);
+    if (error instanceof ApiError) ({ status,code,message,details } = error);
     else if (error instanceof ZodError) {
       status = 400; code = 'VALIDATION_ERROR'; message = 'Invalid request'; details = error.issues.map(({path,message}) => ({path,message}));
     } else if (error instanceof multer.MulterError) {

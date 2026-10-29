@@ -1,0 +1,131 @@
+{
+  "months": [
+    {
+      "month": 1,
+      "tMeanC": -16.7,
+      "precipitationMm": 16.3
+    },
+    {
+      "month": 2,
+      "tMeanC": -14.7,
+      "precipitationMm": 12.6
+    },
+    {
+      "month": 3,
+      "tMeanC": -6.1,
+      "precipitationMm": 18.2
+    },
+    {
+      "month": 4,
+      "tMeanC": 6.8,
+      "precipitationMm": 15.6
+    },
+    {
+      "month": 5,
+      "tMeanC": 14.1,
+      "precipitationMm": 20.6
+    },
+    {
+      "month": 6,
+      "tMeanC": 19.7,
+      "precipitationMm": 41.5
+    },
+    {
+      "month": 7,
+      "tMeanC": 21.3,
+      "precipitationMm": 57.9
+    },
+    {
+      "month": 8,
+      "tMeanC": 19.1,
+      "precipitationMm": 36.4
+    },
+    {
+      "month": 9,
+      "tMeanC": 12.2,
+      "precipitationMm": 21.0
+    },
+    {
+      "month": 10,
+      "tMeanC": 4.8,
+      "precipitationMm": 21.5
+    },
+    {
+      "month": 11,
+      "tMeanC": -5.7,
+      "precipitationMm": 24.7
+    },
+    {
+      "month": 12,
+      "tMeanC": -13.1,
+      "precipitationMm": 23.2
+    }
+  ],
+  "tAbsMinC": -47.0,
+  "tAbsMaxC": 42.0,
+  "frostFreeDays": 130,
+  "evidenceIds": [
+    "ev-pvl-jma",
+    "ev-pvl-jma-method",
+    "ev-pvl-extremes",
+    "ev-pvl-sp-climate",
+    "ev-pvl-frost-reference"
+  ],
+  "normalPeriod": "1991-2020",
+  "fieldEvidence": {
+    "months.*": {
+      "dataClass": "real",
+      "evidenceIds": [
+        "ev-pvl-jma",
+        "ev-pvl-jma-method"
+      ]
+    },
+    "tAbsMinC": {
+      "dataClass": "real",
+      "year": 1907,
+      "evidenceIds": [
+        "ev-pvl-extremes"
+      ]
+    },
+    "tAbsMaxC": {
+      "dataClass": "real",
+      "year": 1973,
+      "evidenceIds": [
+        "ev-pvl-extremes"
+      ]
+    },
+    "frostFreeDays": {
+      "dataClass": "estimate",
+      "evidenceIds": [
+        "ev-pvl-frost-reference"
+      ],
+      "note": "Справочное описание проекта; период наблюдений не установлен, не применять как официальную норму."
+    }
+  },
+  "alternatives": {
+    "spRk": {
+      "tMeanCByMonth": [
+        -16.6,
+        -15.5,
+        -7.6,
+        5.7,
+        13.8,
+        19.8,
+        21.4,
+        18.6,
+        12.3,
+        4.0,
+        -6.0,
+        -13.0
+      ],
+      "temperaturePeriod": "1971-2011 по п.3.6",
+      "tAbsMinC": -45.5,
+      "tAbsMaxC": 41.1,
+      "dataClass": "real",
+      "evidenceIds": [
+        "ev-pvl-sp-climate"
+      ],
+      "note": "Нормативный источник расходится с JMA и публикацией Казгидромета. Ряды не смешивать; причина расхождения абсолютных рекордов не установлена."
+    }
+  }
+}

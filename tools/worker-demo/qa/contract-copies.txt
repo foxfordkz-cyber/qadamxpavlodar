@@ -1,0 +1,9 @@
+
+File                           Unchanged
+----                           ---------
+00-START-HERE.txt                   True
+01-YOUR-AI-AND-INTEGRATION.txt      True
+02-MAP-AND-COORDINATOR.txt          True
+03-BACKEND-AND-DATA.txt             True
+04-WORKER-AND-DEMO.txt              True
+05-SHARED-CONTRACT.txt              True

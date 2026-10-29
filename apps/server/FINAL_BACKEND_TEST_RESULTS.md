@@ -1,3 +1,5 @@
+> Исторический отчёт до merge (checkpoint 9be77df). Актуальное объединённое состояние: [BACKEND_MERGE_VERIFICATION.md](BACKEND_MERGE_VERIFICATION.md).
+
 # Final backend test results — 29.10.2026
 
 Рабочая ветка `feature/backend-preparation`. Backend продолжен поверх существующего V2/municipal; исходный HEAD `9c3e73437d99996d03a6e1c27e985a56653cd678`. Commit/push/PR/merge/deploy в этом этапе не выполнялись. Это отчёт о локальном интеграционном этапе, не сертификат полного соответствия отсутствующему оригиналу нового ТЗ.

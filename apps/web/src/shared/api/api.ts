@@ -1,15 +1,17 @@
 import { newIdempotencyKey, type Transport } from './transport';
 import type {
-  Brigade, CandidateSite, CheckKey, CheckState, DashboardMetric, DayPlan, DayPlanSummary, EvidenceRef, ID, Issue, Me, Plant, PlantingProject, PlantSelection,
+  Brigade, CandidateSite, CheckKey, GeoJsonPolygon, CheckState, DashboardMetric, DayPlan, DayPlanSummary, EvidenceRef, ID, Issue, Me, Plant, PlantingProject, PlantSelection,
   Priority, ProjectItem, RankWeights, Report, SiteContext, SiteRanking, Species, Task, TaskAction, TaskStatus, Upload, Worker,
 } from './types';
 import type { PlanOptions, Variant, ZoneAnalysis } from '../analytics/plan';
 import type { PriorityFactor, PriorityItem, Problem } from '../analytics/city';
 import type { RateEntry } from '../analytics/rates';
 import type { AssistantReply } from '../analytics/assistant';
+import type { referenceFacts } from './pavlodar';
+import type { GeoHit } from './geocode';
 
 export interface VariantSummary { variant: Variant; label: string; careYears: number; plants: number; cost: number; survival: { y1: number; y2: number; y3: number }; co2t20: number; coolingC: number; rainM3: number; costPerTonCo2: number | null }
-export interface ImportPreview { id?: string; layer?: string; version?: number; format: string; total: number; valid: number; invalid: number; issues: { row: number; level: 'error' | 'warning'; text: string }[]; committed: boolean; note: string }
+export interface ImportPreview { id?: string; format: string; total: number; valid: number; invalid: number; issues: { row: number; level: 'error' | 'warning'; text: string }[]; committed: boolean; note: string }
 type FC = { type: 'FeatureCollection'; features: { type: 'Feature'; properties: Record<string, unknown>; geometry: { type: string; coordinates: unknown } }[] };
 
 export interface TaskFilters {
@@ -45,10 +47,13 @@ export function createApi(t: Transport) {
     kind: t.kind,
     me: () => d(t.request<Me>('GET', '/auth/me')),
     login: (login: string, password: string) => d(t.request<Me>('POST', '/auth/login', { body: { login, password } })),
-    logout: () => d(t.request<null>('POST', '/auth/logout')),
+    logout: () => d(t.request<null>('POST', '/auth/logout', { body: {} })),
 
     sites: () => t.request<CandidateSite[]>('GET', '/sites'),
     site: (id: ID) => d(t.request<CandidateSite>('GET', `/sites/${encodeURIComponent(id)}`)),
+    /** (контракт 29.10) Нарисованная зона: проверка полигона, площадь, окружение, почва в meta. */
+    createZone: (body: { name?: string; geometry: GeoJsonPolygon }, idempotencyKey: string) =>
+      t.request<CandidateSite>('POST', '/zones', { body, idempotencyKey }),
     patchSite: (id: ID, patch: SitePatch) =>
       d(t.request<CandidateSite>('PATCH', `/sites/${encodeURIComponent(id)}`, { body: patch, idempotencyKey: newIdempotencyKey() })),
     rankPreview: (weights: RankWeights) => d(t.request<SiteRanking>('POST', '/sites/rank-preview', { body: { weights } })),
@@ -84,9 +89,9 @@ export function createApi(t: Transport) {
     project: (id: ID) => d(t.request<PlantingProject>('GET', `/projects/${encodeURIComponent(id)}`)),
     createProject: (body: { siteId: ID; title: string; season: string }, idempotencyKey: string) => d(t.request<PlantingProject>('POST', '/projects', { body, idempotencyKey })),
     saveProject: (id: ID, body: { expectedVersion: number; items?: ProjectItem[]; title?: string; season?: string }) =>
-      d(t.request<PlantingProject>('PATCH', `/projects/${encodeURIComponent(id)}`, { body })),
+      d(t.request<PlantingProject>('PATCH', `/projects/${encodeURIComponent(id)}`, { body, idempotencyKey: newIdempotencyKey() })),
     submitProject: (id: ID, expectedVersion: number) => d(t.request<PlantingProject>('POST', `/projects/${encodeURIComponent(id)}/submit`, { body: { expectedVersion }, idempotencyKey: `submit-${id}-v${expectedVersion}` })),
-    withdrawProject: (id: ID, expectedVersion: number) => d(t.request<PlantingProject>('POST', `/projects/${encodeURIComponent(id)}/withdraw`, { body: { expectedVersion } })),
+    withdrawProject: (id: ID, expectedVersion: number) => d(t.request<PlantingProject>('POST', `/projects/${encodeURIComponent(id)}/withdraw`, { body: { expectedVersion }, idempotencyKey: `withdraw-${id}-v${expectedVersion}` })),
     reviewProject: (id: ID, body: { decision: 'approved' | 'returned'; comment: string; expectedVersion: number }) =>
       d(t.request<PlantingProject>('POST', `/projects/${encodeURIComponent(id)}/review`, { body, idempotencyKey: `review-${id}-${body.decision}-v${body.expectedVersion}` })),
     dayPlan: (date: string) => d(t.request<{ plan: DayPlan | null; preview: DayPlanSummary }>('GET', '/plans', { query: { date } })),
@@ -96,14 +101,18 @@ export function createApi(t: Transport) {
     problems: () => t.request<{ problems: Problem[]; notDetectable: string[] }>('GET', '/problems'),
     priorities: (weights: Record<PriorityFactor, number>, budget: number | null) => d(t.request<{ items: PriorityItem[]; roadmap: { chosen: PriorityItem[]; spent: number; left: number; co2t20: number; method: string } | null }>('POST', '/priorities', { body: { weights, budget } })),
     rates: () => d(t.request<{ rates: RateEntry[]; version: number }>('GET', '/rates')),
-    patchRate: (body: { key: string; value: number | null; source: string; expectedVersion: number }) => d(t.request<{ rates: RateEntry[]; version: number }>('PATCH', '/rates', { body })),
+    patchRate: (body: { key: string; value: number | null; source: string; expectedVersion: number }) => d(t.request<{ rates: RateEntry[]; version: number }>('PATCH', '/rates', { body, idempotencyKey: newIdempotencyKey() })),
     soilsLayer: () => t.request<FC>('GET', '/layers/soils'),
     greeneryLayer: () => t.request<FC>('GET', '/layers/greenery'),
     ask: (message: string, siteId: ID | null) => d(t.request<AssistantReply>('POST', '/assistant', { body: { message, siteId } })),
     assistantHistory: () => d(t.request<{ at: string; q: string; intent: string; zones: string[] }[]>('GET', '/assistant/history')),
+    /** (ТЗ 3.1.4) Поиск по адресу, улице, месту или названию зоны — по снимку OSM района прототипа. */
+    geocode: (q: string) => t.request<GeoHit[]>('GET', '/geocode', { query: { q } }),
+    /** Проверенные данные о Павлодаре: факты со ссылками на источники, источники, климатические нормы. */
+    referenceFacts: () => t.request<ReturnType<typeof referenceFacts>['data']>('GET', '/reference/facts'),
+    importFile: (input: {format:string;content?:string;contentBase64?:string;features?:unknown[];source:string;dataClass:'real'|'demo'|'estimate';layer?:string}) => d(t.request<ImportPreview>('POST','/imports/preview',{body:input})),
+    commitImport: (id:string,acknowledgeWarnings:boolean) => d(t.request<ImportPreview>('POST',`/imports/${encodeURIComponent(id)}/commit`,{body:{acknowledgeWarnings},idempotencyKey:newIdempotencyKey()})),
     importPreview: (format: string, features: unknown[]) => d(t.request<ImportPreview>('POST', '/imports/preview', { body: { format, features } })),
-    importFile: (body: {format:string;content:string;layer:string;source:string;dataClass:string}) => d(t.request<ImportPreview>('POST','/imports/preview',{body})),
-    commitImport: (id:string, acknowledgeWarnings:boolean) => d(t.request<ImportPreview>('POST',`/imports/${id}/commit`,{body:{acknowledgeWarnings}})),
     approveDayPlan: (date: string, expectedVersion: number | null) =>
       d(t.request<DayPlan>('POST', `/plans/${date}/approve`, { body: { expectedVersion }, idempotencyKey: `plan-${date}-v${expectedVersion ?? 0}` })),
   };

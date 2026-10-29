@@ -294,7 +294,7 @@ export function analyzeZone(site: CandidateSite, catalog: Species[], rates: Rate
   const opt: PlanOptions = { ...DEFAULT_OPTIONS, ...options };
   const byId = new Map(catalog.map((s) => [s.id, s]));
   const c = site.centroid!;
-  const soil = soilFor(c.lat, c.lng);
+  const soil = (site as CandidateSite & {soilOverride?: SoilInfo}).soilOverride ?? soilFor(c.lat, c.lng);
   const purpose = opt.purpose ?? guessPurpose(site);
   const ranked = scoreSpecies(site, catalog, purpose, soil);
   const scheme = buildScheme(site, ranked, byId, opt);
@@ -331,7 +331,7 @@ export function analyzeZone(site: CandidateSite, catalog: Species[], rates: Rate
   const co2Total = e20.co2t * 10.5;
   const missing: string[] = [];
   if (site.factors.waterAvailability.value === null) missing.push('Доступ к воде на участке неизвестен.');
-  missing.push('Карта почв организатора не загружена — используется синтетический слой.');
+  if (!('soilOverride' in site)) missing.push('Карта почв организатора не загружена — используется синтетический слой.');
   if ((rates['eff.dust.tree'] ?? null) === null) missing.push('Нет коэффициента улавливания пыли — эффект по пыли не рассчитан.');
   if ((rates['eff.population'] ?? null) === null) missing.push('Нет данных о населении — зелень на жителя не рассчитана.');
   return {
@@ -353,7 +353,7 @@ export function analyzeZone(site: CandidateSite, catalog: Species[], rates: Rate
     assumptions: [
       'Все значения оценочные и носят рекомендательный характер; решение принимает специалист акимата (ТЗ 5.2).',
       'Приживаемость — экспертные правила команды (п.п. по факторам риска), модель не калибрована на данных Павлодара.',
-      'Почва — синтетический слой до получения карты почв организатора.',
+      'soilOverride' in site ? 'Почва из импортированного слоя; достоверность определяется источником.' : 'Почва — синтетический слой до получения карты почв организатора.',
       'Расценки — демо-справочник команды; администратор меняет их в «Справочниках».',
       'Экоэффект: рост кроны до взрослого — 30% за 5 лет, 60% за 10, 100% за 20; учтена приживаемость за 3 года.',
     ],
