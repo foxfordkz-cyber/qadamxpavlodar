@@ -77,8 +77,7 @@ export function createApp(store: Store, options: AppOptions = {}) {
     }
     next();
   });
-  // Предпросмотр импорта (ТЗ 3.1.5) принимает слой целиком; остальным запросам хватает 32 KiB.
-  app.use('/api/v1/imports/preview', express.json({ limit: '4mb', strict: true }));
+  app.use('/api/v1/imports/preview',express.json({limit:'8mb',strict:true}));
   app.use(express.json({ limit: '32kb', strict: true }));
   app.use('/api/v1', createV2Router(store, join(photos.root,'v2'),options.v2Adapters,options.tz));
   route('health', (_req, res) => {

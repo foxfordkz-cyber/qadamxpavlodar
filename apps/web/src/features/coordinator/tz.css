@@ -62,7 +62,9 @@
 .gp-rank-item.is-chosen { border-left: 4px solid var(--gp-olive-600); }
 .gp-roadmap-sum { border: 1px solid var(--gp-olive-300); background: var(--gp-green-soft); padding: 8px 10px; margin-top: 8px; }
 .gp-roadmap-sum p { margin: 2px 0; }
-.gp-import { display: flex; gap: 10px; align-items: center; padding: 12px; margin-bottom: 12px; }
+/* Панель импорта переносится по строкам: на телефоне поля #13 (происхождение данных, файл) не уходят за экран. */
+.gp-import { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; padding: 12px; margin-bottom: 12px; }
+.gp-import > * { min-width: 0; max-width: 100%; }
 .gp-import__pick { cursor: pointer; }
 .gp-import__res { padding: 12px; }
 
@@ -113,12 +115,14 @@
 .gp-zone__facts { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); }
 
 /* Проверенные данные о Павлодаре на странице «Справочники» */
-.gp-facts { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; margin-top: 12px; }
-.gp-facts__topic { padding: 12px 14px; }
-.gp-facts__topic .gp-subhead { margin-top: 0; }
-.gp-facts__item { padding: 8px 0; border-bottom: 1px dashed var(--gp-border); }
-.gp-facts__item:last-child { border-bottom: 0; }
-.gp-facts__item p { margin: 4px 0; }
+/* Факты о Павлодаре в «Справочниках»: своё имя — .gp-facts из v2.css делает строку flex и крупный заголовок. */
+.gp-pvlfacts { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; margin-top: 12px; align-items: start; }
+.gp-pvlfacts__topic { padding: 12px 14px; }
+.gp-pvlfacts__topic .gp-subhead { margin-top: 0; }
+.gp-pvlfacts__item { display: block; padding: 8px 0; border-bottom: 1px dashed var(--gp-border); }
+.gp-pvlfacts__item:last-child { border-bottom: 0; }
+.gp-pvlfacts__item > strong { font-size: 15px; margin-right: 6px; }
+.gp-pvlfacts__item p { margin: 4px 0; overflow-wrap: anywhere; }
 
 /* ТЗ 3.1.4: поиск по адресу и рисование зоны в панели инструментов карты */
 .gp-map__toolbar { max-width: calc(100% - 64px); align-items: center; }
@@ -133,3 +137,72 @@
 .gp-drawbar__form { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
 .gp-drawbar__form .gp-input { min-height: 32px; padding: 4px 10px; width: 220px; }
 .gp-map__saved { position: absolute; z-index: 6; left: 50%; transform: translateX(-50%); bottom: 44px; max-width: min(520px, 90%); margin: 0; }
+
+/* Зоны из ответа ассистента и дорожной карты: нумерация совпадает с номерами на карте. */
+.gp-hl { margin: 0; padding: 10px 12px; border-bottom: 1px solid var(--gp-border); background: #f4effa; }
+.gp-hl__head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 6px; }
+.gp-hl__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: 220px; overflow-y: auto; }
+.gp-hl__item { all: unset; box-sizing: border-box; cursor: pointer; display: flex; gap: 8px; align-items: center; width: 100%; padding: 4px 6px; border-radius: 6px; font-size: 14px; }
+.gp-hl__item:hover, .gp-hl__item[aria-current='true'] { background: #e6dcf3; }
+.gp-hl__item:focus-visible { outline: 2px solid #6b3fa0; outline-offset: 1px; }
+.gp-hl__n { flex: none; display: inline-grid; place-items: center; min-width: 22px; height: 22px; border-radius: 11px; background: #6b3fa0; color: #fff; font-weight: 700; font-size: 12px; padding: 0 5px; }
+.gp-hl-pill { position: absolute; z-index: 6; left: 50%; transform: translateX(-50%); bottom: 10px; display: flex; gap: 8px; align-items: center; margin: 0; padding: 4px 6px 4px 8px; font-size: 14px; max-width: min(460px, 90%); }
+.gp-assist__map { margin-top: 6px; }
+
+/* Машина времени зоны: переключатель года в карточке и над картой. */
+.gp-tm { margin-top: 14px; padding: 10px 12px; border: 1px solid var(--gp-border); border-radius: var(--gp-radius); background: #f3f7ec; display: grid; gap: 8px; }
+.gp-tm .gp-subhead { margin: 0; }
+.gp-tm__stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.gp-tm__stats > div { background: #fff; border-radius: 8px; padding: 6px 8px; display: grid; }
+.gp-tm__stats strong { font-size: 17px; }
+.gp-tm__stats span { font-size: 12px; color: var(--gp-muted); }
+.gp-tm__stats > p { grid-column: 1 / -1; margin: 0; }
+.gp-tm-bar { position: absolute; z-index: 6; left: 50%; transform: translateX(-50%); bottom: 54px; display: flex; gap: 8px; align-items: center; margin: 0; padding: 4px 6px 4px 10px; max-width: calc(100% - 20px); }
+
+/* Первый вход: три шага поверх карты. */
+.gp-firstrun { position: fixed; z-index: 47; left: 50%; top: calc(var(--gp-header-h, 56px) + 72px); transform: translateX(-50%); width: min(460px, calc(100% - 24px)); margin: 0; padding: 14px 16px; box-shadow: 0 12px 40px rgb(0 0 0 / 22%); }
+.gp-firstrun ol { margin: 6px 0 10px; padding-left: 20px; display: grid; gap: 6px; font-size: 15px; }
+.gp-sheet__handle { display: none; }
+
+/* Телефон: карточка зоны — шторка снизу, карта над ней остаётся видна. */
+@media (max-width: 760px) {
+  .gp-sites--card .gp-sites__card { top: auto; bottom: 0; height: 52dvh; border-radius: 16px 16px 0 0; box-shadow: 0 -8px 30px rgb(0 0 0 / 22%); padding-top: 0; transition: height 0.2s ease; }
+  .gp-sites--card .gp-sites__card.is-full { height: 92dvh; }
+  .gp-sheet__handle { display: flex; flex-direction: column; align-items: center; gap: 4px; position: sticky; top: 0; z-index: 2; width: 100%; padding: 6px 0 4px; border: 0; background: var(--gp-surface); font: inherit; font-size: 12px; color: var(--gp-muted); cursor: pointer; }
+  .gp-sheet__handle span { width: 44px; height: 5px; border-radius: 3px; background: #c9ccc2; }
+  .gp-sites--card .gp-tm-bar, .gp-sites--card .gp-hl-pill { display: none; }
+  .gp-firstrun { top: auto; bottom: 72px; max-height: calc(100dvh - 140px); overflow-y: auto; }
+  /* Экран телефона — карте: шапка и строка статуса в одну строку, у карты — только поиск, 3D и рисование. */
+  .gp-header__right { flex-wrap: nowrap; gap: 6px; }
+  .gp-header__right > .gp-small { display: none; }
+  .gp-header__right .gp-btn { min-height: 30px; padding: 2px 8px; font-size: 13px; }
+  .gp-subbar .gp-status-row { flex-wrap: nowrap; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+  .gp-subbar .gp-status-row > .gp-kv { display: flex; flex: none; gap: 4px; align-items: baseline; }
+  .gp-subbar .gp-status-row dd { margin: 0; }
+  .gp-map__toolbar .gp-segment { display: none; }
+  .gp-map__toolbar .gp-mapsearch { flex: 1 1 100%; }
+  .gp-sites--card .gp-map__toolbar { display: none; }
+}
+
+/* Режим презентации (Alt+P или ?present=1): крупнее текст карточки и ассистента, без служебной строки. */
+.gp-present .gp-subbar { display: none; }
+.gp-present .gp-sites__card, .gp-present .gp-assist, .gp-present .gp-page { font-size: 17px; }
+.gp-present .gp-table, .gp-present .gp-zone__facts, .gp-present .gp-hl__item { font-size: 16px; }
+.gp-present .gp-assist { width: min(480px, 100%); }
+.gp-present-pill { position: fixed; z-index: 60; left: 12px; bottom: 12px; border: 0; border-radius: 999px; padding: 6px 12px; background: rgb(31 47 31 / 85%); color: #fff; font: inherit; font-size: 13px; cursor: pointer; }
+@media print { .gp-present-pill { display: none; } }
+
+/* Сводка на «Обзоре»: число и подпись сверху, определение — мелко ниже. */
+.gp-tile--metric { justify-content: flex-start; gap: 8px; min-height: 120px; }
+.gp-tile__head { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.gp-tile--metric .gp-tile__value { font-size: 40px; }
+.gp-tile--metric .gp-tile__label { font-size: 16px; line-height: 1.25; }
+.gp-tile__def { flex: 1; line-height: 1.35; }
+
+/* Пустой список: под текстом — что сделать дальше. */
+.gp-state__action { margin-top: 10px; }
+
+/* Отчёт на телефоне: широкие таблицы листаются внутри себя, страница не уезжает вбок. */
+@media (max-width: 760px) {
+  .gp-report-doc table { display: block; max-width: 100%; overflow-x: auto; }
+}

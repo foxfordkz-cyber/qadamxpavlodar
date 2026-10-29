@@ -10,7 +10,7 @@ import { centroidXY, makeProjection } from '../../geo';
 import { analyzeZone, type PlanOptions } from '../../analytics/plan';
 import { detectProblems, priorities, roadmap, DEFAULT_PRIORITY_WEIGHTS, type PriorityFactor } from '../../analytics/city';
 import { ratesMap } from '../../analytics/rates';
-import { answer } from '../../analytics/assistant';
+import { answer, type AskContext } from '../../analytics/assistant';
 import { soilFor } from '../../analytics/zone';
 import { addCareDemoPlants, catalog, osmMeta, seed, type MockDb } from './fixtures';
 import { CHECKS, rankSites, selectPlants } from './rules';
@@ -653,9 +653,9 @@ route('GET', /^\/layers\/greenery$/, () => {
 route('POST', /^\/assistant$/, (_m, o) => {
   requireRole('coordinator', 'viewer' as Role);
   if (mockControls.aiDown) fail(503, 'ai_unavailable', 'Ассистент недоступен. Все модули работают вручную.');
-  const b = o.body as { message?: string; siteId?: string | null };
+  const b = o.body as { message?: string; siteId?: string | null; history?: AskContext['history']; view?: AskContext['view'] };
   if (!b?.message?.trim()) fail(400, 'validation_error', 'Пустой запрос.');
-  const reply = answer(b.message!, { siteId: b.siteId ?? null }, db.sites, catalog, rates());
+  const reply = answer(b.message!, { siteId: b.siteId ?? null, history: (b.history ?? []).slice(-6), view: b.view ?? null }, db.sites, catalog, rates());
   db.history = [...(db.history ?? []), { at: nowIso(), q: b.message!.slice(0, 300), intent: reply.intent, zones: reply.zones.map((z) => z.id) }].slice(-50);
   save();
   return { data: reply };

@@ -33,8 +33,8 @@ async function start() {
   const port = probe.address().port;
   await new Promise(resolve => probe.close(resolve));
   base = `http://127.0.0.1:${port}`;
-  child = spawn(process.execPath, ['--import','./scripts/local-network-guard.mjs','dist/server.js'], {
-    env: { ...process.env, NODE_ENV: 'test', DB_PATH: path, PORT: String(port) },
+  child = spawn(process.execPath, ['--import','./scripts/local-network-guard.mjs','--import','tsx','dist/server.js'], {
+    env: { ...process.env, NODE_ENV: 'test', HOST: '127.0.0.1', STORAGE_ROOT: dir, DB_PATH: path, UPLOADS_PATH: join(dir, 'uploads'), PORT: String(port) },
     windowsHide: true, stdio: ['ignore', 'pipe', 'pipe']
   });
   let output = '';
@@ -42,7 +42,9 @@ async function start() {
   child.on('error', e => { launchError = e; });
   child.stdout.on('data', chunk => { output += chunk; });
   child.stderr.on('data', chunk => { output += chunk; });
-  for (let i = 0; i < 100; i++) {
+  // Cold shared TypeScript imports on Windows can exceed ten seconds.
+  const deadline = Date.now() + 60_000;
+  while (Date.now() < deadline) {
     if (launchError) throw launchError;
     if (child.exitCode !== null) throw new Error(`Server exited: ${output}`);
     try {

@@ -11,7 +11,7 @@ export function domainRoutes(s:Store,api:Api){
   const{route,write}=api;
   const managers=(a:User)=>allow(a,'admin','coordinator'),coordinator=(a:User)=>allow(a,'coordinator'),admin=(a:User)=>allow(a,'admin');
   function visible(a:User,kind:Kind,objectId:string){
-    if(a.role==='admin'||a.role==='coordinator'||a.role==='viewer')return true;
+    if(a.role==='admin'||a.role==='coordinator'||a.role==='specialist'||a.role==='viewer')return true;
     return tasks.allTasks(s).some(t=>tasks.canTask(s,a,t)&&t.objectType===(kind==='plant'?'plant':'candidate_site')&&t.objectId===objectId);
   }
   function requireVisible(a:User,kind:Kind,objectId:string){if(!visible(a,kind,objectId))fail('NOT_FOUND','Object not found',404);}
@@ -36,18 +36,30 @@ export function domainRoutes(s:Store,api:Api){
     ['evidence','/evidence',d.evidenceInput,null,managers],
     ['care_policy','/care-policies',d.carePolicyInput,null,managers]
   ] as const){
-    route({method:'get',path,summary:`Read ${kind} with sources`},(req,res)=>{allow(actor(res),'admin','coordinator','viewer','foreman');res.json(d.page(listDocs(s,kind),req.query));});
+    route({method:'get',path,query:d.listQuery,summary:`Read ${kind} with sources; worker catalog is scoped to assigned approved revisions`},(req,res)=>{
+      const a=actor(res);allow(a,'admin','coordinator','viewer','foreman',...(kind==='catalog'?['worker' as const]:[]));
+      let rows=listDocs(s,kind);
+      if(a.role==='worker'){
+        const catalogIds=new Set<string>();
+        for(const t of tasks.allTasks(s).filter(t=>tasks.canTask(s,a,t)&&t.approvedDesignId&&t.approvedDesignVersion)){
+          const revision=designs.approvedRevision(s,t.approvedDesignId,t.approvedDesignVersion);
+          for(const item of revision.plantingItems)catalogIds.add(item.catalogItemId);
+        }
+        rows=rows.filter(row=>catalogIds.has(row.id));
+      }
+      res.json(d.page(rows,req.query));
+    });
     write({method:'post',path,input,status:201,summary:`Create ${kind}`},authorize,(a,b)=>d.createData(s,a,kind,b));
     if(patch)write({method:'patch',path:path+'/:id',input:patch,summary:`Update ${kind} with expectedVersion`},authorize,(a,b,req)=>d.patchData(s,a,kind,param(req),b));
   }
   function designAccess(a:User,designId:string){
-    if(a.role==='admin'||a.role==='coordinator'||a.role==='viewer')return;
+    if(a.role==='admin'||a.role==='coordinator'||a.role==='specialist'||a.role==='viewer')return;
     if(!tasks.allTasks(s).some(t=>t.approvedDesignId===designId&&tasks.canTask(s,a,t)))fail('NOT_FOUND','Design not found',404);
   }
   route({method:'get',path:'/designs',summary:'Coordinator/admin/viewer: design proposals'},(req,res)=>{allow(actor(res),'admin','coordinator','viewer');res.json(d.page(s.all('SELECT data FROM v2_designs ORDER BY id').map(r=>parseRow(r)),req.query));});
   route({method:'get',path:'/designs/:id',summary:'Design with immutable approved revisions'},(req,res)=>{designAccess(actor(res),param(req));
     const revisions=s.all('SELECT data FROM v2_design_revisions WHERE design_id=? ORDER BY revision',param(req)).map(r=>parseRow(r));
-    if(['admin','coordinator','viewer'].includes(actor(res).role))res.json({data:{...designs.design(s,param(req)),revisions}});
+    if(['admin','coordinator','specialist','viewer'].includes(actor(res).role))res.json({data:{...designs.design(s,param(req)),revisions}});
     else{const allowed=tasks.allTasks(s).filter(t=>t.approvedDesignId===param(req)&&tasks.canTask(s,actor(res),t)).map(t=>t.approvedDesignVersion);res.json({data:{id:param(req),revisions:revisions.filter(r=>allowed.includes(r.revision))}});}
   });
   write({method:'post',path:'/designs',input:designs.designCreate,status:201,summary:'Coordinator: create a design draft'},coordinator,(a,b)=>designs.createDesign(s,a,b));
@@ -56,7 +68,7 @@ export function domainRoutes(s:Store,api:Api){
   write({method:'post',path:'/designs/:id/withdraw',input:expected,summary:'Coordinator: withdraw a submitted design back to draft'},coordinator,(a,b,req)=>designs.withdrawDesign(s,a,param(req),b.expectedVersion));
   write({method:'post',path:'/designs/:id/review',input:designs.designReview,summary:'Admin: approve or request changes with comment'},admin,(a,b,req)=>designs.reviewDesign(s,a,param(req),b));
   write({method:'post',path:'/designs/:id/create-tasks',input:tasks.designTasks,status:201,summary:'Coordinator: release approved revision once'},coordinator,(a,b,req)=>tasks.createDesignTasks(s,a,param(req),b));
-  route({method:'get',path:'/tasks',summary:'Assignments filtered by server role and ownership'},(req,res)=>res.json(tasks.listTasks(s,actor(res),req.query)));
+  route({method:'get',path:'/tasks',query:tasks.taskQuery,summary:'Role-scoped assignments; date uses scheduledStart or dueAt in UTC+5 [start,end)'},(req,res)=>res.json(tasks.listTasks(s,actor(res),req.query)));
   route({method:'get',path:'/tasks/:id',summary:'Task detail with reports and immutable assignment history'},(req,res)=>{const task=tasks.task(s,actor(res),param(req));res.json({data:{...task,reports:s.all('SELECT data FROM v2_reports WHERE task_id=? ORDER BY revision',task.id).map(r=>parseRow(r))}});});
   route({method:'get',path:'/tasks/:id/history',summary:'Task change history with actor, time and snapshots'},(req,res)=>{tasks.task(s,actor(res),param(req));res.json({data:s.all("SELECT * FROM v2_history WHERE entity_type='task' AND entity_id=? ORDER BY created_at,id",param(req)).map(r=>({id:r.id,actorId:r.actor_id,action:r.action,before:r.before_json?JSON.parse(String(r.before_json)):null,after:JSON.parse(String(r.after_json)),createdAt:r.created_at}))});});
   write({method:'post',path:'/tasks',input:tasks.taskCreate,status:201,summary:'Coordinator: create a manual care/inspection draft'},coordinator,(a,b)=>tasks.insertTask(s,a,b));

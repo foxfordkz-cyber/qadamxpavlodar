@@ -7,7 +7,8 @@ import { resolve,join } from 'node:path';
 import sharp from 'sharp';
 import { Store } from '../dist/db.js';
 import { seed } from '../dist/seed.js';
-import { seedV2,seedV2Scenario,DEMO_PASSWORD } from '../dist/v2/seed.js';
+import { seedV2,seedV2Scenario,demoPassword } from '../dist/v2/seed.js';
+const DEMO_PASSWORD=demoPassword();
 const name=process.argv[2]??'verification-v2';
 assert(/^[a-zA-Z0-9_-]{1,40}$/.test(name),'Run name must contain safe characters');
 const dir=resolve('data','v2-demo',name),dbPath=join(dir,'demo.sqlite'),uploads=resolve('uploads','v2-demo',name);
@@ -16,9 +17,10 @@ let store=new Store(dbPath);seed(store);await seedV2(store);seedV2Scenario(store
 const probe=createServer();probe.listen(0,'127.0.0.1');await once(probe,'listening');const port=probe.address().port;await new Promise(done=>probe.close(done));
 const base=`http://127.0.0.1:${port}`;let server;let iteration=0;
 async function launch(){
-  server=spawn(process.execPath,['--import','./scripts/local-network-guard.mjs','dist/server.js'],{cwd:process.cwd(),windowsHide:true,env:{...process.env,NODE_ENV:'development',PORT:String(port),DB_PATH:dbPath,UPLOADS_PATH:uploads},stdio:['ignore','pipe','pipe']});
+  server=spawn(process.execPath,['--import','./scripts/local-network-guard.mjs','--import','tsx','dist/server.js'],{cwd:process.cwd(),windowsHide:true,env:{...process.env,NODE_ENV:'development',PORT:String(port),DB_PATH:dbPath,UPLOADS_PATH:uploads},stdio:['ignore','pipe','pipe']});
   server.stdout.pipe(createWriteStream(join(dir,`server-${++iteration}.log`),{flags:'a'}));server.stderr.pipe(createWriteStream(join(dir,`server-${iteration}.error.log`),{flags:'a'}));
-  for(let n=0;n<100;n++){if(server.exitCode!==null)throw Error('Demo server exited');try{const r=await fetch(base+'/health');if(r.ok)return;}catch{}await new Promise(done=>setTimeout(done,100));}throw Error('Server startup timeout');
+  const deadline=Date.now()+60000;let probe='not attempted';
+  while(Date.now()<deadline){if(server.exitCode!==null)throw Error('Demo server exited; inspect the isolated server error log');try{const r=await fetch(base+'/health',{signal:AbortSignal.timeout(2000)});probe=`HTTP ${r.status}`;if(r.ok)return;}catch(e){probe=`${e.name}: ${e.cause?.code??e.message}`;}await new Promise(done=>setTimeout(done,100));}throw Error(`Server startup timeout: ${probe}`);
 }
 async function stop(){const child=server;server=undefined;if(child&&child.exitCode===null&&child.signalCode===null){const done=once(child,'exit');child.kill();await done;}}
 const sessions=new Map();
@@ -44,10 +46,11 @@ try{
   await stop();await launch();
   const me=await api('/auth/me','GET','worker1');assert.equal(me.user.id,'demo-worker-1');
   assert.equal((await api(`/tasks/${t.id}`)).status,'verified');assert.deepEqual(await api(`/reports/${submitted.report.id}/review`,'POST','coordinator',reviewBody,'demo-accept'),accepted);
+  assert.deepEqual(await api(`/reports/${submitted.report.id}`),accepted.report);
   const file=await fetch(base+photo.contentUrl,{headers:{Cookie:session.cookie}});assert.equal(file.status,200);assert((await file.arrayBuffer()).byteLength>0);
   const denied=await fetch(base+photo.contentUrl,{headers:{Cookie:sessions.get('worker3').cookie}});assert.equal(denied.status,404);
   await stop();store=new Store(dbPath);seed(store);await seedV2(store);seedV2Scenario(store);
-  const result={mode:'DEMO',contract:'V2',taskId:t.id,reportId:submitted.report.id,status:'verified',newPlants:accepted.plants.length,careDrafts:accepted.careTasks.length,storedPlants:store.get("SELECT count(*) n FROM v2_documents WHERE kind='plant'").n,legacyPlants:store.get('SELECT count(*) n FROM plants').n,legacyTasks:store.get('SELECT count(*) n FROM tasks').n,restart:'PASS',persistentSession:'PASS',privatePhoto:'PASS',idempotentReview:'PASS',repeatSeed:'PASS',integrity:store.get('PRAGMA integrity_check').integrity_check};
+  const result={mode:'DEMO',contract:'V2',taskId:t.id,reportId:submitted.report.id,status:'verified',newPlants:accepted.plants.length,careDrafts:accepted.careTasks.length,storedPlants:store.get("SELECT count(*) n FROM v2_documents WHERE kind='plant'").n,legacyPlants:store.get('SELECT count(*) n FROM plants').n,legacyTasks:store.get('SELECT count(*) n FROM tasks').n,restart:'PASS',persistentSession:'PASS',persistentAcceptedReport:'PASS',privatePhoto:'PASS',idempotentReview:'PASS',repeatSeed:'PASS',integrity:store.get('PRAGMA integrity_check').integrity_check};
   assert.equal(store.get('SELECT count(*) n FROM v2_planting_receipts WHERE task_id=?',t.id).n,2);assert.equal(result.storedPlants,32);assert.equal(result.integrity,'ok');assert.deepEqual(store.all('PRAGMA foreign_key_check'),[]);store.close();
   writeFileSync(join(dir,'result.json'),JSON.stringify(result,null,2));console.log(JSON.stringify(result,null,2));
 }finally{await stop();}

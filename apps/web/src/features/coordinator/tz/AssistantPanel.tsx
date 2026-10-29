@@ -3,7 +3,11 @@ import { useData } from '../../../shared/api/DataProvider';
 import { ApiError } from '../../../shared/api/transport';
 import type { AssistantReply } from '../../../shared/analytics/assistant';
 import { MethodLine, MethodTag } from '../../../shared/ui/components';
-import { hrefFor, useRoute } from '../../../shared/router';
+import { hrefFor, navigate, useRoute } from '../../../shared/router';
+import { mapView } from '../map/mapView';
+import { CENTER } from '../map/geo';
+import { useMe } from '../me';
+import { uiCommand } from './assistantCommands';
 
 const EXAMPLES = [
   'Какие участки требуют озеленения в первую очередь?',
@@ -11,13 +15,22 @@ const EXAMPLES = [
   'Какая будет приживаемость, если заменить сирень на карагану?',
   'Что можно озеленить на 50 млн при максимальном эффекте?',
   'Где проблемные зоны?',
+  'Бірінші кезекте қай аумақтарды көгалдандыру керек?',
 ];
+
+// Заголовок подсветки на карте — по тому, что посчитано (правила: intent; модель: первая вызванная функция).
+const MAP_TITLE: Record<string, string> = {
+  budget: 'Дорожная карта бюджета', budget_roadmap: 'Дорожная карта бюджета', priority: 'Первые по приоритету', top_priorities: 'Первые по приоритету',
+  problems: 'Проблемные зоны', find_problems: 'Проблемные зоны', search_zones: 'Найденные зоны',
+};
+/** Параметры карты для зон ответа: номера на карте идут в порядке ответа (очередь, рейтинг). */
+const mapParams = (reply: AssistantReply) => ({ hl: reply.zones.map((z) => z.id).join(','), hlt: MAP_TITLE[reply.intent] ?? 'Зоны из ответа ассистента' });
 
 interface Msg { role: 'user' | 'bot'; text: string; reply?: AssistantReply; error?: boolean }
 
 const TOOL_LABEL: Record<string, string> = {
   search_zones: 'поиск зон', analyze_zone: 'расчёт зоны', compare_variants: 'сравнение вариантов', top_priorities: 'приоритеты',
-  budget_roadmap: 'дорожная карта под бюджет', find_problems: 'проблемные зоны', search_knowledge: 'поиск по справочникам',
+  budget_roadmap: 'дорожная карта под бюджет', find_problems: 'проблемные зоны', search_knowledge: 'поиск по справочникам', find_place: 'поиск места',
 };
 
 /** Чем подтверждён ответ: метод, вызванные расчёты и источники — видно под каждым ответом. */
@@ -43,6 +56,7 @@ export function AssistantPanel() {
   const { api } = useData();
   const route = useRoute();
   const siteId = route.path === '/map' ? route.params.get('site') : null;
+  const me = useMe();
   const [open, setOpen] = useState(false);
   const [msgs, setMsgs] = useState<Msg[]>([]);
   const [q, setQ] = useState('');
@@ -51,15 +65,37 @@ export function AssistantPanel() {
   const input = useRef<HTMLTextAreaElement>(null);
   useEffect(() => { list.current?.scrollTo({ top: list.current.scrollHeight }); }, [msgs]);
   useEffect(() => { if (open) input.current?.focus(); }, [open]);
+  useEffect(() => {
+    if (!open) return;
+    const esc = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false); };
+    document.addEventListener('keydown', esc);
+    return () => document.removeEventListener('keydown', esc);
+  }, [open]);
 
   const send = async (text: string) => {
     if (!text.trim() || busy) return;
-    setMsgs((m) => [...m, { role: 'user', text }]);
     setQ('');
+    // «Нарисуй зону» — команда карте: включаем рисование (#/map?draw=1), а не считаем ближайшую зону.
+    if (uiCommand(text) === 'draw') {
+      const can = me.role === 'coordinator';
+      const reply = can
+        ? 'Включил рисование на карте: кликайте по углам участка, затем «Готово» и название. Ошиблись — «Отменить точку», выйти — Esc.'
+        : 'Рисовать зоны может только специалист. Выберите готовую зону на карте или в списке.';
+      setMsgs((m) => [...m, { role: 'user', text }, { role: 'bot', text: reply }]);
+      if (can) navigate('/map', { draw: '1' }, route.path === '/map');
+      return;
+    }
+    setMsgs((m) => [...m, { role: 'user', text }]);
     setBusy(true);
     try {
-      const reply = await api.ask(text, siteId);
+      // Последние реплики — чтобы короткий ответ («Едиге би 1») продолжал вопрос; центр карты — если зона не выбрана.
+      const history = msgs.filter((m) => !m.error).slice(-6).map((m) => ({ role: m.role === 'user' ? 'user' as const : 'assistant' as const, text: m.text.slice(0, 600) }));
+      // Карта не загрузилась (показана схема) — центр района прототипа.
+      const view = route.path === '/map' && !siteId ? mapView.center ?? { lat: CENTER[1], lng: CENTER[0] } : null;
+      const reply = await api.ask(text, siteId, { history, ...(view ? { view } : {}) });
       setMsgs((m) => [...m, { role: 'bot', text: reply.text, reply }]);
+      // Уже на карте — зоны из ответа сразу появляются на ней с номерами; выбранная зона остаётся открытой.
+      if (route.path === '/map' && reply.zones.length >= 2) navigate('/map', { site: siteId, ...mapParams(reply) }, true);
     } catch (e) {
       const msg = e instanceof ApiError && e.status === 503 ? 'Ассистент недоступен. Все разделы — карта, подбор, смета, приоритеты — работают вручную.' : `Не удалось получить ответ: ${(e as Error).message}`;
       setMsgs((m) => [...m, { role: 'bot', text: msg, error: true }]);
@@ -87,7 +123,12 @@ export function AssistantPanel() {
         {msgs.map((m, i) => (
           <div key={i} className={`gp-assist__msg gp-assist__msg--${m.role} ${m.error ? 'is-error' : ''}`}>
             {m.text.split('\n').map((l, j) => <p key={j}>{l}</p>)}
-            {!!m.reply?.zones.length && <div className="gp-assist__zones">{m.reply.zones.map((z) => <a key={z.id} className="gp-chip" href={hrefFor('/map', { site: z.id })} title="Показать на карте">📍 {z.name}</a>)}</div>}
+            {!!m.reply?.zones.length && (
+              <div className="gp-assist__zones">
+                {m.reply.zones.map((z, n) => <a key={z.id} className="gp-chip" href={hrefFor('/map', { site: z.id, ...(m.reply!.zones.length >= 2 ? mapParams(m.reply!) : {}) })} title="Открыть карточку зоны">{m.reply!.zones.length >= 2 ? `${n + 1}.` : '📍'} {z.name}</a>)}
+                {m.reply.zones.length >= 2 && <button className="gp-btn gp-btn--secondary gp-assist__map" onClick={() => navigate('/map', mapParams(m.reply!))}>🗺 Показать все на карте ({m.reply.zones.length})</button>}
+              </div>
+            )}
             {m.reply && <ReplyProof reply={m.reply} />}
           </div>
         ))}

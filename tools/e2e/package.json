@@ -1,0 +1,14 @@
+{
+  "name": "@green-pavlodar/e2e",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22.19.0" },
+  "scripts": {
+    "e2e": "node scripts/run.mjs mock",
+    "e2e:api": "node scripts/run.mjs api",
+    "e2e:bugs": "node scripts/run.mjs mock --known-bugs",
+    "report": "playwright show-report playwright-report/mock"
+  },
+  "devDependencies": { "@playwright/test": "1.64.1", "fflate": "0.8.3" }
+}

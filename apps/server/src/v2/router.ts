@@ -1,3 +1,4 @@
+import { municipalRoutes } from '../municipal/routes.js';
 import { Router, type Request, type Response, type RequestHandler } from 'express';
 import { z } from 'zod';
 import { Store } from '../db.js';
@@ -13,15 +14,14 @@ import { adminHtml,adminJs } from './admin-ui.js';
 import { tzRoutes,type TzOptions } from '../tz/routes.js';
 
 export type Method='get'|'post'|'patch'|'put';
-// readOnly: POST-расчёт без сохранения (Idempotency-Key не нужен, CSRF — нужен); response: схема data, если не из responses.ts.
-export type Operation={method:Method;path:string;summary:string;input?:z.ZodType;public?:boolean;multipart?:boolean;binary?:boolean;status?:number;readOnly?:boolean;response?:z.ZodType};
+export type Operation={method:Method;path:string;summary:string;input?:z.ZodType;query?:z.ZodType;response?:z.ZodType;readOnly?:boolean;public?:boolean;multipart?:boolean;binary?:boolean;idempotent?:boolean;status?:number};
 export type Api={router:Router;operations:Operation[];route:(op:Operation,...handlers:RequestHandler[])=>void;
   write:(op:Operation,authorize:(a:User,req:Request)=>void,change:(a:User,body:any,req:Request)=>unknown)=>void};
 export const param=(req:Request)=>id.parse(req.params.id);
 export function defineApi(s:Store):Api {
   const router=Router(),operations:Operation[]=[];
-  const route:Api['route']=(op,...handlers)=>{operations.push(op);router[op.method](op.path,...handlers);};
-  const write:Api['write']=(op,authorize,change)=>route(op,(req,res)=>{
+  const route:Api['route']=(op,...handlers)=>{if(operations.some(x=>x.method===op.method&&x.path===op.path))throw Error(`Duplicate API operation: ${op.method} ${op.path}`);operations.push(op);router[op.method](op.path,...handlers);};
+  const write:Api['write']=(op,authorize,change)=>route({...op,idempotent:true},(req,res)=>{
     const body=op.input!.parse(req.body); const a=actor(res);
     const result=mutate(s,a,req.method,req.path,req.get('Idempotency-Key'),body,op.status??200,()=>authorize(a,req),()=>change(a,body,req));
     res.set('Idempotency-Replayed',String(result.replayed)).status(result.status).json(result.body);
@@ -33,13 +33,14 @@ export function openApi(operations:Operation[]) {
   for(const op of operations){
     const path=op.path.replace(/:([a-zA-Z]+)/g,'{$1}');
     const parameters:any[]=[...(op.path.includes(':id')?[{in:'path',name:'id',required:true,schema:{type:'string'}}]:[])];
-    if(!['get'].includes(op.method)&&!op.public&&!op.readOnly&&op.path!=='/auth/logout')parameters.push({in:'header',name:'Idempotency-Key',required:true,schema:{type:'string',minLength:1,maxLength:128}});
+    if(op.query){const query=z.toJSONSchema(op.query,{io:'input',unrepresentable:'any'});for(const[name,schema]of Object.entries(query.properties??{}))parameters.push({in:'query',name,required:query.required?.includes(name)??false,schema});}
+    if(op.idempotent)parameters.push({in:'header',name:'Idempotency-Key',required:true,schema:{type:'string',minLength:1,maxLength:128}});
     (paths[path]??={})[op.method]={summary:op.summary,tags:['Contract V2 / local DEMO'],security:op.public?[]:[{SessionCookie:[],...(op.method==='get'?{}:{CsrfToken:[]})}],parameters,
       ...(op.input?{requestBody:{required:true,content:{[op.multipart?'multipart/form-data':'application/json']:{schema:z.toJSONSchema(op.input,{io:'input',unrepresentable:'any'})}}}}:{}),
-      responses:{[op.status??200]:{description:'Success',content:op.binary?{'image/webp':{schema:{type:'string',format:'binary'}}}:{'application/json':{schema:{type:'object',required:['data'],properties:{data:z.toJSONSchema(op.response??responseData(op),{io:'input',unrepresentable:'any'}),meta:{type:'object'}},additionalProperties:false}}}},
-        ...Object.fromEntries([400,401,403,404,409,413,415,429,500,503].map(status=>[status,{description:'Structured error',content:{'application/json':{schema:{$ref:'#/components/schemas/Error'}}}}]))}};
+      responses:{[op.status??200]:{description:'Success',content:op.binary?{[op.path.endsWith('/export')?'application/pdf':'image/webp']:{schema:{type:'string',format:'binary'}},...(op.path.endsWith('/export')?{'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':{schema:{type:'string',format:'binary'}}}:{})}:{'application/json':{schema:{type:'object',required:['data'],properties:{data:z.toJSONSchema((op.response??responseData(op)),{io:'input',unrepresentable:'any'}),meta:{type:'object'}},additionalProperties:false}}}},
+        ...Object.fromEntries([400,401,403,404,409,413,415,422,429,500,503].map(status=>[status,{description:'Structured error',content:{'application/json':{schema:{$ref:'#/components/schemas/Error'}}}}]))}};
   }
-  return{openapi:'3.1.0',info:{title:'Green Pavlodar — team contract V2, local DEMO',version:'2.0.0-local',description:'Implemented V2 routes only. Server session required; X-Demo-User is ignored. Cookie is HttpOnly/SameSite=Strict; local HTTP only. Send X-CSRF-Token from login/me on writes. Mutation replay rechecks current rights.'},servers:[{url:'/api/v1'}],paths,
+  return{openapi:'3.1.0',info:{title:'Green Pavlodar — V2 + municipal API',version:'2.1.0-local',description:'V2 workflow and municipal import/analysis/export routes. Municipal calculations use labelled expert estimates; LLM adapter is optional; unconfigured or failed providers are explicitly labelled as rules fallback. Server session required; X-Demo-User is ignored. Cookie is HttpOnly/SameSite=Strict; local HTTP only. Send X-CSRF-Token from login/me on writes. Mutation replay rechecks current rights.'},servers:[{url:'/api/v1'}],paths,
     components:{securitySchemes:{SessionCookie:{type:'apiKey',in:'cookie',name:'gp_v2_session'},CsrfToken:{type:'apiKey',in:'header',name:'X-CSRF-Token'}},schemas:{...Object.fromEntries(Object.entries(responseModels).map(([name,schema])=>[name,z.toJSONSchema(schema,{io:'input',unrepresentable:'any'})])),Error:{type:'object',required:['error'],properties:{error:{type:'object',required:['code','message','requestId'],properties:{code:{type:'string'},message:{type:'string'},requestId:{type:'string'},details:{}}}}}}}};
 }
 export function authRoutes(s:Store,api:Api) {
@@ -60,7 +61,7 @@ export function peopleRoutes(s:Store,api:Api) {
   const admin=(a:User)=>allow(a,'admin');
   route({method:'get',path:'/users',summary:'Admin: users and availability, no authentication secrets'},(_req,res)=>res.json({data:people.listUsers(s,actor(res))}));
   for(const updating of [false,true]){
-    const op:Operation={method:updating?'patch':'post',path:updating?'/users/:id':'/users',status:updating?200:201,input:updating?people.userPatch:people.userCreate,summary:updating?'Admin: change user, role or availability; revoke sessions':'Admin: create account'};
+    const op:Operation={idempotent:true,method:updating?'patch':'post',path:updating?'/users/:id':'/users',status:updating?200:201,input:updating?people.userPatch:people.userCreate,summary:updating?'Admin: change user, role or availability; revoke sessions':'Admin: create account'};
     route(op,async(req,res)=>{
       const a=actor(res);allow(a,'admin');const b=op.input!.parse(req.body) as any;
       const passwordHash=b.password?await hashPassword(b.password):undefined;
@@ -77,11 +78,18 @@ export function peopleRoutes(s:Store,api:Api) {
     allow(actor(res),'admin');res.json({data:s.all("SELECT * FROM v2_history WHERE entity_type='user' AND entity_id=? ORDER BY created_at,id",param(req)).map(r=>({id:r.id,actorId:r.actor_id,action:r.action,before:r.before_json?JSON.parse(String(r.before_json)):null,after:JSON.parse(String(r.after_json)),createdAt:r.created_at}))});
   });
 }
+function excluding(api:Api,paths:Set<string>):Api {
+  return {...api,route:(op,...handlers)=>{if(!paths.has(`${op.method} ${op.path}`))api.route(op,...handlers);},write:(op,authorize,change)=>{if(!paths.has(`${op.method} ${op.path}`))api.write(op,authorize,change);}};
+}
 export function createV2Router(s:Store,uploadsPath:string,adapters:V2Adapters={},tz:TzOptions={}) {
-  const api=defineApi(s);authRoutes(s,api);peopleRoutes(s,api);domainRoutes(s,api);reportRoutes(s,api,uploadsPath);
+  const api=defineApi(s);authRoutes(s,api);
+  // One owner for each shared URL. Durable municipal imports/calculations stay canonical;
+  // Damir's assistant keeps its provider/fallback boundary and all additional TZ routes.
+  municipalRoutes(s,excluding(api,new Set(['post /assistant','get /assistant/history'])));
+  peopleRoutes(s,api);domainRoutes(s,api);reportRoutes(s,api,uploadsPath);
   intelligenceRoutes(s,api,adapters);
   visualizationRoutes(s,api);
-  tzRoutes(s,api,tz);
+  tzRoutes(s,excluding(api,new Set(['get /species','get /layers/soils','get /layers/greenery','post /zones/:id/analysis','post /zones/:id/variants','get /problems','post /priorities','get /rates','patch /rates','post /imports/preview'])),tz);
   api.router.use((_req,_res)=>fail('NOT_FOUND','V2 route not found',404));
   return api.router;
 }

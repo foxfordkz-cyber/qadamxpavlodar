@@ -6,13 +6,13 @@ import type {
 import type { PlanOptions, Variant, ZoneAnalysis } from '../analytics/plan';
 import type { PriorityFactor, PriorityItem, Problem } from '../analytics/city';
 import type { RateEntry } from '../analytics/rates';
-import type { AssistantReply } from '../analytics/assistant';
+import type { AskContext, AssistantReply } from '../analytics/assistant';
 import type { referenceFacts } from './pavlodar';
 import type { CareRequest, CareSchedule } from '../analytics/careSchedule';
 import type { GeoHit } from './geocode';
 
 export interface VariantSummary { variant: Variant; label: string; careYears: number; plants: number; cost: number; survival: { y1: number; y2: number; y3: number }; co2t20: number; coolingC: number; rainM3: number; costPerTonCo2: number | null }
-export interface ImportPreview { format: string; total: number; valid: number; invalid: number; issues: { row: number; level: 'error' | 'warning'; text: string }[]; committed: boolean; note: string }
+export interface ImportPreview { id?: string; format: string; total: number; valid: number; invalid: number; issues: { row: number; level: 'error' | 'warning'; text: string }[]; committed: boolean; note: string }
 type FC = { type: 'FeatureCollection'; features: { type: 'Feature'; properties: Record<string, unknown>; geometry: { type: string; coordinates: unknown } }[] };
 
 export interface TaskFilters {
@@ -106,12 +106,14 @@ export function createApi(t: Transport) {
     patchRate: (body: { key: string; value: number | null; source: string; expectedVersion: number }) => d(t.request<{ rates: RateEntry[]; version: number }>('PATCH', '/rates', { body, idempotencyKey: newIdempotencyKey() })),
     soilsLayer: () => t.request<FC>('GET', '/layers/soils'),
     greeneryLayer: () => t.request<FC>('GET', '/layers/greenery'),
-    ask: (message: string, siteId: ID | null) => d(t.request<AssistantReply>('POST', '/assistant', { body: { message, siteId } })),
+    ask: (message: string, siteId: ID | null, extra: Pick<AskContext, 'history' | 'view'> = {}) => d(t.request<AssistantReply>('POST', '/assistant', { body: { message, siteId, ...extra } })),
     assistantHistory: () => d(t.request<{ at: string; q: string; intent: string; zones: string[] }[]>('GET', '/assistant/history')),
     /** (ТЗ 3.1.4) Поиск по адресу, улице, месту или названию зоны — по снимку OSM района прототипа. */
     geocode: (q: string) => t.request<GeoHit[]>('GET', '/geocode', { query: { q } }),
     /** Проверенные данные о Павлодаре: факты со ссылками на источники, источники, климатические нормы. */
     referenceFacts: () => t.request<ReturnType<typeof referenceFacts>['data']>('GET', '/reference/facts'),
+    importFile: (input: {format:string;content?:string;contentBase64?:string;features?:unknown[];source:string;dataClass:'real'|'demo'|'estimate';layer?:string}) => d(t.request<ImportPreview>('POST','/imports/preview',{body:input})),
+    commitImport: (id:string,acknowledgeWarnings:boolean) => d(t.request<ImportPreview>('POST',`/imports/${encodeURIComponent(id)}/commit`,{body:{acknowledgeWarnings},idempotencyKey:newIdempotencyKey()})),
     importPreview: (format: string, features: unknown[]) => d(t.request<ImportPreview>('POST', '/imports/preview', { body: { format, features } })),
     approveDayPlan: (date: string, expectedVersion: number | null) =>
       d(t.request<DayPlan>('POST', `/plans/${date}/approve`, { body: { expectedVersion }, idempotencyKey: `plan-${date}-v${expectedVersion ?? 0}` })),

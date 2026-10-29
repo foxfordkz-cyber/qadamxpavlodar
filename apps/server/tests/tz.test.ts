@@ -75,7 +75,7 @@ test('migration 4 rebuilds v2_users with the viewer role and keeps every referen
   old.close();
   try {
     const s = new Store(path);
-    assert.equal(s.get('PRAGMA user_version')?.user_version, 4);
+    assert.equal(s.get('PRAGMA user_version')?.user_version, 5);
     assert.equal(s.get('SELECT user_id FROM v2_sessions')?.user_id, 'u1');
     s.run("INSERT INTO v2_users VALUES ('u2','view','DEMO','viewer',1,'x',1,'t','t')");
     assert.throws(() => s.run("INSERT INTO v2_users VALUES ('u3','bad','DEMO','superuser',1,'x',1,'t','t')"), /CHECK/);
@@ -106,7 +106,11 @@ test('TZ routes compute with shared analytics, cache by zone/options/rates versi
   assert.equal(analysis.status, 200, JSON.stringify(analysis.body));
   const species = (await f.call('/species')).body.data; const rates = (await f.call('/rates')).body.data;
   const site = web.siteFromV2((await f.call(`/sites/${zone}`)).body.data);
-  assert.deepEqual(analysis.body.data, JSON.parse(JSON.stringify(web.analyzeZone(site, species, web.ratesMap(rates.rates), { variant: 'optimal' }))));
+  const {inputSnapshot,provenance,assumptions,...numericAnalysis}=analysis.body.data;
+  const {assumptions:sharedAssumptions,...sharedAnalysis}=JSON.parse(JSON.stringify(web.analyzeZone(site, species, web.ratesMap(rates.rates), { variant: 'optimal' })));
+  assert.deepEqual(numericAnalysis,sharedAnalysis);
+  assert.deepEqual(assumptions.slice(0,sharedAssumptions.length),sharedAssumptions);
+  assert.equal(provenance.calibrated,false);assert.equal(inputSnapshot.zone.id,site.id);
   const cached = cacheSize();
   await f.call(`/zones/${zone}/analysis`, 'POST', 'coordinator', { options: { variant: 'optimal' } }, null);
   assert.equal(cacheSize(), cached, 'repeat analysis is served from cache');
@@ -128,7 +132,7 @@ test('TZ routes compute with shared analytics, cache by zone/options/rates versi
   assert.equal((await f.call('/rates', 'PATCH', 'coordinator', { key, value: 1, source: 'тест', expectedVersion: 1 })).status, 403);
   assert.equal((await f.call('/rates', 'PATCH', 'viewer', { key, value: 1, source: 'тест', expectedVersion: 1 })).status, 403);
   assert.equal((await f.call('/rates', 'PATCH', 'admin', { key, value: 1, expectedVersion: 1 })).status, 400);
-  const patched = await f.call('/rates', 'PATCH', 'admin', { key, value: 1234, source: 'Прайс питомника (тест)', expectedVersion: 1 });
+  const patched = await f.call('/rates', 'PATCH', 'admin', { key, value: 1234, source: 'Прайс питомника (тест)', dataClass:'real', expectedVersion: 1 });
   assert.equal(patched.status, 200, JSON.stringify(patched.body)); assert.equal(patched.body.data.version, 2);
   assert.equal(patched.body.data.rates[0].dataClass, 'real');
   assert.equal((await f.call('/rates', 'PATCH', 'admin', { key, value: 5, source: 'устарело', expectedVersion: 1 })).status, 409);

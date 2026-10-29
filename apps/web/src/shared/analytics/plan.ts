@@ -63,6 +63,8 @@ export interface ZoneAnalysis {
 
 const LV = { low: 0, medium: 1, high: 2 } as const;
 const clamp = (v: number, a = 0, b = 100) => Math.max(a, Math.min(b, v));
+/** «1 раз», «4 раза», «12 раз». */
+const times = (n: number) => `${n} ${n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 'раза' : 'раз'}`;
 const salRank = { none: 0, low: 1, medium: 2, high: 3 } as const;
 const PURPOSE_USE: Record<Purpose, string[]> = { park: ['square', 'greenbelt', 'alley'], square: ['square', 'yard'], yard: ['yard', 'hedge'], street: ['alley', 'roadside'], sanitary: ['greenbelt', 'roadside', 'hedge'], school: ['yard', 'square', 'hedge'] };
 const POISONOUS = new Set(['sp-juniperus-sabina']);
@@ -257,7 +259,7 @@ export function careCalendar(scheme: SchemeRow[], catalog: Map<string, Species>,
     const n = Math.max(1, Math.round(n0 * scale * (lowDrought ? 1.2 : 1)));
     const litres = n * (nT * volT + nS * volS);
     const unknownVolume = has('flower') || (nT > 0 && rates['care.water.tree'] == null) || (nS > 0 && rates['care.water.shrub'] == null);
-    care.push({ month: Number(m), operation: 'Полив', detail: unknownVolume ? `${n} раз; полный объём — нет данных (площадь цветника или норма полива неизвестна)` : `${n} раз; ≈${Math.round(litres)} л за месяц (дерево ${volT} л, куст ${volS} л за раз)`, visits: n, taskAction: 'water',
+    care.push({ month: Number(m), operation: 'Полив', detail: unknownVolume ? `${times(n)}; полный объём — нет данных (площадь цветника или норма полива неизвестна)` : `${times(n)}; ≈${Math.round(litres)} л за месяц (дерево ${volT} л, куст ${volS} л за раз)`, visits: n, taskAction: 'water',
       waterLitersPerVisit: unknownVolume ? null : nT * volT + nS * volS });
   }
   care.push({ month: 4, operation: 'Обрезка санитарная', detail: 'Удалить сухие и повреждённые ветви до распускания почек', visits: 1 });
@@ -316,7 +318,7 @@ export function analyzeZone(site: CandidateSite, catalog: Species[], rates: Rate
   const opt: PlanOptions = { ...DEFAULT_OPTIONS, ...options };
   const byId = new Map(catalog.map((s) => [s.id, s]));
   const c = site.centroid!;
-  const soil = soilFor(c.lat, c.lng);
+  const soil = (site as CandidateSite & {soilOverride?: SoilInfo}).soilOverride ?? soilFor(c.lat, c.lng);
   const purpose = opt.purpose ?? guessPurpose(site);
   const ranked = scoreSpecies(site, catalog, purpose, soil);
   const scheme = buildScheme(site, ranked, byId, opt);
@@ -353,7 +355,7 @@ export function analyzeZone(site: CandidateSite, catalog: Species[], rates: Rate
   const co2Total = e20.co2t * 10.5;
   const missing: string[] = [];
   if (site.factors.waterAvailability.value === null) missing.push('Доступ к воде на участке неизвестен.');
-  missing.push('Карта почв организатора не загружена — используется синтетический слой.');
+  if (!('soilOverride' in site)) missing.push('Карта почв организатора не загружена — используется синтетический слой.');
   if ((rates['eff.dust.tree'] ?? null) === null) missing.push('Нет коэффициента улавливания пыли — эффект по пыли не рассчитан.');
   if ((rates['eff.population'] ?? null) === null) missing.push('Нет данных о населении — зелень на жителя не рассчитана.');
   return {
@@ -377,7 +379,7 @@ export function analyzeZone(site: CandidateSite, catalog: Species[], rates: Rate
     assumptions: [
       'Все значения оценочные и носят рекомендательный характер; решение принимает специалист акимата (ТЗ 5.2).',
       'Приживаемость первого года — логистическая регрессия на синтетических данных из экспертных правил; не калибрована на посадках Павлодара. Последующие годы — экспертное затухание.',
-      'Почва — синтетический слой до получения карты почв организатора.',
+      'soilOverride' in site ? 'Почва из импортированного слоя; достоверность определяется источником.' : 'Почва — синтетический слой до получения карты почв организатора.',
       'Расценки — демо-справочник команды; администратор меняет их в «Справочниках».',
       'Экоэффект: рост кроны до взрослого — 30% за 5 лет, 60% за 10, 100% за 20; учтена приживаемость за 3 года.',
     ],

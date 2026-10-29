@@ -41,7 +41,7 @@ export function ProblemsPage() {
         <label className="gp-kv gp-small">Сортировка <select className="gp-input gp-input--inline" value={sort} onChange={(e) => setSort(e.target.value as typeof sort)}><option value="severity">по остроте</option><option value="type">по типу</option><option value="zone">по зоне</option></select></label>
         <span className="gp-small gp-muted" aria-live="polite">Найдено: {list.length} из {all.length}</span>
       </div>
-      <StateView loading={res.loading} error={res.error} hasData={!!res.data} onRetry={res.reload} empty={!!res.data && !list.length} emptyText="Проблем по выбранным фильтрам нет.">
+      <StateView loading={res.loading} error={res.error} hasData={!!res.data} onRetry={res.reload} empty={!!res.data && !list.length} emptyText="Проблем по выбранным фильтрам нет." emptyAction={<button className="gp-btn" onClick={() => { setType('all'); setSev('all'); }}>Показать все</button>}>
         <div className="gp-table-wrap gp-card">
           <table className="gp-table">
             <thead><tr><th>Зона</th><th>Проблема</th><th>Острота</th><th>Причина</th><th>Что сделать</th></tr></thead>

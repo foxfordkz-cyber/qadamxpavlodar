@@ -14,9 +14,11 @@ import { type Api, param } from '../v2/router.js';
 import { analyze, candidate, candidates, priorities, ratesList, ratesVersion, reference, speciesList } from './data.js';
 import { insertZone } from './seed.js';
 import { web, type Json } from './shared.js';
+import * as municipal from '../municipal/data.js';
 
 /** Подключение ассистента участника 3 (LLM + RAG). Нет адаптера или он упал — ответ по правилам. */
-export type AssistantAdapter = (input: { message: string; siteId: string | null; user: User }) => Promise<Json>;
+export type AssistantTurn = { role: 'user' | 'assistant'; text: string };
+export type AssistantAdapter = (input: { message: string; siteId: string | null; user: User; history?: AssistantTurn[]; view?: { lat: number; lng: number } | null }) => Promise<Json>;
 export type TzOptions = { assistant?: AssistantAdapter };
 
 const reader = (a: User) => allow(a, 'admin', 'coordinator', 'viewer');
@@ -25,7 +27,12 @@ const options = z.object({ options: object.default({}) }).strict();
 const weights = z.record(z.string(), z.number().min(0).max(1));
 const prioritiesInput = z.object({ weights: weights.optional(), budget: z.number().nonnegative().nullable().optional() }).strict();
 const rateInput = z.object({ key: z.string().min(1).max(80), value: z.number().nonnegative().finite().nullable(), source: text, expectedVersion: version }).strict();
-const assistantInput = z.object({ message: z.string().trim().min(1).max(2000), siteId: id.nullable().optional() }).strict();
+// history — последние реплики диалога (короткий ответ продолжает вопрос); view — центр карты, если зона не выбрана.
+const assistantInput = z.object({
+  message: z.string().trim().min(1).max(2000), siteId: id.nullable().optional(),
+  history: z.array(z.object({ role: z.enum(['user', 'assistant']), text: z.string().max(2000) }).strict()).max(6).optional(),
+  view: z.object({ lat: z.number().min(-90).max(90), lng: z.number().min(-180).max(180) }).strict().nullable().optional(),
+}).strict();
 const zoneInput = z.object({ name: z.string().max(120).optional(), geometry: z.unknown() }).strict();
 const importInput = z.object({ format: z.string().max(20).optional(), features: z.array(object).max(20000) }).strict();
 const rankInput = z.object({ weights: z.record(z.string(), z.number()) }).strict();
@@ -52,7 +59,7 @@ export function tzRoutes(s: Store, api: Api, tz: TzOptions = {}) {
   route({ method: 'get', path: '/layers/greenery', summary: 'TZ: existing greenery from OpenStreetMap' }, (_req, res) => { reader(actor(res)); res.json(web.greeneryLayer()); });
 
   // POST /zones — нарисованная зона (контракт 29.10): проверка полигона, площадь, окружение; почва — в meta.
-  route({ method: 'post', path: '/zones', input: zoneInput, status: 201, summary: 'Coordinator: save a drawn zone polygon as site-user-N' }, (req, res) => {
+  route({ method: 'post', path: '/zones', input: zoneInput, status: 201, idempotent: true, summary: 'Coordinator: save a drawn zone polygon as site-user-N' }, (req, res) => {
     const a = actor(res); allow(a, 'coordinator'); const b = zoneInput.parse(req.body);
     const { ring, errors } = web.validateDrawnPolygon(b.geometry);
     if (errors.length) throw new ApiError(400, 'VALIDATION_ERROR', errors.map(e => e.message).join(' '), { fields: { geometry: errors[0]!.message }, errors });
@@ -118,23 +125,27 @@ export function tzRoutes(s: Store, api: Api, tz: TzOptions = {}) {
   route({ method: 'post', path: '/assistant', input: assistantInput, readOnly: true, summary: 'TZ 3.10: assistant answer with numbers from modules; history kept per user' }, async (req, res) => {
     const a = actor(res); reader(a); const b = assistantInput.parse(req.body);
     const siteId = b.siteId ?? null;
+    // The reader guard above is the same city-wide access boundary as /zones.
+    // Validate the ID without forcing a cost calculation before the assistant.
+    if (siteId) municipal.site(s, siteId);
     let reply: Json | null = null, fallbackReason: string | null = null;
     if (tz.assistant) {
-      try { reply = await tz.assistant({ message: b.message, siteId, user: a }); }
+      try { reply = await tz.assistant({ message: b.message, siteId, user: a, history: b.history ?? [], view: b.view ?? null }); }
       catch (e) {
         // В журнал — только причина, без текста вопроса и ключа.
         console.warn(`Assistant model failed, rules answer instead: ${e instanceof Error ? e.message : 'error'}`);
         fallbackReason = 'Модель не ответила вовремя или ответ не прошёл проверку — показан ответ по правилам.';
       }
     }
-    if (!reply) { const ref = reference(s); reply = { sources: [], toolCalls: [], ...web.answer(b.message, { siteId }, candidates(s), ref.species, ref.map), ...(fallbackReason ? { fallbackReason } : {}) }; }
+    if (!reply) { const ref = reference(s); reply = { sources: [], toolCalls: [], ...web.answer(b.message, { siteId, history: b.history ?? [], view: b.view ?? null }, candidates(s), ref.species, ref.map), ...(fallbackReason ? { fallbackReason } : {}) }; }
     s.run('INSERT INTO tz_assistant_history VALUES (?,?,?,?,?,?,?)', randomUUID(), a.id, now(), b.message.slice(0, 300), String(reply.intent ?? 'other'), String(reply.method ?? 'rules'), JSON.stringify((reply.zones ?? []).map((z: Json) => z.id)));
     res.json({ data: reply });
   });
   route({ method: 'get', path: '/assistant/history', summary: 'TZ 3.9: current user assistant history (last 50)', response: z.array(object) }, (_req, res) => {
     const a = actor(res); reader(a);
-    const rows = s.all('SELECT * FROM tz_assistant_history WHERE user_id=? ORDER BY at DESC, id LIMIT 50', a.id).reverse();
-    res.json({ data: rows.map(r => ({ at: r.at, q: r.question, intent: r.intent, method: r.method, zones: JSON.parse(String(r.zones)) })) });
+    const rows = s.all('SELECT * FROM tz_assistant_history WHERE user_id=? ORDER BY at DESC, id LIMIT 50', a.id).map(r => ({ at: r.at, q: r.question, intent: r.intent, method: r.method, zones: JSON.parse(String(r.zones)) }));
+    const legacy=s.all('SELECT data FROM municipal_history WHERE owner_id=? ORDER BY created_at DESC LIMIT 50',a.id).map(r=>JSON.parse(String(r.data)));
+    res.json({ data: [...legacy,...rows].sort((a,b)=>String(a.at).localeCompare(String(b.at))).slice(-50) });
   });
 
   route({ method: 'post', path: '/imports/preview', input: importInput, readOnly: true, summary: 'TZ 3.1.5: import quality check; nothing is saved' }, (req, res) => {
