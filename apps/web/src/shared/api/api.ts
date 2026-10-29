@@ -12,7 +12,7 @@ import type { CareRequest, CareSchedule } from '../analytics/careSchedule';
 import type { GeoHit } from './geocode';
 
 export interface VariantSummary { variant: Variant; label: string; careYears: number; plants: number; cost: number; survival: { y1: number; y2: number; y3: number }; co2t20: number; coolingC: number; rainM3: number; costPerTonCo2: number | null }
-export interface ImportPreview { format: string; total: number; valid: number; invalid: number; issues: { row: number; level: 'error' | 'warning'; text: string }[]; committed: boolean; note: string }
+export interface ImportPreview { id?: string; format: string; total: number; valid: number; invalid: number; issues: { row: number; level: 'error' | 'warning'; text: string }[]; committed: boolean; note: string }
 type FC = { type: 'FeatureCollection'; features: { type: 'Feature'; properties: Record<string, unknown>; geometry: { type: string; coordinates: unknown } }[] };
 
 export interface TaskFilters {
@@ -112,6 +112,8 @@ export function createApi(t: Transport) {
     geocode: (q: string) => t.request<GeoHit[]>('GET', '/geocode', { query: { q } }),
     /** Проверенные данные о Павлодаре: факты со ссылками на источники, источники, климатические нормы. */
     referenceFacts: () => t.request<ReturnType<typeof referenceFacts>['data']>('GET', '/reference/facts'),
+    importFile: (input: {format:string;content?:string;contentBase64?:string;features?:unknown[];source:string;dataClass:'real'|'demo'|'estimate';layer?:string}) => d(t.request<ImportPreview>('POST','/imports/preview',{body:input})),
+    commitImport: (id:string,acknowledgeWarnings:boolean) => d(t.request<ImportPreview>('POST',`/imports/${encodeURIComponent(id)}/commit`,{body:{acknowledgeWarnings},idempotencyKey:newIdempotencyKey()})),
     importPreview: (format: string, features: unknown[]) => d(t.request<ImportPreview>('POST', '/imports/preview', { body: { format, features } })),
     approveDayPlan: (date: string, expectedVersion: number | null) =>
       d(t.request<DayPlan>('POST', `/plans/${date}/approve`, { body: { expectedVersion }, idempotencyKey: `plan-${date}-v${expectedVersion ?? 0}` })),

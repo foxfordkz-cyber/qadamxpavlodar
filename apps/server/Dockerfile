@@ -2,6 +2,7 @@
 # расчёты ТЗ берутся из apps/web/src/shared/analytics, данные OSM — из fixtures/osm.
 # Запуск: docker compose up --build (см. docker-compose.yml и README).
 FROM node:24-alpine
+RUN apk add --no-cache font-dejavu
 WORKDIR /app/apps/server
 COPY apps/server/package.json apps/server/package-lock.json ./
 # tsx нужен и в работе: сервер запускается из исходников TypeScript вместе с общими модулями веба.
@@ -9,6 +10,7 @@ RUN npm ci --include=dev && npm cache clean --force
 COPY apps/server/tsconfig.json ./
 COPY apps/server/scripts ./scripts
 COPY apps/server/src ./src
+COPY apps/server/fixtures ./fixtures
 # package.json веба — только ради "type": "module": tsx грузит общие модули как ESM, как в разработке.
 COPY apps/web/package.json /app/apps/web/package.json
 COPY apps/web/src/shared /app/apps/web/src/shared

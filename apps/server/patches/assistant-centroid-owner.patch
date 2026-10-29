@@ -1,0 +1,10 @@
+--- a/apps/server/tests/llm.test.ts
++++ b/apps/server/tests/llm.test.ts
+@@ -127,6 +127,7 @@
+   assert.deepEqual(seen[0]!.body.messages.slice(1, 3).map((m: any) => [m.role, m.content]), [['user', 'подбери растения для двора'], ['assistant', 'Уточните адрес двора.']]);
+   // Без модели правила берут зону у центра карты, а не просят выбрать зону.
+   const site = candidates(f.store).find((c) => c.centroid)!;
++  assert.ok(site.centroid);
+   const zone = { name: String(site.name), lat: Number(site.centroid.lat), lng: Number(site.centroid.lng) };
+   f.use(async () => { throw new Error('model down'); });
+   const rules = await f.ask('подбери растения здесь', null, { view: { lat: zone.lat, lng: zone.lng } });

@@ -1,5 +1,7 @@
 # Green Pavlodar — локальный Backend V2
 
+Актуальная приёмка PR #13: [RELEASE_ACCEPTANCE.md](RELEASE_ACCEPTANCE.md). Числа тестов и описание среды ниже относятся к предыдущим этапам; актуальные результаты и блокеры приведены в отчёте.
+
 Текущий контракт: предложение команды V2 от 27 октября 2026. Реализация продолжает
 существующий backend. Только DEMO, без production-данных.
 
@@ -32,7 +34,7 @@ npm start
 - [OpenAPI V2](http://127.0.0.1:3100/api/v1/openapi.json)
 - [Health](http://127.0.0.1:3100/health)
 
-Вход: admin / coordinator / foreman1–2 / worker1–4, DEMO-пароль `DEMO-only-2026!`.
+Вход: admin / coordinator / viewer / foreman1–2 / worker1–4. Скопируйте `.env.example` в локальный `.env` и задайте случайный `DEMO_PASSWORD` перед seed изолированной демонстрационной базы. Пароли существующих аккаунтов повторный seed не заменяет. Логин `specialist` совместим с municipal DEMO и имеет роль `coordinator`.
 Подробности cookie, CSRF, прав, актуальных версий и повторов — в V2 handoff.
 Не запускать второй сервер на занятом порту. Production mode запрещён конфигурацией.
 

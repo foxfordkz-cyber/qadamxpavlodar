@@ -10,19 +10,20 @@ export const shortText = z.string().trim().min(1).max(200);
 export const version = z.number().int().positive();
 export const timestamp = z.iso.datetime({ offset: true }).transform(s => new Date(s).toISOString());
 export const expected = z.object({ expectedVersion: version }).strict();
-// viewer = «Просмотр» по ТЗ: только чтение и расчёты без сохранения.
-export const roles = z.enum(['admin','coordinator','viewer','foreman','worker']);
+export const roles = z.enum(['admin','coordinator','foreman','worker','specialist','viewer']);
 export type Role = z.infer<typeof roles>;
+// Compatibility input/storage alias only; public identities use the five team roles.
+export const canonicalRole = (role: Role): Exclude<Role, 'specialist'> => role === 'specialist' ? 'coordinator' : role;
 export type User = { id: string; displayName: string; role: Role; active: boolean; version: number };
 export type Doc = Record<string, any> & { id: string; version: number };
 export const now = () => new Date().toISOString();
 export const hash = (value: unknown) => createHash('sha256').update(canonical(value)).digest('hex');
 export function fail(code: string, message: string, status = 409): never { throw new ApiError(status,code,message); }
-export function allow(user: User, ...accepted: Role[]) { if (!accepted.includes(user.role)) fail('FORBIDDEN','This role cannot perform the operation',403); }
+export function allow(user: User, ...accepted: Role[]) { if (!accepted.includes(user.role==='specialist'?'coordinator':user.role)) fail('FORBIDDEN','This role cannot perform the operation',403); }
 export function userDto(row: Row): User {
-  return { id: String(row.id),displayName: String(row.display_name),role: row.role as Role,active: row.active===1,version: Number(row.version) };
+  return { id: String(row.id),displayName: String(row.display_name),role: canonicalRole((row.municipal_role ?? row.role) as Role),active: row.active===1,version: Number(row.version) };
 }
-export function getUser(s: Store, userId: string) { const row = s.get('SELECT * FROM v2_users WHERE id=?',userId); if (!row) fail('NOT_FOUND','User not found',404); return userDto(row!); }
+export function getUser(s: Store, userId: string) { const row = s.get('SELECT u.*,r.role AS municipal_role FROM v2_users u LEFT JOIN municipal_roles r ON r.user_id=u.id WHERE u.id=?',userId); if (!row) fail('NOT_FOUND','User not found',404); return userDto(row!); }
 export function fresh(s: Store, actor: User) {
   const current = getUser(s,actor.id);
   if (!current.active || current.role !== actor.role || current.version !== actor.version) fail('SESSION_REVOKED','Sign in again',401);

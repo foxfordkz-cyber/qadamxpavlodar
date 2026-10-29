@@ -249,7 +249,7 @@ test('v1 migration is additive and repeat-open/seed preserve legacy records', as
   old.prepare('INSERT INTO plants VALUES (?,?,?,?,?,?,0)').run('custom-local','DEMO preserved user record','DEMO Species',52.3,76.9,'good');
   old.close();
   const migrated = new Store(path);
-  assert.equal(migrated.get('PRAGMA user_version')?.user_version,4);
+  assert.equal(migrated.get('PRAGMA user_version')?.user_version,5);
   seed(migrated); seed(migrated);
   assert.equal(migrated.get('SELECT name FROM plants WHERE id=?','custom-local')?.name,'DEMO preserved user record');
   assert.equal(migrated.get('SELECT count(*) AS n FROM plants')?.n,31);

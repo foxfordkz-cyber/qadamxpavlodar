@@ -18,7 +18,7 @@ export const demoAccounts=[['demo-admin-1','admin','admin','Администра
   ...[1,2,3,4].map(i=>[`demo-worker-${i}`,`worker${i}`,'worker',`Работник ${i} (демо)`])] as const;
 export async function seedV2(s:Store) {
   const credentials=new Map<string,string>();
-  for(const[userId]of demoAccounts)if(!s.get('SELECT id FROM v2_users WHERE id=?',userId))credentials.set(userId!,await hashPassword(demoPassword()));
+  for(const[userId,login]of demoAccounts)if(!s.get('SELECT id FROM v2_users WHERE id=? OR login=? COLLATE NOCASE',userId,login))credentials.set(userId!,await hashPassword(demoPassword()));
   s.transaction(()=>{
     for(const[userId,login,role,displayName]of demoAccounts){
       if(credentials.has(userId!))s.run('INSERT INTO v2_users VALUES (?,?,?,?,1,?,1,?,?)',userId!,login!,displayName!,role!,credentials.get(userId!)!,now(),now());
