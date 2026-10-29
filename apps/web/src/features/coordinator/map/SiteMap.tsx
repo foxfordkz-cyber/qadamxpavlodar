@@ -38,6 +38,15 @@ function add3dBuildings(map: MlMap) {
   }, layers.find((l) => l.type === 'symbol')?.id);
 }
 
+/** На телефоне карточка зоны — шторка снизу: зона должна оказаться над ней, а не под ней. */
+function fitPadding(m: MlMap, p: number) {
+  const sheet = document.querySelector('.gp-sites--card .gp-sites__card');
+  if (!sheet || !matchMedia('(max-width: 760px)').matches) return p;
+  const box = m.getContainer().getBoundingClientRect();
+  const hidden = box.bottom - sheet.getBoundingClientRect().top;
+  return hidden > 0 && hidden < box.height - 80 ? { top: p / 2, left: p / 3, right: p / 3, bottom: hidden + p / 3 } : p;
+}
+
 /** Цвет подсветки «зоны из ответа»: не совпадает с цветами статусов, проблем и приоритета. */
 const HL_COLOR = '#6b3fa0';
 
@@ -314,7 +323,7 @@ export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, co
     if (now.ring) {
       const xs = now.ring.map((p) => p[0]);
       const ys = now.ring.map((p) => p[1]);
-      m.fitBounds([[Math.min(...xs), Math.min(...ys)], [Math.max(...xs), Math.max(...ys)]], { padding: 70, maxZoom: 18.5, pitch: 60, duration: 1400 });
+      m.fitBounds([[Math.min(...xs), Math.min(...ys)], [Math.max(...xs), Math.max(...ys)]], { padding: fitPadding(m, 70), maxZoom: 18.5, pitch: 60, duration: 1400 });
     }
   };
   useEffect(() => { void syncGrowth.current(); }, [growth]);
@@ -371,7 +380,7 @@ export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, co
     const s = sites.find((x) => x.id === selectedId);
     if (!map || !ready.current || !s || !focusSeq || focusDone.current === focusSeq) return;
     focusDone.current = focusSeq;
-    map.fitBounds(siteBounds(s), { padding: 80, maxZoom: 17, pitch: pitched ? 50 : 0, duration: 1200 });
+    map.fitBounds(siteBounds(s), { padding: fitPadding(map, 80), maxZoom: 17, pitch: pitched ? 50 : 0, duration: 1200 });
   };
   useEffect(() => focusRef.current(), [focusSeq, sites, selectedId]);
 

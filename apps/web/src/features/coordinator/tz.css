@@ -154,3 +154,28 @@
 .gp-tm__stats span { font-size: 12px; color: var(--gp-muted); }
 .gp-tm__stats > p { grid-column: 1 / -1; margin: 0; }
 .gp-tm-bar { position: absolute; z-index: 6; left: 50%; transform: translateX(-50%); bottom: 54px; display: flex; gap: 8px; align-items: center; margin: 0; padding: 4px 6px 4px 10px; max-width: calc(100% - 20px); }
+
+/* Первый вход: три шага поверх карты. */
+.gp-firstrun { position: fixed; z-index: 47; left: 50%; top: calc(var(--gp-header-h, 56px) + 72px); transform: translateX(-50%); width: min(460px, calc(100% - 24px)); margin: 0; padding: 14px 16px; box-shadow: 0 12px 40px rgb(0 0 0 / 22%); }
+.gp-firstrun ol { margin: 6px 0 10px; padding-left: 20px; display: grid; gap: 6px; font-size: 15px; }
+.gp-sheet__handle { display: none; }
+
+/* Телефон: карточка зоны — шторка снизу, карта над ней остаётся видна. */
+@media (max-width: 760px) {
+  .gp-sites--card .gp-sites__card { top: auto; bottom: 0; height: 52dvh; border-radius: 16px 16px 0 0; box-shadow: 0 -8px 30px rgb(0 0 0 / 22%); padding-top: 0; transition: height 0.2s ease; }
+  .gp-sites--card .gp-sites__card.is-full { height: 92dvh; }
+  .gp-sheet__handle { display: flex; flex-direction: column; align-items: center; gap: 4px; position: sticky; top: 0; z-index: 2; width: 100%; padding: 6px 0 4px; border: 0; background: var(--gp-surface); font: inherit; font-size: 12px; color: var(--gp-muted); cursor: pointer; }
+  .gp-sheet__handle span { width: 44px; height: 5px; border-radius: 3px; background: #c9ccc2; }
+  .gp-sites--card .gp-tm-bar, .gp-sites--card .gp-hl-pill { display: none; }
+  .gp-firstrun { top: auto; bottom: 72px; max-height: calc(100dvh - 140px); overflow-y: auto; }
+  /* Экран телефона — карте: шапка и строка статуса в одну строку, у карты — только поиск, 3D и рисование. */
+  .gp-header__right { flex-wrap: nowrap; gap: 6px; }
+  .gp-header__right > .gp-small { display: none; }
+  .gp-header__right .gp-btn { min-height: 30px; padding: 2px 8px; font-size: 13px; }
+  .gp-subbar .gp-status-row { flex-wrap: nowrap; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+  .gp-subbar .gp-status-row > .gp-kv { display: flex; flex: none; gap: 4px; align-items: baseline; }
+  .gp-subbar .gp-status-row dd { margin: 0; }
+  .gp-map__toolbar .gp-segment { display: none; }
+  .gp-map__toolbar .gp-mapsearch { flex: 1 1 100%; }
+  .gp-sites--card .gp-map__toolbar { display: none; }
+}

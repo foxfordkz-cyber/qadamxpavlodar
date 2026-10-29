@@ -45,6 +45,8 @@ export function SitesPage() {
   const [f, setF] = useState<SiteFilters>(emptyFilters);
   const [focusSeq, setFocusSeq] = useState(0);
   const [tab, setTab] = useState<'list' | 'map'>('list');
+  // Телефон: карточка зоны — шторка на полэкрана над картой; ручка разворачивает её целиком.
+  const [sheetFull, setSheetFull] = useState(false);
 
   const sites = useMemo(() => sitesRes.data?.data ?? [], [sitesRes.data]);
   const tasks = useMemo(() => tasksRes.data?.data ?? [], [tasksRes.data]);
@@ -200,9 +202,13 @@ export function SitesPage() {
           priority={layers.priority ? <PriorityControls prio={prio} items={prioRes.data?.items ?? null} names={names} onPick={(id) => select(id, true)} /> : null} />
         <MapLegend osmBase={osmMeta?.osmBase} />
       </section>
+      <FirstRunHint canDraw={canDraw} />
 
       {selectedId && (
-        <aside className="gp-sites__card gp-card" aria-label={t('site.card')}>
+        <aside className={`gp-sites__card gp-card ${sheetFull ? 'is-full' : ''}`} aria-label={t('site.card')}>
+          <button className="gp-sheet__handle" aria-expanded={sheetFull} onClick={() => setSheetFull((v) => !v)}>
+            <span aria-hidden="true" />{sheetFull ? 'Свернуть карточку — показать карту' : 'Развернуть карточку'}
+          </button>
           <SiteCard id={selectedId} tasks={tasks.filter((x) => x.objectId === selectedId)} onClose={() => navigate('/map', keepHl, true)} onChanged={() => { sitesRes.reload(); tasksRes.reload(); }}
             context={{ data: ctxRes.data ?? null, error: ctxRes.error, loading: ctxRes.loading, radius, setRadius, reload: ctxRes.reload }}
             projects={(projectsRes.data?.data ?? []).filter((p) => p.siteId === selectedId)} plants={(plantsRes.data?.data ?? []).filter((p) => (projectsRes.data?.data ?? []).some((pr) => pr.id === p.projectId && pr.siteId === selectedId))} />
@@ -214,6 +220,41 @@ export function SitesPage() {
         <button role="tab" aria-selected={tab === 'map'} onClick={() => setTab('map')}>◫ Карта</button>
       </div>
     </div>
+  );
+}
+
+const HINT_KEY = 'gp-first-run-v1';
+function hintSeen() {
+  try { return localStorage.getItem(HINT_KEY) === '1'; } catch { return true; }
+}
+
+/** Первый вход: три шага работы с картой. Закрывается навсегда (кнопкой или Esc). */
+function FirstRunHint({ canDraw }: { canDraw: boolean }) {
+  const [open, setOpen] = useState(() => !hintSeen());
+  const close = useCallback(() => {
+    setOpen(false);
+    try { localStorage.setItem(HINT_KEY, '1'); } catch { /* без хранилища — покажется ещё раз */ }
+  }, []);
+  useEffect(() => {
+    if (!open) return;
+    const esc = (e: KeyboardEvent) => { if (e.key === 'Escape') close(); };
+    document.addEventListener('keydown', esc);
+    return () => document.removeEventListener('keydown', esc);
+  }, [open, close]);
+  if (!open) return null;
+  return (
+    <section className="gp-firstrun gp-card" aria-labelledby="firstrun-h">
+      <h2 id="firstrun-h" className="gp-subhead">Три шага, чтобы начать</h2>
+      <ol>
+        <li><strong>Выберите зону</strong> на карте или в списке{canDraw ? ' — или обведите свою кнопкой «✎ Нарисовать зону»' : ''}. Адрес ищется строкой над картой.</li>
+        <li><strong>Посмотрите расчёт</strong> в карточке: растения, смета, приживаемость, уход, эффект. В «Эффекте» машина времени покажет зону через 20 лет.</li>
+        <li><strong>Спросите ассистента</strong> (✦ внизу справа), например «Что озеленить на 50 млн?» — зоны появятся на карте с номерами очереди.</li>
+      </ol>
+      <div className="gp-btn-row">
+        <button className="gp-btn gp-btn--primary" onClick={close} autoFocus>Понятно, начать</button>
+        <a className="gp-btn gp-btn--ghost" href={hrefFor('/guide')} onClick={close}>Подробный гайд</a>
+      </div>
+    </section>
   );
 }
 
