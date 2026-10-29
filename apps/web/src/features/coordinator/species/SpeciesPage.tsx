@@ -58,7 +58,7 @@ export function SpeciesPage() {
         <label className="gp-check"><input type="checkbox" checked={hardy} onChange={(e) => setHardy(e.target.checked)} />{tr("Без полива")}</label>
         <span className="gp-small gp-muted" aria-live="polite">{tr("Найдено:")}{" "}{list.length}</span>
       </div>
-      <StateView loading={r.loading} error={r.error} hasData={!!r.data} onRetry={r.reload} empty={!!r.data && !list.length} emptyText={tr("Ничего не найдено. Ослабьте фильтры.")}>
+      <StateView loading={r.loading} error={r.error} hasData={!!r.data} onRetry={r.reload} empty={!!r.data && !list.length} emptyText={tr("Ничего не найдено. Ослабьте фильтры.")} emptyAction={<button className="gp-btn" onClick={reset}>Сбросить фильтры</button>}>
         <div className="gp-spgrid">{list.map((s) => <SpeciesCardFull key={s.id} s={s} onOpen={() => setCard(s)} />)}</div>
       </StateView>
       {list.length === 0 && r.data && <button className="gp-btn" onClick={reset}>{t('filters.reset')}</button>}

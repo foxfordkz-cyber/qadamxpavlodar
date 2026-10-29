@@ -1,4 +1,4 @@
-import type { ReactElement } from 'react';
+import { useEffect, useState, type ReactElement } from 'react';
 import { useLanguage } from '../../shared/i18n/useLanguage';
 import { useRoute } from '../../shared/router';
 import { Shell } from './Shell';
@@ -39,9 +39,36 @@ const PAGES: [string, () => ReactElement][] = [
   ['/report', () => <ReportPage />],
 ];
 
+const PRESENT_KEY = 'gp-present';
+function readPresent() {
+  if (new URLSearchParams(location.search).has('present')) return true;
+  try { return localStorage.getItem(PRESENT_KEY) === '1'; } catch { return false; }
+}
+
+/** Режим презентации для защиты: крупнее текст, без служебной строки. Alt+P или ?present=1 в адресе. */
+function usePresentation() {
+  const [on, setOn] = useState(readPresent);
+  useEffect(() => {
+    document.documentElement.classList.toggle('gp-present', on);
+    try { localStorage.setItem(PRESENT_KEY, on ? '1' : '0'); } catch { /* без хранилища — до перезагрузки */ }
+  }, [on]);
+  useEffect(() => {
+    const key = (e: KeyboardEvent) => { if (e.altKey && e.code === 'KeyP') { e.preventDefault(); setOn((v) => !v); } };
+    addEventListener('keydown', key);
+    return () => removeEventListener('keydown', key);
+  }, []);
+  return [on, setOn] as const;
+}
+
 export function CoordinatorApp() {
   useLanguage();
   const { path } = useRoute();
+  const [present, setPresent] = usePresentation();
   const page = PAGES.find(([p]) => path === p || path.startsWith(p + '/'))?.[1] ?? (() => <HomePage />);
-  return <Shell>{page()}</Shell>;
+  return (
+    <>
+      <Shell>{page()}</Shell>
+      {present && <button className="gp-present-pill" onClick={() => setPresent(false)} title="Alt+P">Режим презентации · выйти</button>}
+    </>
+  );
 }

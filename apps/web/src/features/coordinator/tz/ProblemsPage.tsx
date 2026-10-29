@@ -42,7 +42,7 @@ export function ProblemsPage() {
         <label className="gp-kv gp-small">{tr("Сортировка")}{" "}<select className="gp-input gp-input--inline" value={sort} onChange={(e) => setSort(e.target.value as typeof sort)}><option value="severity">{tr("по остроте")}</option><option value="type">{tr("по типу")}</option><option value="zone">{tr("по зоне")}</option></select></label>
         <span className="gp-small gp-muted" aria-live="polite">{tr("Найдено:")}{" "}{list.length}{" "}{tr("из")}{" "}{all.length}</span>
       </div>
-      <StateView loading={res.loading} error={res.error} hasData={!!res.data} onRetry={res.reload} empty={!!res.data && !list.length} emptyText={tr("Проблем по выбранным фильтрам нет.")}>
+      <StateView loading={res.loading} error={res.error} hasData={!!res.data} onRetry={res.reload} empty={!!res.data && !list.length} emptyText={tr("Проблем по выбранным фильтрам нет.")} emptyAction={<button className="gp-btn" onClick={() => { setType('all'); setSev('all'); }}>Показать все</button>}>
         <div className="gp-table-wrap gp-card">
           <table className="gp-table">
             <thead><tr><th>{tr("Зона")}</th><th>{tr("Проблема")}</th><th>{tr("Острота")}</th><th>{tr("Причина")}</th><th>{tr("Что сделать")}</th></tr></thead>

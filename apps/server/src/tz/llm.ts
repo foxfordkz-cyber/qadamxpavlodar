@@ -35,22 +35,27 @@ export const llmConfig = (env = process.env): LlmConfig | null => llmProviders(e
 
 const SYSTEM = `Ты — ассистент специалиста акимата Павлодара по озеленению (прототип, демо-данные).
 Правила:
-1. Отвечай по-русски, коротко: 3–8 предложений или короткий список.
+1. Отвечай на языке вопроса (казахский или русский), коротко: 3–8 предложений или короткий список. Названия зон пиши как в результатах функций.
 2. Любое число, площадь, цену, процент, балл бери ТОЛЬКО из результатов функций. Сам ничего не считай и не оценивай. Нужна цифра — вызови функцию.
    Факторы приоритета и пригодность видов — баллы 0–100, а не проценты; проценты — только приживаемость.
    Не добавляй фактов, которых нет в результатах функций (какие именно объекты рядом, причины, названия).
 3. Если данных нет или функция вернула ошибку — прямо скажи, каких данных не хватает. Не придумывай.
 4. Все сметы, приживаемость и экоэффект — оценки по правилам и демо-расценкам; так и говори.
-5. Называй зоны по названию из результатов функций. Если пользователь говорит «эта зона», а выбранной зоны нет — попроси выбрать её на карте или найди через search_zones.
+5. Называй зоны по названию из результатов функций. Если зона не выбрана, а в вопросе адрес, улица, здание, «возле», «здесь» — или пользователь отвечает адресом на твой вопрос, — вызови find_place, затем analyze_zone для ближайшей зоны и скажи, какую зону взял и на каком расстоянии. Переспрашивай, только если find_place ничего не нашёл.
 6. На вопросы «почему», «откуда цифра», «что за вид» используй search_knowledge и называй источник.
 7. Не давай юридических разрешений: посадку согласует специалист после проверок участка.
 8. Пиши простым текстом: без Markdown, таблиц и звёздочек; список — каждый пункт с новой строки, начиная с «• ». id зон не пиши — только названия.`;
+
+/** Язык вопроса: буквы, которых нет в русском (ә ғ қ ң ө ұ ү һ і), — казахский. */
+export const questionLang = (text: string): 'kk' | 'ru' => (/[әғқңөұүһі]/i.test(text) ? 'kk' : 'ru');
+const LANG_NOTE = { kk: '\nОтветь на казахском языке (қазақ тілінде).', ru: '' } as const;
 
 const ZONE = { type: 'string', description: 'id зоны, например site-osm-1546881092' };
 const tool = (name: string, description: string, properties: Json, required: string[] = []) =>
   ({ type: 'function', function: { name, description, parameters: { type: 'object', properties, required, additionalProperties: false } } });
 export const TOOLS = [
   tool('search_zones', 'Найти зоны по названию или улице. Возвращает id, название, площадь и статус проверок.', { query: { type: 'string' } }, ['query']),
+  tool('find_place', 'Найти место по адресу, улице или зданию (снимок OSM центра Павлодара) и ближайшие к нему зоны с расстоянием в метрах. Без query или если адреса нет в снимке — зоны у центра карты, которую видит специалист.', { query: { type: 'string', description: 'адрес, улица или место, например «Торайгырова 1/5»' } }),
   tool('analyze_zone', 'Расчёт зоны: подбор видов 0–100, схема посадки, смета из 5 статей, приживаемость на 1/2/3 года, уход, экоэффект на 5/10/20 лет.', {
     zoneId: ZONE, variant: { type: 'string', enum: ['econom', 'optimal', 'max'] }, careYears: { type: 'integer', enum: [1, 2, 3] },
     excluded: { type: 'array', items: { type: 'string' }, description: 'id видов, которые исключить' },
@@ -73,9 +78,11 @@ const norm = (x: string) => x.toLowerCase().replace(/ё/g, 'е');
 const stems = (q: string) => norm(q).split(/[^a-zа-я0-9-]+/).filter((w) => w.length >= 3).map((w) => w.slice(0, Math.max(3, Math.min(6, w.length - 1))));
 const score = (text: string, keys: string[]) => keys.reduce((n, k) => n + (text.includes(k) ? 1 : 0), 0);
 const clip = (x: string, n = 280) => (x.length > n ? `${x.slice(0, n - 1)}…` : x);
+/** Без разметки Markdown: **жирный**, __подчёркнутый__, `код`, заголовки «# », списки «* » → «• ». */
+export const plainText = (x: string) => x.replace(/\*\*(.+?)\*\*|__(.+?)__/g, '$1$2').replace(/`([^`]+)`/g, '$1').replace(/^#{1,6}\s+/gm, '').replace(/^\s*[*-]\s+/gm, '• ').trim();
 
 type Zone = { id: string; name: string };
-type Ctx = { zones: Zone[]; evidence: Set<string> };
+type Ctx = { zones: Zone[]; evidence: Set<string>; view?: { lat: number; lng: number } | null };
 
 /** Функции, которые вызывает модель. Выполняются сервером теми же модулями, что экраны. */
 export function createTools(s: Store) {
@@ -87,6 +94,12 @@ export function createTools(s: Store) {
   };
   const elig = (c: Json) => { const st = web.CHECKS.map((k) => c.checks[k].state); return st.includes('blocked') ? 'есть ограничение' : st.every((x) => x === 'cleared') ? 'проверки завершены' : 'нужна проверка'; };
   const run: Record<string, (a: Json, ctx: Ctx) => Json> = {
+    find_place: (a, ctx) => {
+      const p = web.placeZones(String(a.query ?? ''), candidates(s), ctx.view);
+      if (!p.zones.length) return { found: false, note: 'Места нет в снимке OSM района прототипа (центр Павлодара), центр карты неизвестен: попросите выбрать зону на карте, найти адрес строкой над картой или нарисовать контур.' };
+      return { found: p.from === 'address', place: p.place, basedOn: p.from === 'address' ? 'адрес из снимка OSM' : 'центр карты: такого адреса нет в снимке района',
+        zones: p.zones.map((x) => ({ ...zoneOf(String(x.site.id), ctx), distanceM: x.distanceM, areaM2: x.site.areaM2 ?? null, checks: elig(x.site) })) };
+    },
     search_zones: (a, ctx) => {
       const keys = stems(String(a.query ?? ''));
       const found = candidates(s).map((c) => ({ c, n: score(norm(`${c.name} ${c.id}`), keys) })).filter((x) => x.n > 0).sort((x, y) => y.n - x.n).slice(0, 8);
@@ -210,11 +223,16 @@ export function createLlmAssistant(s: Store, providers: LlmConfig | LlmConfig[])
   };
 }
 
-async function askOne(s: Store, exec: ReturnType<typeof createTools>, cfg: LlmConfig, { message, siteId }: { message: string; siteId: string | null }, deadline: number) {
-  const ctx: Ctx = { zones: [], evidence: new Set() };
+type AskInput = Parameters<AssistantAdapter>[0];
+
+async function askOne(s: Store, exec: ReturnType<typeof createTools>, cfg: LlmConfig, { message, siteId, history = [], view = null }: AskInput, deadline: number) {
+  const ctx: Ctx = { zones: [], evidence: new Set(), view };
   const selected = siteId ? maybeDoc(s, 'site', siteId) : undefined;
-  const where = selected && analyzable(selected) ? `Выбранная на карте зона: ${selected.id} «${selected.name}».` : 'Зона на карте не выбрана.';
-  const messages: Json[] = [{ role: 'system', content: SYSTEM }, { role: 'user', content: `${where}\nВопрос: ${message}` }];
+  const where = selected && analyzable(selected) ? `Выбранная на карте зона: ${selected.id} «${selected.name}».` : `Зона на карте не выбрана.${view ? ' find_place без query вернёт зоны у центра карты, которую видит специалист.' : ''}`;
+  const lang = questionLang(message);
+  // Прошлые реплики — только текст: короткий ответ пользователя продолжает его прошлый вопрос.
+  const turns = history.slice(-6).map((h) => ({ role: h.role, content: clip(h.text, 600) }));
+  const messages: Json[] = [{ role: 'system', content: SYSTEM }, ...turns, { role: 'user', content: `${where}${LANG_NOTE[lang]}\nВопрос: ${message}` }];
   const toolCalls: { name: string; args: Json }[] = [];
   let text = '';
   for (let round = 0; ; round++) {
@@ -228,13 +246,15 @@ async function askOne(s: Store, exec: ReturnType<typeof createTools>, cfg: LlmCo
       messages.push({ role: 'tool', tool_call_id: call.id, content: JSON.stringify(exec(call.function.name, args, ctx)) });
     }
   }
+  // Модели иногда пишут Markdown вопреки правилу 8 — в чате это звёздочки и решётки; оставляем простой текст.
+  text = plainText(text);
   if (!text) throw new LlmError('empty answer');
   // Цифры без вызова функций — значит, модель их придумала: такой ответ не показываем (резерв или правила).
   if (!toolCalls.length && /\d/.test(text)) throw new LlmError('numbers without tool calls');
   const named = ctx.zones.filter((z) => text.includes(z.name));
   const sources = [...ctx.evidence].map((id) => maybeDoc(s, 'evidence', id)).filter(Boolean).slice(0, 6)
     .map((e) => ({ id: e!.id, label: String(e!.sourceLabel), ...(e!.sourceUrl ? { url: String(e!.sourceUrl) } : {}) }));
-  return { text, zones: (named.length ? named : ctx.zones).slice(0, 8), method: 'model', intent: toolCalls[0]?.name ?? 'chat', model: cfg.model, sources, toolCalls } as Json;
+  return { text, zones: (named.length ? named : ctx.zones).slice(0, 8), method: 'model', intent: toolCalls[0]?.name ?? 'chat', model: cfg.model, sources, toolCalls, lang } as Json;
 }
 
 export type CheckResult = { name: string; model: string; host: string; hostAllowed: boolean; keyAccepted: boolean | null; modelListed: boolean | null; available: string[]; toolCall: boolean; ms: number | null; error: string | null };

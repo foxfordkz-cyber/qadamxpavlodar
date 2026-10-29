@@ -8,6 +8,9 @@ import { t } from '../../../shared/i18n';
 import { CENTER, siteBounds, siteCenter } from './geo';
 import { SchemeView } from './SchemeView';
 import { mapBroken } from './mapFlags';
+import { mapView } from './mapView';
+import type { GrowthFrame } from '../zone/timeMachine';
+import type { SceneInput } from '../projects/scene3d';
 
 // Векторная подложка OpenFreeMap (OSM). Без ключа; атрибуция обязательна — её задаёт сам стиль
 // («OpenFreeMap © OpenMapTiles Data from OpenStreetMap»), контрол показывает её всегда развёрнутой.
@@ -35,6 +38,18 @@ function add3dBuildings(map: MlMap) {
     paint: { 'fill-extrusion-base': ['get', 'render_min_height'] as never, 'fill-extrusion-height': ['get', 'render_height'] as never, 'fill-extrusion-color': '#d7dbe0', 'fill-extrusion-opacity': 0.8 },
   }, layers.find((l) => l.type === 'symbol')?.id);
 }
+
+/** На телефоне карточка зоны — шторка снизу: зона должна оказаться над ней, а не под ней. */
+function fitPadding(m: MlMap, p: number) {
+  const sheet = document.querySelector('.gp-sites--card .gp-sites__card');
+  if (!sheet || !matchMedia('(max-width: 760px)').matches) return p;
+  const box = m.getContainer().getBoundingClientRect();
+  const hidden = box.bottom - sheet.getBoundingClientRect().top;
+  return hidden > 0 && hidden < box.height - 80 ? { top: p / 2, left: p / 3, right: p / 3, bottom: hidden + p / 3 } : p;
+}
+
+/** Цвет подсветки «зоны из ответа»: не совпадает с цветами статусов, проблем и приоритета. */
+const HL_COLOR = '#6b3fa0';
 
 // MapLibre 6 ищет воркер рядом со своим файлом; после сборки Vite он лежит отдельно.
 setWorkerUrl(workerUrl);
@@ -66,6 +81,10 @@ interface Props {
   target?: { lng: number; lat: number; bbox?: [number, number, number, number]; label: string; seq: number } | null;
   /** Поиск и кнопка рисования — в панели инструментов карты. */
   toolbarExtra?: ReactNode;
+  /** Зоны из ответа ассистента или дорожной карты: номер очереди и обводка; seq меняется — карта показывает их все. */
+  highlight?: { ids: string[]; seq: number } | null;
+  /** Машина времени: посадка выбранной зоны в 3D (three.js) на указанный год. */
+  growth?: GrowthFrame | null;
 }
 
 const EMPTY = { type: 'FeatureCollection' as const, features: [] as { type: 'Feature'; properties: Record<string, unknown>; geometry: unknown }[] };
@@ -101,11 +120,12 @@ const pointsGeoJson = (pts: { lng: number; lat: number; label: string }[]) => ({
   features: pts.map((p) => ({ type: 'Feature' as const, properties: { label: p.label }, geometry: { type: 'Point' as const, coordinates: [p.lng, p.lat] } })),
 });
 
-function toGeoJson(sites: CandidateSite[], eligibility: Props['eligibility'], selectedId: string | null, tint?: Record<string, string> | null) {
+function toGeoJson(sites: CandidateSite[], eligibility: Props['eligibility'], selectedId: string | null, tint?: Record<string, string> | null, highlight?: Props['highlight']) {
+  const rank = new Map((highlight?.ids ?? []).map((id, i) => [id, i + 1]));
   return {
     type: 'FeatureCollection' as const,
     features: sites.flatMap((s) => {
-      const props = { id: s.id, elig: eligibility(s), selected: s.id === selectedId ? 1 : 0, name: s.name, ...(tint?.[s.id] ? { tint: tint[s.id] } : {}) };
+      const props = { id: s.id, elig: eligibility(s), selected: s.id === selectedId ? 1 : 0, name: s.name, ...(tint?.[s.id] ? { tint: tint[s.id] } : {}), ...(rank.has(s.id) ? { rank: rank.get(s.id) } : {}) };
       const c = siteCenter(s);
       return [
         { type: 'Feature' as const, id: s.id, properties: props, geometry: s.geometry },
@@ -128,7 +148,7 @@ function hatchImage(color: string) {
   return { width: size, height: size, data };
 }
 
-export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, context, plants = [], planned = [], soils = null, greenery = null, zoneTint = null, drawPoints = null, onDrawPoint, target = null, toolbarExtra }: Props) {
+export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, context, plants = [], planned = [], soils = null, greenery = null, zoneTint = null, drawPoints = null, onDrawPoint, target = null, toolbarExtra, highlight = null, growth = null }: Props) {
   const box = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MlMap | null>(null);
   const ready = useRef(false);
@@ -151,8 +171,8 @@ export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, co
   onSelectRef.current = onSelect;
   const onDrawRef = useRef(onDrawPoint);
   onDrawRef.current = onDrawPoint;
-  const dataRef = useRef({ sites, eligibility, selectedId, context, plants, planned, soils, greenery, zoneTint, drawPoints, target });
-  dataRef.current = { sites, eligibility, selectedId, context, plants, planned, soils, greenery, zoneTint, drawPoints, target };
+  const dataRef = useRef({ sites, eligibility, selectedId, context, plants, planned, soils, greenery, zoneTint, drawPoints, target, highlight });
+  dataRef.current = { sites, eligibility, selectedId, context, plants, planned, soils, greenery, zoneTint, drawPoints, target, highlight };
 
   useEffect(() => {
     if (!box.current || view !== 'map') return;
@@ -189,6 +209,7 @@ export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, co
     });
     map.on('moveend', () => {
       const c = map.getCenter();
+      mapView.center = { lat: +c.lat.toFixed(6), lng: +c.lng.toFixed(6) };
       camera.current = { center: [c.lng, c.lat], zoom: map.getZoom(), pitch: map.getPitch(), bearing: map.getBearing() };
     });
     map.on('load', () => {
@@ -207,7 +228,7 @@ export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, co
       map.addLayer({ id: 'greenery-fill', type: 'fill', source: 'greenery', filter: ['==', ['geometry-type'], 'Polygon'] as never, paint: { 'fill-color': '#3f8a3a', 'fill-opacity': 0.45 } });
       map.addLayer({ id: 'greenery-line', type: 'line', source: 'greenery', filter: ['==', ['geometry-type'], 'LineString'] as never, paint: { 'line-color': '#2f6e2a', 'line-width': 3 } });
       map.addLayer({ id: 'greenery-tree', type: 'circle', source: 'greenery', filter: ['==', ['geometry-type'], 'Point'] as never, paint: { 'circle-radius': 4, 'circle-color': '#2f6e2a', 'circle-stroke-color': '#fff', 'circle-stroke-width': 1 } });
-      map.addSource('sites', { type: 'geojson', data: toGeoJson(sites, eligibility, selectedId, dataRef.current.zoneTint) });
+      map.addSource('sites', { type: 'geojson', data: toGeoJson(sites, eligibility, selectedId, dataRef.current.zoneTint, dataRef.current.highlight) });
       const color = ['match', ['get', 'elig'], 'blocked', '#b3261e', 'planting_candidate', '#2f7a3e', '#d89a1c'] as never;
       const isPoly = ['!=', ['get', 'centroid'], 1] as never;
       map.addLayer({ id: 'sites-fill', type: 'fill', source: 'sites', filter: isPoly, paint: { 'fill-color': color, 'fill-opacity': ['case', ['==', ['get', 'selected'], 1], 0.45, 0.28] } });
@@ -217,11 +238,16 @@ export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, co
       map.addLayer({ id: 'sites-line-dash', type: 'line', source: 'sites', filter: ['all', isPoly, ['==', ['get', 'elig'], 'survey_needed']] as never, paint: { 'line-color': '#8a5a00', 'line-width': 2, 'line-dasharray': [2, 1.5] } });
       map.addLayer({ id: 'sites-line-solid', type: 'line', source: 'sites', filter: ['all', isPoly, ['!=', ['get', 'elig'], 'survey_needed']] as never, paint: { 'line-color': color, 'line-width': 2.5 } });
       map.addLayer({ id: 'sites-selected', type: 'line', source: 'sites', filter: ['all', isPoly, ['==', ['get', 'selected'], 1]] as never, paint: { 'line-color': '#1f5d99', 'line-width': 4 } });
+      map.addLayer({ id: 'sites-hl-line', type: 'line', source: 'sites', filter: ['all', isPoly, ['has', 'rank']] as never, paint: { 'line-color': HL_COLOR, 'line-width': 3.5 } });
       // Точки-центры видны на мелком масштабе, где полигоны слишком малы.
       // Окраска слоя «Приоритет» или «Проблемы» видна и на точках, иначе на мелком масштабе её не разглядеть.
       map.addLayer({ id: 'sites-dot', type: 'circle', source: 'sites', filter: ['==', ['get', 'centroid'], 1] as never, maxzoom: 15.5, paint: { 'circle-radius': ['case', ['==', ['get', 'selected'], 1], 8, ['has', 'tint'], 6, 5] as never, 'circle-color': ['case', ['has', 'tint'], ['get', 'tint'], color] as never, 'circle-stroke-color': ['case', ['==', ['get', 'selected'], 1], '#1f5d99', '#ffffff'], 'circle-stroke-width': 2, 'circle-opacity': 0.9 } });
       // Подпись только у выбранного участка — без десятков наложенных надписей.
       map.addLayer({ id: 'sites-label', type: 'symbol', source: 'sites', filter: ['all', ['==', ['get', 'centroid'], 1], ['==', ['get', 'selected'], 1]] as never, layout: { 'text-field': ['get', 'name'], 'text-font': ['Noto Sans Bold'], 'text-size': 13, 'text-offset': [0, 1.4], 'text-anchor': 'top', 'text-max-width': 14 }, paint: { 'text-color': '#0f2f4f', 'text-halo-color': '#ffffff', 'text-halo-width': 2 } });
+      // Номер очереди на центре зоны — виден на любом масштабе, поверх подписей.
+      const isRanked = ['all', ['==', ['get', 'centroid'], 1], ['has', 'rank']] as never;
+      map.addLayer({ id: 'sites-hl-badge', type: 'circle', source: 'sites', filter: isRanked, paint: { 'circle-radius': 11, 'circle-color': HL_COLOR, 'circle-stroke-color': '#ffffff', 'circle-stroke-width': 2 } });
+      map.addLayer({ id: 'sites-hl-num', type: 'symbol', source: 'sites', filter: isRanked, layout: { 'text-field': ['to-string', ['get', 'rank']] as never, 'text-font': ['Noto Sans Bold'], 'text-size': 12, 'text-allow-overlap': true, 'text-ignore-placement': true }, paint: { 'text-color': '#ffffff' } });
       // Окружение выбранного участка: поверх 3D-зданий подсвечиваются контуры в выбранном радиусе.
       const d = dataRef.current;
       map.addSource('ctx', { type: 'geojson', data: contextGeoJson(d.context) });
@@ -246,7 +272,7 @@ export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, co
       map.addLayer({ id: 'draw-vertex', type: 'circle', source: 'draw', filter: ['==', ['get', 't'], 'vertex'] as never, paint: { 'circle-radius': ['case', ['==', ['get', 'first'], 1], 7, 5] as never, 'circle-color': '#fff', 'circle-stroke-color': '#1f5d99', 'circle-stroke-width': 2.5 } });
       // В режиме рисования клик ставит угол контура, а не открывает зону.
       map.on('click', (e) => { if (dataRef.current.drawPoints) onDrawRef.current?.([+e.lngLat.lng.toFixed(7), +e.lngLat.lat.toFixed(7)]); });
-      for (const layer of ['sites-fill', 'sites-dot']) {
+      for (const layer of ['sites-fill', 'sites-dot', 'sites-hl-badge']) {
         map.on('click', layer, (e: MapLayerMouseEvent) => {
           if (dataRef.current.drawPoints) return;
           const id = e.features?.[0]?.properties?.id;
@@ -256,14 +282,53 @@ export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, co
         map.on('mouseleave', layer, () => { if (!dataRef.current.drawPoints) map.getCanvas().style.cursor = ''; });
       }
       focusRef.current();
+      highlightRef.current();
+      planting.current = null;
+      void syncGrowth.current();
     });
     return () => {
       clearTimeout(timeout);
       ready.current = false;
+      planting.current = null;
       map.remove();
       mapRef.current = null;
     };
   }, [view, basemap, reportService]);
+
+  // Машина времени: three.js-слой из редактора проектов (scene3d), грузится только когда нужен.
+  // Первое включение — камера наклоняется к зоне; смена года пересобирает модели без пересоздания слоя.
+  const growthRef = useRef(growth);
+  growthRef.current = growth;
+  const planting = useRef<{ update: (input: SceneInput) => void } | null>(null);
+  const syncGrowth = useRef(async () => {});
+  syncGrowth.current = async () => {
+    const m = mapRef.current;
+    const g = growthRef.current;
+    if (!m || !ready.current) return;
+    if (!g) {
+      if (m.getLayer('planting-3d')) m.removeLayer('planting-3d');
+      planting.current = null;
+      return;
+    }
+    const input = { origin: g.origin, siteRing: g.ring, items: g.items, species: g.species, stage: g.k };
+    if (planting.current && m.getLayer('planting-3d')) { planting.current.update(input); return; }
+    const { createPlantingLayer } = await import('../projects/scene3d');
+    const now = growthRef.current;
+    if (mapRef.current !== m || !now || m.getLayer('planting-3d')) return;
+    try {
+      const pl = createPlantingLayer({ origin: now.origin, siteRing: now.ring, items: now.items, species: now.species, stage: now.k });
+      m.addLayer(pl.layer);
+      planting.current = pl;
+    } catch {
+      return; // без WebGL-контекста для three.js — цифры машины времени остаются в карточке
+    }
+    if (now.ring) {
+      const xs = now.ring.map((p) => p[0]);
+      const ys = now.ring.map((p) => p[1]);
+      m.fitBounds([[Math.min(...xs), Math.min(...ys)], [Math.max(...xs), Math.max(...ys)]], { padding: fitPadding(m, 70), maxZoom: 18.5, pitch: 60, duration: 1400 });
+    }
+  };
+  useEffect(() => { void syncGrowth.current(); }, [growth]);
 
   useEffect(() => {
     const m = mapRef.current;
@@ -276,8 +341,8 @@ export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, co
   // Обновление данных без пересоздания карты.
   useEffect(() => {
     const src = mapRef.current?.getSource('sites') as GeoJSONSource | undefined;
-    if (ready.current && src) src.setData(toGeoJson(sites, eligibility, selectedId, zoneTint));
-  }, [sites, eligibility, selectedId, zoneTint]);
+    if (ready.current && src) src.setData(toGeoJson(sites, eligibility, selectedId, zoneTint, highlight));
+  }, [sites, eligibility, selectedId, zoneTint, highlight]);
 
   useEffect(() => {
     const m = mapRef.current;
@@ -317,9 +382,23 @@ export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, co
     const s = sites.find((x) => x.id === selectedId);
     if (!map || !ready.current || !s || !focusSeq || focusDone.current === focusSeq) return;
     focusDone.current = focusSeq;
-    map.fitBounds(siteBounds(s), { padding: 80, maxZoom: 17, pitch: pitched ? 50 : 0, duration: 1200 });
+    map.fitBounds(siteBounds(s), { padding: fitPadding(map, 80), maxZoom: 17, pitch: pitched ? 50 : 0, duration: 1200 });
   };
   useEffect(() => focusRef.current(), [focusSeq, sites, selectedId]);
+
+  // Подсвеченные зоны показываются все сразу, один раз на highlight.seq (как перелёт к выбранной зоне).
+  const highlightDone = useRef(0);
+  const highlightRef = useRef(() => {});
+  highlightRef.current = () => {
+    const map = mapRef.current;
+    const list = sites.filter((s) => highlight?.ids.includes(s.id));
+    if (!map || !ready.current || !highlight?.seq || !list.length || highlightDone.current === highlight.seq) return;
+    highlightDone.current = highlight.seq;
+    const b = list.map(siteBounds);
+    const bounds: [[number, number], [number, number]] = [[Math.min(...b.map((x) => x[0][0])), Math.min(...b.map((x) => x[0][1]))], [Math.max(...b.map((x) => x[1][0])), Math.max(...b.map((x) => x[1][1]))]];
+    map.fitBounds(bounds, { padding: 90, maxZoom: 16, pitch: pitched ? 45 : 0, duration: 1200 });
+  };
+  useEffect(() => highlightRef.current(), [highlight?.seq, sites]);
 
   const toggle3d = () => {
     const next = !pitched;

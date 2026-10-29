@@ -48,7 +48,7 @@ export function TasksPage() {
           <section className="gp-card gp-tasks__unassigned" aria-labelledby="unassigned-h">
             <div className="gp-section__head"><h2 id="unassigned-h"><span aria-hidden="true">⚠ </span>{t('tasks.unassigned')}: {unassigned.length}</h2></div>
             <p className="gp-small gp-muted">{t('tasks.unassignedNote')}</p>
-            {unassigned.length === 0 ? <p className="gp-muted">{t('tasks.empty')}</p> : (
+            {unassigned.length === 0 ? <p className="gp-muted">{t('tasks.empty')} <a href={hrefFor('/map')}>Задание на обследование создаётся в карточке участка на карте →</a></p> : (
               <ul className="gp-list">
                 {unassigned.map((x) => <TaskRow key={x.id} task={x} site={siteById.get(x.objectId)} brigades={brigades.data ?? []} onChanged={() => { tasks.reload(); plan.reload(); }} reason={t('tasks.reason.noBrigade')} />)}
               </ul>
