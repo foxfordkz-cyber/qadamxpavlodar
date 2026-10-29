@@ -3,7 +3,8 @@
 import type { CandidateSite, ConflictType, ProjectItem, SiteContextBuilding, Species } from './api/types';
 import { distShapes, makeProjection, pointInRing, type XY } from './geo';
 
-/** Ориентиры команды до сверки с нормами СП РК: расстояние от стены здания до оси растения. */
+/** СП РК 3.01-101-2013, п. 6.10, табл. 1-3 (fixtures/pavlodar, ev-pvl-sp-planning): от наружной стены здания до оси растения.
+ *  Значения — для кроны не более 5 м; для большей кроны норма требует увеличить расстояние (на сколько — не задано). */
 export const MIN_DISTANCE_TO_BUILDING_M: Record<Species['form'], number> = { tree: 5, shrub: 1.5, flower: 0 };
 
 export interface Conflict {
@@ -32,10 +33,15 @@ export function computeConflicts(item: Pick<ProjectItem, 'geometry' | 'speciesId
     for (const b of buildings) {
       const d = distShapes(pts, b.geometry.coordinates[0].map(proj.toXY), item.geometry.type === 'Polygon', true);
       if (d < min) {
-        out.push({ type: 'near_building', message: `До здания${b.address ? ` (${b.address})` : ''} ≈${d.toFixed(1)} м — меньше ориентира ${min} м для формы «${species!.form === 'tree' ? 'дерево' : 'кустарник'}».` });
+        out.push({ type: 'near_building', message: `До здания${b.address ? ` (${b.address})` : ''} ≈${d.toFixed(1)} м — меньше нормы СП РК ${min} м для формы «${species!.form === 'tree' ? 'дерево' : 'кустарник'}».` });
         break;
       }
     }
+  }
+  // Крона больше 5 м: табличные расстояния СП РК к такому дереву неприменимы как есть — нужен больший отступ.
+  if (species?.form === 'tree' && (species.crownDiameterM ?? 0) > 5 && min > 0) {
+    const near = buildings.some((b) => distShapes(pts, b.geometry.coordinates[0].map(proj.toXY), item.geometry.type === 'Polygon', true) < min + (species.crownDiameterM! - 5) / 2);
+    if (near && !out.some((c) => c.type === 'near_building')) out.push({ type: 'near_building', message: `Крона «${species.nameRu}» до ${species.crownDiameterM} м: по СП РК для кроны больше 5 м отступ от здания увеличивают — проверьте вручную.` });
   }
   return out;
 }

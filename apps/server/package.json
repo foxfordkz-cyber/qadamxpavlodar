@@ -19,7 +19,8 @@
     "seed:v2": "node --env-file-if-exists=.env --import ./scripts/local-network-guard.mjs --import tsx src/v2-seed-cli.ts",
     "test:v2": "node --import ./scripts/local-network-guard.mjs --import ./tests/setup-env.mjs --import tsx --test tests/v2.test.ts",
     "demo:v2": "node --env-file-if-exists=.env --import ./scripts/local-network-guard.mjs scripts/demo-v2.mjs",
-    "seed:tz": "node --env-file-if-exists=.env --import ./scripts/local-network-guard.mjs --import tsx src/tz/seed-cli.ts"
+    "seed:tz": "node --env-file-if-exists=.env --import ./scripts/local-network-guard.mjs --import tsx src/tz/seed-cli.ts",
+    "llm:check": "node --env-file-if-exists=.env --import ./scripts/local-network-guard.mjs --import tsx src/tz/llm-check-cli.ts"
   },
   "dependencies": {
     "csv-parse": "7.0.3",

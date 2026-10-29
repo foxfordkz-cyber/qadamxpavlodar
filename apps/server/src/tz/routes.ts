@@ -41,6 +41,9 @@ export function tzRoutes(s: Store, api: Api, tz: TzOptions = {}) {
   route({ method: 'get', path: '/layers/sources', summary: 'TZ: provenance of map layers (OSM snapshot date and license)' }, (_req, res) => {
     reader(actor(res)); res.json({ data: { osm: web.osmMeta } });
   });
+  route({ method: 'get', path: '/reference/facts', summary: 'TZ 5.3: verified Pavlodar facts (climate, norms, air, green fund, prices) with sources' }, (_req, res) => {
+    reader(actor(res)); res.json(web.referenceFacts());
+  });
   route({ method: 'get', path: '/layers/soils', summary: 'TZ: synthetic soil grid until the organizer soil map arrives' }, (_req, res) => { reader(actor(res)); res.json(web.soilsLayer()); });
   route({ method: 'get', path: '/layers/greenery', summary: 'TZ: existing greenery from OpenStreetMap' }, (_req, res) => { reader(actor(res)); res.json(web.greeneryLayer()); });
 
@@ -107,13 +110,20 @@ export function tzRoutes(s: Store, api: Api, tz: TzOptions = {}) {
       osmBase: web.osmMeta.osmBase }), meta: fetchedAt() });
   });
 
-  // Ассистент (ТЗ 3.10): ответ по правилам поверх модулей; LLM участника 3 подключается адаптером.
+  // Ассистент (ТЗ 3.10): модель через адаптер (src/tz/llm.ts) с расчётами модулей; без модели или при её сбое — правила.
   route({ method: 'post', path: '/assistant', input: assistantInput, readOnly: true, summary: 'TZ 3.10: assistant answer with numbers from modules; history kept per user' }, async (req, res) => {
     const a = actor(res); reader(a); const b = assistantInput.parse(req.body);
     const siteId = b.siteId ?? null;
-    let reply: Json | null = null;
-    if (tz.assistant) { try { reply = await tz.assistant({ message: b.message, siteId, user: a }); } catch { reply = null; } }
-    if (!reply) { const ref = reference(s); reply = { ...web.answer(b.message, { siteId }, candidates(s), ref.species, ref.map), sources: [], toolCalls: [] }; }
+    let reply: Json | null = null, fallbackReason: string | null = null;
+    if (tz.assistant) {
+      try { reply = await tz.assistant({ message: b.message, siteId, user: a }); }
+      catch (e) {
+        // В журнал — только причина, без текста вопроса и ключа.
+        console.warn(`Assistant model failed, rules answer instead: ${e instanceof Error ? e.message : 'error'}`);
+        fallbackReason = 'Модель не ответила вовремя или ответ не прошёл проверку — показан ответ по правилам.';
+      }
+    }
+    if (!reply) { const ref = reference(s); reply = { sources: [], toolCalls: [], ...web.answer(b.message, { siteId }, candidates(s), ref.species, ref.map), ...(fallbackReason ? { fallbackReason } : {}) }; }
     s.run('INSERT INTO tz_assistant_history VALUES (?,?,?,?,?,?,?)', randomUUID(), a.id, now(), b.message.slice(0, 300), String(reply.intent ?? 'other'), String(reply.method ?? 'rules'), JSON.stringify((reply.zones ?? []).map((z: Json) => z.id)));
     res.json({ data: reply });
   });

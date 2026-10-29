@@ -1,16 +1,31 @@
-// Ассистент по правилам (ТЗ 3.10) — замена до подключения LLM + RAG участником 1.
+// Ассистент по правилам (ТЗ 3.10): работает в тестовом источнике и как запасной ответ сервера,
+// когда модель не настроена или не ответила. Ответ модели собирает сервер (apps/server/src/tz/llm.ts).
 // Отвечает только цифрами из модулей; при нехватке данных говорит об этом, а не придумывает.
 import type { CandidateSite, Species } from '../api/types';
 import type { Rates } from './rates';
 import { analyzeZone, type PlanOptions } from './plan';
 import { detectProblems, PROBLEM_LABEL, priorities, roadmap, DEFAULT_PRIORITY_WEIGHTS } from './city';
+import { factSources, searchFacts } from '../api/pavlodar';
+
+// Вопросы о нормах, климате, воздухе, зелёном фонде — отвечаем проверенными фактами о Павлодаре со ссылками.
+const FACT_WORDS = /норм|отступ|расстоян|климат|мороз|температур|осадк|ветер|ветр|снег|воздух|загрязн|компенсац|вырубк|населен|жител|почв|инвентаризац|безмороз|микрорайон|госзакуп/;
 
 export interface AssistantReply {
   text: string;
   zones: { id: string; name: string }[];
-  method: 'rules';
+  /** model — ответ модели с расчётами модулей; rules — разбор по правилам. */
+  method: 'rules' | 'model';
   intent: string;
   data?: unknown;
+  /** (контракт 29.10) Источники из справочников, на которые опирался ответ модели. */
+  sources?: { id: string; label: string; url?: string }[];
+  /** (контракт 29.10) Какие функции расчёта вызвала модель и с какими параметрами. */
+  toolCalls?: { name: string; args: Record<string, unknown> }[];
+  model?: string;
+  /** Почему вместо модели ответили правила (модель не ответила или ответ не прошёл проверку). */
+  fallbackReason?: string;
+  /** Почему ответила резервная модель, а не основная (лимит, сбой, долгий ответ). */
+  reserveReason?: string;
 }
 
 const fmt = (n: number) => Math.round(n).toLocaleString('ru-RU');
@@ -58,6 +73,11 @@ export function answer(q: string, ctx: { siteId: string | null }, sites: Candida
     const counts = Object.entries(PROBLEM_LABEL).map(([k, v]) => `${v}: ${problems.filter((p) => p.type === k).length}`).join('; ');
     const high = problems.filter((p) => p.severity === 'high').slice(0, 5);
     return { text: `Выявлено проблем: ${problems.length} (${counts}). С высокой остротой — ${problems.filter((p) => p.severity === 'high').length}.\n${high.map((p) => `• ${zone(p.siteId).name}: ${PROBLEM_LABEL[p.type]} — ${p.cause}`).join('\n')}\n${notDetectable.join(' ')}`, zones: high.map((p) => zone(p.siteId)), method: 'rules', intent: 'problems' };
+  }
+  // Вопрос про выбранную зону («какая почва здесь») — к расчёту зоны, а не к общим фактам о городе.
+  if (FACT_WORDS.test(low) && !(site && /зон|участ|здесь/.test(low))) {
+    const found = searchFacts(low, 3);
+    if (found.length) return { text: found.map((f) => `• ${f.title}: ${f.text}`).join('\n'), zones: [], method: 'rules', intent: 'facts', sources: factSources(found) };
   }
   if (!site) return { text: 'Выберите зону на карте — и я посчитаю подбор, смету, приживаемость или эффект для неё. Без выбранной зоны могу ответить про приоритеты, бюджет и проблемные зоны.', zones: [], method: 'rules', intent: 'need_zone' };
 

@@ -162,3 +162,20 @@ test('assistant answers by rules with module numbers and keeps history per user'
   const noCsrf = await fetch(f.base + '/api/v1/priorities', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' });
   assert.equal(noCsrf.status, 401);
 });
+
+test('verified Pavlodar data: sources seeded as evidence, facts route, assistant answers norms with sources', async t => {
+  const f = await tzFixture(t);
+  const ref = await f.call('/reference/facts', 'GET', 'viewer');
+  assert.equal(ref.status, 200);
+  assert.equal(ref.body.data.facts.length, 33); assert.equal(ref.body.data.sources.length, 34); assert.equal(ref.body.data.climate.months.length, 12);
+  assert.ok(ref.body.data.facts.every((x: any) => x.gap || x.evidenceIds.every((id: string) => ref.body.data.sources.some((s: any) => s.id === id))));
+  assert.equal(f.store.get("SELECT json_extract(data,'$.sourceUrl') AS u FROM v2_documents WHERE kind='evidence' AND id='ev-pvl-sp-planning'")?.u !== null, true);
+  const { createTools } = await import('../src/tz/llm.js');
+  const ctx = { zones: [], evidence: new Set<string>() };
+  const hits = createTools(f.store)('search_knowledge', { query: 'отступ дерева от здания' }, ctx);
+  assert.equal(hits.results[0].id, 'norm-building'); assert.ok(ctx.evidence.has('ev-pvl-sp-planning'));
+  // Без модели ответ по правилам тоже опирается на проверенные факты и называет источник.
+  const r = await f.call('/assistant', 'POST', 'coordinator', { message: 'Какой отступ дерева от здания по нормам?' }, null);
+  assert.equal(r.body.data.intent, 'facts'); assert.match(r.body.data.text, /5 м/);
+  assert.ok(r.body.data.sources.some((s: any) => s.id === 'ev-pvl-sp-planning' && s.url));
+});

@@ -42,8 +42,9 @@ export function seedTz(s: Store) {
   const at = now();
   const counts = { zones: 0, evidence: 0, species: 0, rates: 0 };
   s.transaction(() => {
+    // db.evidence тестового источника уже включает проверенные источники о Павлодаре (fixtures/pavlodar/sources.json).
     for (const e of db.evidence as Json[]) {
-      const doc = { id: e.id, sourceType: e.sourceType, sourceLabel: e.sourceLabel, sourceUrl: e.sourceUrl ?? null, observedAt: e.observedAt ?? null, validUntil: e.validUntil ?? null, dataClass: e.dataClass, note: e.note ?? null, version: 1 };
+      const doc = { id: e.id, sourceType: e.sourceType, sourceLabel: e.sourceLabel, sourceUrl: e.sourceUrl ?? null, observedAt: e.observedAt ?? null, validUntil: e.validUntil ?? null, dataClass: e.dataClass, note: e.note ?? null, ...(e.publishedAt !== undefined ? { publishedAt: e.publishedAt } : {}), version: 1 };
       counts.evidence += Number(s.run("INSERT INTO v2_documents VALUES ('evidence',?,?,1) ON CONFLICT(kind,id) DO NOTHING", doc.id, JSON.stringify(doc)).changes);
     }
     for (const site of db.sites as Json[]) {

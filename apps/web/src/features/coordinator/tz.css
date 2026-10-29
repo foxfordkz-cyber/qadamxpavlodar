@@ -82,6 +82,8 @@
 .gp-assist__msg.is-error { border-color: var(--gp-amber-line); background: var(--gp-amber-soft); }
 .gp-assist__zones { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
 .gp-assist__zones a { text-decoration: none; color: var(--gp-text); }
+.gp-assist__proof { margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--gp-border); display: grid; gap: 2px; justify-items: start; }
+.gp-assist__proof p { margin: 0; }
 .gp-assist__form { display: grid; grid-template-columns: 1fr auto; gap: 6px; align-items: end; border-top: 1px solid var(--gp-border); padding-top: 8px; }
 
 /* Отчёт: печать в PDF */
@@ -110,3 +112,11 @@
 .gp-zone table { display: block; overflow-x: auto; max-width: 100%; }
 .gp-zone__facts .gp-input--inline, .gp-zone .gp-input--inline { max-width: 100%; }
 .gp-zone__facts { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); }
+
+/* Проверенные данные о Павлодаре на странице «Справочники» */
+.gp-facts { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; margin-top: 12px; }
+.gp-facts__topic { padding: 12px 14px; }
+.gp-facts__topic .gp-subhead { margin-top: 0; }
+.gp-facts__item { padding: 8px 0; border-bottom: 1px dashed var(--gp-border); }
+.gp-facts__item:last-child { border-bottom: 0; }
+.gp-facts__item p { margin: 4px 0; }
