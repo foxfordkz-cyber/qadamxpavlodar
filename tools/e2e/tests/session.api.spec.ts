@@ -1,0 +1,38 @@
+import { test, expect, type Page } from '@playwright/test';
+import { dismissHint } from '../support/helpers';
+import { bugs, runKnownBugs } from '../support/known-bugs';
+
+test.beforeEach(() => test.skip(!process.env.E2E_PASSWORD, 'E2E_PASSWORD is not set'));
+
+async function login(page: Page, username: string) {
+    await page.getByRole('textbox', { name: /^Логин/ }).fill(username);
+    // evaluate has no password-bearing fill step title; API reporter omits all step/error payloads.
+    await page.locator('input[type=password]').evaluate((input, password) => {
+      Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value')!.set!.call(input, password);
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+    }, process.env.E2E_PASSWORD!);
+    await page.getByRole('button', { name: 'Войти', exact: true }).click();
+}
+
+test('API: coordinator login, server data indicator, map, estimate, priorities, logout', async ({ page }) => {
+  await page.goto('/?source=api#/', { waitUntil: 'domcontentloaded' });
+  await login(page, 'coordinator');
+  await expect(page.locator('.gp-kv').filter({ has: page.locator('dt', { hasText: /^Данные$/ }) })).toContainText('Сервер /api/v1');
+  await page.getByRole('navigation').getByRole('link', { name: /Карта/ }).click();
+  await dismissHint(page);
+  await page.locator('.gp-sites__items button').first().click();
+  await page.locator('.gp-sites__card').getByRole('tab', { name: 'Смета', exact: true }).click();
+  await expect(page.locator('.gp-sites__card')).toContainText('₸');
+  await page.getByRole('navigation').getByRole('link', { name: 'Приоритеты', exact: true }).click();
+  await expect(page.locator('.gp-rank-list li').first()).toBeVisible();
+  await page.getByRole('button', { name: 'Выйти', exact: true }).click();
+  await expect(page.locator('input[type=password]')).toBeVisible();
+});
+
+test('API: worker1 login opens shift cabinet', async ({ page }) => {
+  test.fixme(!runKnownBugs, bugs.worker);
+  await page.goto('/?source=api#/', { waitUntil: 'domcontentloaded' });
+  await login(page, 'worker1');
+  await expect(page).toHaveURL(/#\/worker/);
+  await expect(page.locator('green-worker')).toBeVisible();
+});
