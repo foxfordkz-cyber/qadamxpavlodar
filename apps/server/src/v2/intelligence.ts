@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { z } from 'zod';
 import { Store } from '../db.js';
-import { id,text,shortText,uniqueIds,version,timestamp,allow,fail,hash,now,getDoc,listDocs,insertDoc,updateDoc,matchVersion,mutate,replay,fresh,audit,type User,type Doc } from './core.js';
+import { id,text,shortText,uniqueIds,version,timestamp,allow,fail,hash,now,getDoc,listDocs,insertDoc,updateDoc,matchVersion,mutate,replay,fresh,audit,canonicalRole,type Role,type User,type Doc } from './core.js';
 import { allTasks,task,assign } from './tasks.js';
 import { actor } from './auth.js';
 import { type Api,param } from './router.js';
@@ -18,7 +18,7 @@ export const observationRequest=z.object({taskId:id,text}).strict();
 export const observationResult=z.object({objectId:id,category:z.enum(['access_problem','visible_damage','care_completed','needs_inspection','other']),extractedFacts:z.array(text).max(30),proposedAction:z.enum(['inspect','water','weed','plant']).nullable().optional(),evidenceIds:uniqueIds,missingData:z.array(text).max(30),needsHumanReview:z.literal(true)}).strict();
 function freeze<T>(value:T):T{if(value&&typeof value==='object'){Object.values(value).forEach(freeze);Object.freeze(value);}return value;}
 export function snapshot(s:Store){
-  const input={tasks:allTasks(s),workers:s.all('SELECT u.id,COALESCE(m.role,u.role) AS role,u.active,u.version,p.data AS profile FROM v2_users u LEFT JOIN v2_profiles p ON p.user_id=u.id LEFT JOIN municipal_roles m ON m.user_id=u.id').map(r=>({...r,profile:r.profile?JSON.parse(String(r.profile)):null})),crews:s.all('SELECT data FROM v2_crews').map(r=>JSON.parse(String(r.data))),memberships:s.all('SELECT * FROM v2_memberships'),resources:listDocs(s,'resource'),sites:listDocs(s,'site'),plants:listDocs(s,'plant'),evidence:listDocs(s,'evidence'),issues:s.all('SELECT data FROM v2_issues').map(r=>JSON.parse(String(r.data))),designs:s.all('SELECT data FROM v2_designs').map(r=>JSON.parse(String(r.data)))};
+  const input={tasks:allTasks(s),workers:s.all('SELECT u.id,COALESCE(m.role,u.role) AS role,u.active,u.version,p.data AS profile FROM v2_users u LEFT JOIN v2_profiles p ON p.user_id=u.id LEFT JOIN municipal_roles m ON m.user_id=u.id').map(r=>({...r,role:canonicalRole(r.role as Role),profile:r.profile?JSON.parse(String(r.profile)):null})),crews:s.all('SELECT data FROM v2_crews').map(r=>JSON.parse(String(r.data))),memberships:s.all('SELECT * FROM v2_memberships'),resources:listDocs(s,'resource'),sites:listDocs(s,'site'),plants:listDocs(s,'plant'),evidence:listDocs(s,'evidence'),issues:s.all('SELECT data FROM v2_issues').map(r=>JSON.parse(String(r.data))),designs:s.all('SELECT data FROM v2_designs').map(r=>JSON.parse(String(r.data)))};
   if(Object.values(input).some(rows=>rows.length>500))fail('SNAPSHOT_LIMIT','Bounded local snapshot exceeds 500 rows per collection',503);
   return freeze({...input,inputVersion:hash(input)});
 }

@@ -7,7 +7,7 @@ import { reportContent } from './reports.js';
 import type { Operation } from './router.js';
 const object=z.object({}).passthrough();
 const date=z.iso.datetime({offset:true});
-const user=z.object({id,displayName:z.string(),role:roles,active:z.boolean(),version,profile:object.nullable().optional()}).strict();
+const user=z.object({id,displayName:z.string(),role:roles.exclude(['specialist']),active:z.boolean(),version,profile:object.nullable().optional()}).strict();
 const crew=z.object({id,name:z.string(),foremanId:id,active:z.boolean(),resourceIds:uniqueIds,version,members:z.array(object).optional()}).strict();
 const task=taskCreate.extend({id,createdAt:date,updatedAt:date,status:z.enum(['draft','assigned','in_progress','submitted','verified']),assignedCrewId:id.nullable(),assignedWorkerIds:uniqueIds,resourceIds:uniqueIds,scheduledStart:date.nullable(),scheduledEnd:date.nullable(),approvedDesignId:id.nullable(),approvedDesignVersion:version.nullable(),latestReportId:id.nullable(),planId:id.nullable(),isDemo:z.boolean(),version}).passthrough();
 const report=reportContent.extend({id,taskId:id,authorId:id,contributorIds:uniqueIds,createdAt:date,revision:version,version,reviewStatus:z.enum(['pending','accepted','changes_requested']),reviewerId:id.nullable(),reviewComment:z.string().nullable(),reviewedAt:date.nullable(),idempotencyKey:z.string()}).passthrough();

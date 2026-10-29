@@ -62,7 +62,7 @@ export async function seedMunicipal(s:Store){
   const adminRow=s.get("SELECT id FROM v2_users WHERE role='admin' LIMIT 1");if(!adminRow)fail('SEED_ORDER','Run seed:v2 first',400);
   const admin={id:String(adminRow.id),displayName:'Seed',role:'admin' as const,active:true,version:1};
   const password=demoPassword();
-  for(const role of ['specialist','viewer'] as const)if(!s.get('SELECT id FROM v2_users WHERE login=?',role))createUser(s,admin,{login:role,displayName:`DEMO ${role}`,role,password},await hashPassword(password));
+  for(const login of ['specialist','viewer'] as const)if(!s.get('SELECT id FROM v2_users WHERE login=? COLLATE NOCASE',login))createUser(s,admin,{login,displayName:`DEMO ${login}`,role:login==='specialist'?'coordinator':'viewer',password},await hashPassword(password));
   const osm=JSON.parse(readFileSync(new URL('../../fixtures/sites.json',import.meta.url),'utf8'));
   const currentRates=rates(s);
   s.transaction(()=>{for(const[key,value]of Object.entries({sites:osm.sites,evidence:osm.evidence,species:web.species,rates:currentRates.rates,greenery:JSON.parse(readFileSync(new URL('../../fixtures/greenery.json',import.meta.url),'utf8'))}))if(!s.get('SELECT key FROM municipal_state WHERE key=?',key))putState(s,key,value,key==='rates'?currentRates.version:1);});

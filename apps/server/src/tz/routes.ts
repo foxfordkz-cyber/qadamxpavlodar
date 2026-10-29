@@ -59,7 +59,7 @@ export function tzRoutes(s: Store, api: Api, tz: TzOptions = {}) {
   route({ method: 'get', path: '/layers/greenery', summary: 'TZ: existing greenery from OpenStreetMap' }, (_req, res) => { reader(actor(res)); res.json(web.greeneryLayer()); });
 
   // POST /zones — нарисованная зона (контракт 29.10): проверка полигона, площадь, окружение; почва — в meta.
-  route({ method: 'post', path: '/zones', input: zoneInput, status: 201, summary: 'Coordinator: save a drawn zone polygon as site-user-N' }, (req, res) => {
+  route({ method: 'post', path: '/zones', input: zoneInput, status: 201, idempotent: true, summary: 'Coordinator: save a drawn zone polygon as site-user-N' }, (req, res) => {
     const a = actor(res); allow(a, 'coordinator'); const b = zoneInput.parse(req.body);
     const { ring, errors } = web.validateDrawnPolygon(b.geometry);
     if (errors.length) throw new ApiError(400, 'VALIDATION_ERROR', errors.map(e => e.message).join(' '), { fields: { geometry: errors[0]!.message }, errors });
@@ -125,7 +125,9 @@ export function tzRoutes(s: Store, api: Api, tz: TzOptions = {}) {
   route({ method: 'post', path: '/assistant', input: assistantInput, readOnly: true, summary: 'TZ 3.10: assistant answer with numbers from modules; history kept per user' }, async (req, res) => {
     const a = actor(res); reader(a); const b = assistantInput.parse(req.body);
     const siteId = b.siteId ?? null;
-    if(siteId)municipal.analyze(s,siteId,{});
+    // The reader guard above is the same city-wide access boundary as /zones.
+    // Validate the ID without forcing a cost calculation before the assistant.
+    if (siteId) municipal.site(s, siteId);
     let reply: Json | null = null, fallbackReason: string | null = null;
     if (tz.assistant) {
       try { reply = await tz.assistant({ message: b.message, siteId, user: a, history: b.history ?? [], view: b.view ?? null }); }

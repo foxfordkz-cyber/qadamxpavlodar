@@ -50,7 +50,7 @@ test('Readiness: worker catalog contains only assigned approved planting revisio
 test('Readiness: planning snapshot retains effective roles; OpenAPI requires real adapter idempotency keys',async t=>{
   const f=await setup(t);await seedMunicipal(f.store);
   const users=(await f.call('/users','GET','admin')).body.data,snapshot=(await f.call('/integration/snapshot')).body.data;
-  for(const role of ['viewer','specialist']){const user=users.find((x:any)=>x.role===role);assert.equal(snapshot.workers.find((x:any)=>x.id===user.id).role,role);}
+  for(const user of users)assert.equal(snapshot.workers.find((x:any)=>x.id===user.id)?.role,user.role,'Snapshot must retain the canonical effective role of every account');
   assert(!JSON.stringify(snapshot).includes('password_hash'));assert(!JSON.stringify(snapshot).includes('csrf'));
   const spec=await (await fetch(f.base+'/api/v1/openapi.json')).json();assert.equal(Object.values(spec.paths).reduce((n:number,p:any)=>n+Object.keys(p).length,0),101);
   for(const path of ['/plans/preview','/observations/interpret'])assert(spec.paths[path].post.parameters.some((p:any)=>p.name==='Idempotency-Key'&&p.required));

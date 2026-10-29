@@ -12,7 +12,7 @@ async function setup(t:TestContext){const f=await fixture(t);await seedV2(f.stor
  const ss=sessions.get(user),r=await fetch(f.base+'/api/v1'+path,{method,headers:{Cookie:ss.cookie,'X-CSRF-Token':ss.csrf,'Idempotency-Key':key??`municipal-${++seq}`,...(body?{'Content-Type':'application/json'}:{})},body:body?JSON.stringify(body):undefined});return{status:r.status,headers:r.headers,body:binary?Buffer.from(await r.arrayBuffer()):await r.json()};};return{...f,call};}
 const feature=(lng=76.94,name='Zone')=>({type:'Feature',geometry:{type:'Point',coordinates:[lng,52.28]},properties:{name}});
 test('Municipal roles: real sessions, viewer cannot edit, rate conflicts and revoked privileges',async t=>{const f=await setup(t);
- assert.equal((await f.call('/auth/me')).body.data.user.role,'specialist');assert.equal((await f.call('/auth/me','GET','viewer')).body.data.user.role,'viewer');
+ assert.equal((await f.call('/auth/me')).body.data.user.role,'coordinator');assert.equal((await f.call('/auth/me','GET','viewer')).body.data.user.role,'viewer');
  assert((await f.call('/crews')).body.data.length>0);assert((await f.call('/workers')).body.data.length>0);
  assert.equal((await f.call('/crews','GET','viewer')).body.data.length,0);
  assert.equal((await f.call('/rates','GET','worker1')).status,403);const r=(await f.call('/rates')).body.data;
@@ -22,9 +22,9 @@ test('Municipal roles: real sessions, viewer cannot edit, rate conflicts and rev
  assert.equal((await f.call('/rates')).body.data.rates.find((x:any)=>x.key===b.key).dataClass,'estimate');
  const before=f.store.get('SELECT count(*) AS n FROM plants')!.n;await seedMunicipal(f.store);assert.equal(f.store.get('SELECT count(*) AS n FROM plants')!.n,before);assert.equal((await f.call('/rates')).body.data.version,2);
  const viewer=(await f.call('/auth/me','GET','viewer')).body.data.user;
- const changed=await f.call(`/users/${viewer.id}`,'PATCH','admin',{expectedVersion:viewer.version,role:'specialist'});assert.equal(changed.status,200);assert.equal(changed.body.data.role,'specialist');
+ const changed=await f.call(`/users/${viewer.id}`,'PATCH','admin',{expectedVersion:viewer.version,role:'specialist'});assert.equal(changed.status,200);assert.equal(changed.body.data.role,'coordinator');
  assert.equal((await f.call('/auth/me','GET','viewer')).status,401,'Role change revokes old cookie');
- assert.equal((await f.call('/users','GET','admin')).body.data.find((x:any)=>x.id===viewer.id).role,'specialist');
+ assert.equal((await f.call('/users','GET','admin')).body.data.find((x:any)=>x.id===viewer.id).role,'coordinator');
 });
 test('Import: preview/commit, owner scope, duplicates, concurrent commits, atomic rollback and durable storage',async t=>{const f=await setup(t);
  const input={format:'geojson',features:[feature()],source:'Test fixture',dataClass:'demo'};

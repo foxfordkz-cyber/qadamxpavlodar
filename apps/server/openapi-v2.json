@@ -78,7 +78,6 @@
                                 "coordinator",
                                 "foreman",
                                 "worker",
-                                "specialist",
                                 "viewer"
                               ]
                             },
@@ -299,7 +298,6 @@
                                 "coordinator",
                                 "foreman",
                                 "worker",
-                                "specialist",
                                 "viewer"
                               ]
                             },
@@ -4792,7 +4790,6 @@
                               "coordinator",
                               "foreman",
                               "worker",
-                              "specialist",
                               "viewer"
                             ]
                           },
@@ -5133,7 +5130,6 @@
                             "coordinator",
                             "foreman",
                             "worker",
-                            "specialist",
                             "viewer"
                           ]
                         },
@@ -5484,7 +5480,6 @@
                             "coordinator",
                             "foreman",
                             "worker",
-                            "specialist",
                             "viewer"
                           ]
                         },
@@ -5683,7 +5678,6 @@
                               "coordinator",
                               "foreman",
                               "worker",
-                              "specialist",
                               "viewer"
                             ]
                           },
@@ -29929,7 +29923,18 @@
             "CsrfToken": []
           }
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -31550,7 +31555,6 @@
               "coordinator",
               "foreman",
               "worker",
-              "specialist",
               "viewer"
             ]
           },

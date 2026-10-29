@@ -19,7 +19,8 @@ const base=`http://127.0.0.1:${port}`;let server;let iteration=0;
 async function launch(){
   server=spawn(process.execPath,['--import','./scripts/local-network-guard.mjs','--import','tsx','dist/server.js'],{cwd:process.cwd(),windowsHide:true,env:{...process.env,NODE_ENV:'development',PORT:String(port),DB_PATH:dbPath,UPLOADS_PATH:uploads},stdio:['ignore','pipe','pipe']});
   server.stdout.pipe(createWriteStream(join(dir,`server-${++iteration}.log`),{flags:'a'}));server.stderr.pipe(createWriteStream(join(dir,`server-${iteration}.error.log`),{flags:'a'}));
-  for(let n=0;n<100;n++){if(server.exitCode!==null)throw Error('Demo server exited');try{const r=await fetch(base+'/health');if(r.ok)return;}catch{}await new Promise(done=>setTimeout(done,100));}throw Error('Server startup timeout');
+  const deadline=Date.now()+60000;let probe='not attempted';
+  while(Date.now()<deadline){if(server.exitCode!==null)throw Error('Demo server exited; inspect the isolated server error log');try{const r=await fetch(base+'/health',{signal:AbortSignal.timeout(2000)});probe=`HTTP ${r.status}`;if(r.ok)return;}catch(e){probe=`${e.name}: ${e.cause?.code??e.message}`;}await new Promise(done=>setTimeout(done,100));}throw Error(`Server startup timeout: ${probe}`);
 }
 async function stop(){const child=server;server=undefined;if(child&&child.exitCode===null&&child.signalCode===null){const done=once(child,'exit');child.kill();await done;}}
 const sessions=new Map();

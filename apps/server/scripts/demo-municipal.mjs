@@ -20,7 +20,8 @@ const probe=createServer();probe.listen(0,'127.0.0.1');await once(probe,'listeni
 const base=`http://127.0.0.1:${port}`;let server,iteration=0;
 async function launch(){server=spawn(process.execPath,['--import','./scripts/local-network-guard.mjs','--import','tsx','dist/server.js'],{cwd:process.cwd(),windowsHide:true,env:{...process.env,NODE_ENV:'development',PORT:String(port),DB_PATH:dbPath,UPLOADS_PATH:uploads},stdio:['ignore','pipe','pipe']});
  server.stdout.pipe(createWriteStream(join(dir,`server-${++iteration}.log`)));server.stderr.pipe(createWriteStream(join(dir,`server-${iteration}.error.log`)));
- for(let n=0;n<100;n++){if(server.exitCode!==null)throw Error('Server exited');try{if((await fetch(base+'/health')).ok)return;}catch{}await new Promise(done=>setTimeout(done,100));}throw Error('Server startup timeout');}
+ const deadline=Date.now()+60000;let probe='not attempted';
+ while(Date.now()<deadline){if(server.exitCode!==null)throw Error('Server exited; inspect the isolated server error log');try{const r=await fetch(base+'/health',{signal:AbortSignal.timeout(2000)});probe=`HTTP ${r.status}`;if(r.ok)return;}catch(e){probe=`${e.name}: ${e.cause?.code??e.message}`;}await new Promise(done=>setTimeout(done,100));}throw Error(`Server startup timeout: ${probe}`);}
 async function stop(){const child=server;server=undefined;if(child&&child.exitCode===null&&child.signalCode===null){const done=once(child,'exit');child.kill();await done;}}
 const sessions=new Map();
 async function login(user){const r=await fetch(base+'/api/v1/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({login:user,password:DEMO_PASSWORD})});const b=await r.json();assert.equal(r.status,200);sessions.set(user,{cookie:r.headers.get('set-cookie').split(';')[0],csrf:b.data.csrfToken});}
@@ -37,7 +38,7 @@ try{
  const {id:snapshotId,...persistedCalculation}=await api(`/zones/${zone}/snapshots`,'POST',{options:{}},'specialist','durable-calculation',201);
  for(const format of ['pdf','xlsx']){const ss=sessions.get('specialist'),r=await fetch(base+`/api/v1/zones/${zone}/export`,{method:'POST',headers:{Cookie:ss.cookie,'X-CSRF-Token':ss.csrf,'Content-Type':'application/json'},body:JSON.stringify({format,options:{}})});assert.equal(r.status,200);writeFileSync(join(dir,`example-report.${format}`),Buffer.from(await r.arrayBuffer()));}
  await stop();await launch();
- assert.equal((await api('/auth/me')).user.role,'specialist');
+ assert.equal((await api('/auth/me')).user.role,'coordinator');
  assert.deepEqual(await api('/rates'),saved);
  assert.equal((await api('/municipal/sites')).length,baseline+1);
  assert.equal((await api(`/zones/${zone}/analysis`,'POST',{options:{}})).provenance.inputHash,analysis.provenance.inputHash);
@@ -66,7 +67,7 @@ try{
   await client.logout();await assert.rejects(client.me(),e=>e.status===401);
   await client.login('admin',DEMO_PASSWORD);const previous=await client.rates();assert.equal((await client.patchRate({key:'price.tree',value:19029,source:'Synthetic frontend integration test',expectedVersion:previous.version})).version,previous.version+1);await client.logout();
   const {createBackendClient}=await import('../examples/team-client.mjs');const shared=createBackendClient();
-  assert.equal((await shared.login('specialist',DEMO_PASSWORD)).user.role,'specialist');
+  assert.equal((await shared.login('specialist',DEMO_PASSWORD)).user.role,'coordinator');
   assert.equal((await shared.request('GET','/municipal/sites')).data.length,baseline+1);
   assert.equal((await shared.request('POST',`/zones/${zone}/analysis`,{body:{options:{}}})).data.siteId,zone);
   assert.equal((await shared.request('GET',`/analysis-snapshots/${snapshotId}`)).data.provenance.inputHash,persistedCalculation.provenance.inputHash);
