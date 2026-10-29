@@ -5,6 +5,7 @@ import type { AssistantReply } from '../../../shared/analytics/assistant';
 import { MethodLine, MethodTag } from '../../../shared/ui/components';
 import { hrefFor, navigate, useRoute } from '../../../shared/router';
 import { mapView } from '../map/mapView';
+import { CENTER } from '../map/geo';
 import { useMe } from '../me';
 import { uiCommand } from './assistantCommands';
 
@@ -89,7 +90,8 @@ export function AssistantPanel() {
     try {
       // Последние реплики — чтобы короткий ответ («Едиге би 1») продолжал вопрос; центр карты — если зона не выбрана.
       const history = msgs.filter((m) => !m.error).slice(-6).map((m) => ({ role: m.role === 'user' ? 'user' as const : 'assistant' as const, text: m.text.slice(0, 600) }));
-      const view = route.path === '/map' && !siteId ? mapView.center : null;
+      // Карта не загрузилась (показана схема) — центр района прототипа.
+      const view = route.path === '/map' && !siteId ? mapView.center ?? { lat: CENTER[1], lng: CENTER[0] } : null;
       const reply = await api.ask(text, siteId, { history, ...(view ? { view } : {}) });
       setMsgs((m) => [...m, { role: 'bot', text: reply.text, reply }]);
       // Уже на карте — зоны из ответа сразу появляются на ней с номерами; выбранная зона остаётся открытой.
