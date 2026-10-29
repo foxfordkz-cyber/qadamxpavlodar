@@ -1,24 +1,19 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useData, useResource } from '../../../shared/api/DataProvider';
-import { DEFAULT_PRIORITY_WEIGHTS, PRIORITY_LABEL, type PriorityFactor } from '../../../shared/analytics/city';
+import { PRIORITY_LABEL } from '../../../shared/analytics/city';
 import { Bar, Button, StateView } from '../../../shared/ui/components';
 import { hrefFor } from '../../../shared/router';
 import { PageHeader } from '../PageHeader';
 import { download } from '../sites/filters';
+import { FACTORS, usePriorityWeights, WeightSliders } from './PriorityWeights';
 
-const FACTORS = Object.keys(PRIORITY_LABEL) as PriorityFactor[];
 const money = (n: number) => (n >= 1e6 ? `${(n / 1e6).toFixed(2)} млн ₸` : `${Math.round(n).toLocaleString('ru-RU')} ₸`);
 
 /** ТЗ 3.7: индекс приоритета 0–100, ползунки весов (пересчёт сразу), объяснение и дорожная карта под бюджет. */
 export function PrioritiesPage() {
   const { api } = useData();
-  const [weights, setWeights] = useState(DEFAULT_PRIORITY_WEIGHTS);
+  const { weights, setWeights, debounced, reset } = usePriorityWeights(250);
   const [budget, setBudget] = useState('50');
-  const [debounced, setDebounced] = useState(weights);
-  useEffect(() => {
-    const id = setTimeout(() => setDebounced(weights), 250);
-    return () => clearTimeout(id);
-  }, [weights]);
   const budgetTg = Number(budget.replace(',', '.')) * 1e6;
   const res = useResource(() => api.priorities(debounced, Number.isFinite(budgetTg) && budgetTg > 0 ? budgetTg : null), [JSON.stringify(debounced), budget]);
   const sites = useResource(() => api.sites(), []);
@@ -33,14 +28,10 @@ export function PrioritiesPage() {
       <div className="gp-ranking">
         <section className="gp-card gp-ranking__weights" aria-labelledby="w-h">
           <h2 id="w-h">Веса факторов</h2>
-          {FACTORS.map((f) => (
-            <div key={f} className="gp-weight">
-              <label htmlFor={`pw-${f}`}>{PRIORITY_LABEL[f]} <strong>{weights[f].toFixed(2)}</strong></label>
-              <input id={`pw-${f}`} type="range" min={0} max={0.5} step={0.05} value={weights[f]} onChange={(e) => setWeights({ ...weights, [f]: Number(e.target.value) })} />
-            </div>
-          ))}
+          <WeightSliders weights={weights} onChange={setWeights} idPrefix="pw" />
           <p className="gp-small gp-muted">Веса нормируются на сумму. Плотность населения заменена плотностью застройки (нет данных о населении), тепловая нагрузка — оценка по дорогам и застройке.</p>
-          <Button variant="ghost" onClick={() => setWeights(DEFAULT_PRIORITY_WEIGHTS)}>Веса по умолчанию</Button>
+          <p className="gp-small gp-muted">Эти же веса окрашивают слой «Приоритет» на карте.</p>
+          <Button variant="ghost" onClick={reset}>Веса по умолчанию</Button>
           <h2 className="gp-subhead">Бюджет</h2>
           <label className="gp-kv">
             <input className="gp-input gp-input--short" inputMode="decimal" value={budget} onChange={(e) => setBudget(e.target.value)} aria-label="Бюджет, млн тенге" /> млн ₸
