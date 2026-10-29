@@ -113,3 +113,43 @@ test('integration: incomplete bindings fail closed, HTTP errors are never succes
   try { globalThis.fetch = async () => ({ ok: false, status: 403 }); await assert.rejects(requestJSON('/example'), /Нет доступа/); }
   finally { globalThis.fetch = fetchOriginal; }
 });
+
+test('real API workflow: 415 upload rejection permits explicit replacement with a new operation key', async () => {
+  const { source, drafts, gateway } = setup();
+  const attempts = [];
+  const workflow = new WorkerWorkflow({ drafts, userId: 'demo-worker-1', scope: DEMO_SCOPE, strictServer: true,
+    gateway: { ...gateway, async uploadPhoto(input) {
+      attempts.push({ key: input.idempotencyKey, name: input.file.name });
+      if (attempts.length === 1) throw Object.assign(new Error('Unsupported image content'), { status: 415, code: 'UNSUPPORTED_MEDIA_TYPE' });
+      return gateway.uploadPhoto(input);
+    } },
+  });
+  await gateway.startTask('GP-104');
+  const draft = await workflow.draft('GP-104');
+  draft.photo = photo(); draft.note = 'Работа выполнена, снимок требует замены.';
+  const rejectedKey = draft.idempotencyKey;
+  await assert.rejects(workflow.send(draft), error => error.status === 415 && error.code === 'UNSUPPORTED_MEDIA_TYPE');
+  const recovered = await workflow.draft('GP-104');
+  assert.equal(recovered.delivery, 'rejected');
+  assert.equal(recovered.idempotencyKey, rejectedKey);
+  assert.equal(recovered.note, draft.note);
+  assert.equal(recovered.upload, null);
+  assert.equal(source.snapshot().calls.reports, 0);
+  assert.equal(source.snapshot().calls.uploads, 0);
+  assert.deepEqual(await workflow.synchronize(), [], 'definitively rejected photos must not be retried by background sync');
+  assert.equal(attempts.length, 1);
+
+  await workflow.rebase(recovered);
+  assert.equal(recovered.frozen, null);
+  assert.equal(recovered.delivery, 'draft');
+  assert.notEqual(recovered.idempotencyKey, rejectedKey);
+  recovered.photo = new File([pngBytes], 'replacement.png', { type: 'image/png' });
+  await workflow.save(recovered);
+  const receipt = await workflow.send(recovered);
+  assert.equal(receipt.saved, true);
+  assert.ok(receipt.id);
+  assert.deepEqual(attempts, [{ key: `${rejectedKey}:photo`, name: 'test.png' }, { key: `${recovered.idempotencyKey}:photo`, name: 'replacement.png' }]);
+  assert.equal(source.snapshot().calls.uploads, 1);
+  assert.equal(source.snapshot().calls.reports, 1);
+  assert.equal((await workflow.pending()).length, 0);
+});
