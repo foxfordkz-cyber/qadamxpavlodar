@@ -2,20 +2,22 @@
 // Проверяет версии (409), повтор Idempotency-Key, роли (401/403), отказ сети и AI (503).
 // Не является сервером участника 3 — нужен, чтобы экраны работали до его готовности.
 import { ApiError, type HttpMethod, type RequestOptions, type Transport } from '../transport';
-import type { CandidateSite, CheckKey, CheckState, DashboardMetric, DayPlan, Me, PlantingProject, ProjectItem, Plant, Report, Role, Task } from '../types';
+import type { CandidateSite, CheckKey, CheckState, DayPlan, Me, PlantingProject, ProjectItem, Plant, Report, Role, Task } from '../types';
 import { siteContext } from './context';
 import { buildDrawnZone, validateDrawnPolygon } from './drawnZone';
 import { computeConflicts, unresolved } from '../../projectRules';
 import { centroidXY, makeProjection } from '../../geo';
-import { analyzeZone, VARIANT_LABEL, type PlanOptions, type Variant } from '../../analytics/plan';
+import { analyzeZone, type PlanOptions } from '../../analytics/plan';
 import { detectProblems, priorities, roadmap, DEFAULT_PRIORITY_WEIGHTS, type PriorityFactor } from '../../analytics/city';
 import { ratesMap } from '../../analytics/rates';
 import { answer } from '../../analytics/assistant';
-import { SOIL_CELL_DEG, soilFor, soilForCell, SALINITY_LABEL } from '../../analytics/zone';
-import greenery from '../../../../../../fixtures/osm/greenery.json';
+import { soilFor } from '../../analytics/zone';
 import { catalog, osmMeta, seed, type MockDb } from './fixtures';
 import { CHECKS, rankSites, selectPlants } from './rules';
 import { demoPhoto } from './photo';
+import { previewImport, type ImportFeature } from './imports';
+import { daySummary } from '../dayPlan';
+import { dashboardMetrics, greeneryLayer, soilsLayer, variantSummaries } from '../tzViews';
 
 // v3: справочник с источниками по Павлодару. Старые данные не читаются.
 const STORAGE_KEY = 'gp-mock-db-v4';
@@ -88,7 +90,7 @@ const nowIso = () => new Date().toISOString();
 const nextId = (p: string) => `${p}-${++db.seq}`;
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
-/** Руководитель (admin) видит всё, что видит координатор. Права проверяет сервер, не интерфейс. */
+/** Чтение: администратор и «Просмотр» видят всё, что видит специалист. Изменения ограничены в транспорте (см. ниже). */
 function requireRole(...roles: Role[]) {
   if (mockControls.role === 'anonymous') fail(401, 'unauthenticated', 'Нужно войти в систему.');
   const r = mockControls.role as Role;
@@ -488,28 +490,8 @@ route('POST', /^\/projects\/([^/]+)\/review$/, (m, o) => {
   };
 });
 
-function dayOf(iso: string) {
-  return new Date(Date.parse(iso) + 5 * 3600e3).toISOString().slice(0, 10);
-}
 function planSummary(date: string) {
-  const tasks = db.tasks.filter((t) => t.brigadeId && t.scheduledStart && dayOf(t.scheduledStart) === date && t.status !== 'verified');
-  const warnings: string[] = [];
-  const byBrigade = db.brigades.map((b) => {
-    const list = tasks.filter((t) => t.brigadeId === b.id);
-    const minutes = list.reduce((a, t) => a + t.estimatedMinutes, 0);
-    if (minutes > b.capacityMinutes) warnings.push(`${b.name}: ${minutes} мин работ при ёмкости смены ${b.capacityMinutes} мин.`);
-    return { brigadeId: b.id, tasks: list.length, minutes };
-  });
-  for (const t of tasks) {
-    const b = db.brigades.find((x) => x.id === t.brigadeId);
-    if (b && t.scheduledEnd && t.scheduledEnd > b.shiftEnd) warnings.push(`${t.id}: работа заканчивается после конца смены бригады (${b.name}).`);
-  }
-  for (const t of tasks) if (!t.crewIds?.length) warnings.push(`${t.id}: бригада выбрана, но бригадир ещё не собрал состав (нужно ≥${t.minCrew ?? 1}).`);
-  const unassigned = db.tasks.filter((t) => t.status === 'draft' && !t.brigadeId && (t.priority === 'high' || t.priority === 'critical'));
-  if (unassigned.length) warnings.push(`Без бригады остаются приоритетные задания: ${unassigned.map((t) => t.id).join(', ')}.`);
-  const unscheduled = db.tasks.filter((t) => t.brigadeId && !t.scheduledStart && t.status === 'assigned');
-  if (unscheduled.length) warnings.push(`Без времени начала: ${unscheduled.map((t) => t.id).join(', ')} — в план дня не попали.`);
-  return { tasks, summary: { tasks: tasks.length, byBrigade, warnings } };
+  return daySummary(date, db.tasks, db.brigades);
 }
 route('GET', /^\/plans$/, (_m, o) => {
   requireRole('coordinator');
@@ -613,14 +595,7 @@ route('POST', /^\/zones\/([^/]+)\/variants$/, (m, o) => {
   requireRole('coordinator', 'viewer' as Role);
   const site = findSite(decodeURIComponent(m[1]));
   const opts = ((o.body as { options?: Partial<PlanOptions> })?.options) ?? {};
-  const careByVariant: Record<Variant, 1 | 2 | 3> = { econom: 1, optimal: 2, max: 3 };
-  return {
-    data: (['econom', 'optimal', 'max'] as Variant[]).map((v) => {
-      const a = analyzeZone(site, catalog, rates(), { ...opts, variant: v, careYears: careByVariant[v] });
-      const e20 = a.effect.find((e) => e.years === 20)!;
-      return { variant: v, label: VARIANT_LABEL[v], careYears: a.options.careYears, plants: a.scheme.reduce((x, r) => x + r.quantity, 0), cost: a.cost.total, survival: a.survivalAvg, co2t20: e20.co2t, coolingC: e20.coolingC, rainM3: e20.rainM3, costPerTonCo2: a.costPerTonCo2 };
-    }),
-  };
+  return { data: variantSummaries(opts, (x) => analyzeZone(site, catalog, rates(), x)) };
 });
 route('GET', /^\/problems$/, () => {
   requireRole('coordinator', 'viewer' as Role);
@@ -652,19 +627,11 @@ route('PATCH', /^\/rates$/, (_m, o) => {
 });
 route('GET', /^\/layers\/soils$/, () => {
   requireRole('coordinator', 'viewer' as Role);
-  const features = [];
-  for (let la = Math.floor(52.268 / SOIL_CELL_DEG.lat); la * SOIL_CELL_DEG.lat < 52.3; la++)
-    for (let ln = Math.floor(76.926 / SOIL_CELL_DEG.lng); ln * SOIL_CELL_DEG.lng < 76.974; ln++) {
-      const s = soilForCell(`soil-${la}-${ln}`);
-      const [y0, x0] = [la * SOIL_CELL_DEG.lat, ln * SOIL_CELL_DEG.lng];
-      const [y1, x1] = [y0 + SOIL_CELL_DEG.lat, x0 + SOIL_CELL_DEG.lng];
-      features.push({ type: 'Feature', properties: { id: s.cellId, type: s.type, ph: s.ph, salinity: s.salinity, salinityLabel: SALINITY_LABEL[s.salinity], synthetic: true }, geometry: { type: 'Polygon', coordinates: [[[x0, y0], [x1, y0], [x1, y1], [x0, y1], [x0, y0]]] } });
-    }
-  return { data: { type: 'FeatureCollection', features }, meta: { synthetic: true, note: 'Синтетический слой почв: заменить картой почв организатора.' } };
+  return soilsLayer();
 });
 route('GET', /^\/layers\/greenery$/, () => {
   requireRole('coordinator', 'viewer' as Role);
-  return { data: greenery, meta: { source: 'OpenStreetMap (ODbL)', note: 'До получения карты насаждений организатора.' } };
+  return greeneryLayer();
 });
 route('POST', /^\/assistant$/, (_m, o) => {
   requireRole('coordinator', 'viewer' as Role);
@@ -682,55 +649,13 @@ route('GET', /^\/assistant\/history$/, () => {
 });
 route('POST', /^\/imports\/preview$/, (_m, o) => {
   requireRole('coordinator');
-  const b = o.body as { format?: string; features?: { geometry?: { type?: string; coordinates?: unknown } | null; properties?: Record<string, unknown> }[] };
-  const feats = b.features ?? [];
-  const issues: { row: number; level: 'error' | 'warning'; text: string }[] = [];
-  const flat = (c: unknown): number[][] => (Array.isArray(c) && typeof c[0] === 'number' ? [c as number[]] : Array.isArray(c) ? (c as unknown[]).flatMap(flat) : []);
-  const boxes: { i: number; b: number[] }[] = [];
-  feats.forEach((f, i) => {
-    if (!f.geometry || !f.geometry.coordinates) { issues.push({ row: i + 1, level: 'error', text: 'Нет геометрии.' }); return; }
-    const pts = flat(f.geometry.coordinates);
-    if (!pts.length) { issues.push({ row: i + 1, level: 'error', text: 'Пустые координаты.' }); return; }
-    const bad = pts.find(([x, y]) => !Number.isFinite(x) || !Number.isFinite(y));
-    if (bad) issues.push({ row: i + 1, level: 'error', text: 'Нечисловые координаты.' });
-    else if (pts.some(([x, y]) => Math.abs(x) > 180 || Math.abs(y) > 90)) issues.push({ row: i + 1, level: 'error', text: 'Координаты вне диапазона градусов — похоже на метровую систему (например, UTM). Нужен WGS 84 (EPSG:4326).' });
-    else if (pts.some(([x, y]) => y > 70 && x < 60)) issues.push({ row: i + 1, level: 'warning', text: 'Похоже, перепутаны долгота и широта.' });
-    else if (!pts.every(([x, y]) => x > 75 && x < 79 && y > 51 && y < 53.5)) issues.push({ row: i + 1, level: 'warning', text: 'Объект вне Павлодара.' });
-    const missingProps = ['name'].filter((k) => !f.properties?.[k]);
-    if (missingProps.length) issues.push({ row: i + 1, level: 'warning', text: `Не заполнено: ${missingProps.join(', ')}.` });
-    const xs = pts.map((p) => p[0]); const ys = pts.map((p) => p[1]);
-    boxes.push({ i, b: [Math.min(...xs), Math.min(...ys), Math.max(...xs), Math.max(...ys)] });
-  });
-  for (let a = 0; a < boxes.length; a++)
-    for (let c = a + 1; c < boxes.length; c++) {
-      const [p, q] = [boxes[a].b, boxes[c].b];
-      if (p[0] < q[2] && q[0] < p[2] && p[1] < q[3] && q[1] < p[3] && feats[boxes[a].i].geometry?.type === 'Polygon' && feats[boxes[c].i].geometry?.type === 'Polygon')
-        issues.push({ row: boxes[a].i + 1, level: 'warning', text: `Возможно пересечение с объектом ${boxes[c].i + 1} (по габаритам).` });
-    }
-  const errors = new Set(issues.filter((x) => x.level === 'error').map((x) => x.row));
-  return { data: { format: b.format ?? 'geojson', total: feats.length, valid: feats.length - errors.size, invalid: errors.size, issues: issues.slice(0, 200), committed: false, note: 'Предпросмотр: в базу ничего не записано. Сохранение — после подтверждения (участник 3).' } };
+  const b = o.body as { format?: string; features?: ImportFeature[] };
+  return { data: previewImport(b?.format, b?.features, 'Предпросмотр: в базу ничего не записано. Сохранение — после подтверждения (участник 3).') };
 });
 
 route('GET', /^\/dashboard$/, () => {
   requireRole('coordinator');
-  const elig = (s: CandidateSite) => {
-    const st = CHECKS.map((k) => s.checks[k].state);
-    return st.includes('blocked') ? 'blocked' : st.every((x) => x === 'cleared') ? 'cleared' : 'needs';
-  };
-  const weekAgo = Date.now() - 7 * 864e5;
-  const metrics: DashboardMetric[] = [
-    { key: 'sites_total', label: 'Кандидатов из OSM', value: db.sites.length, definition: 'Газоны и травяные участки OSM 150–25 000 м² вне существующих парков.', period: `Данные OSM на ${osmMeta.osmBase?.slice(0, 10)}` },
-    { key: 'sites_need_check', label: 'Нужна проверка', value: db.sites.filter((s) => elig(s) === 'needs').length, definition: 'Хотя бы одна из четырёх проверок не выполнена, ограничений нет.', period: 'Сейчас' },
-    { key: 'sites_blocked', label: 'Есть ограничение', value: db.sites.filter((s) => elig(s) === 'blocked').length, definition: 'Хотя бы одна проверка отмечена человеком как ограничение.', period: 'Сейчас' },
-    { key: 'sites_cleared', label: 'Проверки завершены', value: db.sites.filter((s) => elig(s) === 'cleared').length, definition: 'Все четыре проверки отмечены человеком как пройденные.', period: 'Сейчас' },
-    { key: 'tasks_open', label: 'Открытые задания', value: db.tasks.filter((t) => ['draft', 'assigned', 'in_progress'].includes(t.status)).length, definition: 'Черновики, назначенные и начатые задания.', period: 'Сейчас' },
-    { key: 'unassigned_priority', label: 'Без исполнителя (высокий приоритет)', value: db.tasks.filter((t) => t.status === 'draft' && (t.priority === 'high' || t.priority === 'critical')).length, definition: 'Черновики с приоритетом «высокий» или «критичный» без назначения.', period: 'Сейчас' },
-    { key: 'reports_pending', label: 'Отчёты ждут проверки', value: db.reports.filter((r) => r.reviewStatus === 'pending').length, definition: 'Отчёты со статусом проверки «ожидает».', period: 'Сейчас' },
-    { key: 'projects_review', label: 'Проекты на согласовании', value: db.projects.filter((p) => p.status === 'submitted').length, definition: 'Проекты озеленения, отправленные руководителю и ещё не рассмотренные.', period: 'Сейчас' },
-    { key: 'projects_approved', label: 'Проекты согласованы', value: db.projects.filter((p) => p.approved && !p.implementedAt).length, definition: 'Есть согласованная версия, посадка ещё не принята по отчёту. «Согласован» ≠ «посажено».', period: 'Сейчас' },
-    { key: 'verified_7d', label: 'Подтверждено выполнено', value: db.tasks.filter((t) => t.status === 'verified' && Date.parse(t.updatedAt) >= weekAgo).length, definition: 'Задания, принятые координатором по отчёту.', period: 'Последние 7 дней' },
-  ];
-  return { data: metrics, meta: { fetchedAt: nowIso() } };
+  return { data: dashboardMetrics({ sites: db.sites, tasks: db.tasks, reports: db.reports, projects: db.projects, osmBase: osmMeta.osmBase }), meta: { fetchedAt: nowIso() } };
 });
 
 export function createMockTransport(): Transport {
@@ -741,6 +666,11 @@ export function createMockTransport(): Transport {
       if (mockControls.networkDown) throw new ApiError(0, 'network_error', 'Сервер недоступен или нет сети.');
       const readOnlyPost = /^\/(zones\/[^/]+\/(analysis|variants)|priorities|assistant|sites\/rank-preview|sites\/[^/]+\/plant-selection|auth\/(login|logout))$/.test(path);
       if (mockControls.role === 'viewer' && method !== 'GET' && !readOnlyPost) throw new ApiError(403, 'forbidden', 'Роль «Просмотр»: изменения недоступны.', `mock-${++reqSeq}`);
+      // То же правило, что на сервере (README, «Роли»): администратор ведёт справочники и пользователей, согласует проекты
+      // и отмечает проверки участков; зоны, проекты, задания и отчёты ведёт специалист.
+      const adminWrite = /^\/(rates|imports\/preview|sites\/[^/]+|projects\/[^/]+\/review)$/.test(path);
+      if (mockControls.role === 'admin' && method !== 'GET' && !readOnlyPost && !adminWrite)
+        throw new ApiError(403, 'forbidden', 'Администратор ведёт справочники и пользователей и согласует проекты; это действие выполняет специалист.', `mock-${++reqSeq}`);
       for (const [m, re, h] of routes) {
         if (m !== method) continue;
         const match = path.match(re);

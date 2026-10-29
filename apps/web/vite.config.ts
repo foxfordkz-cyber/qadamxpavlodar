@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-// Сервер участника 3 по умолчанию ожидается на :3000. Переопределяется VITE_API_PROXY.
-const apiTarget = process.env.VITE_API_PROXY ?? 'http://localhost:3000';
+// Сервер apps/server слушает :3100 (SRV-03). Переопределяется VITE_API_PROXY.
+const apiTarget = process.env.VITE_API_PROXY ?? 'http://127.0.0.1:3100';
 
 export default defineConfig({
   plugins: [react()],

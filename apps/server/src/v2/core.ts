@@ -10,7 +10,8 @@ export const shortText = z.string().trim().min(1).max(200);
 export const version = z.number().int().positive();
 export const timestamp = z.iso.datetime({ offset: true }).transform(s => new Date(s).toISOString());
 export const expected = z.object({ expectedVersion: version }).strict();
-export const roles = z.enum(['admin','coordinator','foreman','worker']);
+// viewer = «Просмотр» по ТЗ: только чтение и расчёты без сохранения.
+export const roles = z.enum(['admin','coordinator','viewer','foreman','worker']);
 export type Role = z.infer<typeof roles>;
 export type User = { id: string; displayName: string; role: Role; active: boolean; version: number };
 export type Doc = Record<string, any> & { id: string; version: number };

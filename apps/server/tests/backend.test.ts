@@ -213,10 +213,19 @@ test('uploads, browser origins and untrusted Host headers are rejected', async t
   assert.equal(hostStatus, 403);
 });
 
-test('configuration prevents production mode and paths outside local data/', () => {
-  assert.throws(() => loadConfig({ NODE_ENV: 'production' }), /development/);
+test('configuration: loopback by default, explicit container settings, no paths outside data/ or STORAGE_ROOT', () => {
+  assert.throws(() => loadConfig({ NODE_ENV: 'staging' }), /development/);
   assert.throws(() => loadConfig({ DB_PATH: '../shared.sqlite' }), /data/);
   assert.throws(() => loadConfig({ DB_PATH: 'postgres://production' }), /data/);
   assert.throws(() => loadConfig({ PORT: 'NaN' }), /PORT/);
-  assert.equal(loadConfig({}).host, '127.0.0.1');
+  assert.throws(() => loadConfig({ HOST: '192.168.1.5' }), /HOST/);
+  assert.throws(() => loadConfig({ ALLOWED_HOSTS: '*' }), /ALLOWED_HOSTS/);
+  assert.throws(() => loadConfig({ FRONTEND_ORIGINS: 'http://evil.example' }), /FRONTEND_ORIGINS/);
+  assert.throws(() => loadConfig({ STORAGE_ROOT: '/data', DB_PATH: '/etc/db.sqlite' }), /STORAGE_ROOT/);
+  const local = loadConfig({});
+  assert.equal(local.host, '127.0.0.1'); assert.deepEqual(local.allowedHosts, ['127.0.0.1', 'localhost', '[::1]']); assert.equal(local.trustProxy, false);
+  const container = loadConfig({ NODE_ENV: 'production', HOST: '0.0.0.0', STORAGE_ROOT: '/data', ALLOWED_HOSTS: 'demo.local', FRONTEND_ORIGINS: 'http://demo.local:8080', TRUST_PROXY: 'uniquelocal' });
+  assert.equal(container.mode, 'production'); assert.equal(container.host, '0.0.0.0');
+  assert.match(container.dbPath, /[\\/]data[\\/]db[\\/]/); assert.match(container.uploadsPath, /[\\/]data[\\/]uploads$/);
+  assert(container.allowedHosts.includes('demo.local')); assert.deepEqual(container.frontendOrigins, ['http://demo.local:8080']);
 });

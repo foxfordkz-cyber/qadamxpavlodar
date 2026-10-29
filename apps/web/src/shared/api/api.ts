@@ -45,7 +45,7 @@ export function createApi(t: Transport) {
     kind: t.kind,
     me: () => d(t.request<Me>('GET', '/auth/me')),
     login: (login: string, password: string) => d(t.request<Me>('POST', '/auth/login', { body: { login, password } })),
-    logout: () => d(t.request<null>('POST', '/auth/logout')),
+    logout: () => d(t.request<null>('POST', '/auth/logout', { body: {} })),
 
     sites: () => t.request<CandidateSite[]>('GET', '/sites'),
     site: (id: ID) => d(t.request<CandidateSite>('GET', `/sites/${encodeURIComponent(id)}`)),
@@ -87,9 +87,9 @@ export function createApi(t: Transport) {
     project: (id: ID) => d(t.request<PlantingProject>('GET', `/projects/${encodeURIComponent(id)}`)),
     createProject: (body: { siteId: ID; title: string; season: string }, idempotencyKey: string) => d(t.request<PlantingProject>('POST', '/projects', { body, idempotencyKey })),
     saveProject: (id: ID, body: { expectedVersion: number; items?: ProjectItem[]; title?: string; season?: string }) =>
-      d(t.request<PlantingProject>('PATCH', `/projects/${encodeURIComponent(id)}`, { body })),
+      d(t.request<PlantingProject>('PATCH', `/projects/${encodeURIComponent(id)}`, { body, idempotencyKey: newIdempotencyKey() })),
     submitProject: (id: ID, expectedVersion: number) => d(t.request<PlantingProject>('POST', `/projects/${encodeURIComponent(id)}/submit`, { body: { expectedVersion }, idempotencyKey: `submit-${id}-v${expectedVersion}` })),
-    withdrawProject: (id: ID, expectedVersion: number) => d(t.request<PlantingProject>('POST', `/projects/${encodeURIComponent(id)}/withdraw`, { body: { expectedVersion } })),
+    withdrawProject: (id: ID, expectedVersion: number) => d(t.request<PlantingProject>('POST', `/projects/${encodeURIComponent(id)}/withdraw`, { body: { expectedVersion }, idempotencyKey: `withdraw-${id}-v${expectedVersion}` })),
     reviewProject: (id: ID, body: { decision: 'approved' | 'returned'; comment: string; expectedVersion: number }) =>
       d(t.request<PlantingProject>('POST', `/projects/${encodeURIComponent(id)}/review`, { body, idempotencyKey: `review-${id}-${body.decision}-v${body.expectedVersion}` })),
     dayPlan: (date: string) => d(t.request<{ plan: DayPlan | null; preview: DayPlanSummary }>('GET', '/plans', { query: { date } })),
@@ -99,7 +99,7 @@ export function createApi(t: Transport) {
     problems: () => t.request<{ problems: Problem[]; notDetectable: string[] }>('GET', '/problems'),
     priorities: (weights: Record<PriorityFactor, number>, budget: number | null) => d(t.request<{ items: PriorityItem[]; roadmap: { chosen: PriorityItem[]; spent: number; left: number; co2t20: number; method: string } | null }>('POST', '/priorities', { body: { weights, budget } })),
     rates: () => d(t.request<{ rates: RateEntry[]; version: number }>('GET', '/rates')),
-    patchRate: (body: { key: string; value: number | null; source: string; expectedVersion: number }) => d(t.request<{ rates: RateEntry[]; version: number }>('PATCH', '/rates', { body })),
+    patchRate: (body: { key: string; value: number | null; source: string; expectedVersion: number }) => d(t.request<{ rates: RateEntry[]; version: number }>('PATCH', '/rates', { body, idempotencyKey: newIdempotencyKey() })),
     soilsLayer: () => t.request<FC>('GET', '/layers/soils'),
     greeneryLayer: () => t.request<FC>('GET', '/layers/greenery'),
     ask: (message: string, siteId: ID | null) => d(t.request<AssistantReply>('POST', '/assistant', { body: { message, siteId } })),

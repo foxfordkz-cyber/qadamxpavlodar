@@ -13,7 +13,9 @@ export const plantPatch=plantInput.partial().extend({expectedVersion:version}).s
 const check=z.object({status:z.enum(['unknown','cleared','blocked','not_applicable']),comment:text}).strict();
 export const checkNames=['landPermission','utilities','access','siteSuitability','trafficVisibility'] as const;
 export const checks=z.object(Object.fromEntries(checkNames.map(n=>[n,check])) as Record<typeof checkNames[number],typeof check>).strict();
-export const sitePatch=z.object({expectedVersion:version,name:shortText.optional(),geometry:geometry.optional(),checks:checks.partial().optional(),isIntersection:z.boolean().optional()}).strict();
+// waterAvailability: 0–100 или null (неизвестно) и откуда это известно; сервер сохраняет источник как evidence.
+export const sitePatch=z.object({expectedVersion:version,name:shortText.optional(),geometry:geometry.optional(),checks:checks.partial().optional(),isIntersection:z.boolean().optional(),
+  waterAvailability:z.object({value:z.number().min(0).max(100).nullable(),note:text}).strict().optional()}).strict();
 export const resourceInput=z.object({label:shortText,type:z.enum(['vehicle','water','equipment','material']),ownerCrewId:id.nullable().default(null),capacity:z.number().positive().nullable().default(null),unit:shortText.nullable().default(null),availableIntervals:intervals.min(1),evidenceIds:uniqueIds.min(1)}).strict();
 export const resourcePatch=resourceInput.partial().extend({expectedVersion:version}).strict();
 export const catalogInput=z.object({displayName:shortText,botanicalName:shortText.nullable().default(null),kind:z.enum(['tree','shrub','flowerbed']),colors:z.array(shortText).max(20).default([]),bloomPeriod:shortText.nullable().default(null),lightRequirement:text.nullable().default(null),soilRequirement:text.nullable().default(null),moistureRequirement:text.nullable().default(null),climateSuitabilityNotes:text.nullable().default(null),matureHeightM:z.number().nonnegative().nullable().default(null),spreadM:z.number().positive().nullable().default(null),spacingM:z.number().positive().nullable().default(null),carePolicyId:id.nullable().default(null),unitCost:z.number().nonnegative().nullable().default(null),currency:z.string().regex(/^[A-Z]{3}$/).nullable().default(null),priceDate:z.iso.date().nullable().default(null),stockQuantity:z.number().int().nonnegative().nullable().default(null),evidenceIds:uniqueIds.min(1),isDemo:z.literal(true).default(true)}).strict()
@@ -32,7 +34,14 @@ export function createData(s:Store,a:User,kind:Kind,body:Record<string,any>) {
 }
 export function patchData(s:Store,a:User,kind:Kind,objectId:string,body:Record<string,any>) {
   const before=getDoc(s,kind,objectId);matchVersion(before,body.expectedVersion);const{expectedVersion,...patch}=body;validateReferences(s,patch);
-  if(kind==='site'&&patch.checks){patch.checks={...before.checks,...Object.fromEntries(Object.entries(patch.checks).map(([key,value])=>[key,{...(value as object),reviewedBy:a.id,reviewedAt:now()}]))};}
+  if(kind==='site'&&patch.checks){patch.checks={...before.checks,...Object.fromEntries(Object.entries(patch.checks).map(([key,value])=>[key,{...(value as object),reviewedBy:a.id,reviewedByName:a.displayName,reviewedAt:now()}]))};}
+  if(kind==='site'&&patch.waterAvailability){
+    const{value,note}=patch.waterAvailability;delete patch.waterAvailability;
+    const ev=insertDoc(s,'evidence',{id:randomUUID(),sourceType:'manual',sourceLabel:`Внесено: ${a.displayName}`,sourceUrl:null,observedAt:now(),validUntil:null,dataClass:'real',note,version:1});
+    patch.factors={...before.factors,waterAvailability:{value,evidenceIds:value===null?[]:[ev.id],method:`Указано специалистом: ${note}`}};
+    patch.missingData=(before.missingData??[]).filter((m:any)=>m?.field!=='factors.waterAvailability');
+    if(value===null)patch.missingData.push({field:'factors.waterAvailability',reason:'Специалист отметил значение как неизвестное.'});
+  }
   const after:Doc={...before,...patch,version:before.version+1,updatedAt:now()};
   if(kind==='catalog')catalogInput.parse(Object.fromEntries(Object.entries(after).filter(([k])=>!['id','version','createdAt','updatedAt','reviewedBy'].includes(k))));
   if(kind==='site'&&after.isIntersection&&after.checks.trafficVisibility.status==='not_applicable')fail('TRAFFIC_CHECK_REQUIRED','Intersection visibility cannot be not_applicable',400);
