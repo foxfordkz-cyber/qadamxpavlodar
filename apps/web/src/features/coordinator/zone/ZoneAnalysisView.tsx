@@ -8,6 +8,7 @@ import { Badge, Bar, Button, ErrorNote, StateView } from '../../../shared/ui/com
 import { hrefFor } from '../../../shared/router';
 import { SpeciesPhoto } from '../species/SpeciesCardGrid';
 import { SurvivalMethod } from './SurvivalMethod';
+import { CareDrafts } from './CareDrafts';
 import { t } from '../../../shared/i18n';
 
 export type ZoneTab = 'plants' | 'cost' | 'survival' | 'care' | 'effect';
@@ -253,6 +254,7 @@ function CareTab({ a }: { a: ZoneAnalysis }) {
         ))}
       </div>
       <p className="gp-small gp-muted">Объёмы полива и допустимое число выездов — в «Справочниках». Календарь входит в отчёт по зоне.</p>
+      <CareDrafts key={a.siteId} siteId={a.siteId} />
     </section>
   );
 }

@@ -8,6 +8,7 @@ import type { PriorityFactor, PriorityItem, Problem } from '../analytics/city';
 import type { RateEntry } from '../analytics/rates';
 import type { AssistantReply } from '../analytics/assistant';
 import type { referenceFacts } from './pavlodar';
+import type { CareRequest, CareSchedule } from '../analytics/careSchedule';
 
 export interface VariantSummary { variant: Variant; label: string; careYears: number; plants: number; cost: number; survival: { y1: number; y2: number; y3: number }; co2t20: number; coolingC: number; rainM3: number; costPerTonCo2: number | null }
 export interface ImportPreview { format: string; total: number; valid: number; invalid: number; issues: { row: number; level: 'error' | 'warning'; text: string }[]; committed: boolean; note: string }
@@ -96,6 +97,7 @@ export function createApi(t: Transport) {
     dayPlan: (date: string) => d(t.request<{ plan: DayPlan | null; preview: DayPlanSummary }>('GET', '/plans', { query: { date } })),
     // --- ТЗ акимата ---
     zoneAnalysis: (id: ID, options: Partial<PlanOptions>) => d(t.request<ZoneAnalysis>('POST', `/zones/${encodeURIComponent(id)}/analysis`, { body: { options } })),
+    careSchedule: (id: ID, body: CareRequest) => d(t.request<CareSchedule>('POST', `/zones/${encodeURIComponent(id)}/care-schedule`, { body })),
     zoneVariants: (id: ID, options: Partial<PlanOptions>) => d(t.request<VariantSummary[]>('POST', `/zones/${encodeURIComponent(id)}/variants`, { body: { options } })),
     problems: () => t.request<{ problems: Problem[]; notDetectable: string[] }>('GET', '/problems'),
     priorities: (weights: Record<PriorityFactor, number>, budget: number | null) => d(t.request<{ items: PriorityItem[]; roadmap: { chosen: PriorityItem[]; spent: number; left: number; co2t20: number; method: string } | null }>('POST', '/priorities', { body: { weights, budget } })),

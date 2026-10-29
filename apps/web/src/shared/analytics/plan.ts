@@ -35,7 +35,7 @@ export interface SchemeRow { speciesId: string; tier: 'tree' | 'shrub' | 'flower
 export interface CostItem { key: string; label: string; amount: number; formula: string; dataClass: 'demo' | 'estimate' }
 export interface SurvivalRow { speciesId: string; y1: number; y2: number; y3: number; low: number; high: number; risks: { label: string; pp: number }[] }
 export interface Measure { label: string; effect: string; apply: Partial<PlanOptions> | { replace: [string, string] } }
-export interface CareRow { month: number; operation: string; detail: string; visits: number }
+export interface CareRow { month: number; operation: string; detail: string; visits: number; taskAction?: 'inspect' | 'water' | 'weed'; waterLitersPerVisit?: number | null }
 export interface EffectRow { years: 5 | 10 | 20; co2t: number; o2t: number; rainM3: number; coolingC: number; canopyM2: number; dustKg: number | null }
 
 export interface ZoneAnalysis {
@@ -241,7 +241,7 @@ export function survivalForecast(site: CandidateSite, scheme: SchemeRow[], catal
   });
 }
 
-export function careCalendar(scheme: SchemeRow[], catalog: Map<string, Species>, soil: SoilInfo, opt: PlanOptions, rates: Rates): { care: CareRow[]; warnings: string[] } {
+export function careCalendar(scheme: SchemeRow[], catalog: Map<string, Species>, soil: { salinity: SoilInfo['salinity'] | null }, opt: PlanOptions, rates: Rates): { care: CareRow[]; warnings: string[] } {
   const has = (t: SchemeRow['tier']) => scheme.some((s) => s.tier === t);
   const nT = scheme.filter((s) => s.tier === 'tree').reduce((a, s) => a + s.quantity, 0);
   const nS = scheme.filter((s) => s.tier === 'shrub').reduce((a, s) => a + s.quantity, 0);
@@ -256,7 +256,9 @@ export function careCalendar(scheme: SchemeRow[], catalog: Map<string, Species>,
   for (const [m, n0] of Object.entries(wPerMonth)) {
     const n = Math.max(1, Math.round(n0 * scale * (lowDrought ? 1.2 : 1)));
     const litres = n * (nT * volT + nS * volS);
-    care.push({ month: Number(m), operation: 'Полив', detail: `${n} раз; ≈${Math.round(litres / 1000)} м³ за месяц (дерево ${volT} л, куст ${volS} л за раз)`, visits: n });
+    const unknownVolume = has('flower') || (nT > 0 && rates['care.water.tree'] == null) || (nS > 0 && rates['care.water.shrub'] == null);
+    care.push({ month: Number(m), operation: 'Полив', detail: unknownVolume ? `${n} раз; полный объём — нет данных (площадь цветника или норма полива неизвестна)` : `${n} раз; ≈${Math.round(litres)} л за месяц (дерево ${volT} л, куст ${volS} л за раз)`, visits: n, taskAction: 'water',
+      waterLitersPerVisit: unknownVolume ? null : nT * volT + nS * volS });
   }
   care.push({ month: 4, operation: 'Обрезка санитарная', detail: 'Удалить сухие и повреждённые ветви до распускания почек', visits: 1 });
   care.push({ month: 4, operation: 'Побелка стволов', detail: 'Защита коры от весенних ожогов', visits: 1 });
@@ -266,10 +268,11 @@ export function careCalendar(scheme: SchemeRow[], catalog: Map<string, Species>,
   if (hedge) care.push({ month: 6, operation: 'Формовка изгороди', detail: 'Стрижка после цветения', visits: 1 });
   care.push({ month: 7, operation: 'Осмотр на вредителей и болезни', detail: 'Повторный осмотр в жару', visits: 1 });
   if (hedge) care.push({ month: 8, operation: 'Формовка изгороди', detail: 'Вторая стрижка', visits: 1 });
-  care.push({ month: 10, operation: 'Влагозарядковый полив', detail: 'Обильный полив перед заморозками', visits: 1 });
+  care.push({ month: 10, operation: 'Влагозарядковый полив', detail: 'Обильный полив перед заморозками; объём уточнить у дендролога', visits: 1, taskAction: 'water', waterLitersPerVisit: null });
   care.push({ month: 10, operation: 'Побелка стволов', detail: 'Осенняя побелка от морозобоин', visits: 1 });
   care.push({ month: 11, operation: 'Зимняя защита', detail: evergreen ? 'Укрытие молодых хвойных от солнечных ожогов, обвязка кроны' : 'Защита стволов сеткой от грызунов', visits: 1 });
   if (has('flower')) care.push({ month: 5, operation: 'Высадка цветников', detail: 'Однолетники — после заморозков; многолетники — прополка', visits: 1 });
+  if (has('flower')) care.push({ month: 6, operation: 'Прополка цветников', detail: 'Оценка: удалить сорняки, не повреждая зарегистрированные растения', visits: 1, taskAction: 'weed' });
   if (soil.salinity === 'medium' || soil.salinity === 'high') care.push({ month: 4, operation: 'Мелиорация почвы', detail: 'Гипсование или промывка засолённых участков', visits: 1 });
   care.sort((a, b) => a.month - b.month);
   const warnings: string[] = [];

@@ -11,7 +11,8 @@
     "report:example": "esbuild scripts/example-report.ts --bundle --platform=node --format=esm --outfile=dist-scripts/example-report.mjs --log-level=warning && node dist-scripts/example-report.mjs",
     "check:zones": "esbuild scripts/check-drawn-zone.ts --bundle --platform=node --format=esm --outfile=dist-scripts/check-drawn-zone.mjs --log-level=warning && node dist-scripts/check-drawn-zone.mjs",
     "train:survival": "esbuild scripts/train-survival.ts --bundle --platform=node --format=esm --outfile=dist-scripts/train-survival.mjs --log-level=warning && node dist-scripts/train-survival.mjs",
-    "check:survival": "esbuild scripts/check-survival.ts --bundle --platform=node --format=esm --outfile=dist-scripts/check-survival.mjs --log-level=warning && node dist-scripts/check-survival.mjs"
+    "check:survival": "esbuild scripts/check-survival.ts --bundle --platform=node --format=esm --outfile=dist-scripts/check-survival.mjs --log-level=warning && node dist-scripts/check-survival.mjs",
+    "check:care": "esbuild scripts/check-care.ts --bundle --define:import.meta.env.DEV=false --platform=node --format=esm --outfile=dist-scripts/check-care.mjs --log-level=warning && node dist-scripts/check-care.mjs"
   },
   "dependencies": {
     "@types/three": "0.186.0",
