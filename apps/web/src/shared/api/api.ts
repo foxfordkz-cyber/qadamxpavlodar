@@ -1,6 +1,6 @@
 import { newIdempotencyKey, type Transport } from './transport';
 import type {
-  Brigade, CandidateSite, CheckKey, CheckState, DashboardMetric, DayPlan, DayPlanSummary, EvidenceRef, ID, Issue, Me, Plant, PlantingProject, PlantSelection,
+  Brigade, CandidateSite, CheckKey, GeoJsonPolygon, CheckState, DashboardMetric, DayPlan, DayPlanSummary, EvidenceRef, ID, Issue, Me, Plant, PlantingProject, PlantSelection,
   Priority, ProjectItem, RankWeights, Report, SiteContext, SiteRanking, Species, Task, TaskAction, TaskStatus, Upload, Worker,
 } from './types';
 import type { PlanOptions, Variant, ZoneAnalysis } from '../analytics/plan';
@@ -49,6 +49,9 @@ export function createApi(t: Transport) {
 
     sites: () => t.request<CandidateSite[]>('GET', '/sites'),
     site: (id: ID) => d(t.request<CandidateSite>('GET', `/sites/${encodeURIComponent(id)}`)),
+    /** (контракт 29.10) Нарисованная зона: проверка полигона, площадь, окружение, почва в meta. */
+    createZone: (body: { name?: string; geometry: GeoJsonPolygon }, idempotencyKey: string) =>
+      t.request<CandidateSite>('POST', '/zones', { body, idempotencyKey }),
     patchSite: (id: ID, patch: SitePatch) =>
       d(t.request<CandidateSite>('PATCH', `/sites/${encodeURIComponent(id)}`, { body: patch, idempotencyKey: newIdempotencyKey() })),
     rankPreview: (weights: RankWeights) => d(t.request<SiteRanking>('POST', '/sites/rank-preview', { body: { weights } })),

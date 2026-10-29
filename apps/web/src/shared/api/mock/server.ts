@@ -4,13 +4,14 @@
 import { ApiError, type HttpMethod, type RequestOptions, type Transport } from '../transport';
 import type { CandidateSite, CheckKey, CheckState, DashboardMetric, DayPlan, Me, PlantingProject, ProjectItem, Plant, Report, Role, Task } from '../types';
 import { siteContext } from './context';
+import { buildDrawnZone, validateDrawnPolygon } from './drawnZone';
 import { computeConflicts, unresolved } from '../../projectRules';
 import { centroidXY, makeProjection } from '../../geo';
 import { analyzeZone, VARIANT_LABEL, type PlanOptions, type Variant } from '../../analytics/plan';
 import { detectProblems, priorities, roadmap, DEFAULT_PRIORITY_WEIGHTS, type PriorityFactor } from '../../analytics/city';
 import { ratesMap } from '../../analytics/rates';
 import { answer } from '../../analytics/assistant';
-import { SOIL_CELL_DEG, soilForCell, SALINITY_LABEL } from '../../analytics/zone';
+import { SOIL_CELL_DEG, soilFor, soilForCell, SALINITY_LABEL } from '../../analytics/zone';
 import greenery from '../../../../../../fixtures/osm/greenery.json';
 import { catalog, osmMeta, seed, type MockDb } from './fixtures';
 import { CHECKS, rankSites, selectPlants } from './rules';
@@ -144,6 +145,22 @@ route('GET', /^\/sites$/, () => {
 route('GET', /^\/sites\/([^/]+)$/, (m) => {
   requireRole('coordinator');
   return { data: findSite(decodeURIComponent(m[1])) };
+});
+// SRV-02: нарисованная пользователем зона. Ответ — CandidateSite с id site-user-N.
+route('POST', /^\/zones$/, (_m, o) => {
+  requireRole('coordinator');
+  const b = (o.body ?? {}) as { name?: string; geometry?: unknown };
+  const { ring, errors } = validateDrawnPolygon(b.geometry);
+  if (errors.length) fail(400, 'validation_error', errors.map((e) => e.message).join(' '), { fields: { geometry: errors[0].message }, errors });
+  return withIdempotency(o.idempotencyKey, o.body, () => {
+    const n = 1 + db.sites.reduce((mx, s) => Math.max(mx, Number(/^site-user-(\d+)$/.exec(s.id)?.[1] ?? 0)), 0);
+    const maxB = db.sites.reduce((mx, s) => Math.max(mx, s.context?.buildings200m ?? 0), 1);
+    const site = buildDrawnZone(`site-user-${n}`, (b.name ?? '').trim().slice(0, 120), ring, maxB);
+    db.sites.push(site);
+    save();
+    const soil = soilFor(site.centroid!.lat, site.centroid!.lng);
+    return { data: site, meta: { soil, note: 'Почва — синтетический слой до карты почв организатора.' } };
+  });
 });
 route('PATCH', /^\/sites\/([^/]+)$/, (m, o) => {
   requireRole('coordinator');
