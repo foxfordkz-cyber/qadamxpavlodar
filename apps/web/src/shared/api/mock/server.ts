@@ -140,7 +140,7 @@ route('GET', /^\/auth\/me$/, () => {
 route('POST', /^\/auth\/login$/, (_m, o) => {
   const b = o.body as { login?: string; password?: string };
   if (!b?.login || !b?.password) fail(400, 'validation_error', 'Введите логин и пароль.');
-  const byLogin: Record<string, Role> = { worker: 'worker', foreman: 'foreman', admin: 'admin', viewer: 'viewer' };
+  const byLogin: Record<string, Role> = { worker: 'worker', worker1: 'worker', foreman: 'foreman', foreman1: 'foreman', admin: 'admin', viewer: 'viewer' };
   setMockControls({ role: byLogin[b.login!] ?? 'coordinator' });
   return { data: me[mockControls.role as Role] };
 });
