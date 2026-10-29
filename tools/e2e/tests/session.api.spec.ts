@@ -1,6 +1,5 @@
 import { test, expect, type Page } from '@playwright/test';
 import { dismissHint } from '../support/helpers';
-import { bugs, runKnownBugs } from '../support/known-bugs';
 
 test.beforeEach(() => test.skip(!process.env.E2E_PASSWORD, 'E2E_PASSWORD is not set'));
 
@@ -30,9 +29,29 @@ test('API: coordinator login, server data indicator, map, estimate, priorities, 
 });
 
 test('API: worker1 login opens shift cabinet', async ({ page }) => {
-  test.fixme(!runKnownBugs, bugs.worker);
   await page.goto('/?source=api#/', { waitUntil: 'domcontentloaded' });
   await login(page, 'worker1');
   await expect(page).toHaveURL(/#\/worker/);
   await expect(page.locator('green-worker')).toBeVisible();
+  await expect(page.locator('green-worker').getByRole('heading', { name: 'Моя смена', exact: true })).toBeVisible();
+});
+
+test('API: foreman1 login opens the crew shift cabinet', async ({ page }) => {
+  await page.goto('/?source=api#/', { waitUntil: 'domcontentloaded' });
+  await login(page, 'foreman1');
+  await expect(page).toHaveURL(/#\/worker$/);
+  await expect(page.locator('green-worker')).toBeVisible();
+  await expect(page.locator('green-worker').getByRole('heading', { name: 'Смена бригады', exact: true })).toBeVisible();
+});
+
+test('API: coordinator cannot open the worker route and returns home', async ({ page }) => {
+  await page.goto('/?source=api#/worker', { waitUntil: 'domcontentloaded' });
+  await login(page, 'coordinator');
+  await expect(page).toHaveURL(/#\/$/);
+  await expect(page.locator('green-worker')).toHaveCount(0);
+  await expect(page.locator('nav.gp-nav').getByRole('link', { name: 'Обзор', exact: true })).toHaveAttribute('aria-current', 'page');
+  // Also attempt the route after authentication, not only on the initial sign-in.
+  await page.evaluate(() => { location.hash = '#/worker'; });
+  await expect(page).toHaveURL(/#\/$/);
+  await expect(page.locator('green-worker')).toHaveCount(0);
 });

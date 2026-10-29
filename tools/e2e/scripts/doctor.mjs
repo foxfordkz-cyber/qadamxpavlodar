@@ -54,12 +54,22 @@ if (args.includes('--api') || args.includes('--docker')) {
 if (args.includes('--api')) {
   try {
     const target = baseUrl(process.env.E2E_BASE_URL || process.env.VITE_API_PROXY || 'http://127.0.0.1:3100');
-    const response = await fetch(new URL('/api/health', target), { signal: AbortSignal.timeout(5000), redirect: 'error' });
-    const body = await response.json();
-    const healthy = response.ok && body.status === 'ok' && body.database === 'ok';
-    add('API и база данных', healthy ? 'pass' : passwordPresent ? 'fail' : 'warn',
-      healthy ? 'Health endpoint подтвердил доступность API и SQLite' : 'Health endpoint не подтвердил готовность сервера');
-  } catch { add('API и база данных', passwordPresent ? 'fail' : 'warn', 'Сервер не отвечает; запустите API или задайте E2E_BASE_URL для готового стенда'); }
+    const response = await fetch(new URL('/api/v1/auth/me', target), { signal: AbortSignal.timeout(5000), redirect: 'error' });
+    const reachable = response.status === 401 && response.headers.get('content-type')?.includes('application/json');
+    await response.body?.cancel();
+    add('API', reachable ? 'pass' : passwordPresent ? 'fail' : 'warn',
+      reachable ? 'Сервер отвечает через /api/v1; без сессии корректно возвращает 401' : 'Не получен ожидаемый ответ API без сессии');
+  } catch { add('API', passwordPresent ? 'fail' : 'warn', 'Сервер не отвечает; запустите API или задайте E2E_BASE_URL для готового стенда'); }
+  // /health belongs to the backend; nginx/Vite proxy only /api, so never mistake index.html for health.
+  if (!process.env.E2E_BASE_URL || process.env.VITE_API_PROXY) {
+    try {
+      const backend = baseUrl(process.env.VITE_API_PROXY || 'http://127.0.0.1:3100');
+      const response = await fetch(new URL('/health', backend), { signal: AbortSignal.timeout(5000), redirect: 'error' });
+      const body = await response.json();
+      const healthy = response.ok && body.status === 'ok' && body.database === 'ok';
+      add('SQLite', healthy ? 'pass' : passwordPresent ? 'fail' : 'warn', healthy ? '/health подтвердил доступность базы' : '/health не подтвердил готовность базы');
+    } catch { add('SQLite', passwordPresent ? 'fail' : 'warn', 'Прямой /health сервера недоступен'); }
+  } else add('SQLite', 'warn', 'Прямой /health не опубликован через веб; для проверки задайте VITE_API_PROXY с адресом API');
 }
 if (args.includes('--docker')) {
   try {
