@@ -4,7 +4,7 @@ import osm from '../../../../../../fixtures/osm/sites.json';
 import type { Brigade, CandidateSite, DayPlan, EvidenceRef, ExclusionZone, Issue, PlantingProject, Plant, Report, Task, Worker } from '../types';
 import { pavlodarEvidence, priceEvidence, species, speciesEvidence } from './species';
 import { contextEvidence } from './context';
-import { centroidXY, makeProjection, type XY } from '../../geo';
+import { centroidXY, makeProjection, pointInRing, type XY } from '../../geo';
 import { DEFAULT_RATES, type RateEntry } from '../../analytics/rates';
 import { pavlodarSources } from '../pavlodar';
 
@@ -16,6 +16,7 @@ export interface MockDb {
   brigades: Brigade[];
   projects: PlantingProject[];
   plants: Plant[];
+  careDemoVersion?: number;
   plans: DayPlan[];
   rates: RateEntry[];
   ratesVersion: number;
@@ -68,6 +69,29 @@ function demoZone(site: CandidateSite, label: string, reason: string, depth = 0.
 }
 
 const at = (h: number, day = 27) => `2026-10-${String(day).padStart(2, '0')}T${String(h).padStart(2, '0')}:00:00Z`;
+
+export const CARE_DEMO_SITE_ID = 'site-osm-1490224716';
+/** Additive migration: preserve existing tasks, plants, edits and mock data. */
+export function addCareDemoPlants(db: Pick<MockDb, 'sites' | 'plants' | 'careDemoVersion'>): boolean {
+  if ((db.careDemoVersion ?? 0) >= 1) return false;
+  const site = db.sites.find(s => s.id === CARE_DEMO_SITE_ID);
+  if (!site || site.geometry.type !== 'Polygon') return false;
+  const [outer, ...holes] = site.geometry.coordinates;
+  const samples = [
+    { speciesId: 'sp-ulmus-pumila', lng: 76.96848, lat: 52.27944 },
+    { speciesId: 'sp-pinus-sylvestris', lng: 76.96851, lat: 52.27949 },
+    { speciesId: 'sp-caragana-arborescens', lng: 76.96854, lat: 52.27954 },
+  ];
+  for (const [i, sample] of samples.entries()) {
+    const id = `plant-care-demo-${i + 1}`, sp = species.find(s => s.id === sample.speciesId)!;
+    if (db.plants.some(p => p.id === id) || !pointInRing([sample.lng, sample.lat], outer) || holes.some(h => pointInRing([sample.lng, sample.lat], h))) continue;
+    db.plants.push({ id, ...sample, name: `${sp.nameRu} — демо ухода ${i + 1}`, species: sp.latin, kind: sp.form === 'tree' ? 'tree' : 'shrub',
+      plantedAt: '2026-05-15T07:00:00Z', condition: 'unknown', lastVerifiedCareAt: null, carePolicyId: null,
+      evidenceIds: ['ev-demo-scenario'], isDemo: true, version: 1 });
+  }
+  db.careDemoVersion = 1;
+  return true;
+}
 
 export function seed(): MockDb {
   const sites = structuredClone(osm.sites) as unknown as CandidateSite[];
@@ -146,6 +170,7 @@ export function seed(): MockDb {
   ];
   const plans: DayPlan[] = [];
   const plants: Plant[] = [];
+  addCareDemoPlants({ sites, plants });
 
   return {
     seededAt: new Date().toISOString(),
@@ -153,6 +178,7 @@ export function seed(): MockDb {
     brigades,
     projects,
     plants,
+    careDemoVersion: 1,
     plans,
     rates: structuredClone(DEFAULT_RATES),
     ratesVersion: 1,

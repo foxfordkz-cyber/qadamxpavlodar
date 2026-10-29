@@ -12,13 +12,14 @@ import { detectProblems, priorities, roadmap, DEFAULT_PRIORITY_WEIGHTS, type Pri
 import { ratesMap } from '../../analytics/rates';
 import { answer } from '../../analytics/assistant';
 import { soilFor } from '../../analytics/zone';
-import { catalog, osmMeta, seed, type MockDb } from './fixtures';
+import { addCareDemoPlants, catalog, osmMeta, seed, type MockDb } from './fixtures';
 import { CHECKS, rankSites, selectPlants } from './rules';
 import { demoPhoto } from './photo';
 import { previewImport, type ImportFeature } from './imports';
 import { daySummary } from '../dayPlan';
 import { dashboardMetrics, greeneryLayer, soilsLayer, variantSummaries } from '../tzViews';
 import { referenceFacts } from '../pavlodar';
+import { buildCareSchedule, parseCareRequest } from '../../analytics/careSchedule';
 import { GEOCODE_META, searchAddress } from '../geocode';
 
 // v3: справочник с источниками по Павлодару. Старые данные не читаются.
@@ -48,7 +49,13 @@ let db: MockDb = load();
 function load(): MockDb {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw) as MockDb;
+    if (raw) {
+      const saved = JSON.parse(raw) as MockDb;
+      if (addCareDemoPlants(saved)) {
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(saved)); } catch { /* keep migrated data in memory */ }
+      }
+      return saved;
+    }
   } catch {
     /* хранилище недоступно — работаем в памяти */
   }
@@ -231,6 +238,8 @@ route('POST', /^\/tasks$/, (_m, o) => {
       const errors: Record<string, string> = {};
       if (!b.objectId) errors.objectId = 'Не выбран объект.';
       else if (b.objectType === 'candidate_site' && !db.sites.some((s) => s.id === b.objectId)) errors.objectId = 'Участок не найден.';
+      else if (b.objectType === 'plant' && !db.plants.some((p) => p.id === b.objectId)) errors.objectId = 'Растение не найдено.';
+      if ((b.action === 'water' || b.action === 'weed') && b.objectType !== 'plant') errors.action = 'Уход назначается только зарегистрированному растению.';
       if (!b.action || !['inspect', 'water', 'weed', 'plant'].includes(b.action)) errors.action = 'Не выбрано действие.';
       if (!b.priority) errors.priority = 'Не выбран приоритет.';
       if (!b.estimatedMinutes || b.estimatedMinutes <= 0) errors.estimatedMinutes = 'Длительность должна быть больше нуля.';
@@ -588,6 +597,12 @@ export function simulateWorkerReport(): string | null {
 
 // --- ТЗ акимата: анализ зоны, проблемы, приоритеты, справочники, слои, ассистент, импорт ---
 const rates = () => ratesMap(db.rates);
+route('POST', /^\/zones\/([^/]+)\/care-schedule$/, (m, o) => {
+  requireRole('coordinator', 'viewer');
+  let request;
+  try { request = parseCareRequest(o.body); } catch (e) { return fail(400, 'VALIDATION_ERROR', (e as Error).message); }
+  return { data: buildCareSchedule(findSite(decodeURIComponent(m[1])), db.plants, catalog, rates(), request) };
+});
 route('POST', /^\/zones\/([^/]+)\/analysis$/, (m, o) => {
   requireRole('coordinator', 'viewer' as Role);
   const site = findSite(decodeURIComponent(m[1]));
@@ -677,7 +692,7 @@ export function createMockTransport(): Transport {
     async request<T>(method: HttpMethod, path: string, opts: RequestOptions = {}) {
       await sleep(mockControls.latencyMs * (0.6 + Math.random() * 0.8));
       if (mockControls.networkDown) throw new ApiError(0, 'network_error', 'Сервер недоступен или нет сети.');
-      const readOnlyPost = /^\/(zones\/[^/]+\/(analysis|variants)|priorities|assistant|sites\/rank-preview|sites\/[^/]+\/plant-selection|auth\/(login|logout))$/.test(path);
+      const readOnlyPost = /^\/(zones\/[^/]+\/(analysis|variants|care-schedule)|priorities|assistant|sites\/rank-preview|sites\/[^/]+\/plant-selection|auth\/(login|logout))$/.test(path);
       if (mockControls.role === 'viewer' && method !== 'GET' && !readOnlyPost) throw new ApiError(403, 'forbidden', 'Роль «Просмотр»: изменения недоступны.', `mock-${++reqSeq}`);
       // То же правило, что на сервере (README, «Роли»): администратор ведёт справочники и пользователей, согласует проекты
       // и отмечает проверки участков; зоны, проекты, задания и отчёты ведёт специалист.

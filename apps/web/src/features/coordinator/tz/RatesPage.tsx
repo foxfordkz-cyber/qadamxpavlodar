@@ -4,6 +4,7 @@ import type { RateEntry } from '../../../shared/analytics/rates';
 import { Badge, Button, ErrorNote, StateView, useGuarded } from '../../../shared/ui/components';
 import { PageHeader } from '../PageHeader';
 import { useMe } from '../me';
+import { t } from '../../../shared/i18n';
 import { TOPIC_LABEL, type FactTopic, type PavlodarFact, type PavlodarSource } from '../../../shared/api/pavlodar';
 
 const GROUP: Record<RateEntry['group'], string> = { cost: 'Расценки сметы', effect: 'Коэффициенты экологического эффекта', care: 'Уход', survival: 'Приживаемость' };
@@ -24,6 +25,7 @@ export function RatesPage() {
         {groups.map(([g, list]) => (
           <section key={g} className="gp-guide__sec">
             <h2 className="gp-guide__h">{GROUP[g]}</h2>
+            {g === 'survival' && <p className="gp-alert gp-alert--info gp-small">{t('survival.ratesNote')}</p>}
             <div className="gp-table-wrap gp-card">
               <table className="gp-table gp-small">
                 <thead><tr><th>Показатель</th><th>Значение</th><th>Ед.</th><th>Источник</th></tr></thead>
