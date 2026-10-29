@@ -82,3 +82,21 @@ export function centroidXY(ring: XY[]): XY {
   }
   return [x / n, y / n];
 }
+
+/** Направление длинной оси контура: сторона наименьшего описанного прямоугольника, вдоль его длинной стороны.
+ *  Не зависит от того, на сколько отрезков OSM разбил длинную сторону газона. */
+export function longAxis(ring: XY[]): XY {
+  let best = { area: Infinity, u: [1, 0] as XY };
+  for (let i = 0; i < ring.length - 1; i++) {
+    const dx = ring[i + 1][0] - ring[i][0];
+    const dy = ring[i + 1][1] - ring[i][1];
+    const len = Math.hypot(dx, dy);
+    if (len < 0.5) continue;
+    const u: XY = [dx / len, dy / len];
+    const s = ring.map(([x, y]) => x * u[0] + y * u[1]);
+    const t = ring.map(([x, y]) => -x * u[1] + y * u[0]);
+    const [w, h] = [Math.max(...s) - Math.min(...s), Math.max(...t) - Math.min(...t)];
+    if (w * h < best.area) best = { area: w * h, u: w >= h ? u : [-u[1], u[0]] };
+  }
+  return best.u;
+}

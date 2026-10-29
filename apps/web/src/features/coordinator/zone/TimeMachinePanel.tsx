@@ -1,12 +1,24 @@
 import { useEffect, useMemo } from 'react';
+import { useData, useResource } from '../../../shared/api/DataProvider';
 import type { CandidateSite, Species } from '../../../shared/api/types';
 import type { ZoneAnalysis } from '../../../shared/analytics/plan';
 import { buildGrowthScene, GROWTH_YEARS, timeMachine, useTimeMachine, YEAR_LABEL } from './timeMachine';
 
+const STREET = /^(motorway|trunk|primary|secondary|tertiary|unclassified|residential|living_street)(_link)?$/;
+
 /** Вкладка «Эффект»: посадка по схеме растёт на основной карте через 5, 10, 20 лет; цифры — из того же расчёта. */
 export function TimeMachinePanel({ a, site, byId }: { a: ZoneAnalysis; site: CandidateSite; byId: Map<string, Species> }) {
+  const { api } = useData();
   const tm = useTimeMachine();
-  const scene = useMemo(() => buildGrowthScene(site, a, byId), [site, a, byId]);
+  // Улицы рядом с зоной: ряды и бордюр цветов выстраиваются вдоль ближайшей. Тротуары и проезды
+  // к домам вплотную к газону не в счёт — иначе бордюр уходит к подъездам, а не к улице.
+  const ctx = useResource(() => api.siteContext(site.id, 50), [site.id]);
+  const roads = useMemo(() => {
+    const all = ctx.data?.roads ?? [];
+    const streets = all.filter((r) => STREET.test(r.kind));
+    return (streets.length ? streets : all).map((r) => r.geometry.coordinates);
+  }, [ctx.data]);
+  const scene = useMemo(() => (ctx.loading ? null : buildGrowthScene(site, a, byId, roads)), [site, a, byId, roads, ctx.loading]);
   const active = tm.scene?.siteId === site.id;
   // Пересчёт зоны (вариант, замена вида, полив) сразу меняет посадку на карте.
   useEffect(() => {
@@ -15,6 +27,7 @@ export function TimeMachinePanel({ a, site, byId }: { a: ZoneAnalysis; site: Can
   }, [scene]);
   // Ушли со вкладки или закрыли карточку — карта возвращается к обычному виду.
   useEffect(() => () => timeMachine.hide(), []);
+  if (ctx.loading) return <p className="gp-small gp-muted" role="status">Машина времени: загружаю окружение зоны…</p>;
   if (!scene) return <p className="gp-small gp-muted">Машина времени доступна для зон с контуром.</p>;
   const year = active ? tm.year : null;
   const e = year ? a.effect.find((x) => x.years === year) : null;
@@ -42,7 +55,7 @@ export function TimeMachinePanel({ a, site, byId }: { a: ZoneAnalysis; site: Can
       {active && <button className="gp-btn gp-btn--ghost" onClick={() => timeMachine.hide()}>Скрыть с карты</button>}
       <p className="gp-small gp-muted">
         Схематичные 3D-модели: высота и крона — из справочника видов, рост — те же доли, что в расчёте эффекта; к 5, 10 и 20 годам выпавшие растения убраны по прогнозу приживаемости.
-        Места растений условные — точную раскладку делает проект озеленения.{scene.shown < scene.total ? ` На карте ${scene.shown} из ${scene.total} растений.` : ''}
+        Ряды и бордюр цветов идут вдоль ближайшей улицы; места растений условные — точную раскладку делает проект озеленения.{scene.shown < scene.total ? ` На карте ${scene.shown} из ${scene.total} растений.` : ''}
       </p>
     </section>
   );

@@ -3,7 +3,7 @@
 import * as THREE from 'three';
 import type { CustomLayerInterface, Map as MlMap } from 'maplibre-gl';
 import type { GeoJsonPoint, GeoJsonPolygon, ProjectItem, Species } from '../../../shared/api/types';
-import { makeProjection, type XY } from '../../../shared/geo';
+import { longAxis, makeProjection, type XY } from '../../../shared/geo';
 import { STAGE_K, type Stage } from './trees3d';
 
 const FLOWER_COLORS: Record<string, number[]> = {
@@ -114,8 +114,8 @@ function plantModel(sp: Species | undefined, stage: Growth, seed: string): THREE
 }
 
 /**
- * Клумба: низкий бортик почвы и растения ровной сеткой с шагом в диаметр куста по справочнику
- * (со смещением рядов и небольшим разбросом), каждое — куст листвы у земли и соцветие на высоте вида.
+ * Клумба: низкий бортик почвы и растения ровными рядами вдоль длинной стороны, шаг — из справочника
+ * (spacingM или диаметр куста), ряды в шахматном порядке; каждое — куст листвы у земли и соцветие на высоте вида.
  * Раньше цветки падали случайно по 14 на м²: налезали друг на друга и висели над почвой.
  */
 function bedModel(ring: XY[], sp: Species | undefined, stage: Growth, seed: string): THREE.Group {
@@ -133,9 +133,12 @@ function bedModel(ring: XY[], sp: Species | undefined, stage: Growth, seed: stri
   const crown = Math.max(0.12, (sp?.crownDiameterM ?? 0.35) * Math.max(0.35, k.crown));
   // Шаг посадки — из справочника (spacingM), иначе диаметр взрослого куста; не плотнее 0,2 м.
   const step = Math.max(0.2, sp?.spacingM ?? (sp?.crownDiameterM ?? 0.35));
-  const xs = ring.map((p) => p[0]);
-  const ys = ring.map((p) => p[1]);
-  const [minX, maxX, minY, maxY] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)];
+  // Ряды идут вдоль длинной оси клумбы (у бордюра — вдоль улицы), а не по сторонам света.
+  const u = longAxis(ring);
+  const n: XY = [-u[1], u[0]];
+  const st = ring.map(([x, y]) => [x * u[0] + y * u[1], x * n[0] + y * n[1]] as XY);
+  const [minS, maxS] = [Math.min(...st.map((p) => p[0])), Math.max(...st.map((p) => p[0]))];
+  const [minT, maxT] = [Math.min(...st.map((p) => p[1])), Math.max(...st.map((p) => p[1]))];
   const inside = (x: number, y: number) => {
     let ins = false;
     for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
@@ -145,10 +148,18 @@ function bedModel(ring: XY[], sp: Species | undefined, stage: Growth, seed: stri
     }
     return ins;
   };
+  // Ровные ряды в шахматном порядке; ряды по центру ширины клумбы, без случайного разброса.
+  const nRows = Math.max(1, Math.floor((maxT - minT) / (step * 0.87)));
+  const t0 = minT + ((maxT - minT) - (nRows - 1) * step * 0.87) / 2;
   const cells: XY[] = [];
-  for (let row = 0, y = minY + step / 2; y < maxY; y += step * 0.87, row++)
-    for (let x = minX + step / 2 + (row % 2 ? step / 2 : 0); x < maxX; x += step)
-      if (inside(x, y)) cells.push([x + (r() - 0.5) * step * 0.3, y + (r() - 0.5) * step * 0.3]);
+  for (let row = 0; row < nRows; row++) {
+    const t = t0 + row * step * 0.87;
+    for (let sv = minS + step / 2 + (row % 2 ? step / 2 : 0); sv < maxS - step / 4; sv += step) {
+      const x = sv * u[0] + t * n[0];
+      const y = sv * u[1] + t * n[1];
+      if (inside(x, y)) cells.push([x, y]);
+    }
+  }
   // Больше 700 растений браузер рисует тяжело: на большой клумбе берём каждое n-е место, сетка остаётся ровной.
   const every = Math.max(1, Math.ceil(cells.length / 700));
   const spots = cells.filter((_, i) => i % every === 0);
@@ -166,7 +177,7 @@ function bedModel(ring: XY[], sp: Species | undefined, stage: Growth, seed: stri
     leaves.setMatrixAt(i, m4);
     const ci = Math.floor(r() * cols.length);
     const b = Math.max(0.07, crown * 0.42);
-    m4.compose(new THREE.Vector3(x + (r() - 0.5) * leaf * 0.4, SOIL + h - b * 0.5, -y + (r() - 0.5) * leaf * 0.4), q, new THREE.Vector3(b, b * 0.8, b));
+    m4.compose(new THREE.Vector3(x, SOIL + h - b * 0.5, -y), q, new THREE.Vector3(b, b * 0.8, b));
     blooms[ci].setMatrixAt(counts[ci]++, m4);
   });
   blooms.forEach((m, i) => { m.count = counts[i]; m.computeBoundingSphere(); g.add(m); });
