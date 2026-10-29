@@ -1,9 +1,11 @@
+import { approvedDesign, parsePositions, positionsText, geometryPoints } from './field-values.mjs';
 export const MAX_PHOTO_BYTES = 10 * 1024 * 1024;
+export const SERVER_MAX_PHOTO_BYTES = 5 * 1024 * 1024;
 export const REASONS = ['Нет доступа', 'Не хватает ресурсов', 'Объект не найден', 'Нужна проверка', 'Другая причина'];
 export const storageKey = (scope, userId, taskId, kind) => JSON.stringify([scope, userId, taskId, kind]);
-export async function validatePhoto(file) {
+export async function validatePhoto(file, maxBytes = MAX_PHOTO_BYTES) {
   if (!file || !file.size) throw new Error('Выберите непустую фотографию.');
-  if (file.size > MAX_PHOTO_BYTES) throw new Error('Фотография больше 10 МБ. Выберите файл меньшего размера.');
+  if (file.size > maxBytes) throw new Error(`Фотография больше ${maxBytes / 1024 / 1024} МБ. Выберите файл меньшего размера.`);
   if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) throw new Error('Поддерживаются JPG, PNG и WebP. HEIC нужно преобразовать на устройстве.');
   const b = new Uint8Array(await file.slice(0, 12).arrayBuffer());
   const jpeg = b[0] === 255 && b[1] === 216 && b[2] === 255;
@@ -12,8 +14,8 @@ export async function validatePhoto(file) {
   if (!(file.type === 'image/jpeg' && jpeg || file.type === 'image/png' && png || file.type === 'image/webp' && webp)) throw new Error('Содержимое файла не соответствует фотографии. Выберите другой файл.');
 }
 export class WorkerWorkflow {
-  constructor({ gateway, drafts, userId, scope, timeoutMs = 6000 }) {
-    Object.assign(this, { gateway, drafts, userId, scope, timeoutMs });
+  constructor({ gateway, drafts, userId, scope, timeoutMs = 6000, strictServer = false }) {
+    Object.assign(this, { gateway, drafts, userId, scope, timeoutMs, strictServer });
     this.inflight = new Map();
   }
   async draft(taskId, kind = 'report') {
@@ -32,7 +34,7 @@ export class WorkerWorkflow {
   }
   pending() { return this.drafts.list(this.scope, this.userId); }
   async rebase(draft) {
-    if(draft.delivery!=='conflict')throw new Error('Неоднозначную отправку нужно повторить с тем же ключом.');
+    if(!['conflict','rejected'].includes(draft.delivery))throw new Error('Неоднозначную отправку нужно повторить с тем же ключом.');
     const task=await this.gateway.getTask(draft.taskId);
     if(draft.kind==='report'&&!task.permissions.report)throw new Error('Сначала начните исправление или проверьте состояние задания.');
     draft.baseVersion=task.version;draft.sharedBaseVersion=task.sharedDraft?.version;draft.frozen=null;draft.delivery='draft';draft.idempotencyKey=crypto.randomUUID();await this.save(draft);
@@ -59,7 +61,7 @@ export class WorkerWorkflow {
     if (draft.note.length > 4000) throw new Error('Заметка может содержать не больше 4000 символов.');
     if (!draft.frozen) {
       const task = await this.gateway.getTask(draft.taskId);
-      if(draft.baseVersion&&draft.baseVersion!==task.version || draft.sharedBaseVersion&&draft.sharedBaseVersion!==task.sharedDraft?.version){
+      if(draft.baseVersion != null && draft.baseVersion!==task.version || draft.sharedBaseVersion != null && draft.sharedBaseVersion!==task.sharedDraft?.version){
         draft.delivery='conflict';await this.save(draft);const error=new Error('Данные изменились. Обновите версию перед исправлением.');error.status=409;throw error;
       }
       if (!task.visibleToCurrentUser && task.assignedTo !== this.userId) throw new Error('Нет доступа к заданию.');
@@ -67,25 +69,37 @@ export class WorkerWorkflow {
       if (draft.kind === 'issue' && !task.permissions.issue) throw new Error('Для этого задания нельзя отправить проблему.');
       if (draft.kind === 'report' && task.reportMode !== 'final' && !draft.photo) throw new Error('Добавьте фотографию результата.');
       const sharedPhotoIds = [...new Set((task.sharedDraft?.contributions || []).flatMap(c=>c.photoIds))];
+      if (draft.kind === 'report' && task.reportMode === 'final' && sharedPhotoIds.length>20) throw new Error('В итоговом отчёте не может быть больше 20 фотографий. Уточните состав материалов бригады.');
       if (draft.kind === 'report' && task.reportMode === 'final' && (!draft.foremanChecked || !sharedPhotoIds.length)) throw new Error('Проверьте материалы участников и подтвердите полноту отчёта.');
-      if(draft.kind==='report'&&task.reportMode==='final'&&!draft.actualWorkerIds.length)throw new Error('Отметьте фактических исполнителей.');
-      if (draft.kind === 'report' && task.actionCode === 'plant' && task.design?.plantingItems.some(item=>!draft.actualPlantingItems.some(actual=>actual.plantingItemId===item.id && Number.isInteger(actual.quantity) && actual.quantity>=0))) throw new Error('Укажите фактическое количество для каждой позиции. Ноль означает, что посадка не выполнена.');
+      const actualWorkerIds = [...new Set(draft.actualWorkerIds?.length ? draft.actualWorkerIds : task.reportMode === 'contribution' ? [this.userId] : task.reportMode === 'final' ? [] : task.assignedWorkerIds?.length ? task.assignedWorkerIds : [this.userId])];
+      if(draft.kind==='report'&&task.reportMode!=='contribution'&&(actualWorkerIds.length<Math.max(1,task.minWorkers||1)||actualWorkerIds.some(id=>!task.assignedWorkerIds?.includes(id))))throw new Error('Отметьте фактических исполнителей из назначенного состава: не меньше минимума задания.');
+      const plantingReport = draft.kind === 'report' && task.reportMode !== 'contribution' && task.actionCode === 'plant';
+      if (plantingReport && !approvedDesign(task)) throw new Error('Утверждённая версия проекта недоступна. Обновите задание.');
+      if (plantingReport && task.design.plantingItems.some(item=>!draft.actualPlantingItems.some(actual=>actual.plantingItemId===item.id && Number.isInteger(actual.quantity) && actual.quantity>=0 && actual.quantity<=200))) throw new Error('Укажите фактическое количество для каждой позиции: целое число от 0 до 200. Ноль означает, что посадка не выполнена.');
+      let actualPlantingItems = plantingReport ? structuredClone(draft.actualPlantingItems.filter(item=>item.quantity>0)) : [];
+      if (this.strictServer && draft.kind === 'report' && !draft.note.trim()) throw new Error('Кратко опишите выполненную работу или добавленные материалы.');
+      if (this.strictServer && plantingReport) {
+        actualPlantingItems = actualPlantingItems.map(item=>({...item,geometry:parsePositions(draft.actualPositions?.[item.plantingItemId] ?? positionsText(item.geometry),item.quantity)}));
+        const points=actualPlantingItems.flatMap(item=>geometryPoints(item.geometry)).map(point=>JSON.stringify(point));
+        if(new Set(points).size!==points.length)throw new Error('Фактические точки разных позиций не должны повторяться.');
+      }
       if (draft.kind === 'issue' && !REASONS.includes(draft.reason)) throw new Error('Выберите причину.');
       if (draft.kind === 'issue' && draft.reason === 'Другая причина' && !draft.note.trim()) throw new Error('Кратко поясните причину.');
-      if (draft.photo) await validatePhoto(draft.photo);
+      if (draft.kind === 'issue' && [draft.reason,draft.note].map(value=>value.trim()).filter(Boolean).join('\n').length>4000) throw new Error('Причина и пояснение вместе не должны превышать 4000 символов.');
+      if (draft.photo && !(this.strictServer && draft.kind === 'issue')) await validatePhoto(draft.photo, this.strictServer ? SERVER_MAX_PHOTO_BYTES : MAX_PHOTO_BYTES);
       draft.frozen = { taskId: draft.taskId, idempotencyKey: draft.idempotencyKey, note: draft.note.trim(),
         analysis: draft.analysis?.decision ? structuredClone(draft.analysis) : null,
         geo: draft.geo, deviceTime: new Date().toISOString(), revisionOf: task.revisionOf || null,
         objectId:task.objectId, expectedVersion:task.version, expectedDraftVersion:task.sharedDraft?.version,
-        submissionType:task.reportMode, actualPlantingItems:structuredClone(draft.actualPlantingItems),
-        actualWorkerIds:draft.actualWorkerIds.length?draft.actualWorkerIds:(task.reportMode==='contribution'?[this.userId]:task.assignedWorkerIds || [this.userId]),
+        submissionType:task.reportMode, actualPlantingItems,
+        actualWorkerIds,
         sharedPhotoIds, contributorIds:task.sharedDraft?.contributions.map(c=>c.authorId)||[],
         ...(draft.kind === 'issue' ? { reason: draft.reason } : {}) };
       draft.delivery = 'queued';
       await this.save(draft);
     }
     try {
-      if (draft.photo && !draft.upload) {
+      if (draft.photo && !draft.upload && !(this.strictServer && draft.kind === 'issue')) {
         draft.upload = await this.gateway.uploadPhoto({ file: draft.photo, idempotencyKey: `${draft.idempotencyKey}:photo`, taskId: draft.taskId });
         await this.save(draft);
       }
@@ -96,7 +110,7 @@ export class WorkerWorkflow {
       await this.drafts.remove(draft.storageKey);
       return receipt;
     } catch (error) {
-      draft.delivery = error.status===409 ? 'conflict' : 'uncertain';
+      draft.delivery = error.status===409 ? 'conflict' : [400,413,415,422].includes(error.status) ? 'rejected' : 'uncertain';
       try { await this.save(draft); } catch { /* Original draft was persisted before any upload. */ }
       throw error;
     }
@@ -104,7 +118,7 @@ export class WorkerWorkflow {
   async synchronize() {
     const outcomes = [];
     for (const draft of await this.pending()) {
-      if (!draft.frozen || draft.delivery==='conflict') continue; // Never silently send unfinished/conflicting drafts.
+      if (!draft.frozen || ['conflict','rejected'].includes(draft.delivery)) continue; // Never silently send unfinished or explicitly rejected drafts.
       try { outcomes.push({ taskId: draft.taskId, saved: true, receipt: await this.send(draft) }); }
       catch (error) { outcomes.push({ taskId: draft.taskId, saved: false, error: error.message }); }
     }

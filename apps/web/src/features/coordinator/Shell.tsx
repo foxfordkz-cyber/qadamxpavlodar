@@ -4,9 +4,10 @@ import { ApiError } from '../../shared/api/transport';
 import { Button, ErrorNote, Field, StateView, useGuarded } from '../../shared/ui/components';
 import { t, type Key } from '../../shared/i18n';
 import { fmtDate } from '../../shared/format';
-import { hrefFor, useRoute } from '../../shared/router';
+import { hrefFor, navigate, useRoute } from '../../shared/router';
 
 const DevPanel = lazy(() => import('./DevPanel').then((m) => ({ default: m.DevPanel })));
+const WorkerPage = lazy(() => import('../worker/WorkerPage').then((m) => ({ default: m.WorkerPage })));
 
 import { MeContext } from './me';
 import { AssistantPanel } from './tz/AssistantPanel';
@@ -36,7 +37,11 @@ const SVC_ICON: Record<SvcState, string> = { ok: '●', down: '✕', unknown: '�
 export function Shell({ children }: { children: ReactNode }) {
   const { api, mode, services } = useData();
   const route = useRoute();
-  const me = useResource(() => api.me(), []);
+  // V2 wraps the user in a session; mock (and the future compatibility layer) returns Me directly.
+  const me = useResource<Me & { csrfToken?: string }>(async () => {
+    const session = await api.me() as Me | { user: Me; csrfToken?: string };
+    return 'user' in session ? { ...session.user, csrfToken: session.csrfToken } : session;
+  }, []);
   const [dev, setDev] = useState(false);
   const [today, setToday] = useState(() => new Date().toISOString());
   useEffect(() => {
@@ -46,6 +51,20 @@ export function Shell({ children }: { children: ReactNode }) {
 
   const authError = me.error instanceof ApiError ? me.error.status : null;
   const role = me.data?.role;
+  const crew = role === 'foreman' || role === 'worker';
+  // Бригадир и работник работают только в своём кабинете — держим их на маршруте #/worker, остальных уводим с него.
+  useEffect(() => {
+    if (crew && route.path !== '/worker') navigate('/worker', {}, true);
+    else if (role && !crew && route.path === '/worker') navigate('/', {}, true);
+  }, [crew, role, route.path]);
+  const logout = async () => {
+    try {
+      if (mode === 'api') {
+        const { createV2Transport } = await import('../worker/contract-v2.mjs');
+        await createV2Transport({ csrfToken: me.data?.csrfToken })('POST', '/auth/logout', { body: {} });
+      } else await api.logout();
+    } finally { me.reload(); }
+  };
   const nav = NAV.filter((n) => role && n.roles.includes(role));
   const current = (path: string) => (path === '/' ? route.path === '/' || route.path === '' : route.path.startsWith(path));
   return (
@@ -61,7 +80,7 @@ export function Shell({ children }: { children: ReactNode }) {
         <div className="gp-header__right">
           {me.data && <span className="gp-small">{me.data.displayName}</span>}
           {mode === 'mock' && <Button onClick={() => setDev(true)}>⚙ {t('shell.devPanel')}</Button>}
-          {me.data && <Button onClick={async () => { try { await api.logout(); } finally { me.reload(); } }}>{t('shell.logout')}</Button>}
+          {me.data && <Button onClick={logout}>{t('shell.logout')}</Button>}
         </div>
       </header>
       <div className="gp-subbar">
@@ -81,8 +100,8 @@ export function Shell({ children }: { children: ReactNode }) {
           <Login onDone={me.reload} />
         ) : authError === 403 ? (
           <Forbidden />
-        ) : me.data && (me.data.role === 'foreman' || me.data.role === 'worker') ? (
-          <OtherCabinet me={me.data} />
+        ) : me.data && crew ? (
+          <Suspense fallback={null}><WorkerPage me={me.data} onLogout={logout} /></Suspense>
         ) : (
           <StateView loading={me.loading} error={me.error} hasData={!!me.data} onRetry={me.reload}>
             {me.data && <MeContext.Provider value={me.data}>{children}<AssistantPanel /></MeContext.Provider>}
@@ -97,20 +116,6 @@ export function Shell({ children }: { children: ReactNode }) {
 const Forbidden = () => (
   <div className="gp-page"><div className="gp-state gp-state--error" role="alert"><span className="gp-state__icon" aria-hidden="true">🔒</span>{t('state.forbidden')}</div></div>
 );
-
-/** Бригадир и работник работают в своих кабинетах (участник 4); сюда им доступа нет. */
-function OtherCabinet({ me }: { me: Me }) {
-  return (
-    <div className="gp-page">
-      <div className="gp-card gp-other">
-        <p className="gp-eyebrow">{t(`shell.role.${me.role}` as Key)}</p>
-        <h1 className="gp-h1">{t('shell.otherCabinet.title')}</h1>
-        <p>{t('shell.otherCabinet.text')}</p>
-        <a className="gp-btn gp-btn--primary" href="#/worker">{t('shell.otherCabinet.link')}</a>
-      </div>
-    </div>
-  );
-}
 
 function Login({ onDone }: { onDone: () => void }) {
   const { api, mode } = useData();

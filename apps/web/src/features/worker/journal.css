@@ -44,4 +44,5 @@ h1{font:600 clamp(44px,6.2vw,80px)/.99 var(--gp-display);letter-spacing:-.055em}
 @media(max-width:800px){.date-tools{width:205px;padding-left:18px}}
 @media(max-width:540px){.heading-copy{grid-row:auto}.page-heading{row-gap:22px}.shift-stamp{align-self:start}.date-tools{grid-column:1 / -1;flex-wrap:nowrap;width:auto;padding:0;margin:0;gap:12px;align-items:center}.date-tools label{display:flex;align-items:center;gap:12px;flex-basis:auto}.date-tools label>span{font-size:11px;margin:0}.date-tools input{width:154px;padding:8px;font-size:12px}.date-tools .icon-button{width:44px;flex-shrink:0}.badge{font-size:10px}.task-code,.task-deadline,.task-team{font-size:10px}.tabs button{font-size:11px}.crew-label,.roster-count{font-size:11px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+.planting-actual{padding:12px 0;border-bottom:1px solid var(--gp-line)}.planting-actual .field{margin-top:14px}.planting-actual textarea{font-family:var(--gp-mono);min-height:92px}.planting-actual .button{white-space:normal;text-align:left;margin-top:8px}
 
