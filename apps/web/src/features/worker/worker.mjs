@@ -2,8 +2,9 @@ import { WorkerWorkflow, validatePhoto, REASONS } from './workflow.mjs';
 import { BrowserDrafts } from './drafts.mjs';
 import { dictionary } from './strings.mjs';
 import { icon } from './icons.mjs';
-import { OBSERVATION_CATEGORIES, ROLE_LABELS } from './contract-v2.mjs';
-import { scheme, crewSummary, assignmentPanel, sharedMaterials, reportQuantities, reportHistoryAmounts, localInput } from './v2-views.mjs';
+import { OBSERVATION_CATEGORIES } from './contract-v2.mjs';
+import { scheme, assignmentPanel, sharedMaterials, reportQuantities, reportHistoryAmounts, localInput } from './v2-views.mjs';
+import { cabinetLayout, navigation, taskRow } from './cabinet-layout.mjs';
 const escape = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[char]));
 const dateTime = value => new Intl.DateTimeFormat('ru-KZ', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Qyzylorda' }).format(new Date(value));
 const safePhotoURL = url => typeof url === 'string' && (/^data:image\/(png|jpeg|webp);base64,/.test(url) || /^https:\/\//.test(url) || /^blob:/.test(url)) ? url : '';
@@ -105,7 +106,7 @@ export class GreenWorker extends HTMLElement {
   }
   async onChange(event) {
     try {
-      if (event.target.dataset.field === 'date') { this.date = event.target.value; this.selected = null; this.draft = null; this.mobileDetail = false; this.setPreview(null); await this.refresh(false); }
+      if (event.target.dataset.field === 'date') { if (!event.target.value) return; this.date = event.target.value; this.selected = null; this.draft = null; this.mobileDetail = false; this.setPreview(null); await this.refresh(false); }
       if (event.target.type === 'file' && this.draft && !this.draft.frozen) {
         const file = event.target.files[0]; if (!file) return;
         const key = this.draft.storageKey; const version = this.contextVersion;
@@ -126,7 +127,7 @@ export class GreenWorker extends HTMLElement {
     if (action === 'rebase-draft' && this.draft?.delivery==='conflict'){await this.workflow.rebase(this.draft);await this.refresh(false);this.render();return;}
     if (action === 'tab') { this.section = id; this.selected = this.tasks.find(t => t.section === id) || null; this.draft = null; this.mobileDetail = false; this.message = null; this.setPreview(null); this.render(); return; }
     if (action === 'select') { const version = this.contextVersion; const task = await this.gateway.getTask(id); if (version !== this.contextVersion || !task.visibleToCurrentUser && task.assignedTo !== this.user?.id) return; this.selected = task; this.assignmentDraft=null; this.mobileDetail = true; this.draft = null; this.suggestion = null; this.message = null; this.setPreview(null); this.render(); this.root.querySelector('.detail-panel h2')?.focus(); return; }
-    if (action === 'back') { this.mobileDetail = false; this.draft = null; this.setPreview(null); this.render(); return; }
+    if (action === 'back') { const taskId = this.selected?.id; this.mobileDetail = false; this.draft = null; this.setPreview(null); this.render(); [...this.root.querySelectorAll('[data-action="select"]')].find(button => button.dataset.id === taskId)?.focus(); return; }
     if (action === 'open-report' || action === 'open-issue') return this.openDraft(action === 'open-report' ? 'report' : 'issue');
     if (action === 'open-draft') {
       const entry = this.queue.find(x => x.storageKey === id); if (!entry) return;
@@ -193,21 +194,33 @@ export class GreenWorker extends HTMLElement {
     finally { if (version === this.contextVersion) { this.busy = false; this.render(); this.dispatchEvent(new CustomEvent('worker-busy', { detail: false })); } }
   }
   button(action, label, css = '', iconName = '', id = '', disabled = false) { return `<button type="button" class="button ${css}" data-action="${action}" ${id ? `data-id="${escape(id)}"` : ''} ${disabled ? 'disabled' : ''}>${iconName ? icon(iconName) : ''}${escape(label)}</button>`; }
-  nav() { return [['tasks','list',this.t.myTasks],['history','clock',this.t.history],['profile','user',this.t.profile]].map(([id, symbol, label]) => `<button type="button" data-action="nav" data-id="${id}" class="${this.page === id ? 'active' : ''}" ${this.page === id ? 'aria-current="page"' : ''}>${icon(symbol)}${escape(label)}</button>`).join(''); }
+  nav() { return navigation(this); }
   badge(task) { return `<span class="badge ${task.coordinatorComment ? 'warn' : task.section === 'confirmed' ? 'ok' : ''}">${escape(task.statusLabel)}</span>`; }
-  card(task) { return `<button type="button" data-action="select" data-id="${escape(task.id)}" class="task ${this.selected?.id === task.id ? 'selected' : ''}" aria-label="${escape(task.place + '. ' + task.action + '. ' + task.statusLabel)}"><div class="task-top"><span class="task-code">${escape(task.id)}</span><span class="priority ${task.priorityTone === 'high' ? 'high' : ''}"><span class="dot"></span>${escape(task.priority)}</span></div><h3>${escape(task.place)}</h3><p class="task-action">${escape(task.action)}</p><span class="task-arrow">${icon('arrow')}</span><div class="task-bottom"><span class="time">${icon('clock')}${escape(task.due)}</span>${this.badge(task)}</div></button>`; }
+  card(task, index = 0) { return taskRow(this, task, index); }
   historyCards(history, task) { return history.length ? `<div class="history-list">${[...history].reverse().map(item => `<article class="history-card"><div class="row"><strong>${item.type === 'issue' ? this.t.issue : this.t.report}</strong><span class="badge">${escape(item.reviewLabel)}</span></div><small>${escape(dateTime(item.time))}</small>${item.reason ? `<p><strong>${escape(item.reason)}</strong></p>` : ''}<p>${escape(item.note || this.t.emptyNote)}</p>${item.photoName ? `<small>${icon('photo')} ${this.t.photoAttached}: ${escape(item.photoName)}</small>${safePhotoURL(item.photoUrl) ? `<img src="${escape(safePhotoURL(item.photoUrl))}" alt="${escape(this.t.photoAttached)}" loading="lazy">` : `<small>${this.demo ? this.t.previewUnavailable : ''}</small>`}` : ''}${item.analysis ? `<p><strong>${this.t.confirmedAnalysis}: ${escape(item.analysis.category)}</strong><br>${item.analysis.facts.map(escape).join('<br>')}</p><small>${this.t.origin}: ${escape(item.analysis.provenance?.provider)} · ${escape(item.analysis.decision)}</small>` : ''}${item.geo ? `<p>${Number(item.geo.latitude).toFixed(5)}, ${Number(item.geo.longitude).toFixed(5)} · ±${Math.round(item.geo.accuracy)} м</p><small>${this.t.geoEvidence}</small>` : ''}${reportHistoryAmounts(task,item,this.crewWorkspace,this.t)}${item.coordinatorComment ? `<blockquote><strong>${this.t.reviewComment}</strong><br>${escape(item.coordinatorComment)}</blockquote>` : ''}</article>`).join('')}</div>` : `<p class="small muted">${this.t.noHistory}</p>`; }
   detail() {
     const task = this.selected, t = this.t; if (!task) return '';
-    return `<section class="detail-panel" aria-label="${t.detail}"><div class="detail-hero"><div class="detail-pattern">${icon('leaf')}</div><div class="row"><span class="task-code">${t.detail.toUpperCase()} ${escape(task.id)}</span>${this.badge(task)}</div><h2 tabindex="-1">${escape(task.action)}</h2><p>${escape(task.objectLabel)}</p></div><div class="detail-body">
-      ${task.coordinatorComment ? `<div class="note-box"><strong>${t.returnTitle}</strong>${escape(task.coordinatorComment)}</div>` : ''}
-      <div><p class="section-label">${t.instruction}</p><p class="body-text">${escape(task.instruction)}</p></div>
-      ${scheme(task,t)}
-      <div class="norm-box"><p class="section-label">${t.norm}</p><p>${escape(task.norm || t.noNorm)}</p><small>${escape(task.norm ? task.normSource : t.noNormText)}</small></div>
-      <div class="metadata"><div><p class="section-label">${t.duration}</p><p>${icon('clock')} ${escape(task.duration || t.noData)}</p></div>${task.startedAt ? `<div><p class="section-label">${t.started}</p><p>${escape(dateTime(task.startedAt))}</p></div>` : ''}</div>
-      <div><p class="section-label">${t.location}</p><div class="location-box"><div class="location-icon">${icon('pin')}</div><div><p><strong>${escape(task.place)}</strong></p><p>${escape(task.address)}</p><small>${t.coordinates}: ${escape(task.coordinates?.latitude ?? t.noData)}, ${escape(task.coordinates?.longitude ?? t.noData)}</small></div></div><p class="small muted" style="margin-top:7px">${t.locationNote}</p></div>
-    </div>${this.user.role==='foreman'||task.sharedDraft?`<div class="crew-context">${this.user.role==='foreman'?assignmentPanel(task,this.crewWorkspace,this.assignmentDraft,t,this.busy):''}${sharedMaterials(task,this.crewWorkspace,t)}</div>`:''}<div class="detail-footer">${task.permissions.start && !this.draft ? this.button('start', this.busy ? t.starting : t.start, 'primary full', 'arrow', '', this.busy) + `<p class="small muted" style="text-align:center">${t.startHint}</p>` : ''}${task.permissions.report && !this.draft ? this.button('open-report', task.reportMode==='contribution'?t.addMaterials:task.reportMode==='final'?t.prepareFinal:task.coordinatorComment ? t.fixReport : t.writeReport, 'primary full', 'photo') : ''}${task.permissions.issue && !this.draft ? this.button('open-issue', t.cannot, 'plain full', 'alert') : ''}${!task.permissions.start && !task.permissions.report && !task.permissions.issue ? `<p class="small muted">${escape(task.statusLabel)}</p>` : ''}</div>
-      ${this.draft ? this.form() : ''}<div class="detail-body"><h3>${t.historyTitle}</h3>${this.historyCards(task.history || [], task)}</div></section>`;
+    const actions = !this.draft ? [
+      task.permissions.start ? this.button('start', this.busy ? t.starting : t.start, 'primary', 'arrow', '', this.busy) : '',
+      task.permissions.report ? this.button('open-report', task.reportMode === 'contribution' ? t.addMaterials : task.reportMode === 'final' ? t.prepareFinal : task.coordinatorComment ? t.fixReport : t.writeReport, 'primary', 'photo') : '',
+      task.permissions.issue ? this.button('open-issue', t.cannot, 'secondary', 'alert') : ''
+    ].join('') : '';
+    return `<section class="detail-panel" aria-label="${t.detail}">
+      <header class="detail-hero"><div class="row"><span class="task-code">${t.workSheet} / ${escape(task.id)}</span>${this.badge(task)}</div><h2 tabindex="-1">${escape(task.place)}</h2><p class="detail-action">${escape(task.action)}</p><div class="sheet-meta"><span>${escape(task.objectLabel)}</span><span>${escape(task.due)}</span><span>${escape(task.duration || t.noData)}</span></div></header>
+      ${task.coordinatorComment ? `<div class="note-box return-note"><strong>${t.returnTitle}</strong><p>${escape(task.coordinatorComment)}</p></div>` : ''}
+      ${actions ? `<div class="detail-footer">${actions}${task.permissions.start ? `<p class="small muted">${t.startHint}</p>` : ''}</div>` : ''}
+      <div class="work-columns"><div class="detail-body">
+        <section class="instruction-section"><p class="section-label">${t.instruction}</p><p class="body-text">${escape(task.instruction)}</p></section>
+        ${scheme(task,t)}
+        <section><p class="section-label">${t.location}</p><div class="location-box">${icon('pin')}<div><strong>${escape(task.place)}</strong><p>${escape(task.address)}</p><p class="coordinate-line">${escape(task.coordinates?.latitude ?? t.noData)}, ${escape(task.coordinates?.longitude ?? t.noData)}</p></div></div><p class="small muted">${t.locationNote}</p></section>
+      </div><aside class="crew-context" aria-label="${t.workConditions}">
+        <div class="norm-box"><p class="section-label">${t.norm}</p><strong>${escape(task.norm || t.noNorm)}</strong><p class="small muted">${escape(task.norm ? task.normSource : t.noNormText)}</p></div>
+        <div class="metadata"><div><p class="section-label">${t.duration}</p><p>${escape(task.duration || t.noData)}</p></div>${task.startedAt ? `<div><p class="section-label">${t.started}</p><p>${escape(dateTime(task.startedAt))}</p></div>` : ''}</div>
+        ${this.user.role === 'foreman' ? assignmentPanel(task,this.crewWorkspace,this.assignmentDraft,t,this.busy) : ''}
+        ${sharedMaterials(task,this.crewWorkspace,t)}
+      </aside></div>
+      ${this.draft ? this.form() : ''}<section class="detail-history"><header class="section-heading"><span class="section-label">${t.journalNav}</span><h3>${t.historyTitle}</h3></header>${this.historyCards(task.history || [], task)}</section>
+    </section>`;
   }
   form() {
     const d = this.draft, t = this.t, issue = d.kind === 'issue', final=!issue&&this.selected.reportMode==='final',contribution=!issue&&this.selected.reportMode==='contribution', locked = !!d.frozen || this.busy, disabled = locked ? 'disabled' : '';
@@ -231,19 +244,8 @@ export class GreenWorker extends HTMLElement {
     </section>`;
   }
   render() {
-    const t = this.t, selected = this.selected, count = section => this.tasks.filter(task => task.section === section).length;
-    const css = `<link rel="stylesheet" href="${new URL('./worker.css', import.meta.url).href}">`;
-    if (!this.user) { this.root.innerHTML = `${css}<div class="signed-out"><h2>${t.signIn}</h2><p>${t.signInText}</p></div>`; return; }
-    if(!['worker','foreman'].includes(this.user.role)){this.root.innerHTML=`${css}<div class="signed-out"><h2>${t.unsupportedRole}</h2><p>${t.unsupportedRoleText}</p><p>${escape(this.user.displayName)} · ${ROLE_LABELS[this.user.role]}</p></div>`;return;}
-    const brand = `<div class="brand"><span class="brand-mark">${icon('leaf')}</span><span>${t.brand}<small>${t.workspace}</small></span></div>`;
-    let content;
-    if (this.page === 'profile') content = `<section class="profile"><h2>${t.profile}</h2><div><p class="section-label">${t.user}</p><strong>${escape(this.user.name)}</strong><p class="small muted">${escape(ROLE_LABELS[this.user.role]||this.user.role)}</p></div><div><p class="section-label">${t.session}</p><p class="small break">${escape(this.user.id)}</p></div>${this.demo ? `<p class="small muted">${t.demoAccount}</p>` : ''}${this.button('logout', t.logout, 'secondary')}</section>`;
-    else if (this.page === 'history') content = `<section><h2 style="margin-bottom:20px">${t.historyTitle}</h2><div class="history-list">${this.tasks.filter(task => task.history?.length).map(task => `<section><h3 style="margin:8px 0 12px">${escape(task.place)} · ${escape(task.id)}</h3>${this.historyCards(task.history, task)}</section>`).join('') || `<p>${t.noHistory}</p>`}</div></section>`;
-    else content = `<div class="split ${this.mobileDetail && selected ? 'detail-open' : ''}"><div class="list-pane"><div class="tabs" role="group" aria-label="${t.tasksLabel}">${['current','submitted','confirmed'].map(section => `<button type="button" data-action="tab" data-id="${section}" class="${this.section === section ? 'active' : ''}" aria-pressed="${this.section === section}">${t[section]}<span>${count(section)}</span></button>`).join('')}</div><div class="task-list">${this.loading ? `<p role="status">${t.loading}</p>` : this.tasks.filter(task => task.section === this.section).map(task => this.card(task)).join('') || `<div class="empty">${icon('leaf')}<h3>${this.tasks.length ? t.emptySection : t.emptyTitle}</h3><p>${this.tasks.length ? t.emptySectionText : t.emptyText}</p>${this.button('refresh', t.refresh, 'plain', 'refresh')}</div>`}</div></div><div>${this.button('back', t.back, 'back plain', 'back')}${this.detail()}</div></div>`;
-    this.root.innerHTML = `${css}<div class="shell"><aside class="rail">${brand}<nav class="nav" aria-label="${t.workerSpace}">${this.nav()}</nav><div class="rail-help"><div class="leaf-art">${icon('leaf')}</div><h3 style="font-size:12px">${t.helpTitle}</h3><p>${t.helpText}</p></div><p class="rail-bottom">${this.demo ? 'Локальный шаблон · V2' : t.workerSpace}</p></aside><div class="workspace"><header class="topbar"><p class="breadcrumb">Green Pavlodar <span style="margin:0 12px">/</span> ${t.workerSpace}</p><div class="mobile-brand">${brand}</div><div class="identity"><div><strong>${escape(this.user.name)}</strong><small>${escape(ROLE_LABELS[this.user.role]||this.user.role)}</small></div><span class="avatar">${escape(this.user.name.split(' ').map(x => x[0]).slice(0,2).join(''))}</span></div></header>${this.demo ? `<div class="demo-line"><span class="demo-tag">${t.demo}</span><span>${t.demoNotice}</span></div>` : ''}${this.locale === 'kk-draft' ? `<div class="language-note">${t.languageNote}</div>` : ''}<main class="main"><div class="page-heading ${this.mobileDetail ? 'detail-mode' : ''}"><div><p class="eyebrow">${t.workerSpace}</p><h1>${t.myTasks}</h1><p class="subhead">${t.greeting}</p></div><div class="date-tools"><label for="shift-date">${t.today}<input id="shift-date" data-field="date" type="date" value="${escape(this.date)}"></label><button type="button" class="icon-button" data-action="refresh" aria-label="${t.refresh}" ${this.loading || this.busy ? 'disabled' : ''}>${icon('refresh')}</button></div></div><div class="stats ${this.mobileDetail ? 'detail-mode' : ''}"><div class="stat"><div><span>${t.totalLabel}</span></div><strong>${this.tasks.length}</strong><i class="stat-icon">${icon('list')}</i></div><div class="stat"><div><span>${t.inProgressLabel}</span></div><strong>${count('current')}</strong><i class="stat-icon">${icon('clock')}</i></div><div class="stat green"><div><span>${t.completedLabel}</span></div><strong>${count('confirmed')}</strong><i class="stat-icon">${icon('check')}</i></div></div>
-      ${this.message ? `<div class="toast ${this.message.tone || ''}" role="${this.message.tone === 'error' ? 'alert' : 'status'}">${escape(this.message.text)}</div>` : ''}
-      ${this.queue.length ? `<div class="queue"><div><strong>${t.localOnly}: ${this.queue.length}</strong><p>${t.queueHelp}</p>${this.queue.map(entry => `<button type="button" class="button plain" style="font-size:11px;padding:5px;min-height:44px" data-action="open-draft" data-id="${escape(entry.storageKey)}">${t.draftOpen}: ${escape(entry.taskId)} · ${entry.kind === 'issue' ? t.issue : t.report}</button>`).join('')}</div>${this.button('sync', t.synchronize, 'secondary', 'cloud', '', this.busy)}</div>` : ''}${this.user.role==='foreman'&&!this.mobileDetail?crewSummary(this.crewWorkspace,t):''}${content}</main></div><nav class="mobile-nav" aria-label="${t.workerSpace}">${this.nav()}</nav></div>`;
-    // Disable navigation during a mutation; retries are guarded in the workflow as well.
+    const css = `<link rel="stylesheet" href="${new URL('./journal.css', import.meta.url).href}">`;
+    this.root.innerHTML = cabinetLayout(this, css);
     if (this.busy) this.root.querySelectorAll('[data-action="select"],[data-action="tab"],[data-action="nav"],[data-action="open-draft"],[data-action="back"],[data-field="date"]').forEach(element => { element.disabled = true; });
   }
 }

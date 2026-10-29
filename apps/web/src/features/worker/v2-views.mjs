@@ -10,18 +10,18 @@ export function scheme(task,t){
   if(!points.length)return `<p>${t.noScheme}</p>`;
   const xs=points.map(p=>p[0]),ys=points.map(p=>p[1]);const minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);
   const x=v=>20+(v-minX)/Math.max(.00001,maxX-minX)*320,y=v=>200-(v-minY)/Math.max(.00001,maxY-minY)*180;
-  const palette={building:'#c9d0c2',road:'#b1b8ae',crossing:'#f7f5e8',planting:'#6f955d'};
+  const palette={building:'#d4d7dd',road:'#a2a8b3',crossing:'#ffffff',planting:'#2d52d1'};
   const shapes=features.map(f=>{
-    const color=palette[f.kind]||'#e2e8d9';
-    if(f.geometry.type==='Polygon')return `<polygon points="${f.geometry.coordinates[0].map(p=>`${x(p[0]).toFixed(1)},${y(p[1]).toFixed(1)}`).join(' ')}" fill="${color}" stroke="${f.kind==='planting'?'#365b2b':'#8e9a84'}" stroke-width="1.5"><title>${e(f.name||f.kind)}</title></polygon>`;
+    const color=palette[f.kind]||'#e9edf5';
+    if(f.geometry.type==='Polygon')return `<polygon points="${f.geometry.coordinates[0].map(p=>`${x(p[0]).toFixed(1)},${y(p[1]).toFixed(1)}`).join(' ')}" fill="${color}" stroke="${f.kind==='planting'?'#183a98':'#8991a2'}" stroke-width="1.5"><title>${e(f.name||f.kind)}</title></polygon>`;
     const ps=f.geometry.type==='MultiPoint'?f.geometry.coordinates:f.geometry.type==='Point'?[f.geometry.coordinates]:[];
-    return ps.map(p=>`<circle cx="${x(p[0]).toFixed(1)}" cy="${y(p[1]).toFixed(1)}" r="8" fill="${color}" stroke="#365b2b"/>`).join('');
+    return ps.map(p=>`<circle cx="${x(p[0]).toFixed(1)}" cy="${y(p[1]).toFixed(1)}" r="8" fill="${color}" stroke="#183a98"/>`).join('');
   }).join('');
-  return `<section><p class="section-label">${t.approvedDesign}</p><h3>${e(d.name)}</h3><p class="small muted">${t.revision} ${d.revision} · ${t.taskVersion} ${task.approvedDesignVersion}</p>${!task.designCurrent?`<div class="note-box">${t.staleDesign}</div>`:''}<figure class="scheme"><svg viewBox="0 0 360 220" role="img" aria-label="${t.schemeLabel}"><rect width="360" height="220" fill="#f2f4ea"/>${shapes}</svg><figcaption>${task.isDemo?t.schemeDemo:t.schemeSources}</figcaption></figure><p class="small muted">${t.schemeLegend}</p><div class="quantity-list">${d.plantingItems.map(item=>`<div class="quantity-row"><span>${e(task.catalog.find(c=>c.id===item.catalogItemId)?.displayName||item.catalogItemId)}</span><strong>${item.quantity===null?t.noData:item.quantity} ${t.pieces}</strong></div>`).join('')}</div><p class="small muted">${t.noConceptPhoto}</p></section>`;
+  return `<section><p class="section-label">${t.approvedDesign}</p><h3>${e(d.name)}</h3><p class="small muted">${t.revision} ${d.revision} · ${t.taskVersion} ${task.approvedDesignVersion}</p>${!task.designCurrent?`<div class="note-box">${t.staleDesign}</div>`:''}<figure class="scheme"><svg viewBox="0 0 360 220" role="img" aria-label="${t.schemeLabel}"><rect width="360" height="220" fill="#f1f4fa"/>${shapes}</svg><figcaption>${task.isDemo?t.schemeDemo:t.schemeSources}</figcaption></figure><p class="small muted">${t.schemeLegend}</p><div class="quantity-list">${d.plantingItems.map(item=>`<div class="quantity-row"><span>${e(task.catalog.find(c=>c.id===item.catalogItemId)?.displayName||item.catalogItemId)}</span><strong>${item.quantity===null?t.noData:item.quantity} ${t.pieces}</strong></div>`).join('')}</div><p class="small muted">${t.noConceptPhoto}</p></section>`;
 }
 export function crewSummary(workspace,t){
   if(!workspace)return '';
-  return `<section class="crew-summary"><div><p class="section-label">${t.myCrews}</p><strong>${workspace.crews.map(c=>e(c.name)).join(', ')}</strong><p class="small muted">${workspace.workers.length} ${t.peopleInRoster}</p></div><div><p class="section-label">${t.resources}</p>${workspace.resources.map(r=>`<p class="small">${e(r.label)} · ${r.capacity??t.noData} ${e(r.unit||'')}</p>`).join('')}<p class="small muted">${t.resourcesOnce}</p></div></section>`;
+  return `<details class="crew-summary"><summary><span class="crew-label">${t.myCrews}</span><strong>${workspace.crews.map(c=>e(c.name)).join(', ')}</strong><span class="roster-count">${workspace.workers.length} ${t.peopleInRoster}</span><span class="disclosure" aria-hidden="true">+</span></summary><div class="crew-expanded"><div><p class="section-label">${t.selectPeople}</p>${workspace.workers.map(w=>`<p>${e(w.displayName)} <span class="small muted">${clockTime(w.profile.shiftStart)}–${clockTime(w.profile.shiftEnd)}</span></p>`).join('')}</div><div><p class="section-label">${t.resources}</p>${workspace.resources.map(r=>`<p>${e(r.label)} · ${r.capacity??t.noData} ${e(r.unit||'')}</p>`).join('')}<p class="small muted">${t.resourcesOnce}</p></div></div></details>`;
 }
 export function assignmentPanel(task,workspace,draft,t,busy){
   if(!workspace||!workspace.crews.some(c=>c.id===task.assignedCrewId))return '';
