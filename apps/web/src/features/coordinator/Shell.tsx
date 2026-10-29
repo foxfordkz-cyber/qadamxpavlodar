@@ -3,6 +3,7 @@ import { useData, useResource, type SvcState } from '../../shared/api/DataProvid
 import { ApiError } from '../../shared/api/transport';
 import { Button, ErrorNote, Field, StateView, useGuarded } from '../../shared/ui/components';
 import { t, type Key } from '../../shared/i18n';
+import { LanguageSwitcher } from '../../shared/i18n/LanguageSwitcher';
 import { fmtDate } from '../../shared/format';
 import { hrefFor, navigate, useRoute } from '../../shared/router';
 
@@ -80,6 +81,7 @@ export function Shell({ children }: { children: ReactNode }) {
         <div className="gp-header__right">
           {me.data && <span className="gp-small">{me.data.displayName}</span>}
           {mode === 'mock' && <Button onClick={() => setDev(true)}>⚙ {t('shell.devPanel')}</Button>}
+          <LanguageSwitcher />
           {me.data && <Button onClick={logout}>{t('shell.logout')}</Button>}
         </div>
       </header>
