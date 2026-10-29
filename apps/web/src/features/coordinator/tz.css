@@ -133,3 +133,14 @@
 .gp-drawbar__form { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
 .gp-drawbar__form .gp-input { min-height: 32px; padding: 4px 10px; width: 220px; }
 .gp-map__saved { position: absolute; z-index: 6; left: 50%; transform: translateX(-50%); bottom: 44px; max-width: min(520px, 90%); margin: 0; }
+
+/* Зоны из ответа ассистента и дорожной карты: нумерация совпадает с номерами на карте. */
+.gp-hl { margin: 0; padding: 10px 12px; border-bottom: 1px solid var(--gp-border); background: #f4effa; }
+.gp-hl__head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 6px; }
+.gp-hl__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: 220px; overflow-y: auto; }
+.gp-hl__item { all: unset; box-sizing: border-box; cursor: pointer; display: flex; gap: 8px; align-items: center; width: 100%; padding: 4px 6px; border-radius: 6px; font-size: 14px; }
+.gp-hl__item:hover, .gp-hl__item[aria-current='true'] { background: #e6dcf3; }
+.gp-hl__item:focus-visible { outline: 2px solid #6b3fa0; outline-offset: 1px; }
+.gp-hl__n { flex: none; display: inline-grid; place-items: center; min-width: 22px; height: 22px; border-radius: 11px; background: #6b3fa0; color: #fff; font-weight: 700; font-size: 12px; padding: 0 5px; }
+.gp-hl-pill { position: absolute; z-index: 6; left: 50%; transform: translateX(-50%); bottom: 10px; display: flex; gap: 8px; align-items: center; margin: 0; padding: 4px 6px 4px 8px; font-size: 14px; max-width: min(460px, 90%); }
+.gp-assist__map { margin-top: 6px; }

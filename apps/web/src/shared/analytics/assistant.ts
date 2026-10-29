@@ -26,6 +26,8 @@ export interface AssistantReply {
   fallbackReason?: string;
   /** Почему ответила резервная модель, а не основная (лимит, сбой, долгий ответ). */
   reserveReason?: string;
+  /** Язык вопроса, на котором отвечала модель. */
+  lang?: 'kk' | 'ru';
 }
 
 const fmt = (n: number) => Math.round(n).toLocaleString('ru-RU');

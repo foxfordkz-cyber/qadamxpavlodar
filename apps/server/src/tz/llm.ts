@@ -35,7 +35,7 @@ export const llmConfig = (env = process.env): LlmConfig | null => llmProviders(e
 
 const SYSTEM = `Ты — ассистент специалиста акимата Павлодара по озеленению (прототип, демо-данные).
 Правила:
-1. Отвечай по-русски, коротко: 3–8 предложений или короткий список.
+1. Отвечай на языке вопроса (казахский или русский), коротко: 3–8 предложений или короткий список. Названия зон пиши как в результатах функций.
 2. Любое число, площадь, цену, процент, балл бери ТОЛЬКО из результатов функций. Сам ничего не считай и не оценивай. Нужна цифра — вызови функцию.
    Факторы приоритета и пригодность видов — баллы 0–100, а не проценты; проценты — только приживаемость.
    Не добавляй фактов, которых нет в результатах функций (какие именно объекты рядом, причины, названия).
@@ -45,6 +45,10 @@ const SYSTEM = `Ты — ассистент специалиста акимат�
 6. На вопросы «почему», «откуда цифра», «что за вид» используй search_knowledge и называй источник.
 7. Не давай юридических разрешений: посадку согласует специалист после проверок участка.
 8. Пиши простым текстом: без Markdown, таблиц и звёздочек; список — каждый пункт с новой строки, начиная с «• ». id зон не пиши — только названия.`;
+
+/** Язык вопроса: буквы, которых нет в русском (ә ғ қ ң ө ұ ү һ і), — казахский. */
+export const questionLang = (text: string): 'kk' | 'ru' => (/[әғқңөұүһі]/i.test(text) ? 'kk' : 'ru');
+const LANG_NOTE = { kk: '\nОтветь на казахском языке (қазақ тілінде).', ru: '' } as const;
 
 const ZONE = { type: 'string', description: 'id зоны, например site-osm-1546881092' };
 const tool = (name: string, description: string, properties: Json, required: string[] = []) =>
@@ -214,7 +218,8 @@ async function askOne(s: Store, exec: ReturnType<typeof createTools>, cfg: LlmCo
   const ctx: Ctx = { zones: [], evidence: new Set() };
   const selected = siteId ? maybeDoc(s, 'site', siteId) : undefined;
   const where = selected && analyzable(selected) ? `Выбранная на карте зона: ${selected.id} «${selected.name}».` : 'Зона на карте не выбрана.';
-  const messages: Json[] = [{ role: 'system', content: SYSTEM }, { role: 'user', content: `${where}\nВопрос: ${message}` }];
+  const lang = questionLang(message);
+  const messages: Json[] = [{ role: 'system', content: SYSTEM }, { role: 'user', content: `${where}${LANG_NOTE[lang]}\nВопрос: ${message}` }];
   const toolCalls: { name: string; args: Json }[] = [];
   let text = '';
   for (let round = 0; ; round++) {
@@ -234,7 +239,7 @@ async function askOne(s: Store, exec: ReturnType<typeof createTools>, cfg: LlmCo
   const named = ctx.zones.filter((z) => text.includes(z.name));
   const sources = [...ctx.evidence].map((id) => maybeDoc(s, 'evidence', id)).filter(Boolean).slice(0, 6)
     .map((e) => ({ id: e!.id, label: String(e!.sourceLabel), ...(e!.sourceUrl ? { url: String(e!.sourceUrl) } : {}) }));
-  return { text, zones: (named.length ? named : ctx.zones).slice(0, 8), method: 'model', intent: toolCalls[0]?.name ?? 'chat', model: cfg.model, sources, toolCalls } as Json;
+  return { text, zones: (named.length ? named : ctx.zones).slice(0, 8), method: 'model', intent: toolCalls[0]?.name ?? 'chat', model: cfg.model, sources, toolCalls, lang } as Json;
 }
 
 export type CheckResult = { name: string; model: string; host: string; hostAllowed: boolean; keyAccepted: boolean | null; modelListed: boolean | null; available: string[]; toolCall: boolean; ms: number | null; error: string | null };

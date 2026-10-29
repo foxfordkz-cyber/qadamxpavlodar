@@ -5,7 +5,7 @@ import { once } from 'node:events';
 import { fixture } from './helpers.js';
 import { seedV2, DEMO_PASSWORD } from '../src/v2/seed.js';
 import { seedTz } from '../src/tz/seed.js';
-import { checkProvider, createLlmAssistant, llmConfig, llmProviders, TOOLS, type LlmConfig } from '../src/tz/llm.js';
+import { checkProvider, createLlmAssistant, llmConfig, llmProviders, questionLang, TOOLS, type LlmConfig } from '../src/tz/llm.js';
 import type { AssistantAdapter } from '../src/tz/routes.js';
 
 type Reply = { status?: number; body: unknown; headers?: Record<string, string> };
@@ -90,6 +90,24 @@ test('tools run real calculations: selected zone analysis, knowledge search with
   assert.deepEqual(r.body.data.toolCalls.map((x: any) => x.name), ['analyze_zone', 'search_knowledge', 'analyze_zone']);
   assert.ok(r.body.data.sources.length > 0 && r.body.data.sources.every((x: any) => x.id && x.label));
   assert.equal(seen.length, 4);
+});
+
+test('answer language follows the question: a Kazakh question gets a Kazakh instruction, a Russian one does not', async t => {
+  assert.equal(questionLang('Бірінші кезекте қай аумақтарды көгалдандыру керек?'), 'kk');
+  assert.equal(questionLang('Какие зоны озеленить в первую очередь?'), 'ru');
+  const f = await app(t);
+  const { cfg, seen } = await fakeModel(t, [
+    req => (req.messages.some((m: any) => m.role === 'tool') ? say(`Бірінші аумақ — ${lastTool(req).items[0].zone.name}, индекс ${lastTool(req).items[0].index}.`) : toolCall('top_priorities', { limit: 1 })),
+  ]);
+  f.use(createLlmAssistant(f.store, cfg));
+  const kk = await f.ask('Бірінші кезекте қай аумақтарды көгалдандыру керек?');
+  assert.equal(kk.body.data.method, 'model', JSON.stringify(kk.body));
+  assert.equal(kk.body.data.lang, 'kk');
+  assert.match(seen[0]!.body.messages[1].content, /қазақ тілінде/);
+  const before = seen.length;
+  const ru = await f.ask('Какие зоны озеленить в первую очередь?');
+  assert.equal(ru.body.data.lang, 'ru');
+  assert.doesNotMatch(seen[before]!.body.messages[1].content, /қазақ тілінде/);
 });
 
 test('fallback to rules: model error, timeout or invented numbers never reach the user as a model answer', async t => {

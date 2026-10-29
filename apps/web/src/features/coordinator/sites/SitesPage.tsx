@@ -21,6 +21,15 @@ export function SitesPage() {
   const { api } = useData();
   const route = useRoute();
   const selectedId = route.params.get('site');
+  // Зоны из ответа ассистента или дорожной карты (#/map?hl=id1,id2&hlt=заголовок) — подсветка переживает выбор зоны.
+  const hlKey = route.params.get('hl') ?? '';
+  const hlTitle = route.params.get('hlt') || 'Зоны из ответа ассистента';
+  const hlIds = useMemo(() => hlKey.split(',').filter(Boolean).slice(0, 30), [hlKey]);
+  const [hlSeq, setHlSeq] = useState(0);
+  useEffect(() => { if (hlKey) setHlSeq((x) => x + 1); }, [hlKey]);
+  const highlight = useMemo(() => (hlIds.length ? { ids: hlIds, seq: hlSeq } : null), [hlIds, hlSeq]);
+  const keepHl = hlKey ? { hl: hlKey, hlt: route.params.get('hlt') } : {};
+  const clearHl = () => navigate('/map', { site: selectedId }, true);
   // Опрос раз в 30 с: изменения с сервера (проверки, отчёты) видны без перезагрузки.
   const sitesRes = useResource(() => api.sites(), [], 30000);
   const tasksRes = useResource(() => api.tasks(), [], 30000);
@@ -64,7 +73,7 @@ export function SitesPage() {
   const pickedHere = useRef<string | null>(null);
   const select = (id: string, fromList: boolean) => {
     pickedHere.current = id;
-    navigate('/map', { site: id }, true);
+    navigate('/map', { site: id, ...keepHl }, true);
     if (fromList) {
       setFocusSeq((x) => x + 1);
       setTab('map');
@@ -112,6 +121,7 @@ export function SitesPage() {
   return (
     <div className={`gp-sites ${selectedId ? 'gp-sites--card' : ''}`} data-tab={tab}>
       <aside className="gp-sites__list gp-card" aria-label={t('filters.title')}>
+        {highlight && <HighlightList title={hlTitle} ids={hlIds} names={names} selectedId={selectedId} onPick={(id) => select(id, true)} onClear={clearHl} />}
         <div className="gp-sites__filters">
           <Metrics compact />
           <label className="gp-sr" htmlFor="site-q">{t('filters.search')}</label>
@@ -165,8 +175,14 @@ export function SitesPage() {
           <div className="gp-alert gp-alert--bad" role="alert">Не показаны на карте из-за координат: {badGeometry.map(([s, e]) => `${s.id} (${e})`).join('; ')}</div>
         )}
         <SiteMap sites={validSites} eligibility={elig} selectedId={selectedId} onSelect={(id) => select(id, false)} focusSeq={focusSeq} context={ctxRes.data} plants={layers.greenery ? plantsRes.data?.data ?? [] : []} planned={planned} soils={layers.soils ? (soilsRes.data?.data as never) : null} greenery={layers.greenery ? (greenRes.data?.data as never) : null} zoneTint={zoneTint}
-          drawPoints={drawPoints} onDrawPoint={(p) => setDrawPoints((prev) => (prev ? [...prev, p] : prev))} target={target} toolbarExtra={toolbarExtra} />
+          drawPoints={drawPoints} onDrawPoint={(p) => setDrawPoints((prev) => (prev ? [...prev, p] : prev))} target={target} toolbarExtra={toolbarExtra} highlight={highlight} />
         {savedNote && <div className="gp-alert gp-alert--ok gp-map__saved" role="status">{savedNote}</div>}
+        {highlight && (
+          <div className="gp-hl-pill gp-card" role="status">
+            <span className="gp-hl__n" aria-hidden="true">{hlIds.length}</span><span>{hlTitle}</span>
+            <button className="gp-icon-btn" onClick={clearHl} aria-label="Убрать подсветку зон">✕</button>
+          </div>
+        )}
         <LayerPanel layers={layers} toggle={toggleLayer} loading={soilsRes.loading || greenRes.loading || problemsRes.loading || prioRes.loading}
           priority={layers.priority ? <PriorityControls prio={prio} items={prioRes.data?.items ?? null} names={names} onPick={(id) => select(id, true)} /> : null} />
         <MapLegend osmBase={osmMeta?.osmBase} />
@@ -174,7 +190,7 @@ export function SitesPage() {
 
       {selectedId && (
         <aside className="gp-sites__card gp-card" aria-label={t('site.card')}>
-          <SiteCard id={selectedId} tasks={tasks.filter((x) => x.objectId === selectedId)} onClose={() => navigate('/map', {}, true)} onChanged={() => { sitesRes.reload(); tasksRes.reload(); }}
+          <SiteCard id={selectedId} tasks={tasks.filter((x) => x.objectId === selectedId)} onClose={() => navigate('/map', keepHl, true)} onChanged={() => { sitesRes.reload(); tasksRes.reload(); }}
             context={{ data: ctxRes.data ?? null, error: ctxRes.error, loading: ctxRes.loading, radius, setRadius, reload: ctxRes.reload }}
             projects={(projectsRes.data?.data ?? []).filter((p) => p.siteId === selectedId)} plants={(plantsRes.data?.data ?? []).filter((p) => (projectsRes.data?.data ?? []).some((pr) => pr.id === p.projectId && pr.siteId === selectedId))} />
         </aside>
@@ -185,6 +201,25 @@ export function SitesPage() {
         <button role="tab" aria-selected={tab === 'map'} onClick={() => setTab('map')}>◫ Карта</button>
       </div>
     </div>
+  );
+}
+
+/** Зоны из ответа ассистента или дорожной карты — с той же нумерацией, что на карте. */
+function HighlightList({ title, ids, names, selectedId, onPick, onClear }: { title: string; ids: string[]; names: Map<string, string>; selectedId: string | null; onPick: (id: string) => void; onClear: () => void }) {
+  return (
+    <section className="gp-hl" aria-label={title}>
+      <div className="gp-hl__head">
+        <strong>{title}</strong>
+        <button className="gp-btn gp-btn--ghost" onClick={onClear}>✕ Убрать с карты</button>
+      </div>
+      <ol className="gp-hl__list">
+        {ids.map((id, i) => (
+          <li key={id}>
+            <button className="gp-hl__item" aria-current={id === selectedId} onClick={() => onPick(id)}><span className="gp-hl__n" aria-hidden="true">{i + 1}</span>{names.get(id) ?? id}</button>
+          </li>
+        ))}
+      </ol>
+    </section>
   );
 }
 
