@@ -105,7 +105,7 @@ export function ErrorNote({ error, notSaved }: { error: unknown; notSaved?: bool
 }
 
 /** Единая обработка загрузки, отказа сети, нет прав и пустых данных. */
-export function StateView({ loading, error, empty, emptyText, onRetry, children, hasData }: { loading: boolean; error: unknown; empty?: boolean; emptyText?: string; onRetry?: () => void; children?: ReactNode; hasData?: boolean }) {
+export function StateView({ loading, error, empty, emptyText, emptyAction, onRetry, children, hasData }: { loading: boolean; error: unknown; empty?: boolean; emptyText?: string; /** Что сделать дальше: кнопка или ссылка под пустым списком. */ emptyAction?: ReactNode; onRetry?: () => void; children?: ReactNode; hasData?: boolean }) {
   if (loading && !hasData) return <div className="gp-state" role="status"><span className="gp-spinner" aria-hidden="true" /> {t('state.loading')}</div>;
   const e = error as ApiError;
   const authLost = e instanceof ApiError && (e.status === 401 || e.status === 403);
@@ -120,7 +120,7 @@ export function StateView({ loading, error, empty, emptyText, onRetry, children,
       </div>
     );
   }
-  if (empty) return <div className="gp-state gp-state--empty"><span aria-hidden="true" className="gp-state__icon">∅</span>{emptyText ?? t('state.empty')}</div>;
+  if (empty) return <div className="gp-state gp-state--empty"><span aria-hidden="true" className="gp-state__icon">∅</span>{emptyText ?? t('state.empty')}{emptyAction && <div className="gp-state__action">{emptyAction}</div>}</div>;
   return <>{children}</>;
 }
 

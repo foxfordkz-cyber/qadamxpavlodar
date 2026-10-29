@@ -5,8 +5,9 @@ import { once } from 'node:events';
 import { fixture } from './helpers.js';
 import { seedV2, DEMO_PASSWORD } from '../src/v2/seed.js';
 import { seedTz } from '../src/tz/seed.js';
-import { checkProvider, createLlmAssistant, llmConfig, llmProviders, TOOLS, type LlmConfig } from '../src/tz/llm.js';
+import { checkProvider, createLlmAssistant, llmConfig, llmProviders, questionLang, TOOLS, type LlmConfig } from '../src/tz/llm.js';
 import type { AssistantAdapter } from '../src/tz/routes.js';
+import { candidates } from '../src/tz/data.js';
 
 type Reply = { status?: number; body: unknown; headers?: Record<string, string> };
 /** Подставной OpenAI-совместимый сервер: отвечает по сценарию и запоминает запросы. */
@@ -34,8 +35,8 @@ async function app(t: TestContext) {
   await seedV2(f.store); seedTz(f.store);
   const r = await fetch(f.base + '/api/v1/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ login: 'coordinator', password: DEMO_PASSWORD }) });
   const b = await r.json(); const cookie = r.headers.get('set-cookie')!.split(';')[0]!;
-  const ask = async (message: string, siteId: string | null = null) => {
-    const res = await fetch(f.base + '/api/v1/assistant', { method: 'POST', headers: { Cookie: cookie, 'X-CSRF-Token': b.data.csrfToken, 'Content-Type': 'application/json' }, body: JSON.stringify({ message, siteId }) });
+  const ask = async (message: string, siteId: string | null = null, extra: Record<string, unknown> = {}) => {
+    const res = await fetch(f.base + '/api/v1/assistant', { method: 'POST', headers: { Cookie: cookie, 'X-CSRF-Token': b.data.csrfToken, 'Content-Type': 'application/json' }, body: JSON.stringify({ message, siteId, ...extra }) });
     return { status: res.status, body: await res.json() };
   };
   const history = async () => (await (await fetch(f.base + '/api/v1/assistant/history', { headers: { Cookie: cookie } })).json()).data;
@@ -90,6 +91,48 @@ test('tools run real calculations: selected zone analysis, knowledge search with
   assert.deepEqual(r.body.data.toolCalls.map((x: any) => x.name), ['analyze_zone', 'search_knowledge', 'analyze_zone']);
   assert.ok(r.body.data.sources.length > 0 && r.body.data.sources.every((x: any) => x.id && x.label));
   assert.equal(seen.length, 4);
+});
+
+test('answer language follows the question: a Kazakh question gets a Kazakh instruction, a Russian one does not', async t => {
+  assert.equal(questionLang('Бірінші кезекте қай аумақтарды көгалдандыру керек?'), 'kk');
+  assert.equal(questionLang('Какие зоны озеленить в первую очередь?'), 'ru');
+  const f = await app(t);
+  const { cfg, seen } = await fakeModel(t, [
+    req => (req.messages.some((m: any) => m.role === 'tool') ? say(`Бірінші аумақ — ${lastTool(req).items[0].zone.name}, индекс ${lastTool(req).items[0].index}.`) : toolCall('top_priorities', { limit: 1 })),
+  ]);
+  f.use(createLlmAssistant(f.store, cfg));
+  const kk = await f.ask('Бірінші кезекте қай аумақтарды көгалдандыру керек?');
+  assert.equal(kk.body.data.method, 'model', JSON.stringify(kk.body));
+  assert.equal(kk.body.data.lang, 'kk');
+  assert.match(seen[0]!.body.messages[1].content, /қазақ тілінде/);
+  const before = seen.length;
+  const ru = await f.ask('Какие зоны озеленить в первую очередь?');
+  assert.equal(ru.body.data.lang, 'ru');
+  assert.doesNotMatch(seen[before]!.body.messages[1].content, /қазақ тілінде/);
+});
+
+test('places and follow-ups: find_place finds an address and the nearest zones; history reaches the model; rules use the map centre', async t => {
+  const f = await app(t);
+  const { cfg, seen } = await fakeModel(t, [
+    req => (req.messages.some((m: any) => m.role === 'tool') ? say(`Ближайшая зона — ${lastTool(req).zones[0].name}, ≈${lastTool(req).zones[0].distanceM} м.`) : toolCall('find_place', { query: 'Торайгырова 1/5' })),
+  ]);
+  f.use(createLlmAssistant(f.store, cfg));
+  const history = [{ role: 'user', text: 'подбери растения для двора' }, { role: 'assistant', text: 'Уточните адрес двора.' }];
+  const r = await f.ask('Торайгырова 1/5', null, { history });
+  assert.equal(r.body.data.method, 'model', JSON.stringify(r.body));
+  assert.equal(r.body.data.toolCalls[0].name, 'find_place');
+  const place = lastTool(seen[1]!.body);
+  assert.equal(place.found, true); assert.ok(place.zones.length > 0 && Number.isFinite(place.zones[0].distanceM));
+  assert.deepEqual(seen[0]!.body.messages.slice(1, 3).map((m: any) => [m.role, m.content]), [['user', 'подбери растения для двора'], ['assistant', 'Уточните адрес двора.']]);
+  // Без модели правила берут зону у центра карты, а не просят выбрать зону.
+  const site = candidates(f.store).find((c) => c.centroid)!;
+  const zone = { name: String(site.name), lat: Number(site.centroid.lat), lng: Number(site.centroid.lng) };
+  f.use(async () => { throw new Error('model down'); });
+  const rules = await f.ask('подбери растения здесь', null, { view: { lat: zone.lat, lng: zone.lng } });
+  assert.equal(rules.body.data.method, 'rules');
+  assert.match(rules.body.data.text, /ближайшую к центру карты/);
+  assert.equal(rules.body.data.zones[0].name, zone.name);
+  assert.equal((await f.ask('x', null, { view: { lat: 91, lng: 0 } })).status, 400);
 });
 
 test('fallback to rules: model error, timeout or invented numbers never reach the user as a model answer', async t => {

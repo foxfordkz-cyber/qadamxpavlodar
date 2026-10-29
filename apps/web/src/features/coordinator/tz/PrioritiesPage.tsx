@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { useData, useResource } from '../../../shared/api/DataProvider';
 import { PRIORITY_LABEL } from '../../../shared/analytics/city';
 import { Bar, Button, StateView } from '../../../shared/ui/components';
-import { hrefFor } from '../../../shared/router';
+import { hrefFor, navigate } from '../../../shared/router';
 import { PageHeader } from '../PageHeader';
 import { download } from '../sites/filters';
 import { FACTORS, usePriorityWeights, WeightSliders } from './PriorityWeights';
@@ -20,11 +20,16 @@ export function PrioritiesPage() {
   const name = useMemo(() => new Map((sites.data?.data ?? []).map((s) => [s.id, s.name])), [sites.data]);
   const items = res.data?.items ?? [];
   const chosen = new Set((res.data?.roadmap?.chosen ?? []).map((c) => c.siteId));
+  // Номера на карте — место в рейтинге или в очереди дорожной карты.
+  const showOnMap = (ids: string[], title: string) => navigate('/map', { hl: ids.slice(0, 30).join(','), hlt: title });
   const csv = () => download('priorities.csv', '﻿' + ['Место;Зона;ID;Индекс;' + FACTORS.map((f) => PRIORITY_LABEL[f]).join(';') + ';Смета, ₸;CO₂ через 20 лет, т/год;В дорожной карте', ...items.map((it, i) => [i + 1, name.get(it.siteId), it.siteId, it.index, ...FACTORS.map((f) => it.factors[f]), Math.round(it.cost), it.co2t20.toFixed(2), chosen.has(it.siteId) ? 'да' : 'нет'].join(';'))].join('\n'));
 
   return (
     <div className="gp-page">
-      <PageHeader eyebrow="Очерёдность озеленения" title="Приоритеты" lead="Индекс приоритета 0–100 по факторам ТЗ. Меняйте веса — рейтинг пересчитывается сразу. Задайте бюджет — система предложит, какие зоны озеленить в первую очередь." actions={<button className="gp-btn" onClick={csv}>⤓ Excel (CSV)</button>} />
+      <PageHeader eyebrow="Очерёдность озеленения" title="Приоритеты" lead="Индекс приоритета 0–100 по факторам ТЗ. Меняйте веса — рейтинг пересчитывается сразу. Задайте бюджет — система предложит, какие зоны озеленить в первую очередь." actions={<>
+        <button className="gp-btn gp-btn--secondary" disabled={!items.length} onClick={() => showOnMap(items.slice(0, 10).map((it) => it.siteId), 'Первые 10 по приоритету')}>🗺 Топ-10 на карте</button>
+        <button className="gp-btn" onClick={csv}>⤓ Excel (CSV)</button>
+      </>} />
       <div className="gp-ranking">
         <section className="gp-card gp-ranking__weights" aria-labelledby="w-h">
           <h2 id="w-h">Веса факторов</h2>
@@ -41,6 +46,7 @@ export function PrioritiesPage() {
               <p><strong>{res.data.roadmap.chosen.length}</strong> зон за <strong>{money(res.data.roadmap.spent)}</strong>, остаток {money(res.data.roadmap.left)}.</p>
               <p className="gp-small">CO₂ через 20 лет: ≈{res.data.roadmap.co2t20.toFixed(1)} т/год (оценка).</p>
               <p className="gp-small gp-muted">{res.data.roadmap.method} Сметы — вариант «оптимальный», демо-расценки.</p>
+              {res.data.roadmap.chosen.length > 0 && <Button variant="primary" onClick={() => showOnMap(res.data!.roadmap!.chosen.map((c) => c.siteId), `Дорожная карта · ${budget} млн ₸`)}>🗺 Показать очередь на карте</Button>}
             </div>
           )}
         </section>

@@ -143,13 +143,14 @@ const TILE_LINK: Record<string, string> = {
 
 function MetricTile({ m }: { m: DashboardMetric }) {
   return (
-    <a className="gp-tile" href={hrefFor(TILE_LINK[m.key] ?? '/')}>
-      <span className="gp-small">{m.definition}</span>
-      <span>
+    // Сначала число и что это, ниже — точное определение мелко: сводку читают с одного взгляда.
+    <a className="gp-tile gp-tile--metric" href={hrefFor(TILE_LINK[m.key] ?? '/')}>
+      <span className="gp-tile__head">
         <span className="gp-tile__value">{m.value ?? '—'}</span>
-        <span className="gp-tile__label"> {m.label}</span>
-        <span className="gp-tile__period">{m.period}</span>
+        <span className="gp-tile__label">{m.label}</span>
       </span>
+      <span className="gp-small gp-muted gp-tile__def">{m.definition}</span>
+      <span className="gp-tile__period">{m.period}</span>
     </a>
   );
 }
