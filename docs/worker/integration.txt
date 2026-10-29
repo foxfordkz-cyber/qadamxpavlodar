@@ -7,7 +7,7 @@ GREEN PAVLODAR / ИНТЕГРАЦИЯ УЧАСТНИКА 4 / V2
 worker.mjs регистрирует <green-worker>. Его configure принимает gateway, user, scope, date, demo, locale, embedded.
 embedded:true скрывает демонстрационную боковую панель и верхнюю шапку, чтобы не дублировать общую оболочку.
 Общие цвета передаются CSS-переменными --gp-ink, --gp-muted, --gp-green, --gp-paper, --gp-line и другими --gp-*.
-React-обёртка: WorkerCabinet.tsx. Проверка TypeScript и общая сборка codex/coordinator прошли 28.10.2026; встраивание в маршрут и браузерный сценарий ещё не проверены. Зависимости общей сборки не изменены, пакет демо расположен отдельно в tools/worker-demo/package.json.
+React-обёртка: WorkerCabinet.tsx. Маршрут #/worker: WorkerPage.tsx, его показывает Shell для ролей бригадира и работника. В режиме mock кабинет берёт данные из учебного источника tools/worker-demo (demo-gateway.mjs, загружается лениво), в режиме api — из маршрутов V2 через createV2Transport. Зависимости общей сборки не изменены, пакет демо расположен отдельно в tools/worker-demo/package.json.
 Пример подключения с настоящим транспортом: docs/worker/integration-example.mjs.
 Настоящий вход и выход выполняет общий сервер. worker-logout сообщает оболочке, что нужно завершить общую сессию.
 После смены пользователя configure вызывается заново. scope обязан различать организацию, демо и production.
