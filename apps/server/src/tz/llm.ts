@@ -1,5 +1,7 @@
-// Ассистент на модели (ТЗ 3.10): LLM через OpenAI-совместимый API — Grok по умолчанию, но подойдёт любой
-// провайдер с /chat/completions и tools (GPT, Gemini, Ollama): меняются LLM_BASE_URL и LLM_MODEL в .env.
+// Ассистент на модели (ТЗ 3.10): LLM через OpenAI-совместимый API — подойдёт любой провайдер
+// с /chat/completions и tools (Gemini, Groq, DeepSeek, Grok, Ollama): LLM_BASE_URL и LLM_MODEL в .env.
+// Резерв: LLM2_* (и LLM3_*). Если основная модель упёрлась в лимит, упала или не уложилась во время,
+// отвечает следующая; после ответа 429 модель пропускается до конца Retry-After (или минуту).
 // Модель ничего не считает сама: она выбирает функции, сервер выполняет их теми же модулями расчётов,
 // и в ответе допустимы только цифры из результатов функций. RAG — поиск по справочникам и источникам в базе.
 // В модель уходят вопрос, данные зон (OSM) и результаты расчётов; имена и роли пользователей — нет.
@@ -9,21 +11,27 @@ import { analyze, analyzable, candidate, candidates, priorities, ratesList, refe
 import { web, type Json } from './shared.js';
 import type { AssistantAdapter } from './routes.js';
 
-export type LlmConfig = { baseUrl: string; model: string; apiKey: string; timeoutMs: number; maxRounds: number };
+export type LlmConfig = { name: string; baseUrl: string; model: string; apiKey: string; timeoutMs: number; maxRounds: number };
 const LOCAL_HOST = /^(127\.0\.0\.1|localhost|\[::1\]|[a-z0-9-]+)$/; // loopback или имя сервиса в docker compose (ollama)
 
-/** null — модель не настроена (нет ключа или модели): ассистент отвечает по правилам. */
-export function llmConfig(env = process.env): LlmConfig | null {
-  const apiKey = env.LLM_API_KEY?.trim(), model = env.LLM_MODEL?.trim();
+/** Провайдер с префиксом LLM, LLM2, LLM3. null — не настроен (нет ключа или модели). */
+function provider(env: NodeJS.ProcessEnv, prefix: string, timeoutMs: number): LlmConfig | null {
+  const apiKey = env[`${prefix}_API_KEY`]?.trim(), model = env[`${prefix}_MODEL`]?.trim();
   if (!apiKey || !model) return null;
-  const baseUrl = (env.LLM_BASE_URL?.trim() || 'https://api.x.ai/v1').replace(/\/+$/, '');
+  const baseUrl = (env[`${prefix}_BASE_URL`]?.trim() || 'https://api.x.ai/v1').replace(/\/+$/, '');
   const url = new URL(baseUrl);
-  if (url.username || url.password || url.search || url.hash) throw new Error('LLM_BASE_URL: only scheme, host, port and path');
-  if (url.protocol !== 'https:' && !(url.protocol === 'http:' && LOCAL_HOST.test(url.hostname))) throw new Error('LLM_BASE_URL must use https (http only for a local model)');
+  if (url.username || url.password || url.search || url.hash) throw new Error(`${prefix}_BASE_URL: only scheme, host, port and path`);
+  if (url.protocol !== 'https:' && !(url.protocol === 'http:' && LOCAL_HOST.test(url.hostname))) throw new Error(`${prefix}_BASE_URL must use https (http only for a local model)`);
+  return { name: prefix, baseUrl, model, apiKey, timeoutMs, maxRounds: 3 };
+}
+/** Модели по порядку: основная LLM_*, резервные LLM2_*, LLM3_*. Пусто — ассистент отвечает по правилам. */
+export function llmProviders(env = process.env): LlmConfig[] {
   const timeoutMs = Number(env.LLM_TIMEOUT_MS ?? 20000);
   if (!Number.isFinite(timeoutMs) || timeoutMs < 1000 || timeoutMs > 120000) throw new Error('LLM_TIMEOUT_MS: 1000–120000');
-  return { baseUrl, model, apiKey, timeoutMs, maxRounds: 3 };
+  return ['LLM', 'LLM2', 'LLM3'].map((p) => provider(env, p, timeoutMs)).filter((p): p is LlmConfig => !!p);
 }
+/** Основная модель или null. */
+export const llmConfig = (env = process.env): LlmConfig | null => llmProviders(env)[0] ?? null;
 
 const SYSTEM = `Ты — ассистент специалиста акимата Павлодара по озеленению (прототип, демо-данные).
 Правила:
@@ -139,51 +147,88 @@ export function createTools(s: Store) {
   };
 }
 
-class LlmError extends Error {}
+class LlmError extends Error {
+  constructor(message: string, public status?: number, public retryAfterMs?: number) { super(message); }
+}
 
 async function chat(cfg: LlmConfig, messages: Json[], deadline: number, toolChoice: 'auto' | 'none') {
   const left = deadline - Date.now();
   if (left < 500) throw new LlmError('timeout');
-  const res = await fetch(`${cfg.baseUrl}/chat/completions`, {
-    method: 'POST', signal: AbortSignal.timeout(left),
-    headers: { Authorization: `Bearer ${cfg.apiKey}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ model: cfg.model, messages, tools: TOOLS, tool_choice: toolChoice, temperature: 0.2, max_tokens: 800 }),
-  });
-  if (!res.ok) throw new LlmError(`HTTP ${res.status}`);
+  let res: Response;
+  try {
+    res = await fetch(`${cfg.baseUrl}/chat/completions`, {
+      method: 'POST', signal: AbortSignal.timeout(left),
+      headers: { Authorization: `Bearer ${cfg.apiKey}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: cfg.model, messages, tools: TOOLS, tool_choice: toolChoice, temperature: 0.2, max_tokens: 800 }),
+    });
+  } catch (e) {
+    throw new LlmError((e as Error).name === 'TimeoutError' ? 'timeout' : 'network error');
+  }
+  if (!res.ok) {
+    const retry = Number(res.headers.get('retry-after'));
+    throw new LlmError(res.status === 429 ? 'rate limit' : `HTTP ${res.status}`, res.status, Number.isFinite(retry) && retry > 0 ? Math.min(retry, 600) * 1000 : undefined);
+  }
   const json = (await res.json()) as Json;
   const msg = json.choices?.[0]?.message;
   if (!msg) throw new LlmError('empty response');
   return msg as { content?: string | null; tool_calls?: { id: string; function: { name: string; arguments: string } }[] };
 }
 
-/** Ответ модели в форме AssistantReply: method 'model', sources и toolCalls по контракту 29.10. */
-export function createLlmAssistant(s: Store, cfg: LlmConfig): AssistantAdapter {
+const REASON: Record<string, string> = { 'rate limit': 'лимит запросов', timeout: 'не уложилась во время', 'network error': 'нет связи', 'numbers without tool calls': 'цифры без расчёта', 'empty answer': 'пустой ответ' };
+const reasonText = (e: unknown) => (e instanceof LlmError ? REASON[e.message] ?? e.message : 'ошибка');
+
+/**
+ * Ответ модели в форме AssistantReply: method 'model', sources и toolCalls по контракту 29.10.
+ * Модели пробуются по порядку; у каждой — своя доля общего лимита LLM_TIMEOUT_MS, чтобы резерву хватило времени.
+ */
+export function createLlmAssistant(s: Store, providers: LlmConfig | LlmConfig[]): AssistantAdapter {
+  const list = Array.isArray(providers) ? providers : [providers];
   const exec = createTools(s);
-  return async ({ message, siteId }) => {
-    const deadline = Date.now() + cfg.timeoutMs;
-    const ctx: Ctx = { zones: [], evidence: new Set() };
-    const selected = siteId ? maybeDoc(s, 'site', siteId) : undefined;
-    const where = selected && analyzable(selected) ? `Выбранная на карте зона: ${selected.id} «${selected.name}».` : 'Зона на карте не выбрана.';
-    const messages: Json[] = [{ role: 'system', content: SYSTEM }, { role: 'user', content: `${where}\nВопрос: ${message}` }];
-    const toolCalls: { name: string; args: Json }[] = [];
-    let text = '';
-    for (let round = 0; ; round++) {
-      const msg = await chat(cfg, messages, deadline, round < cfg.maxRounds ? 'auto' : 'none');
-      if (!msg.tool_calls?.length || round >= cfg.maxRounds) { text = (msg.content ?? '').trim(); break; }
-      messages.push({ role: 'assistant', content: msg.content ?? null, tool_calls: msg.tool_calls });
-      for (const call of msg.tool_calls) {
-        let args: Json = {};
-        try { args = JSON.parse(call.function.arguments || '{}'); } catch { /* пустые аргументы */ }
-        toolCalls.push({ name: call.function.name, args });
-        messages.push({ role: 'tool', tool_call_id: call.id, content: JSON.stringify(exec(call.function.name, args, ctx)) });
+  const coolUntil = new Map<string, number>();
+  return async (input) => {
+    const total = list[0]!.timeoutMs, end = Date.now() + total;
+    const failures: string[] = [];
+    const ready = list.filter((p) => (coolUntil.get(p.name) ?? 0) <= Date.now());
+    for (const [i, cfg] of ready.entries()) {
+      const share = Math.max(1000, Math.floor((end - Date.now()) / (ready.length - i)));
+      try {
+        const reply = await askOne(s, exec, cfg, input, Math.min(end, Date.now() + share));
+        const skipped = list.filter((p) => !ready.includes(p)).map((p) => `${p.model}: лимит запросов, пропущена`);
+        const notes = [...skipped, ...failures];
+        return notes.length ? { ...reply, reserveReason: `Ответила резервная модель (${notes.join('; ')}).` } : reply;
+      } catch (e) {
+        if (e instanceof LlmError && e.status === 429) coolUntil.set(cfg.name, Date.now() + (e.retryAfterMs ?? 60000));
+        failures.push(`${cfg.model}: ${reasonText(e)}`);
+        console.warn(`Assistant model ${cfg.name} (${cfg.model}) failed: ${e instanceof Error ? e.message : 'error'}`);
       }
     }
-    if (!text) throw new LlmError('empty answer');
-    // Цифры без вызова функций — значит, модель их придумала: такой ответ не показываем, отвечают правила.
-    if (!toolCalls.length && /\d/.test(text)) throw new LlmError('numbers without tool calls');
-    const named = ctx.zones.filter((z) => text.includes(z.name));
-    const sources = [...ctx.evidence].map((id) => maybeDoc(s, 'evidence', id)).filter(Boolean).slice(0, 6)
-      .map((e) => ({ id: e!.id, label: String(e!.sourceLabel), ...(e!.sourceUrl ? { url: String(e!.sourceUrl) } : {}) }));
-    return { text, zones: (named.length ? named : ctx.zones).slice(0, 8), method: 'model', intent: toolCalls[0]?.name ?? 'chat', model: cfg.model, sources, toolCalls };
+    throw new LlmError(failures.length ? `all models failed: ${failures.join('; ')}` : 'all models are cooling down after rate limits');
   };
+}
+
+async function askOne(s: Store, exec: ReturnType<typeof createTools>, cfg: LlmConfig, { message, siteId }: { message: string; siteId: string | null }, deadline: number) {
+  const ctx: Ctx = { zones: [], evidence: new Set() };
+  const selected = siteId ? maybeDoc(s, 'site', siteId) : undefined;
+  const where = selected && analyzable(selected) ? `Выбранная на карте зона: ${selected.id} «${selected.name}».` : 'Зона на карте не выбрана.';
+  const messages: Json[] = [{ role: 'system', content: SYSTEM }, { role: 'user', content: `${where}\nВопрос: ${message}` }];
+  const toolCalls: { name: string; args: Json }[] = [];
+  let text = '';
+  for (let round = 0; ; round++) {
+    const msg = await chat(cfg, messages, deadline, round < cfg.maxRounds ? 'auto' : 'none');
+    if (!msg.tool_calls?.length || round >= cfg.maxRounds) { text = (msg.content ?? '').trim(); break; }
+    messages.push({ role: 'assistant', content: msg.content ?? null, tool_calls: msg.tool_calls });
+    for (const call of msg.tool_calls) {
+      let args: Json = {};
+      try { args = JSON.parse(call.function.arguments || '{}'); } catch { /* пустые аргументы */ }
+      toolCalls.push({ name: call.function.name, args });
+      messages.push({ role: 'tool', tool_call_id: call.id, content: JSON.stringify(exec(call.function.name, args, ctx)) });
+    }
+  }
+  if (!text) throw new LlmError('empty answer');
+  // Цифры без вызова функций — значит, модель их придумала: такой ответ не показываем (резерв или правила).
+  if (!toolCalls.length && /\d/.test(text)) throw new LlmError('numbers without tool calls');
+  const named = ctx.zones.filter((z) => text.includes(z.name));
+  const sources = [...ctx.evidence].map((id) => maybeDoc(s, 'evidence', id)).filter(Boolean).slice(0, 6)
+    .map((e) => ({ id: e!.id, label: String(e!.sourceLabel), ...(e!.sourceUrl ? { url: String(e!.sourceUrl) } : {}) }));
+  return { text, zones: (named.length ? named : ctx.zones).slice(0, 8), method: 'model', intent: toolCalls[0]?.name ?? 'chat', model: cfg.model, sources, toolCalls } as Json;
 }

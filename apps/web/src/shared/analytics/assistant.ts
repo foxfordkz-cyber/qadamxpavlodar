@@ -20,6 +20,8 @@ export interface AssistantReply {
   model?: string;
   /** Почему вместо модели ответили правила (модель не ответила или ответ не прошёл проверку). */
   fallbackReason?: string;
+  /** Почему ответила резервная модель, а не основная (лимит, сбой, долгий ответ). */
+  reserveReason?: string;
 }
 
 const fmt = (n: number) => Math.round(n).toLocaleString('ru-RU');

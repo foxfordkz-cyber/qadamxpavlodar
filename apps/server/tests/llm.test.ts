@@ -5,23 +5,23 @@ import { once } from 'node:events';
 import { fixture } from './helpers.js';
 import { seedV2, DEMO_PASSWORD } from '../src/v2/seed.js';
 import { seedTz } from '../src/tz/seed.js';
-import { createLlmAssistant, llmConfig, TOOLS, type LlmConfig } from '../src/tz/llm.js';
+import { createLlmAssistant, llmConfig, llmProviders, TOOLS, type LlmConfig } from '../src/tz/llm.js';
 import type { AssistantAdapter } from '../src/tz/routes.js';
 
-type Reply = { status?: number; body: unknown };
+type Reply = { status?: number; body: unknown; headers?: Record<string, string> };
 /** Подставной OpenAI-совместимый сервер: отвечает по сценарию и запоминает запросы. */
-async function fakeModel(t: TestContext, script: ((req: any) => Reply)[]) {
+async function fakeModel(t: TestContext, script: ((req: any) => Reply)[], name = 'LLM', model = 'fake-grok') {
   const seen: { headers: IncomingMessage['headers']; body: any }[] = [];
   const server = createServer(async (req, res) => {
     let raw = ''; for await (const chunk of req) raw += chunk;
     const body = JSON.parse(raw); seen.push({ headers: req.headers, body });
     const step = script[Math.min(seen.length - 1, script.length - 1)]!(body);
-    res.writeHead(step.status ?? 200, { 'Content-Type': 'application/json' }).end(JSON.stringify(step.body));
+    res.writeHead(step.status ?? 200, { 'Content-Type': 'application/json', ...step.headers }).end(JSON.stringify(step.body));
   });
   server.listen(0, '127.0.0.1'); await once(server, 'listening');
   t.after(() => new Promise<void>(done => server.close(() => done())));
   const port = (server.address() as { port: number }).port;
-  const cfg: LlmConfig = { baseUrl: `http://127.0.0.1:${port}/v1`, model: 'fake-grok', apiKey: 'test-key', timeoutMs: 5000, maxRounds: 3 };
+  const cfg: LlmConfig = { name, baseUrl: `http://127.0.0.1:${port}/v1`, model, apiKey: 'test-key', timeoutMs: 5000, maxRounds: 3 };
   return { cfg, seen };
 }
 const toolCall = (name: string, args: unknown) => ({ body: { choices: [{ message: { role: 'assistant', content: null, tool_calls: [{ id: `call-${name}`, type: 'function', function: { name, arguments: JSON.stringify(args) } }] } }] } });
@@ -49,6 +49,9 @@ test('LLM config: no key — rules only; Grok by default; https required except 
   assert.throws(() => llmConfig({ LLM_API_KEY: 'k', LLM_MODEL: 'm', LLM_BASE_URL: 'http://api.example.com/v1' }), /https/);
   assert.equal(llmConfig({ LLM_API_KEY: 'k', LLM_MODEL: 'm', LLM_BASE_URL: 'http://ollama:11434/v1/' })!.baseUrl, 'http://ollama:11434/v1');
   assert.throws(() => llmConfig({ LLM_API_KEY: 'k', LLM_MODEL: 'm', LLM_TIMEOUT_MS: '10' }), /LLM_TIMEOUT_MS/);
+  const both = llmProviders({ LLM_API_KEY: 'k1', LLM_MODEL: 'gemini', LLM_BASE_URL: 'https://generativelanguage.googleapis.com/v1beta/openai', LLM2_API_KEY: 'k2', LLM2_MODEL: 'llama', LLM2_BASE_URL: 'https://api.groq.com/openai/v1' });
+  assert.deepEqual(both.map(p => [p.name, p.model]), [['LLM', 'gemini'], ['LLM2', 'llama']]);
+  assert.deepEqual(llmProviders({ LLM2_API_KEY: 'k2', LLM2_MODEL: 'llama' }).map(p => p.name), ['LLM2'], 'a reserve alone also works');
 });
 
 test('model answers with numbers from server tools: method, toolCalls, zones, history; no user names sent to the model', async t => {
@@ -103,4 +106,27 @@ test('fallback to rules: model error, timeout or invented numbers never reach th
   f.use(createLlmAssistant(f.store, { ...slow.cfg, maxRounds: 50, timeoutMs: 1200 }));
   r = await f.ask('Какие зоны первые?');
   assert.equal(r.body.data.method, 'rules', 'endless tool loop stops at the deadline');
+});
+
+test('reserve model: primary hits the rate limit, the reserve answers; primary is skipped during Retry-After; both down — rules', async t => {
+  const f = await app(t);
+  const primary = await fakeModel(t, [() => ({ status: 429, body: { error: 'quota' }, headers: { 'Retry-After': '30' } })], 'LLM', 'gemini-fake');
+  // Резерв отвечает по ходу диалога: нет результата расчёта — вызывает функцию, есть — отвечает его цифрой.
+  const reserve = await fakeModel(t, [req => (req.messages.some((m: any) => m.role === 'tool') ? say(`Проблем всего ${lastTool(req).total}.`) : toolCall('find_problems', { limit: 2 }))], 'LLM2', 'groq-fake');
+  f.use(createLlmAssistant(f.store, [primary.cfg, reserve.cfg]));
+  let r = await f.ask('Где проблемные зоны?');
+  assert.equal(r.body.data.method, 'model', JSON.stringify(r.body)); assert.equal(r.body.data.model, 'groq-fake');
+  assert.match(r.body.data.reserveReason, /gemini-fake: лимит запросов/);
+  assert.equal(primary.seen.length, 1);
+  r = await f.ask('А сколько проблем?');
+  assert.equal(r.body.data.model, 'groq-fake');
+  assert.equal(primary.seen.length, 1, 'rate-limited primary is not called again during Retry-After');
+  assert.match(r.body.data.reserveReason, /пропущена/);
+
+  const deadPrimary = await fakeModel(t, [() => ({ status: 503, body: {} })], 'LLM', 'a');
+  const deadReserve = await fakeModel(t, [() => ({ status: 500, body: {} })], 'LLM2', 'b');
+  f.use(createLlmAssistant(f.store, [deadPrimary.cfg, deadReserve.cfg]));
+  r = await f.ask('Где проблемные зоны?');
+  assert.equal(r.body.data.method, 'rules'); assert.ok(r.body.data.fallbackReason);
+  assert.equal(deadPrimary.seen.length, 1); assert.equal(deadReserve.seen.length, 1);
 });

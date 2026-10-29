@@ -27,6 +27,7 @@ function ReplyProof({ reply }: { reply: AssistantReply }) {
     <div className="gp-assist__proof gp-small">
       <MethodTag method={reply.method} />
       {reply.method === 'model' && <span className="gp-muted">{reply.model ? `${reply.model} · ` : ''}цифры — из расчётов системы</span>}
+      {reply.reserveReason && <p className="gp-muted">{reply.reserveReason}</p>}
       {reply.fallbackReason && <p className="gp-muted">{reply.fallbackReason}</p>}
       {calls.length > 0 && <p>Посчитано: {calls.join(', ')}.</p>}
       {!!reply.sources?.length && (
