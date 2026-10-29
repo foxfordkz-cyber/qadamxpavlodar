@@ -3,6 +3,7 @@
 // Все результаты оценочные (ТЗ 5.2); допущения перечислены в assumptions.
 import type { CandidateSite, Species } from '../api/types';
 import type { Rates } from './rates';
+import { predictSurvival, survivalModel } from './survival';
 import { guessPurpose, lightLevel, PURPOSE_LABEL, SALINITY_LABEL, soilFor, type Purpose, type SoilInfo } from './zone';
 
 export type Variant = 'econom' | 'optimal' | 'max';
@@ -32,9 +33,9 @@ export interface ScoredSpecies {
 
 export interface SchemeRow { speciesId: string; tier: 'tree' | 'shrub' | 'flower'; quantity: number; locked: boolean; replacedFrom?: string }
 export interface CostItem { key: string; label: string; amount: number; formula: string; dataClass: 'demo' | 'estimate' }
-export interface SurvivalRow { speciesId: string; y1: number; y2: number; y3: number; low: number; high: number; risks: { label: string; pp: number }[] }
+export interface SurvivalRow { speciesId: string; y1: number; y2: number; y3: number; low: number; high: number; risks: { label: string; pp: number }[]; warnings?: string[] }
 export interface Measure { label: string; effect: string; apply: Partial<PlanOptions> | { replace: [string, string] } }
-export interface CareRow { month: number; operation: string; detail: string; visits: number }
+export interface CareRow { month: number; operation: string; detail: string; visits: number; taskAction?: 'inspect' | 'water' | 'weed'; waterLitersPerVisit?: number | null }
 export interface EffectRow { years: 5 | 10 | 20; co2t: number; o2t: number; rainM3: number; coolingC: number; canopyM2: number; dustKg: number | null }
 
 export interface ZoneAnalysis {
@@ -46,6 +47,8 @@ export interface ZoneAnalysis {
   tiersNote: string;
   cost: { items: CostItem[]; total: number; perM2: number | null };
   survival: SurvivalRow[];
+  survivalModel: typeof survivalModel;
+  survivalRules: SurvivalRow[];
   survivalAvg: { y1: number; y2: number; y3: number };
   measures: Measure[];
   care: CareRow[];
@@ -191,7 +194,7 @@ export function costEstimate(site: CandidateSite, scheme: SchemeRow[], catalog: 
 }
 
 /** Приживаемость: экспертные правила, п.п. по факторам риска (ТЗ 3.5). Не ML, не калибровано. */
-export function survivalForecast(site: CandidateSite, scheme: SchemeRow[], catalog: Map<string, Species>, opt: PlanOptions, soil: SoilInfo, rates: Rates): SurvivalRow[] {
+export function rulesSurvivalForecast(site: CandidateSite, scheme: SchemeRow[], catalog: Map<string, Species>, opt: PlanOptions, soil: SoilInfo, rates: Rates): SurvivalRow[] {
   const water = site.factors.waterAvailability.value;
   const road = site.context?.nearestMajorRoadM ?? null;
   const base = rates['surv.base'] ?? 88;
@@ -222,7 +225,23 @@ export function survivalForecast(site: CandidateSite, scheme: SchemeRow[], catal
   });
 }
 
-export function careCalendar(scheme: SchemeRow[], catalog: Map<string, Species>, soil: SoilInfo, opt: PlanOptions, rates: Rates): { care: CareRow[]; warnings: string[] } {
+/** First-year synthetic ML estimate; later-year decay preserves the existing contract. */
+export function survivalForecast(site: CandidateSite, scheme: SchemeRow[], catalog: Map<string, Species>, opt: PlanOptions, soil: SoilInfo, _rates: Rates): SurvivalRow[] {
+  return [...new Set(scheme.map(s => s.speciesId))].map(speciesId => {
+    const sp = catalog.get(speciesId);
+    if (!sp) throw new Error(`Нет данных о виде ${speciesId}`);
+    const prediction = predictSurvival(sp, { salinity: soil.salinity, ph: soil.ph,
+      waterKnown: site.factors.waterAvailability.value !== null, watering: opt.watering,
+      roadM: site.context?.nearestMajorRoadM ?? null, variant: opt.variant, improveSoil: opt.improveSoil });
+    const decay = opt.watering === 'regular' ? 0.97 : opt.watering === 'rare' ? 0.93 : 0.88;
+    const annual = sp.form === 'flower' && /однолетник/.test(sp.nameRu);
+    const y2 = annual ? 0 : clamp(Math.round(prediction.y1 * decay), 0, 99);
+    const y3 = annual ? 0 : clamp(Math.round(y2 * (decay + 0.01)), 0, 99);
+    return { speciesId, ...prediction, y2, y3 };
+  });
+}
+
+export function careCalendar(scheme: SchemeRow[], catalog: Map<string, Species>, soil: { salinity: SoilInfo['salinity'] | null }, opt: PlanOptions, rates: Rates): { care: CareRow[]; warnings: string[] } {
   const has = (t: SchemeRow['tier']) => scheme.some((s) => s.tier === t);
   const nT = scheme.filter((s) => s.tier === 'tree').reduce((a, s) => a + s.quantity, 0);
   const nS = scheme.filter((s) => s.tier === 'shrub').reduce((a, s) => a + s.quantity, 0);
@@ -237,7 +256,9 @@ export function careCalendar(scheme: SchemeRow[], catalog: Map<string, Species>,
   for (const [m, n0] of Object.entries(wPerMonth)) {
     const n = Math.max(1, Math.round(n0 * scale * (lowDrought ? 1.2 : 1)));
     const litres = n * (nT * volT + nS * volS);
-    care.push({ month: Number(m), operation: 'Полив', detail: `${n} раз; ≈${Math.round(litres / 1000)} м³ за месяц (дерево ${volT} л, куст ${volS} л за раз)`, visits: n });
+    const unknownVolume = has('flower') || (nT > 0 && rates['care.water.tree'] == null) || (nS > 0 && rates['care.water.shrub'] == null);
+    care.push({ month: Number(m), operation: 'Полив', detail: unknownVolume ? `${n} раз; полный объём — нет данных (площадь цветника или норма полива неизвестна)` : `${n} раз; ≈${Math.round(litres)} л за месяц (дерево ${volT} л, куст ${volS} л за раз)`, visits: n, taskAction: 'water',
+      waterLitersPerVisit: unknownVolume ? null : nT * volT + nS * volS });
   }
   care.push({ month: 4, operation: 'Обрезка санитарная', detail: 'Удалить сухие и повреждённые ветви до распускания почек', visits: 1 });
   care.push({ month: 4, operation: 'Побелка стволов', detail: 'Защита коры от весенних ожогов', visits: 1 });
@@ -247,10 +268,11 @@ export function careCalendar(scheme: SchemeRow[], catalog: Map<string, Species>,
   if (hedge) care.push({ month: 6, operation: 'Формовка изгороди', detail: 'Стрижка после цветения', visits: 1 });
   care.push({ month: 7, operation: 'Осмотр на вредителей и болезни', detail: 'Повторный осмотр в жару', visits: 1 });
   if (hedge) care.push({ month: 8, operation: 'Формовка изгороди', detail: 'Вторая стрижка', visits: 1 });
-  care.push({ month: 10, operation: 'Влагозарядковый полив', detail: 'Обильный полив перед заморозками', visits: 1 });
+  care.push({ month: 10, operation: 'Влагозарядковый полив', detail: 'Обильный полив перед заморозками; объём уточнить у дендролога', visits: 1, taskAction: 'water', waterLitersPerVisit: null });
   care.push({ month: 10, operation: 'Побелка стволов', detail: 'Осенняя побелка от морозобоин', visits: 1 });
   care.push({ month: 11, operation: 'Зимняя защита', detail: evergreen ? 'Укрытие молодых хвойных от солнечных ожогов, обвязка кроны' : 'Защита стволов сеткой от грызунов', visits: 1 });
   if (has('flower')) care.push({ month: 5, operation: 'Высадка цветников', detail: 'Однолетники — после заморозков; многолетники — прополка', visits: 1 });
+  if (has('flower')) care.push({ month: 6, operation: 'Прополка цветников', detail: 'Оценка: удалить сорняки, не повреждая зарегистрированные растения', visits: 1, taskAction: 'weed' });
   if (soil.salinity === 'medium' || soil.salinity === 'high') care.push({ month: 4, operation: 'Мелиорация почвы', detail: 'Гипсование или промывка засолённых участков', visits: 1 });
   care.sort((a, b) => a.month - b.month);
   const warnings: string[] = [];
@@ -343,6 +365,8 @@ export function analyzeZone(site: CandidateSite, catalog: Species[], rates: Rate
     tiersNote: `Ярусы: деревья, кустарники${scheme.some((s) => s.tier === 'flower') ? ', цветы' : ''}. Доля одного вида в ярусе — не более ${Math.round(opt.maxSpeciesShare * 100)}%.`,
     cost,
     survival,
+    survivalModel,
+    survivalRules: rulesSurvivalForecast(site, scheme, byId, opt, soil, rates),
     survivalAvg,
     measures,
     care,
@@ -352,7 +376,7 @@ export function analyzeZone(site: CandidateSite, catalog: Species[], rates: Rate
     before: { canopyM2: 0, greenShare: site.context?.greenShare200m ?? null },
     assumptions: [
       'Все значения оценочные и носят рекомендательный характер; решение принимает специалист акимата (ТЗ 5.2).',
-      'Приживаемость — экспертные правила команды (п.п. по факторам риска), модель не калибрована на данных Павлодара.',
+      'Приживаемость первого года — логистическая регрессия на синтетических данных из экспертных правил; не калибрована на посадках Павлодара. Последующие годы — экспертное затухание.',
       'soilOverride' in site ? 'Почва из импортированного слоя; достоверность определяется источником.' : 'Почва — синтетический слой до получения карты почв организатора.',
       'Расценки — демо-справочник команды; администратор меняет их в «Справочниках».',
       'Экоэффект: рост кроны до взрослого — 30% за 5 лет, 60% за 10, 100% за 20; учтена приживаемость за 3 года.',

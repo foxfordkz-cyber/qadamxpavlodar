@@ -5,7 +5,7 @@ import { fail } from '../v2/core.js';
 import type { analyze } from './data.js';
 type Analysis=ReturnType<typeof analyze>;
 function sections(a:Analysis):[string,(string|number|null)[][]][]{return[
-  ['Summary',[['Zone',a.siteId],['Method','Expert rules; estimates; not calibrated'],['Input SHA256',a.provenance.inputHash],['Generated UTC',a.provenance.generatedAt],['Rates version',a.provenance.ratesVersion],['Cost KZT',a.cost.total],['CO2 cost KZT/t',a.costPerTonCo2],['Soil source',JSON.stringify(a.provenance.soilSource)]]],
+  ['Summary',[['Zone',a.siteId],['Method',`Shared estimates; survival: ${a.provenance.survivalMethod}; not field calibrated`],['Input SHA256',a.provenance.inputHash],['Generated UTC',a.provenance.generatedAt],['Rates version',a.provenance.ratesVersion],['Cost KZT',a.cost.total],['CO2 cost KZT/t',a.costPerTonCo2],['Soil source',JSON.stringify(a.provenance.soilSource)]]],
   ['Estimate',[['Article','KZT','Formula'],...a.cost.items.map(x=>[x.label,x.amount,x.formula])]],
   ['Planting',[['Species','Tier','Quantity'],...a.scheme.map(x=>[x.speciesId,x.tier,x.quantity])]],
   ['Survival',[['Species','Year 1 %','Year 2 %','Year 3 %','Lower','Upper','Risks'],...a.survival.map(x=>[x.speciesId,x.y1,x.y2,x.y3,x.low,x.high,JSON.stringify(x.risks)])]],

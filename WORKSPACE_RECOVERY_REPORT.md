@@ -26,4 +26,6 @@
 
 Проверка ancestry подтвердила, что server/srv-03-06 является предком codex/coordinator. Поэтому выполнен обычный merge последнего codex/coordinator **в личную feature-ветку**, с ручным разрешением 29 конфликтов. Общая ветка не изменяется этим локальным merge. Результаты: [BACKEND_MERGE_VERIFICATION.md](apps/server/BACKEND_MERGE_VERIFICATION.md).
 
+Перед push remote проверен повторно: codex/coordinator продвинулся до `dc182fd696c0fb612234ef1896e980c42b8fa0e2`. После первого merge-коммита `a4569b3` этот новый HEAD также объединён обычным merge в личную ветку. Два дополнительных конфликта (ReportPage, shared analytics/plan) разрешены с сохранением обеих функций. Полная повторная проверка: 58/58 backend tests, server/web typecheck/build, shared survival/care/zones checks и оба HTTP restart сценария прошли; 101 операция API. Исходная ветка feature/backend-preparation не передвигалась.
+
 Для продолжения в другом локальном чате нужна эта же существующая папка `...\outputs\qadamxpavlodar-backend-publish` на этом компьютере. Содержимое backup и незакоммиченные данные другого компьютера автоматически доступными не становятся. В текущем чате дополнительное действие пользователя для доступа не требуется.

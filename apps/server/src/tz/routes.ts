@@ -155,4 +155,10 @@ export function tzRoutes(s: Store, api: Api, tz: TzOptions = {}) {
   route({ method: 'post', path: '/sites/:id/plant-selection', input: z.object({}).strict(), readOnly: true, summary: 'Rule-based plant selection for a site' }, (req, res) => {
     reader(actor(res)); res.json({ data: web.selectPlants(candidate(s, param(req)), speciesList(s)) });
   });
+
+  const careInput = z.object({ months: z.number().int().min(1).max(12), crewVisitsPerMonth: z.number().int().min(0).max(31).optional(), budgetKzt: z.number().finite().nonnegative().optional() }).strict();
+  route({ method: 'post', path: '/zones/:id/care-schedule', input: careInput, readOnly: true, summary: 'Care calendar as task drafts; no tasks saved', response: z.object({ tasks: z.array(object), warnings: z.array(z.string()), method: z.literal('rules') }) }, (req, res) => {
+    reader(actor(res)); const input = careInput.parse(req.body), ref = reference(s);
+    res.json({ data: web.buildCareSchedule(candidate(s, param(req)), listDocs(s, 'plant'), ref.species, ref.map, input) });
+  });
 }

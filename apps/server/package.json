@@ -22,7 +22,8 @@
     "test:municipal": "node --import ./scripts/local-network-guard.mjs --import ./tests/setup-env.mjs --import tsx --test tests/municipal.test.ts",
     "demo:municipal": "node --import ./scripts/local-network-guard.mjs --import tsx scripts/demo-municipal.mjs",
     "seed:tz": "node --env-file-if-exists=.env --import ./scripts/local-network-guard.mjs --import tsx src/tz/seed-cli.ts",
-    "llm:check": "node --env-file-if-exists=.env --import ./scripts/local-network-guard.mjs --import tsx src/tz/llm-check-cli.ts"
+    "llm:check": "node --env-file-if-exists=.env --import ./scripts/local-network-guard.mjs --import tsx src/tz/llm-check-cli.ts",
+    "perf": "node --import ./scripts/local-network-guard.mjs scripts/perf.mjs"
   },
   "dependencies": {
     "@turf/turf": "^7.4.0",

@@ -1,10 +1,12 @@
 import { useMemo, useRef, useState } from 'react';
+import { SurvivalMethod } from '../zone/SurvivalMethod';
+import { t } from '../../../shared/i18n';
 import { useData, useResource } from '../../../shared/api/DataProvider';
 import type { PlanOptions } from '../../../shared/analytics/plan';
 import { VARIANT_LABEL } from '../../../shared/analytics/plan';
 import { SALINITY_LABEL } from '../../../shared/analytics/zone';
 import { StateView } from '../../../shared/ui/components';
-import { fmtDateTime } from '../../../shared/format';
+import { fmtDateTime, fmtPp } from '../../../shared/format';
 import { hrefFor, useRoute } from '../../../shared/router';
 import { download } from '../sites/filters';
 
@@ -16,6 +18,7 @@ export function ReportPage() {
   const { api, mode } = useData();
   const [exportError,setExportError]=useState('');
   const [exporting,setExporting]=useState(false);
+  const [compare, setCompare] = useState(false);
   const route = useRoute();
   const siteId = route.params.get('site') ?? '';
   const options = useMemo<Partial<PlanOptions>>(() => {
@@ -73,10 +76,12 @@ export function ReportPage() {
             </tbody></table>
             <p>Расценки — демонстрационный справочник; заменить сметными нормами.</p>
             <h2>4. Прогноз приживаемости</h2>
-            <table><thead><tr><th>Вид</th><th>1 год, %</th><th>2 года, %</th><th>3 года, %</th><th>Диапазон 1-го года</th><th>Факторы риска</th></tr></thead><tbody>
-              {r.survival.map((x) => <tr key={x.speciesId}><td>{byId.get(x.speciesId)?.nameRu}</td><td>{x.y1}</td><td>{x.y2 || '—'}</td><td>{x.y3 || '—'}</td><td>{x.low}–{x.high}</td><td>{x.risks.map((k) => `${k.label} ${k.pp} п.п.`).join('; ') || 'нет'}</td></tr>)}
+            <SurvivalMethod model={r.survivalModel} />
+            <button className="gp-btn gp-noprint" aria-pressed={compare} onClick={() => setCompare(!compare)}>{t(compare ? 'survival.hideRules' : 'survival.compare')}</button>
+            <table><thead><tr><th>Вид</th><th>1 год, %</th>{compare && <th>{t('survival.rulesColumn')}</th>}<th>2 года, %</th><th>3 года, %</th><th>Диапазон 1-го года</th><th>Факторы риска</th></tr></thead><tbody>
+              {r.survival.map((x) => <tr key={x.speciesId}><td>{byId.get(x.speciesId)?.nameRu}</td><td>{x.y1}</td>{compare && <td>{r.survivalRules.find(v => v.speciesId === x.speciesId)?.y1 ?? '—'}</td>}<td>{x.y2 || '—'}</td><td>{x.y3 || '—'}</td><td>{x.low}–{x.high}</td><td>{x.risks.map((k) => `${k.label} ${fmtPp(k.pp)}`).join('; ') || 'нет'}{x.warnings?.map(w => <p key={w}>{w}</p>)}</td></tr>)}
             </tbody></table>
-            <p>Средняя по зоне: {r.survivalAvg.y1}% / {r.survivalAvg.y2}% / {r.survivalAvg.y3}%. Метод — экспертные правила, не калиброваны на данных Павлодара.{r.measures.length ? ` Меры: ${r.measures.map((m) => `${m.label} (${m.effect})`).join('; ')}.` : ''}</p>
+            <p>Средняя по зоне: {r.survivalAvg.y1}% / {r.survivalAvg.y2}% / {r.survivalAvg.y3}%.{r.measures.length ? ` Меры: ${r.measures.map((m) => `${m.label} (${m.effect})`).join('; ')}.` : ''}</p>
             <h2>5. План ухода</h2>
             <table><thead><tr><th>Месяц</th><th>Операция</th><th>Подробности</th></tr></thead><tbody>
               {r.care.map((c, i) => <tr key={i}><td>{MONTHS[c.month - 1]}</td><td>{c.operation}</td><td>{c.detail}</td></tr>)}

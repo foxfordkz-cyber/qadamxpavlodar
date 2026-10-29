@@ -9,6 +9,9 @@ const llmHosts = (process.env.LLM_ALLOWED_HOSTS ?? '').split(',').map(h => h.tri
 // Точные имена: api.x.ai или имя сервиса в docker compose (ollama). IP-адреса и шаблоны не принимаются.
 for (const h of llmHosts) if (!/^[a-z0-9-]+(\.[a-z0-9-]+)*$/.test(h) || /^[\d.]+$/.test(h)) throw new Error(`LLM_ALLOWED_HOSTS: use exact DNS names, got ${h}`);
 const allowed = new Set(['127.0.0.1','localhost','::1','[::1]',...llmHosts]);
+// Адреса «все интерфейсы» (HOST=0.0.0.0 в Docker): server.listen проверяет их через dns.lookup.
+// Это входящие соединения, поэтому разрешены только в lookup, не в connect.
+const listenOnly = new Set(['0.0.0.0','::']);
 const blocked = [];
 function deny(destination) {
   blocked.push(String(destination));
@@ -36,7 +39,7 @@ net.Socket.prototype.connect = function (...args) {
 };
 const originalLookup = dns.lookup;
 dns.lookup = function (hostname,...args) {
-  if (!allowed.has(hostname)) deny(hostname);
+  if (!allowed.has(hostname) && !listenOnly.has(hostname)) deny(hostname);
   return originalLookup.call(this,hostname,...args);
 };
 for (const name of Object.keys(dns)) if (name.startsWith('resolve') || name === 'reverse' || name === 'lookupService') {
@@ -47,7 +50,7 @@ for (const name of Object.keys(dns.promises)) if (name.startsWith('resolve') || 
 }
 const originalPromiseLookup = dns.promises.lookup.bind(dns.promises);
 dns.promises.lookup = async (hostname,...args) => {
-  if (!allowed.has(hostname)) deny(hostname);
+  if (!allowed.has(hostname) && !listenOnly.has(hostname)) deny(hostname);
   return originalPromiseLookup(hostname,...args);
 };
 dgram.createSocket = () => deny('UDP');
