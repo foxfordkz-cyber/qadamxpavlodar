@@ -9,6 +9,7 @@ import { hrefFor } from '../../../shared/router';
 import { SpeciesPhoto } from '../species/SpeciesCardGrid';
 import { SurvivalMethod } from './SurvivalMethod';
 import { CareDrafts } from './CareDrafts';
+import { TimeMachinePanel } from './TimeMachinePanel';
 import { t } from '../../../shared/i18n';
 import { fmtPp } from '../../../shared/format';
 
@@ -39,7 +40,7 @@ export function ZoneAnalysisView({ site, tab, options, setOptions }: { site: Can
             {tab === 'cost' && <CostTab a={a} site={site} options={options} set={set} />}
             {tab === 'survival' && <SurvivalTab a={a} byId={byId} options={options} set={set} />}
             {tab === 'care' && <CareTab a={a} />}
-            {tab === 'effect' && <EffectTab a={a} />}
+            {tab === 'effect' && <EffectTab a={a} site={site} byId={byId} />}
             <details className="gp-zone__notes">
               <summary>Допущения и недостающие данные ({a.missing.length})</summary>
               <ul className="gp-small">{[...a.missing, ...a.assumptions].map((x) => <li key={x}>{x}</li>)}</ul>
@@ -260,7 +261,7 @@ function CareTab({ a }: { a: ZoneAnalysis }) {
   );
 }
 
-function EffectTab({ a }: { a: ZoneAnalysis }) {
+function EffectTab({ a, site, byId }: { a: ZoneAnalysis; site: CandidateSite; byId: Map<string, Species> }) {
   const e20 = a.effect[2];
   return (
     <section aria-labelledby="z-eff">
@@ -284,6 +285,7 @@ function EffectTab({ a }: { a: ZoneAnalysis }) {
       </table>
       <p><strong>Стоимость тонны CO₂ за 20 лет:</strong> {a.costPerTonCo2 ? money(a.costPerTonCo2) : '—'} <span className="gp-muted gp-small">(смета ÷ накопленное поглощение за 20 лет)</span></p>
       <p className="gp-small gp-muted">Коэффициенты и их источники — в «Справочниках». Значения оценочные, учитывают рост кроны и приживаемость за 3 года.</p>
+      <TimeMachinePanel a={a} site={site} byId={byId} />
       <ErrorNote error={null} />
     </section>
   );

@@ -3,7 +3,7 @@
 import * as THREE from 'three';
 import type { CustomLayerInterface, Map as MlMap } from 'maplibre-gl';
 import type { GeoJsonPoint, GeoJsonPolygon, ProjectItem, Species } from '../../../shared/api/types';
-import { makeProjection, ringAreaXY, type XY } from '../../../shared/geo';
+import { longAxis, makeProjection, type XY } from '../../../shared/geo';
 import { STAGE_K, type Stage } from './trees3d';
 
 const FLOWER_COLORS: Record<string, number[]> = {
@@ -31,10 +31,14 @@ function shadowDisk(r: number) {
   return m;
 }
 
+/** Стадия проекта или доли взрослых размеров (машина времени зоны: рост по расчёту экоэффекта). */
+export type Growth = Stage | { h: number; crown: number };
+const kOf = (g: Growth) => (typeof g === 'string' ? STAGE_K[g] : g);
+
 /** Модель растения в локальных метрах (Y вверх). */
-function plantModel(sp: Species | undefined, stage: Stage, seed: string): THREE.Group {
+function plantModel(sp: Species | undefined, stage: Growth, seed: string): THREE.Group {
   const r = rng(seed);
-  const k = STAGE_K[stage];
+  const k = kOf(stage);
   const hMax = sp?.matureHeightM ? (sp.matureHeightM[0] + sp.matureHeightM[1]) / 2 : 2;
   const H = Math.max(0.5, hMax * k.h);
   const R = Math.max(0.3, ((sp?.crownDiameterM ?? 1.5) / 2) * k.crown);
@@ -78,7 +82,7 @@ function plantModel(sp: Species | undefined, stage: Stage, seed: string): THREE.
         blob.scale.y = Math.min(1.25, ry / size);
         g.add(blob);
       }
-      if (sp.floweringMonths?.length && stage !== 'planting') {
+      if (sp.floweringMonths?.length && k.crown > STAGE_K.planting.crown) {
         // Лёгкий намёк на цветение у цветущих деревьев.
         const petals = new THREE.Mesh(new THREE.IcosahedronGeometry(R * 0.35, 0), mat(/niedzwetzkyana/.test(sp.id) ? 0xe58bb4 : 0xf4f1e6));
         petals.position.set(R * 0.3, cy + ry * 0.5, -R * 0.2);
@@ -109,26 +113,32 @@ function plantModel(sp: Species | undefined, stage: Stage, seed: string): THREE.
   return g;
 }
 
-/** Клумба: почва, листва и россыпь цветков (InstancedMesh, до 900 шт.). */
-function bedModel(ring: XY[], sp: Species | undefined, stage: Stage, seed: string): THREE.Group {
+/**
+ * Клумба: низкий бортик почвы и растения ровными рядами вдоль длинной стороны, шаг — из справочника
+ * (spacingM или диаметр куста), ряды в шахматном порядке; каждое — куст листвы у земли и соцветие на высоте вида.
+ * Раньше цветки падали случайно по 14 на м²: налезали друг на друга и висели над почвой.
+ */
+function bedModel(ring: XY[], sp: Species | undefined, stage: Growth, seed: string): THREE.Group {
   const r = rng(seed);
   const g = new THREE.Group();
+  const k = kOf(stage);
+  const SOIL = 0.05;
   const shape = new THREE.Shape(ring.map(([x, y]) => new THREE.Vector2(x, -y)));
-  const soil = new THREE.Mesh(new THREE.ExtrudeGeometry(shape, { depth: 0.12, bevelEnabled: false }), mat(0x6e5a3e));
+  const soil = new THREE.Mesh(new THREE.ExtrudeGeometry(shape, { depth: SOIL, bevelEnabled: false }), mat(0x5a4632));
   soil.rotation.x = Math.PI / 2;
-  soil.position.y = 0.12;
+  soil.position.y = SOIL;
   g.add(soil);
-  const area = ringAreaXY(ring);
   const hMax = sp?.matureHeightM ? (sp.matureHeightM[0] + sp.matureHeightM[1]) / 2 : 0.4;
-  const h = Math.max(0.12, hMax * STAGE_K[stage].h);
-  const n = Math.min(900, Math.round(area * 14));
-  const cols = FLOWER_COLORS[sp?.id ?? ''] ?? (sp?.form === 'shrub' ? [0x6b9a3a] : [0xc0688a]);
-  const geo = new THREE.IcosahedronGeometry(0.11, 0);
-  const meshes = cols.map((c) => new THREE.InstancedMesh(geo, mat(c, 0.6), n));
-  const leaves = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(0.16, 0), mat(0x5f8f35), n);
-  const xs = ring.map((p) => p[0]);
-  const ys = ring.map((p) => p[1]);
-  const [minX, maxX, minY, maxY] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)];
+  const h = Math.max(0.1, hMax * k.h);
+  const crown = Math.max(0.12, (sp?.crownDiameterM ?? 0.35) * Math.max(0.35, k.crown));
+  // Шаг посадки — из справочника (spacingM), иначе диаметр взрослого куста; не плотнее 0,2 м.
+  const step = Math.max(0.2, sp?.spacingM ?? (sp?.crownDiameterM ?? 0.35));
+  // Ряды идут вдоль длинной оси клумбы (у бордюра — вдоль улицы), а не по сторонам света.
+  const u = longAxis(ring);
+  const n: XY = [-u[1], u[0]];
+  const st = ring.map(([x, y]) => [x * u[0] + y * u[1], x * n[0] + y * n[1]] as XY);
+  const [minS, maxS] = [Math.min(...st.map((p) => p[0])), Math.max(...st.map((p) => p[0]))];
+  const [minT, maxT] = [Math.min(...st.map((p) => p[1])), Math.max(...st.map((p) => p[1]))];
   const inside = (x: number, y: number) => {
     let ins = false;
     for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
@@ -138,22 +148,40 @@ function bedModel(ring: XY[], sp: Species | undefined, stage: Stage, seed: strin
     }
     return ins;
   };
-  const m4 = new THREE.Matrix4();
-  const counts = cols.map(() => 0);
-  let placed = 0;
-  for (let tries = 0; placed < n && tries < n * 4; tries++) {
-    const x = minX + r() * (maxX - minX);
-    const y = minY + r() * (maxY - minY);
-    if (!inside(x, y)) continue;
-    const ci = Math.floor(r() * cols.length);
-    m4.makeTranslation(x, 0.12 + h, -y);
-    meshes[ci].setMatrixAt(counts[ci]++, m4);
-    m4.makeTranslation(x + 0.05, 0.12 + h * 0.5, -y + 0.05);
-    leaves.setMatrixAt(placed, m4);
-    placed++;
+  // Ровные ряды в шахматном порядке; ряды по центру ширины клумбы, без случайного разброса.
+  const nRows = Math.max(1, Math.floor((maxT - minT) / (step * 0.87)));
+  const t0 = minT + ((maxT - minT) - (nRows - 1) * step * 0.87) / 2;
+  const cells: XY[] = [];
+  for (let row = 0; row < nRows; row++) {
+    const t = t0 + row * step * 0.87;
+    for (let sv = minS + step / 2 + (row % 2 ? step / 2 : 0); sv < maxS - step / 4; sv += step) {
+      const x = sv * u[0] + t * n[0];
+      const y = sv * u[1] + t * n[1];
+      if (inside(x, y)) cells.push([x, y]);
+    }
   }
-  meshes.forEach((m, i) => { m.count = counts[i]; g.add(m); });
-  leaves.count = placed;
+  // Больше 700 растений браузер рисует тяжело: на большой клумбе берём каждое n-е место, сетка остаётся ровной.
+  const every = Math.max(1, Math.ceil(cells.length / 700));
+  const spots = cells.filter((_, i) => i % every === 0);
+  const cols = FLOWER_COLORS[sp?.id ?? ''] ?? (sp?.form === 'shrub' ? [0x6b9a3a] : [0xc0688a]);
+  const unit = new THREE.IcosahedronGeometry(1, 0);
+  const blooms = cols.map((c) => new THREE.InstancedMesh(unit, mat(c, 0.6), spots.length));
+  const leaves = new THREE.InstancedMesh(unit, mat(0x5f8f35), spots.length);
+  const m4 = new THREE.Matrix4();
+  const q = new THREE.Quaternion();
+  const counts = cols.map(() => 0);
+  spots.forEach(([x, y], i) => {
+    const leaf = crown / 2;
+    // Куст листвы стоит на почве, соцветие — у верхушки, на высоте вида.
+    m4.compose(new THREE.Vector3(x, SOIL + Math.min(h, leaf) * 0.55, -y), q, new THREE.Vector3(leaf, Math.min(h, leaf) * 0.6, leaf));
+    leaves.setMatrixAt(i, m4);
+    const ci = Math.floor(r() * cols.length);
+    const b = Math.max(0.07, crown * 0.42);
+    m4.compose(new THREE.Vector3(x, SOIL + h - b * 0.5, -y), q, new THREE.Vector3(b, b * 0.8, b));
+    blooms[ci].setMatrixAt(counts[ci]++, m4);
+  });
+  blooms.forEach((m, i) => { m.count = counts[i]; m.computeBoundingSphere(); g.add(m); });
+  leaves.computeBoundingSphere();
   g.add(leaves);
   return g;
 }
@@ -171,7 +199,7 @@ export interface SceneInput {
   siteRing: [number, number][] | null;
   items: ProjectItem[];
   species: Map<string, Species>;
-  stage: Stage;
+  stage: Growth;
 }
 
 /** Слой MapLibre с three.js-сценой. update() пересобирает модели без пересоздания карты. */

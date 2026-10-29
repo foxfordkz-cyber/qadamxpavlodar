@@ -17,7 +17,8 @@ import { web, type Json } from './shared.js';
 import * as municipal from '../municipal/data.js';
 
 /** Подключение ассистента участника 3 (LLM + RAG). Нет адаптера или он упал — ответ по правилам. */
-export type AssistantAdapter = (input: { message: string; siteId: string | null; user: User }) => Promise<Json>;
+export type AssistantTurn = { role: 'user' | 'assistant'; text: string };
+export type AssistantAdapter = (input: { message: string; siteId: string | null; user: User; history?: AssistantTurn[]; view?: { lat: number; lng: number } | null }) => Promise<Json>;
 export type TzOptions = { assistant?: AssistantAdapter };
 
 const reader = (a: User) => allow(a, 'admin', 'coordinator', 'viewer');
@@ -26,7 +27,12 @@ const options = z.object({ options: object.default({}) }).strict();
 const weights = z.record(z.string(), z.number().min(0).max(1));
 const prioritiesInput = z.object({ weights: weights.optional(), budget: z.number().nonnegative().nullable().optional() }).strict();
 const rateInput = z.object({ key: z.string().min(1).max(80), value: z.number().nonnegative().finite().nullable(), source: text, expectedVersion: version }).strict();
-const assistantInput = z.object({ message: z.string().trim().min(1).max(2000), siteId: id.nullable().optional() }).strict();
+// history — последние реплики диалога (короткий ответ продолжает вопрос); view — центр карты, если зона не выбрана.
+const assistantInput = z.object({
+  message: z.string().trim().min(1).max(2000), siteId: id.nullable().optional(),
+  history: z.array(z.object({ role: z.enum(['user', 'assistant']), text: z.string().max(2000) }).strict()).max(6).optional(),
+  view: z.object({ lat: z.number().min(-90).max(90), lng: z.number().min(-180).max(180) }).strict().nullable().optional(),
+}).strict();
 const zoneInput = z.object({ name: z.string().max(120).optional(), geometry: z.unknown() }).strict();
 const importInput = z.object({ format: z.string().max(20).optional(), features: z.array(object).max(20000) }).strict();
 const rankInput = z.object({ weights: z.record(z.string(), z.number()) }).strict();
@@ -122,14 +128,14 @@ export function tzRoutes(s: Store, api: Api, tz: TzOptions = {}) {
     if(siteId)municipal.analyze(s,siteId,{});
     let reply: Json | null = null, fallbackReason: string | null = null;
     if (tz.assistant) {
-      try { reply = await tz.assistant({ message: b.message, siteId, user: a }); }
+      try { reply = await tz.assistant({ message: b.message, siteId, user: a, history: b.history ?? [], view: b.view ?? null }); }
       catch (e) {
         // В журнал — только причина, без текста вопроса и ключа.
         console.warn(`Assistant model failed, rules answer instead: ${e instanceof Error ? e.message : 'error'}`);
         fallbackReason = 'Модель не ответила вовремя или ответ не прошёл проверку — показан ответ по правилам.';
       }
     }
-    if (!reply) { const ref = reference(s); reply = { sources: [], toolCalls: [], ...web.answer(b.message, { siteId }, candidates(s), ref.species, ref.map), ...(fallbackReason ? { fallbackReason } : {}) }; }
+    if (!reply) { const ref = reference(s); reply = { sources: [], toolCalls: [], ...web.answer(b.message, { siteId, history: b.history ?? [], view: b.view ?? null }, candidates(s), ref.species, ref.map), ...(fallbackReason ? { fallbackReason } : {}) }; }
     s.run('INSERT INTO tz_assistant_history VALUES (?,?,?,?,?,?,?)', randomUUID(), a.id, now(), b.message.slice(0, 300), String(reply.intent ?? 'other'), String(reply.method ?? 'rules'), JSON.stringify((reply.zones ?? []).map((z: Json) => z.id)));
     res.json({ data: reply });
   });
