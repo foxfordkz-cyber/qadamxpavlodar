@@ -31,10 +31,14 @@ function shadowDisk(r: number) {
   return m;
 }
 
+/** Стадия проекта или доли взрослых размеров (машина времени зоны: рост по расчёту экоэффекта). */
+export type Growth = Stage | { h: number; crown: number };
+const kOf = (g: Growth) => (typeof g === 'string' ? STAGE_K[g] : g);
+
 /** Модель растения в локальных метрах (Y вверх). */
-function plantModel(sp: Species | undefined, stage: Stage, seed: string): THREE.Group {
+function plantModel(sp: Species | undefined, stage: Growth, seed: string): THREE.Group {
   const r = rng(seed);
-  const k = STAGE_K[stage];
+  const k = kOf(stage);
   const hMax = sp?.matureHeightM ? (sp.matureHeightM[0] + sp.matureHeightM[1]) / 2 : 2;
   const H = Math.max(0.5, hMax * k.h);
   const R = Math.max(0.3, ((sp?.crownDiameterM ?? 1.5) / 2) * k.crown);
@@ -78,7 +82,7 @@ function plantModel(sp: Species | undefined, stage: Stage, seed: string): THREE.
         blob.scale.y = Math.min(1.25, ry / size);
         g.add(blob);
       }
-      if (sp.floweringMonths?.length && stage !== 'planting') {
+      if (sp.floweringMonths?.length && k.crown > STAGE_K.planting.crown) {
         // Лёгкий намёк на цветение у цветущих деревьев.
         const petals = new THREE.Mesh(new THREE.IcosahedronGeometry(R * 0.35, 0), mat(/niedzwetzkyana/.test(sp.id) ? 0xe58bb4 : 0xf4f1e6));
         petals.position.set(R * 0.3, cy + ry * 0.5, -R * 0.2);
@@ -110,7 +114,7 @@ function plantModel(sp: Species | undefined, stage: Stage, seed: string): THREE.
 }
 
 /** Клумба: почва, листва и россыпь цветков (InstancedMesh, до 900 шт.). */
-function bedModel(ring: XY[], sp: Species | undefined, stage: Stage, seed: string): THREE.Group {
+function bedModel(ring: XY[], sp: Species | undefined, stage: Growth, seed: string): THREE.Group {
   const r = rng(seed);
   const g = new THREE.Group();
   const shape = new THREE.Shape(ring.map(([x, y]) => new THREE.Vector2(x, -y)));
@@ -120,7 +124,7 @@ function bedModel(ring: XY[], sp: Species | undefined, stage: Stage, seed: strin
   g.add(soil);
   const area = ringAreaXY(ring);
   const hMax = sp?.matureHeightM ? (sp.matureHeightM[0] + sp.matureHeightM[1]) / 2 : 0.4;
-  const h = Math.max(0.12, hMax * STAGE_K[stage].h);
+  const h = Math.max(0.12, hMax * kOf(stage).h);
   const n = Math.min(900, Math.round(area * 14));
   const cols = FLOWER_COLORS[sp?.id ?? ''] ?? (sp?.form === 'shrub' ? [0x6b9a3a] : [0xc0688a]);
   const geo = new THREE.IcosahedronGeometry(0.11, 0);
@@ -171,7 +175,7 @@ export interface SceneInput {
   siteRing: [number, number][] | null;
   items: ProjectItem[];
   species: Map<string, Species>;
-  stage: Stage;
+  stage: Growth;
 }
 
 /** Слой MapLibre с three.js-сценой. update() пересобирает модели без пересоздания карты. */

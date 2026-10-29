@@ -16,6 +16,7 @@ import { usePriorityWeights, WeightSliders } from '../tz/PriorityWeights';
 import { DrawBar, MapSearch } from '../map/MapTools';
 import { useMe } from '../me';
 import type { GeoHit } from '../../../shared/api/geocode';
+import { GROWTH_YEARS, growthFrame, timeMachine, useTimeMachine, YEAR_LABEL } from '../zone/timeMachine';
 
 export function SitesPage() {
   const { api } = useData();
@@ -30,6 +31,9 @@ export function SitesPage() {
   const highlight = useMemo(() => (hlIds.length ? { ids: hlIds, seq: hlSeq } : null), [hlIds, hlSeq]);
   const keepHl = hlKey ? { hl: hlKey, hlt: route.params.get('hlt') } : {};
   const clearHl = () => navigate('/map', { site: selectedId }, true);
+  // Машина времени включается во вкладке «Эффект» карточки, а посадка растёт здесь, на карте, — только у открытой зоны.
+  const tm = useTimeMachine();
+  const growth = useMemo(() => (tm.scene && tm.scene.siteId === selectedId ? growthFrame(tm.scene, tm.year) : null), [tm, selectedId]);
   // Опрос раз в 30 с: изменения с сервера (проверки, отчёты) видны без перезагрузки.
   const sitesRes = useResource(() => api.sites(), [], 30000);
   const tasksRes = useResource(() => api.tasks(), [], 30000);
@@ -175,8 +179,17 @@ export function SitesPage() {
           <div className="gp-alert gp-alert--bad" role="alert">Не показаны на карте из-за координат: {badGeometry.map(([s, e]) => `${s.id} (${e})`).join('; ')}</div>
         )}
         <SiteMap sites={validSites} eligibility={elig} selectedId={selectedId} onSelect={(id) => select(id, false)} focusSeq={focusSeq} context={ctxRes.data} plants={layers.greenery ? plantsRes.data?.data ?? [] : []} planned={planned} soils={layers.soils ? (soilsRes.data?.data as never) : null} greenery={layers.greenery ? (greenRes.data?.data as never) : null} zoneTint={zoneTint}
-          drawPoints={drawPoints} onDrawPoint={(p) => setDrawPoints((prev) => (prev ? [...prev, p] : prev))} target={target} toolbarExtra={toolbarExtra} highlight={highlight} />
+          drawPoints={drawPoints} onDrawPoint={(p) => setDrawPoints((prev) => (prev ? [...prev, p] : prev))} target={target} toolbarExtra={toolbarExtra} highlight={highlight} growth={growth} />
         {savedNote && <div className="gp-alert gp-alert--ok gp-map__saved" role="status">{savedNote}</div>}
+        {growth && (
+          <div className="gp-tm-bar gp-card" role="group" aria-label="Машина времени: год после посадки">
+            <strong aria-hidden="true">⏳</strong>
+            <div className="gp-segment">
+              {GROWTH_YEARS.map((y) => <label key={y}><input type="radio" name="tm-bar" checked={tm.year === y} onChange={() => timeMachine.setYear(y)} />{YEAR_LABEL[y]}</label>)}
+            </div>
+            <button className="gp-icon-btn" onClick={() => timeMachine.hide()} aria-label="Скрыть машину времени">✕</button>
+          </div>
+        )}
         {highlight && (
           <div className="gp-hl-pill gp-card" role="status">
             <span className="gp-hl__n" aria-hidden="true">{hlIds.length}</span><span>{hlTitle}</span>

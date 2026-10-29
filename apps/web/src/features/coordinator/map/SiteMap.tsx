@@ -8,6 +8,8 @@ import { t } from '../../../shared/i18n';
 import { CENTER, siteBounds, siteCenter } from './geo';
 import { SchemeView } from './SchemeView';
 import { mapBroken } from './mapFlags';
+import type { GrowthFrame } from '../zone/timeMachine';
+import type { SceneInput } from '../projects/scene3d';
 
 // Векторная подложка OpenFreeMap (OSM). Без ключа; атрибуция обязательна — её задаёт сам стиль
 // («OpenFreeMap © OpenMapTiles Data from OpenStreetMap»), контрол показывает её всегда развёрнутой.
@@ -71,6 +73,8 @@ interface Props {
   toolbarExtra?: ReactNode;
   /** Зоны из ответа ассистента или дорожной карты: номер очереди и обводка; seq меняется — карта показывает их все. */
   highlight?: { ids: string[]; seq: number } | null;
+  /** Машина времени: посадка выбранной зоны в 3D (three.js) на указанный год. */
+  growth?: GrowthFrame | null;
 }
 
 const EMPTY = { type: 'FeatureCollection' as const, features: [] as { type: 'Feature'; properties: Record<string, unknown>; geometry: unknown }[] };
@@ -134,7 +138,7 @@ function hatchImage(color: string) {
   return { width: size, height: size, data };
 }
 
-export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, context, plants = [], planned = [], soils = null, greenery = null, zoneTint = null, drawPoints = null, onDrawPoint, target = null, toolbarExtra, highlight = null }: Props) {
+export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, context, plants = [], planned = [], soils = null, greenery = null, zoneTint = null, drawPoints = null, onDrawPoint, target = null, toolbarExtra, highlight = null, growth = null }: Props) {
   const box = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MlMap | null>(null);
   const ready = useRef(false);
@@ -268,14 +272,52 @@ export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, co
       }
       focusRef.current();
       highlightRef.current();
+      planting.current = null;
+      void syncGrowth.current();
     });
     return () => {
       clearTimeout(timeout);
       ready.current = false;
+      planting.current = null;
       map.remove();
       mapRef.current = null;
     };
   }, [view, basemap, reportService]);
+
+  // Машина времени: three.js-слой из редактора проектов (scene3d), грузится только когда нужен.
+  // Первое включение — камера наклоняется к зоне; смена года пересобирает модели без пересоздания слоя.
+  const growthRef = useRef(growth);
+  growthRef.current = growth;
+  const planting = useRef<{ update: (input: SceneInput) => void } | null>(null);
+  const syncGrowth = useRef(async () => {});
+  syncGrowth.current = async () => {
+    const m = mapRef.current;
+    const g = growthRef.current;
+    if (!m || !ready.current) return;
+    if (!g) {
+      if (m.getLayer('planting-3d')) m.removeLayer('planting-3d');
+      planting.current = null;
+      return;
+    }
+    const input = { origin: g.origin, siteRing: g.ring, items: g.items, species: g.species, stage: g.k };
+    if (planting.current && m.getLayer('planting-3d')) { planting.current.update(input); return; }
+    const { createPlantingLayer } = await import('../projects/scene3d');
+    const now = growthRef.current;
+    if (mapRef.current !== m || !now || m.getLayer('planting-3d')) return;
+    try {
+      const pl = createPlantingLayer({ origin: now.origin, siteRing: now.ring, items: now.items, species: now.species, stage: now.k });
+      m.addLayer(pl.layer);
+      planting.current = pl;
+    } catch {
+      return; // без WebGL-контекста для three.js — цифры машины времени остаются в карточке
+    }
+    if (now.ring) {
+      const xs = now.ring.map((p) => p[0]);
+      const ys = now.ring.map((p) => p[1]);
+      m.fitBounds([[Math.min(...xs), Math.min(...ys)], [Math.max(...xs), Math.max(...ys)]], { padding: 70, maxZoom: 18.5, pitch: 60, duration: 1400 });
+    }
+  };
+  useEffect(() => { void syncGrowth.current(); }, [growth]);
 
   useEffect(() => {
     const m = mapRef.current;
