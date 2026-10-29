@@ -232,3 +232,47 @@ async function askOne(s: Store, exec: ReturnType<typeof createTools>, cfg: LlmCo
     .map((e) => ({ id: e!.id, label: String(e!.sourceLabel), ...(e!.sourceUrl ? { url: String(e!.sourceUrl) } : {}) }));
   return { text, zones: (named.length ? named : ctx.zones).slice(0, 8), method: 'model', intent: toolCalls[0]?.name ?? 'chat', model: cfg.model, sources, toolCalls } as Json;
 }
+
+export type CheckResult = { name: string; model: string; host: string; hostAllowed: boolean; keyAccepted: boolean | null; modelListed: boolean | null; available: string[]; toolCall: boolean; ms: number | null; error: string | null };
+// Текст ошибки провайдера; Gemini присылает массив [{error}] и на неверный ключ отвечает 400, а не 401.
+async function providerError(res: Response) {
+  let text = '';
+  try { const raw = (await res.json()) as Json; const j = (Array.isArray(raw) ? raw[0] : raw) ?? {}; text = String(j.error?.message ?? j.error ?? j.message ?? ''); } catch { /* не JSON */ }
+  return { text: `HTTP ${res.status}${text ? `: ${clip(text, 160)}` : ''}`, badKey: res.status === 401 || res.status === 403 || /api key|api_key|unauthori[sz]ed/i.test(text) };
+}
+/** Проверка подключения для npm run llm:check: хост, ключ, модель в списке провайдера, вызов функции, время. Ключ не выводится. */
+export async function checkProvider(cfg: LlmConfig, allowedHosts: string[]): Promise<CheckResult> {
+  const host = new URL(cfg.baseUrl).hostname;
+  const r: CheckResult = { name: cfg.name, model: cfg.model, host, hostAllowed: allowedHosts.includes(host), keyAccepted: null, modelListed: null, available: [], toolCall: false, ms: null, error: null };
+  if (!r.hostAllowed) return { ...r, error: `хост ${host} не указан в LLM_ALLOWED_HOSTS` };
+  const auth = { Authorization: `Bearer ${cfg.apiKey}` };
+  try {
+    const res = await fetch(`${cfg.baseUrl}/models`, { headers: auth, signal: AbortSignal.timeout(10000) });
+    if (!res.ok) { const e = await providerError(res); if (e.badKey) return { ...r, keyAccepted: false, error: `ключ не принят (${e.text})` }; }
+    else {
+      const ids = (((await res.json()) as Json).data ?? []).map((m: Json) => String(m.id).replace(/^models\//, '')) as string[];
+      r.keyAccepted = true; r.modelListed = ids.includes(cfg.model);
+      const family = cfg.model.split(/[-:/.]/)[0]!;
+      r.available = (r.modelListed ? [] : ids.filter((id) => id.includes(family))).slice(0, 10);
+    }
+  } catch { /* список моделей есть не у всех — проверяем запросом ниже */ }
+  const tool = TOOLS.find((x) => x.function.name === 'top_priorities')!;
+  const started = Date.now();
+  try {
+    const res = await fetch(`${cfg.baseUrl}/chat/completions`, {
+      method: 'POST', headers: { ...auth, 'Content-Type': 'application/json' }, signal: AbortSignal.timeout(cfg.timeoutMs),
+      body: JSON.stringify({ model: cfg.model, temperature: 0, max_tokens: 200, tools: [tool], tool_choice: 'auto',
+        messages: [{ role: 'system', content: 'Проверка подключения. Для ответа вызови функцию.' }, { role: 'user', content: 'Покажи три самые приоритетные зоны.' }] }),
+    });
+    r.ms = Date.now() - started;
+    if (!res.ok) { const e = await providerError(res); return { ...r, ...(e.badKey ? { keyAccepted: false } : {}), error: e.badKey ? `ключ не принят (${e.text})` : `запрос к модели: ${e.text}` }; }
+    r.keyAccepted = true;
+    const msg = (((await res.json()) as Json).choices?.[0]?.message ?? {}) as Json;
+    r.toolCall = !!msg.tool_calls?.length;
+    if (!r.toolCall) r.error = 'модель ответила текстом и не вызвала функцию — нужна модель с поддержкой tools';
+  } catch (e) {
+    r.ms = Date.now() - started;
+    r.error = (e as Error).name === 'TimeoutError' ? `нет ответа за ${cfg.timeoutMs / 1000} с` : 'нет связи с провайдером';
+  }
+  return r;
+}

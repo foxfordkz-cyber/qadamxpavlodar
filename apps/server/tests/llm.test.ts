@@ -5,7 +5,7 @@ import { once } from 'node:events';
 import { fixture } from './helpers.js';
 import { seedV2, DEMO_PASSWORD } from '../src/v2/seed.js';
 import { seedTz } from '../src/tz/seed.js';
-import { createLlmAssistant, llmConfig, llmProviders, TOOLS, type LlmConfig } from '../src/tz/llm.js';
+import { checkProvider, createLlmAssistant, llmConfig, llmProviders, TOOLS, type LlmConfig } from '../src/tz/llm.js';
 import type { AssistantAdapter } from '../src/tz/routes.js';
 
 type Reply = { status?: number; body: unknown; headers?: Record<string, string> };
@@ -129,4 +129,27 @@ test('reserve model: primary hits the rate limit, the reserve answers; primary i
   r = await f.ask('Где проблемные зоны?');
   assert.equal(r.body.data.method, 'rules'); assert.ok(r.body.data.fallbackReason);
   assert.equal(deadPrimary.seen.length, 1); assert.equal(deadReserve.seen.length, 1);
+});
+
+test('llm:check: key, model list, tool call and time; bad key and foreign host are reported without the key', async t => {
+  let mode: 'ok' | 'text' | 'badkey' = 'ok';
+  const server = createServer(async (req, res) => {
+    for await (const _ of req) { /* тело не нужно */ }
+    const send = (status: number, body: unknown) => res.writeHead(status, { 'Content-Type': 'application/json' }).end(JSON.stringify(body));
+    if (mode === 'badkey') return send(400, [{ error: { code: 400, message: 'Please pass a valid API key' } }]);
+    if (req.method === 'GET') return send(200, { data: [{ id: 'models/fake-flash' }, { id: 'models/fake-pro' }] });
+    send(200, mode === 'ok' ? toolCall('top_priorities', { limit: 3 }).body : say('Вот зоны').body);
+  });
+  server.listen(0, '127.0.0.1'); await once(server, 'listening'); t.after(() => new Promise<void>(done => server.close(() => done())));
+  const cfg: LlmConfig = { name: 'LLM', baseUrl: `http://127.0.0.1:${(server.address() as { port: number }).port}/v1`, model: 'fake-flash', apiKey: 'secret-key-123', timeoutMs: 5000, maxRounds: 3 };
+  const ok = await checkProvider(cfg, ['127.0.0.1']);
+  assert.deepEqual([ok.keyAccepted, ok.modelListed, ok.toolCall, ok.error], [true, true, true, null]); assert.ok(ok.ms !== null);
+  const missing = await checkProvider({ ...cfg, model: 'fake-ultra' }, ['127.0.0.1']);
+  assert.equal(missing.modelListed, false); assert.deepEqual(missing.available, ['fake-flash', 'fake-pro']);
+  mode = 'text';
+  assert.match((await checkProvider(cfg, ['127.0.0.1'])).error!, /не вызвала функцию/);
+  mode = 'badkey';
+  const bad = await checkProvider(cfg, ['127.0.0.1']);
+  assert.equal(bad.keyAccepted, false); assert.ok(!JSON.stringify(bad).includes('secret-key-123'), 'the key is never echoed');
+  assert.match((await checkProvider(cfg, ['api.groq.com'])).error!, /LLM_ALLOWED_HOSTS/);
 });
