@@ -213,3 +213,18 @@ test('verified Pavlodar data: sources seeded as evidence, facts route, assistant
   assert.equal(r.body.data.intent, 'facts'); assert.match(r.body.data.text, /5 м/);
   assert.ok(r.body.data.sources.some((s: any) => s.id === 'ev-pvl-sp-planning' && s.url));
 });
+
+test('GET /geocode finds houses, streets in Russian and Kazakh, places and zones; validates the query', async t => {
+  const f = await tzFixture(t);
+  const house = await f.call(`/geocode?q=${encodeURIComponent('Торайгырова 1/5')}`, 'GET', 'viewer');
+  assert.equal(house.status, 200); assert.equal(house.body.data[0].kind, 'address'); assert.match(house.body.data[0].label, /1\/5$/);
+  assert.ok(house.body.data[0].lng > 76.9 && house.body.data[0].lat > 52.2, 'coordinates are [lng, lat] inside Pavlodar');
+  const street = await f.call(`/geocode?q=${encodeURIComponent('улица Кривенко')}`);
+  assert.deepEqual(street.body.data.filter((h: any) => h.kind === 'street').length, 1, 'one street, not one per spelling');
+  assert.ok(street.body.data.find((h: any) => h.kind === 'street').bbox);
+  const zone = await f.call(`/geocode?q=${encodeURIComponent('Лермонтова')}`);
+  assert.ok(zone.body.data.some((h: any) => h.kind === 'zone' && h.zoneId?.startsWith('site-osm-')));
+  assert.deepEqual((await f.call('/geocode?q=abc')).body.data, []);
+  assert.equal((await f.call('/geocode?q=')).status, 400);
+  assert.match(house.body.meta.source, /OpenStreetMap/);
+});

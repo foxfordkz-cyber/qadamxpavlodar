@@ -20,6 +20,7 @@ import { daySummary } from '../dayPlan';
 import { dashboardMetrics, greeneryLayer, soilsLayer, variantSummaries } from '../tzViews';
 import { referenceFacts } from '../pavlodar';
 import { buildCareSchedule, parseCareRequest } from '../../analytics/careSchedule';
+import { GEOCODE_META, searchAddress } from '../geocode';
 
 // v3: справочник с источниками по Павлодару. Старые данные не читаются.
 const STORAGE_KEY = 'gp-mock-db-v4';
@@ -652,6 +653,13 @@ route('POST', /^\/assistant$/, (_m, o) => {
   db.history = [...(db.history ?? []), { at: nowIso(), q: b.message!.slice(0, 300), intent: reply.intent, zones: reply.zones.map((z) => z.id) }].slice(-50);
   save();
   return { data: reply };
+});
+// ТЗ 3.1.4: поиск по адресу по снимку OSM района и по названиям зон.
+route('GET', /^\/geocode$/, (_m, o) => {
+  requireRole('coordinator', 'viewer' as Role);
+  const q = String(o.query?.q ?? '').trim();
+  if (!q || q.length > 100) fail(400, 'validation_error', 'Введите адрес, улицу или название места.');
+  return { data: searchAddress(q, db.sites, 8), meta: GEOCODE_META };
 });
 route('GET', /^\/reference\/facts$/, () => {
   requireRole('coordinator', 'viewer' as Role);

@@ -41,6 +41,10 @@ export function tzRoutes(s: Store, api: Api, tz: TzOptions = {}) {
   route({ method: 'get', path: '/layers/sources', summary: 'TZ: provenance of map layers (OSM snapshot date and license)' }, (_req, res) => {
     reader(actor(res)); res.json({ data: { osm: web.osmMeta } });
   });
+  route({ method: 'get', path: '/geocode', summary: 'TZ 3.1.4: address, street, place or zone search over the OSM snapshot', response: z.array(object) }, (req, res) => {
+    reader(actor(res)); const q = z.object({ q: z.string().trim().min(1).max(100) }).strict().parse(req.query);
+    res.json({ data: web.searchAddress(q.q, candidates(s), 8), meta: web.GEOCODE_META });
+  });
   route({ method: 'get', path: '/reference/facts', summary: 'TZ 5.3: verified Pavlodar facts (climate, norms, air, green fund, prices) with sources' }, (_req, res) => {
     reader(actor(res)); res.json(web.referenceFacts());
   });
