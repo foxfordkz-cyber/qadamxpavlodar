@@ -21,5 +21,5 @@ export function loadConfig(env = process.env) {
     }
     return url.origin;
   });
-  return { host: '127.0.0.1' as const, port, dbPath, uploadsPath, frontendOrigins };
+  return { host: env.LOCAL_CONTAINER === '1' ? '0.0.0.0' : '127.0.0.1', port, dbPath, uploadsPath, frontendOrigins };
 }

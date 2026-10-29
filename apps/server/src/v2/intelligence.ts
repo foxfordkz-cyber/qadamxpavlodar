@@ -18,7 +18,7 @@ export const observationRequest=z.object({taskId:id,text}).strict();
 export const observationResult=z.object({objectId:id,category:z.enum(['access_problem','visible_damage','care_completed','needs_inspection','other']),extractedFacts:z.array(text).max(30),proposedAction:z.enum(['inspect','water','weed','plant']).nullable().optional(),evidenceIds:uniqueIds,missingData:z.array(text).max(30),needsHumanReview:z.literal(true)}).strict();
 function freeze<T>(value:T):T{if(value&&typeof value==='object'){Object.values(value).forEach(freeze);Object.freeze(value);}return value;}
 export function snapshot(s:Store){
-  const input={tasks:allTasks(s),workers:s.all('SELECT u.id,u.role,u.active,u.version,p.data AS profile FROM v2_users u LEFT JOIN v2_profiles p ON p.user_id=u.id').map(r=>({...r,profile:r.profile?JSON.parse(String(r.profile)):null})),crews:s.all('SELECT data FROM v2_crews').map(r=>JSON.parse(String(r.data))),memberships:s.all('SELECT * FROM v2_memberships'),resources:listDocs(s,'resource'),sites:listDocs(s,'site'),plants:listDocs(s,'plant'),evidence:listDocs(s,'evidence'),issues:s.all('SELECT data FROM v2_issues').map(r=>JSON.parse(String(r.data))),designs:s.all('SELECT data FROM v2_designs').map(r=>JSON.parse(String(r.data)))};
+  const input={tasks:allTasks(s),workers:s.all('SELECT u.id,COALESCE(m.role,u.role) AS role,u.active,u.version,p.data AS profile FROM v2_users u LEFT JOIN v2_profiles p ON p.user_id=u.id LEFT JOIN municipal_roles m ON m.user_id=u.id').map(r=>({...r,profile:r.profile?JSON.parse(String(r.profile)):null})),crews:s.all('SELECT data FROM v2_crews').map(r=>JSON.parse(String(r.data))),memberships:s.all('SELECT * FROM v2_memberships'),resources:listDocs(s,'resource'),sites:listDocs(s,'site'),plants:listDocs(s,'plant'),evidence:listDocs(s,'evidence'),issues:s.all('SELECT data FROM v2_issues').map(r=>JSON.parse(String(r.data))),designs:s.all('SELECT data FROM v2_designs').map(r=>JSON.parse(String(r.data)))};
   if(Object.values(input).some(rows=>rows.length>500))fail('SNAPSHOT_LIMIT','Bounded local snapshot exceeds 500 rows per collection',503);
   return freeze({...input,inputVersion:hash(input)});
 }
@@ -31,7 +31,7 @@ async function invoke<T>(fn:(()=>unknown|Promise<unknown>)|undefined,schema:z.Zo
 export function intelligenceRoutes(s:Store,api:Api,adapters:V2Adapters={}){
   const{route,write}=api;
   route({method:'get',path:'/integration/snapshot',summary:'Coordinator: immutable V2 planning inputs, without passwords or sessions'},(_req,res)=>{allow(actor(res),'coordinator');res.json({data:s.transaction(()=>snapshot(s))});});
-  route({method:'post',path:'/observations/interpret',input:observationRequest,summary:'Participant 1 adapter: draft only; 503 when not connected'},async(req,res)=>{
+  route({method:'post',path:'/observations/interpret',idempotent:true,input:observationRequest,summary:'Participant 1 adapter: draft only; 503 when not connected'},async(req,res)=>{
     const a=actor(res);allow(a,'worker','foreman','coordinator');const b=observationRequest.parse(req.body);const context=task(s,a,b.taskId);
     const old=s.transaction(()=>{fresh(s,a);task(s,a,b.taskId);return replay(s,a,req.method,req.path,req.get('Idempotency-Key'),b);});
     if(old){res.set('Idempotency-Replayed','true').status(old.status).json(old.body);return;}
@@ -41,7 +41,7 @@ export function intelligenceRoutes(s:Store,api:Api,adapters:V2Adapters={}){
       matchVersion(task(s,a,b.taskId),context.version);return{...draft,inputVersion:context.version,sourceText:b.text,method:'external_adapter',savedAsFact:false};
     });res.set('Idempotency-Replayed',String(result.replayed)).status(result.status).json(result.body);
   });
-  route({method:'post',path:'/plans/preview',input:planRequest,status:201,summary:'Participant 1 adapter: persist preview snapshot; proposed people gain no task access'},async(req,res)=>{
+  route({method:'post',path:'/plans/preview',idempotent:true,input:planRequest,status:201,summary:'Participant 1 adapter: persist preview snapshot; proposed people gain no task access'},async(req,res)=>{
     const a=actor(res);allow(a,'coordinator');const b=planRequest.parse(req.body);
     const old=s.transaction(()=>{fresh(s,a);allow(a,'coordinator');return replay(s,a,req.method,req.path,req.get('Idempotency-Key'),b);});if(old){res.set('Idempotency-Replayed','true').status(old.status).json(old.body);return;}
     const input=s.transaction(()=>snapshot(s));const result=await invoke(adapters.buildPlanPreview?()=>adapters.buildPlanPreview!(input,freeze(structuredClone(b.constraints))):undefined,planResult);

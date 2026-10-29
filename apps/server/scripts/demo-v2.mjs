@@ -44,10 +44,11 @@ try{
   await stop();await launch();
   const me=await api('/auth/me','GET','worker1');assert.equal(me.user.id,'demo-worker-1');
   assert.equal((await api(`/tasks/${t.id}`)).status,'verified');assert.deepEqual(await api(`/reports/${submitted.report.id}/review`,'POST','coordinator',reviewBody,'demo-accept'),accepted);
+  assert.deepEqual(await api(`/reports/${submitted.report.id}`),accepted.report);
   const file=await fetch(base+photo.contentUrl,{headers:{Cookie:session.cookie}});assert.equal(file.status,200);assert((await file.arrayBuffer()).byteLength>0);
   const denied=await fetch(base+photo.contentUrl,{headers:{Cookie:sessions.get('worker3').cookie}});assert.equal(denied.status,404);
   await stop();store=new Store(dbPath);seed(store);await seedV2(store);seedV2Scenario(store);
-  const result={mode:'DEMO',contract:'V2',taskId:t.id,reportId:submitted.report.id,status:'verified',newPlants:accepted.plants.length,careDrafts:accepted.careTasks.length,storedPlants:store.get("SELECT count(*) n FROM v2_documents WHERE kind='plant'").n,legacyPlants:store.get('SELECT count(*) n FROM plants').n,legacyTasks:store.get('SELECT count(*) n FROM tasks').n,restart:'PASS',persistentSession:'PASS',privatePhoto:'PASS',idempotentReview:'PASS',repeatSeed:'PASS',integrity:store.get('PRAGMA integrity_check').integrity_check};
+  const result={mode:'DEMO',contract:'V2',taskId:t.id,reportId:submitted.report.id,status:'verified',newPlants:accepted.plants.length,careDrafts:accepted.careTasks.length,storedPlants:store.get("SELECT count(*) n FROM v2_documents WHERE kind='plant'").n,legacyPlants:store.get('SELECT count(*) n FROM plants').n,legacyTasks:store.get('SELECT count(*) n FROM tasks').n,restart:'PASS',persistentSession:'PASS',persistentAcceptedReport:'PASS',privatePhoto:'PASS',idempotentReview:'PASS',repeatSeed:'PASS',integrity:store.get('PRAGMA integrity_check').integrity_check};
   assert.equal(store.get('SELECT count(*) n FROM v2_planting_receipts WHERE task_id=?',t.id).n,2);assert.equal(result.storedPlants,32);assert.equal(result.integrity,'ok');assert.deepEqual(store.all('PRAGMA foreign_key_check'),[]);store.close();
   writeFileSync(join(dir,'result.json'),JSON.stringify(result,null,2));console.log(JSON.stringify(result,null,2));
 }finally{await stop();}

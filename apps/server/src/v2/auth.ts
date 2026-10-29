@@ -2,7 +2,7 @@ import { randomBytes, scrypt, timingSafeEqual, createHash } from 'node:crypto';
 import type { Request, Response, RequestHandler } from 'express';
 import { z } from 'zod';
 import { Store } from '../db.js';
-import { fail, now, userDto, type User } from './core.js';
+import { fail, now, getUser, userDto, type User } from './core.js';
 
 export const COOKIE = 'gp_v2_session';
 const cookieOptions = { httpOnly:true, sameSite:'strict' as const, secure:false, path:'/api/v1' };
@@ -27,7 +27,7 @@ function sessionToken(req:Request) {
 export function authenticate(s:Store):RequestHandler { return(req,res,next)=>{
   try {
     const token=sessionToken(req);
-    const row=token?s.get(`SELECT u.*,s.csrf_token,s.token_hash,s.expires_at FROM v2_sessions s JOIN v2_users u ON u.id=s.user_id
+    const row=token?s.get(`SELECT u.*,r.role AS municipal_role,s.csrf_token,s.token_hash,s.expires_at FROM v2_sessions s JOIN v2_users u ON u.id=s.user_id LEFT JOIN municipal_roles r ON r.user_id=u.id
       WHERE s.token_hash=? AND s.expires_at>? AND u.active=1`,digest(token),now()):undefined;
     if(!row) fail('AUTH_REQUIRED','Sign in with a server session',401);
     res.locals.v2user=userDto(row!); res.locals.v2session=row!.token_hash; res.locals.csrf=row!.csrf_token;
@@ -62,7 +62,7 @@ export async function login(s:Store,req:Request,res:Response) {
     s.run('INSERT INTO v2_sessions VALUES (?,?,?,?,?)',digest(token),current!.id!,csrf,now(),new Date(at+duration).toISOString());
   });
   res.cookie(COOKIE,token,{...cookieOptions,maxAge:duration});
-  return {user:userDto(current!),csrfToken:csrf,expiresAt:new Date(at+duration).toISOString(),mode:'DEMO'};
+  return {user:getUser(s,String(current!.id)),csrfToken:csrf,expiresAt:new Date(at+duration).toISOString(),mode:'DEMO'};
 }
 export function logout(s:Store,res:Response) { s.run('DELETE FROM v2_sessions WHERE token_hash=?',res.locals.v2session); res.clearCookie(COOKIE,cookieOptions); return {loggedOut:true}; }
 export const actor = (res:Response):User => res.locals.v2user as User;

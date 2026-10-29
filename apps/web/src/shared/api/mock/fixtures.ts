@@ -5,6 +5,7 @@ import type { Brigade, CandidateSite, DayPlan, EvidenceRef, ExclusionZone, Issue
 import { pavlodarEvidence, priceEvidence, species, speciesEvidence } from './species';
 import { contextEvidence } from './context';
 import { centroidXY, makeProjection, type XY } from '../../geo';
+import { DEFAULT_RATES, type RateEntry } from '../../analytics/rates';
 
 export interface MockDb {
   seededAt: string;
@@ -15,6 +16,9 @@ export interface MockDb {
   projects: PlantingProject[];
   plants: Plant[];
   plans: DayPlan[];
+  rates: RateEntry[];
+  ratesVersion: number;
+  history?: { at: string; q: string; intent: string; zones: string[] }[];
   tasks: Task[];
   reports: Report[];
   issues: Issue[];
@@ -147,6 +151,8 @@ export function seed(): MockDb {
     projects,
     plants,
     plans,
+    rates: structuredClone(DEFAULT_RATES),
+    ratesVersion: 1,
     evidence: [...(osm.evidence as EvidenceRef[]), ...demoEvidence],
     workers,
     tasks,

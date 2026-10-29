@@ -49,15 +49,19 @@ export function newIdempotencyKey(): string {
 
 /** Реальный сервер участника 3: префикс /api/v1, cookie-сессия, конверт {data, meta} / {error}. */
 export function createHttpTransport(base = '/api/v1'): Transport {
+  let csrf = '';
   return {
     kind: 'api',
     async request<T>(method: HttpMethod, path: string, opts: RequestOptions = {}) {
       const headers: Record<string, string> = { Accept: 'application/json' };
+      if(method!=='GET'&&path!=='/auth/login'){headers['X-CSRF-Token']=csrf; headers['Idempotency-Key']=opts.idempotencyKey??newIdempotencyKey();}
+      if(method!=='GET'&&opts.body===undefined)opts={...opts,body:{}};
+      const requestPath = path==='/sites'||/^\/sites\/[^/]+(?:\/context)?$/.test(path) ? '/municipal'+path : path==='/evidence'||path==='/dashboard'?'/municipal'+path:path;
       if (opts.body !== undefined) headers['Content-Type'] = 'application/json';
       if (opts.idempotencyKey) headers['Idempotency-Key'] = opts.idempotencyKey;
       let res: Response;
       try {
-        res = await fetch(base + path + buildQuery(opts.query), {
+        res = await fetch(base + requestPath + buildQuery(opts.query), {
           method,
           headers,
           credentials: 'include',
@@ -81,7 +85,10 @@ export function createHttpTransport(base = '/api/v1'): Transport {
       if (!json || typeof json !== 'object' || !('data' in json)) {
         throw new ApiError(res.status, 'bad_envelope', 'Ответ сервера не соответствует контракту {data, meta}.');
       }
-      return json as ApiSuccess<T>;
+      const payload=json as any;
+      if(path==='/auth/me'||path==='/auth/login'){csrf=payload.data.csrfToken;payload.data={...payload.data.user,role:payload.data.user.role==='specialist'?'coordinator':payload.data.user.role,isDemoAccount:payload.data.user.displayName.startsWith('DEMO')};}
+      if(path==='/auth/logout')csrf='';
+      return payload as ApiSuccess<T>;
     },
   };
 }

@@ -6,12 +6,18 @@ import type { CandidateSite, CheckKey, CheckState, DashboardMetric, DayPlan, Me,
 import { siteContext } from './context';
 import { computeConflicts, unresolved } from '../../projectRules';
 import { centroidXY, makeProjection } from '../../geo';
+import { analyzeZone, VARIANT_LABEL, type PlanOptions, type Variant } from '../../analytics/plan';
+import { detectProblems, priorities, roadmap, DEFAULT_PRIORITY_WEIGHTS, type PriorityFactor } from '../../analytics/city';
+import { ratesMap } from '../../analytics/rates';
+import { answer } from '../../analytics/assistant';
+import { SOIL_CELL_DEG, soilForCell, SALINITY_LABEL } from '../../analytics/zone';
+import greenery from '../../../../../../fixtures/osm/greenery.json';
 import { catalog, osmMeta, seed, type MockDb } from './fixtures';
 import { CHECKS, rankSites, selectPlants } from './rules';
 import { demoPhoto } from './photo';
 
 // v3: справочник с источниками по Павлодару. Старые данные не читаются.
-const STORAGE_KEY = 'gp-mock-db-v3';
+const STORAGE_KEY = 'gp-mock-db-v4';
 
 export interface MockControls {
   networkDown: boolean;
@@ -66,8 +72,9 @@ export function simulateConcurrentEdit(): string {
 }
 
 const me: Record<Role, Me> = {
-  coordinator: { id: 'coordinator-demo', displayName: 'Координатор (демо-аккаунт)', role: 'coordinator', isDemoAccount: true },
-  admin: { id: 'admin-demo', displayName: 'Руководитель (демо-аккаунт)', role: 'admin', isDemoAccount: true },
+  coordinator: { id: 'coordinator-demo', displayName: 'Специалист (демо-аккаунт)', role: 'coordinator', isDemoAccount: true },
+  admin: { id: 'admin-demo', displayName: 'Администратор (демо-аккаунт)', role: 'admin', isDemoAccount: true },
+  viewer: { id: 'viewer-demo', displayName: 'Просмотр (демо-аккаунт)', role: 'viewer', isDemoAccount: true },
   foreman: { id: 'w-aigerim', displayName: 'Айгерим С., бригадир (демо)', role: 'foreman', isDemoAccount: true },
   worker: { id: 'w-sanzhar', displayName: 'Санжар Т. (демо)', role: 'worker', isDemoAccount: true },
 };
@@ -84,7 +91,8 @@ const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 function requireRole(...roles: Role[]) {
   if (mockControls.role === 'anonymous') fail(401, 'unauthenticated', 'Нужно войти в систему.');
   const r = mockControls.role as Role;
-  if (r === 'admin' || roles.includes(r)) return me[r];
+  // «Просмотр» читает всё; изменения для него запрещены на уровне транспорта (только GET и расчёты).
+  if (r === 'admin' || r === 'viewer' || roles.includes(r)) return me[r];
   return fail(403, 'forbidden', roles.includes('coordinator') ? 'Недостаточно прав: раздел доступен координатору и руководителю.' : 'Недостаточно прав.');
 }
 
@@ -120,7 +128,7 @@ route('GET', /^\/auth\/me$/, () => {
 route('POST', /^\/auth\/login$/, (_m, o) => {
   const b = o.body as { login?: string; password?: string };
   if (!b?.login || !b?.password) fail(400, 'validation_error', 'Введите логин и пароль.');
-  const byLogin: Record<string, Role> = { worker: 'worker', foreman: 'foreman', admin: 'admin' };
+  const byLogin: Record<string, Role> = { worker: 'worker', foreman: 'foreman', admin: 'admin', viewer: 'viewer' };
   setMockControls({ role: byLogin[b.login!] ?? 'coordinator' });
   return { data: me[mockControls.role as Role] };
 });
@@ -577,6 +585,115 @@ export function simulateWorkerReport(): string | null {
   return t.id;
 }
 
+// --- ТЗ акимата: анализ зоны, проблемы, приоритеты, справочники, слои, ассистент, импорт ---
+const rates = () => ratesMap(db.rates);
+route('POST', /^\/zones\/([^/]+)\/analysis$/, (m, o) => {
+  requireRole('coordinator', 'viewer' as Role);
+  const site = findSite(decodeURIComponent(m[1]));
+  return { data: analyzeZone(site, catalog, rates(), ((o.body as { options?: Partial<PlanOptions> })?.options) ?? {}) };
+});
+route('POST', /^\/zones\/([^/]+)\/variants$/, (m, o) => {
+  requireRole('coordinator', 'viewer' as Role);
+  const site = findSite(decodeURIComponent(m[1]));
+  const opts = ((o.body as { options?: Partial<PlanOptions> })?.options) ?? {};
+  const careByVariant: Record<Variant, 1 | 2 | 3> = { econom: 1, optimal: 2, max: 3 };
+  return {
+    data: (['econom', 'optimal', 'max'] as Variant[]).map((v) => {
+      const a = analyzeZone(site, catalog, rates(), { ...opts, variant: v, careYears: careByVariant[v] });
+      const e20 = a.effect.find((e) => e.years === 20)!;
+      return { variant: v, label: VARIANT_LABEL[v], careYears: a.options.careYears, plants: a.scheme.reduce((x, r) => x + r.quantity, 0), cost: a.cost.total, survival: a.survivalAvg, co2t20: e20.co2t, coolingC: e20.coolingC, rainM3: e20.rainM3, costPerTonCo2: a.costPerTonCo2 };
+    }),
+  };
+});
+route('GET', /^\/problems$/, () => {
+  requireRole('coordinator', 'viewer' as Role);
+  return { data: detectProblems(db.sites), meta: { fetchedAt: nowIso() } };
+});
+route('POST', /^\/priorities$/, (_m, o) => {
+  requireRole('coordinator', 'viewer' as Role);
+  const b = (o.body ?? {}) as { weights?: Record<PriorityFactor, number>; budget?: number | null };
+  const items = priorities(db.sites, catalog, rates(), b.weights ?? DEFAULT_PRIORITY_WEIGHTS);
+  return { data: { items, roadmap: b.budget ? roadmap(items, b.budget) : null } };
+});
+route('GET', /^\/rates$/, () => {
+  requireRole('coordinator', 'viewer' as Role);
+  return { data: { rates: db.rates, version: db.ratesVersion } };
+});
+route('PATCH', /^\/rates$/, (_m, o) => {
+  requireRole('admin');
+  const b = o.body as { key?: string; value?: number | null; source?: string; expectedVersion?: number };
+  if (b.expectedVersion !== db.ratesVersion) fail(409, 'version_conflict', 'Справочник изменён другим пользователем.', { currentVersion: db.ratesVersion });
+  const r = db.rates.find((x) => x.key === b.key) ?? fail(404, 'not_found', 'Нет такой расценки.');
+  if (b.value !== null && (typeof b.value !== 'number' || !Number.isFinite(b.value) || b.value < 0)) fail(400, 'validation_error', 'Значение — неотрицательное число или пусто.', { fields: { value: 'Неверное число.' } });
+  if (!b.source?.trim()) fail(400, 'validation_error', 'Укажите источник значения (ТЗ 5.3).', { fields: { source: 'Обязательно.' } });
+  r.value = b.value ?? null;
+  r.source = b.source!.trim();
+  r.dataClass = 'real';
+  db.ratesVersion += 1;
+  save();
+  return { data: { rates: db.rates, version: db.ratesVersion } };
+});
+route('GET', /^\/layers\/soils$/, () => {
+  requireRole('coordinator', 'viewer' as Role);
+  const features = [];
+  for (let la = Math.floor(52.268 / SOIL_CELL_DEG.lat); la * SOIL_CELL_DEG.lat < 52.3; la++)
+    for (let ln = Math.floor(76.926 / SOIL_CELL_DEG.lng); ln * SOIL_CELL_DEG.lng < 76.974; ln++) {
+      const s = soilForCell(`soil-${la}-${ln}`);
+      const [y0, x0] = [la * SOIL_CELL_DEG.lat, ln * SOIL_CELL_DEG.lng];
+      const [y1, x1] = [y0 + SOIL_CELL_DEG.lat, x0 + SOIL_CELL_DEG.lng];
+      features.push({ type: 'Feature', properties: { id: s.cellId, type: s.type, ph: s.ph, salinity: s.salinity, salinityLabel: SALINITY_LABEL[s.salinity], synthetic: true }, geometry: { type: 'Polygon', coordinates: [[[x0, y0], [x1, y0], [x1, y1], [x0, y1], [x0, y0]]] } });
+    }
+  return { data: { type: 'FeatureCollection', features }, meta: { synthetic: true, note: 'Синтетический слой почв: заменить картой почв организатора.' } };
+});
+route('GET', /^\/layers\/greenery$/, () => {
+  requireRole('coordinator', 'viewer' as Role);
+  return { data: greenery, meta: { source: 'OpenStreetMap (ODbL)', note: 'До получения карты насаждений организатора.' } };
+});
+route('POST', /^\/assistant$/, (_m, o) => {
+  requireRole('coordinator', 'viewer' as Role);
+  if (mockControls.aiDown) fail(503, 'ai_unavailable', 'Ассистент недоступен. Все модули работают вручную.');
+  const b = o.body as { message?: string; siteId?: string | null };
+  if (!b?.message?.trim()) fail(400, 'validation_error', 'Пустой запрос.');
+  const reply = answer(b.message!, { siteId: b.siteId ?? null }, db.sites, catalog, rates());
+  db.history = [...(db.history ?? []), { at: nowIso(), q: b.message!.slice(0, 300), intent: reply.intent, zones: reply.zones.map((z) => z.id) }].slice(-50);
+  save();
+  return { data: reply };
+});
+route('GET', /^\/assistant\/history$/, () => {
+  requireRole('coordinator', 'viewer' as Role);
+  return { data: db.history ?? [] };
+});
+route('POST', /^\/imports\/preview$/, (_m, o) => {
+  requireRole('coordinator');
+  const b = o.body as { format?: string; features?: { geometry?: { type?: string; coordinates?: unknown } | null; properties?: Record<string, unknown> }[] };
+  const feats = b.features ?? [];
+  const issues: { row: number; level: 'error' | 'warning'; text: string }[] = [];
+  const flat = (c: unknown): number[][] => (Array.isArray(c) && typeof c[0] === 'number' ? [c as number[]] : Array.isArray(c) ? (c as unknown[]).flatMap(flat) : []);
+  const boxes: { i: number; b: number[] }[] = [];
+  feats.forEach((f, i) => {
+    if (!f.geometry || !f.geometry.coordinates) { issues.push({ row: i + 1, level: 'error', text: 'Нет геометрии.' }); return; }
+    const pts = flat(f.geometry.coordinates);
+    if (!pts.length) { issues.push({ row: i + 1, level: 'error', text: 'Пустые координаты.' }); return; }
+    const bad = pts.find(([x, y]) => !Number.isFinite(x) || !Number.isFinite(y));
+    if (bad) issues.push({ row: i + 1, level: 'error', text: 'Нечисловые координаты.' });
+    else if (pts.some(([x, y]) => Math.abs(x) > 180 || Math.abs(y) > 90)) issues.push({ row: i + 1, level: 'error', text: 'Координаты вне диапазона градусов — похоже на метровую систему (например, UTM). Нужен WGS 84 (EPSG:4326).' });
+    else if (pts.some(([x, y]) => y > 70 && x < 60)) issues.push({ row: i + 1, level: 'warning', text: 'Похоже, перепутаны долгота и широта.' });
+    else if (!pts.every(([x, y]) => x > 75 && x < 79 && y > 51 && y < 53.5)) issues.push({ row: i + 1, level: 'warning', text: 'Объект вне Павлодара.' });
+    const missingProps = ['name'].filter((k) => !f.properties?.[k]);
+    if (missingProps.length) issues.push({ row: i + 1, level: 'warning', text: `Не заполнено: ${missingProps.join(', ')}.` });
+    const xs = pts.map((p) => p[0]); const ys = pts.map((p) => p[1]);
+    boxes.push({ i, b: [Math.min(...xs), Math.min(...ys), Math.max(...xs), Math.max(...ys)] });
+  });
+  for (let a = 0; a < boxes.length; a++)
+    for (let c = a + 1; c < boxes.length; c++) {
+      const [p, q] = [boxes[a].b, boxes[c].b];
+      if (p[0] < q[2] && q[0] < p[2] && p[1] < q[3] && q[1] < p[3] && feats[boxes[a].i].geometry?.type === 'Polygon' && feats[boxes[c].i].geometry?.type === 'Polygon')
+        issues.push({ row: boxes[a].i + 1, level: 'warning', text: `Возможно пересечение с объектом ${boxes[c].i + 1} (по габаритам).` });
+    }
+  const errors = new Set(issues.filter((x) => x.level === 'error').map((x) => x.row));
+  return { data: { format: b.format ?? 'geojson', total: feats.length, valid: feats.length - errors.size, invalid: errors.size, issues: issues.slice(0, 200), committed: false, note: 'Предпросмотр: в базу ничего не записано. Сохранение — после подтверждения (участник 3).' } };
+});
+
 route('GET', /^\/dashboard$/, () => {
   requireRole('coordinator');
   const elig = (s: CandidateSite) => {
@@ -605,6 +722,8 @@ export function createMockTransport(): Transport {
     async request<T>(method: HttpMethod, path: string, opts: RequestOptions = {}) {
       await sleep(mockControls.latencyMs * (0.6 + Math.random() * 0.8));
       if (mockControls.networkDown) throw new ApiError(0, 'network_error', 'Сервер недоступен или нет сети.');
+      const readOnlyPost = /^\/(zones\/[^/]+\/(analysis|variants)|priorities|assistant|sites\/rank-preview|sites\/[^/]+\/plant-selection|auth\/(login|logout))$/.test(path);
+      if (mockControls.role === 'viewer' && method !== 'GET' && !readOnlyPost) throw new ApiError(403, 'forbidden', 'Роль «Просмотр»: изменения недоступны.', `mock-${++reqSeq}`);
       for (const [m, re, h] of routes) {
         if (m !== method) continue;
         const match = path.match(re);

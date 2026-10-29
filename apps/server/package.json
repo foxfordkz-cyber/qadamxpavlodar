@@ -18,13 +18,20 @@
     "demo:integration": "pwsh -NoProfile -File scripts/demo-integration.ps1",
     "seed:v2": "node --env-file-if-exists=.env --import ./scripts/local-network-guard.mjs --import tsx src/v2-seed-cli.ts",
     "test:v2": "node --import ./scripts/local-network-guard.mjs --import tsx --test tests/v2.test.ts",
-    "demo:v2": "node --import ./scripts/local-network-guard.mjs scripts/demo-v2.mjs"
+    "demo:v2": "node --import ./scripts/local-network-guard.mjs scripts/demo-v2.mjs",
+    "test:municipal": "node --import ./scripts/local-network-guard.mjs --import tsx --test tests/municipal.test.ts"
   },
   "dependencies": {
+    "@turf/turf": "^7.4.0",
     "csv-parse": "7.0.3",
+    "exceljs": "^4.4.0",
     "express": "5.3.0",
+    "fast-xml-parser": "^5.11.2",
+    "fflate": "^0.8.3",
     "multer": "2.5.0",
+    "pdfkit": "^0.20.2",
     "sharp": "0.35.5",
+    "shpjs": "^6.2.0",
     "swagger-ui-dist": "5.34.0",
     "zod": "4.6.7"
   },
@@ -32,9 +39,15 @@
     "@types/express": "5.0.6",
     "@types/multer": "2.3.0",
     "@types/node": "24.19.2",
+    "@types/pdfkit": "^0.17.7",
     "ajv": "8.20.0",
     "ajv-formats": "3.0.1",
     "tsx": "4.23.15",
     "typescript": "7.0.2"
+  },
+  "overrides": {
+    "exceljs": {
+      "uuid": "11.1.1"
+    }
   }
 }

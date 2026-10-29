@@ -1,0 +1,16 @@
+node_modules
+**/node_modules
+apps/web/dist
+apps/web/dist-scripts
+.git
+**/.git
+**/data
+**/uploads
+**/dist
+**/.env
+**/.env.*
+!**/.env.example
+**/*.log
+*.zip
+hackathon-prompts
+Green-Pavlodar-Team-Prompts

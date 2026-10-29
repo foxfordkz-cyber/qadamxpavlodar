@@ -9,20 +9,26 @@ import { hrefFor, useRoute } from '../../shared/router';
 const DevPanel = lazy(() => import('./DevPanel').then((m) => ({ default: m.DevPanel })));
 
 import { MeContext } from './me';
+import { AssistantPanel } from './tz/AssistantPanel';
 import type { Me, Role } from '../../shared/api/types';
 
 // Навигация по роли. Права всё равно проверяет сервер; меню лишь не показывает лишнего.
-const NAV: { path: string; key: Key; roles: Role[] }[] = [
-  { path: '/', key: 'nav.home', roles: ['coordinator', 'admin'] },
-  { path: '/map', key: 'nav.map', roles: ['coordinator', 'admin'] },
-  { path: '/projects', key: 'nav.projects', roles: ['coordinator', 'admin'] },
-  { path: '/approval', key: 'nav.approval', roles: ['admin'] },
-  { path: '/tasks', key: 'nav.tasks', roles: ['coordinator', 'admin'] },
-  { path: '/reports', key: 'nav.reports', roles: ['coordinator', 'admin'] },
-  { path: '/ranking', key: 'nav.ranking', roles: ['coordinator', 'admin'] },
-  { path: '/species', key: 'nav.species', roles: ['coordinator', 'admin'] },
-  { path: '/guide', key: 'nav.guide', roles: ['coordinator', 'admin'] },
-  { path: '/people', key: 'nav.people', roles: ['admin'] },
+const ALL: Role[] = ['coordinator', 'admin', 'viewer'];
+// Сначала разделы ТЗ, затем «Работы» (дополнительный функционал по инициативе команды).
+const NAV: { path: string; key: Key; roles: Role[]; works?: boolean }[] = [
+  { path: '/', key: 'nav.home', roles: ALL },
+  { path: '/map', key: 'nav.map', roles: ALL },
+  { path: '/problems', key: 'nav.problems', roles: ALL },
+  { path: '/priorities', key: 'nav.priorities', roles: ALL },
+  { path: '/species', key: 'nav.species', roles: ALL },
+  { path: '/projects', key: 'nav.projects', roles: ALL },
+  { path: '/rates', key: 'nav.rates', roles: ALL },
+  { path: '/import', key: 'nav.import', roles: ['coordinator', 'admin'] },
+  { path: '/guide', key: 'nav.guide', roles: ALL },
+  { path: '/tasks', key: 'nav.tasks', roles: ['coordinator', 'admin'], works: true },
+  { path: '/reports', key: 'nav.reports', roles: ['coordinator', 'admin'], works: true },
+  { path: '/approval', key: 'nav.approval', roles: ['admin'], works: true },
+  { path: '/people', key: 'nav.people', roles: ['admin'], works: true },
 ];
 
 const SVC_ICON: Record<SvcState, string> = { ok: '●', down: '✕', unknown: '○' };
@@ -48,7 +54,9 @@ export function Shell({ children }: { children: ReactNode }) {
       <header className="gp-header">
         <a className="gp-brand" href={hrefFor('/')}><span className="gp-brand__logo" aria-hidden="true">❦</span><span>{t('app.title')}</span></a>
         <nav className="gp-nav" aria-label={t('nav.label')}>
-          {nav.map((n) => <a key={n.path} href={hrefFor(n.path)} aria-current={current(n.path) ? 'page' : undefined}>{t(n.key)}</a>)}
+          {nav.filter((n) => !n.works).map((n) => <a key={n.path} href={hrefFor(n.path)} aria-current={current(n.path) ? 'page' : undefined}>{t(n.key)}</a>)}
+          {nav.some((n) => n.works) && <span className="gp-nav__sep" aria-hidden="true">{t('nav.works')}:</span>}
+          {nav.filter((n) => n.works).map((n) => <a key={n.path} className="gp-nav__works" href={hrefFor(n.path)} aria-current={current(n.path) ? 'page' : undefined}>{t(n.key)}</a>)}
         </nav>
         <div className="gp-header__right">
           {me.data && <span className="gp-small">{me.data.displayName}</span>}
@@ -77,7 +85,7 @@ export function Shell({ children }: { children: ReactNode }) {
           <OtherCabinet me={me.data} />
         ) : (
           <StateView loading={me.loading} error={me.error} hasData={!!me.data} onRetry={me.reload}>
-            {me.data && <MeContext.Provider value={me.data}>{children}</MeContext.Provider>}
+            {me.data && <MeContext.Provider value={me.data}>{children}<AssistantPanel /></MeContext.Provider>}
           </StateView>
         )}
       </main>

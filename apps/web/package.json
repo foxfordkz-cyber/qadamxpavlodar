@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "typecheck": "tsc -b",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "report:example": "esbuild scripts/example-report.ts --bundle --platform=node --format=esm --outfile=dist-scripts/example-report.mjs --log-level=warning && node dist-scripts/example-report.mjs"
   },
   "dependencies": {
     "@types/three": "0.186.0",

@@ -3,6 +3,7 @@ import { mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
 import { schema } from './schema.js';
 import { migration2 } from './migrations.js';
+import { migration4 } from './municipal/migration.js';
 import { migration3 } from './v2/migration.js';
 
 export type Row = Record<string, string | number | null>;
@@ -35,7 +36,8 @@ export class Store {
           this.db.exec('PRAGMA user_version=3;');
           version = 3;
         }
-        if (version !== 3) {
+        if(version===3){this.db.exec(migration4);this.db.exec('PRAGMA user_version=4');version=4;}
+        if (version !== 4) {
           throw new Error('Unsupported local schema version; do not reset or overwrite this database.');
         }
       });

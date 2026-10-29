@@ -32,6 +32,11 @@ interface Props {
   plants?: Plant[];
   /** Планируемые позиции проектов, ещё не реализованных. Отдельный слой. */
   planned?: { lng: number; lat: number; label: string }[];
+  /** ТЗ 3.1.3: слои почв и существующей зелени (GeoJSON, [lng, lat]). */
+  soils?: { type: 'FeatureCollection'; features: unknown[] } | null;
+  greenery?: { type: 'FeatureCollection'; features: unknown[] } | null;
+  /** Окраска зон по проблемам или приоритету: id → цвет. */
+  zoneTint?: Record<string, string> | null;
 }
 
 const EMPTY = { type: 'FeatureCollection' as const, features: [] as { type: 'Feature'; properties: Record<string, unknown>; geometry: unknown }[] };
@@ -53,11 +58,11 @@ const pointsGeoJson = (pts: { lng: number; lat: number; label: string }[]) => ({
   features: pts.map((p) => ({ type: 'Feature' as const, properties: { label: p.label }, geometry: { type: 'Point' as const, coordinates: [p.lng, p.lat] } })),
 });
 
-function toGeoJson(sites: CandidateSite[], eligibility: Props['eligibility'], selectedId: string | null) {
+function toGeoJson(sites: CandidateSite[], eligibility: Props['eligibility'], selectedId: string | null, tint?: Record<string, string> | null) {
   return {
     type: 'FeatureCollection' as const,
     features: sites.flatMap((s) => {
-      const props = { id: s.id, elig: eligibility(s), selected: s.id === selectedId ? 1 : 0, name: s.name };
+      const props = { id: s.id, elig: eligibility(s), selected: s.id === selectedId ? 1 : 0, name: s.name, ...(tint?.[s.id] ? { tint: tint[s.id] } : {}) };
       const c = siteCenter(s);
       return [
         { type: 'Feature' as const, id: s.id, properties: props, geometry: s.geometry },
@@ -80,7 +85,7 @@ function hatchImage(color: string) {
   return { width: size, height: size, data };
 }
 
-export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, context, plants = [], planned = [] }: Props) {
+export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, context, plants = [], planned = [], soils = null, greenery = null, zoneTint = null }: Props) {
   const box = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MlMap | null>(null);
   const ready = useRef(false);
@@ -90,8 +95,8 @@ export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, co
   const [pitched, setPitched] = useState(true);
   const onSelectRef = useRef(onSelect);
   onSelectRef.current = onSelect;
-  const dataRef = useRef({ sites, eligibility, selectedId, context, plants, planned });
-  dataRef.current = { sites, eligibility, selectedId, context, plants, planned };
+  const dataRef = useRef({ sites, eligibility, selectedId, context, plants, planned, soils, greenery, zoneTint });
+  dataRef.current = { sites, eligibility, selectedId, context, plants, planned, soils, greenery, zoneTint };
 
   useEffect(() => {
     if (!box.current || view !== 'map') return;
@@ -135,10 +140,20 @@ export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, co
       reportService('map', 'ok');
       map.addImage('hatch-blocked', hatchImage('#b3261e'));
       const { sites, eligibility, selectedId } = dataRef.current;
-      map.addSource('sites', { type: 'geojson', data: toGeoJson(sites, eligibility, selectedId) });
+      const empty = { type: 'FeatureCollection' as const, features: [] };
+      // Подложки ТЗ: почвы (синтетика) и существующая зелень — ниже зон.
+      map.addSource('soils', { type: 'geojson', data: (dataRef.current.soils ?? empty) as never });
+      map.addLayer({ id: 'soils-fill', type: 'fill', source: 'soils', paint: { 'fill-color': ['match', ['get', 'salinity'], 'high', '#b8734a', 'medium', '#d6a463', 'low', '#e6d29a', '#cfdcae'] as never, 'fill-opacity': 0.42 } });
+      map.addLayer({ id: 'soils-line', type: 'line', source: 'soils', paint: { 'line-color': '#9a8460', 'line-width': 0.6, 'line-dasharray': [2, 2] } });
+      map.addSource('greenery', { type: 'geojson', data: (dataRef.current.greenery ?? empty) as never });
+      map.addLayer({ id: 'greenery-fill', type: 'fill', source: 'greenery', filter: ['==', ['geometry-type'], 'Polygon'] as never, paint: { 'fill-color': '#3f8a3a', 'fill-opacity': 0.45 } });
+      map.addLayer({ id: 'greenery-line', type: 'line', source: 'greenery', filter: ['==', ['geometry-type'], 'LineString'] as never, paint: { 'line-color': '#2f6e2a', 'line-width': 3 } });
+      map.addLayer({ id: 'greenery-tree', type: 'circle', source: 'greenery', filter: ['==', ['geometry-type'], 'Point'] as never, paint: { 'circle-radius': 4, 'circle-color': '#2f6e2a', 'circle-stroke-color': '#fff', 'circle-stroke-width': 1 } });
+      map.addSource('sites', { type: 'geojson', data: toGeoJson(sites, eligibility, selectedId, dataRef.current.zoneTint) });
       const color = ['match', ['get', 'elig'], 'blocked', '#b3261e', 'planting_candidate', '#2f7a3e', '#d89a1c'] as never;
       const isPoly = ['!=', ['get', 'centroid'], 1] as never;
       map.addLayer({ id: 'sites-fill', type: 'fill', source: 'sites', filter: isPoly, paint: { 'fill-color': color, 'fill-opacity': ['case', ['==', ['get', 'selected'], 1], 0.45, 0.28] } });
+      map.addLayer({ id: 'sites-tint', type: 'fill', source: 'sites', filter: ['all', isPoly, ['has', 'tint']] as never, paint: { 'fill-color': ['get', 'tint'] as never, 'fill-opacity': 0.75 } });
       map.addLayer({ id: 'sites-hatch', type: 'fill', source: 'sites', filter: ['all', isPoly, ['==', ['get', 'elig'], 'blocked']] as never, paint: { 'fill-pattern': 'hatch-blocked' } });
       // Стиль линии кодирует состояние независимо от цвета: пунктир — нужна проверка, сплошная — завершены.
       map.addLayer({ id: 'sites-line-dash', type: 'line', source: 'sites', filter: ['all', isPoly, ['==', ['get', 'elig'], 'survey_needed']] as never, paint: { 'line-color': '#8a5a00', 'line-width': 2, 'line-dasharray': [2, 1.5] } });
@@ -189,8 +204,16 @@ export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, co
   // Обновление данных без пересоздания карты.
   useEffect(() => {
     const src = mapRef.current?.getSource('sites') as GeoJSONSource | undefined;
-    if (ready.current && src) src.setData(toGeoJson(sites, eligibility, selectedId));
-  }, [sites, eligibility, selectedId]);
+    if (ready.current && src) src.setData(toGeoJson(sites, eligibility, selectedId, zoneTint));
+  }, [sites, eligibility, selectedId, zoneTint]);
+
+  useEffect(() => {
+    const m = mapRef.current;
+    if (!ready.current || !m) return;
+    const empty = { type: 'FeatureCollection' as const, features: [] };
+    (m.getSource('soils') as GeoJSONSource | undefined)?.setData((soils ?? empty) as never);
+    (m.getSource('greenery') as GeoJSONSource | undefined)?.setData((greenery ?? empty) as never);
+  }, [soils, greenery]);
 
   useEffect(() => {
     const map = mapRef.current;

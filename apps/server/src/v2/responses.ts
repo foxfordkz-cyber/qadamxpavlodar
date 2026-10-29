@@ -19,6 +19,7 @@ const upload=z.object({id,taskId:id,ownerId:id,reportId:id.nullable(),sha256:z.s
 export const responseModels={User:user,Crew:crew,Task:task,Report:report,Design:design,Plant:plant,Catalog:catalog,Resource:resource,Upload:upload};
 export function responseData(op:Operation):z.ZodType {
   const p=op.path,m=op.method;
+  if(['/municipal/sites','/municipal/evidence','/municipal/dashboard','/species','/zones/:id/variants'].includes(p))return z.array(object);
   if(p==='/auth/login')return z.object({user,csrfToken:z.string(),expiresAt:date,mode:z.literal('DEMO')}).strict();
   if(p==='/auth/me')return z.object({user,csrfToken:z.string()}).strict();
   if(p==='/auth/logout')return z.object({loggedOut:z.literal(true)}).strict();

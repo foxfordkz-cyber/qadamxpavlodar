@@ -12,7 +12,7 @@ export function reportRoutes(s:Store,api:Api,uploadsPath:string){
   const{route,write}=api;let uploads:Uploads|undefined;
   const storage=()=>uploads??=new Uploads(uploadsPath);
   if(existsSync(uploadsPath))storage().cleanup(s);
-  route({method:'post',path:'/uploads',status:201,multipart:true,input:z.object({taskId:id,file:z.string().meta({format:'binary'})}).strict(),summary:'Assigned participant: private JPEG/PNG/WebP upload, 5 MiB'},(_req,res,next)=>{allow(actor(res),'worker','foreman');next();},multipart,async(req,res)=>{
+  route({method:'post',path:'/uploads',idempotent:true,status:201,multipart:true,input:z.object({taskId:id,file:z.string().meta({format:'binary'})}).strict(),summary:'Assigned participant: private JPEG/PNG/WebP upload, 5 MiB'},(_req,res,next)=>{allow(actor(res),'worker','foreman');next();},multipart,async(req,res)=>{
     const result=await storage().save(s,actor(res),req.body,req.file,req.get('Idempotency-Key'));res.set('Idempotency-Replayed',String(result.replayed)).status(result.status).json(result.body);
   });
   route({method:'get',path:'/uploads/:id',binary:true,summary:'Read private normalized photo after server ownership check'},(req,res)=>res.set('Content-Disposition','inline; filename="report.webp"').type('image/webp').send(storage().read(s,actor(res),param(req))));

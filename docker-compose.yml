@@ -1,0 +1,25 @@
+# Запуск одной командой (ТЗ 4): docker compose up --build → http://localhost:8080
+services:
+  server:
+    build:
+      context: .
+      dockerfile: apps/server/Dockerfile
+    volumes:
+      - backend-data:/app/data
+      - backend-uploads:/app/uploads
+    restart: unless-stopped
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      args:
+        DATA_SOURCE: api
+    ports:
+      - "127.0.0.1:8080:80"
+    depends_on:
+      server:
+        condition: service_healthy
+    restart: unless-stopped
+volumes:
+  backend-data:
+  backend-uploads:

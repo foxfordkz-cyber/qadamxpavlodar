@@ -74,6 +74,7 @@ export function createApp(store: Store, options: AppOptions = {}) {
     }
     next();
   });
+  app.use('/api/v1/imports/preview',express.json({limit:'8mb',strict:true}));
   app.use(express.json({ limit: '32kb', strict: true }));
   app.use('/api/v1', createV2Router(store, join(photos.root,'v2'),options.v2Adapters));
   route('health', (_req, res) => {

@@ -11,6 +11,7 @@ import { applyFilters, download, emptyFilters, isFiltered, sitesToCsv, type Site
 import { eligibilityOf } from './eligibility';
 import { SiteCard } from './SiteCard';
 import { Metrics } from '../dashboard/Metrics';
+import { DEFAULT_PRIORITY_WEIGHTS } from '../../../shared/analytics/city';
 
 export function SitesPage() {
   const { api } = useData();
@@ -34,7 +35,23 @@ export function SitesPage() {
   const badGeometry = useMemo(() => sites.map((s) => [s, validateSiteGeometry(s)] as const).filter(([, e]) => e), [sites]);
   const validSites = useMemo(() => visible.filter((s) => !validateSiteGeometry(s)), [visible]);
   const elig = useCallback((s: CandidateSite) => eligibilityOf(s), []);
-  const planned = useMemo(() => plannedPoints(projectsRes.data?.data ?? []), [projectsRes.data]);
+  const [layers, setLayers] = useState<LayerState>(readLayers);
+  const toggleLayer = (k: keyof LayerState) => setLayers((l) => { const n = { ...l, [k]: !l[k], ...(k === 'problems' && !l.problems ? { priority: false } : {}), ...(k === 'priority' && !l.priority ? { problems: false } : {}) }; try { localStorage.setItem('gp-layers', JSON.stringify(n)); } catch { /* без хранилища */ } return n; });
+  const soilsRes = useResource(() => (layers.soils ? api.soilsLayer() : Promise.resolve(null)), [layers.soils]);
+  const greenRes = useResource(() => (layers.greenery ? api.greeneryLayer() : Promise.resolve(null)), [layers.greenery]);
+  const problemsRes = useResource(() => (layers.problems ? api.problems() : Promise.resolve(null)), [layers.problems]);
+  const prioRes = useResource(() => (layers.priority ? api.priorities(DEFAULT_PRIORITY_WEIGHTS, null) : Promise.resolve(null)), [layers.priority]);
+  const zoneTint = useMemo(() => {
+    if (layers.problems && problemsRes.data) {
+      const sev: Record<string, number> = {};
+      const rank = { high: 3, medium: 2, low: 1 };
+      for (const p of problemsRes.data.data.problems) sev[p.siteId] = Math.max(sev[p.siteId] ?? 0, rank[p.severity]);
+      return Object.fromEntries(Object.entries(sev).map(([id, v]) => [id, v === 3 ? '#b3261e' : v === 2 ? '#e0892b' : '#e8cf5a']));
+    }
+    if (layers.priority && prioRes.data) return Object.fromEntries(prioRes.data.items.map((p) => [p.siteId, prioColor(p.index)]));
+    return null;
+  }, [layers.problems, layers.priority, problemsRes.data, prioRes.data]);
+  const planned = useMemo(() => (layers.proposed ? plannedPoints(projectsRes.data?.data ?? []) : []), [projectsRes.data, layers.proposed]);
 
   const select = (id: string, fromList: boolean) => {
     navigate('/map', { site: id }, true);
@@ -101,7 +118,8 @@ export function SitesPage() {
         {badGeometry.length > 0 && (
           <div className="gp-alert gp-alert--bad" role="alert">Не показаны на карте из-за координат: {badGeometry.map(([s, e]) => `${s.id} (${e})`).join('; ')}</div>
         )}
-        <SiteMap sites={validSites} eligibility={elig} selectedId={selectedId} onSelect={(id) => select(id, false)} focusSeq={focusSeq} context={ctxRes.data} plants={plantsRes.data?.data ?? []} planned={planned} />
+        <SiteMap sites={validSites} eligibility={elig} selectedId={selectedId} onSelect={(id) => select(id, false)} focusSeq={focusSeq} context={ctxRes.data} plants={layers.greenery ? plantsRes.data?.data ?? [] : []} planned={planned} soils={layers.soils ? (soilsRes.data?.data as never) : null} greenery={layers.greenery ? (greenRes.data?.data as never) : null} zoneTint={zoneTint} />
+        <LayerPanel layers={layers} toggle={toggleLayer} loading={soilsRes.loading || greenRes.loading || problemsRes.loading || prioRes.loading} />
         <MapLegend osmBase={osmMeta?.osmBase} />
       </section>
 
@@ -129,6 +147,36 @@ function plannedPoints(projects: PlantingProject[]) {
       const [lng, lat] = it.geometry.type === 'Point' ? it.geometry.coordinates : it.geometry.coordinates[0][0];
       return { lng, lat, label: p.title };
     }));
+}
+
+interface LayerState { soils: boolean; greenery: boolean; problems: boolean; priority: boolean; proposed: boolean }
+function readLayers(): LayerState {
+  const d = { soils: false, greenery: true, problems: false, priority: false, proposed: true };
+  try {
+    return { ...d, ...JSON.parse(localStorage.getItem('gp-layers') ?? '{}') };
+  } catch {
+    return d;
+  }
+}
+const prioColor = (i: number) => (i >= 70 ? '#1f6e3a' : i >= 55 ? '#4f9a3f' : i >= 40 ? '#9cc45a' : '#d9e8a8');
+
+/** ТЗ 3.1.3: многослойная карта — пользователь включает и отключает слои. */
+function LayerPanel({ layers, toggle, loading }: { layers: LayerState; toggle: (k: keyof LayerState) => void; loading: boolean }) {
+  const rows: [keyof LayerState, string, string][] = [
+    ['soils', 'Почвы (засоление)', 'синтетический слой до карты почв организатора'],
+    ['greenery', 'Существующая зелень', 'OSM: парки, скверы, деревья'],
+    ['problems', 'Проблемные зоны', 'красный — высокая, оранжевый — средняя острота'],
+    ['priority', 'Приоритет', 'темнее — выше индекс'],
+    ['proposed', 'Предлагаемые посадки', 'позиции проектов, ещё не посаженные'],
+  ];
+  return (
+    <details className="gp-layers gp-card" open={!matchMedia('(max-width: 760px)').matches}>
+      <summary><strong>Слои</strong> {loading && <span className="gp-spinner" aria-label="Загрузка слоя" />}</summary>
+      {rows.map(([k, label, hint]) => (
+        <label key={k} className="gp-check" title={hint}><input type="checkbox" checked={layers[k]} onChange={() => toggle(k)} />{label}{k === 'soils' && <span className="gp-badge gp-badge--demo">синтетика</span>}</label>
+      ))}
+    </details>
+  );
 }
 
 function SiteRow({ s, tasks, selected, onSelect }: { s: CandidateSite; tasks: Task[]; selected: boolean; onSelect: () => void }) {
