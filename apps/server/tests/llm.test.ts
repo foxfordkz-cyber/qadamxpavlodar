@@ -5,7 +5,7 @@ import { once } from 'node:events';
 import { fixture } from './helpers.js';
 import { seedV2, DEMO_PASSWORD } from '../src/v2/seed.js';
 import { seedTz } from '../src/tz/seed.js';
-import { checkProvider, createLlmAssistant, llmConfig, llmProviders, questionLang, TOOLS, type LlmConfig } from '../src/tz/llm.js';
+import { checkProvider, createLlmAssistant, llmConfig, llmProviders, plainText, questionLang, TOOLS, type LlmConfig } from '../src/tz/llm.js';
 import type { AssistantAdapter } from '../src/tz/routes.js';
 import { candidates } from '../src/tz/data.js';
 
@@ -96,6 +96,7 @@ test('tools run real calculations: selected zone analysis, knowledge search with
 test('answer language follows the question: a Kazakh question gets a Kazakh instruction, a Russian one does not', async t => {
   assert.equal(questionLang('Бірінші кезекте қай аумақтарды көгалдандыру керек?'), 'kk');
   assert.equal(questionLang('Какие зоны озеленить в первую очередь?'), 'ru');
+  assert.equal(plainText(['## Итог', '**Газон у Гоголя** — `78`', '* первая', '- вторая'].join('\n')), ['Итог', 'Газон у Гоголя — 78', '• первая', '• вторая'].join('\n'));
   const f = await app(t);
   const { cfg, seen } = await fakeModel(t, [
     req => (req.messages.some((m: any) => m.role === 'tool') ? say(`Бірінші аумақ — ${lastTool(req).items[0].zone.name}, индекс ${lastTool(req).items[0].index}.`) : toolCall('top_priorities', { limit: 1 })),

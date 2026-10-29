@@ -78,6 +78,8 @@ const norm = (x: string) => x.toLowerCase().replace(/ё/g, 'е');
 const stems = (q: string) => norm(q).split(/[^a-zа-я0-9-]+/).filter((w) => w.length >= 3).map((w) => w.slice(0, Math.max(3, Math.min(6, w.length - 1))));
 const score = (text: string, keys: string[]) => keys.reduce((n, k) => n + (text.includes(k) ? 1 : 0), 0);
 const clip = (x: string, n = 280) => (x.length > n ? `${x.slice(0, n - 1)}…` : x);
+/** Без разметки Markdown: **жирный**, __подчёркнутый__, `код`, заголовки «# », списки «* » → «• ». */
+export const plainText = (x: string) => x.replace(/\*\*(.+?)\*\*|__(.+?)__/g, '$1$2').replace(/`([^`]+)`/g, '$1').replace(/^#{1,6}\s+/gm, '').replace(/^\s*[*-]\s+/gm, '• ').trim();
 
 type Zone = { id: string; name: string };
 type Ctx = { zones: Zone[]; evidence: Set<string>; view?: { lat: number; lng: number } | null };
@@ -244,6 +246,8 @@ async function askOne(s: Store, exec: ReturnType<typeof createTools>, cfg: LlmCo
       messages.push({ role: 'tool', tool_call_id: call.id, content: JSON.stringify(exec(call.function.name, args, ctx)) });
     }
   }
+  // Модели иногда пишут Markdown вопреки правилу 8 — в чате это звёздочки и решётки; оставляем простой текст.
+  text = plainText(text);
   if (!text) throw new LlmError('empty answer');
   // Цифры без вызова функций — значит, модель их придумала: такой ответ не показываем (резерв или правила).
   if (!toolCalls.length && /\d/.test(text)) throw new LlmError('numbers without tool calls');
