@@ -196,3 +196,6 @@
 .gp-tile--metric .gp-tile__value { font-size: 40px; }
 .gp-tile--metric .gp-tile__label { font-size: 16px; line-height: 1.25; }
 .gp-tile__def { flex: 1; line-height: 1.35; }
+
+/* Пустой список: под текстом — что сделать дальше. */
+.gp-state__action { margin-top: 10px; }

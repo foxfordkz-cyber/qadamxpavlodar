@@ -164,7 +164,7 @@ export function SitesPage() {
           </div>
           <Freshness updatedAt={sitesRes.updatedAt} error={sitesRes.error} loading={sitesRes.loading} onRefresh={() => { sitesRes.reload(); tasksRes.reload(); }} />
         </div>
-        <StateView loading={sitesRes.loading} error={sitesRes.error} hasData={!!sitesRes.data} onRetry={sitesRes.reload} empty={!!sitesRes.data && visible.length === 0} emptyText={t('filters.empty')}>
+        <StateView loading={sitesRes.loading} error={sitesRes.error} hasData={!!sitesRes.data} onRetry={sitesRes.reload} empty={!!sitesRes.data && visible.length === 0} emptyText={t('filters.empty')} emptyAction={<Button onClick={() => setF(emptyFilters)}>✕ {t('filters.reset')}</Button>}>
           <ul className="gp-list gp-sites__items">
             {visible.map((s) => <SiteRow key={s.id} s={s} tasks={tasks} selected={s.id === selectedId} onSelect={() => select(s.id, true)} />)}
           </ul>
