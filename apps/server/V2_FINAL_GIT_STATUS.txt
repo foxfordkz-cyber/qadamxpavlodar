@@ -1,0 +1,25 @@
+## No commits yet on feature/backend-preparation
+?? .env.example
+?? .gitignore
+?? AI_INTEGRATION_CONTRACT.md
+?? BACKEND_HANDOFF.md
+?? BACKEND_PREPARATION.md
+?? BACKEND_V2_COMPLIANCE.md
+?? BACKEND_V2_HANDOFF.md
+?? BACKEND_V2_VERIFICATION.md
+?? FRONTEND_API_HANDOFF.md
+?? HACKATHON_BACKEND_READY.md
+?? OFFICIAL_TASK_ADAPTATION_CHECKLIST.md
+?? README.md
+?? V2_VERIFICATION_STATE.json
+?? VERIFICATION.md
+?? WORKFLOW_COMPATIBILITY.md
+?? contracts-source/
+?? openapi-v2.json
+?? package-lock.json
+?? package.json
+?? scripts/
+?? src/
+?? tests/
+?? tsconfig.build.json
+?? tsconfig.json
