@@ -1,4 +1,5 @@
 import type { ReactElement } from 'react';
+import { useLanguage } from '../../shared/i18n/useLanguage';
 import { useRoute } from '../../shared/router';
 import { Shell } from './Shell';
 import { HomePage } from './home/HomePage';
@@ -39,6 +40,7 @@ const PAGES: [string, () => ReactElement][] = [
 ];
 
 export function CoordinatorApp() {
+  useLanguage();
   const { path } = useRoute();
   const page = PAGES.find(([p]) => path === p || path.startsWith(p + '/'))?.[1] ?? (() => <HomePage />);
   return <Shell>{page()}</Shell>;

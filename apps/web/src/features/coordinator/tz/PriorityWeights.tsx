@@ -1,3 +1,4 @@
+import { tr } from '../../../shared/i18n';
 import { useEffect, useState } from 'react';
 import { DEFAULT_PRIORITY_WEIGHTS, PRIORITY_LABEL, type PriorityFactor } from '../../../shared/analytics/city';
 
@@ -40,7 +41,7 @@ export function WeightSliders({ weights, onChange, idPrefix }: { weights: Weight
     <>
       {FACTORS.map((f) => (
         <div key={f} className="gp-weight">
-          <label htmlFor={`${idPrefix}-${f}`}>{PRIORITY_LABEL[f]} <strong>{weights[f].toFixed(2)}</strong></label>
+          <label htmlFor={`${idPrefix}-${f}`}>{tr(PRIORITY_LABEL[f])} <strong>{weights[f].toFixed(2)}</strong></label>
           <input id={`${idPrefix}-${f}`} type="range" min={0} max={0.5} step={0.05} value={weights[f]} onChange={(e) => onChange({ ...weights, [f]: Number(e.target.value) })} />
         </div>
       ))}

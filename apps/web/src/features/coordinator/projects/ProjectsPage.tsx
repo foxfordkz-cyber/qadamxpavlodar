@@ -1,3 +1,4 @@
+import { tr } from '../../../shared/i18n';
 import { useEffect, useMemo, useState } from 'react';
 import { PageHeader } from '../PageHeader';
 import { useData, useResource } from '../../../shared/api/DataProvider';
@@ -59,12 +60,12 @@ function NewProject({ siteId }: { siteId: string | null }) {
   const { api } = useData();
   const site = useResource(() => (siteId ? api.site(siteId) : Promise.resolve(null)), [siteId]);
   const [title, setTitle] = useState('');
-  const [season, setSeason] = useState('Весна 2027');
+  const [season, setSeason] = useState(tr("Весна 2027"));
   const [error, setError] = useState<unknown>(null);
   const [key] = useState(newIdempotencyKey);
   const { run, busy } = useGuarded();
   useEffect(() => {
-    if (site.data && !title) setTitle(`Озеленение: ${site.data.name}`);
+    if (site.data && !title) setTitle(t('dynamic.004', { p0: String(site.data.name) }));
   }, [site.data, title]);
   if (!siteId) return <div className="gp-page"><div className="gp-alert gp-alert--warn">{t('projects.pickSite')} <a href={hrefFor('/map')}>{t('nav.map')}</a></div></div>;
   return (

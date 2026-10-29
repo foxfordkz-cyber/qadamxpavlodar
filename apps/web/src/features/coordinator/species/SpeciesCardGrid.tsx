@@ -1,3 +1,4 @@
+import { tr } from '../../../shared/i18n';
 import { useState } from 'react';
 import type { Level, Species } from '../../../shared/api/types';
 import { Badge } from '../../../shared/ui/components';
@@ -48,23 +49,23 @@ export function SpeciesCardFull({ s, onOpen }: { s: Species; onOpen?: () => void
       <SpeciesPhoto s={s} />
       <div className="gp-spcard__body">
         <div className="gp-spcard__badges">
-          {s.pavlodarEvidenceId && <Badge tone="ok" icon="✓">Сажают в Павлодаре</Badge>}
-          {s.soviet && <Badge tone="neutral" icon="★">Советская классика</Badge>}
-          {s.native && <Badge tone="info" icon="◆">Местный</Badge>}
-          {s.invasiveRisk && <Badge tone="bad" icon="!">Инвазивный риск</Badge>}
-          {s.allergenic && <Badge tone="warn" icon="!">Аллерген</Badge>}
+          {s.pavlodarEvidenceId && <Badge tone="ok" icon="✓">{tr("Сажают в Павлодаре")}</Badge>}
+          {s.soviet && <Badge tone="neutral" icon="★">{tr("Советская классика")}</Badge>}
+          {s.native && <Badge tone="info" icon="◆">{tr("Местный")}</Badge>}
+          {s.invasiveRisk && <Badge tone="bad" icon="!">{tr("Инвазивный риск")}</Badge>}
+          {s.allergenic && <Badge tone="warn" icon="!">{tr("Аллерген")}</Badge>}
         </div>
         <h3 className="gp-spcard__name">{s.nameRu}</h3>
-        <p className="gp-small gp-muted"><i>{s.latin}</i> · {t(`species.form.${s.form}` as Key)}{s.matureHeightM ? ` · ${s.matureHeightM[0]}–${s.matureHeightM[1]} м` : ''}</p>
-        {!!s.benefits?.length && <p className="gp-spcard__line"><strong>Польза:</strong> {s.benefits.join(' · ')}</p>}
-        {!!s.beauty?.length && <p className="gp-spcard__line"><strong>Красота:</strong> {s.beauty.join(' · ')}</p>}
+        <p className="gp-small gp-muted"><i>{s.latin}</i> · {t(`species.form.${s.form}` as Key)}{s.matureHeightM ? t('dynamic.006', { p0: String(s.matureHeightM[0]), p1: String(s.matureHeightM[1]) }) : ''}</p>
+        {!!s.benefits?.length && <p className="gp-spcard__line"><strong>{tr("Польза:")}</strong> {s.benefits.join(' · ')}</p>}
+        {!!s.beauty?.length && <p className="gp-spcard__line"><strong>{tr("Красота:")}</strong> {s.beauty.join(' · ')}</p>}
         <div className="gp-spcard__meters">
-          <Meter label="Мороз" v={s.frostHardiness} />
-          <Meter label="Засуха" v={s.droughtTolerance} />
-          <Meter label="Соль" v={s.saltTolerance} />
+          <Meter label={tr("Мороз")} v={s.frostHardiness} />
+          <Meter label={tr("Засуха")} v={s.droughtTolerance} />
+          <Meter label={tr("Соль")} v={s.saltTolerance} />
         </div>
-        {!!s.uses?.length && <div className="gp-spcard__uses">{s.uses.map((u) => <span key={u} className="gp-chip">{USE_LABEL[u]}</span>)}</div>}
-        {onOpen && <button className="gp-btn gp-btn--ghost gp-spcard__more" onClick={onOpen}>Подробнее и источники</button>}
+        {!!s.uses?.length && <div className="gp-spcard__uses">{s.uses.map((u) => <span key={u} className="gp-chip">{tr(USE_LABEL[u])}</span>)}</div>}
+        {onOpen && <button className="gp-btn gp-btn--ghost gp-spcard__more" onClick={onOpen}>{tr("Подробнее и источники")}</button>}
       </div>
     </article>
   );

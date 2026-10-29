@@ -1,3 +1,4 @@
+import { tr } from '../../../shared/i18n';
 import { useEffect, useMemo, useState } from 'react';
 import { PageHeader } from '../PageHeader';
 import { useData, useResource } from '../../../shared/api/DataProvider';
@@ -77,7 +78,7 @@ export function RankingPage() {
             <Button variant="ghost" onClick={() => { setWeights(DEMO_WEIGHTS); recalc(DEMO_WEIGHTS); }}>{t('rank.reset')}</Button>
           </div>
           {ranking && <MethodLine method={ranking.method} />}
-          {ranking && <p className="gp-small gp-muted">Сценарий: {ranking.scenarioId}</p>}
+          {ranking && <p className="gp-small gp-muted">{tr("Сценарий:")}{" "}{ranking.scenarioId}</p>}
         </section>
 
         <section className="gp-ranking__results" aria-live="polite">
@@ -107,7 +108,7 @@ export function RankingPage() {
                             <details>
                               <summary>{t('rank.contrib')}</summary>
                               <table className="gp-table gp-small">
-                                <thead><tr><th>Фактор</th><th>Значение</th><th>Вес</th><th>Вклад</th></tr></thead>
+                                <thead><tr><th>{tr("Фактор")}</th><th>{tr("Значение")}</th><th>{tr("Вес")}</th><th>{tr("Вклад")}</th></tr></thead>
                                 <tbody>
                                   {it.contributions.map((c) => (
                                     <tr key={c.factor}>

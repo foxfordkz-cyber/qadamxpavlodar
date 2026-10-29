@@ -1,3 +1,4 @@
+import { tr } from '../../../shared/i18n';
 import { useMemo, useState } from 'react';
 import { PageHeader } from '../PageHeader';
 import { useData, useResource } from '../../../shared/api/DataProvider';
@@ -114,7 +115,7 @@ function ApprovePlan({ date, plan, preview, brigades, onDone, onCancel }: { date
       {result ? <div className="gp-alert gp-alert--ok" role="status">✓ {t('plan.serverApproved', { at: fmtDateTime(result.approvedAt), v: result.version })}</div> : <p className="gp-small">{t('plan.confirmNote')}</p>}
       <dl className="gp-dl">
         <dt>{t('plan.sumTasks')}</dt><dd><strong>{summary.tasks}</strong></dd>
-        {summary.byBrigade.map((b) => <div key={b.brigadeId} style={{ display: 'contents' }}><dt>{name(b.brigadeId)}</dt><dd>{b.tasks} · {b.minutes} мин</dd></div>)}
+        {summary.byBrigade.map((b) => <div key={b.brigadeId} style={{ display: 'contents' }}><dt>{name(b.brigadeId)}</dt><dd>{b.tasks} · {b.minutes}{" "}{tr("мин")}</dd></div>)}
       </dl>
       {summary.warnings.length > 0 ? (
         <div className="gp-alert gp-alert--warn"><strong>{t('plan.warnings')}</strong><ul>{summary.warnings.map((w) => <li key={w}>{w}</li>)}</ul></div>

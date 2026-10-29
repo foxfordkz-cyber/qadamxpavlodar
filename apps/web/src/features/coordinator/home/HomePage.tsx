@@ -1,3 +1,4 @@
+import { tr } from '../../../shared/i18n';
 import { lazy, Suspense, useCallback, useMemo, useState } from 'react';
 import { useData, useResource } from '../../../shared/api/DataProvider';
 import type { DashboardMetric } from '../../../shared/api/types';
@@ -114,8 +115,8 @@ function CityGallery() {
   const list = (photos as Photo[]).filter((p) => tag === 'all' || p.tag === tag);
   return (
     <>
-      <div className="gp-segment gp-city__tags" role="radiogroup" aria-label="Тема фото">
-        {TAGS.map(([k, v]) => <label key={k}><input type="radio" name="city-tag" checked={tag === k} onChange={() => setTag(k)} />{v} · {k === 'all' ? photos.length : (photos as Photo[]).filter((p) => p.tag === k).length}</label>)}
+      <div className="gp-segment gp-city__tags" role="radiogroup" aria-label={tr("Тема фото")}>
+        {TAGS.map(([k, v]) => <label key={k}><input type="radio" name="city-tag" checked={tag === k} onChange={() => setTag(k)} />{tr(v)} · {k === 'all' ? photos.length : (photos as Photo[]).filter((p) => p.tag === k).length}</label>)}
       </div>
       <div className="gp-city">{list.map((p, i) => <CityPhoto key={p.src} p={p} big={i === 0} />)}</div>
     </>

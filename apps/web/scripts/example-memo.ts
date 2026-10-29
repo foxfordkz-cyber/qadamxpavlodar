@@ -1,0 +1,11 @@
+import { writeFileSync } from 'node:fs';
+import osm from '../../../fixtures/osm/sites.json';
+import { species } from '../src/shared/api/mock/species';
+import type { CandidateSite } from '../src/shared/api/types';
+import { analyzeZone } from '../src/shared/analytics/plan';
+import { DEFAULT_RATES, ratesMap } from '../src/shared/analytics/rates';
+import { buildMemoDocx } from '../src/shared/export/memo';
+const site = osm.sites[0] as unknown as CandidateSite;
+const bytes = buildMemoDocx({ zones: [{ site, analysis: analyzeZone(site, species, ratesMap(DEFAULT_RATES)) }], species, evidence: [], rates: DEFAULT_RATES, source: 'mock', generatedAt: new Date().toISOString() });
+writeFileSync('dist-scripts/example-memo.docx', bytes);
+console.log(`dist-scripts/example-memo.docx: ${bytes.length} bytes`);

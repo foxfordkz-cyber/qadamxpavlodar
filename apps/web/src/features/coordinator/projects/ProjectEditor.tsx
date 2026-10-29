@@ -195,7 +195,7 @@ function EditorBody({ initial, site, catalog, context, contextError, onReload }:
   const taskDraft: TaskDraft | null = server.approved
     ? {
         objectId: site.id, action: 'plant', priority: 'medium', projectId: server.id, projectDesignVersion: server.approved.designVersion, projectTitle: server.title,
-        description: `Посадка по проекту «${server.title}», версия ${server.approved.designVersion}: ${summarize(server.approved.items, byId)}.`,
+        description: t('dynamic.003', { p0: String(server.title), p1: String(server.approved.designVersion), p2: String(summarize(server.approved.items, byId)) }),
         estimatedMinutes: estimateMinutes(server.approved.items, byId),
       }
     : null;
