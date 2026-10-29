@@ -100,9 +100,8 @@
   .gp-page { padding: 0; }
 }
 @media (max-width: 760px) {
-  .gp-layers { right: auto; left: 10px; top: 56px; max-width: 200px; }
-  /* Панель инструментов с переключателем подложки занимает всю ширину — кнопки масштаба ниже неё. */
-  .gp-map .maplibregl-ctrl-top-right { top: 52px; }
+  /* На телефоне панель инструментов карты в несколько строк — «Слои» идут под картой, а не поверх неё. */
+  .gp-layers { position: static; max-width: none; max-height: none; margin: 8px 0 0; }
   .gp-rank__row { grid-template-columns: 44px minmax(0, 1fr); }
   .gp-rank__actions { grid-column: 1 / -1; display: flex; }
   .gp-assist-fab { bottom: 70px; }
@@ -120,3 +119,17 @@
 .gp-facts__item { padding: 8px 0; border-bottom: 1px dashed var(--gp-border); }
 .gp-facts__item:last-child { border-bottom: 0; }
 .gp-facts__item p { margin: 4px 0; }
+
+/* ТЗ 3.1.4: поиск по адресу и рисование зоны в панели инструментов карты */
+.gp-map__toolbar { max-width: calc(100% - 64px); align-items: center; }
+.gp-mapsearch { position: relative; flex: 1 1 220px; min-width: 180px; max-width: 320px; }
+.gp-mapsearch .gp-input { min-height: 32px; padding: 4px 10px; width: 100%; }
+.gp-mapsearch__list { position: absolute; z-index: 20; top: calc(100% + 4px); left: 0; right: 0; margin: 0; padding: 4px; list-style: none; max-height: 300px; overflow-y: auto; background: var(--gp-surface, #fff); box-shadow: var(--gp-shadow); }
+.gp-mapsearch__list button { display: block; width: 100%; text-align: left; background: none; border: 0; padding: 6px 8px; font: inherit; font-size: 13px; cursor: pointer; color: inherit; }
+.gp-mapsearch__list [aria-selected="true"] button { background: var(--gp-green-soft, #e0e7c9); }
+.gp-mapsearch__list .gp-badge { margin-right: 4px; }
+.gp-mapsearch__empty { padding: 6px 8px; }
+.gp-drawbar { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.gp-drawbar__form { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.gp-drawbar__form .gp-input { min-height: 32px; padding: 4px 10px; width: 220px; }
+.gp-map__saved { position: absolute; z-index: 6; left: 50%; transform: translateX(-50%); bottom: 44px; max-width: min(520px, 90%); margin: 0; }
