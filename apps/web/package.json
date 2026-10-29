@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "typecheck": "tsc -b",
     "preview": "vite preview",
-    "report:example": "esbuild scripts/example-report.ts --bundle --platform=node --format=esm --outfile=dist-scripts/example-report.mjs --log-level=warning && node dist-scripts/example-report.mjs"
+    "report:example": "esbuild scripts/example-report.ts --bundle --platform=node --format=esm --outfile=dist-scripts/example-report.mjs --log-level=warning && node dist-scripts/example-report.mjs",
+    "check:zones": "esbuild scripts/check-drawn-zone.ts --bundle --platform=node --format=esm --outfile=dist-scripts/check-drawn-zone.mjs --log-level=warning && node dist-scripts/check-drawn-zone.mjs"
   },
   "dependencies": {
     "@types/three": "0.186.0",
