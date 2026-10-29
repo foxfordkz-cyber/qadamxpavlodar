@@ -1,3 +1,4 @@
+import { speciesName } from '../../../shared/i18n';
 import { tr } from '../../../shared/i18n';
 import { useState } from 'react';
 import type { Level, Species } from '../../../shared/api/types';
@@ -16,7 +17,7 @@ export function SpeciesPhoto({ s, small }: { s: Species; small?: boolean }) {
     return <div className={`gp-spphoto gp-spphoto--none ${small ? 'is-small' : ''}`} aria-hidden="true">{s.form === 'tree' ? '🌳' : s.form === 'shrub' ? '🌿' : '🌸'}</div>;
   return (
     <figure className={`gp-spphoto ${small ? 'is-small' : ''}`}>
-      <img src={s.photo.src} alt={s.nameRu} loading="lazy" decoding="async" onError={() => setFailed(true)} />
+      <img src={s.photo.src} alt={speciesName(s)} loading="lazy" decoding="async" onError={() => setFailed(true)} />
       {!small && <figcaption><a href={s.photo.page} target="_blank" rel="noreferrer">{s.photo.author} · {s.photo.license}</a></figcaption>}
     </figure>
   );
@@ -26,7 +27,7 @@ export function SpeciesThumb({ s }: { s: Species }) {
   return (
     <a className="gp-spthumb" href={hrefFor('/species', { q: s.nameRu })}>
       <SpeciesPhoto s={s} small />
-      <span className="gp-spthumb__name">{s.nameRu}</span>
+      <span className="gp-spthumb__name">{speciesName(s)}</span>
       <span className="gp-small gp-muted">{t(`species.form.${s.form}` as Key)}{s.pavlodarEvidenceId ? ' · сажают в Павлодаре' : ''}</span>
     </a>
   );
@@ -55,7 +56,7 @@ export function SpeciesCardFull({ s, onOpen }: { s: Species; onOpen?: () => void
           {s.invasiveRisk && <Badge tone="bad" icon="!">{tr("Инвазивный риск")}</Badge>}
           {s.allergenic && <Badge tone="warn" icon="!">{tr("Аллерген")}</Badge>}
         </div>
-        <h3 className="gp-spcard__name">{s.nameRu}</h3>
+        <h3 className="gp-spcard__name">{speciesName(s)}</h3>
         <p className="gp-small gp-muted"><i>{s.latin}</i> · {t(`species.form.${s.form}` as Key)}{s.matureHeightM ? t('dynamic.006', { p0: String(s.matureHeightM[0]), p1: String(s.matureHeightM[1]) }) : ''}</p>
         {!!s.benefits?.length && <p className="gp-spcard__line"><strong>{tr("Польза:")}</strong> {s.benefits.join(' · ')}</p>}
         {!!s.beauty?.length && <p className="gp-spcard__line"><strong>{tr("Красота:")}</strong> {s.beauty.join(' · ')}</p>}

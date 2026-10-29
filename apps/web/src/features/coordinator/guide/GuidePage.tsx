@@ -1,3 +1,4 @@
+import { speciesName } from '../../../shared/i18n';
 import { t } from '../../../shared/i18n';
 import { tr } from '../../../shared/i18n';
 import { useMemo, useState, type ReactElement } from 'react';
@@ -90,7 +91,7 @@ export function GuidePage() {
             <tbody>
               {list.filter((s) => s.floweringMonths?.length || s.evergreen).slice(0, 40).map((s) => (
                 <tr key={s.id}>
-                  <td><a href={hrefFor('/species', { q: s.nameRu })}>{s.nameRu}</a></td>
+                  <td><a href={hrefFor('/species', { q: s.nameRu })}>{speciesName(s)}</a></td>
                   {MONTHS.map((_, i) => <td key={i} className={s.floweringMonths?.includes(i + 1) ? 'is-bloom' : s.evergreen ? 'is-green' : ''} aria-label={s.floweringMonths?.includes(i + 1) ? tr("цветёт") : undefined} />)}
                   <td className="gp-small">{(s.beauty ?? []).join(', ')}</td>
                 </tr>

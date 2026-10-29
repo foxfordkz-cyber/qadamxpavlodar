@@ -1,3 +1,4 @@
+import { speciesName } from '../../../shared/i18n';
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { useData, useResource } from '../../../shared/api/DataProvider';
 import { ApiError } from '../../../shared/api/transport';
@@ -258,7 +259,7 @@ function EditorBody({ initial, site, catalog, context, contextError, onReload }:
                   {(['select', 'point', 'bed'] as Tool[]).map((x) => (
                     <button key={x} className={`gp-btn ${tool === x ? 'gp-btn--primary' : ''}`} aria-pressed={tool === x} onClick={() => setTool(x)}>{t(`ed.tool.${x}` as Key)}</button>
                   ))}
-                  <span className="gp-small gp-toolbar__active">{active ? t('ed.activeSpecies', { name: active.nameRu }) : t('ed.pickSpecies')}</span>
+                  <span className="gp-small gp-toolbar__active">{active ? t('ed.activeSpecies', { name: speciesName(active) }) : t('ed.pickSpecies')}</span>
                   <Button variant="ghost" busy={busy} onClick={suggest}>✦ {t('ed.suggest')}</Button>
                   <label className="gp-kv gp-small">{t('ed.template')}
                     <select className="gp-input" value="" onChange={(e) => applyTemplate(e.target.value as TemplateKind)} aria-describedby="tpl-hint">
@@ -308,7 +309,7 @@ function ConflictDialog({ pending, species, onConfirm, onCancel }: { pending: Pe
   useEffect(() => ref.current?.focus(), []);
   return (
     <div>
-      <p><strong>{species?.nameRu}</strong> — {pending.kind === 'add' ? t('ed.conflictAdd') : t('ed.conflictMove')}</p>
+      <p><strong>{speciesName(species)}</strong> — {pending.kind === 'add' ? t('ed.conflictAdd') : t('ed.conflictMove')}</p>
       <ul className="gp-conflicts">{pending.conflicts.map((c) => <li key={c.type}><span aria-hidden="true">✕ </span>{c.message}</li>)}</ul>
       <p className="gp-small gp-muted">{t('ed.conflictHelp')}</p>
       <Field label={t('ed.conflictReason')} required error={err}>
@@ -384,7 +385,7 @@ function NowView({ site }: { site: CandidateSite }) {
 function summarize(items: ProjectItem[], byId: Map<string, Species>) {
   const m = new Map<string, number>();
   for (const i of items) m.set(i.speciesId, (m.get(i.speciesId) ?? 0) + i.quantity);
-  return [...m].map(([id, q]) => `${byId.get(id)?.nameRu ?? id} — ${q}`).join(', ');
+  return [...m].map(([id, q]) => `${speciesName(byId.get(id), id)} — ${q}`).join(', ');
 }
 /** Оценка трудозатрат команды (не норматив): дерево 30 мин, куст 15, цветы 1 мин/шт. */
 function estimateMinutes(items: ProjectItem[], byId: Map<string, Species>) {

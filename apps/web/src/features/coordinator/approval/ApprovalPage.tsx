@@ -1,3 +1,4 @@
+import { speciesName } from '../../../shared/i18n';
 import { useMemo, useState } from 'react';
 import { PageHeader } from '../PageHeader';
 import { useData, useResource } from '../../../shared/api/DataProvider';
@@ -108,7 +109,7 @@ function Review({ project, onChanged }: { project: PlantingProject; onChanged: (
             <tbody>
               {project.items.map((it) => (
                 <tr key={it.id} className={it.id === selected ? 'is-selected' : ''} onClick={() => setSelected(it.id)}>
-                  <td>{byId.get(it.speciesId)?.nameRu ?? it.speciesId} <span className="gp-muted">({it.kind === 'bed' ? t('ed.kind.bed') : t('ed.kind.point')})</span></td>
+                  <td>{speciesName(byId.get(it.speciesId), it.speciesId)} <span className="gp-muted">({it.kind === 'bed' ? t('ed.kind.bed') : t('ed.kind.point')})</span></td>
                   <td>{it.quantity}</td>
                   <td>{it.conflicts.map((c) => <div key={c.type}><Badge tone="bad" icon="!">{c.message}</Badge> {t('ed.bom.resolution')}: {c.resolution}</div>)}{byId.get(it.speciesId)?.invasiveRisk && <Badge tone="bad" icon="!">{t('species.invasive')}</Badge>}</td>
                 </tr>

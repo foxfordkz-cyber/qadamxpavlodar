@@ -1,3 +1,5 @@
+import { speciesName } from '../../../shared/i18n';
+import { analysisText } from '../../../shared/i18n/templateText';
 import { tr } from '../../../shared/i18n';
 import { useMemo, useState } from 'react';
 import { useData, useResource } from '../../../shared/api/DataProvider';
@@ -94,7 +96,7 @@ function PlantsTab({ a, byId, options, set }: { a: ZoneAnalysis; byId: Map<strin
             <li key={r.speciesId} className="gp-rank__row">
               <SpeciesPhoto s={sp} small />
               <div className="gp-rank__main">
-                <div className="gp-rank__title"><strong>{sp.nameRu}</strong> <span className="gp-rank__score" aria-label={t('dynamic.021', { p0: String(r.score) })}>{r.score}</span>{locked.includes(r.speciesId) && <Badge tone="info" icon="📌">{tr("закреплён")}</Badge>}</div>
+                <div className="gp-rank__title"><strong>{speciesName(sp)}</strong> <span className="gp-rank__score" aria-label={t('dynamic.021', { p0: String(r.score) })}>{r.score}</span>{locked.includes(r.speciesId) && <Badge tone="info" icon="📌">{tr("закреплён")}</Badge>}</div>
                 <Bar value={r.score} label={tr("Пригодность")} />
                 <div className="gp-small">{r.reasons.join(', ') || '—'}{r.penalties.length ? <span className="gp-caution"> · {r.penalties.join('; ')}</span> : null}</div>
                 <details className="gp-small"><summary>{tr("Вклад факторов")}</summary>{tr("Климат")}{" "}{r.factors.climate}{" "}{tr("· почва")}{" "}{r.factors.soil}{" "}{tr("· нагрузка")}{" "}{r.factors.urban}{" "}{tr("· назначение")}{" "}{r.factors.purpose}{" "}{tr("· местный опыт")}{" "}{r.factors.local}</details>
@@ -109,9 +111,9 @@ function PlantsTab({ a, byId, options, set }: { a: ZoneAnalysis; byId: Map<strin
       </ol>
       {ok.length > 10 && <Button variant="ghost" onClick={() => setShowAll(!showAll)}>{showAll ? tr("Показать топ-10") : t('dynamic.022', { p0: String(ok.length) })}</Button>}
       {excluded.length > 0 && (
-        <p className="gp-small">{tr("Исключены вами:")}{" "}{excluded.map((id) => <button key={id} className="gp-chip gp-chip--btn" onClick={() => set({ excluded: excluded.filter((x) => x !== id) })}>{byId.get(id)?.nameRu} ✕</button>)}</p>
+        <p className="gp-small">{tr("Исключены вами:")}{" "}{excluded.map((id) => <button key={id} className="gp-chip gp-chip--btn" onClick={() => set({ excluded: excluded.filter((x) => x !== id) })}>{speciesName(byId.get(id), id)} ✕</button>)}</p>
       )}
-      <details className="gp-small"><summary>{tr("Не допущены правилами (")}{hard.length})</summary><ul>{hard.map((r) => <li key={r.speciesId}>{byId.get(r.speciesId)?.nameRu}: {r.excludedBy}</li>)}</ul></details>
+      <details className="gp-small"><summary>{tr("Не допущены правилами (")}{hard.length})</summary><ul>{hard.map((r) => <li key={r.speciesId}>{speciesName(byId.get(r.speciesId), r.speciesId)}: {r.excludedBy}</li>)}</ul></details>
 
       <h3 className="gp-subhead">{tr("Схема посадки ·")}{" "}{a.scheme.reduce((x, r) => x + r.quantity, 0)}{" "}{tr("растений")}</h3>
       <p className="gp-small gp-muted">{a.tiersNote}{" "}{tr("Вариант «")}{tr(VARIANT_LABEL[a.options.variant])}».</p>
@@ -129,13 +131,13 @@ function PlantsTab({ a, byId, options, set }: { a: ZoneAnalysis; byId: Map<strin
             return (
               <tr key={row.speciesId + row.tier}>
                 <td>{row.tier === 'tree' ? tr("Деревья") : row.tier === 'shrub' ? tr("Кустарники") : tr("Цветы")}</td>
-                <td>{sp?.nameRu}{row.replacedFrom && <span className="gp-muted">{" "}{tr("(вместо")}{" "}{byId.get(row.replacedFrom)?.nameRu})</span>}</td>
+                <td>{speciesName(sp)}{row.replacedFrom && <span className="gp-muted">{" "}{tr("(вместо")}{" "}{speciesName(byId.get(row.replacedFrom), row.replacedFrom)})</span>}</td>
                 <td>{row.quantity}</td>
                 <td>
-                  <select className="gp-input gp-input--inline" aria-label={t('dynamic.023', { p0: String(sp?.nameRu) })} value="" onChange={(e) => { const rep = { ...(options.replacements ?? {}) }; if (e.target.value === '__reset') delete rep[from]; else rep[from] = e.target.value; set({ replacements: rep }); }}>
+                  <select className="gp-input gp-input--inline" aria-label={t('dynamic.023', { p0: speciesName(sp) })} value="" onChange={(e) => { const rep = { ...(options.replacements ?? {}) }; if (e.target.value === '__reset') delete rep[from]; else rep[from] = e.target.value; set({ replacements: rep }); }}>
                     <option value="">—</option>
                     {row.replacedFrom && <option value="__reset">{tr("Вернуть исходный")}</option>}
-                    {alts.map((r) => <option key={r.speciesId} value={r.speciesId}>{byId.get(r.speciesId)?.nameRu} ({r.score})</option>)}
+                    {alts.map((r) => <option key={r.speciesId} value={r.speciesId}>{speciesName(byId.get(r.speciesId), r.speciesId)} ({r.score})</option>)}
                   </select>
                 </td>
               </tr>
@@ -212,7 +214,7 @@ function SurvivalTab({ a, byId, options, set }: { a: ZoneAnalysis; byId: Map<str
         <thead><tr><th>{tr("Вид")}</th><th>{tr("1 год")}</th>{compare && <th>{t('survival.rulesColumn')}</th>}<th>{tr("2 года")}</th><th>{tr("3 года")}</th><th>{tr("Главные риски")}</th></tr></thead>
         <tbody>{a.survival.map((r) => (
           <tr key={r.speciesId}>
-            <td>{byId.get(r.speciesId)?.nameRu}</td>
+            <td>{speciesName(byId.get(r.speciesId), r.speciesId)}</td>
             <td><strong>{r.y1}%</strong> <span className="gp-muted">({r.low}–{r.high}%)</span></td>
             {compare && <td>{a.survivalRules.find(x => x.speciesId === r.speciesId)?.y1 ?? '—'}%</td>}
             <td>{r.y2 ? `${r.y2}%` : tr("однолетник")}</td>
@@ -227,7 +229,7 @@ function SurvivalTab({ a, byId, options, set }: { a: ZoneAnalysis; byId: Map<str
           <ul className="gp-measures">
             {a.measures.map((m) => (
               <li key={m.label}>
-                <span><strong>{m.label}</strong> — {m.effect}</span>
+                <span><strong>{analysisText(m.label, [...byId.values()])}</strong> — {analysisText(m.effect, [...byId.values()])}</span>
                 <Button onClick={() => ('replace' in m.apply ? set({ replacements: { ...(options.replacements ?? {}), [m.apply.replace[0]]: m.apply.replace[1] } }) : set(m.apply as Partial<PlanOptions>))}>{tr("Применить")}</Button>
               </li>
             ))}

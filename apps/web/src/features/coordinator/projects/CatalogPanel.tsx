@@ -1,3 +1,4 @@
+import { speciesName } from '../../../shared/i18n';
 import { tr } from '../../../shared/i18n';
 import { useMemo, useState } from 'react';
 import type { Species } from '../../../shared/api/types';
@@ -26,7 +27,7 @@ export function CatalogPanel({ catalog, active, onPick, disabled }: { catalog: S
     () =>
       catalog.filter((s) =>
         (f.form === 'all' || s.form === f.form) &&
-        (!f.q || `${s.nameRu} ${s.latin}`.toLowerCase().includes(f.q.toLowerCase())) &&
+        (!f.q || `${s.nameRu} ${s.nameKk ?? ''} ${s.latin}`.toLowerCase().includes(f.q.toLowerCase())) &&
         (!f.drought || s.droughtTolerance === 'high') &&
         (!f.salt || s.saltTolerance !== 'low') &&
         (!f.month || s.floweringMonths?.includes(f.month)) &&
@@ -65,14 +66,14 @@ export function CatalogPanel({ catalog, active, onPick, disabled }: { catalog: S
           <li key={s.id} className={s.id === active?.id ? 'is-active' : ''}>
             <button className="gp-catalog__pick" onClick={() => onPick(s)} disabled={disabled} aria-pressed={s.id === active?.id}>
               <SpeciesPhoto s={s} small />
-              <span className="gp-catalog__name">{s.nameRu}{s.pavlodarEvidenceId ? <span className="gp-catalog__pvl" title={tr("Сажают в Павлодаре")}> ✓</span> : null}</span>
+              <span className="gp-catalog__name">{speciesName(s)}{s.pavlodarEvidenceId ? <span className="gp-catalog__pvl" title={tr("Сажают в Павлодаре")}> ✓</span> : null}</span>
               <span className="gp-small gp-muted">{t(`species.form.${s.form}` as Key)}{s.floweringMonths?.length ? ` · ${s.floweringMonths.map((m) => tr(MONTHS[m - 1])).join('–')}` : ''}{s.pricePerUnitKzt == null ? ` · ${t('ed.cat.noPrice')}` : ''}</span>
             </button>
-            <button className="gp-icon-btn" onClick={() => setCard(s)} aria-label={t('ed.cat.details', { name: s.nameRu })}>ⓘ</button>
+            <button className="gp-icon-btn" onClick={() => setCard(s)} aria-label={t('ed.cat.details', { name: speciesName(s) })}>ⓘ</button>
           </li>
         ))}
       </ul>
-      <Modal open={!!card} title={card?.nameRu ?? ''} onClose={() => setCard(null)}>
+      <Modal open={!!card} title={speciesName(card)} onClose={() => setCard(null)}>
         {card && <SpeciesCard s={card} />}
       </Modal>
     </div>

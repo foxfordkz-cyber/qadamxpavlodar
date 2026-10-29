@@ -1,3 +1,4 @@
+import { speciesName } from '../../../shared/i18n';
 import { tr } from '../../../shared/i18n';
 import { useMemo, useState } from 'react';
 import { useData, useResource } from '../../../shared/api/DataProvider';
@@ -30,7 +31,7 @@ export function SpeciesPage() {
         (!pvl || s.pavlodarEvidenceId) &&
         (!soviet || s.soviet) &&
         (!hardy || (s.droughtTolerance === 'high' && s.frostHardiness !== 'low')) &&
-        `${s.nameRu} ${s.latin}`.toLowerCase().includes(q.trim().toLowerCase()),
+        `${s.nameRu} ${s.nameKk ?? ''} ${s.latin}`.toLowerCase().includes(q.trim().toLowerCase()),
       ),
     [r.data, form, use, pvl, soviet, hardy, q],
   );
@@ -62,7 +63,7 @@ export function SpeciesPage() {
         <div className="gp-spgrid">{list.map((s) => <SpeciesCardFull key={s.id} s={s} onOpen={() => setCard(s)} />)}</div>
       </StateView>
       {list.length === 0 && r.data && <button className="gp-btn" onClick={reset}>{t('filters.reset')}</button>}
-      <Modal open={!!card} title={card?.nameRu ?? ''} onClose={() => setCard(null)} wide>
+      <Modal open={!!card} title={speciesName(card)} onClose={() => setCard(null)} wide>
         {card && <SpeciesCard s={card} />}
       </Modal>
     </div>

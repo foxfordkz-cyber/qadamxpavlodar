@@ -1,5 +1,6 @@
 import { ru, type Dict } from './ru';
 import { kk } from './kk';
+import type { Species } from '../api/types';
 
 export type Lang = 'ru' | 'kk';
 export type Key = keyof Dict;
@@ -27,6 +28,11 @@ export function setLang(next: Lang) {
   return lang;
 }
 export const getLang = () => lang;
+
+/** UI defaults to its current language; reports and replies pass their language explicitly. */
+export function speciesName(species: Pick<Species, 'nameRu' | 'nameKk'> | null | undefined, fallback = '', language: Lang = getLang()): string {
+  return (language === 'kk' ? species?.nameKk?.trim() : '') || species?.nameRu || fallback;
+}
 
 // Static legacy labels can also come from pure analytics dictionaries shared with the server.
 // Keep those data contracts in Russian; translate only their display in the specialist UI.

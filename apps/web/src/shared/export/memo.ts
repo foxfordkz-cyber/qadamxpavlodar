@@ -1,7 +1,7 @@
 import { strToU8, zipSync } from 'fflate';
 import { VARIANT_LABEL } from '../analytics/plan';
-import { tFor, type Key, type Lang } from '../i18n';
-import { memoText } from './memoText';
+import { tFor, speciesName, type Key, type Lang } from '../i18n';
+import { analysisText } from '../i18n/templateText';
 import { memoEvidenceIds, type MemoInput } from './memoData';
 export { memoEvidenceIds, type MemoInput } from './memoData';
 type Block = { kind: 'paragraph' | 'title' | 'heading'; text: string } | { kind: 'table'; rows: string[][] };
@@ -9,17 +9,14 @@ type Block = { kind: 'paragraph' | 'title' | 'heading'; text: string } | { kind:
 /** Only renders supplied analysis values. Export language never changes the UI or input data. */
 export function memoBlocks(input: MemoInput, language: Lang = 'ru'): Block[] {
   const t = (key: Key, params?: Record<string, string | number>) => tFor(language, key, params);
-  const tr = (text: string) => memoText(language, text);
+  const tr = (text: string) => analysisText(text, input.species, language);
   // Keep number/date formatting identical between documents to make comparison unambiguous.
   const n = (value: number | null | undefined, digits = 2) => value == null || !Number.isFinite(value) ? t('memo.doc.noData') : value.toLocaleString('ru-RU', { maximumFractionDigits: digits });
   const dataClass = (value: string) => value === 'real' || value === 'estimate' || value === 'demo' ? t(`memo.doc.class.${value}`) : value;
   if (!input.zones.length) throw new Error(t('memo.doc.noZones'));
   if (new Set(input.zones.map(z => z.site.id)).size !== input.zones.length) throw new Error(t('memo.doc.duplicateZones'));
   const byId = new Map(input.species.map(s => [s.id, s]));
-  const name = (id: string) => {
-    const species = byId.get(id);
-    return (language === 'kk' ? species?.nameKk : null) || species?.nameRu || id;
-  };
+  const name = (id: string) => speciesName(byId.get(id), id, language);
   const blocks: Block[] = [];
   const p = (text: string) => blocks.push({ kind: 'paragraph', text });
   const h = (text: string) => blocks.push({ kind: 'heading', text });

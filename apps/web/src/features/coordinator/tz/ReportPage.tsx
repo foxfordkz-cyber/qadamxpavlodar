@@ -1,3 +1,5 @@
+import { speciesName } from '../../../shared/i18n';
+import { analysisText } from '../../../shared/i18n/templateText';
 import { tr } from '../../../shared/i18n';
 import { useMemo, useRef, useState } from 'react';
 import { MemoExport } from './MemoExport';
@@ -70,7 +72,7 @@ export function ReportPage() {
             </tbody></table>
             <h2>{tr("2. Подбор растений и схема посадки")}</h2>
             <table><thead><tr><th>{tr("Ярус")}</th><th>{tr("Вид")}</th><th>{tr("Латинское название")}</th><th>{tr("Количество")}</th><th>{tr("Пригодность")}</th></tr></thead><tbody>
-              {r.scheme.map((row) => <tr key={row.speciesId}><td>{row.tier === 'tree' ? tr("Деревья") : row.tier === 'shrub' ? tr("Кустарники") : tr("Цветы")}</td><td>{byId.get(row.speciesId)?.nameRu}</td><td>{byId.get(row.speciesId)?.latin}</td><td>{row.quantity}</td><td>{r.ranked.find((x) => x.speciesId === row.speciesId)?.score ?? '—'}</td></tr>)}
+              {r.scheme.map((row) => <tr key={row.speciesId}><td>{row.tier === 'tree' ? tr("Деревья") : row.tier === 'shrub' ? tr("Кустарники") : tr("Цветы")}</td><td>{speciesName(byId.get(row.speciesId), row.speciesId)}</td><td>{byId.get(row.speciesId)?.latin}</td><td>{row.quantity}</td><td>{r.ranked.find((x) => x.speciesId === row.speciesId)?.score ?? '—'}</td></tr>)}
             </tbody></table>
             <h2>{tr("3. Смета")}</h2>
             <table><thead><tr><th>{tr("Статья")}</th><th>{tr("Сумма, ₸")}</th><th>{tr("Расчёт")}</th></tr></thead><tbody>
@@ -82,9 +84,9 @@ export function ReportPage() {
             <SurvivalMethod model={r.survivalModel} />
             <button className="gp-btn gp-noprint" aria-pressed={compare} onClick={() => setCompare(!compare)}>{t(compare ? 'survival.hideRules' : 'survival.compare')}</button>
             <table><thead><tr><th>{tr("Вид")}</th><th>{tr("1 год, %")}</th>{compare && <th>{t('survival.rulesColumn')}</th>}<th>{tr("2 года, %")}</th><th>{tr("3 года, %")}</th><th>{tr("Диапазон 1-го года")}</th><th>{tr("Факторы риска")}</th></tr></thead><tbody>
-              {r.survival.map((x) => <tr key={x.speciesId}><td>{byId.get(x.speciesId)?.nameRu}</td><td>{x.y1}</td>{compare && <td>{r.survivalRules.find(v => v.speciesId === x.speciesId)?.y1 ?? '—'}</td>}<td>{x.y2}</td><td>{x.y3}</td><td>{x.low}–{x.high}</td><td>{x.risks.map((k) => `${tr(k.label)} ${fmtPp(k.pp)}`).join('; ') || 'нет'}{x.warnings?.map(w => <p key={w}>{tr(w)}</p>)}</td></tr>)}
+              {r.survival.map((x) => <tr key={x.speciesId}><td>{speciesName(byId.get(x.speciesId), x.speciesId)}</td><td>{x.y1}</td>{compare && <td>{r.survivalRules.find(v => v.speciesId === x.speciesId)?.y1 ?? '—'}</td>}<td>{x.y2}</td><td>{x.y3}</td><td>{x.low}–{x.high}</td><td>{x.risks.map((k) => `${tr(k.label)} ${fmtPp(k.pp)}`).join('; ') || 'нет'}{x.warnings?.map(w => <p key={w}>{tr(w)}</p>)}</td></tr>)}
             </tbody></table>
-            <p>{tr("Средняя по зоне:")}{" "}{r.survivalAvg.y1}% / {r.survivalAvg.y2}% / {r.survivalAvg.y3}%.{r.measures.length ? t('dynamic.018', { p0: String(r.measures.map((m) => `${m.label} (${m.effect})`).join('; ')) }) : ''}</p>
+            <p>{tr("Средняя по зоне:")}{" "}{r.survivalAvg.y1}% / {r.survivalAvg.y2}% / {r.survivalAvg.y3}%.{r.measures.length ? t('dynamic.018', { p0: String(r.measures.map((m) => `${analysisText(m.label, catalog.data ?? [])} (${analysisText(m.effect, catalog.data ?? [])})`).join('; ')) }) : ''}</p>
             <h2>{tr("5. План ухода")}</h2>
             <table><thead><tr><th>{tr("Месяц")}</th><th>{tr("Операция")}</th><th>{tr("Подробности")}</th></tr></thead><tbody>
               {r.care.map((c, i) => <tr key={i}><td>{tr(MONTHS[c.month - 1])}</td><td>{c.operation}</td><td>{c.detail}</td></tr>)}
