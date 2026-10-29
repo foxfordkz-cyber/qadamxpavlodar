@@ -40,6 +40,19 @@
 .gp-layers legend { font-weight: 700; padding: 0 4px; display: flex; gap: 6px; align-items: center; }
 .gp-layers .gp-check { font-size: 13px; }
 .gp-layers .gp-badge { margin-left: 4px; }
+/* Веса приоритета прямо на карте (ТЗ 3.7.2): панель прокручивается, если не помещается по высоте. */
+.gp-layers { max-height: calc(100% - 140px); overflow-y: auto; }
+.gp-layers__prio { display: grid; gap: 4px; margin: 2px 0 6px 22px; padding-left: 8px; border-left: 2px solid var(--gp-green); }
+.gp-layers__prio summary { cursor: pointer; font-weight: 600; }
+.gp-layers__prio .gp-weight { margin: 4px 0; }
+.gp-layers__prio .gp-weight label { font-size: 12px; gap: 6px; }
+.gp-layers__scale { display: flex; flex-wrap: wrap; gap: 6px; font-size: 11px; color: var(--gp-muted); }
+.gp-layers__scale span { display: inline-flex; align-items: center; gap: 3px; }
+.gp-layers__scale i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; border: 1px solid rgb(0 0 0 / 15%); }
+.gp-layers__row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: space-between; }
+.gp-layers__top { margin: 2px 0 0; padding-left: 18px; font-size: 12px; }
+.gp-layers__top li { margin: 2px 0; }
+.gp-layers__top .gp-link { background: none; border: 0; padding: 0; color: inherit; text-decoration: underline; cursor: pointer; font: inherit; text-align: left; }
 
 /* Проблемы, приоритеты */
 .gp-tiles--compact { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); margin-bottom: 10px; }
@@ -88,6 +101,8 @@
 }
 @media (max-width: 760px) {
   .gp-layers { right: auto; left: 10px; top: 56px; max-width: 200px; }
+  /* Панель инструментов с переключателем подложки занимает всю ширину — кнопки масштаба ниже неё. */
+  .gp-map .maplibregl-ctrl-top-right { top: 52px; }
   .gp-rank__row { grid-template-columns: 44px minmax(0, 1fr); }
   .gp-rank__actions { grid-column: 1 / -1; display: flex; }
   .gp-assist-fab { bottom: 70px; }

@@ -12,7 +12,29 @@ import { mapBroken } from './mapFlags';
 // Векторная подложка OpenFreeMap (OSM). Без ключа; атрибуция обязательна — её задаёт сам стиль
 // («OpenFreeMap © OpenMapTiles Data from OpenStreetMap»), контрол показывает её всегда развёрнутой.
 // Массовое скачивание тайлов для офлайн-показа не делаем — резерв это SchemeView.
-const STYLE_URL = 'https://tiles.openfreemap.org/styles/liberty';
+// По умолчанию светлая приглушённая подложка: на ней слои ТЗ (почвы, проблемы, приоритет) не сливаются с дорогами.
+const STYLES = { light: 'https://tiles.openfreemap.org/styles/positron', color: 'https://tiles.openfreemap.org/styles/liberty' } as const;
+type Basemap = keyof typeof STYLES;
+const BASEMAP_KEY = 'gp-basemap';
+function readBasemap(): Basemap {
+  try {
+    const v = localStorage.getItem(BASEMAP_KEY);
+    if (v === 'light' || v === 'color') return v;
+  } catch {
+    /* без хранилища — светлая */
+  }
+  return 'light';
+}
+
+/** У светлой подложки нет объёмных зданий — добавляем их из того же источника OpenMapTiles, под подписями. */
+function add3dBuildings(map: MlMap) {
+  const layers = map.getStyle().layers;
+  if (layers.some((l) => l.type === 'fill-extrusion') || !map.getSource('openmaptiles')) return;
+  map.addLayer({
+    id: 'building-3d', type: 'fill-extrusion', source: 'openmaptiles', 'source-layer': 'building', minzoom: 14, filter: ['!', ['has', 'hide_3d']] as never,
+    paint: { 'fill-extrusion-base': ['get', 'render_min_height'] as never, 'fill-extrusion-height': ['get', 'render_height'] as never, 'fill-extrusion-color': '#d7dbe0', 'fill-extrusion-opacity': 0.8 },
+  }, layers.find((l) => l.type === 'symbol')?.id);
+}
 
 // MapLibre 6 ищет воркер рядом со своим файлом; после сборки Vite он лежит отдельно.
 setWorkerUrl(workerUrl);
@@ -93,6 +115,17 @@ export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, co
   const [failed, setFailed] = useState<string | null>(null);
   const [view, setView] = useState<'map' | 'scheme'>('map');
   const [pitched, setPitched] = useState(true);
+  const [basemap, setBasemapState] = useState<Basemap>(readBasemap);
+  const setBasemap = (b: Basemap) => {
+    setBasemapState(b);
+    try {
+      localStorage.setItem(BASEMAP_KEY, b);
+    } catch {
+      /* не сохраняется — не страшно */
+    }
+  };
+  // Камера переживает смену подложки (карта пересоздаётся со своим стилем).
+  const camera = useRef({ center: CENTER, zoom: 14.2, pitch: 50, bearing: -15 });
   const onSelectRef = useRef(onSelect);
   onSelectRef.current = onSelect;
   const dataRef = useRef({ sites, eligibility, selectedId, context, plants, planned, soils, greenery, zoneTint });
@@ -104,11 +137,8 @@ export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, co
     try {
       map = new MlMap({
         container: box.current,
-        style: mapBroken.value ? 'https://invalid.localhost/style.json' : STYLE_URL,
-        center: CENTER,
-        zoom: 14.2,
-        pitch: 50,
-        bearing: -15,
+        style: mapBroken.value ? 'https://invalid.localhost/style.json' : STYLES[basemap],
+        ...camera.current,
         maxPitch: 70,
         attributionControl: false,
       });
@@ -134,10 +164,15 @@ export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, co
         reportService('map', 'down');
       }
     });
+    map.on('moveend', () => {
+      const c = map.getCenter();
+      camera.current = { center: [c.lng, c.lat], zoom: map.getZoom(), pitch: map.getPitch(), bearing: map.getBearing() };
+    });
     map.on('load', () => {
       ready.current = true;
       clearTimeout(timeout);
       reportService('map', 'ok');
+      add3dBuildings(map);
       map.addImage('hatch-blocked', hatchImage('#b3261e'));
       const { sites, eligibility, selectedId } = dataRef.current;
       const empty = { type: 'FeatureCollection' as const, features: [] };
@@ -160,7 +195,8 @@ export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, co
       map.addLayer({ id: 'sites-line-solid', type: 'line', source: 'sites', filter: ['all', isPoly, ['!=', ['get', 'elig'], 'survey_needed']] as never, paint: { 'line-color': color, 'line-width': 2.5 } });
       map.addLayer({ id: 'sites-selected', type: 'line', source: 'sites', filter: ['all', isPoly, ['==', ['get', 'selected'], 1]] as never, paint: { 'line-color': '#1f5d99', 'line-width': 4 } });
       // Точки-центры видны на мелком масштабе, где полигоны слишком малы.
-      map.addLayer({ id: 'sites-dot', type: 'circle', source: 'sites', filter: ['==', ['get', 'centroid'], 1] as never, maxzoom: 15.5, paint: { 'circle-radius': ['case', ['==', ['get', 'selected'], 1], 8, 5], 'circle-color': color, 'circle-stroke-color': ['case', ['==', ['get', 'selected'], 1], '#1f5d99', '#ffffff'], 'circle-stroke-width': 2, 'circle-opacity': 0.9 } });
+      // Окраска слоя «Приоритет» или «Проблемы» видна и на точках, иначе на мелком масштабе её не разглядеть.
+      map.addLayer({ id: 'sites-dot', type: 'circle', source: 'sites', filter: ['==', ['get', 'centroid'], 1] as never, maxzoom: 15.5, paint: { 'circle-radius': ['case', ['==', ['get', 'selected'], 1], 8, ['has', 'tint'], 6, 5] as never, 'circle-color': ['case', ['has', 'tint'], ['get', 'tint'], color] as never, 'circle-stroke-color': ['case', ['==', ['get', 'selected'], 1], '#1f5d99', '#ffffff'], 'circle-stroke-width': 2, 'circle-opacity': 0.9 } });
       // Подпись только у выбранного участка — без десятков наложенных надписей.
       map.addLayer({ id: 'sites-label', type: 'symbol', source: 'sites', filter: ['all', ['==', ['get', 'centroid'], 1], ['==', ['get', 'selected'], 1]] as never, layout: { 'text-field': ['get', 'name'], 'text-font': ['Noto Sans Bold'], 'text-size': 13, 'text-offset': [0, 1.4], 'text-anchor': 'top', 'text-max-width': 14 }, paint: { 'text-color': '#0f2f4f', 'text-halo-color': '#ffffff', 'text-halo-width': 2 } });
       // Окружение выбранного участка: поверх 3D-зданий подсвечиваются контуры в выбранном радиусе.
@@ -184,6 +220,7 @@ export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, co
         map.on('mouseenter', layer, () => (map.getCanvas().style.cursor = 'pointer'));
         map.on('mouseleave', layer, () => (map.getCanvas().style.cursor = ''));
       }
+      focusRef.current();
     });
     return () => {
       clearTimeout(timeout);
@@ -191,7 +228,7 @@ export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, co
       map.remove();
       mapRef.current = null;
     };
-  }, [view, reportService]);
+  }, [view, basemap, reportService]);
 
   useEffect(() => {
     const m = mapRef.current;
@@ -215,13 +252,18 @@ export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, co
     (m.getSource('greenery') as GeoJSONSource | undefined)?.setData((greenery ?? empty) as never);
   }, [soils, greenery]);
 
-  useEffect(() => {
+  // Перелёт к выбранной зоне (из списка, по ссылке ассистента, со страниц «Проблемы» и «Приоритеты»).
+  // Если карта или участки ещё грузятся — перелёт выполнится, когда они будут готовы, один раз на focusSeq.
+  const focusDone = useRef(0);
+  const focusRef = useRef(() => {});
+  focusRef.current = () => {
     const map = mapRef.current;
     const s = sites.find((x) => x.id === selectedId);
-    if (!map || !s || !focusSeq) return;
-    map.fitBounds(siteBounds(s), { padding: 80, maxZoom: 17, pitch: pitched ? 50 : 0, duration: 800 });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [focusSeq]);
+    if (!map || !ready.current || !s || !focusSeq || focusDone.current === focusSeq) return;
+    focusDone.current = focusSeq;
+    map.fitBounds(siteBounds(s), { padding: 80, maxZoom: 17, pitch: pitched ? 50 : 0, duration: 1200 });
+  };
+  useEffect(() => focusRef.current(), [focusSeq, sites, selectedId]);
 
   const toggle3d = () => {
     const next = !pitched;
@@ -241,6 +283,12 @@ export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, co
           <button className="gp-btn gp-btn--secondary" onClick={toggle3d} aria-pressed={pitched} aria-label={t('map.toggle3d')}>
             {pitched ? t('map.3d') : t('map.2d')}
           </button>
+        )}
+        {!showScheme && (
+          <div className="gp-segment" role="radiogroup" aria-label={t('map.base.label')}>
+            <label title={t('map.base.lightHint')}><input type="radio" name="basemap" checked={basemap === 'light'} onChange={() => setBasemap('light')} />{t('map.base.light')}</label>
+            <label title={t('map.base.colorHint')}><input type="radio" name="basemap" checked={basemap === 'color'} onChange={() => setBasemap('color')} />{t('map.base.color')}</label>
+          </div>
         )}
       </div>
       {failed && (
