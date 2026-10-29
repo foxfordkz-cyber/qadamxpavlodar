@@ -2,7 +2,9 @@ import { defineConfig } from '@playwright/test';
 import { fileURLToPath } from 'node:url';
 
 const api = process.env.E2E_MODE === 'api';
-const mockRun = process.env.E2E_RUN_KNOWN_BUGS === '1' ? 'bugs' : 'mock';
+const requestedRun = process.env.E2E_PROFILE;
+const mockRun = process.env.E2E_RUN_KNOWN_BUGS === '1' ? 'bugs' :
+  requestedRun === 'smoke' || requestedRun === 'screens' ? requestedRun : 'mock';
 const baseURL = process.env.E2E_BASE_URL || 'http://localhost:5174';
 const launchOptions = { args: ['--enable-unsafe-swiftshader', '--use-angle=swiftshader'] };
 export default defineConfig({
