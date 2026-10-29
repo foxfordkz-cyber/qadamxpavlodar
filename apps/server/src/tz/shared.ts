@@ -5,10 +5,10 @@ export type Json = Record<string, any>;
 
 const root = new URL('../../../web/src/shared/', import.meta.url);
 const load = (path: string): Promise<Json> => import(new URL(path, root).href);
-const [plan, city, rates, zone, assistant, species, fixtures, context, drawn, rules, imports, compat, views] = await Promise.all([
+const [plan, city, rates, zone, assistant, species, fixtures, context, drawn, rules, imports, compat, views, pavlodar] = await Promise.all([
   load('analytics/plan.ts'), load('analytics/city.ts'), load('analytics/rates.ts'), load('analytics/zone.ts'), load('analytics/assistant.ts'),
   load('api/mock/species.ts'), load('api/mock/fixtures.ts'), load('api/mock/context.ts'), load('api/mock/drawnZone.ts'),
-  load('api/mock/rules.ts'), load('api/mock/imports.ts'), load('api/v2compat.ts'), load('api/tzViews.ts'),
+  load('api/mock/rules.ts'), load('api/mock/imports.ts'), load('api/v2compat.ts'), load('api/tzViews.ts'), load('api/pavlodar.ts'),
 ]);
 
 export const web = {
@@ -42,5 +42,9 @@ export const web = {
   soilsLayer: views.soilsLayer as () => { data: Json; meta: Json },
   greeneryLayer: views.greeneryLayer as () => { data: Json; meta: Json },
   variantSummaries: views.variantSummaries as (opts: Json, analyze: (o: Json) => Json) => Json[],
+  // Проверенные данные о Павлодаре (fixtures/pavlodar): факты для ассистента и «Справочников».
+  pavlodarFacts: pavlodar.pavlodarFacts as Json[],
+  pavlodarSources: pavlodar.pavlodarSources as Json[],
+  referenceFacts: pavlodar.referenceFacts as () => { data: Json; meta: Json },
   dashboardMetrics: views.dashboardMetrics as (input: { sites: Json[]; tasks: Json[]; reports: Json[]; projects: Json[]; osmBase?: string | null }) => Json[],
 };

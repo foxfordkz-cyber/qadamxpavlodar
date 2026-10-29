@@ -41,6 +41,9 @@ export function tzRoutes(s: Store, api: Api, tz: TzOptions = {}) {
   route({ method: 'get', path: '/layers/sources', summary: 'TZ: provenance of map layers (OSM snapshot date and license)' }, (_req, res) => {
     reader(actor(res)); res.json({ data: { osm: web.osmMeta } });
   });
+  route({ method: 'get', path: '/reference/facts', summary: 'TZ 5.3: verified Pavlodar facts (climate, norms, air, green fund, prices) with sources' }, (_req, res) => {
+    reader(actor(res)); res.json(web.referenceFacts());
+  });
   route({ method: 'get', path: '/layers/soils', summary: 'TZ: synthetic soil grid until the organizer soil map arrives' }, (_req, res) => { reader(actor(res)); res.json(web.soilsLayer()); });
   route({ method: 'get', path: '/layers/greenery', summary: 'TZ: existing greenery from OpenStreetMap' }, (_req, res) => { reader(actor(res)); res.json(web.greeneryLayer()); });
 
@@ -120,7 +123,7 @@ export function tzRoutes(s: Store, api: Api, tz: TzOptions = {}) {
         fallbackReason = 'Модель не ответила вовремя или ответ не прошёл проверку — показан ответ по правилам.';
       }
     }
-    if (!reply) { const ref = reference(s); reply = { ...web.answer(b.message, { siteId }, candidates(s), ref.species, ref.map), sources: [], toolCalls: [], ...(fallbackReason ? { fallbackReason } : {}) }; }
+    if (!reply) { const ref = reference(s); reply = { sources: [], toolCalls: [], ...web.answer(b.message, { siteId }, candidates(s), ref.species, ref.map), ...(fallbackReason ? { fallbackReason } : {}) }; }
     s.run('INSERT INTO tz_assistant_history VALUES (?,?,?,?,?,?,?)', randomUUID(), a.id, now(), b.message.slice(0, 300), String(reply.intent ?? 'other'), String(reply.method ?? 'rules'), JSON.stringify((reply.zones ?? []).map((z: Json) => z.id)));
     res.json({ data: reply });
   });

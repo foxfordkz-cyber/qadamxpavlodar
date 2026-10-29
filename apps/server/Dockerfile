@@ -13,6 +13,7 @@ COPY apps/server/src ./src
 COPY apps/web/package.json /app/apps/web/package.json
 COPY apps/web/src/shared /app/apps/web/src/shared
 COPY fixtures/osm/sites.json fixtures/osm/surroundings.json fixtures/osm/greenery.json /app/fixtures/osm/
+COPY fixtures/pavlodar /app/fixtures/pavlodar
 ENV NODE_ENV=production \
     HOST=0.0.0.0 \
     PORT=3100 \

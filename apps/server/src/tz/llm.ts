@@ -65,7 +65,7 @@ export const TOOLS = [
   tool('find_problems', 'Проблемные зоны: дефицит зелени, почва, остров тепла, нет защитной полосы; острота, причина, действие.', {
     type: { type: 'string', enum: ['deficit', 'soil', 'heat', 'unprotected', 'degradation'] }, severity: { type: 'string', enum: ['high', 'medium', 'low'] }, limit: { type: 'integer', minimum: 1, maximum: 20 },
   }),
-  tool('search_knowledge', 'Поиск по справочнику растений, расценкам и источникам: свойства видов, откуда взята цифра, нормы.', { query: { type: 'string' }, limit: { type: 'integer', minimum: 1, maximum: 8 } }, ['query']),
+  tool('search_knowledge', 'Поиск по справочникам: виды растений, расценки, проверенные факты о Павлодаре (климат, нормы отступов СП РК, правила вырубки и компенсации, воздух, зелёный фонд, цены госзакупок), источники.', { query: { type: 'string' }, limit: { type: 'integer', minimum: 1, maximum: 8 } }, ['query']),
 ];
 
 const norm = (x: string) => x.toLowerCase().replace(/ё/g, 'е');
@@ -136,6 +136,7 @@ export function createTools(s: Store) {
       const docs: { id: string; kind: string; title: string; text: string; sourceIds: string[] }[] = [
         ...speciesList(s).map((x) => ({ id: x.id, kind: 'вид', title: `${x.nameRu} (${x.latin})`, text: [...(x.notes ?? []), ...(x.benefits ?? []), ...(x.beauty ?? [])].join(' '), sourceIds: [...(x.evidenceIds ?? []), ...(x.pavlodarEvidenceId ? [x.pavlodarEvidenceId] : [])] })),
         ...ratesList(s).map((x) => ({ id: x.key, kind: 'расценка', title: x.label, text: `${x.value ?? 'нет данных'} ${x.unit}. Источник: ${x.source}`, sourceIds: [] as string[] })),
+        ...web.pavlodarFacts.map((x) => ({ id: x.id, kind: x.gap ? 'нет данных' : 'факт о Павлодаре', title: x.title, text: x.text, sourceIds: x.evidenceIds as string[] })),
         ...listDocs(s, 'evidence').map((x) => ({ id: x.id, kind: 'источник', title: String(x.sourceLabel), text: String(x.note ?? ''), sourceIds: [x.id] })),
       ];
       const hits = docs.map((d) => ({ d, n: score(norm(`${d.title} ${d.text}`), keys) * 2 + score(norm(d.title), keys) })).filter((x) => x.n > 0).sort((x, y) => y.n - x.n).slice(0, Math.min(8, Number(a.limit ?? 5)));

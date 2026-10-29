@@ -18,6 +18,7 @@ import { demoPhoto } from './photo';
 import { previewImport, type ImportFeature } from './imports';
 import { daySummary } from '../dayPlan';
 import { dashboardMetrics, greeneryLayer, soilsLayer, variantSummaries } from '../tzViews';
+import { referenceFacts } from '../pavlodar';
 
 // v3: справочник с источниками по Павлодару. Старые данные не читаются.
 const STORAGE_KEY = 'gp-mock-db-v4';
@@ -642,6 +643,10 @@ route('POST', /^\/assistant$/, (_m, o) => {
   db.history = [...(db.history ?? []), { at: nowIso(), q: b.message!.slice(0, 300), intent: reply.intent, zones: reply.zones.map((z) => z.id) }].slice(-50);
   save();
   return { data: reply };
+});
+route('GET', /^\/reference\/facts$/, () => {
+  requireRole('coordinator', 'viewer' as Role);
+  return referenceFacts();
 });
 route('GET', /^\/assistant\/history$/, () => {
   requireRole('coordinator', 'viewer' as Role);
