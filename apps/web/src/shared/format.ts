@@ -30,3 +30,4 @@ export function isoToLocalInput(iso?: string | null): string {
 }
 export const fmtArea = (m2?: number | null) => (m2 == null ? 'неизвестна' : m2 >= 10000 ? `${(m2 / 10000).toFixed(2)} га` : `${m2.toLocaleString('ru-RU')} м²`);
 export const fmtCoord = (lat: number, lng: number) => `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+export const fmtPp = (value: number) => `${value > 0 ? '+' : ''}${value} п.п.`;

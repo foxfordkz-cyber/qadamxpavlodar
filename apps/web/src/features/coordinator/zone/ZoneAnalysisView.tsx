@@ -7,6 +7,10 @@ import { PURPOSE_LABEL, SALINITY_LABEL, type Purpose } from '../../../shared/ana
 import { Badge, Bar, Button, ErrorNote, StateView } from '../../../shared/ui/components';
 import { hrefFor } from '../../../shared/router';
 import { SpeciesPhoto } from '../species/SpeciesCardGrid';
+import { SurvivalMethod } from './SurvivalMethod';
+import { CareDrafts } from './CareDrafts';
+import { t } from '../../../shared/i18n';
+import { fmtPp } from '../../../shared/format';
 
 export type ZoneTab = 'plants' | 'cost' | 'survival' | 'care' | 'effect';
 export const ZONE_TABS: [ZoneTab, string][] = [['plants', 'Растения'], ['cost', 'Смета'], ['survival', 'Приживаемость'], ['care', 'Уход'], ['effect', 'Эффект']];
@@ -188,13 +192,15 @@ function CostTab({ a, site, options, set }: { a: ZoneAnalysis; site: CandidateSi
 }
 
 function SurvivalTab({ a, byId, options, set }: { a: ZoneAnalysis; byId: Map<string, Species>; options: Partial<PlanOptions>; set: (p: Partial<PlanOptions>) => void }) {
+  const [compare, setCompare] = useState(false);
   return (
     <section aria-labelledby="z-surv">
       <h3 id="z-surv" className="gp-subhead">Прогноз приживаемости</h3>
       <div className="gp-bigstats">
         {(['y1', 'y2', 'y3'] as const).map((k, i) => <div key={k}><span className="gp-bigstats__v">{pct(a.survivalAvg[k])}</span><span className="gp-small">через {i + 1} {i ? 'года' : 'год'}</span></div>)}
       </div>
-      <p className="gp-small gp-muted">Экспертные правила команды: базовое значение минус п.п. по факторам риска. Модель не калибрована на данных Павлодара; диапазон показывает неопределённость (почва синтетическая, вода неизвестна).</p>
+      <SurvivalMethod model={a.survivalModel} />
+      <Button aria-pressed={compare} onClick={() => setCompare(!compare)}>{t(compare ? 'survival.hideRules' : 'survival.compare')}</Button>
       <div className="gp-btn-row gp-zone__controls">
         <label className="gp-kv gp-small">Полив
           <select className="gp-input gp-input--inline" value={a.options.watering} onChange={(e) => set({ watering: e.target.value as PlanOptions['watering'] })}>
@@ -204,14 +210,15 @@ function SurvivalTab({ a, byId, options, set }: { a: ZoneAnalysis; byId: Map<str
         <label className="gp-check"><input type="checkbox" checked={a.options.improveSoil} onChange={(e) => set({ improveSoil: e.target.checked })} />Улучшить почву</label>
       </div>
       <table className="gp-table gp-small">
-        <thead><tr><th>Вид</th><th>1 год</th><th>2 года</th><th>3 года</th><th>Главные риски</th></tr></thead>
+        <thead><tr><th>Вид</th><th>1 год</th>{compare && <th>{t('survival.rulesColumn')}</th>}<th>2 года</th><th>3 года</th><th>Главные риски</th></tr></thead>
         <tbody>{a.survival.map((r) => (
           <tr key={r.speciesId}>
             <td>{byId.get(r.speciesId)?.nameRu}</td>
             <td><strong>{r.y1}%</strong> <span className="gp-muted">({r.low}–{r.high}%)</span></td>
+            {compare && <td>{a.survivalRules.find(x => x.speciesId === r.speciesId)?.y1 ?? '—'}%</td>}
             <td>{r.y2 ? `${r.y2}%` : 'однолетник'}</td>
             <td>{r.y3 ? `${r.y3}%` : '—'}</td>
-            <td>{r.risks.length ? r.risks.map((x) => <div key={x.label}>{x.label}: <span className="gp-caution">{x.pp} п.п.</span></div>) : <span className="gp-muted">нет</span>}</td>
+            <td>{r.risks.length ? r.risks.map((x) => <div key={x.label}>{x.label}: <span className="gp-caution">{fmtPp(x.pp)}</span></div>) : <span className="gp-muted">нет</span>}{r.warnings?.map(w => <p className="gp-caution" key={w}>{w}</p>)}</td>
           </tr>
         ))}</tbody>
       </table>
@@ -248,6 +255,7 @@ function CareTab({ a }: { a: ZoneAnalysis }) {
         ))}
       </div>
       <p className="gp-small gp-muted">Объёмы полива и допустимое число выездов — в «Справочниках». Календарь входит в отчёт по зоне.</p>
+      <CareDrafts key={a.siteId} siteId={a.siteId} />
     </section>
   );
 }

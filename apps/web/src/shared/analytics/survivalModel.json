@@ -1,0 +1,145 @@
+{
+  "version": "survival-logistic-v2",
+  "trainedAt": "2026-10-29T11:22:07.018Z",
+  "seed": 20261029,
+  "method": "logistic-regression",
+  "trainedOn": "synthetic",
+  "features": [
+    "intercept",
+    "shrub",
+    "flower",
+    "frostMedium",
+    "frostLow",
+    "droughtVulnerability",
+    "saltVulnerability",
+    "saltDeficit",
+    "rareWatering",
+    "noWatering",
+    "droughtRare",
+    "droughtNone",
+    "waterUnknown",
+    "unknownWaterVulnerable",
+    "nearRoadSensitive",
+    "roadUnknown",
+    "alkalineSensitive",
+    "phUnknown",
+    "largeTree",
+    "soilImproved",
+    "saltWithoutWater",
+    "salinityWaterStress",
+    "salinityUnknown"
+  ],
+  "coefficients": [
+    1.8608448001525588,
+    -0.08606699116933385,
+    0.1566561229097416,
+    -0.3205726436680728,
+    -0.7525811858459094,
+    0.0858039424940063,
+    -0.10652340336930012,
+    -1.1284988667832863,
+    -0.25778053389681105,
+    -0.4788008545331564,
+    -0.46639232242375794,
+    -0.7334316694076787,
+    0.09547697084390751,
+    -0.26162582170417203,
+    -0.4603741385263537,
+    0.12155299582486429,
+    0.013928260816331757,
+    0.03913274714021837,
+    -0.12876742483638245,
+    0.031204221218420675,
+    -0.7640804463672447,
+    -0.9632924408356219,
+    0.06423099323302671
+  ],
+  "n": 12000,
+  "trainingN": 9600,
+  "validationN": 2400,
+  "rocAuc": 0.7323732259229001,
+  "brier": 0.17718827022151074,
+  "calibration": [
+    {
+      "lower": 0,
+      "upper": 0.1,
+      "n": 14,
+      "predicted": 0.08745305171606844,
+      "observed": 0
+    },
+    {
+      "lower": 0.1,
+      "upper": 0.2,
+      "n": 49,
+      "predicted": 0.15200992651312217,
+      "observed": 0.16326530612244897
+    },
+    {
+      "lower": 0.2,
+      "upper": 0.3,
+      "n": 66,
+      "predicted": 0.2566590424407468,
+      "observed": 0.3484848484848485
+    },
+    {
+      "lower": 0.3,
+      "upper": 0.4,
+      "n": 66,
+      "predicted": 0.3504458089621559,
+      "observed": 0.3939393939393939
+    },
+    {
+      "lower": 0.4,
+      "upper": 0.5,
+      "n": 128,
+      "predicted": 0.45137787024279813,
+      "observed": 0.3828125
+    },
+    {
+      "lower": 0.5,
+      "upper": 0.6,
+      "n": 183,
+      "predicted": 0.5551362955621191,
+      "observed": 0.546448087431694
+    },
+    {
+      "lower": 0.6,
+      "upper": 0.7,
+      "n": 374,
+      "predicted": 0.6556957610274614,
+      "observed": 0.6122994652406417
+    },
+    {
+      "lower": 0.7,
+      "upper": 0.8,
+      "n": 666,
+      "predicted": 0.7562332562484375,
+      "observed": 0.7702702702702703
+    },
+    {
+      "lower": 0.8,
+      "upper": 0.9,
+      "n": 850,
+      "predicted": 0.8471328247336335,
+      "observed": 0.8564705882352941
+    },
+    {
+      "lower": 0.9,
+      "upper": 1,
+      "n": 4,
+      "predicted": 0.9025228358790824,
+      "observed": 0.75
+    }
+  ],
+  "residualRmse": 0.420937370901552,
+  "basePct": 88,
+  "baselineSource": "rates[surv.base]",
+  "literatureSpecies": 0,
+  "split": "seeded shuffle, first 80% train, remaining 20% holdout",
+  "nonpositiveFeatures": [
+    "saltDeficit",
+    "saltWithoutWater",
+    "salinityWaterStress"
+  ],
+  "intervalMethod": "calibration-bin probability envelope: radius=max(abs(mean prediction - Wilson95 lower), abs(Wilson95 upper - mean prediction)); empty bin=[0,1]; not individual 95% coverage"
+}

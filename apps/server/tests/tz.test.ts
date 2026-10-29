@@ -13,6 +13,40 @@ import { seedV2, DEMO_PASSWORD } from '../src/v2/seed.js';
 import { seedTz } from '../src/tz/seed.js';
 import { web } from '../src/tz/shared.js';
 import { cacheSize } from '../src/tz/data.js';
+import { insertDoc } from '../src/v2/core.js';
+
+test('care schedule: shared result, registered plants only, validation, roles and V2 task creation', async t => {
+  const f = await tzFixture(t);
+  const created = await f.call('/zones', 'POST', 'coordinator', { name: 'Care test', geometry: square(76.950, 52.286, 0.0009) });
+  assert.equal(created.status, 201, JSON.stringify(created.body));
+  const zone = created.body.data.id;
+  const empty = await f.call(`/zones/${zone}/care-schedule`, 'POST', 'viewer', { months: 12, crewVisitsPerMonth: 0, budgetKzt: 100 }, null);
+  assert.equal(empty.status, 200, JSON.stringify(empty.body));
+  assert.equal(empty.body.data.tasks.length, 12);
+  assert.ok(empty.body.data.tasks.every((x: any) => x.objectType === 'candidate_site' && x.action === 'inspect'));
+  assert.ok(empty.body.data.warnings.some((w: string) => w.includes('нет зарегистрированных')));
+  for (const body of [{ months: 0 }, { months: 13 }, { months: 1.5 }, { months: 1, budgetKzt: -1 }, { months: 1, extra: 1 }]) {
+    assert.equal((await f.call(`/zones/${zone}/care-schedule`, 'POST', 'coordinator', body, null)).status, 400);
+  }
+  assert.equal((await f.call(`/zones/${zone}/care-schedule`, 'POST', 'worker1', { months: 1 }, null)).status, 403);
+  assert.equal((await f.call('/zones/missing/care-schedule', 'POST', 'coordinator', { months: 1 }, null)).status, 404);
+  const catalog = (await f.call('/species')).body.data, sp = catalog.find((s: any) => s.form === 'tree');
+  const plant = insertDoc(f.store, 'plant', { id: 'care-registered', name: 'Care tree', kind: 'tree', species: sp.latin, lat: 52.2862, lng: 76.9504, condition: 'unknown', evidenceIds: ['demo-v2-evidence'], isDemo: true, version: 1 });
+  const input = { months: 12 }, result = await f.call(`/zones/${zone}/care-schedule`, 'POST', 'coordinator', input, null);
+  assert.equal(result.status, 200, JSON.stringify(result.body));
+  const site = web.siteFromV2((await f.call(`/sites/${zone}`)).body.data), rates = (await f.call('/rates')).body.data.rates;
+  assert.deepEqual(result.body.data, web.buildCareSchedule(site, [plant], catalog, web.ratesMap(rates), input));
+  assert.ok(result.body.data.tasks.every((x: any) => x.objectType === 'plant' && x.objectId === plant.id));
+  const water = result.body.data.tasks.find((x: any) => x.action === 'water');
+  assert.ok(water);
+  const { id: _id, objectName: _name, dataClass: _class, estimatedCostKzt: _cost, ...taskBody } = water;
+  const saved = await f.call('/tasks', 'POST', 'coordinator', taskBody, 'care-create');
+  assert.equal(saved.status, 201, JSON.stringify(saved.body));
+  assert.equal((await f.call('/tasks', 'POST', 'coordinator', taskBody, 'care-create')).body.data.id, saved.body.data.id);
+  assert.equal((await f.call('/tasks', 'POST', 'coordinator', { ...taskBody, objectType: 'candidate_site', objectId: zone })).status, 400);
+  const { id: _inspectId, objectName: _inspectName, dataClass: _inspectClass, estimatedCostKzt: _inspectCost, ...inspection } = empty.body.data.tasks[0];
+  assert.equal((await f.call('/tasks', 'POST', 'coordinator', inspection)).status, 201);
+});
 
 async function tzFixture(t: TestContext) {
   const f = await fixture(t); await seedV2(f.store); const seeded = seedTz(f.store);
