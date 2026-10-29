@@ -1,0 +1,41 @@
+import { defineConfig } from '@playwright/test';
+import { fileURLToPath } from 'node:url';
+
+const api = process.env.E2E_MODE === 'api';
+const mockRun = process.env.E2E_RUN_KNOWN_BUGS === '1' ? 'bugs' : 'mock';
+const baseURL = process.env.E2E_BASE_URL || 'http://localhost:5174';
+const launchOptions = { args: ['--enable-unsafe-swiftshader', '--use-angle=swiftshader'] };
+export default defineConfig({
+  testDir: './tests',
+  timeout: 45_000,
+  expect: { timeout: 12_000 },
+  fullyParallel: true,
+  workers: 2,
+  retries: 0,
+  forbidOnly: !!process.env.CI,
+  outputDir: api ? 'test-results/api' : `test-results/${mockRun}`,
+  reporter: api ? [['./support/api-reporter.ts']] : [
+    ['list'], ['html', { outputFolder: `playwright-report/${mockRun}`, open: 'never' }],
+    ['json', { outputFile: `test-results/${mockRun}/results.json` }],
+  ],
+  use: {
+    baseURL, browserName: 'chromium', launchOptions,
+    locale: 'ru-RU', timezoneId: 'Asia/Qyzylorda',
+    actionTimeout: 12_000, navigationTimeout: 30_000,
+    // API credentials must never enter traces, videos or automatic screenshots.
+    trace: api ? 'off' : 'retain-on-failure',
+    screenshot: api ? 'off' : 'only-on-failure', video: 'off',
+  },
+  projects: api ? [{ name: 'api', testMatch: '**/*.api.spec.ts', use: { viewport: { width: 1280, height: 800 } } }] : [
+    { name: 'desktop', testMatch: '**/*.mock.spec.ts', use: { viewport: { width: 1280, height: 800 } } },
+    { name: 'mobile', testMatch: '**/*.mock.spec.ts', use: { viewport: { width: 375, height: 812 }, isMobile: true, hasTouch: true } },
+  ],
+  // An explicit URL means an already running server (including Docker).
+  // Without a password API tests skip without requiring even a local web server.
+  webServer: process.env.E2E_BASE_URL || (api && !process.env.E2E_PASSWORD) ? undefined : {
+    command: 'npm run dev -- --host 127.0.0.1 --port 5174 --strictPort',
+    cwd: fileURLToPath(new URL('../../apps/web', import.meta.url)),
+    url: baseURL, reuseExistingServer: !process.env.CI, timeout: 60_000,
+    stdout: 'ignore', stderr: 'pipe',
+  },
+});
