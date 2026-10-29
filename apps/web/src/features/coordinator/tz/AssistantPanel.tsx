@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useData } from '../../../shared/api/DataProvider';
 import { ApiError } from '../../../shared/api/transport';
 import type { AssistantReply } from '../../../shared/analytics/assistant';
-import { MethodLine } from '../../../shared/ui/components';
+import { MethodLine, MethodTag } from '../../../shared/ui/components';
 import { hrefFor, useRoute } from '../../../shared/router';
 
 const EXAMPLES = [
@@ -15,7 +15,29 @@ const EXAMPLES = [
 
 interface Msg { role: 'user' | 'bot'; text: string; reply?: AssistantReply; error?: boolean }
 
-/** ТЗ 3.10: диалоговый ассистент в боковой панели. Сейчас — правила поверх модулей; LLM + RAG подключит участник 1. */
+const TOOL_LABEL: Record<string, string> = {
+  search_zones: 'поиск зон', analyze_zone: 'расчёт зоны', compare_variants: 'сравнение вариантов', top_priorities: 'приоритеты',
+  budget_roadmap: 'дорожная карта под бюджет', find_problems: 'проблемные зоны', search_knowledge: 'поиск по справочникам',
+};
+
+/** Чем подтверждён ответ: метод, вызванные расчёты и источники — видно под каждым ответом. */
+function ReplyProof({ reply }: { reply: AssistantReply }) {
+  const calls = [...new Set((reply.toolCalls ?? []).map((c) => TOOL_LABEL[c.name] ?? c.name))];
+  return (
+    <div className="gp-assist__proof gp-small">
+      <MethodTag method={reply.method} />
+      {reply.method === 'model' && <span className="gp-muted">{reply.model ? `${reply.model} · ` : ''}цифры — из расчётов системы</span>}
+      {reply.fallbackReason && <p className="gp-muted">{reply.fallbackReason}</p>}
+      {calls.length > 0 && <p>Посчитано: {calls.join(', ')}.</p>}
+      {!!reply.sources?.length && (
+        <p>Источники: {reply.sources.map((s, i) => <span key={s.id}>{i > 0 && '; '}{s.url ? <a href={s.url} target="_blank" rel="noreferrer noopener">{s.label}</a> : s.label}</span>)}</p>
+      )}
+    </div>
+  );
+}
+
+/** ТЗ 3.10: диалоговый ассистент в боковой панели. На сервере с ключом модели отвечает модель (Grok и др.)
+ *  с расчётами модулей; в тестовом источнике и при сбое модели — правила. */
 export function AssistantPanel() {
   const { api } = useData();
   const route = useRoute();
@@ -53,7 +75,7 @@ export function AssistantPanel() {
         <span className="gp-small gp-muted">{siteId ? `зона: ${siteId}` : 'зона не выбрана'}</span>
         <button className="gp-icon-btn" onClick={() => setOpen(false)} aria-label="Закрыть ассистента">✕</button>
       </div>
-      <MethodLine method="rules" />
+      <MethodLine method={[...msgs].reverse().find((m) => m.reply)?.reply?.method ?? 'rules'} />
       <div ref={list} className="gp-assist__list" aria-live="polite">
         {msgs.length === 0 && (
           <div className="gp-assist__hello">
@@ -64,7 +86,8 @@ export function AssistantPanel() {
         {msgs.map((m, i) => (
           <div key={i} className={`gp-assist__msg gp-assist__msg--${m.role} ${m.error ? 'is-error' : ''}`}>
             {m.text.split('\n').map((l, j) => <p key={j}>{l}</p>)}
-            {!!m.reply?.zones.length && <div className="gp-assist__zones">{m.reply.zones.map((z) => <a key={z.id} className="gp-chip" href={hrefFor('/map', { site: z.id })}>📍 {z.name}</a>)}</div>}
+            {!!m.reply?.zones.length && <div className="gp-assist__zones">{m.reply.zones.map((z) => <a key={z.id} className="gp-chip" href={hrefFor('/map', { site: z.id })} title="Показать на карте">📍 {z.name}</a>)}</div>}
+            {m.reply && <ReplyProof reply={m.reply} />}
           </div>
         ))}
         {busy && <div className="gp-assist__msg gp-assist__msg--bot"><span className="gp-spinner" aria-label="Ассистент думает" /></div>}

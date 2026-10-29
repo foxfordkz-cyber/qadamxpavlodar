@@ -69,6 +69,8 @@
 .gp-assist__msg.is-error { border-color: var(--gp-amber-line); background: var(--gp-amber-soft); }
 .gp-assist__zones { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
 .gp-assist__zones a { text-decoration: none; color: var(--gp-text); }
+.gp-assist__proof { margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--gp-border); display: grid; gap: 2px; justify-items: start; }
+.gp-assist__proof p { margin: 0; }
 .gp-assist__form { display: grid; grid-template-columns: 1fr auto; gap: 6px; align-items: end; border-top: 1px solid var(--gp-border); padding-top: 8px; }
 
 /* Отчёт: печать в PDF */

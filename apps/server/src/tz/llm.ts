@@ -1,0 +1,189 @@
+// Ассистент на модели (ТЗ 3.10): LLM через OpenAI-совместимый API — Grok по умолчанию, но подойдёт любой
+// провайдер с /chat/completions и tools (GPT, Gemini, Ollama): меняются LLM_BASE_URL и LLM_MODEL в .env.
+// Модель ничего не считает сама: она выбирает функции, сервер выполняет их теми же модулями расчётов,
+// и в ответе допустимы только цифры из результатов функций. RAG — поиск по справочникам и источникам в базе.
+// В модель уходят вопрос, данные зон (OSM) и результаты расчётов; имена и роли пользователей — нет.
+import { Store } from '../db.js';
+import { listDocs, maybeDoc } from '../v2/core.js';
+import { analyze, analyzable, candidate, candidates, priorities, ratesList, reference, speciesList } from './data.js';
+import { web, type Json } from './shared.js';
+import type { AssistantAdapter } from './routes.js';
+
+export type LlmConfig = { baseUrl: string; model: string; apiKey: string; timeoutMs: number; maxRounds: number };
+const LOCAL_HOST = /^(127\.0\.0\.1|localhost|\[::1\]|[a-z0-9-]+)$/; // loopback или имя сервиса в docker compose (ollama)
+
+/** null — модель не настроена (нет ключа или модели): ассистент отвечает по правилам. */
+export function llmConfig(env = process.env): LlmConfig | null {
+  const apiKey = env.LLM_API_KEY?.trim(), model = env.LLM_MODEL?.trim();
+  if (!apiKey || !model) return null;
+  const baseUrl = (env.LLM_BASE_URL?.trim() || 'https://api.x.ai/v1').replace(/\/+$/, '');
+  const url = new URL(baseUrl);
+  if (url.username || url.password || url.search || url.hash) throw new Error('LLM_BASE_URL: only scheme, host, port and path');
+  if (url.protocol !== 'https:' && !(url.protocol === 'http:' && LOCAL_HOST.test(url.hostname))) throw new Error('LLM_BASE_URL must use https (http only for a local model)');
+  const timeoutMs = Number(env.LLM_TIMEOUT_MS ?? 20000);
+  if (!Number.isFinite(timeoutMs) || timeoutMs < 1000 || timeoutMs > 120000) throw new Error('LLM_TIMEOUT_MS: 1000–120000');
+  return { baseUrl, model, apiKey, timeoutMs, maxRounds: 3 };
+}
+
+const SYSTEM = `Ты — ассистент специалиста акимата Павлодара по озеленению (прототип, демо-данные).
+Правила:
+1. Отвечай по-русски, коротко: 3–8 предложений или короткий список.
+2. Любое число, площадь, цену, процент, балл бери ТОЛЬКО из результатов функций. Сам ничего не считай и не оценивай. Нужна цифра — вызови функцию.
+3. Если данных нет или функция вернула ошибку — прямо скажи, каких данных не хватает. Не придумывай.
+4. Все сметы, приживаемость и экоэффект — оценки по правилам и демо-расценкам; так и говори.
+5. Называй зоны по названию из результатов функций. Если пользователь говорит «эта зона», а выбранной зоны нет — попроси выбрать её на карте или найди через search_zones.
+6. На вопросы «почему», «откуда цифра», «что за вид» используй search_knowledge и называй источник.
+7. Не давай юридических разрешений: посадку согласует специалист после проверок участка.`;
+
+const ZONE = { type: 'string', description: 'id зоны, например site-osm-1546881092' };
+const tool = (name: string, description: string, properties: Json, required: string[] = []) =>
+  ({ type: 'function', function: { name, description, parameters: { type: 'object', properties, required, additionalProperties: false } } });
+export const TOOLS = [
+  tool('search_zones', 'Найти зоны по названию или улице. Возвращает id, название, площадь и статус проверок.', { query: { type: 'string' } }, ['query']),
+  tool('analyze_zone', 'Расчёт зоны: подбор видов 0–100, схема посадки, смета из 5 статей, приживаемость на 1/2/3 года, уход, экоэффект на 5/10/20 лет.', {
+    zoneId: ZONE, variant: { type: 'string', enum: ['econom', 'optimal', 'max'] }, careYears: { type: 'integer', enum: [1, 2, 3] },
+    excluded: { type: 'array', items: { type: 'string' }, description: 'id видов, которые исключить' },
+    replacements: { type: 'object', additionalProperties: { type: 'string' }, description: 'замена вида: {"id из схемы": "id замены"}' },
+  }, ['zoneId']),
+  tool('compare_variants', 'Сравнить варианты «эконом», «оптимальный», «максимальный эффект» для зоны.', { zoneId: ZONE }, ['zoneId']),
+  tool('top_priorities', 'Зоны с наибольшим индексом приоритета 0–100 и объяснение факторов.', {
+    limit: { type: 'integer', minimum: 1, maximum: 20 },
+    weights: { type: 'object', description: 'веса факторов deficit, density, social, load, soil, benefit (0–1)', additionalProperties: { type: 'number' } },
+  }),
+  tool('budget_roadmap', 'Какие зоны озеленить на заданный бюджет (жадный отбор по индексу приоритета).', { budgetKzt: { type: 'number', minimum: 1 } }, ['budgetKzt']),
+  tool('find_problems', 'Проблемные зоны: дефицит зелени, почва, остров тепла, нет защитной полосы; острота, причина, действие.', {
+    type: { type: 'string', enum: ['deficit', 'soil', 'heat', 'unprotected', 'degradation'] }, severity: { type: 'string', enum: ['high', 'medium', 'low'] }, limit: { type: 'integer', minimum: 1, maximum: 20 },
+  }),
+  tool('search_knowledge', 'Поиск по справочнику растений, расценкам и источникам: свойства видов, откуда взята цифра, нормы.', { query: { type: 'string' }, limit: { type: 'integer', minimum: 1, maximum: 8 } }, ['query']),
+];
+
+const norm = (x: string) => x.toLowerCase().replace(/ё/g, 'е');
+/** Основы слов запроса: «липу», «липы» → «лип». */
+const stems = (q: string) => norm(q).split(/[^a-zа-я0-9-]+/).filter((w) => w.length >= 3).map((w) => w.slice(0, Math.max(3, Math.min(6, w.length - 1))));
+const score = (text: string, keys: string[]) => keys.reduce((n, k) => n + (text.includes(k) ? 1 : 0), 0);
+const clip = (x: string, n = 280) => (x.length > n ? `${x.slice(0, n - 1)}…` : x);
+
+type Zone = { id: string; name: string };
+type Ctx = { zones: Zone[]; evidence: Set<string> };
+
+/** Функции, которые вызывает модель. Выполняются сервером теми же модулями, что экраны. */
+export function createTools(s: Store) {
+  const spName = () => new Map(speciesList(s).map((x) => [x.id, x.nameRu as string]));
+  const zoneOf = (id: string, ctx: Ctx): Zone => {
+    const z = { id, name: String(maybeDoc(s, 'site', id)?.name ?? id) };
+    if (!ctx.zones.some((x) => x.id === id)) ctx.zones.push(z);
+    return z;
+  };
+  const elig = (c: Json) => { const st = web.CHECKS.map((k) => c.checks[k].state); return st.includes('blocked') ? 'есть ограничение' : st.every((x) => x === 'cleared') ? 'проверки завершены' : 'нужна проверка'; };
+  const run: Record<string, (a: Json, ctx: Ctx) => Json> = {
+    search_zones: (a, ctx) => {
+      const keys = stems(String(a.query ?? ''));
+      const found = candidates(s).map((c) => ({ c, n: score(norm(`${c.name} ${c.id}`), keys) })).filter((x) => x.n > 0).sort((x, y) => y.n - x.n).slice(0, 8);
+      return { zones: found.map(({ c }) => ({ ...zoneOf(c.id, ctx), areaM2: c.areaM2 ?? null, checks: elig(c) })), note: found.length ? undefined : 'Совпадений нет: уточните улицу.' };
+    },
+    analyze_zone: (a, ctx) => {
+      const site = candidate(s, String(a.zoneId)); const ref = reference(s); const names = spName();
+      const opts: Json = {};
+      for (const k of ['variant', 'careYears', 'excluded', 'replacements']) if (a[k] !== undefined) opts[k] = a[k];
+      const r = analyze(site, ref, opts);
+      return {
+        zone: zoneOf(site.id, ctx), options: r.options, areaM2: r.facts.areaM2, purpose: r.facts.purposeLabel, soil: r.facts.soil,
+        topSpecies: r.ranked.filter((x: Json) => !x.excludedBy).slice(0, 6).map((x: Json) => ({ id: x.speciesId, name: names.get(x.speciesId), score: x.score, reasons: x.reasons.slice(0, 2) })),
+        excludedSpecies: r.ranked.filter((x: Json) => x.excludedBy).slice(0, 5).map((x: Json) => ({ id: x.speciesId, name: names.get(x.speciesId), why: x.excludedBy })),
+        scheme: r.scheme.map((x: Json) => ({ id: x.speciesId, name: names.get(x.speciesId), tier: x.tier, quantity: x.quantity })),
+        cost: { totalKzt: r.cost.total, perM2Kzt: r.cost.perM2, items: r.cost.items.map((x: Json) => ({ label: x.label, amountKzt: x.amount, dataClass: x.dataClass })) },
+        survivalPercent: r.survivalAvg, care: { visitsPerYear: r.care.reduce((n: number, x: Json) => n + x.visits, 0), warnings: r.careWarnings },
+        effect: r.effect.map((x: Json) => ({ years: x.years, co2TonsPerYear: x.co2t, coolingC: x.coolingC, rainM3: x.rainM3 })),
+        costPerTonCo2Kzt: r.costPerTonCo2, missingData: r.missing, note: 'Оценки по правилам; расценки — демо, пока администратор не заменит их в справочнике.',
+      };
+    },
+    compare_variants: (a, ctx) => {
+      const site = candidate(s, String(a.zoneId)); const ref = reference(s);
+      return { zone: zoneOf(site.id, ctx), variants: web.variantSummaries({}, (o) => analyze(site, ref, o)) };
+    },
+    top_priorities: (a, ctx) => {
+      const items = priorities(candidates(s), reference(s), a.weights ?? web.DEFAULT_PRIORITY_WEIGHTS);
+      return { weights: a.weights ?? web.DEFAULT_PRIORITY_WEIGHTS, items: items.slice(0, Math.min(20, Number(a.limit ?? 5))).map((x) => ({ zone: zoneOf(x.siteId, ctx), index: x.index, explanation: x.explanation, costKzt: Math.round(x.cost), co2t20: x.co2t20 })),
+        note: 'Плотность населения заменена плотностью застройки: данных о населении нет.' };
+    },
+    budget_roadmap: (a, ctx) => {
+      const budget = Number(a.budgetKzt);
+      if (!Number.isFinite(budget) || budget <= 0) return { error: 'budgetKzt должен быть положительным числом в тенге' };
+      const rm = web.roadmap(priorities(candidates(s), reference(s), web.DEFAULT_PRIORITY_WEIGHTS), budget);
+      return { budgetKzt: budget, zonesCount: rm.chosen.length, spentKzt: Math.round(rm.spent), leftKzt: Math.round(rm.left), co2t20: rm.co2t20, method: rm.method,
+        zones: rm.chosen.slice(0, 10).map((x: Json) => ({ zone: zoneOf(x.siteId, ctx), index: x.index, costKzt: Math.round(x.cost) })) };
+    },
+    find_problems: (a, ctx) => {
+      const { problems, notDetectable } = web.detectProblems(candidates(s));
+      const list = problems.filter((p) => (!a.type || p.type === a.type) && (!a.severity || p.severity === a.severity));
+      const counts = Object.fromEntries(['deficit', 'soil', 'heat', 'unprotected'].map((t) => [t, problems.filter((p) => p.type === t).length]));
+      return { total: problems.length, countsByType: counts, matched: list.length, notDetectable,
+        items: list.slice(0, Math.min(20, Number(a.limit ?? 8))).map((p) => ({ zone: zoneOf(p.siteId, ctx), type: p.type, severity: p.severity, cause: p.cause, action: p.action, dataNote: p.dataNote })) };
+    },
+    search_knowledge: (a, ctx) => {
+      const keys = stems(String(a.query ?? ''));
+      const docs: { id: string; kind: string; title: string; text: string; sourceIds: string[] }[] = [
+        ...speciesList(s).map((x) => ({ id: x.id, kind: 'вид', title: `${x.nameRu} (${x.latin})`, text: [...(x.notes ?? []), ...(x.benefits ?? []), ...(x.beauty ?? [])].join(' '), sourceIds: [...(x.evidenceIds ?? []), ...(x.pavlodarEvidenceId ? [x.pavlodarEvidenceId] : [])] })),
+        ...ratesList(s).map((x) => ({ id: x.key, kind: 'расценка', title: x.label, text: `${x.value ?? 'нет данных'} ${x.unit}. Источник: ${x.source}`, sourceIds: [] as string[] })),
+        ...listDocs(s, 'evidence').map((x) => ({ id: x.id, kind: 'источник', title: String(x.sourceLabel), text: String(x.note ?? ''), sourceIds: [x.id] })),
+      ];
+      const hits = docs.map((d) => ({ d, n: score(norm(`${d.title} ${d.text}`), keys) * 2 + score(norm(d.title), keys) })).filter((x) => x.n > 0).sort((x, y) => y.n - x.n).slice(0, Math.min(8, Number(a.limit ?? 5)));
+      for (const { d } of hits) d.sourceIds.forEach((id) => ctx.evidence.add(id));
+      return { results: hits.map(({ d }) => ({ id: d.id, kind: d.kind, title: d.title, text: clip(d.text), sourceIds: d.sourceIds })), note: hits.length ? undefined : 'В справочниках ничего не нашлось.' };
+    },
+  };
+  return (name: string, args: Json, ctx: Ctx): Json => {
+    const fn = run[name];
+    if (!fn) return { error: `Нет функции ${name}` };
+    try { return fn(args, ctx); } catch (e) { return { error: e instanceof Error ? e.message : 'Ошибка расчёта' }; }
+  };
+}
+
+class LlmError extends Error {}
+
+async function chat(cfg: LlmConfig, messages: Json[], deadline: number, toolChoice: 'auto' | 'none') {
+  const left = deadline - Date.now();
+  if (left < 500) throw new LlmError('timeout');
+  const res = await fetch(`${cfg.baseUrl}/chat/completions`, {
+    method: 'POST', signal: AbortSignal.timeout(left),
+    headers: { Authorization: `Bearer ${cfg.apiKey}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ model: cfg.model, messages, tools: TOOLS, tool_choice: toolChoice, temperature: 0.2, max_tokens: 800 }),
+  });
+  if (!res.ok) throw new LlmError(`HTTP ${res.status}`);
+  const json = (await res.json()) as Json;
+  const msg = json.choices?.[0]?.message;
+  if (!msg) throw new LlmError('empty response');
+  return msg as { content?: string | null; tool_calls?: { id: string; function: { name: string; arguments: string } }[] };
+}
+
+/** Ответ модели в форме AssistantReply: method 'model', sources и toolCalls по контракту 29.10. */
+export function createLlmAssistant(s: Store, cfg: LlmConfig): AssistantAdapter {
+  const exec = createTools(s);
+  return async ({ message, siteId }) => {
+    const deadline = Date.now() + cfg.timeoutMs;
+    const ctx: Ctx = { zones: [], evidence: new Set() };
+    const selected = siteId ? maybeDoc(s, 'site', siteId) : undefined;
+    const where = selected && analyzable(selected) ? `Выбранная на карте зона: ${selected.id} «${selected.name}».` : 'Зона на карте не выбрана.';
+    const messages: Json[] = [{ role: 'system', content: SYSTEM }, { role: 'user', content: `${where}\nВопрос: ${message}` }];
+    const toolCalls: { name: string; args: Json }[] = [];
+    let text = '';
+    for (let round = 0; ; round++) {
+      const msg = await chat(cfg, messages, deadline, round < cfg.maxRounds ? 'auto' : 'none');
+      if (!msg.tool_calls?.length || round >= cfg.maxRounds) { text = (msg.content ?? '').trim(); break; }
+      messages.push({ role: 'assistant', content: msg.content ?? null, tool_calls: msg.tool_calls });
+      for (const call of msg.tool_calls) {
+        let args: Json = {};
+        try { args = JSON.parse(call.function.arguments || '{}'); } catch { /* пустые аргументы */ }
+        toolCalls.push({ name: call.function.name, args });
+        messages.push({ role: 'tool', tool_call_id: call.id, content: JSON.stringify(exec(call.function.name, args, ctx)) });
+      }
+    }
+    if (!text) throw new LlmError('empty answer');
+    // Цифры без вызова функций — значит, модель их придумала: такой ответ не показываем, отвечают правила.
+    if (!toolCalls.length && /\d/.test(text)) throw new LlmError('numbers without tool calls');
+    const named = ctx.zones.filter((z) => text.includes(z.name));
+    const sources = [...ctx.evidence].map((id) => maybeDoc(s, 'evidence', id)).filter(Boolean).slice(0, 6)
+      .map((e) => ({ id: e!.id, label: String(e!.sourceLabel), ...(e!.sourceUrl ? { url: String(e!.sourceUrl) } : {}) }));
+    return { text, zones: (named.length ? named : ctx.zones).slice(0, 8), method: 'model', intent: toolCalls[0]?.name ?? 'chat', model: cfg.model, sources, toolCalls };
+  };
+}

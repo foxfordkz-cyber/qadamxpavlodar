@@ -1,4 +1,5 @@
-// Ассистент по правилам (ТЗ 3.10) — замена до подключения LLM + RAG участником 1.
+// Ассистент по правилам (ТЗ 3.10): работает в тестовом источнике и как запасной ответ сервера,
+// когда модель не настроена или не ответила. Ответ модели собирает сервер (apps/server/src/tz/llm.ts).
 // Отвечает только цифрами из модулей; при нехватке данных говорит об этом, а не придумывает.
 import type { CandidateSite, Species } from '../api/types';
 import type { Rates } from './rates';
@@ -8,9 +9,17 @@ import { detectProblems, PROBLEM_LABEL, priorities, roadmap, DEFAULT_PRIORITY_WE
 export interface AssistantReply {
   text: string;
   zones: { id: string; name: string }[];
-  method: 'rules';
+  /** model — ответ модели с расчётами модулей; rules — разбор по правилам. */
+  method: 'rules' | 'model';
   intent: string;
   data?: unknown;
+  /** (контракт 29.10) Источники из справочников, на которые опирался ответ модели. */
+  sources?: { id: string; label: string; url?: string }[];
+  /** (контракт 29.10) Какие функции расчёта вызвала модель и с какими параметрами. */
+  toolCalls?: { name: string; args: Record<string, unknown> }[];
+  model?: string;
+  /** Почему вместо модели ответили правила (модель не ответила или ответ не прошёл проверку). */
+  fallbackReason?: string;
 }
 
 const fmt = (n: number) => Math.round(n).toLocaleString('ru-RU');
