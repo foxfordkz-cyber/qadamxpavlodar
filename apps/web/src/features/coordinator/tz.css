@@ -62,7 +62,9 @@
 .gp-rank-item.is-chosen { border-left: 4px solid var(--gp-olive-600); }
 .gp-roadmap-sum { border: 1px solid var(--gp-olive-300); background: var(--gp-green-soft); padding: 8px 10px; margin-top: 8px; }
 .gp-roadmap-sum p { margin: 2px 0; }
-.gp-import { display: flex; gap: 10px; align-items: center; padding: 12px; margin-bottom: 12px; }
+/* Панель импорта переносится по строкам: на телефоне поля #13 (происхождение данных, файл) не уходят за экран. */
+.gp-import { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; padding: 12px; margin-bottom: 12px; }
+.gp-import > * { min-width: 0; max-width: 100%; }
 .gp-import__pick { cursor: pointer; }
 .gp-import__res { padding: 12px; }
 

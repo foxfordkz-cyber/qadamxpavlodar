@@ -191,6 +191,8 @@ export function SiteMap({ sites, eligibility, selectedId, onSelect, focusSeq, co
       return;
     }
     mapRef.current = map;
+    // Центр известен сразу, а не только после первого сдвига карты: «подбери растения здесь» на свежей карте.
+    mapView.center = { lat: +camera.current.center[1].toFixed(6), lng: +camera.current.center[0].toFixed(6) };
     map.addControl(new NavigationControl({ visualizePitch: true }), 'top-right');
     map.addControl(new ScaleControl({ unit: 'metric' }), 'bottom-left');
     map.addControl(new AttributionControl({ compact: false }), 'bottom-right');
