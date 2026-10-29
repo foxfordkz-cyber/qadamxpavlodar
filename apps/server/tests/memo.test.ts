@@ -24,7 +24,18 @@ test('api: memo snapshot uses authenticated V2-compatible zone analysis, catalog
   const api = createApi(createV2CompatTransport(transport)); const sites: { id: string }[] = (await api.sites()).data.filter((s: { id: string }) => s.id.startsWith('site-osm-')).slice(0, 2);
   const input = await loadMemo(api, sites.map(s => s.id), { variant: 'econom', careYears: 3 }, 'api');
   assert.equal(input.zones.length, 2); assert.ok(input.evidence.length > 0);
-  const direct = await api.zoneAnalysis(sites[0]!.id, { variant: 'econom', careYears: 3 });
-  assert.deepEqual(input.zones[0].analysis, direct);
+  for (const zone of input.zones) {
+    const direct = await api.zoneAnalysis(zone.site.id, { variant: 'econom', careYears: 3 });
+    // Municipal analysis now includes request-time provenance. Compare every
+    // other field, including the source snapshot, input hash and rates version.
+    const { generatedAt: memoAt, ...memoProvenance } = zone.analysis.provenance;
+    const { generatedAt: directAt, ...directProvenance } = direct.provenance;
+    for (const at of [memoAt, directAt]) {
+      assert.equal(typeof at, 'string');
+      assert.equal(new Date(at).toISOString(), at, 'analysis timestamp must be valid ISO');
+    }
+    assert.deepEqual({ ...zone.analysis, provenance: memoProvenance }, { ...direct, provenance: directProvenance });
+    assert.equal(memoProvenance.ratesVersion, (await api.rates()).version);
+  }
   assert.equal(input.source, 'api'); assert.ok(input.rates.length > 0 && input.species.length > 0);
 });

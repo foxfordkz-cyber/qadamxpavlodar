@@ -3,26 +3,24 @@
 import { Store } from '../db.js';
 import { fail, hash, listDocs, maybeDoc, type Doc } from '../v2/core.js';
 import { web, type Json } from './shared.js';
+import * as municipal from '../municipal/data.js';
 
-export const speciesList = (s: Store): Json[] => s.all('SELECT data FROM tz_species ORDER BY id').map(r => JSON.parse(String(r.data)));
-export const ratesList = (s: Store): Json[] => s.all('SELECT data FROM tz_rates ORDER BY position').map(r => JSON.parse(String(r.data)));
+export const speciesList = (s: Store): Json[] => municipal.catalog(s);
+export const ratesList = (s: Store): Json[] => municipal.rates(s).rates;
 /** Версия справочника расценок: 1 после seed, +1 за каждую правку (tz_rate_history). */
-export const ratesVersion = (s: Store) => Number(s.get('SELECT COALESCE(MAX(version),1) AS v FROM tz_rate_history')?.v ?? 1);
+export const ratesVersion = (s: Store) => municipal.rates(s).version;
 
 export function reference(s: Store) {
-  const species = speciesList(s), rates = ratesList(s);
+  const species = speciesList(s), rates = municipal.calculationRates(s).rates;
   if (!species.length || !rates.length) fail('TZ_REFERENCE_MISSING', 'Справочники ТЗ не загружены: выполните npm run seed:tz', 503);
   return { species, rates, map: web.ratesMap(rates), version: ratesVersion(s) };
 }
 
 /** Зону можно рассчитать, если у неё есть контур и центр (синтетические точечные участки V2 — нельзя). */
 export const analyzable = (doc: Doc) => doc.geometry?.type === 'Polygon' && !!doc.centroid;
-export const candidates = (s: Store) => listDocs(s, 'site').filter(analyzable).map(web.siteFromV2);
+export const candidates = (s: Store) => municipal.calculationSites(s);
 export function candidate(s: Store, id: string) {
-  const doc = maybeDoc(s, 'site', id);
-  if (!doc) fail('NOT_FOUND', 'Zone not found', 404);
-  if (!analyzable(doc!)) fail('ZONE_NOT_ANALYZABLE', 'Zone has no polygon geometry for TZ calculations', 422);
-  return web.siteFromV2(doc!);
+  return municipal.withSoil(s,municipal.site(s,id)).zone;
 }
 
 // Кэш расчётов: ключ «зона и её версия, параметры, версия расценок». Новая версия зоны или расценок — новый ключ.
@@ -37,11 +35,11 @@ function remember<T extends Json | Json[]>(key: string, run: () => T): T {
   return value;
 }
 export function analyze(site: Json, ref: ReturnType<typeof reference>, options: Json = {}) {
-  return remember(`zone:${site.id}:${site.version}:${hash(options)}:${ref.version}`, () => web.analyzeZone(site, ref.species, ref.map, options));
+  return remember(`zone:${hash({site,options,species:ref.species,rates:ref.rates,version:ref.version})}`, () => web.analyzeZone(site, ref.species, ref.map, options));
 }
 /** priorities() внутри считает analyzeZone по всем зонам; кэшируем результат по составу зон, весам и версии расценок. */
 export function priorities(sites: Json[], ref: ReturnType<typeof reference>, weights: Json) {
-  const stamp = hash(sites.map(z => [z.id, z.version]));
+  const stamp = hash({sites,species:ref.species,rates:ref.rates});
   return remember(`priorities:${stamp}:${hash(weights)}:${ref.version}`, () => web.priorities(sites, ref.species, ref.map, weights)) as Json[];
 }
 export const cacheSize = () => cache.size;

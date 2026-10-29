@@ -126,7 +126,8 @@ test('places and follow-ups: find_place finds an address and the nearest zones; 
   assert.equal(place.found, true); assert.ok(place.zones.length > 0 && Number.isFinite(place.zones[0].distanceM));
   assert.deepEqual(seen[0]!.body.messages.slice(1, 3).map((m: any) => [m.role, m.content]), [['user', 'подбери растения для двора'], ['assistant', 'Уточните адрес двора.']]);
   // Без модели правила берут зону у центра карты, а не просят выбрать зону.
-  const site = candidates(f.store).find((c) => c.centroid)!;
+  const site = candidates(f.store).find((c) => c.centroid);
+  assert.ok(site?.centroid, 'в сиде есть зона с центром');
   const zone = { name: String(site.name), lat: Number(site.centroid.lat), lng: Number(site.centroid.lng) };
   f.use(async () => { throw new Error('model down'); });
   const rules = await f.ask('подбери растения здесь', null, { view: { lat: zone.lat, lng: zone.lng } });

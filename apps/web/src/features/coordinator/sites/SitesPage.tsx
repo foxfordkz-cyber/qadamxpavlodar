@@ -98,6 +98,14 @@ export function SitesPage() {
   const [drawPoints, setDrawPoints] = useState<[number, number][] | null>(null);
   const [target, setTarget] = useState<{ lng: number; lat: number; bbox?: [number, number, number, number]; label: string; seq: number } | null>(null);
   const [savedNote, setSavedNote] = useState<string | null>(null);
+  // Ассистент («нарисуй зону») открывает карту с ?draw=1: включаем рисование и убираем параметр из адреса.
+  const drawParam = route.params.get('draw');
+  useEffect(() => {
+    if (drawParam !== '1') return;
+    if (canDraw) { setSavedNote(null); setDrawPoints([]); setTab('map'); }
+    navigate('/map', { site: selectedId, ...keepHl }, true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [drawParam, canDraw]);
   const pickPlace = (h: GeoHit) => {
     if (h.zoneId) { setTarget(null); select(h.zoneId, true); return; }
     setTarget((prev) => ({ lng: h.lng, lat: h.lat, ...(h.bbox ? { bbox: h.bbox } : {}), label: h.label, seq: (prev?.seq ?? 0) + 1 }));

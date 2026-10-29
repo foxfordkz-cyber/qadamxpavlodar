@@ -7,6 +7,8 @@ import type { AssistantReply } from '../../../shared/analytics/assistant';
 import { MethodLine, MethodTag } from '../../../shared/ui/components';
 import { hrefFor, navigate, useRoute } from '../../../shared/router';
 import { mapView } from '../map/mapView';
+import { useMe } from '../me';
+import { uiCommand } from './assistantCommands';
 
 const EXAMPLES: Key[] = [
   'assistant.example1',
@@ -55,6 +57,7 @@ export function AssistantPanel() {
   const { api } = useData();
   const route = useRoute();
   const siteId = route.path === '/map' ? route.params.get('site') : null;
+  const me = useMe();
   const [open, setOpen] = useState(false);
   const zone = useResource(() => open && siteId ? api.site(siteId) : Promise.resolve(null), [open, siteId]);
   // useResource retains old data while loading: never label a new selection with the previous name.
@@ -75,8 +78,18 @@ export function AssistantPanel() {
 
   const send = async (text: string) => {
     if (!text.trim() || busy) return;
-    setMsgs((m) => [...m, { role: 'user', text }]);
     setQ('');
+    // «Нарисуй зону» — команда карте: включаем рисование (#/map?draw=1), а не считаем ближайшую зону.
+    if (uiCommand(text) === 'draw') {
+      const can = me.role === 'coordinator';
+      const reply = can
+        ? t('assistant.drawEnabled')
+        : t('assistant.drawRestricted');
+      setMsgs((m) => [...m, { role: 'user', text }, { role: 'bot', text: reply }]);
+      if (can) navigate('/map', { draw: '1' }, route.path === '/map');
+      return;
+    }
+    setMsgs((m) => [...m, { role: 'user', text }]);
     setBusy(true);
     try {
       // Последние реплики — чтобы короткий ответ («Едиге би 1») продолжал вопрос; центр карты — если зона не выбрана.

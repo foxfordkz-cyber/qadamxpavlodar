@@ -17,8 +17,10 @@ const money = (n: number) => `${Math.round(n).toLocaleString('ru-RU')} ₸`;
 
 /** Отчёт по зоне (ТЗ 3.9, 9): печать в PDF через браузер и выгрузка в Excel (.xls из таблиц отчёта). */
 export function ReportPage() {
+  const { api, mode } = useData();
+  const [exportError,setExportError]=useState('');
+  const [exporting,setExporting]=useState(false);
   const [compare, setCompare] = useState(false);
-  const { api } = useData();
   const route = useRoute();
   const siteId = route.params.get('site') ?? '';
   const options = useMemo<Partial<PlanOptions>>(() => {
@@ -29,6 +31,15 @@ export function ReportPage() {
   const catalog = useResource(() => api.species(), []);
   const byId = useMemo(() => new Map((catalog.data ?? []).map((s) => [s.id, s])), [catalog.data]);
   const body = useRef<HTMLDivElement>(null);
+  const serverExport=async(format:'pdf'|'xlsx')=>{
+    setExporting(true);setExportError('');
+    try{const me=await fetch('/api/v1/auth/me',{credentials:'include'});const session=await me.json();
+      if(!me.ok)throw Error(session.error?.message??t('report.signInAgain'));
+      const res=await fetch(`/api/v1/zones/${encodeURIComponent(siteId)}/export`,{method:'POST',credentials:'include',headers:{'Content-Type':'application/json','X-CSRF-Token':session.data.csrfToken},body:JSON.stringify({options,format})});
+      if(!res.ok){const e=await res.json();throw Error(e.error?.message??t('report.exportFailed'));}
+      const url=URL.createObjectURL(await res.blob()),link=document.createElement('a');link.href=url;link.download=`zone-${siteId}.${format}`;link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+    }catch(e){setExportError((e as Error).message);}finally{setExporting(false);}
+  };
   const toExcel = () => {
     const html = `<html><head><meta charset="utf-8"></head><body>${body.current?.innerHTML ?? ''}</body></html>`;
     download(`report-${siteId}.xls`, html, 'application/vnd.ms-excel;charset=utf-8');
@@ -40,7 +51,8 @@ export function ReportPage() {
       <div className="gp-btn-row gp-noprint">
         <a className="gp-btn" href={hrefFor('/map', { site: siteId })}>{tr("← К зоне")}</a>
         <button className="gp-btn gp-btn--primary" onClick={() => print()}>{tr("Печать / сохранить PDF")}</button>
-        <button className="gp-btn" onClick={toExcel}>⤓ Excel (.xls)</button>
+        {mode==='api'?<><button className="gp-btn" disabled={exporting} onClick={()=>serverExport('pdf')}>{t('report.serverPdf')}</button><button className="gp-btn" disabled={exporting} onClick={()=>serverExport('xlsx')}>{t('report.excel', { format: 'xlsx' })}</button></>:<button className="gp-btn" onClick={toExcel}>{t('report.excel', { format: 'xls' })}</button>}
+        {exportError&&<p role="alert">{exportError}</p>}
       </div>
       <MemoExport siteId={siteId} options={options} ready={!!r && !!s && !!catalog.data && !a.loading && !site.loading && !catalog.loading && !a.error && !site.error && !catalog.error} />
       <StateView loading={a.loading || site.loading || catalog.loading} error={a.error ?? site.error ?? catalog.error} hasData={!!r && !!s && !!catalog.data}>

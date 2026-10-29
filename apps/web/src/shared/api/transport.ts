@@ -90,7 +90,7 @@ export function createHttpTransport(base = '/api/v1'): Transport {
       const d = out.data as { user?: Me; csrfToken?: string } | null;
       if (d?.user) {
         csrf = d.csrfToken ?? null;
-        out.data = { id: d.user.id, displayName: d.user.displayName, role: d.user.role, isDemoAccount: res.headers.get('X-Data-Mode') === 'DEMO' } satisfies Me;
+        out.data = { id: d.user.id, displayName: d.user.displayName, role: String(d.user.role)==='specialist'?'coordinator':d.user.role, isDemoAccount: res.headers.get('X-Data-Mode') === 'DEMO' } satisfies Me;
       }
     }
     if (path === '/auth/logout') csrf = null;

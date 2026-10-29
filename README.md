@@ -167,3 +167,8 @@ fixtures/photos/                 фото со свободной лицензи
 4. **Приоритеты** → задайте веса и бюджет → получите очерёдность.
 5. **Проблемные зоны** → фильтр по типу и остроте → переход к зоне на карте.
 6. **✦ Ассистент** → спросите своими словами, например: «что можно озеленить на 50 млн».
+
+
+## Municipal backend integration
+
+The recovered municipal backend is integrated with the coordinator server on `feature/backend-municipal`. See [merge verification](apps/server/BACKEND_MERGE_VERIFICATION.md) for schema 5 migration from both historical schema 4 layouts, durable imports/snapshots/PDF/XLSX, tests and remaining Docker/provider checks; [workspace recovery](WORKSPACE_RECOVERY_REPORT.md) records source preservation. Use `?source=api` for real HTTP integration.

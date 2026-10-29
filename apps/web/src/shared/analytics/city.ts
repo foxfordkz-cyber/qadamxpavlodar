@@ -2,7 +2,7 @@
 import type { CandidateSite, Species } from '../api/types';
 import type { Rates } from './rates';
 import { analyzeZone } from './plan';
-import { SALINITY_LABEL, soilFor } from './zone';
+import { SALINITY_LABEL, soilFor, type SoilInfo } from './zone';
 
 export type ProblemType = 'deficit' | 'degradation' | 'soil' | 'heat' | 'unprotected';
 export type Severity = 'high' | 'medium' | 'low';
@@ -28,9 +28,9 @@ export function detectProblems(sites: CandidateSite[]): { problems: Problem[]; n
       const sev: Severity = share < 0.03 || gap >= 80 ? 'high' : share < 0.08 ? 'medium' : 'low';
       out.push({ id: `${s.id}-deficit`, siteId: s.id, type: 'deficit', severity: sev, cause: `Зелени в радиусе 200 м: ${Math.round(share * 100)}%; до ближайшей зелёной зоны ≈${ctx.distanceToGreenM ?? '?'} м.`, action: 'Включить в первоочередное озеленение: деревья + кустарники.', dataNote: 'Доля на жителя не рассчитана: нет данных о населении.' });
     }
-    const soil = soilFor(s.centroid!.lat, s.centroid!.lng);
+    const soil = (s as CandidateSite & {soilOverride?: SoilInfo}).soilOverride ?? soilFor(s.centroid!.lat, s.centroid!.lng);
     if (soil.salinity === 'medium' || soil.salinity === 'high') {
-      out.push({ id: `${s.id}-soil`, siteId: s.id, type: 'soil', severity: soil.salinity === 'high' ? 'high' : 'medium', cause: `Засоление ${SALINITY_LABEL[soil.salinity]}, pH ${soil.ph}, почва ${soil.type}.`, action: 'Гипсование или промывка; солеустойчивые виды (лох, тамарикс, карагана, вяз).', dataNote: 'Синтетический слой почв — заменить картой почв организатора.' });
+      out.push({ id: `${s.id}-soil`, siteId: s.id, type: 'soil', severity: soil.salinity === 'high' ? 'high' : 'medium', cause: `Засоление ${SALINITY_LABEL[soil.salinity]}, pH ${soil.ph}, почва ${soil.type}.`, action: 'Гипсование или промывка; солеустойчивые виды (лох, тамарикс, карагана, вяз).', dataNote: 'soilOverride' in s ? 'Импортированный слой почв; источник указан пользователем.' : 'Синтетический слой почв — заменить картой почв организатора.' });
     }
     const bld = ctx.buildings200m ?? 0;
     if (bld >= 30 && (share ?? 1) < 0.08) {
@@ -95,7 +95,7 @@ export function roadmap(items: PriorityItem[], budget: number) {
   const chosen: PriorityItem[] = [];
   let spent = 0;
   for (const it of items) {
-    if (spent + it.cost <= budget) {
+    if (budget > 0 && it.cost > 0 && Number.isFinite(it.cost) && spent + it.cost <= budget) {
       chosen.push(it);
       spent += it.cost;
     }
