@@ -1,9 +1,8 @@
 import { test, expect } from '@playwright/test';
 import { pages, openPage, dismissHint, screenshot, openEffect, watchErrors, chooseYear, mapReady } from '../support/helpers';
-import { bugs, runKnownBugs } from '../support/known-bugs';
 
 for (const [name, route] of pages) {
-  test(`${route}: opens without JavaScript errors or horizontal overflow`, async ({ page }, info) => {
+  test(`${route}: opens without JavaScript errors or horizontal overflow`, async ({ page }) => {
     const errors = watchErrors(page);
     await openPage(page, route);
     await dismissHint(page);
@@ -14,8 +13,6 @@ for (const [name, route] of pages) {
       scroll: document.documentElement.scrollWidth, client: document.documentElement.clientWidth,
     }));
     expect(errors, `${route}: browser errors`).toEqual([]);
-    // Still check loading and JS errors; quarantine only the known layout assertion.
-    test.fixme(name === 'import' && info.project.name === 'mobile' && !runKnownBugs, bugs.importWidth);
     expect(sizes.scroll, `${route}: document width ${sizes.scroll}, viewport ${sizes.client}`).toBeLessThanOrEqual(sizes.client);
   });
 

@@ -42,7 +42,6 @@ test('assistant: budget answer uses rules and highlights zones automatically; Es
 });
 
 test('assistant: without a selected zone explains the nearest zone', async ({ page }) => {
-  test.fixme(!runKnownBugs, bugs.nearest);
   await openPage(page, '/map');
   await dismissHint(page);
   await mapReady(page);

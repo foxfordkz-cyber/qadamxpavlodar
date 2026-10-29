@@ -22,20 +22,22 @@ export async function dismissHint(page: Page) {
   if (await hint.isVisible()) await hint.getByRole('button', { name: 'Понятно, начать' }).click();
 }
 
-export async function selectZone(page: Page) {
-  await openPage(page, '/map');
+export async function selectZone(page: Page, siteId?: string) {
+  await openPage(page, siteId ? `/map?site=${encodeURIComponent(siteId)}` : '/map');
   await dismissHint(page);
-  const rows = page.locator('.gp-sites__items button');
-  await expect(rows.first()).toBeVisible();
-  await rows.first().click();
+  if (!siteId) {
+    const rows = page.locator('.gp-sites__items button');
+    await expect(rows.first()).toBeVisible();
+    await rows.first().click();
+  }
   await expect(page).toHaveURL(/[#&?]site=/);
   const card = page.locator('.gp-sites__card');
   await expect(card.getByRole('tablist', { name: 'Разделы зоны' })).toBeVisible();
   return card;
 }
 
-export async function openEffect(page: Page) {
-  const card = await selectZone(page);
+export async function openEffect(page: Page, siteId?: string) {
+  const card = await selectZone(page, siteId);
   await card.getByRole('tab', { name: 'Эффект', exact: true }).click();
   await expect(card.getByRole('heading', { name: 'Машина времени', exact: true })).toBeVisible();
   return card;
