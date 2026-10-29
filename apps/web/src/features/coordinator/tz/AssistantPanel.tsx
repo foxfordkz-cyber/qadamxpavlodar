@@ -60,6 +60,12 @@ export function AssistantPanel() {
   const input = useRef<HTMLTextAreaElement>(null);
   useEffect(() => { list.current?.scrollTo({ top: list.current.scrollHeight }); }, [msgs]);
   useEffect(() => { if (open) input.current?.focus(); }, [open]);
+  useEffect(() => {
+    if (!open) return;
+    const esc = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false); };
+    document.addEventListener('keydown', esc);
+    return () => document.removeEventListener('keydown', esc);
+  }, [open]);
 
   const send = async (text: string) => {
     if (!text.trim() || busy) return;
