@@ -1,7 +1,11 @@
 import { test, expect } from '@playwright/test';
 import { openPage, dismissHint, mapReady, watchErrors } from '../support/helpers';
+import { ru } from '../../../apps/web/src/shared/i18n/ru';
+import { kk } from '../../../apps/web/src/shared/i18n/kk';
 
-test('drawing: undo a vertex, save a named polygon and reopen it after reload', async ({ page }, info) => {
+for (const language of ['ru', 'kk'] as const) test(`drawing ${language}: search counters, undo, save a polygon and reopen after reload`, async ({ page }, info) => {
+  const dictionary: Record<string, string> = language === 'ru' ? ru : kk;
+  const t = (key: string, params: Record<string, number> = {}) => dictionary[key].replace(/\{(\w+)\}/g, (_, key) => String(params[key]));
   const errors = watchErrors(page);
   // Replace only the external basemap. MapLibre, pointer events, geometry and saving stay real.
   await page.route('https://tiles.openfreemap.org/styles/*', route => route.fulfill({
@@ -9,14 +13,25 @@ test('drawing: undo a vertex, save a named polygon and reopen it after reload', 
       { id: 'background', type: 'background', paint: { 'background-color': '#edf2ed' } },
     ] }),
   }));
-  await openPage(page, '/map');
+  await openPage(page, '/map', 'mock', language);
   await dismissHint(page);
+  const rows = page.locator('.gp-sites__items button');
+  await expect(rows.first()).toBeVisible();
+  const total = await rows.count();
+  await expect(page.locator('.gp-sites__count strong')).toHaveText(t('filters.found', { n: total, total }));
+  await page.getByRole('searchbox', { name: t('filters.search'), exact: true }).fill('zzzz');
+  await expect(rows).toHaveCount(0);
+  await expect(page.locator('.gp-sites__count strong')).toHaveText(t('filters.found', { n: 0, total }));
+  const empty = page.locator('.gp-sites__list .gp-state--empty');
+  await expect(empty).toContainText(t('filters.empty'));
+  await empty.getByRole('button', { name: new RegExp(t('filters.reset')) }).click();
+  await expect(rows).toHaveCount(total);
   if (info.project.name === 'mobile') await page.locator('.gp-sites__tabs').getByRole('tab', { name: /Карта/ }).click();
   await mapReady(page);
-  await page.getByRole('button', { name: '✎ Нарисовать зону', exact: true }).click();
+  await page.getByRole('button', { name: `✎ ${t('sites.draw')}`, exact: true }).click();
   const draw = page.locator('.gp-drawbar');
-  const done = draw.getByRole('button', { name: 'Готово', exact: true });
-  const undo = draw.getByRole('button', { name: 'Отменить точку', exact: true });
+  const done = draw.getByRole('button', { name: t('draw.done'), exact: true });
+  const undo = draw.getByRole('button', { name: t('draw.undo'), exact: true });
   await expect(done).toBeDisabled();
   await expect(undo).toBeDisabled();
   const canvas = page.locator('.gp-map__canvas canvas.maplibregl-canvas');
@@ -26,17 +41,18 @@ test('drawing: undo a vertex, save a named polygon and reopen it after reload', 
   const points = [[0.35, 0.35], [0.6, 0.35], [0.6, 0.55]];
   for (let i = 0; i < points.length; i++) {
     await canvas.click({ position: { x: box.width * points[i][0], y: box.height * points[i][1] } });
-    await expect(draw).toContainText(i < 2 ? `(${i + 1} из минимум 3)` : 'Углов: 3');
+    if (i < 2) await expect(draw).toContainText(t('draw.pointsHint', { n: i + 1 }));
+    else await expect(draw).toContainText(language === 'ru' ? 'Углов: 3' : 'Бұрыштар: 3');
   }
   await expect(done).toBeEnabled();
   await undo.click();
   await expect(done).toBeDisabled();
-  await expect(draw).toContainText('(2 из минимум 3)');
+  await expect(draw).toContainText(t('draw.pointsHint', { n: 2 }));
   await canvas.click({ position: { x: box.width * 0.6, y: box.height * 0.55 } });
   await done.click();
-  const name = `QA polygon ${info.project.name}`;
-  await draw.getByRole('textbox', { name: 'Название зоны', exact: true }).fill(name);
-  await draw.getByRole('button', { name: 'Сохранить зону', exact: true }).click();
+  const name = `QA polygon ${language} ${info.project.name}`;
+  await draw.getByRole('textbox', { name: t('draw.name'), exact: true }).fill(name);
+  await draw.getByRole('button', { name: t('draw.save'), exact: true }).click();
   await expect(draw).toHaveCount(0);
   await expect(page.locator('.gp-sites__card')).toContainText(name);
   const id = new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('site');

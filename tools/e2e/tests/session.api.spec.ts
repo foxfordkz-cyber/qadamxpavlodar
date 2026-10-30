@@ -1,6 +1,7 @@
 import { test, expect, type Page } from '@playwright/test';
 import { dismissHint } from '../support/helpers';
 import { workerProfileButton } from '../support/worker';
+import { expectSignedOut } from '../support/session';
 
 test.beforeEach(() => test.skip(!process.env.E2E_PASSWORD, 'E2E_PASSWORD is not set'));
 
@@ -26,7 +27,7 @@ test('API: coordinator login, server data indicator, map, estimate, priorities, 
   await page.getByRole('navigation').getByRole('link', { name: 'Приоритеты', exact: true }).click();
   await expect(page.locator('.gp-rank-list li').first()).toBeVisible();
   await page.getByRole('button', { name: 'Выйти', exact: true }).click();
-  await expect(page.locator('input[type=password]')).toBeVisible();
+  await expectSignedOut(page);
 });
 
 test('API: worker1 login opens shift cabinet and cabinet logout ends the session', async ({ page }) => {
@@ -37,9 +38,9 @@ test('API: worker1 login opens shift cabinet and cabinet logout ends the session
   await expect(page.locator('green-worker').getByRole('heading', { name: 'Моя смена', exact: true })).toBeVisible();
   await (await workerProfileButton(page)).click();
   await page.locator('green-worker').getByRole('button', { name: 'Завершить сессию', exact: true }).click();
-  await expect(page.locator('input[type=password]')).toBeVisible();
+  await expectSignedOut(page);
   await page.reload({ waitUntil: 'domcontentloaded' });
-  await expect(page.locator('input[type=password]')).toBeVisible();
+  await expectSignedOut(page);
   await expect(page.locator('green-worker')).toHaveCount(0);
 });
 
@@ -50,7 +51,7 @@ test('API: foreman1 login opens the crew shift cabinet', async ({ page }) => {
   await expect(page.locator('green-worker')).toBeVisible();
   await expect(page.locator('green-worker').getByRole('heading', { name: 'Смена бригады', exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Выйти', exact: true }).click();
-  await expect(page.locator('input[type=password]')).toBeVisible();
+  await expectSignedOut(page);
   await expect(page.locator('green-worker')).toHaveCount(0);
 });
 
@@ -69,7 +70,7 @@ for (const username of ['viewer', 'admin']) {
     await expect(page).toHaveURL(/#\/$/);
     await expect(page.locator('green-worker')).toHaveCount(0);
     await page.getByRole('button', { name: 'Выйти', exact: true }).click();
-    await expect(page.locator('input[type=password]')).toBeVisible();
+    await expectSignedOut(page);
   });
 }
 
@@ -83,4 +84,15 @@ test('API: coordinator cannot open the worker route and returns home', async ({ 
   await page.evaluate(() => { location.hash = '#/worker'; });
   await expect(page).toHaveURL(/#\/$/);
   await expect(page.locator('green-worker')).toHaveCount(0);
+});
+
+test('API: worker1 header logout clears identity and remains signed out after reload', async ({ page }) => {
+  await page.goto('/?source=api#/', { waitUntil: 'domcontentloaded' });
+  await login(page, 'worker1');
+  await expect(page.locator('green-worker').getByRole('heading', { name: 'Моя смена', exact: true })).toBeVisible();
+  const name = (await page.locator('.gp-header__right > span').innerText()).trim();
+  await page.getByRole('button', { name: 'Выйти', exact: true }).click();
+  await expectSignedOut(page, name);
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await expectSignedOut(page, name);
 });

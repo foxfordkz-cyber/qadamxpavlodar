@@ -19,7 +19,7 @@ export async function openPage(page: Page, route = '/', mode = 'mock', lang = 'r
 
 export async function dismissHint(page: Page) {
   const hint = page.locator('.gp-firstrun');
-  if (await hint.isVisible()) await hint.getByRole('button', { name: 'Понятно, начать' }).click();
+  if (await hint.isVisible()) await hint.getByRole('button', { name: /^(Понятно, начать|Түсінікті, бастау)$/ }).click();
 }
 
 export async function selectZone(page: Page, siteId?: string) {
@@ -55,7 +55,8 @@ export async function screenshot(page: Page, name: string, info: TestInfo) {
   }
   await presentation(page);
   await page.evaluate(async () => { await document.fonts.ready; });
-  const dir = resolve('screens');
+  // Candidate captures are reviewed before replacing the presentation materials.
+  const dir = resolve(process.env.E2E_SCREEN_REVIEW === '1' ? 'test-results/screen-review' : 'screens');
   await mkdir(dir, { recursive: true });
   const file = resolve(dir, `${name}-${page.viewportSize()!.width}.png`);
   await page.screenshot({ path: file, fullPage: false, animations: 'disabled' });

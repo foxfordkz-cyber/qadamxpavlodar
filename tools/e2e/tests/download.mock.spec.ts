@@ -2,10 +2,8 @@ import { test, expect } from '@playwright/test';
 import { species } from '../support/catalogue';
 import { inspectDocx } from '../support/docx';
 import { openPage, SITE } from '../support/helpers';
-import { bugs, runKnownBugs } from '../support/known-bugs';
 
 test('zone report downloads Russian and Kazakh Word memos through export settings', async ({ page }) => {
-  test.fixme(!runKnownBugs, bugs.memo);
   await openPage(page, `/report?site=${SITE}`);
   const report = page.locator('.gp-report-doc');
   await expect(report.getByRole('heading', { name: '3. Смета', exact: true })).toBeVisible();

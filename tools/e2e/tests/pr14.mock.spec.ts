@@ -1,10 +1,9 @@
 import { test, expect, type Page, type Locator } from '@playwright/test';
 import { species } from '../support/catalogue';
 import { openPage, dismissHint, SITE } from '../support/helpers';
-import { pr14LanguageIntegrated, pr14HeaderIntegrated, pr14Pending } from '../support/pr14';
-import { runKnownBugs } from '../support/known-bugs';
-
-test.beforeEach(() => test.skip(!pr14LanguageIntegrated && !runKnownBugs, pr14Pending));
+import { expectNoOverflow } from '../support/session';
+import { ru } from '../../../apps/web/src/shared/i18n/ru';
+import { kk } from '../../../apps/web/src/shared/i18n/kk';
 
 async function switchLanguage(page: Page, language: 'Рус' | 'Қаз') {
   const button = page.getByRole('group', { name: 'Язык / Тіл', exact: true }).getByRole('button', { name: language, exact: true });
@@ -13,6 +12,11 @@ async function switchLanguage(page: Page, language: 'Рус' | 'Қаз') {
 }
 
 async function translatedSpecies(page: Page, container: Locator) {
+  // Analysis and catalogue load independently; aria-busy covers only the former.
+  await expect.poll(async () => {
+    const text = await container.innerText();
+    return species.some(s => text.includes(s.nameRu));
+  }, { message: 'Wait for actual catalogue names before comparing translations' }).toBe(true);
   const russian = await container.innerText();
   const used = species.filter(s => russian.includes(s.nameRu));
   expect(used.length, 'The selected view must contain actual catalogue species').toBeGreaterThan(0);
@@ -23,7 +27,6 @@ async function translatedSpecies(page: Page, container: Locator) {
 }
 
 test('PR14: header language persists after reload and preserves the current route', async ({ page }) => {
-  test.skip(!pr14HeaderIntegrated && !runKnownBugs, 'DEP-14: header integration afdd003 is not merged');
   await openPage(page, '/priorities');
   const route = new URL(page.url()).hash;
   await switchLanguage(page, 'Қаз');
@@ -63,9 +66,8 @@ test('PR14: unconfirmed Kazakh plant names fall back to the Russian catalogue na
   }
 });
 
-for (const tab of ['Растения', 'Смета', 'Приживаемость']) {
+for (const tab of ['Растения', 'Приживаемость']) {
   test(`PR14: translated species in zone tab ${tab} preserve Latin names`, async ({ page }) => {
-    test.skip(!pr14HeaderIntegrated && !runKnownBugs, 'DEP-14: header integration afdd003 is not merged');
     await openPage(page, `/map?site=${SITE}`);
     await dismissHint(page);
     const card = page.locator('.gp-sites__card');
@@ -76,8 +78,25 @@ for (const tab of ['Растения', 'Смета', 'Приживаемость
   });
 }
 
+test('PR14: estimate translates service headings and preserves every numeric cost cell', async ({ page }) => {
+  await openPage(page, `/map?site=${SITE}`);
+  await dismissHint(page);
+  const card = page.locator('.gp-sites__card');
+  await card.getByRole('tab', { name: 'Смета', exact: true }).click();
+  const section = card.locator('section[aria-labelledby="z-cost"]');
+  await expect(section.locator('tbody tr').first()).toBeVisible();
+  const numbers = () => section.locator('tbody tr').evaluateAll(rows => rows.map(row => [...row.querySelectorAll('td')]
+    .slice(1).map(cell => cell.textContent?.match(/\d+(?:[.,]\d+)?/g) ?? [])));
+  const before = await numbers();
+  await switchLanguage(page, 'Қаз');
+  await expect(section.getByRole('columnheader', { name: 'Статья', exact: true })).toHaveCount(0);
+  await expect(section.getByRole('columnheader', { name: 'Сумма', exact: true })).toHaveCount(0);
+  expect(await numbers()).toEqual(before);
+  // This view contains cost categories, not species names; those are checked in planting,
+  // survival, the zone report and DOCX rather than inventing a species list for the estimate.
+});
+
 test('PR14: zone report translates plant names while retaining Latin names and numbers', async ({ page }) => {
-  test.skip(!pr14HeaderIntegrated && !runKnownBugs, 'DEP-14: header integration afdd003 is not merged');
   await openPage(page, `/report?site=${SITE}`);
   const report = page.locator('.gp-report-doc');
   const numbers = () => report.locator('tbody tr').evaluateAll(rows => rows.map(row => [...row.querySelectorAll('td')]
@@ -85,6 +104,22 @@ test('PR14: zone report translates plant names while retaining Latin names and n
   const before = await numbers();
   await translatedSpecies(page, report);
   expect(await numbers()).toEqual(before);
+  await expectNoOverflow(page);
+});
+
+test('PR14: dashboard counters translate their labels while preserving data values', async ({ page }) => {
+  await openPage(page);
+  const cards = page.locator('.gp-home .gp-tile--metric');
+  await expect(cards.first()).toBeVisible();
+  const values = await cards.locator('.gp-tile__value').allTextContents();
+  const labels = await cards.locator('.gp-tile__label').allTextContents();
+  const translations = new Map(Object.entries(ru).map(([key, value]) => [value, kk[key as keyof typeof kk]]));
+  const expected = labels.map(label => translations.get(label));
+  expect(expected.every(Boolean), 'Every displayed service label has a Kazakh dictionary entry').toBe(true);
+  await switchLanguage(page, 'Қаз');
+  await expect(cards.locator('.gp-tile__label')).toHaveText(expected as string[]);
+  await expect(cards.locator('.gp-tile__value')).toHaveText(values);
+  await expectNoOverflow(page);
 });
 
 test('PR14: rule assistant answers Kazakh then Russian with identical priorities and factors', async ({ page }) => {

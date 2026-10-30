@@ -1,15 +1,15 @@
 import { test, expect } from '@playwright/test';
 import { ru } from '../../../apps/web/src/shared/i18n/ru';
+import { kk } from '../../../apps/web/src/shared/i18n/kk';
 import { pages, openPage } from '../support/helpers';
-import { bugs, runKnownBugs } from '../support/known-bugs';
+import { expectNoOverflow } from '../support/session';
 
 // Exact UI labels from the maintained Russian dictionary, never OSM street/zone data.
 const forbidden: string[] = Object.entries(ru)
   .filter(([key, value]) => /(^nav\.|^common\.|\.(title|heading|submit|cancel|save|close|reset|add|create|delete|retry|logout|devPanel)$)/.test(key)
-    && /[А-Яа-яЁё]/.test(value) && !value.includes('{') && value.length <= 80)
+    && /[А-Яа-яЁё]/.test(value) && !value.includes('{') && value.length <= 80
+    && kk[key as keyof typeof kk] !== value) // e.g. «Импорт» is the approved label in both dictionaries.
   .map(([, value]) => value);
-
-test.beforeEach(() => test.fixme(!runKnownBugs, bugs.locale));
 
 test('Kazakh navigation is enabled with ?lang=kk', async ({ page }) => {
   await openPage(page, '/', 'mock', 'kk');
@@ -24,5 +24,6 @@ for (const [, route] of pages) {
     const normalize = (s: string) => s.replace(/^[^\p{L}\p{N}]+/u, '').replace(/\s+/g, ' ').trim();
     const leaks = [...new Set(labels.map(normalize).filter(label => forbidden.includes(label)))];
     expect(leaks, `Russian controls on ${route} with ?lang=kk`).toEqual([]);
+    await expectNoOverflow(page);
   });
 }
