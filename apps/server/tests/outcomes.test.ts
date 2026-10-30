@@ -28,6 +28,28 @@ async function setup(t:TestContext){
  const inspect={id:'inspection',observedOn:today(),expectedVersion:1,evidenceIds:[],observations:[{plantId:'oc-tree-1',state:'alive',reportId:null,evidenceIds:['outcomes-demo-evidence']},{plantId:'oc-tree-2',state:'dead',reportId:null,evidenceIds:['outcomes-demo-evidence']}]};
  return{...f,call,input,inspect};
 }
+test('outcomes workflow: scoped read model, saved snapshots and stale rate version',async t=>{
+ const f=await setup(t);seedOutcomes(f.store);
+ const read=await f.call(`/sites/${f.input.siteId}`);assert.equal(read.status,200);
+ assert.equal(read.body.data.asOf,today());assert.equal(read.body.data.cohorts.length,1);
+ assert.equal(read.body.data.inspections.length,1);assert.equal(read.body.data.forecasts.length,1);
+ assert.equal(read.body.data.registry.length,read.body.data.cohorts[0].plants.length);
+ assert.ok(read.body.data.registry.every((p:any)=>p.siteId===f.input.siteId&&p.isDemo));
+ assert.equal((await f.call(`/sites/${f.input.siteId}`,'GET',undefined,'viewer')).status,200);
+ for(const role of ['worker1','foreman1'])assert.equal((await f.call(`/sites/${f.input.siteId}`,'GET',undefined,role)).status,403);
+ assert.equal((await f.call('/sites/nonexistent')).status,404);
+ const saved=read.body.data.forecasts[0].snapshot;
+ const input={id:'workflow-snapshot',siteId:f.input.siteId,expectedVersion:saved.provenance.siteVersion,expectedRatesVersion:saved.provenance.ratesVersion,variant:'econom'};
+ assert.equal((await f.call('/snapshots','POST',{...input,expectedRatesVersion:999})).status,409);
+ const captured=await f.call('/snapshots','POST',input,'coordinator','workflow-save');assert.equal(captured.status,201);
+ assert.deepEqual((await f.call('/snapshots','POST',input,'coordinator','workflow-save')).body,captured.body);
+ const after=await f.call(`/sites/${f.input.siteId}`);assert.equal(after.body.data.forecasts.length,2);
+ assert.deepEqual(after.body.data.forecasts.find((x:any)=>x.id===input.id).snapshot,captured.body.data.snapshot);
+ f.store.run("UPDATE tz_rates SET data=json_set(data,'$.value',123456) WHERE key='soil.prep'");
+ assert.deepEqual((await f.call(`/sites/${f.input.siteId}`)).body.data.forecasts.find((x:any)=>x.id===input.id).snapshot,captured.body.data.snapshot);
+ const spec=(await f.call('/openapi.json')).body;assert.ok(spec.paths['/sites/{id}']);
+});
+
 test('outcomes: HTTP cohort validation and missing date remains null',async t=>{
  const f=await setup(t);
  for(const [delta,status]of [[{plantIds:['missing']},404],[{plantIds:['oc-tree-1','oc-tree-1']},400],[{plantIds:['oc-tree-6']},400],[{plantedOn:'2020-01-01'},400]]as const){const r=await f.call('/cohorts','POST',{...f.input,...delta});assert.equal(r.status,status,JSON.stringify(r.body));assert.ok(r.body.error.code);assert.ok(r.body.error.requestId);}

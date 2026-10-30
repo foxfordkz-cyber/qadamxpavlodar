@@ -1,4 +1,5 @@
 import { newIdempotencyKey, type Transport } from './transport';
+import { createOutcomesClient, type OutcomesClient } from './outcomesClient';
 import type {
   Brigade, CandidateSite, CheckKey, GeoJsonPolygon, CheckState, DashboardMetric, DayPlan, DayPlanSummary, EvidenceRef, ID, Issue, Me, Plant, PlantingProject, PlantSelection,
   Priority, ProjectItem, RankWeights, Report, SiteContext, SiteRanking, Species, Task, TaskAction, TaskStatus, Upload, Worker,
@@ -42,10 +43,11 @@ export interface SitePatch {
 }
 
 /** Все методы экрана координатора. Пути — /api/v1 из общего контракта; помеченные (v1.1) — предложение. */
-export function createApi(t: Transport) {
+export function createApi(t: Transport, outcomesBackend?: OutcomesClient) {
   const d = async <T,>(p: Promise<{ data: T; meta?: Record<string, unknown> }>) => (await p).data;
   return {
     kind: t.kind,
+    outcomes: createOutcomesClient(t, outcomesBackend),
     me: () => d(t.request<Me>('GET', '/auth/me')),
     login: (login: string, password: string) => d(t.request<Me>('POST', '/auth/login', { body: { login, password } })),
     logout: () => d(t.request<null>('POST', '/auth/logout', { body: {} })),
