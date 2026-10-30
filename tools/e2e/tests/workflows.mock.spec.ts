@@ -1,6 +1,5 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../support/test';
 import { openPage, dismissHint, selectZone, openEffect, chooseYear, mapReady } from '../support/helpers';
-import { bugs, runKnownBugs } from '../support/known-bugs';
 
 test('zone list, six tabs, time machine statistics and hide', async ({ page }, info) => {
   const card = await openEffect(page);
@@ -42,7 +41,6 @@ test('assistant: budget answer uses rules and highlights zones automatically; Es
 });
 
 test('assistant: without a selected zone explains the nearest zone', async ({ page }) => {
-  test.fixme(!runKnownBugs, bugs.nearest);
   await openPage(page, '/map');
   await dismissHint(page);
   await mapReady(page);
@@ -81,7 +79,6 @@ test('mobile: bottom sheet expands from under 60% to about 90%', async ({ page }
 });
 
 test('mock roles: worker opens shift cabinet, specialist returns home', async ({ page }) => {
-  test.fixme(!runKnownBugs, bugs.worker);
   await openPage(page);
   await page.getByRole('button', { name: '⚙ Режим проверки', exact: true }).click();
   await page.getByRole('radio', { name: 'Работник', exact: true }).check();
@@ -89,7 +86,7 @@ test('mock roles: worker opens shift cabinet, specialist returns home', async ({
   await expect(page).toHaveURL(/#\/worker/);
   await expect(page.locator('green-worker')).toBeVisible();
   // Playwright CSS/text locators pierce the component's open shadow root.
-  await expect(page.locator('green-worker').getByText(/смен[аыу]/i).first()).toBeVisible();
+  await expect(page.locator('green-worker').getByRole('heading', { name: 'Моя смена', exact: true })).toBeVisible();
   await page.getByRole('button', { name: '⚙ Режим проверки', exact: true }).click();
   await page.getByRole('radio', { name: 'Специалист', exact: true }).check();
   await page.getByRole('button', { name: 'Закрыть', exact: true }).last().click();

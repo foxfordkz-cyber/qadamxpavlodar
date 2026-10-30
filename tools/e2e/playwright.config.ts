@@ -2,7 +2,9 @@ import { defineConfig } from '@playwright/test';
 import { fileURLToPath } from 'node:url';
 
 const api = process.env.E2E_MODE === 'api';
-const mockRun = process.env.E2E_RUN_KNOWN_BUGS === '1' ? 'bugs' : 'mock';
+const requestedRun = process.env.E2E_PROFILE;
+const mockRun = process.env.E2E_RUN_KNOWN_BUGS === '1' ? 'bugs' :
+  requestedRun === 'smoke' || requestedRun === 'screens' ? requestedRun : 'mock';
 const baseURL = process.env.E2E_BASE_URL || 'http://localhost:5174';
 const launchOptions = { args: ['--enable-unsafe-swiftshader', '--use-angle=swiftshader'] };
 export default defineConfig({
@@ -29,6 +31,10 @@ export default defineConfig({
   projects: api ? [{ name: 'api', testMatch: '**/*.api.spec.ts', use: { viewport: { width: 1280, height: 800 } } }] : [
     { name: 'desktop', testMatch: '**/*.mock.spec.ts', use: { viewport: { width: 1280, height: 800 } } },
     { name: 'mobile', testMatch: '**/*.mock.spec.ts', use: { viewport: { width: 375, height: 812 }, isMobile: true, hasTouch: true } },
+    ...[375, 800, 801, 1280].map(width => ({
+      name: `crew-${width}`, testMatch: '**/*.crew.spec.ts',
+      use: { viewport: { width, height: width === 1280 ? 800 : 812 }, isMobile: width === 375, hasTouch: width <= 800 },
+    })),
   ],
   // An explicit URL means an already running server (including Docker).
   // Without a password API tests skip without requiring even a local web server.
