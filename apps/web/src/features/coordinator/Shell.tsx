@@ -30,8 +30,8 @@ const NAV: { path: string; key: Key; roles: Role[]; works?: boolean }[] = [
   { path: '/rates', key: 'nav.rates', roles: ALL },
   { path: '/import', key: 'nav.import', roles: ['coordinator', 'admin'] },
   { path: '/guide', key: 'nav.guide', roles: ALL },
-  { path: '/tasks', key: 'nav.tasks', roles: ['coordinator', 'admin'], works: true },
-  { path: '/reports', key: 'nav.reports', roles: ['coordinator', 'admin'], works: true },
+  { path: '/tasks', key: 'nav.tasks', roles: ALL, works: true },
+  { path: '/reports', key: 'nav.reports', roles: ALL, works: true },
   { path: '/approval', key: 'nav.approval', roles: ['admin'], works: true },
   { path: '/people', key: 'nav.people', roles: ['admin'], works: true },
 ];

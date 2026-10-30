@@ -109,7 +109,7 @@ export function AssistantPanel() {
     }
   };
 
-  if (!open) return <button className="gp-assist-fab" onClick={() => setOpen(true)} aria-label={t('assistant.open')}>✦ {t('assistant.title')}</button>;
+  if (!open) return <button className="gp-assist-fab" onClick={() => setOpen(true)} aria-label={t('assistant.open')}><span aria-hidden="true">✦</span> <span className="gp-assist-fab__label">{t('assistant.title')}</span></button>;
   return (
     <aside className="gp-assist" aria-label={t('assistant.label')}>
       <div className="gp-assist__head">
