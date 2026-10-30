@@ -1,3 +1,4 @@
+import { outcomesRouter } from './outcomes/routes.js';
 import express, { type ErrorRequestHandler, type Request, type Response, type RequestHandler } from 'express';
 import { randomUUID } from 'node:crypto';
 import { createRequire } from 'node:module';
@@ -79,6 +80,7 @@ export function createApp(store: Store, options: AppOptions = {}) {
   });
   app.use('/api/v1/imports/preview',express.json({limit:'8mb',strict:true}));
   app.use(express.json({ limit: '32kb', strict: true }));
+  app.use('/api/v1/outcomes', outcomesRouter(store));
   app.use('/api/v1', createV2Router(store, join(photos.root,'v2'),options.v2Adapters,options.tz));
   route('health', (_req, res) => {
     try { if (store.get('SELECT 1 AS ok')?.ok !== 1) throw new Error('Database check failed'); }

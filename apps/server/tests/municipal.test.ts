@@ -40,7 +40,7 @@ test('Import: preview/commit, owner scope, duplicates, concurrent commits, atomi
  f.store.db.exec("CREATE TRIGGER test_import_failure BEFORE INSERT ON municipal_features WHEN (SELECT count(*) FROM municipal_features)>=2 BEGIN SELECT RAISE(ABORT,'test'); END");
  assert.equal((await f.call(`/imports/${p2.id}/commit`,'POST','specialist',payload)).status,500);assert.equal(f.store.get('SELECT count(*) AS n FROM municipal_features')!.n,1);f.store.db.exec('DROP TRIGGER test_import_failure');
  assert.equal((await f.call(`/imports/${p2.id}/commit`,'POST','specialist',payload)).status,200);
- const other=new Store(f.store.path);assert.equal(other.get('SELECT count(*) AS n FROM municipal_features')!.n,3);assert.equal(other.get('PRAGMA user_version')!.user_version,5);other.close();
+ const other=new Store(f.store.path);assert.equal(other.get('SELECT count(*) AS n FROM municipal_features')!.n,3);assert.equal(other.get('PRAGMA user_version')!.user_version,6);other.close();
 });
 function shapeZip(){const sh=Buffer.alloc(128);sh.writeInt32BE(9994,0);sh.writeInt32BE(64,24);sh.writeInt32LE(1000,28);sh.writeInt32LE(1,32);for(const[o,n]of [[36,76.94],[44,52.28],[52,76.94],[60,52.28]])sh.writeDoubleLE(n!,o!);sh.writeInt32BE(1,100);sh.writeInt32BE(10,104);sh.writeInt32LE(1,108);sh.writeDoubleLE(76.94,112);sh.writeDoubleLE(52.28,120);
  const db=Buffer.alloc(97,32);db[0]=3;db.writeUInt32LE(1,4);db.writeUInt16LE(65,8);db.writeUInt16LE(31,10);db.fill(0,12,32);db.write('name',32);db.fill(0,36,43);db[43]=67;db.fill(0,44,48);db[48]=30;db.fill(0,49,64);db[64]=13;db.write('SHP test',66);db[96]=26;
