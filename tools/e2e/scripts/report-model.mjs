@@ -103,9 +103,21 @@ const publicEnvironment = value => value ? { node: safeVersion(value.node), play
   workers: Number.isInteger(value.workers) && value.workers > 0 && value.workers <= 128 ? value.workers : undefined,
   retries: Number.isInteger(value.retries) && value.retries >= 0 && value.retries <= 10 ? value.retries : undefined } : undefined;
 
-export function inspectScreens(root, runs = [], revision) {
-  const screenshotRun = runs.filter(run => ['mock', 'screens'].includes(run.profile) && run.meta?.capturesScreens && run.meta.startedAt)
+export function latestCaptureRun(runs = []) {
+  return runs.filter(run => ['mock', 'screens'].includes(run.profile) && run.meta?.capturesScreens && run.meta.startedAt)
     .sort((a, b) => Date.parse(b.meta.startedAt) - Date.parse(a.meta.startedAt))[0];
+}
+
+export function captureRunIsComplete(run) {
+  return !!run && run.available && run.current && run.meta?.state === 'finished' && run.meta.exitCode === 0 &&
+    run.meta.capturesScreens && !run.runnerFailed && run.counts.passed > 0 &&
+    (run.profile === 'screens' || (run.profile === 'mock' && run.meta.selection === 'full')) &&
+    statuses.filter(status => !['passed', 'skipped'].includes(status)).every(status => run.counts[status] === 0) &&
+    run.tests.filter(test => test.status === 'skipped').every(test => run.profile === 'mock' && test.outOfScope);
+}
+
+export function inspectScreens(root, runs = [], revision) {
+  const screenshotRun = latestCaptureRun(runs);
   return expectedScreens.map(name => inspectCapture(root, name, screenshotRun, revision));
 }
 

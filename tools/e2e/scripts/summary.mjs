@@ -2,9 +2,9 @@ import { copyFileSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSyn
 import { execFileSync } from 'node:child_process';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { zipSync, strToU8 } from 'fflate';
+import { unzipSync, zipSync, strToU8 } from 'fflate';
 import { apiPassword, e2eDir } from './environment.mjs';
-import { acceptance, collectHistory, collectRuns, expectedScreens, inspectScreens } from './report-model.mjs';
+import { acceptance, captureRunIsComplete, collectHistory, collectRuns, expectedScreens, inspectScreens, latestCaptureRun } from './report-model.mjs';
 import { renderHtml } from './report-html.mjs';
 import { hashBytes } from './screen-provenance.mjs';
 
@@ -41,16 +41,24 @@ export function markdown(model) {
     'Локальный API не доказывает работу Docker или публичного HTTPS. Проверка DOCX/XML не является открытием файла в Microsoft Word. Эти проверки и ручной сценарий защиты отмечаются отдельно.', ''].join('\n');
 }
 
-export function generateSummary({ root = e2eDir, secrets = [], pack = false } = {}) {
+export function buildSummaryModel({ root = e2eDir, secrets = [] } = {}) {
   const runs = collectRuns(root, secrets);
   const { revision, dirty } = gitState(root);
+  const captureRun = latestCaptureRun(runs);
   const model = { generatedAt: new Date().toISOString(), revision, dirty, runs, history: collectHistory(root, revision),
+    captureRun: captureRun ? { profile: captureRun.profile, runId: captureRun.meta.runId, state: captureRun.meta.state,
+      exitCode: captureRun.meta.exitCode, successful: !!captureRunIsComplete(captureRun) } : null,
     screens: inspectScreens(root, runs, revision), acceptance: acceptance(runs, revision) };
   if (dirty) model.acceptance = { ready: false, message: 'Есть локальные изменения после зафиксированной версии: полная приёмка не подтверждена' };
-  else if (model.acceptance.ready && model.screens.some(screen => !screen.fresh || !screen.reviewed)) {
-    model.acceptance = { ready: false, message: 'Тесты пройдены, но полный набор свежих просмотренных снимков ещё не подтверждён' };
+  else if (model.acceptance.ready && (!model.captureRun?.successful || model.screens.some(screen => !screen.fresh || !screen.reviewed))) {
+    model.acceptance = { ready: false, message: 'Тесты пройдены, но успешный прогон полного набора свежих просмотренных снимков ещё не подтверждён' };
   }
   model.packageKind = model.acceptance.ready ? 'accepted-local-build' : 'diagnostic-not-accepted';
+  return model;
+}
+
+export function generateSummary({ root = e2eDir, secrets = [], pack = false } = {}) {
+  const model = buildSummaryModel({ root, secrets });
   const folder = join(root, 'playwright-report', 'summary');
   mkdirSync(join(folder, 'screens'), { recursive: true });
   const html = renderHtml(model);
@@ -82,12 +90,44 @@ export function generateSummary({ root = e2eDir, secrets = [], pack = false } = 
   return model;
 }
 
+const stableJson = value => JSON.stringify(value, (_key, item) => item && typeof item === 'object' && !Array.isArray(item)
+  ? Object.fromEntries(Object.entries(item).sort(([a], [b]) => a.localeCompare(b))) : item);
+const modelIdentity = model => { const { generatedAt, ...identity } = model; return stableJson(identity); };
+
+/** Read-only gate: validate current evidence and the already published package. */
+export function verifyPublishedSummary({ root = e2eDir, secrets = [] } = {}) {
+  const model = buildSummaryModel({ root, secrets }), folder = join(root, 'playwright-report', 'summary');
+  let published;
+  try { published = JSON.parse(readFileSync(join(folder, 'results.json'), 'utf8')); }
+  catch { throw new Error('Published summary is missing or invalid; run e2e:summary first'); }
+  if (modelIdentity(published) !== modelIdentity(model)) throw new Error('Published summary is stale: SHA, run IDs, results or screenshot evidence changed');
+  const html = readFileSync(join(folder, 'index.html'), 'utf8'), note = readFileSync(join(folder, 'DAMIR.md'), 'utf8');
+  if (html !== renderHtml(published) || note !== markdown(published)) throw new Error('Published report content does not match its recorded evidence');
+  const fresh = model.screens.filter(screen => screen.fresh);
+  for (const screen of fresh) if (hashBytes(readFileSync(join(folder, 'screens', screen.name))) !== screen.sha256) {
+    throw new Error('Published screenshot changed after report generation');
+  }
+  const archive = join(folder, 'green-pavlodar-demo.zip');
+  if (existsSync(archive)) {
+    const entries = unzipSync(readFileSync(archive));
+    const allowed = ['index.html', 'DAMIR.md', 'results.json', ...fresh.map(screen => `screens/${screen.name}`)].sort();
+    if (stableJson(Object.keys(entries).sort()) !== stableJson(allowed)) throw new Error('Archive contains missing or unexpected files');
+    const decode = name => new TextDecoder().decode(entries[name]);
+    if (stableJson(JSON.parse(decode('results.json'))) !== stableJson(published) || decode('index.html') !== html || decode('DAMIR.md') !== note) {
+      throw new Error('Archive belongs to another report generation');
+    }
+    for (const screen of fresh) if (hashBytes(entries[`screens/${screen.name}`]) !== screen.sha256) throw new Error('Archive screenshot hash does not match current evidence');
+  }
+  return model;
+}
+
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
   try {
     const args = process.argv.slice(2);
     if (args.some(arg => !['--pack', '--strict'].includes(arg))) throw new Error('Supported options: --pack, --strict');
     const { value } = apiPassword();
-    const model = generateSummary({ secrets: [value], pack: args.includes('--pack') });
+    if (args.includes('--strict') && args.includes('--pack')) throw new Error('Run e2e:pack and the read-only e2e:gate separately');
+    const model = args.includes('--strict') ? verifyPublishedSummary({ secrets: [value] }) : generateSummary({ secrets: [value], pack: args.includes('--pack') });
     console.log('Summary: playwright-report/summary/index.html; team notes: playwright-report/summary/DAMIR.md');
     if (args.includes('--pack')) console.log(`Package: playwright-report/summary/green-pavlodar-demo.zip (${model.packageKind}, ${model.screens.filter(screen => screen.fresh).length} current mock captures, no API captures)`);
     console.log(model.acceptance.message);

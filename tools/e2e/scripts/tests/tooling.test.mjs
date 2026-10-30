@@ -6,12 +6,12 @@ import { tmpdir } from 'node:os';
 import { basename, dirname, join } from 'node:path';
 import { apiPassword, baseUrl, redact } from '../environment.mjs';
 import { selectRun } from '../profiles.mjs';
-import { acceptance, collectRuns, inspectScreens, normalizeReport, runIsComplete } from '../report-model.mjs';
+import { acceptance, captureRunIsComplete, collectRuns, inspectScreens, normalizeReport, runIsComplete } from '../report-model.mjs';
 import { hashBytes, recordScreenCapture } from '../screen-provenance.mjs';
 import { errorDiagnostics } from '../api-diagnostics.mjs';
-import { unzipSync } from 'fflate';
+import { unzipSync, zipSync } from 'fflate';
 import { renderHtml } from '../report-html.mjs';
-import { generateSummary } from '../summary.mjs';
+import { generateSummary, verifyPublishedSummary } from '../summary.mjs';
 
 const revision = 'a'.repeat(40);
 const json = tests => ({ stats: { duration: 100 }, suites: [{ specs: tests.map(({ title = 'scenario', status = 'expected', result = 'passed', annotations = [], projectName = 'desktop' }) =>
@@ -176,6 +176,38 @@ test('missing/corrupt reports produce a diagnostic package without old screensho
   const entries = unzipSync(readFileSync(join(root, 'playwright-report/summary/green-pavlodar-demo.zip')));
   assert.deepEqual(Object.keys(entries).sort(), ['DAMIR.md', 'index.html', 'results.json']);
   assert.equal(JSON.parse(new TextDecoder().decode(entries['results.json'])).acceptance.ready, false);
+});
+
+test('summary then pack then read-only gate preserves archive and report bytes', t => {
+  const root = folder(t);
+  generateSummary({ root });
+  generateSummary({ root, pack: true });
+  const files = ['index.html', 'DAMIR.md', 'results.json', 'green-pavlodar-demo.zip'];
+  const before = files.map(file => readFileSync(join(root, 'playwright-report/summary', file)));
+  assert.equal(verifyPublishedSummary({ root }).acceptance.ready, false); // Empty diagnostic fixture stays blocked.
+  files.forEach((file, index) => assert.deepEqual(readFileSync(join(root, 'playwright-report/summary', file)), before[index]));
+});
+
+test('read-only gate rejects changed run evidence and an archive with unexpected old images', t => {
+  const root = folder(t); generateSummary({ root, pack: true });
+  mkdirSync(join(root, 'test-results/mock'), { recursive: true });
+  writeFileSync(join(root, 'test-results/mock/results.json'), '{broken');
+  assert.throws(() => verifyPublishedSummary({ root }), /summary is stale/);
+  generateSummary({ root, pack: true });
+  const archive = join(root, 'playwright-report/summary/green-pavlodar-demo.zip');
+  const entries = unzipSync(readFileSync(archive)); entries['screens/old-1280.png'] = Buffer.from('old frame');
+  writeFileSync(archive, zipSync(entries));
+  assert.throws(() => verifyPublishedSummary({ root }), /unexpected files/);
+});
+
+test('failed or flaky screenshot run cannot support acceptance even if its PNGs are fresh', () => {
+  const screenshots = run('screens', json([{}]));
+  screenshots.meta = { ...screenshots.meta, capturesScreens: true, selection: 'subset' };
+  assert.equal(captureRunIsComplete(screenshots), true); // The standard screens preset is deliberately a subset.
+  assert.equal(captureRunIsComplete({ ...screenshots, meta: { ...screenshots.meta, exitCode: 1 } }), false);
+  assert.equal(captureRunIsComplete({ ...screenshots, runnerFailed: true }), false);
+  const flaky = { ...screenshots, ...normalizeReport(json([{ status: 'flaky' }]), 'screens') };
+  assert.equal(captureRunIsComplete(flaky), false);
 });
 
 function captureFixture(t) {

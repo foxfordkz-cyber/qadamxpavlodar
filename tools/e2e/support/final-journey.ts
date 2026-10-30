@@ -28,8 +28,16 @@ export async function zoneToDocument(page: Page, mode: 'mock'|'api', lang: 'ru'|
   const twenties = years.locator('label').filter({ hasText: /^20 (лет|жыл)$/ });
   await twenties.click();
   await expect(twenties.getByRole('radio')).toBeChecked();
-  await expect(page.locator('.gp-tm-bar')).toBeVisible();
+  await expect(page.locator('.gp-tm-bar')).toHaveCount(1);
+  // On phones the duplicate map toolbar is deliberately hidden while the zone
+  // card is open; the same year control and effect figures remain in the card.
+  if (page.viewportSize()!.width > 760) await expect(page.locator('.gp-tm-bar')).toBeVisible();
+  else {
+    await expect(twenties).toBeVisible();
+    await expect(card.locator('.gp-tm')).toBeVisible();
+  }
   await expect(card.locator('.gp-tm__stats')).toContainText('м²');
+  await expect(card.locator('.gp-tm__stats strong')).toHaveCount(3);
   const reportLink = card.locator('a[href^="#/report?"]').first();
   await reportLink.click();
   await expect(page).toHaveURL(new RegExp(`#/report\\?.*site=${SITE}`));

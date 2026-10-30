@@ -78,7 +78,10 @@ test('API lab: displayed explanations and totals match independent cost, water a
       await expect(reason).toContainText(format(expectedWater));
       const context=zone.site.context??{};
       const expectedDeficit=Math.round(Math.max(0,1-(context.greenShare200m??0)/0.3)*100);
-      const expectedSocial=Math.min(100,(context.socialWithin400m??[]).length*25);
+      // Laboratory social evidence is typed OSM data, not legacy name strings.
+      const proofIds=new Set(zone.social.map((proof:any)=>proof.id));
+      expect(proofIds.size).toBe(zone.social.length);
+      const expectedSocial=Math.min(100,proofIds.size*25);
       expect(zone.explanation.find((e:any)=>e.key==='lab.factor.deficit').value).toBe(expectedDeficit);
       expect(zone.explanation.find((e:any)=>e.key==='lab.factor.social').value).toBe(expectedSocial);
       await expect(reason).toContainText(`Дефицит зелени: ${expectedDeficit}/100`);
