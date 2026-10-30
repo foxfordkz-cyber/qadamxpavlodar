@@ -6,6 +6,7 @@ import { MemoryDrafts } from '../../../apps/web/src/features/worker/drafts.mjs';
 import { safePhotoURL, parsePositions } from '../../../apps/web/src/features/worker/field-values.mjs';
 import { scheme, reportQuantities, assignmentPanel } from '../../../apps/web/src/features/worker/v2-views.mjs';
 import { ru } from '../../../apps/web/src/features/worker/strings.mjs';
+import { navigation } from '../../../apps/web/src/features/worker/cabinet-layout.mjs';
 
 // Import the component without constructing DOM nodes; restore import-only globals.
 const domDescriptors = new Map(['HTMLElement', 'customElements'].map(name => [name, Object.getOwnPropertyDescriptor(globalThis, name)]));
@@ -158,6 +159,100 @@ function ui() {
     pendingStarts: new Map(), photoSelectionVersion: 0, render() {}, refresh: async () => {}, dispatchEvent() {} });
   return component;
 }
+
+test('worker navigation: native buttons expose exactly one active page to keyboard and assistive technology', () => {
+  const pages = ['tasks', 'history', 'profile'];
+  for (const page of pages) {
+    const buttons = [...navigation({ t: ru, page }).matchAll(/<button\b([^>]*)>([\s\S]*?)<\/button>/g)];
+    assert.equal(buttons.length, 3);
+    assert.deepEqual(buttons.map(([, attributes]) => attributes.match(/data-id="([^"]+)"/)[1]), pages);
+    for (const [, attributes, content] of buttons) {
+      const current = attributes.includes(`data-id="${page}"`);
+      assert.match(attributes, /type="button"/);
+      assert.doesNotMatch(attributes, /disabled|tabindex="-1"/, 'navigation must remain natively keyboard operable');
+      assert.equal(/aria-current="page"/.test(attributes), current);
+      assert.equal(/class="active"/.test(attributes), current);
+      assert.match(content, /Смена|Журнал|Профиль/);
+    }
+  }
+});
+
+function navigationUi() {
+  const component = ui(), rendered = [], focused = [];
+  Object.assign(component, { page: 'tasks', date: '2026-10-28', section: 'submitted', mobileDetail: true,
+    queue: [], draft: { note: 'Несохранённая заметка', photo: picture() }, previewURL: 'blob:qa-photo',
+    assignmentDraft: { taskId: 't', workerIds: ['w', 'f'] }, message: { text: 'Черновик на устройстве', tone: 'info' } });
+  component.tasks = [component.selected];
+  component.render = () => {
+    rendered.push(component.page);
+    // The desktop and mobile landmarks contain duplicate actions. Only the visible
+    // matching button is a valid target after replacing the shadow-root markup.
+    component.root.querySelectorAll = () => [
+      { dataset: { id: component.page }, getClientRects: () => [], focus: () => assert.fail('focused hidden navigation') },
+      ...['tasks', 'history', 'profile'].map(id => ({ dataset: { id }, getClientRects: () => [{}],
+        focus: options => focused.push({ page: id, options }) })),
+    ];
+  };
+  component.root.querySelectorAll = () => [];
+  return { component, rendered, focused };
+}
+
+test('worker navigation: a round trip preserves an open photo report and lets an in-flight draft save finish', async () => {
+  const { component, rendered, focused } = navigationUi(), env = setup();
+  component.workflow = env.workflow;
+  component.draft = await env.workflow.draft('t');
+  Object.assign(component.draft, { note: 'Фото и пояснение ещё сохраняются', photo: picture() });
+  const draft = component.draft, saving = deferred();
+  component.writeChain = saving.promise.then(() => env.workflow.save(draft));
+  const preserved = Object.fromEntries(['date', 'section', 'selected', 'tasks', 'mobileDetail', 'draft',
+    'previewURL', 'assignmentDraft', 'message', 'writeChain', 'queue'].map(key => [key, component[key]]));
+  const photo = draft.photo, key = draft.idempotencyKey;
+
+  for (const page of ['history', 'profile', 'tasks']) {
+    await component.action('nav', page);
+    assert.equal(component.page, page);
+    for (const [field, value] of Object.entries(preserved)) assert.equal(component[field], value, `navigation replaced ${field}`);
+    assert.equal(component.draft.photo, photo);
+    assert.equal(component.draft.idempotencyKey, key);
+  }
+  assert.deepEqual(rendered, ['history', 'profile', 'tasks']);
+  assert.deepEqual(focused, ['history', 'profile', 'tasks'].map(page => ({ page, options: { preventScroll: true } })));
+  assert.equal(await env.drafts.get(draft.storageKey), undefined, 'navigation must not pretend that a pending write has completed');
+  saving.resolve();
+  await component.writeChain;
+  const saved = await env.workflow.draft('t');
+  assert.equal(saved.note, draft.note);
+  assert.equal(saved.idempotencyKey, key);
+  assert.equal(saved.photo.name, photo.name);
+  assert.deepEqual(await saved.photo.arrayBuffer(), await photo.arrayBuffer());
+  assert.equal(component.mobileDetail, true, 'returning to the shift must retain the open task form');
+});
+
+test('worker navigation: same-page and unknown actions retain focus and do not discard the current form', async () => {
+  const { component, rendered, focused } = navigationUi();
+  const draft = component.draft, selected = component.selected;
+  for (const page of ['tasks', 'unknown', '', undefined]) {
+    await component.action('nav', page);
+    assert.equal(component.page, 'tasks');
+    assert.equal(component.draft, draft);
+    assert.equal(component.selected, selected);
+    assert.equal(component.mobileDetail, true);
+  }
+  assert.deepEqual(rendered, []);
+  assert.deepEqual(focused, []);
+});
+
+test('worker navigation: an in-flight mutation blocks page and focus changes', async () => {
+  const { component, rendered, focused } = navigationUi();
+  const draft = component.draft;
+  component.busy = true;
+  await component.action('nav', 'history');
+  assert.equal(component.page, 'tasks');
+  assert.equal(component.draft, draft);
+  assert.equal(component.mobileDetail, true);
+  assert.deepEqual(rendered, []);
+  assert.deepEqual(focused, []);
+});
 
 test('real API UI: assignment retries preserve body/key and switching task creates a separate action', async () => {
   const component = ui(), calls = [];
