@@ -13,6 +13,7 @@ import { SpeciesPhoto } from '../species/SpeciesCardGrid';
 import { SurvivalMethod } from './SurvivalMethod';
 import { CareDrafts } from './CareDrafts';
 import { TimeMachinePanel } from './TimeMachinePanel';
+import { OutcomeZonePanel } from '../outcomes/OutcomeZonePanel';
 import { t } from '../../../shared/i18n';
 import { fmtPp } from '../../../shared/format';
 
@@ -40,7 +41,7 @@ export function ZoneAnalysisView({ site, tab, options, setOptions, autoPlay }: {
             {tab !== 'effect' && <Facts a={a} onPurpose={(p) => set({ purpose: p })} />}
             {res.loading && <p className="gp-small gp-muted" role="status">{tr("Пересчёт…")}</p>}
             {tab === 'plants' && <PlantsTab a={a} byId={byId} options={options} set={set} />}
-            {tab === 'cost' && <CostTab a={a} site={site} options={options} set={set} />}
+            {tab === 'cost' && <><CostTab a={a} site={site} options={options} set={set} /><OutcomeZonePanel siteId={site.id} requestKey={key} /></>}
             {tab === 'survival' && <SurvivalTab a={a} byId={byId} options={options} set={set} />}
             {tab === 'care' && <CareTab a={a} />}
             {tab === 'effect' && <EffectTab a={a} site={site} byId={byId} autoPlay={autoPlay} />}
@@ -171,6 +172,7 @@ function CostTab({ a, site, options, set }: { a: ZoneAnalysis; site: CandidateSi
       </table>
       <p className="gp-small gp-muted">{tr("Расценки — демо-справочник; администратор меняет их в «Справочниках», смета пересчитается.")}</p>
       <Button onClick={() => setCompare(!compare)}>{compare ? tr("Скрыть сравнение") : tr("Сравнить варианты: эконом / оптимальный / максимальный")}</Button>
+      <a className="gp-btn gp-btn--ghost" href={hrefFor('/outcomes', { site: site.id })}>{t('outcomePage.costLink')}</a>
       {compare && (
         <StateView loading={variants.loading} error={variants.error} hasData={!!variants.data} onRetry={variants.reload}>
           <div className="gp-table-wrap">

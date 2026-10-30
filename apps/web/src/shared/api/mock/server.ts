@@ -21,6 +21,9 @@ import { dashboardMetrics, greeneryLayer, soilsLayer, variantSummaries } from '.
 import { referenceFacts } from '../pavlodar';
 import { buildCareSchedule, parseCareRequest } from '../../analytics/careSchedule';
 import { GEOCODE_META, searchAddress } from '../geocode';
+import { ensureOutcomeDemo, readMockOutcomes } from './outcomes';
+import { createOutcomeSnapshot } from '../../analytics/outcomes';
+import type { SaveOutcomeForecast } from '../outcomesClient';
 import { decisionPlans, parseDecisionLabInput } from '../../analytics/decisionLab';
 import { decisionLabData } from '../decisionLabData';
 
@@ -136,6 +139,43 @@ function withIdempotency<T>(key: string | undefined, body: unknown, run: () => T
 type Handler = (m: RegExpMatchArray, o: RequestOptions) => { data: unknown; meta?: Record<string, unknown> };
 const routes: [HttpMethod, RegExp, Handler][] = [];
 const route = (method: HttpMethod, re: RegExp, h: Handler) => routes.push([method, re, h]);
+
+// UI-only mock routes. The production outcomes module is connected through its own adapter.
+route('GET', /^\/outcomes\/([^/]+)$/, (m) => {
+  requireRole('coordinator');
+  const site = findSite(decodeURIComponent(m[1]));
+  const data = readMockOutcomes(db, site.id);
+  save();
+  return { data };
+});
+route('POST', /^\/outcomes\/([^/]+)\/forecasts$/, (m, o) => {
+  requireRole('coordinator');
+  if (!o.idempotencyKey) fail(400, 'idempotency_required', 'idempotency_required');
+  const site = findSite(decodeURIComponent(m[1]));
+  const body = o.body as SaveOutcomeForecast;
+  const hash = JSON.stringify({ siteId: site.id, ...body });
+  const previous = db.idempotency[o.idempotencyKey!];
+  if (previous) {
+    if (previous.hash !== hash) fail(409, 'idempotency_conflict', 'idempotency_conflict');
+    return previous.body as { data: unknown };
+  }
+  if (body.siteVersion !== site.version || body.ratesVersion !== db.ratesVersion) fail(409, 'version_conflict', 'version_conflict');
+  // Commit snapshot and replay record in one localStorage value; no success if durable storage failed.
+  const next = structuredClone(db);
+  const store = ensureOutcomeDemo(next);
+  const id = `forecast-${++next.seq}`;
+  const snapshot = createOutcomeSnapshot({ id, site, catalog, rates: next.rates,
+    analysis: analyzeZone(site, catalog, ratesMap(next.rates), body.options),
+    provenance: { source: 'mock', capturedAt: nowIso(), dataClass: 'demo', isDemo: true,
+      evidenceIds: [...site.evidenceIds], siteVersion: site.version, ratesVersion: next.ratesVersion } });
+  const result = { data: { id, snapshot } };
+  store.forecasts.push(result.data);
+  next.idempotency[o.idempotencyKey!] = { hash, status: 200, body: result };
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(next)); }
+  catch { return fail(507, 'outcomes_storage', 'outcomes_storage'); }
+  db = next;
+  return result;
+});
 
 route('GET', /^\/auth\/me$/, () => {
   if (mockControls.role === 'anonymous') fail(401, 'unauthenticated', 'Сессия не найдена.');

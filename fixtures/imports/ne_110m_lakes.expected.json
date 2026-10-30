@@ -1,0 +1,295 @@
+{
+  "archiveSha256": "f2eed3c738a93010770acb0ba44273ea6a83b053641588bc902d9d6fd1cdafcb",
+  "version": "5.0.0",
+  "crs": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137.0,298.257223563]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+  "features": [
+    {
+      "name": "Lake Baikal",
+      "neId": 1159113127,
+      "bbox": [
+        103.6200114278329,
+        51.46001170511727,
+        109.92980716353523,
+        55.73091380474372
+      ],
+      "vertices": 39,
+      "consecutiveDuplicate": false
+    },
+    {
+      "name": "Lake Winnipeg",
+      "neId": 1159106747,
+      "bbox": [
+        -99.23680538612963,
+        50.448910630894474,
+        -96.23789282915149,
+        54.337097072967325
+      ],
+      "vertices": 12,
+      "consecutiveDuplicate": false
+    },
+    {
+      "name": "Great Slave Lake",
+      "neId": 1159106729,
+      "bbox": [
+        -118.3849906075604,
+        60.86000641544133,
+        -109.09010576051801,
+        63.08000010848407
+      ],
+      "vertices": 25,
+      "consecutiveDuplicate": false
+    },
+    {
+      "name": "Lake Ontario",
+      "neId": 1159106765,
+      "bbox": [
+        -79.76047481964547,
+        43.20237620703736,
+        -76.17999569365458,
+        44.20802541765336
+      ],
+      "vertices": 17,
+      "consecutiveDuplicate": false
+    },
+    {
+      "name": "Lake Erie",
+      "neId": 1159106757,
+      "bbox": [
+        -83.46283281119673,
+        41.435920722004255,
+        -78.90057898630869,
+        42.96500051530464
+      ],
+      "vertices": 19,
+      "consecutiveDuplicate": true
+    },
+    {
+      "name": "Lake Superior",
+      "neId": 1159112991,
+      "bbox": [
+        -92.01192338740282,
+        46.439594631529474,
+        -84.39559241406505,
+        48.93670319273738
+      ],
+      "vertices": 31,
+      "consecutiveDuplicate": false
+    },
+    {
+      "name": "Lake Victoria",
+      "neId": 1159113191,
+      "bbox": [
+        31.648022088352292,
+        -2.7145110001775734,
+        34.13624230320599,
+        0.3249933943658334
+      ],
+      "vertices": 19,
+      "consecutiveDuplicate": true
+    },
+    {
+      "name": "Lake Ladoga",
+      "neId": 1159113095,
+      "bbox": [
+        29.836711460089845,
+        59.92034800886205,
+        32.94432539239392,
+        61.77504100203353
+      ],
+      "vertices": 15,
+      "consecutiveDuplicate": true
+    },
+    {
+      "name": "Lake Balkhash",
+      "neId": 1159113111,
+      "bbox": [
+        73.4367375019309,
+        44.98893382423201,
+        79.2451684915375,
+        46.81678091082786
+      ],
+      "vertices": 26,
+      "consecutiveDuplicate": true
+    },
+    {
+      "name": "Lake Tanganyika",
+      "neId": 1159113185,
+      "bbox": [
+        29.101717563602506,
+        -8.786543470904988,
+        31.189032016735865,
+        -3.455499362810748
+      ],
+      "vertices": 22,
+      "consecutiveDuplicate": true
+    },
+    {
+      "name": "Lake Malawi",
+      "neId": 1159113163,
+      "bbox": [
+        33.906592238100984,
+        -14.401291192281633,
+        35.2602047055542,
+        -9.495440769084837
+      ],
+      "vertices": 20,
+      "consecutiveDuplicate": false
+    },
+    {
+      "name": "Vänern",
+      "neId": 1159113235,
+      "bbox": [
+        12.460149366921371,
+        58.50619660097878,
+        13.984449090234762,
+        59.336481838612315
+      ],
+      "vertices": 14,
+      "consecutiveDuplicate": true
+    },
+    {
+      "name": "Lake Okeechobee",
+      "neId": 1159106781,
+      "bbox": [
+        -80.93244462759287,
+        26.788959458924822,
+        -80.69369951040441,
+        27.068916530866048
+      ],
+      "vertices": 6,
+      "consecutiveDuplicate": true
+    },
+    {
+      "name": "Lago de Nicaragua",
+      "neId": 1159106791,
+      "bbox": [
+        -85.8851655748783,
+        11.147898667846633,
+        -84.85548682324658,
+        11.940330918826362
+      ],
+      "vertices": 8,
+      "consecutiveDuplicate": true
+    },
+    {
+      "name": "Lake Tana",
+      "neId": 1159113265,
+      "bbox": [
+        37.01482628759251,
+        11.713393866416595,
+        37.518361443844526,
+        12.233878892460353
+      ],
+      "vertices": 8,
+      "consecutiveDuplicate": true
+    },
+    {
+      "name": "Lago Titicaca",
+      "neId": 1159113279,
+      "bbox": [
+        -69.98365556504908,
+        -16.536406345284952,
+        -68.74623755560401,
+        -15.35425628017606
+      ],
+      "vertices": 17,
+      "consecutiveDuplicate": true
+    },
+    {
+      "name": "Cedar Lake",
+      "neId": 1159123681,
+      "bbox": [
+        -100.60685095905177,
+        53.120427151087455,
+        -99.39317827024485,
+        54.23033356385231
+      ],
+      "vertices": 20,
+      "consecutiveDuplicate": true
+    },
+    {
+      "name": "Lake Onega",
+      "neId": 1159113251,
+      "bbox": [
+        34.265019972477376,
+        60.948579820389625,
+        36.391401808423325,
+        62.762448432050576
+      ],
+      "vertices": 24,
+      "consecutiveDuplicate": false
+    },
+    {
+      "name": "Great Salt Lake",
+      "neId": 1159113251,
+      "bbox": [
+        -112.87814327680917,
+        40.851460272783186,
+        -112.13875688357706,
+        41.62815705013003
+      ],
+      "vertices": 10,
+      "consecutiveDuplicate": false
+    },
+    {
+      "name": "Great Bear Lake",
+      "neId": 1159106721,
+      "bbox": [
+        -124.95363440005697,
+        64.87999359807459,
+        -117.60545162643749,
+        66.96929759385118
+      ],
+      "vertices": 25,
+      "consecutiveDuplicate": true
+    },
+    {
+      "name": "Lake Athabasca",
+      "neId": 1159106863,
+      "bbox": [
+        -111.19948605023998,
+        58.56017263450765,
+        -106.54517066122398,
+        59.55042226830068
+      ],
+      "vertices": 9,
+      "consecutiveDuplicate": true
+    },
+    {
+      "name": "Reindeer Lake",
+      "neId": 1159106817,
+      "bbox": [
+        -103.2825015938281,
+        56.34539826112639,
+        -101.54384802936804,
+        58.01914622662788
+      ],
+      "vertices": 15,
+      "consecutiveDuplicate": true
+    },
+    {
+      "name": "Lake Huron",
+      "neId": 1159113021,
+      "bbox": [
+        -84.93000423861146,
+        42.98001251888543,
+        -79.76292945017934,
+        46.55576325132161
+      ],
+      "vertices": 32,
+      "consecutiveDuplicate": false
+    },
+    {
+      "name": "Lake Michigan",
+      "neId": 1159113005,
+      "bbox": [
+        -87.98831885450912,
+        41.640714423176945,
+        -84.75355506055087,
+        46.03000722918408
+      ],
+      "vertices": 32,
+      "consecutiveDuplicate": false
+    }
+  ]
+}

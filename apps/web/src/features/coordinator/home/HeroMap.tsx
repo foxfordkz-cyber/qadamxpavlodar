@@ -8,6 +8,14 @@ import { growthFrame, type GrowthScene } from '../zone/timeMachine';
 setWorkerUrl(workerUrl);
 const STYLE_URL = 'https://tiles.openfreemap.org/styles/liberty';
 const PANEL_MIN_WIDTH = 761;
+// Деревья и клумбы идут первыми, кусты разбросаны равномерно: на первом экране их достаточно части.
+const HERO_MODELS = 160;
+
+/** Слабому устройству или режиму экономии трафика достаточно контура участка: рост откроется по кнопке. */
+function canPlant() {
+  const nav = navigator as Navigator & { deviceMemory?: number; connection?: { saveData?: boolean } };
+  return !nav.connection?.saveData && (nav.deviceMemory ?? 8) >= 4 && navigator.hardwareConcurrency >= 4;
+}
 
 const zones = (sites: CandidateSite[], focusId: string | null) => ({
   type: 'FeatureCollection' as const,
@@ -76,17 +84,19 @@ export function HeroMap({ sites, focus, scene, onFail }: { sites: CandidateSite[
 
   useEffect(() => {
     const map = mapRef.current;
-    if (!ready || !map || !scene || planted.current) return;
+    if (!ready || !map || !scene || planted.current || !canPlant()) return;
     planted.current = true;
     const g = growthFrame(scene, 20);
-    void import('../projects/scene3d').then(({ createPlantingLayer }) => {
+    // Сначала карта и панель, модель — когда браузер свободен, чтобы первый экран открывался сразу.
+    const plant = () => void import('../projects/scene3d').then(({ createPlantingLayer }) => {
       if (mapRef.current !== map) return;
       try {
-        map.addLayer(createPlantingLayer({ origin: g.origin, siteRing: g.ring, items: g.items, species: g.species, stage: g.k }).layer);
+        map.addLayer(createPlantingLayer({ origin: g.origin, siteRing: g.ring, items: g.items.slice(0, HERO_MODELS), species: g.species, stage: g.k }).layer);
       } catch {
         /* без WebGL-контекста для three.js участок остаётся выделенным контуром */
       }
     }).catch(() => { /* модель не загрузилась: контур участка виден и без неё */ });
+    if ('requestIdleCallback' in window) requestIdleCallback(plant, { timeout: 2500 }); else setTimeout(plant, 800);
   }, [ready, scene]);
 
   return <div ref={box} className={`gp-hero__map ${ready ? 'is-ready' : ''}`} aria-hidden="true" />;

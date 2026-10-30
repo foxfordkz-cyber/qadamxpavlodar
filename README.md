@@ -178,6 +178,71 @@ fixtures/photos/                 фото со свободной лицензи
 6. **✦ Ассистент** → спросите своими словами, например: «что можно озеленить на 50 млн».
 
 
+## Проверки качества и покрытие
+
+[Quality](.github/workflows/quality.yml) запускается на pull request в `codex/coordinator`
+и push в эту ветку. Три независимых задания используют Node 24: веб (типы, сборка,
+тесты, все `check:*` и покрытие), сервер (типы, сборка и тесты) и кабинет работника.
+Установка — `npm ci` по существующим lockfiles; пакет работника внешних зависимостей
+не имеет. Ключи моделей и секреты репозитория не нужны. Серверные тесты работают без
+`.env`: одноразовый пароль создаёт `tests/setup-env.mjs`.
+
+Основные команды из корня:
+
+```powershell
+npm --prefix apps/web ci
+npm --prefix apps/server ci
+npm --prefix apps/web run typecheck
+npm --prefix apps/web run build
+npm --prefix apps/web test
+npm --prefix apps/web run check:i18n
+npm --prefix apps/web run check:zones
+npm --prefix apps/web run check:survival
+npm --prefix apps/web run check:care
+npm --prefix apps/web run test:coverage
+npm --prefix apps/server run typecheck
+npm --prefix apps/server run build
+npm --prefix apps/server test -- --test-concurrency=2
+npm --prefix tools/worker-demo test
+```
+
+`npm run test:coverage` использует [встроенное покрытие Node](https://nodejs.org/docs/latest-v24.x/api/test.html#collecting-code-coverage),
+без дополнительной библиотеки и без порога. Esbuild создаёт общие ESM-фрагменты и
+связанные source maps с исходным текстом; сторонние пакеты остаются внешними.
+Тот же набор тестов измеряется последовательно в одном процессе: это устраняет
+повторные копии модулей и зависимость счётчиков source maps от порядка объединения
+процессов. Обычный `npm test` сохраняет изоляцию файлов тестов отдельными процессами.
+
+Измерено **30.10.2026**, Windows, Node **v24.17.0**, чистый коммит
+`de3d84ebb517a4d670d01b1a5ff374058d8416c2`: **171 тест**, отчёт по **52 исходным TS/TSX-файлам**.
+
+| Метрика | Покрыто / учтено | Процент |
+|---|---:|---:|
+| Строки | 3053 / 5709 | 53,48% |
+| Ветви | 1676 / 1934 | 86,66% |
+| Функции | 589 / 776 | 75,90% |
+
+Это покрытие исходников, достигнутых данным набором Node-тестов и сопоставленных
+встроенным экспериментальным механизмом Node, **не всего приложения**. В знаменатель
+не входят незагруженные файлы, тесты, `node_modules`, fixtures, JSON-данные и диапазоны,
+которые Node не смог сопоставить с исходниками. Показатель не измеряет браузерные
+сценарии, сервер или визуальное качество. Не следует складывать его с результатами E2E.
+
+После запуска доступны `apps/web/dist-tests/coverage/lcov.info` и `summary.json`.
+JSON содержит дату, Node, SHA, признак незакоммиченных изменений, список файлов,
+исключения и числители/знаменатели. CI сохраняет эти два отчёта как артефакт на семь
+дней. Старые отчёты удаляются перед измерением; пустой отчёт, дубли путей или строки
+из bundle вместо `src` считаются ошибкой, а не успешным измерением.
+
+Прямые тесты `v2compat` проверяют соответствия сайтов, проверок, задач, бригад,
+проектов/согласованных ревизий, отчётов и ошибок; отдельно — версии, ключи повторов,
+пагинацию и передачу ошибок API. Сами преобразования этим изменением не переписываются.
+
+Playwright остаётся отдельной приёмкой в `tools/e2e`. Дополнительное задание E2E в CI
+пока не включено: расширенный набор #16 требует отдельного финального прогона mock/API
+на одном интегрированном SHA. При создании ветки `main` для жюри капитан должен добавить
+её в фильтры workflow; текущие фильтры относятся только к `codex/coordinator`.
+
 ## Municipal backend integration
 
 The recovered municipal backend is integrated with the coordinator server on `feature/backend-municipal`. See [merge verification](apps/server/BACKEND_MERGE_VERIFICATION.md) for schema 5 migration from both historical schema 4 layouts, durable imports/snapshots/PDF/XLSX, tests and remaining Docker/provider checks; [workspace recovery](WORKSPACE_RECOVERY_REPORT.md) records source preservation. Use `?source=api` for real HTTP integration.

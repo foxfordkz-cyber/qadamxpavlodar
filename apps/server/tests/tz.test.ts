@@ -115,7 +115,7 @@ test('migration 4 rebuilds v2_users with the viewer role and keeps every referen
   old.close();
   try {
     const s = new Store(path);
-    assert.equal(s.get('PRAGMA user_version')?.user_version, 5);
+    assert.equal(s.get('PRAGMA user_version')?.user_version, 6);
     assert.equal(s.get('SELECT user_id FROM v2_sessions')?.user_id, 'u1');
     s.run("INSERT INTO v2_users VALUES ('u2','view','DEMO','viewer',1,'x',1,'t','t')");
     assert.throws(() => s.run("INSERT INTO v2_users VALUES ('u3','bad','DEMO','superuser',1,'x',1,'t','t')"), /CHECK/);
