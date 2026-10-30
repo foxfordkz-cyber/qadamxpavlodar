@@ -43,3 +43,8 @@ export function priorities(sites: Json[], ref: ReturnType<typeof reference>, wei
   return remember(`priorities:${stamp}:${hash(weights)}:${ref.version}`, () => web.priorities(sites, ref.species, ref.map, weights)) as Json[];
 }
 export const cacheSize = () => cache.size;
+/** Include actual reference data and request parameters, so edits invalidate cached plans. */
+export function decisionLab(sites: Json[], ref: ReturnType<typeof reference>, input: Json) {
+  return remember(`decision-lab:${hash({ sites, species: ref.species, rates: ref.rates, version: ref.version, input })}`,
+    () => web.decisionPlans({ ...web.decisionLabData(sites, ref.species, ref.rates, 'api', ref.version, new Date().toISOString()), ...input }));
+}
