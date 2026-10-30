@@ -55,6 +55,14 @@ export async function screenshot(page: Page, name: string, info: TestInfo) {
   }
   await presentation(page);
   await page.evaluate(async () => { await document.fonts.ready; });
+  // Lazy external photos may still be downloading after the page and fonts are ready.
+  // Only images actually inside the captured viewport must finish; offscreen images
+  // must not hold a screenshot hostage. A broken visible image is not a ready frame.
+  await expect.poll(() => page.locator('img').evaluateAll(images => images.filter(image => {
+    const rect = image.getBoundingClientRect();
+    return rect.width > 0 && rect.height > 0 && rect.top < innerHeight && rect.bottom > 0 &&
+      rect.left < innerWidth && rect.right > 0 && (!image.complete || image.naturalWidth === 0);
+  }).length), { message: 'Visible presentation photos must finish loading', timeout: 60_000 }).toBe(0);
   // Candidate captures are reviewed before replacing the presentation materials.
   const dir = resolve(process.env.E2E_SCREEN_REVIEW === '1' ? 'test-results/screen-review' : 'screens');
   await mkdir(dir, { recursive: true });
