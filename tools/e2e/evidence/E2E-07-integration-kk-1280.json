@@ -1,0 +1,122 @@
+[
+  {
+    "label": "Шолу",
+    "href": "#/",
+    "left": 20,
+    "right": 72.59375,
+    "top": 44,
+    "bottom": 75.5625,
+    "width": 52.59375,
+    "viewport": 1280
+  },
+  {
+    "label": "Учаскелер картасы",
+    "href": "#/map",
+    "left": 74.59375,
+    "right": 216.765625,
+    "top": 44,
+    "bottom": 75.5625,
+    "width": 142.171875,
+    "viewport": 1280
+  },
+  {
+    "label": "Мәселелі аймақтар",
+    "href": "#/problems",
+    "left": 218.765625,
+    "right": 361.890625,
+    "top": 44,
+    "bottom": 75.5625,
+    "width": 143.125,
+    "viewport": 1280
+  },
+  {
+    "label": "Басымдықтар",
+    "href": "#/priorities",
+    "left": 363.890625,
+    "right": 470.1875,
+    "top": 44,
+    "bottom": 75.5625,
+    "width": 106.296875,
+    "viewport": 1280
+  },
+  {
+    "label": "Өсімдіктер",
+    "href": "#/species",
+    "left": 472.1875,
+    "right": 559.96875,
+    "top": 44,
+    "bottom": 75.5625,
+    "width": 87.78125,
+    "viewport": 1280
+  },
+  {
+    "label": "Көгалдандыру жобалары",
+    "href": "#/projects",
+    "left": 561.96875,
+    "right": 743.015625,
+    "top": 44,
+    "bottom": 75.5625,
+    "width": 181.046875,
+    "viewport": 1280
+  },
+  {
+    "label": "Болжам және нақты нәтиже",
+    "href": "#/outcomes",
+    "left": 745.015625,
+    "right": 944.703125,
+    "top": 44,
+    "bottom": 75.5625,
+    "width": 199.6875,
+    "viewport": 1280
+  },
+  {
+    "label": "Анықтамалықтар",
+    "href": "#/rates",
+    "left": 946.703125,
+    "right": 1074.5,
+    "top": 44,
+    "bottom": 75.5625,
+    "width": 127.796875,
+    "viewport": 1280
+  },
+  {
+    "label": "Импорт",
+    "href": "#/import",
+    "left": 1076.5,
+    "right": 1142.53125,
+    "top": 44,
+    "bottom": 75.5625,
+    "width": 66.03125,
+    "viewport": 1280
+  },
+  {
+    "label": "Нұсқаулық",
+    "href": "#/guide",
+    "left": 1151.53125,
+    "right": 1327.53125,
+    "top": 86.5625,
+    "bottom": 118.125,
+    "width": 176,
+    "viewport": 1280
+  },
+  {
+    "label": "Жұмыс жоспары",
+    "href": "#/tasks",
+    "left": 1151.53125,
+    "right": 1327.53125,
+    "top": 146.796875,
+    "bottom": 178.359375,
+    "width": 176,
+    "viewport": 1280
+  },
+  {
+    "label": "Есептер",
+    "href": "#/reports",
+    "left": 1151.53125,
+    "right": 1327.53125,
+    "top": 180.359375,
+    "bottom": 211.921875,
+    "width": 176,
+    "viewport": 1280
+  }
+]

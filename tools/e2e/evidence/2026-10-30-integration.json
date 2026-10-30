@@ -1,0 +1,2100 @@
+{
+  "applicationAndTestSha": "9665a69636468e39ff487214204770b46a11849c",
+  "branch": "qa/acceptance-20261030",
+  "experimental": true,
+  "sources": {
+    "coordinator": "b53c180a67686d1d2fc1f79d0295884783d5bb4b",
+    "integration27": "6e5de2efb7d21e45e9b13072476162640dec2fec",
+    "ui21": "7b2978215911184e64cc36817b8c8d46d30634b4",
+    "api23": "bdffafbb689e5a85a4eb4a7830c1000ceb879ea1",
+    "workflow24": "d8ab77c93f314ddcc733802039931ea3ab90225b",
+    "qa16": "4ddeed7ee9561cb3c0b7f13ec2a3f532191e6e08",
+    "deploy22Included": "1a006571ec66bbef176ccc460a5295d7b824e8ad"
+  },
+  "environment": {
+    "os": "Windows",
+    "node": "24.22.2",
+    "playwright": "1.64.1",
+    "chromium": "156.0.8078.4",
+    "workers": 2,
+    "retries": 0,
+    "database": "new isolated SQLite, synthetic demo registry and reports",
+    "docker": false,
+    "https": false
+  },
+  "mock": {
+    "run": {
+      "profile": "mock",
+      "selection": "full",
+      "target": "http://localhost:5176",
+      "revision": "9665a69636468e39ff487214204770b46a11849c",
+      "dirty": false,
+      "capturesScreens": true,
+      "startedAt": "2026-10-30T13:19:13.557Z",
+      "state": "finished",
+      "exitCode": 1,
+      "endedAt": "2026-10-30T13:28:42.746Z"
+    },
+    "counts": {
+      "passed": 181,
+      "failed": 1,
+      "skipped": 2,
+      "fixme": 0
+    },
+    "tests": [
+      {
+        "file": "download.mock.spec.ts",
+        "title": "zone report downloads Russian and Kazakh Word memos through export settings",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 8046
+      },
+      {
+        "file": "download.mock.spec.ts",
+        "title": "zone report downloads Russian and Kazakh Word memos through export settings",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 6149
+      },
+      {
+        "file": "drawing.mock.spec.ts",
+        "title": "drawing ru: search counters, undo, save a polygon and reopen after reload",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 15366
+      },
+      {
+        "file": "drawing.mock.spec.ts",
+        "title": "drawing kk: search counters, undo, save a polygon and reopen after reload",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 18197
+      },
+      {
+        "file": "drawing.mock.spec.ts",
+        "title": "drawing ru: search counters, undo, save a polygon and reopen after reload",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 9862
+      },
+      {
+        "file": "drawing.mock.spec.ts",
+        "title": "drawing kk: search counters, undo, save a polygon and reopen after reload",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 12579
+      },
+      {
+        "file": "locale.mock.spec.ts",
+        "title": "Kazakh navigation is enabled with ?lang=kk",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 4885
+      },
+      {
+        "file": "locale.mock.spec.ts",
+        "title": "/: Kazakh controls have no Russian service labels",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 5529
+      },
+      {
+        "file": "locale.mock.spec.ts",
+        "title": "/map: Kazakh controls have no Russian service labels",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 3529
+      },
+      {
+        "file": "locale.mock.spec.ts",
+        "title": "/problems: Kazakh controls have no Russian service labels",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 6195
+      },
+      {
+        "file": "locale.mock.spec.ts",
+        "title": "/priorities: Kazakh controls have no Russian service labels",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 3386
+      },
+      {
+        "file": "locale.mock.spec.ts",
+        "title": "/species: Kazakh controls have no Russian service labels",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 3919
+      },
+      {
+        "file": "locale.mock.spec.ts",
+        "title": "/projects: Kazakh controls have no Russian service labels",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 3029
+      },
+      {
+        "file": "locale.mock.spec.ts",
+        "title": "/rates: Kazakh controls have no Russian service labels",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 3199
+      },
+      {
+        "file": "locale.mock.spec.ts",
+        "title": "/import: Kazakh controls have no Russian service labels",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 3112
+      },
+      {
+        "file": "locale.mock.spec.ts",
+        "title": "/guide: Kazakh controls have no Russian service labels",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 3148
+      },
+      {
+        "file": "locale.mock.spec.ts",
+        "title": "/tasks: Kazakh controls have no Russian service labels",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 3859
+      },
+      {
+        "file": "locale.mock.spec.ts",
+        "title": "/reports: Kazakh controls have no Russian service labels",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 2473
+      },
+      {
+        "file": "locale.mock.spec.ts",
+        "title": "Kazakh navigation is enabled with ?lang=kk",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 3659
+      },
+      {
+        "file": "locale.mock.spec.ts",
+        "title": "/: Kazakh controls have no Russian service labels",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 3151
+      },
+      {
+        "file": "locale.mock.spec.ts",
+        "title": "/map: Kazakh controls have no Russian service labels",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 2663
+      },
+      {
+        "file": "locale.mock.spec.ts",
+        "title": "/problems: Kazakh controls have no Russian service labels",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 2698
+      },
+      {
+        "file": "locale.mock.spec.ts",
+        "title": "/priorities: Kazakh controls have no Russian service labels",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 2826
+      },
+      {
+        "file": "locale.mock.spec.ts",
+        "title": "/species: Kazakh controls have no Russian service labels",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 2288
+      },
+      {
+        "file": "locale.mock.spec.ts",
+        "title": "/projects: Kazakh controls have no Russian service labels",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 2021
+      },
+      {
+        "file": "locale.mock.spec.ts",
+        "title": "/rates: Kazakh controls have no Russian service labels",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 2346
+      },
+      {
+        "file": "locale.mock.spec.ts",
+        "title": "/import: Kazakh controls have no Russian service labels",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 2077
+      },
+      {
+        "file": "locale.mock.spec.ts",
+        "title": "/guide: Kazakh controls have no Russian service labels",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 2268
+      },
+      {
+        "file": "locale.mock.spec.ts",
+        "title": "/tasks: Kazakh controls have no Russian service labels",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 2379
+      },
+      {
+        "file": "locale.mock.spec.ts",
+        "title": "/reports: Kazakh controls have no Russian service labels",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 1730
+      },
+      {
+        "file": "outcomes.mock.spec.ts",
+        "title": "outcomes mock: ru real demo history, annual/early/partial/undated selections and no stale zone",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 6482
+      },
+      {
+        "file": "outcomes.mock.spec.ts",
+        "title": "outcomes mock: kk real demo history, annual/early/partial/undated selections and no stale zone",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 7039
+      },
+      {
+        "file": "outcomes.mock.spec.ts",
+        "title": "outcomes mock: P4 reference cases I01–I07 are calculated in the application, unknown is not dead",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 8347
+      },
+      {
+        "file": "outcomes.mock.spec.ts",
+        "title": "outcomes mock: independent prices, common basis, durable snapshots and unchanged saved rates",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 17392
+      },
+      {
+        "file": "outcomes.mock.spec.ts",
+        "title": "outcomes mock: mixed or unknown cost never wins or becomes zero",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 7754
+      },
+      {
+        "file": "outcomes.mock.spec.ts",
+        "title": "outcomes mock: viewer cannot save; loading/error/retry never retain previous values",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 7920
+      },
+      {
+        "file": "outcomes.mock.spec.ts",
+        "title": "outcomes mock: ru real demo history, annual/early/partial/undated selections and no stale zone",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 4949
+      },
+      {
+        "file": "outcomes.mock.spec.ts",
+        "title": "outcomes mock: kk real demo history, annual/early/partial/undated selections and no stale zone",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 4616
+      },
+      {
+        "file": "outcomes.mock.spec.ts",
+        "title": "outcomes mock: P4 reference cases I01–I07 are calculated in the application, unknown is not dead",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 6329
+      },
+      {
+        "file": "outcomes.mock.spec.ts",
+        "title": "outcomes mock: independent prices, common basis, durable snapshots and unchanged saved rates",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 13647
+      },
+      {
+        "file": "outcomes.mock.spec.ts",
+        "title": "outcomes mock: mixed or unknown cost never wins or becomes zero",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 6226
+      },
+      {
+        "file": "outcomes.mock.spec.ts",
+        "title": "outcomes mock: viewer cannot save; loading/error/retry never retain previous values",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 6706
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/: opens without JavaScript errors or horizontal overflow",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 3971
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/: presentation screenshot",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 11545
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/map: opens without JavaScript errors or horizontal overflow",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 7771
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/map: presentation screenshot",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 10611
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/problems: opens without JavaScript errors or horizontal overflow",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 4035
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/problems: presentation screenshot",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 6086
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/priorities: opens without JavaScript errors or horizontal overflow",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 5013
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/priorities: presentation screenshot",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 5518
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/species: opens without JavaScript errors or horizontal overflow",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 3933
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/species: presentation screenshot",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 7874
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/projects: opens without JavaScript errors or horizontal overflow",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 3482
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/projects: presentation screenshot",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 2719
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/rates: opens without JavaScript errors or horizontal overflow",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 4522
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/rates: presentation screenshot",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 4206
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/import: opens without JavaScript errors or horizontal overflow",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 2782
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/import: presentation screenshot",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 3170
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/guide: opens without JavaScript errors or horizontal overflow",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 3440
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/guide: presentation screenshot",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 4369
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/tasks: opens without JavaScript errors or horizontal overflow",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 3142
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/tasks: presentation screenshot",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 4707
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/reports: opens without JavaScript errors or horizontal overflow",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 3443
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/reports: presentation screenshot",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 3711
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "time machine: Посадка presentation screenshot",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 15772
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "time machine: 20 лет presentation screenshot",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 16059
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/: opens without JavaScript errors or horizontal overflow",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 2857
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/: presentation screenshot",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 5116
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/map: opens without JavaScript errors or horizontal overflow",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 4996
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/map: presentation screenshot",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 4934
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/problems: opens without JavaScript errors or horizontal overflow",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 2277
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/problems: presentation screenshot",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 2886
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/priorities: opens without JavaScript errors or horizontal overflow",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 2242
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/priorities: presentation screenshot",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 3139
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/species: opens without JavaScript errors or horizontal overflow",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 2263
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/species: presentation screenshot",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 6157
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/projects: opens without JavaScript errors or horizontal overflow",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 2005
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/projects: presentation screenshot",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 1856
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/rates: opens without JavaScript errors or horizontal overflow",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 1754
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/rates: presentation screenshot",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 2355
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/import: opens without JavaScript errors or horizontal overflow",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 2093
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/import: presentation screenshot",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 2133
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/guide: opens without JavaScript errors or horizontal overflow",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 2452
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/guide: presentation screenshot",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 2536
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/tasks: opens without JavaScript errors or horizontal overflow",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 2273
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/tasks: presentation screenshot",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 2672
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/reports: opens without JavaScript errors or horizontal overflow",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 2383
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "/reports: presentation screenshot",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 2526
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "time machine: Посадка presentation screenshot",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 10219
+      },
+      {
+        "file": "pages.mock.spec.ts",
+        "title": "time machine: 20 лет presentation screenshot",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 9943
+      },
+      {
+        "file": "pr14.mock.spec.ts",
+        "title": "PR14: header language persists after reload and preserves the current route",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 12579
+      },
+      {
+        "file": "pr14.mock.spec.ts",
+        "title": "PR14: catalogue finds the same pine by Russian, Kazakh and Latin names",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 4533
+      },
+      {
+        "file": "pr14.mock.spec.ts",
+        "title": "PR14: unconfirmed Kazakh plant names fall back to the Russian catalogue name",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 7173
+      },
+      {
+        "file": "pr14.mock.spec.ts",
+        "title": "PR14: translated species in zone tab Растения preserve Latin names",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 9745
+      },
+      {
+        "file": "pr14.mock.spec.ts",
+        "title": "PR14: translated species in zone tab Приживаемость preserve Latin names",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 9291
+      },
+      {
+        "file": "pr14.mock.spec.ts",
+        "title": "PR14: estimate translates service headings and preserves every numeric cost cell",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 8937
+      },
+      {
+        "file": "pr14.mock.spec.ts",
+        "title": "PR14: zone report translates plant names while retaining Latin names and numbers",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 5247
+      },
+      {
+        "file": "pr14.mock.spec.ts",
+        "title": "PR14: dashboard counters translate their labels while preserving data values",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 6165
+      },
+      {
+        "file": "pr14.mock.spec.ts",
+        "title": "PR14: rule assistant answers Kazakh then Russian with identical priorities and factors",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 12257
+      },
+      {
+        "file": "pr14.mock.spec.ts",
+        "title": "PR14: header language persists after reload and preserves the current route",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 6081
+      },
+      {
+        "file": "pr14.mock.spec.ts",
+        "title": "PR14: catalogue finds the same pine by Russian, Kazakh and Latin names",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 3157
+      },
+      {
+        "file": "pr14.mock.spec.ts",
+        "title": "PR14: unconfirmed Kazakh plant names fall back to the Russian catalogue name",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 4901
+      },
+      {
+        "file": "pr14.mock.spec.ts",
+        "title": "PR14: translated species in zone tab Растения preserve Latin names",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 7811
+      },
+      {
+        "file": "pr14.mock.spec.ts",
+        "title": "PR14: translated species in zone tab Приживаемость preserve Latin names",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 6519
+      },
+      {
+        "file": "pr14.mock.spec.ts",
+        "title": "PR14: estimate translates service headings and preserves every numeric cost cell",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 6232
+      },
+      {
+        "file": "pr14.mock.spec.ts",
+        "title": "PR14: zone report translates plant names while retaining Latin names and numbers",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 2649
+      },
+      {
+        "file": "pr14.mock.spec.ts",
+        "title": "PR14: dashboard counters translate their labels while preserving data values",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 3817
+      },
+      {
+        "file": "pr14.mock.spec.ts",
+        "title": "PR14: rule assistant answers Kazakh then Russian with identical priorities and factors",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 6925
+      },
+      {
+        "file": "regressions.mock.spec.ts",
+        "title": "assistant drawing: specialist sends «нарисуй зону» from priorities and cancels",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 8417
+      },
+      {
+        "file": "regressions.mock.spec.ts",
+        "title": "assistant drawing: viewer is denied «нарисуй зону»",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 7350
+      },
+      {
+        "file": "regressions.mock.spec.ts",
+        "title": "assistant drawing: specialist sends «аймақ сыз» from priorities and cancels",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 5617
+      },
+      {
+        "file": "regressions.mock.spec.ts",
+        "title": "assistant drawing: viewer is denied «аймақ сыз»",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 6385
+      },
+      {
+        "file": "regressions.mock.spec.ts",
+        "title": "time machine: canopy grows at 5, 10, 20 years; planting describes seedlings",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 13265
+      },
+      {
+        "file": "regressions.mock.spec.ts",
+        "title": "mobile report: document fits the viewport and wide tables scroll internally",
+        "project": "desktop",
+        "status": "skipped",
+        "fixme": false,
+        "annotations": [
+          {
+            "type": "skip",
+            "description": "The report overflow regression targets 375×812"
+          }
+        ],
+        "durationMs": 987
+      },
+      {
+        "file": "regressions.mock.spec.ts",
+        "title": "empty map list: reset restores every zone",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 6163
+      },
+      {
+        "file": "regressions.mock.spec.ts",
+        "title": "empty species list: reset restores every species",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 4429
+      },
+      {
+        "file": "regressions.mock.spec.ts",
+        "title": "empty problems list: show all clears both filters and restores rows",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 5024
+      },
+      {
+        "file": "regressions.mock.spec.ts",
+        "title": "presentation: present=1 enables the mode and the exit pill disables it",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 1258
+      },
+      {
+        "file": "regressions.mock.spec.ts",
+        "title": "priorities: top ten IDs and numbered rows persist when selecting a zone",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 6586
+      },
+      {
+        "file": "regressions.mock.spec.ts",
+        "title": "assistant drawing: specialist sends «нарисуй зону» from priorities and cancels",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 4631
+      },
+      {
+        "file": "regressions.mock.spec.ts",
+        "title": "assistant drawing: viewer is denied «нарисуй зону»",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 3918
+      },
+      {
+        "file": "regressions.mock.spec.ts",
+        "title": "assistant drawing: specialist sends «аймақ сыз» from priorities and cancels",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 4199
+      },
+      {
+        "file": "regressions.mock.spec.ts",
+        "title": "assistant drawing: viewer is denied «аймақ сыз»",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 4505
+      },
+      {
+        "file": "regressions.mock.spec.ts",
+        "title": "time machine: canopy grows at 5, 10, 20 years; planting describes seedlings",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 11878
+      },
+      {
+        "file": "regressions.mock.spec.ts",
+        "title": "mobile report: document fits the viewport and wide tables scroll internally",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 2104
+      },
+      {
+        "file": "regressions.mock.spec.ts",
+        "title": "empty map list: reset restores every zone",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 3869
+      },
+      {
+        "file": "regressions.mock.spec.ts",
+        "title": "empty species list: reset restores every species",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 4333
+      },
+      {
+        "file": "regressions.mock.spec.ts",
+        "title": "empty problems list: show all clears both filters and restores rows",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 3308
+      },
+      {
+        "file": "regressions.mock.spec.ts",
+        "title": "presentation: present=1 enables the mode and the exit pill disables it",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 1293
+      },
+      {
+        "file": "regressions.mock.spec.ts",
+        "title": "priorities: top ten IDs and numbered rows persist when selecting a zone",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 4423
+      },
+      {
+        "file": "session.mock.spec.ts",
+        "title": "language switcher: Специалист switches labels and persists language without changing route",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 7132
+      },
+      {
+        "file": "session.mock.spec.ts",
+        "title": "language switcher: Администратор switches labels and persists language without changing route",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 9433
+      },
+      {
+        "file": "session.mock.spec.ts",
+        "title": "language switcher: Просмотр switches labels and persists language without changing route",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 8668
+      },
+      {
+        "file": "session.mock.spec.ts",
+        "title": "logout: Специалист immediately clears the previous name, role and navigation",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 5143
+      },
+      {
+        "file": "session.mock.spec.ts",
+        "title": "logout: Администратор immediately clears the previous name, role and navigation",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 5979
+      },
+      {
+        "file": "session.mock.spec.ts",
+        "title": "logout: Просмотр immediately clears the previous name, role and navigation",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 7178
+      },
+      {
+        "file": "session.mock.spec.ts",
+        "title": "logout: Работник immediately clears the previous name, role and navigation",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 5160
+      },
+      {
+        "file": "session.mock.spec.ts",
+        "title": "logout: Бригадир immediately clears the previous name, role and navigation",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 5540
+      },
+      {
+        "file": "session.mock.spec.ts",
+        "title": "language switcher: login form translates and remembers the language while signed out",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 8280
+      },
+      {
+        "file": "session.mock.spec.ts",
+        "title": "language switcher: Специалист switches labels and persists language without changing route",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 5494
+      },
+      {
+        "file": "session.mock.spec.ts",
+        "title": "language switcher: Администратор switches labels and persists language without changing route",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 7284
+      },
+      {
+        "file": "session.mock.spec.ts",
+        "title": "language switcher: Просмотр switches labels and persists language without changing route",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 6595
+      },
+      {
+        "file": "session.mock.spec.ts",
+        "title": "logout: Специалист immediately clears the previous name, role and navigation",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 4492
+      },
+      {
+        "file": "session.mock.spec.ts",
+        "title": "logout: Администратор immediately clears the previous name, role and navigation",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 5541
+      },
+      {
+        "file": "session.mock.spec.ts",
+        "title": "logout: Просмотр immediately clears the previous name, role and navigation",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 5063
+      },
+      {
+        "file": "session.mock.spec.ts",
+        "title": "logout: Работник immediately clears the previous name, role and navigation",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 3993
+      },
+      {
+        "file": "session.mock.spec.ts",
+        "title": "logout: Бригадир immediately clears the previous name, role and navigation",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 4232
+      },
+      {
+        "file": "session.mock.spec.ts",
+        "title": "language switcher: login form translates and remembers the language while signed out",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 6296
+      },
+      {
+        "file": "worker-navigation.mock.spec.ts",
+        "title": "E2E-06: embedded worker cabinet exposes Profile navigation at desktop and phone widths",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 5561
+      },
+      {
+        "file": "worker-navigation.mock.spec.ts",
+        "title": "E2E-06: embedded worker cabinet exposes Profile navigation at desktop and phone widths",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 4867
+      },
+      {
+        "file": "workflows.mock.spec.ts",
+        "title": "zone list, six tabs, time machine statistics and hide",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 10391
+      },
+      {
+        "file": "workflows.mock.spec.ts",
+        "title": "priorities highlight a numbered queue and clear it",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 9263
+      },
+      {
+        "file": "workflows.mock.spec.ts",
+        "title": "assistant: budget answer uses rules and highlights zones automatically; Escape closes",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 8398
+      },
+      {
+        "file": "workflows.mock.spec.ts",
+        "title": "assistant: without a selected zone explains the nearest zone",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 9048
+      },
+      {
+        "file": "workflows.mock.spec.ts",
+        "title": "first visit hint stays dismissed after reload; Alt+P toggles presentation",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 7112
+      },
+      {
+        "file": "workflows.mock.spec.ts",
+        "title": "mobile: bottom sheet expands from under 60% to about 90%",
+        "project": "desktop",
+        "status": "skipped",
+        "fixme": false,
+        "annotations": [
+          {
+            "type": "skip",
+            "description": "Only the 375×812 layout has a bottom sheet"
+          }
+        ],
+        "durationMs": 340
+      },
+      {
+        "file": "workflows.mock.spec.ts",
+        "title": "mock roles: worker opens shift cabinet, specialist returns home",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 6313
+      },
+      {
+        "file": "workflows.mock.spec.ts",
+        "title": "zone list, six tabs, time machine statistics and hide",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 8979
+      },
+      {
+        "file": "workflows.mock.spec.ts",
+        "title": "priorities highlight a numbered queue and clear it",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 4468
+      },
+      {
+        "file": "workflows.mock.spec.ts",
+        "title": "assistant: budget answer uses rules and highlights zones automatically; Escape closes",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 5805
+      },
+      {
+        "file": "workflows.mock.spec.ts",
+        "title": "assistant: without a selected zone explains the nearest zone",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 6692
+      },
+      {
+        "file": "workflows.mock.spec.ts",
+        "title": "first visit hint stays dismissed after reload; Alt+P toggles presentation",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 5550
+      },
+      {
+        "file": "workflows.mock.spec.ts",
+        "title": "mobile: bottom sheet expands from under 60% to about 90%",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 7033
+      },
+      {
+        "file": "workflows.mock.spec.ts",
+        "title": "mock roles: worker opens shift cabinet, specialist returns home",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 5218
+      },
+      {
+        "file": "navigation-language.crew.spec.ts",
+        "title": "E2E-06: Работник keyboard navigation with Kazakh shell",
+        "project": "crew-375",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 5790
+      },
+      {
+        "file": "navigation-language.crew.spec.ts",
+        "title": "E2E-06: Бригадир keyboard navigation with Kazakh shell",
+        "project": "crew-375",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 6412
+      },
+      {
+        "file": "navigation-language.crew.spec.ts",
+        "title": "E2E-06: Работник keyboard navigation with Kazakh shell",
+        "project": "crew-800",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 6356
+      },
+      {
+        "file": "navigation-language.crew.spec.ts",
+        "title": "E2E-06: Бригадир keyboard navigation with Kazakh shell",
+        "project": "crew-800",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 7607
+      },
+      {
+        "file": "navigation-language.crew.spec.ts",
+        "title": "E2E-06: Работник keyboard navigation with Kazakh shell",
+        "project": "crew-801",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 5830
+      },
+      {
+        "file": "navigation-language.crew.spec.ts",
+        "title": "E2E-06: Бригадир keyboard navigation with Kazakh shell",
+        "project": "crew-801",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 6862
+      },
+      {
+        "file": "navigation-language.crew.spec.ts",
+        "title": "E2E-06: Работник keyboard navigation with Kazakh shell",
+        "project": "crew-1280",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 6099
+      },
+      {
+        "file": "navigation-language.crew.spec.ts",
+        "title": "E2E-06: Бригадир keyboard navigation with Kazakh shell",
+        "project": "crew-1280",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 8127
+      },
+      {
+        "file": "navigation.crew.spec.ts",
+        "title": "E2E-06: Работник can switch Shift, Journal and Profile without navigation covering content",
+        "project": "crew-375",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 6227
+      },
+      {
+        "file": "navigation.crew.spec.ts",
+        "title": "E2E-06: Бригадир can switch Shift, Journal and Profile without navigation covering content",
+        "project": "crew-375",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 5570
+      },
+      {
+        "file": "navigation.crew.spec.ts",
+        "title": "E2E-06: Работник can switch Shift, Journal and Profile without navigation covering content",
+        "project": "crew-800",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 6892
+      },
+      {
+        "file": "navigation.crew.spec.ts",
+        "title": "E2E-06: Бригадир can switch Shift, Journal and Profile without navigation covering content",
+        "project": "crew-800",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 7532
+      },
+      {
+        "file": "navigation.crew.spec.ts",
+        "title": "E2E-06: Работник can switch Shift, Journal and Profile without navigation covering content",
+        "project": "crew-801",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 6105
+      },
+      {
+        "file": "navigation.crew.spec.ts",
+        "title": "E2E-06: Бригадир can switch Shift, Journal and Profile without navigation covering content",
+        "project": "crew-801",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 7066
+      },
+      {
+        "file": "navigation.crew.spec.ts",
+        "title": "E2E-06: Работник can switch Shift, Journal and Profile without navigation covering content",
+        "project": "crew-1280",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 6284
+      },
+      {
+        "file": "navigation.crew.spec.ts",
+        "title": "E2E-06: Бригадир can switch Shift, Journal and Profile without navigation covering content",
+        "project": "crew-1280",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 6438
+      },
+      {
+        "file": "navigation.wide.spec.ts",
+        "title": "E2E-07: every coordinator menu destination fits the viewport (ru)",
+        "project": "nav-1280",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 4040
+      },
+      {
+        "file": "navigation.wide.spec.ts",
+        "title": "E2E-07: every coordinator menu destination fits the viewport (kk)",
+        "project": "nav-1280",
+        "status": "failed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 4621
+      },
+      {
+        "file": "navigation.wide.spec.ts",
+        "title": "E2E-07: every coordinator menu destination fits the viewport (ru)",
+        "project": "nav-1440",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 6453
+      },
+      {
+        "file": "navigation.wide.spec.ts",
+        "title": "E2E-07: every coordinator menu destination fits the viewport (kk)",
+        "project": "nav-1440",
+        "status": "passed",
+        "fixme": false,
+        "annotations": [],
+        "durationMs": 4023
+      }
+    ]
+  },
+  "api": {
+    "run": {
+      "profile": "api",
+      "selection": "full",
+      "target": "http://localhost:5177",
+      "revision": "9665a69636468e39ff487214204770b46a11849c",
+      "dirty": false,
+      "capturesScreens": false,
+      "startedAt": "2026-10-30T13:19:45.489Z",
+      "state": "finished",
+      "exitCode": 0,
+      "endedAt": "2026-10-30T13:22:32.515Z"
+    },
+    "counts": {
+      "passed": 37,
+      "failed": 0,
+      "skipped": 0,
+      "fixme": 0
+    },
+    "tests": [
+      {
+        "title": "E2E-06 API: worker1, 375px, ru, direct route/reload and keyboard",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 8973,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "E2E-06 API: foreman1, 375px, ru, direct route/reload and keyboard",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 9310,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "E2E-06 API: worker1, 375px, kk, direct route/reload and keyboard",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 6052,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "E2E-06 API: foreman1, 375px, kk, direct route/reload and keyboard",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 5881,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "E2E-06 API: worker1, 800px, ru, direct route/reload and keyboard",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 4327,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "E2E-06 API: foreman1, 800px, ru, direct route/reload and keyboard",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 5039,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "E2E-06 API: worker1, 800px, kk, direct route/reload and keyboard",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 5412,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "E2E-06 API: foreman1, 800px, kk, direct route/reload and keyboard",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 6122,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "E2E-06 API: worker1, 801px, ru, direct route/reload and keyboard",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 4881,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "E2E-06 API: foreman1, 801px, ru, direct route/reload and keyboard",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 4568,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "E2E-06 API: worker1, 801px, kk, direct route/reload and keyboard",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 5810,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "E2E-06 API: foreman1, 801px, kk, direct route/reload and keyboard",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 5681,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "E2E-06 API: worker1, 1280px, ru, direct route/reload and keyboard",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 4194,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "E2E-06 API: foreman1, 1280px, ru, direct route/reload and keyboard",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 4739,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "E2E-06 API: worker1, 1280px, kk, direct route/reload and keyboard",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 8121,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "E2E-06 API: foreman1, 1280px, kk, direct route/reload and keyboard",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 9500,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "API: coordinator login, server data indicator, map, estimate, priorities, logout",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 13057,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "outcomes API: ru/1280, today's partial demo is not an annual result",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 3543,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "API: worker1 login opens shift cabinet and cabinet logout ends the session",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 4180,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "API: foreman1 login opens the crew shift cabinet",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 3240,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "outcomes API: kk/1280, today's partial demo is not an annual result",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 6412,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "outcomes API: ru/375, today's partial demo is not an annual result",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 4466,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "API: viewer reads the map, cannot draw or enter a crew cabinet, and logs out",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 7627,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "outcomes API: kk/375, today's partial demo is not an annual result",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 5571,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "API: admin reads the map, cannot draw or enter a crew cabinet, and logs out",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 7632,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "outcomes API: viewer is read-only in UI and HTTP",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 4299,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "API: coordinator cannot open the worker route and returns home",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 3837,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "API: worker1 header logout clears identity and remains signed out after reload",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 4234,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "outcomes API: save/reload, identical replay, conflicts, and immutable forecast after rate edit",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 17253,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "outcomes API: read failure stays an API error and retry restores real partial data",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 7141,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "outcomes API: P4 I01 uses real registry/HTTP, independent counts, no duplicate saves",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 5820,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "outcomes API: P4 I02 uses real registry/HTTP, independent counts, no duplicate saves",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 5175,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "outcomes API: P4 I03 uses real registry/HTTP, independent counts, no duplicate saves",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 6712,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "outcomes API: P4 I04 uses real registry/HTTP, independent counts, no duplicate saves",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 6439,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "outcomes API: P4 I05 uses real registry/HTTP, independent counts, no duplicate saves",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 6515,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "outcomes API: P4 I06 uses real registry/HTTP, independent counts, no duplicate saves",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 8254,
+        "note": "",
+        "errors": []
+      },
+      {
+        "title": "outcomes API: P4 I07 uses real registry/HTTP, independent counts, no duplicate saves",
+        "status": "passed",
+        "fixme": false,
+        "durationMs": 5527,
+        "note": "",
+        "errors": []
+      }
+    ],
+    "credentialScan": "passed",
+    "trace": false,
+    "video": false,
+    "screenshots": false
+  },
+  "outcomesSubset": {
+    "mock": {
+      "passed": 12,
+      "failed": 0,
+      "skipped": 0,
+      "fixme": 0
+    },
+    "api": {
+      "passed": 14,
+      "failed": 0,
+      "skipped": 0,
+      "fixme": 0
+    }
+  },
+  "failure": {
+    "id": "E2E-07",
+    "role": "coordinator",
+    "url": "/?source=mock&lang=kk#/",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "steps": [
+      "Open home",
+      "Wait for document.fonts.ready",
+      "Open the labelled overflow menu"
+    ],
+    "expected": "Every navigation link is fully inside the viewport",
+    "overflow": [
+      {
+        "label": "Нұсқаулық",
+        "href": "#/guide",
+        "left": 1151.53125,
+        "right": 1327.53125,
+        "top": 86.5625,
+        "bottom": 118.125,
+        "width": 176,
+        "viewport": 1280
+      },
+      {
+        "label": "Жұмыс жоспары",
+        "href": "#/tasks",
+        "left": 1151.53125,
+        "right": 1327.53125,
+        "top": 146.796875,
+        "bottom": 178.359375,
+        "width": 176,
+        "viewport": 1280
+      },
+      {
+        "label": "Есептер",
+        "href": "#/reports",
+        "left": 1151.53125,
+        "right": 1327.53125,
+        "top": 180.359375,
+        "bottom": 211.921875,
+        "width": 176,
+        "viewport": 1280
+      }
+    ],
+    "evidence": [
+      "E2E-07-integration-kk-1280.json",
+      "E2E-07-integration-kk-1280.png"
+    ]
+  }
+}
