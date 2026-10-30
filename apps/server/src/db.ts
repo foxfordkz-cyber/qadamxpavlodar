@@ -1,3 +1,4 @@
+import { outcomesMigration } from './outcomes/migration.js';
 import { DatabaseSync, type SQLInputValue } from 'node:sqlite';
 import { mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
@@ -45,7 +46,8 @@ export class Store {
           if(!this.get("SELECT name FROM sqlite_master WHERE type='table' AND name='municipal_state'"))this.db.exec(municipalMigration4);
           this.db.exec('PRAGMA user_version=5');version=5;
         }
-        if (version !== 5) {
+        if(version===5){this.db.exec(outcomesMigration);this.db.exec('PRAGMA user_version=6');version=6;}
+        if (version !== 6) {
           throw new Error('Unsupported local schema version; do not reset or overwrite this database.');
         }
         if (this.all('PRAGMA foreign_key_check').length) throw new Error('Foreign key check failed during migration');
