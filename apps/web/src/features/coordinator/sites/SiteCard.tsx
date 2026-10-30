@@ -25,7 +25,7 @@ export interface ContextState {
   reload: () => void;
 }
 
-export function SiteCard({ id, tasks, onClose, onChanged, context, projects, plants }: { id: string; tasks: Task[]; onClose: () => void; onChanged: () => void; context: ContextState; projects: PlantingProject[]; plants: Plant[] }) {
+export function SiteCard({ id, tasks, onClose, onChanged, context, projects, plants, listOpen, onToggleList }: { id: string; tasks: Task[]; onClose: () => void; onChanged: () => void; context: ContextState; projects: PlantingProject[]; plants: Plant[]; listOpen: boolean; onToggleList?: () => void }) {
   const { api } = useData();
   const site = useResource(() => api.site(id), [id], 30000);
   const issues = useResource(() => api.issues({ objectId: id }), [id]);
@@ -69,7 +69,7 @@ export function SiteCard({ id, tasks, onClose, onChanged, context, projects, pla
   return (
     <div className="gp-sitecard">
       <div className="gp-sitecard__head">
-        <button className="gp-btn gp-btn--ghost gp-sitecard__back" onClick={onClose}>← {t('site.allZones')}</button>
+        {onToggleList && <button className="gp-btn gp-btn--ghost gp-sitecard__back" aria-pressed={listOpen} onClick={onToggleList}>☰ {t('site.allZones')}</button>}
         <h2>{s?.name ?? t('site.card')}</h2>
         <button className="gp-icon-btn" onClick={onClose} aria-label={t('site.close')}>✕</button>
       </div>
