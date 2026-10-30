@@ -5,6 +5,7 @@ import { useData } from '../../../shared/api/DataProvider';
 import type { ImportPreview } from '../../../shared/api/api';
 import { Badge, Button, ErrorNote, useGuarded } from '../../../shared/ui/components';
 import { PageHeader } from '../PageHeader';
+import { IMPORT_API_ACCEPT, IMPORT_TEXT_ACCEPT, importIssueText, localizedImportError, prepareImportFile } from './importFile';
 
 type Feat = { geometry: { type: string; coordinates: unknown } | null; properties: Record<string, unknown> };
 
@@ -39,7 +40,7 @@ export function parseFile(name: string, text: string): { format: string; feature
     if (li < 0 || gi < 0) throw new Error(tr("В CSV не найдены колонки широты и долготы (lat, lng)."));
     return { format: 'csv', features: rows.map((r) => { const v = r.split(sep); return { geometry: { type: 'Point', coordinates: [Number(v[gi]), Number(v[li])] }, properties: Object.fromEntries(cols.map((c, i) => [c, v[i]])) }; }) };
   }
-  throw new Error(ext === 'zip' || ext === 'shp' ? tr("Shapefile (zip) обрабатывается на сервере. В этой форме загрузите GeoJSON, KML или CSV либо конвертируйте файл в GeoJSON.") : t('dynamic.013', { p0: String(ext) }));
+  throw new Error(ext === 'zip' || ext === 'shp' ? t('import.shpMockHint') : t('dynamic.013', { p0: String(ext) }));
 }
 
 export function ImportPage() {
@@ -57,29 +58,28 @@ export function ImportPage() {
     setFile(f.name);
     try {
       if(mode==='api'){
-        if(f.size>5*1024*1024)throw new Error(t('import.maxSize', { size: 5 }));
         if(source.trim().length<3)throw new Error(t('import.sourceRequired'));
-        const ext=f.name.toLowerCase().split('.').pop(); const format=ext==='zip'?'shp':ext==='json'?'geojson':ext!;
-        let content:string;if(format==='shp'){const bytes=new Uint8Array(await f.arrayBuffer());let str='';for(const x of bytes)str+=String.fromCharCode(x);content=btoa(str);}else content=await f.text();
+        const {format,content}=await prepareImportFile(f);
         setPreview(await api.importFile({format,content,layer,source,dataClass}));
       }else{const {format,features}=parseFile(f.name,await f.text());setPreview(await api.importPreview(format,features));}
     } catch (e) { setError(e); }
   });
   return (
     <div className="gp-page">
-      <PageHeader eyebrow={tr("Данные AI-карты")} title={tr("Импорт и проверка слоёв")} lead={tr("Загрузите слой зон, почв или насаждений (GeoJSON, KML, CSV с координатами). Система проверит пропуски, систему координат и пересечения до сохранения.")} />
+      <PageHeader eyebrow={tr("Данные AI-карты")} title={tr("Импорт и проверка слоёв")} lead={mode === 'api' ? t('import.apiLead') : tr("Загрузите слой зон, почв или насаждений (GeoJSON, KML, CSV с координатами). Система проверит пропуски, систему координат и пересечения до сохранения.")} />
+      <p id="import-formats" className="gp-small gp-muted">{t(mode === 'api' ? 'import.shpArchiveHint' : 'import.shpMockHint')}</p>
       <div className="gp-card gp-import">
         <label>{t('import.layer')} <select value={layer} onChange={e=>setLayer(e.target.value)}><option value="zones">{t('import.layerZones')}</option><option value="soils">{t('import.layerSoils')}</option><option value="greenery">{t('import.layerGreenery')}</option><option value="city">{t('import.layerCity')}</option><option value="catalog">{t('import.layerCatalog')}</option></select></label>
         <label>{t('import.sourceDate')} <input value={source} onChange={e=>setSource(e.target.value)} placeholder={t('import.sourcePlaceholder')} /></label>
         <label>{t('import.dataClass')} <select value={dataClass} onChange={e=>setDataClass(e.target.value as 'real'|'demo'|'estimate')}><option value="demo">{t('import.dataDemo')}</option><option value="estimate">{t('import.dataEstimate')}</option><option value="real">{t('import.dataReal')}</option></select></label>
         <label className="gp-btn gp-btn--primary gp-import__pick">
           {tr("Выбрать файл")}
-          <input type="file" accept=".geojson,.json,.kml,.csv,.zip" className="gp-sr" onChange={(e) => e.target.files?.[0] && onFile(e.target.files[0])} />
+          <input type="file" accept={mode === 'api' ? IMPORT_API_ACCEPT : IMPORT_TEXT_ACCEPT} aria-describedby="import-formats" className="gp-sr" onChange={(e) => e.target.files?.[0] && onFile(e.target.files[0])} />
         </label>
         <span className="gp-small gp-muted">{file ?? tr('Файл не выбран')}</span>
         {busy && <span className="gp-spinner" aria-label={tr("Проверка")} />}
       </div>
-      <ErrorNote error={error} />
+      <ErrorNote error={localizedImportError(error)} />
       {preview && (
         <section className="gp-card gp-import__res" aria-live="polite">
           <div className="gp-bigstats">
@@ -87,11 +87,11 @@ export function ImportPage() {
             <div><span className="gp-bigstats__v">{preview.valid}</span><span className="gp-small">{tr("без ошибок")}</span></div>
             <div><span className="gp-bigstats__v gp-caution">{preview.invalid}</span><span className="gp-small">{tr("с ошибками")}</span></div>
           </div>
-          <p className="gp-small gp-muted">{preview.note}</p>
+          <p className="gp-small gp-muted">{mode === 'api' ? t(preview.committed ? 'import.savedNote' : 'import.previewNote') : tr(preview.note)}</p>
           {preview.issues.length === 0 ? <p>{tr("Проблем не найдено.")}</p> : (
             <table className="gp-table gp-small">
               <thead><tr><th>{tr("Строка")}</th><th>{tr("Уровень")}</th><th>{tr("Проблема")}</th></tr></thead>
-              <tbody>{preview.issues.map((x, i) => <tr key={i}><td>{x.row}</td><td>{x.level === 'error' ? <Badge tone="bad" icon="✕">{tr("ошибка")}</Badge> : <Badge tone="warn" icon="!">{tr("внимание")}</Badge>}</td><td>{x.text}</td></tr>)}</tbody>
+              <tbody>{preview.issues.map((x, i) => <tr key={i}><td>{x.row}</td><td>{x.level === 'error' ? <Badge tone="bad" icon="✕">{tr("ошибка")}</Badge> : <Badge tone="warn" icon="!">{tr("внимание")}</Badge>}</td><td>{importIssueText(x.text)}</td></tr>)}</tbody>
             </table>
           )}
           {mode==='api' ? <><label><input type="checkbox" checked={ack} onChange={e=>setAck(e.target.checked)}/> {t('import.warningsChecked')}</label><Button disabled={busy||!preview.id||preview.invalid>0||preview.committed||(preview.issues.length>0&&!ack)} onClick={()=>run(async()=>{try{setPreview(await api.commitImport(preview.id!,ack));bump();}catch(e){setError(e);}})}>{t(preview.committed?'import.saved':'import.confirmSave')}</Button></> : <Button disabled title={t('import.mockSaveHint')}>{t('import.mockSave')}</Button>}
