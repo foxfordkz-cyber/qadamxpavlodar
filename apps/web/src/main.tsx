@@ -1,4 +1,6 @@
 // Общая тема подключается первой, чтобы стили модулей могли её уточнять.
+import '@fontsource-variable/onest/index.css';
+import '@fontsource-variable/lora/index.css';
 import './shared/ui/theme.css';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';

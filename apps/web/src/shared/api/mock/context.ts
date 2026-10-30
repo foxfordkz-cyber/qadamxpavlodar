@@ -1,5 +1,5 @@
 // Окружение участка (B19) для тестового источника: та же форма, что должен отдавать
-// сервер участника 3 (GET /sites/:id/context?radius=). Данные — OSM, без догадок о назначении.
+// сервер (GET /sites/:id/context?radius=). Данные — OSM, без догадок о назначении.
 import surroundings from '../../../../../../fixtures/osm/surroundings.json';
 import type { CandidateSite, EvidenceRef, SiteContext, SiteContextBuilding } from '../types';
 import { distPointLine, distShapes, makeProjection, type LngLat, type XY } from '../../geo';

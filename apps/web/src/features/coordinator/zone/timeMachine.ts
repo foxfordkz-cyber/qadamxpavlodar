@@ -166,6 +166,14 @@ export function buildGrowthScene(site: CandidateSite, a: ZoneAnalysis, species: 
   return { siteId: site.id, origin: site.centroid, ring: site.geometry.coordinates[0], species, items, shown: trees.length + shrubs.length, total };
 }
 
+const STREET = /^(motorway|trunk|primary|secondary|tertiary|unclassified|residential|living_street)(_link)?$/;
+/** Улицы рядом с зоной: ряды и бордюр цветов выстраиваются вдоль ближайшей. Тротуары и проезды
+ *  к домам вплотную к газону не в счёт — иначе бордюр уходит к подъездам, а не к улице. */
+export function streetLines(all: { kind: string; geometry: { coordinates: [number, number][] } }[]) {
+  const streets = all.filter((r) => STREET.test(r.kind));
+  return (streets.length ? streets : all).map((r) => r.geometry.coordinates);
+}
+
 /** Растения на карте в выбранный год: при посадке — все, дальше — только прижившиеся. */
 export function growthFrame(scene: GrowthScene, year: GrowthYear) {
   const items = scene.items.filter((x) => year === 0 || x.survives).map((x) => x.item);
@@ -174,13 +182,37 @@ export function growthFrame(scene: GrowthScene, year: GrowthYear) {
 export type GrowthFrame = ReturnType<typeof growthFrame>;
 
 // Общее состояние карточки зоны и карты: машину времени включают во вкладке «Эффект», а растёт она на основной карте.
-let state: { scene: GrowthScene | null; year: GrowthYear } = { scene: null, year: 10 };
+let state: { scene: GrowthScene | null; year: GrowthYear; playing: boolean } = { scene: null, year: 10, playing: false };
 const subs = new Set<() => void>();
 const emit = () => subs.forEach((f) => f());
+// Показ роста: посадка → 5 → 10 → 20 лет. Первый шаг ждёт, пока камера долетит до зоны.
+const PLAY_STEP_MS = 1900;
+const PLAY_FLIGHT_MS = 1500;
+let playTimer: ReturnType<typeof setTimeout> | null = null;
+const stopTimer = () => { if (playTimer) clearTimeout(playTimer); playTimer = null; };
 export const timeMachine = {
-  show(scene: GrowthScene | null, year: GrowthYear) { state = { scene, year }; emit(); },
-  setYear(year: GrowthYear) { state = { ...state, year }; emit(); },
-  hide() { if (state.scene) { state = { ...state, scene: null }; emit(); } },
+  show(scene: GrowthScene | null, year: GrowthYear) { stopTimer(); state = { scene, year, playing: false }; emit(); },
+  setYear(year: GrowthYear) { stopTimer(); state = { ...state, year, playing: false }; emit(); },
+  hide() { stopTimer(); if (state.scene || state.playing) { state = { ...state, scene: null, playing: false }; emit(); } },
+  play(scene: GrowthScene) {
+    stopTimer();
+    const flying = state.scene !== scene;
+    state = { scene, year: 0, playing: true };
+    emit();
+    const next = (i: number) => {
+      playTimer = setTimeout(() => {
+        const year = GROWTH_YEARS[i]!;
+        const last = i === GROWTH_YEARS.length - 1;
+        playTimer = null;
+        state = { ...state, year, playing: !last };
+        emit();
+        if (!last) next(i + 1);
+      }, PLAY_STEP_MS + (i === 1 && flying ? PLAY_FLIGHT_MS : 0));
+    };
+    next(1);
+  },
+  current: () => state,
+  stop() { stopTimer(); if (state.playing) { state = { ...state, playing: false }; emit(); } },
 };
 export function useTimeMachine() {
   return useSyncExternalStore((f) => { subs.add(f); return () => subs.delete(f); }, () => state);

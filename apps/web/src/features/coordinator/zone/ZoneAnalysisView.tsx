@@ -24,7 +24,7 @@ const money = (n: number) => `${Math.round(n).toLocaleString('ru-RU')} ₸`;
 const pct = (n: number) => `${n}%`;
 
 /** Панель анализа зоны (ТЗ 3.3–3.8). Все вкладки — из одного расчёта и пересчитываются вместе. */
-export function ZoneAnalysisView({ site, tab, options, setOptions }: { site: CandidateSite; tab: ZoneTab; options: Partial<PlanOptions>; setOptions: (o: Partial<PlanOptions>) => void }) {
+export function ZoneAnalysisView({ site, tab, options, setOptions, autoPlay }: { site: CandidateSite; tab: ZoneTab; options: Partial<PlanOptions>; setOptions: (o: Partial<PlanOptions>) => void; autoPlay?: boolean }) {
   const { api } = useData();
   const key = JSON.stringify(options);
   const res = useResource(() => api.zoneAnalysis(site.id, options), [site.id, key]);
@@ -37,13 +37,13 @@ export function ZoneAnalysisView({ site, tab, options, setOptions }: { site: Can
       <StateView loading={res.loading || catalog.loading} error={res.error ?? catalog.error} hasData={!!a && !!catalog.data} onRetry={res.reload}>
         {a && (
           <>
-            <Facts a={a} onPurpose={(p) => set({ purpose: p })} />
+            {tab !== 'effect' && <Facts a={a} onPurpose={(p) => set({ purpose: p })} />}
             {res.loading && <p className="gp-small gp-muted" role="status">{tr("Пересчёт…")}</p>}
             {tab === 'plants' && <PlantsTab a={a} byId={byId} options={options} set={set} />}
             {tab === 'cost' && <CostTab a={a} site={site} options={options} set={set} />}
             {tab === 'survival' && <SurvivalTab a={a} byId={byId} options={options} set={set} />}
             {tab === 'care' && <CareTab a={a} />}
-            {tab === 'effect' && <EffectTab a={a} site={site} byId={byId} />}
+            {tab === 'effect' && <EffectTab a={a} site={site} byId={byId} autoPlay={autoPlay} />}
             <details className="gp-zone__notes">
               <summary>{tr("Допущения и недостающие данные (")}{a.missing.length})</summary>
               <ul className="gp-small">{[...a.missing, ...a.assumptions].map((x) => <li key={x}>{x}</li>)}</ul>
@@ -261,10 +261,11 @@ function CareTab({ a }: { a: ZoneAnalysis }) {
   );
 }
 
-function EffectTab({ a, site, byId }: { a: ZoneAnalysis; site: CandidateSite; byId: Map<string, Species> }) {
+function EffectTab({ a, site, byId, autoPlay }: { a: ZoneAnalysis; site: CandidateSite; byId: Map<string, Species>; autoPlay?: boolean }) {
   const e20 = a.effect[2];
   return (
     <section aria-labelledby="z-eff">
+      <TimeMachinePanel a={a} site={site} byId={byId} autoPlay={autoPlay} />
       <h3 id="z-eff" className="gp-subhead">{tr("Экологический эффект (оценка)")}</h3>
       <div className="gp-beforeafter">
         <div><span className="gp-muted gp-small">{tr("Сейчас")}</span><strong>{a.before.canopyM2}{" "}{tr("м² кроны")}</strong><span className="gp-small">{tr("зелень в 200 м:")}{" "}{a.before.greenShare === null ? tr("нет данных") : `${Math.round(a.before.greenShare * 100)}%`}</span></div>
@@ -285,7 +286,6 @@ function EffectTab({ a, site, byId }: { a: ZoneAnalysis; site: CandidateSite; by
       </table>
       <p><strong>{tr("Стоимость тонны CO₂ за 20 лет:")}</strong> {a.costPerTonCo2 ? money(a.costPerTonCo2) : '—'} <span className="gp-muted gp-small">{tr("(смета ÷ накопленное поглощение за 20 лет)")}</span></p>
       <p className="gp-small gp-muted">{tr("Коэффициенты и их источники — в «Справочниках». Значения оценочные, учитывают рост кроны и приживаемость за 3 года.")}</p>
-      <TimeMachinePanel a={a} site={site} byId={byId} />
       <ErrorNote error={null} />
     </section>
   );
