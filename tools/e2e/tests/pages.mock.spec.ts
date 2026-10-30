@@ -17,6 +17,9 @@ for (const [name, route] of pages) {
   });
 
   test(`${route}: presentation screenshot`, async ({ page }, info) => {
+    // Real external fonts can take 30–50s on a cold connection; still wait for
+    // document.fonts.ready instead of accepting an unfinished screenshot.
+    test.setTimeout(90_000);
     await openPage(page, route);
     await dismissHint(page);
     if (name === 'map') await expect(page.locator('.gp-sites__items button').first()).toBeVisible();
@@ -26,6 +29,7 @@ for (const [name, route] of pages) {
 
 for (const [label, name] of [['Посадка', 'time-planting'], ['20 лет', 'time-20-years']] as const) {
   test(`time machine: ${label} presentation screenshot`, async ({ page }, info) => {
+    test.setTimeout(90_000);
     const card = await openEffect(page);
     await chooseYear(page, label);
     await expect(card.getByRole('radio', { name: label, exact: true })).toBeChecked();
