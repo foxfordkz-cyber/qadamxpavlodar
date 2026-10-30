@@ -33,7 +33,8 @@ export class GreenWorker extends HTMLElement {
     this.gateway = gateway; this.tasks = []; this.selected = null; this.draft = null; this.suggestion = null; this.message = null; this.queue = []; this.section = 'current'; this.page = 'tasks'; this.busy = false; this.aiBusy = false; this.geoBusy = false; this.mobileDetail = false;
     this.setPreview(null); this.render(); if (user) await this.refresh(false);
   }
-  showError(error) { this.message = { text: error.message || String(error), tone: 'error' }; this.render(); }
+  errorText(error) { return error?.code === 'WORKER_REQUEST_TIMEOUT' ? this.t.requestTimeout : error?.code === 'WORKER_REQUEST_ABORTED' ? this.t.requestCancelled : error?.message || String(error); }
+  showError(error) { this.message = { text: this.errorText(error), tone: 'error' }; this.render(); }
   notify(text, tone = '') { this.message = { text, tone }; this.render(); }
   async refresh(showNotice = true) {
     if (!this.workflow) return;
@@ -56,7 +57,7 @@ export class GreenWorker extends HTMLElement {
       if (version !== this.contextVersion) return;
       this.queue = queue;
       if (showNotice) this.message = { text: this.t.stale, tone: 'info' };
-    } catch (error) { if (version === this.contextVersion) this.message = { text: error.message, tone: 'error' }; }
+    } catch (error) { if (version === this.contextVersion) this.message = { text: this.errorText(error), tone: 'error' }; }
     finally { if (version === this.contextVersion) { this.loading = false; this.render(); } }
   }
   setPreview(file) { ++this.photoSelectionVersion; if (this.previewURL) URL.revokeObjectURL(this.previewURL); this.previewURL = file ? URL.createObjectURL(file) : null; }
@@ -175,7 +176,7 @@ export class GreenWorker extends HTMLElement {
       if (this.aiBusy || !this.draft || this.draft.frozen) return;
       const text = this.draft.note, key = this.draft.storageKey, version = this.contextVersion; this.aiBusy = true; this.render();
       try { const result = await this.workflow.analyze(text,{objectId:this.selected.objectId,taskId:this.selected.id}); if (version === this.contextVersion && this.draft?.storageKey === key && this.draft.note === text && !this.draft.frozen) this.suggestion = result; }
-      catch (error) { if (version === this.contextVersion && this.draft?.storageKey === key) this.message = { text: error.message, tone: 'error' }; }
+      catch (error) { if (version === this.contextVersion && this.draft?.storageKey === key) this.message = { text: this.errorText(error), tone: 'error' }; }
       finally { if (version === this.contextVersion) { this.aiBusy = false; this.render(); } } return;
     }
     if (action === 'remove-geo' && !this.draft?.frozen) { this.draft.geo = null; await this.saveDraft(); this.render(); return; }
@@ -219,12 +220,13 @@ export class GreenWorker extends HTMLElement {
         const results = await this.workflow.synchronize();
         if (version === this.contextVersion) {
           const saved = results.filter(r => r.saved).length, failed = results.length - saved;
-          this.message = { text: results.length ? `${this.t.syncSuccess}: ${saved}. ${this.t.syncFailure}: ${failed}.${failed ? ' ' + results.find(r => !r.saved).error : ''}` : this.t.noQueued, tone: failed ? 'error' : 'info' };
+          const failure = results.find(r => !r.saved);
+          this.message = { text: results.length ? `${this.t.syncSuccess}: ${saved}. ${this.t.syncFailure}: ${failed}.${failure ? ' ' + this.errorText({ code: failure.errorCode, message: failure.error }) : ''}` : this.t.noQueued, tone: failed ? 'error' : 'info' };
           if (this.draft?.frozen && results.some(r => r.taskId === this.draft.taskId && r.saved)) { this.draft = null; this.setPreview(null); }
         }
       }
       if (version === this.contextVersion) await this.refresh(false);
-    } catch (error) { if (version === this.contextVersion) { this.message = { text: error.message, tone: 'error' }; this.queue = await this.workflow.pending(); } }
+    } catch (error) { if (version === this.contextVersion) { this.message = { text: this.errorText(error), tone: 'error' }; this.queue = await this.workflow.pending(); } }
     finally { if (version === this.contextVersion) { this.busy = false; this.render(); this.dispatchEvent(new CustomEvent('worker-busy', { detail: false })); } }
   }
   button(action, label, css = '', iconName = '', id = '', disabled = false) { return `<button type="button" class="button ${css}" data-action="${action}" ${id ? `data-id="${escape(id)}"` : ''} ${disabled ? 'disabled' : ''}>${iconName ? icon(iconName) : ''}${escape(label)}</button>`; }

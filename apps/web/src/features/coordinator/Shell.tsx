@@ -2,6 +2,8 @@ import { lazy, Suspense, useEffect, useRef, useState, type ReactNode } from 'rea
 import { useData, type SvcState } from '../../shared/api/DataProvider';
 import { useSession } from '../../shared/api/useSession';
 import { ApiError } from '../../shared/api/transport';
+import { isConnectionFailure } from '../../shared/api/connection';
+import { ApiConnectionNotice } from '../../shared/ui/ApiConnectionNotice';
 import { Button, ErrorNote, Field, StateView, useGuarded } from '../../shared/ui/components';
 import { t, type Key } from '../../shared/i18n';
 import { LanguageSwitcher } from '../../shared/i18n/LanguageSwitcher';
@@ -59,6 +61,7 @@ export function Shell({ children }: { children: ReactNode }) {
   const user = me.data;
   const role = user?.role;
   const crew = role === 'foreman' || role === 'worker';
+  const connectionPending = mode === 'api' && !user && (me.loading || isConnectionFailure(me.error));
   // Бригадир и работник работают только в своём кабинете — держим их на маршруте #/worker, остальных уводим с него.
   useEffect(() => {
     if (crew && route.path !== '/worker') navigate('/worker', {}, true);
@@ -148,10 +151,12 @@ export function Shell({ children }: { children: ReactNode }) {
         </dl>
       </div>
       <main id="main" className="gp-main" tabIndex={-1}>
+        <ApiConnectionNotice enabled={mode === 'api'} loading={me.loading} hasUser={!!user}
+          error={me.error} disconnected={services.api === 'down'} onReady={me.reload} />
         {user && <ErrorNote error={logoutError} />}
         {me.unauthenticated ? (
           <Login onDone={me.reload} />
-        ) : authError === 403 ? (
+        ) : connectionPending ? null : authError === 403 ? (
           <Forbidden />
         ) : me.data && crew ? (
           <Suspense fallback={null}><WorkerPage me={me.data} onLogout={logout} /></Suspense>

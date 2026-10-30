@@ -5,7 +5,7 @@ import { WorkerWorkflow, validatePhoto, SERVER_MAX_PHOTO_BYTES } from '../../../
 import { MemoryDrafts } from '../../../apps/web/src/features/worker/drafts.mjs';
 import { safePhotoURL, parsePositions } from '../../../apps/web/src/features/worker/field-values.mjs';
 import { scheme, reportQuantities, assignmentPanel } from '../../../apps/web/src/features/worker/v2-views.mjs';
-import { ru } from '../../../apps/web/src/features/worker/strings.mjs';
+import { ru, dictionary } from '../../../apps/web/src/features/worker/strings.mjs';
 import { navigation } from '../../../apps/web/src/features/worker/cabinet-layout.mjs';
 
 // Import the component without constructing DOM nodes; restore import-only globals.
@@ -159,6 +159,27 @@ function ui() {
     pendingStarts: new Map(), photoSelectionVersion: 0, render() {}, refresh: async () => {}, dispatchEvent() {} });
   return component;
 }
+
+test('worker UI: network timeout releases busy state, keeps the draft and uses the selected dictionary', async () => {
+  for (const locale of ['ru', 'kk-draft']) {
+    const component = ui();
+    const draft = { kind: 'report', note: 'Saved note', photo: picture(), idempotencyKey: 'same-operation' };
+    component.t = dictionary(locale);
+    component.draft = draft;
+    component.writeChain = Promise.resolve();
+    component.workflow = {
+      send: async () => { throw Object.assign(new Error('TimeoutError: internal message'), { code: 'WORKER_REQUEST_TIMEOUT' }); },
+      pending: async () => [draft],
+    };
+    await component.action('send');
+    assert.equal(component.busy, false);
+    assert.equal(component.draft, draft);
+    assert.deepEqual(component.queue, [draft]);
+    assert.equal(component.message.text, component.t.requestTimeout);
+    component.showError({ code: 'WORKER_REQUEST_ABORTED', message: 'AbortError: internal message' });
+    assert.equal(component.message.text, component.t.requestCancelled);
+  }
+});
 
 test('worker navigation: native buttons expose exactly one active page to keyboard and assistive technology', () => {
   const pages = ['tasks', 'history', 'profile'];
