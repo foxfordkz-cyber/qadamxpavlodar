@@ -134,9 +134,11 @@ export function SitesPage() {
   const osmMeta = sitesRes.data?.meta?.osm as { osmBase?: string } | undefined;
   // С открытой карточкой на обычном экране карте мало места: панели поверх неё закрывают саму зону.
   const tightMap = !!selectedId && matchMedia('(max-width: 1600px)').matches;
+  // Список рядом с карточкой включается кнопкой и остаётся, пока специалист переходит между зонами.
+  const [listOpen, setListOpen] = useState(false);
 
   return (
-    <div className={`gp-sites ${selectedId ? 'gp-sites--card' : ''} ${growth ? 'gp-sites--growth' : ''} ${highlight ? 'gp-sites--hl' : ''}`} data-tab={tab}>
+    <div className={`gp-sites ${selectedId ? 'gp-sites--card' : ''} ${growth ? 'gp-sites--growth' : ''} ${highlight || listOpen ? 'gp-sites--withlist' : ''}`} data-tab={tab}>
       <aside className="gp-sites__list gp-card" aria-label={t('filters.title')}>
         {highlight && <HighlightList title={hlTitle} ids={hlIds} names={names} selectedId={selectedId} onPick={(id) => select(id, true)} onClear={clearHl} />}
         <div className="gp-sites__filters">
@@ -225,7 +227,7 @@ export function SitesPage() {
           <button className="gp-sheet__handle" aria-expanded={sheetFull} onClick={() => setSheetFull((v) => !v)}>
             <span aria-hidden="true" />{sheetFull ? t('sites.sheetCollapse') : t('sites.sheetExpand')}
           </button>
-          <SiteCard id={selectedId} tasks={tasks.filter((x) => x.objectId === selectedId)} onClose={() => navigate('/map', keepHl, true)} onChanged={() => { sitesRes.reload(); tasksRes.reload(); }}
+          <SiteCard listOpen={listOpen} onToggleList={highlight ? undefined : () => setListOpen((o) => !o)} id={selectedId} tasks={tasks.filter((x) => x.objectId === selectedId)} onClose={() => navigate('/map', keepHl, true)} onChanged={() => { sitesRes.reload(); tasksRes.reload(); }}
             context={{ data: ctxRes.data ?? null, error: ctxRes.error, loading: ctxRes.loading, radius, setRadius, reload: ctxRes.reload }}
             projects={(projectsRes.data?.data ?? []).filter((p) => p.siteId === selectedId)} plants={(plantsRes.data?.data ?? []).filter((p) => (projectsRes.data?.data ?? []).some((pr) => pr.id === p.projectId && pr.siteId === selectedId))} />
         </aside>

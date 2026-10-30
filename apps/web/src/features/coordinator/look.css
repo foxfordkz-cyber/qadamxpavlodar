@@ -146,9 +146,10 @@
 /* Карта главнее: при открытой карточке список убран, вернуться к нему можно кнопкой «Все зоны» */
 .gp-sitecard__back { display: none; }
 @media (min-width: 1101px) {
-  .gp-sites--card:not(.gp-sites--hl) { grid-template-columns: minmax(0, 1fr) minmax(380px, 440px); }
-  .gp-sites--card:not(.gp-sites--hl) .gp-sites__list { display: none; }
-  .gp-sites--card:not(.gp-sites--hl) .gp-sitecard__back { display: inline-flex; min-height: 30px; padding: 2px 8px; flex: none; order: -1; }
+  .gp-sites--card:not(.gp-sites--withlist) { grid-template-columns: minmax(0, 1fr) minmax(380px, 440px); }
+  .gp-sites--card:not(.gp-sites--withlist) .gp-sites__list { display: none; }
+  .gp-sitecard__back { display: inline-flex; min-height: 30px; padding: 2px 8px; flex: none; order: -1; }
+  .gp-sitecard__back[aria-pressed='true'] { background: var(--gp-green-soft); color: var(--gp-olive-800); }
   .gp-sitecard__head { flex-wrap: wrap; }
   .gp-sitecard__head h2 { order: 1; flex: 1 1 100%; }
   .gp-sitecard__head .gp-icon-btn { margin-left: auto; }

@@ -34,8 +34,8 @@ const NAV: { path: string; key: Key; roles: Role[]; works?: boolean }[] = [
   { path: '/people', key: 'nav.people', roles: ['admin'], works: true },
 ];
 
-// В основной строке меню — разделы сценария; справочные и рабочие страницы открываются из «Ещё».
-const MORE = new Set(['/rates', '/import', '/guide']);
+// В основной строке меню — все разделы ТЗ; гайд и рабочие страницы открываются из «Ещё».
+const MORE = new Set(['/guide']);
 const isMore = (n: { path: string; works?: boolean }) => !!n.works || MORE.has(n.path);
 
 const SVC_ICON: Record<SvcState, string> = { ok: '●', down: '✕', unknown: '○' };

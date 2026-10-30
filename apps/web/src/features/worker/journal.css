@@ -1,5 +1,5 @@
-/* Field journal: white working sheets, time columns and signal-orange actions. */
-:host{--gp-ink:#18191c;--gp-muted:#62656d;--gp-paper:#fff;--gp-line:#d7d9de;--gp-accent:#f35b35;--gp-blue:#244cc8;--gp-wash:#f1f2f5;--gp-warning:#8c301b;--gp-mono:'Cascadia Mono',Consolas,monospace;--gp-display:Bahnschrift,'Arial Narrow','Segoe UI',sans-serif;display:block;min-height:100vh;background:var(--gp-paper);color:var(--gp-ink);font:15px/1.55 'Segoe UI',Arial,sans-serif;-webkit-font-smoothing:antialiased}
+/* Field journal: white working sheets and time columns, in the shared light theme. */
+:host{--gp-ink:#18241c;--gp-muted:#56655b;--gp-paper:#fff;--gp-line:#e3e6da;--gp-accent:#256b4a;--gp-blue:#2c5a7a;--gp-wash:#f2f4ec;--gp-warning:#8c301b;--gp-mono:'Onest Variable','Segoe UI',Arial,sans-serif;--gp-display:'Lora Variable',Georgia,'Times New Roman',serif;display:block;min-height:100vh;background:var(--gp-paper);color:var(--gp-ink);font:15px/1.55 'Onest Variable','Segoe UI',Arial,sans-serif;-webkit-font-smoothing:antialiased}
 *{box-sizing:border-box}h1,h2,h3,p,figure{margin:0}button,input,textarea,select{font:inherit}button{color:inherit;cursor:pointer}button,input,select,textarea,a,summary{touch-action:manipulation}button:disabled{opacity:.5;cursor:not-allowed}
 button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid var(--gp-blue);outline-offset:4px}button:focus-visible{position:relative;z-index:2}
 h1{font:600 clamp(44px,6.2vw,80px)/.99 var(--gp-display);letter-spacing:-.055em}h2{font:600 30px/1.13 var(--gp-display);letter-spacing:-.025em}h3{font:600 21px/1.25 var(--gp-display)}h1:focus,h2:focus{outline:none}small,.small{font-size:12px;line-height:1.6}svg{width:20px;height:20px;flex-shrink:0;vertical-align:middle}a{color:var(--gp-blue)}.muted{color:var(--gp-muted)}.break{overflow-wrap:anywhere}.hidden{display:none}.row{display:flex;align-items:center;justify-content:space-between;gap:16px}.shell{width:100%}
@@ -51,3 +51,16 @@ h1{font:600 clamp(44px,6.2vw,80px)/.99 var(--gp-display);letter-spacing:-.055em}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
 .planting-actual{padding:12px 0;border-bottom:1px solid var(--gp-line)}.planting-actual .field{margin-top:14px}.planting-actual textarea{font-family:var(--gp-mono);min-height:92px}.planting-actual .button{white-space:normal;text-align:left;margin-top:8px}
 
+/* Общая тема приложения: светлая шапка кабинета, зелёные действия, спокойные заголовки. */
+h1{font-size:clamp(32px,3.6vw,46px);line-height:1.1;letter-spacing:-.01em}h2{font-size:26px;letter-spacing:-.005em}.detail-hero h2{font-size:clamp(28px,3.2vw,40px);letter-spacing:-.01em}.task-place{letter-spacing:-.005em}
+.topbar{background:#fff;color:var(--gp-ink);border-bottom:1px solid var(--gp-line)}.brand-mark{letter-spacing:-.02em}
+.nav button{color:#3c4b41;font-weight:500;border-bottom-width:3px}.nav button:hover{color:var(--gp-ink)}.nav button.active{color:var(--gp-ink);font-weight:600}.nav-index{display:none}
+:host([embedded]) .topbar{min-height:52px}:host([embedded]) .main{padding-top:24px}
+.demo-line{font-size:12px}.eyebrow,.section-label,.task-code,.register-columns,.crew-label{letter-spacing:.04em;font-weight:500}
+.date-block>strong{font-size:56px;letter-spacing:-.02em}
+.button{border-radius:8px}.primary{color:#fff}.primary:hover:not(:disabled){background:#1b3a2b;border-color:#1b3a2b}.secondary{border-color:var(--gp-line)}.secondary:hover:not(:disabled){background:var(--gp-wash);color:var(--gp-ink);border-color:var(--gp-accent)}
+.tabs{border-radius:8px;overflow:hidden}.tabs button.active{background:var(--gp-accent)}
+.task:hover .task-arrow{color:#fff}.task-list,.journal{border-top-width:1px;border-top-color:var(--gp-line)}.detail-hero{border-top-width:1px;border-top-color:var(--gp-line)}
+.crew-summary,.work-columns,.profile,.form{border-color:var(--gp-line)}.form{border-radius:12px;border-top:4px solid var(--gp-accent)}.profile{border-radius:12px;overflow:hidden}
+.profile-label{color:#fff}.profile-label .eyebrow{color:#e2f0e5}.profile-monogram{letter-spacing:-.02em}
+.mobile-nav{background:#fff;border-top:1px solid var(--gp-line)}.mobile-nav button{color:#3c4b41}.mobile-nav button.active{color:var(--gp-ink);font-weight:600}
