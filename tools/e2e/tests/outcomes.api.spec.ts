@@ -12,6 +12,8 @@ const path = `/outcomes/sites/${SITE}`;
 const sessions: Record<string, any[]> = {};
 test.beforeAll(async ({ browser, baseURL }) => {
   if (!process.env.E2E_PASSWORD) return;
+  expect(process.env.E2E_ISOLATED, 'Outcome writes require scripts/isolated.mjs api --outcomes').toBe('1');
+  expect(['localhost', '127.0.0.1', '[::1]'], 'Outcome writes are limited to the disposable loopback API').toContain(new URL(baseURL!).hostname);
   // Outcome tests exercise records, not repeated password login. Reuse genuine
   // sessions in memory so this suite does not trip the 10-logins/account limiter.
   // No cookies/storageState are written to disk or attached to the report.

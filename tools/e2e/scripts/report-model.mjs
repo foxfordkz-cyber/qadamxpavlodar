@@ -1,9 +1,11 @@
-import { existsSync, readFileSync, statSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { profiles } from './profiles.mjs';
 import { redact } from './environment.mjs';
+import { captureRunId, inspectCapture } from './screen-provenance.mjs';
+import { safeDiagnostic } from './api-diagnostics.mjs';
 
-export const screenNames = ['home', 'map', 'problems', 'priorities', 'species', 'projects', 'rates', 'import', 'guide', 'tasks', 'reports', 'time-planting', 'time-20-years'];
+export const screenNames = ['home', 'map', 'problems', 'priorities', 'species', 'projects', 'rates', 'import', 'guide', 'tasks', 'reports', 'time-planting', 'time-20-years', 'lab', 'outcomes'];
 export const expectedScreens = screenNames.flatMap(name => [1280, 375].map(width => `${name}-${width}.png`));
 export const statuses = ['passed', 'failed', 'fixme', 'skipped', 'flaky', 'notRun'];
 
@@ -14,8 +16,9 @@ export function normalizeReport(data, profile, secrets = []) {
     if (!Array.isArray(data.tests) || typeof data.status !== 'string') throw new Error('Invalid API report');
     for (const test of data.tests) {
       const fixme = test.fixme ?? /^E2E-\d+:/.test(test.note ?? '');
-      const status = test.status === 'passed' ? 'passed' : test.status === 'skipped' ? fixme ? 'fixme' : 'skipped' : 'failed';
-      tests.push({ title: safe(test.title), project: 'api', status, note: safe(test.note), durationMs: test.durationMs ?? 0 });
+      const status = test.status === 'flaky' ? 'flaky' : test.status === 'passed' ? 'passed' : test.status === 'skipped' ? fixme ? 'fixme' : 'skipped' : 'failed';
+      tests.push({ title: safe(test.title), project: 'api', status, note: safe(test.note), durationMs: test.durationMs ?? 0,
+        diagnostics: Array.isArray(test.diagnostics) ? test.diagnostics.slice(0, 8).map(safeDiagnostic).filter(value => Object.keys(value).length) : [] });
     }
   } else {
     if (!Array.isArray(data.suites) || !data.stats) throw new Error('Invalid Playwright report');
@@ -73,15 +76,19 @@ export function collectRuns(root, secrets = []) {
       if (existsSync(metaFile)) {
         const raw = json(metaFile);
         // Only publish the fields needed to identify a run, never arbitrary environment/argv.
-        meta = { state: raw.state, startedAt: raw.startedAt, endedAt: raw.endedAt, exitCode: raw.exitCode,
+        meta = { runId: captureRunId.test(raw.runId ?? '') ? raw.runId : null,
+          state: raw.state, startedAt: raw.startedAt, endedAt: raw.endedAt, exitCode: raw.exitCode,
           revision: /^[a-f0-9]{40}$/.test(raw.revision) ? raw.revision : null, dirty: !!raw.dirty,
           selection: raw.selection, capturesScreens: raw.capturesScreens === true,
+          command: typeof raw.command === 'string' && /^node scripts\/run\.mjs (mock|api|smoke|screens)$/.test(raw.command) ? raw.command : undefined,
+          environment: publicEnvironment(raw.environment),
           target: raw.target ? new URL(raw.target).origin : undefined };
       }
       if (!existsSync(file)) return { profile, available: false, meta };
       const normalized = normalizeReport(json(file), profile, secrets);
       // A failed new invocation must not silently reuse a previous green JSON report.
       const current = !!meta?.startedAt && statSync(file).mtimeMs >= Date.parse(meta.startedAt);
+      if (!current) return { profile, available: false, current: false, stale: true, meta };
       return { profile, available: true, current, meta, ...normalized };
     } catch {
       return { profile, available: false, invalid: true, meta };
@@ -89,21 +96,33 @@ export function collectRuns(root, secrets = []) {
   });
 }
 
-export function inspectScreens(root, runs = []) {
+const safeVersion = value => typeof value === 'string' && /^\d+\.\d+\.\d+$/.test(value) ? value : undefined;
+const publicEnvironment = value => value ? { node: safeVersion(value.node), playwright: safeVersion(value.playwright),
+  platform: ['win32', 'linux', 'darwin'].includes(value.platform) ? value.platform : undefined,
+  arch: ['x64', 'arm64', 'ia32'].includes(value.arch) ? value.arch : undefined,
+  workers: Number.isInteger(value.workers) && value.workers > 0 && value.workers <= 128 ? value.workers : undefined,
+  retries: Number.isInteger(value.retries) && value.retries >= 0 && value.retries <= 10 ? value.retries : undefined } : undefined;
+
+export function inspectScreens(root, runs = [], revision) {
   const screenshotRun = runs.filter(run => ['mock', 'screens'].includes(run.profile) && run.meta?.capturesScreens && run.meta.startedAt)
     .sort((a, b) => Date.parse(b.meta.startedAt) - Date.parse(a.meta.startedAt))[0];
-  return expectedScreens.map(name => {
-    const width = name.endsWith('-375.png') ? 375 : 1280;
-    const height = width === 375 ? 812 : 800;
-    const file = join(root, 'screens', name);
+  return expectedScreens.map(name => inspectCapture(root, name, screenshotRun, revision));
+}
+
+export function collectHistory(root, revision) {
+  const directory = join(root, 'playwright-report', 'history');
+  if (!existsSync(directory)) return [];
+  return readdirSync(directory).filter(name => captureRunId.test(name.replace(/\.json$/, ''))).flatMap(name => {
     try {
-      const bytes = readFileSync(file);
-      const valid = bytes.length >= 24 && bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])) &&
-        bytes.readUInt32BE(16) === width && bytes.readUInt32BE(20) === height;
-      const capturedAt = statSync(file).mtime.toISOString();
-      return { name, width, height, valid, capturedAt,
-        fresh: !!screenshotRun?.current && screenshotRun.meta.state === 'finished' && screenshotRun.meta.exitCode === 0 &&
-          Date.parse(capturedAt) >= Date.parse(screenshotRun.meta.startedAt) };
-    } catch { return { name, width, height, valid: false, fresh: false }; }
-  });
+      const record = json(join(directory, name));
+      if (record.meta?.revision !== revision) return [];
+      // History is for run provenance, not another source of raw test/HTTP errors.
+      return [{ profile: profiles.includes(record.profile) ? record.profile : 'unknown', runId: record.meta.runId, available: !!record.available,
+        revision, startedAt: record.meta.startedAt, endedAt: record.meta.endedAt, exitCode: record.meta.exitCode,
+        selection: record.meta.selection, dirty: !!record.meta.dirty, target: record.meta.target,
+        command: /^node scripts\/run\.mjs (mock|api|smoke|screens)$/.test(record.meta.command ?? '') ? record.meta.command : undefined,
+        environment: publicEnvironment(record.meta.environment),
+        counts: record.available ? Object.fromEntries(statuses.map(status => [status, Number.isInteger(record.counts?.[status]) ? record.counts[status] : 0])) : null }];
+    } catch { return []; }
+  }).sort((a, b) => Date.parse(a.startedAt) - Date.parse(b.startedAt));
 }

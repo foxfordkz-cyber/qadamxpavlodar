@@ -15,6 +15,12 @@ try {
   // ONLY canonical demo plant records. Cohorts and observations are created through
   // the real HTTP endpoints by the tests; no analytics results are injected.
   store.transaction(() => {
+    for (let i = 1; i <= 4; i++) insertDoc(store, 'plant', {
+      id: `qa-parity-p${i}`, name: 'QA synthetic parity reference tree', kind: 'tree',
+      siteId: 'site-osm-1569993037', speciesId: 'sp-pinus-sylvestris', species: 'Pinus sylvestris',
+      plantedAt: '2023-10-30T12:00:00+05:00', condition: 'unknown',
+      evidenceIds: ['outcomes-demo-evidence'], isDemo: true, version: 1,
+    });
     for (const c of reference.inspectionCases) for (let i = 1; i <= 4; i++) insertDoc(store, 'plant', {
       id: `qa-api-${c.id}-p${i}`, name: 'QA synthetic P4 reference tree', kind: 'tree',
       siteId: 'site-osm-1569993037', speciesId: 'sp-pinus-sylvestris', species: 'Pinus sylvestris',

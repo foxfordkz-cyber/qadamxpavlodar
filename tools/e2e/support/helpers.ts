@@ -1,12 +1,14 @@
 import { expect, type Page, type TestInfo } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import { recordScreenCapture } from '../scripts/screen-provenance.mjs';
 
 export const SITE = 'site-osm-1569993037';
 export const pages = [
   ['home', '/'], ['map', '/map'], ['problems', '/problems'], ['priorities', '/priorities'],
   ['species', '/species'], ['projects', '/projects'], ['rates', '/rates'], ['import', '/import'],
   ['guide', '/guide'], ['tasks', '/tasks'], ['reports', '/reports'],
+  ['lab', '/lab'], ['outcomes', '/outcomes'],
 ] as const;
 
 export async function openPage(page: Page, route = '/', mode = 'mock', lang = 'ru') {
@@ -15,6 +17,33 @@ export async function openPage(page: Page, route = '/', mode = 'mock', lang = 'r
   await expect(page.locator('nav.gp-nav a').first()).toBeVisible();
   await expect(page.locator('#main')).not.toBeEmpty();
   await expect(page.locator('#main .gp-state .gp-spinner')).toHaveCount(0);
+  await settledPage(page);
+}
+
+/** Readiness is product data, not just a mounted shell or a resolved navigation. */
+export async function settledPage(page: Page) {
+  await expect(page.locator('#main [aria-busy=true]:visible, #main .gp-spinner:visible')).toHaveCount(0);
+  await expect(page.locator('#main')).not.toContainText(/Считаем решение…|Учаске үшін шешім есептелуде…/);
+  const route = new URL(page.url()).hash.split('?')[0];
+  if (route === '#/' || route === '#') {
+    const plan = page.locator('.gp-hero .gp-plansum:not(.gp-plansum--place)');
+    await expect(plan).toBeVisible();
+    await expect(plan).toContainText('₸');
+    await expect(plan.locator('strong')).toHaveCount(3);
+    return 'settled-plan' as const;
+  }
+  if (route === '#/lab') {
+    await expect(page.locator('.gp-lab-results')).toHaveAttribute('aria-busy', 'false');
+    await expect(page.locator('.gp-lab-card')).toHaveCount(3);
+    await expect(page.locator('.gp-lab-card').first().locator('[data-metric=spent]')).not.toHaveText('');
+    return 'settled-plan' as const;
+  }
+  if (route === '#/outcomes') {
+    for (const variant of ['econom', 'optimal', 'max']) await expect(page.getByTestId(`outcome-${variant}`)).toBeVisible();
+    await expect(page.locator('.gp-outcomes-page .gp-state[role=status]')).toHaveCount(0);
+    return 'settled-outcomes' as const;
+  }
+  return route === '#/map' ? 'settled-map' as const : 'settled-page' as const;
 }
 
 export async function dismissHint(page: Page) {
@@ -49,12 +78,17 @@ export async function presentation(page: Page) {
 }
 
 export async function screenshot(page: Page, name: string, info: TestInfo) {
+  const readiness = await settledPage(page);
   if (await page.locator('.gp-sites__map').count()) await mapReady(page);
   if (await page.locator('.gp-hero').count()) {
     await expect(page.locator('.gp-hero__map:not(.is-ready)')).toHaveCount(0, { timeout: 20_000 });
   }
   await presentation(page);
   await page.evaluate(async () => { await document.fonts.ready; });
+  // The laboratory/Outcomes controls sit above their results: the defence frame
+  // must show a calculated plan rather than only inputs or a loading shell.
+  if (new URL(page.url()).hash.startsWith('#/lab')) await page.locator('.gp-lab-card').first().scrollIntoViewIfNeeded();
+  if (new URL(page.url()).hash.startsWith('#/outcomes')) await page.getByTestId('outcome-econom').scrollIntoViewIfNeeded();
   // Lazy external photos may still be downloading after the page and fonts are ready.
   // Only images actually inside the captured viewport must finish; offscreen images
   // must not hold a screenshot hostage. A broken visible image is not a ready frame.
@@ -68,6 +102,8 @@ export async function screenshot(page: Page, name: string, info: TestInfo) {
   await mkdir(dir, { recursive: true });
   const file = resolve(dir, `${name}-${page.viewportSize()!.width}.png`);
   await page.screenshot({ path: file, fullPage: false, animations: 'disabled' });
+  recordScreenCapture({ file, name: `${name}-${page.viewportSize()!.width}.png`, width: page.viewportSize()!.width, height: page.viewportSize()!.height,
+    readiness, source: 'mock', testIdentity: info.titlePath.join(' > ') });
   await info.attach(`${name}-${page.viewportSize()!.width}`, { path: file, contentType: 'image/png' });
 }
 
