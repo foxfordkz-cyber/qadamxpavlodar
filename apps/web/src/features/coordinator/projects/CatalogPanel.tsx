@@ -1,3 +1,5 @@
+import { speciesName } from '../../../shared/i18n';
+import { tr } from '../../../shared/i18n';
 import { useMemo, useState } from 'react';
 import type { Species } from '../../../shared/api/types';
 import { Badge, DataClassTag, EvidenceList, Modal } from '../../../shared/ui/components';
@@ -25,7 +27,7 @@ export function CatalogPanel({ catalog, active, onPick, disabled }: { catalog: S
     () =>
       catalog.filter((s) =>
         (f.form === 'all' || s.form === f.form) &&
-        (!f.q || `${s.nameRu} ${s.latin}`.toLowerCase().includes(f.q.toLowerCase())) &&
+        (!f.q || `${s.nameRu} ${s.nameKk ?? ''} ${s.latin}`.toLowerCase().includes(f.q.toLowerCase())) &&
         (!f.drought || s.droughtTolerance === 'high') &&
         (!f.salt || s.saltTolerance !== 'low') &&
         (!f.month || s.floweringMonths?.includes(f.month)) &&
@@ -54,7 +56,7 @@ export function CatalogPanel({ catalog, active, onPick, disabled }: { catalog: S
         <label className="gp-kv gp-small">{t('ed.cat.month')}
           <select className="gp-input" value={f.month} onChange={(e) => set('month', Number(e.target.value))}>
             <option value={0}>{t('filters.all')}</option>
-            {MONTHS.map((m, i) => <option key={m} value={i + 1}>{m}</option>)}
+            {MONTHS.map((m, i) => <option key={m} value={i + 1}>{tr(m)}</option>)}
           </select>
         </label>
       </div>
@@ -64,14 +66,14 @@ export function CatalogPanel({ catalog, active, onPick, disabled }: { catalog: S
           <li key={s.id} className={s.id === active?.id ? 'is-active' : ''}>
             <button className="gp-catalog__pick" onClick={() => onPick(s)} disabled={disabled} aria-pressed={s.id === active?.id}>
               <SpeciesPhoto s={s} small />
-              <span className="gp-catalog__name">{s.nameRu}{s.pavlodarEvidenceId ? <span className="gp-catalog__pvl" title="Сажают в Павлодаре"> ✓</span> : null}</span>
-              <span className="gp-small gp-muted">{t(`species.form.${s.form}` as Key)}{s.floweringMonths?.length ? ` · ${s.floweringMonths.map((m) => MONTHS[m - 1]).join('–')}` : ''}{s.pricePerUnitKzt == null ? ` · ${t('ed.cat.noPrice')}` : ''}</span>
+              <span className="gp-catalog__name">{speciesName(s)}{s.pavlodarEvidenceId ? <span className="gp-catalog__pvl" title={tr("Сажают в Павлодаре")}> ✓</span> : null}</span>
+              <span className="gp-small gp-muted">{t(`species.form.${s.form}` as Key)}{s.floweringMonths?.length ? ` · ${s.floweringMonths.map((m) => tr(MONTHS[m - 1])).join('–')}` : ''}{s.pricePerUnitKzt == null ? ` · ${t('ed.cat.noPrice')}` : ''}</span>
             </button>
-            <button className="gp-icon-btn" onClick={() => setCard(s)} aria-label={t('ed.cat.details', { name: s.nameRu })}>ⓘ</button>
+            <button className="gp-icon-btn" onClick={() => setCard(s)} aria-label={t('ed.cat.details', { name: speciesName(s) })}>ⓘ</button>
           </li>
         ))}
       </ul>
-      <Modal open={!!card} title={card?.nameRu ?? ''} onClose={() => setCard(null)}>
+      <Modal open={!!card} title={speciesName(card)} onClose={() => setCard(null)}>
         {card && <SpeciesCard s={card} />}
       </Modal>
     </div>
@@ -84,17 +86,17 @@ export function SpeciesCard({ s }: { s: Species }) {
     <div className="gp-spmodal">
       <SpeciesPhoto s={s} />
       <p><i>{s.latin}</i> · {t(`species.form.${s.form}` as Key)} <DataClassTag value={s.dataClass} /></p>
-      {!!s.benefits?.length && <p><strong>Польза для города:</strong> {s.benefits.join(' · ')}</p>}
-      {!!s.beauty?.length && <p><strong>Красота:</strong> {s.beauty.join(' · ')}</p>}
-      {s.spacingM != null && <p className="gp-small"><strong>Шаг посадки в ряду:</strong> {s.spacingM} м <span className="gp-muted">(ориентир команды)</span></p>}
+      {!!s.benefits?.length && <p><strong>{tr("Польза для города:")}</strong> {s.benefits.join(' · ')}</p>}
+      {!!s.beauty?.length && <p><strong>{tr("Красота:")}</strong> {s.beauty.join(' · ')}</p>}
+      {s.spacingM != null && <p className="gp-small"><strong>{tr("Шаг посадки в ряду:")}</strong> {s.spacingM}{" "}{tr("м")}{" "}<span className="gp-muted">{tr("(ориентир команды)")}</span></p>}
       <dl className="gp-dl">
         <dt>{t('species.frost')}</dt><dd>{t(`species.level.${s.frostHardiness}` as Key)}</dd>
         <dt>{t('species.drought')}</dt><dd>{t(`species.level.${s.droughtTolerance}` as Key)}</dd>
         <dt>{t('species.salt')}</dt><dd>{t(`species.level.${s.saltTolerance}` as Key)}</dd>
         <dt>{t('ed.cat.care')}</dt><dd>{s.careLevel ? t(`species.level.${s.careLevel}` as Key) : unknown(null)}</dd>
-        <dt>{t('ed.cat.flowering')}</dt><dd>{s.floweringMonths?.length ? s.floweringMonths.map((m) => MONTHS[m - 1]).join(', ') : unknown(null)}</dd>
+        <dt>{t('ed.cat.flowering')}</dt><dd>{s.floweringMonths?.length ? s.floweringMonths.map((m) => tr(MONTHS[m - 1])).join(', ') : unknown(null)}</dd>
         <dt>{t('species.height')}</dt><dd>{s.matureHeightM ? `${s.matureHeightM[0]}–${s.matureHeightM[1]}` : unknown(null)}</dd>
-        <dt>{t('ed.cat.crown')}</dt><dd>{s.crownDiameterM != null ? `${s.crownDiameterM} м` : unknown(null)}</dd>
+        <dt>{t('ed.cat.crown')}</dt><dd>{s.crownDiameterM != null ? t('dynamic.002', { p0: String(s.crownDiameterM) }) : unknown(null)}</dd>
         <dt>{t('ed.cat.price')}</dt><dd>{s.pricePerUnitKzt != null ? `${s.pricePerUnitKzt.toLocaleString('ru-RU')} ₸ (${t('data.demo')})` : unknown(null)}</dd>
       </dl>
       <div className="gp-btn-row">
@@ -105,7 +107,7 @@ export function SpeciesCard({ s }: { s: Species }) {
       {s.notes.length > 0 && <ul>{s.notes.map((n) => <li key={n}>{n}</li>)}</ul>}
       <h3 className="gp-subhead">{t('data.sources')}</h3>
       <EvidenceList ids={[...s.evidenceIds, ...(s.priceEvidenceId ? [s.priceEvidenceId] : [])]} />
-      {s.photo && <p className="gp-small gp-muted">Фото: <a href={s.photo.page} target="_blank" rel="noreferrer">{s.photo.author}, {s.photo.license}, Wikimedia Commons</a> — иллюстрация вида, не снимок участка.</p>}
+      {s.photo && <p className="gp-small gp-muted">{tr("Фото:")}{" "}<a href={s.photo.page} target="_blank" rel="noreferrer">{s.photo.author}, {s.photo.license}, Wikimedia Commons</a>{" "}{tr("— иллюстрация вида, не снимок участка.")}</p>}
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import { tr } from '../../../shared/i18n';
 import { useEffect, useMemo, useState } from 'react';
 import { PageHeader } from '../PageHeader';
 import { useData, useResource } from '../../../shared/api/DataProvider';
@@ -27,7 +28,7 @@ function ProjectList() {
   return (
     <div className="gp-page">
       <PageHeader eyebrow={t('projects.eyebrow')} title={t('projects.title')} lead={t('projects.howTo')} actions={<><a className="gp-btn" href={hrefFor('/guide')}>{t('nav.guide')}</a><a className="gp-btn gp-btn--primary" href={hrefFor('/map')}>{t('projects.pickOnMap')}</a><Freshness updatedAt={projects.updatedAt} error={projects.error} loading={projects.loading} onRefresh={projects.reload} /></>} />
-      <StateView loading={projects.loading} error={projects.error} hasData={!!projects.data} onRetry={projects.reload} empty={!!projects.data && list.length === 0} emptyText={t('projects.empty')} emptyAction={<a className="gp-btn gp-btn--primary" href={hrefFor('/map')}>Выбрать участок на карте</a>}>
+      <StateView loading={projects.loading} error={projects.error} hasData={!!projects.data} onRetry={projects.reload} empty={!!projects.data && list.length === 0} emptyText={t('projects.empty')} emptyAction={<a className="gp-btn gp-btn--primary" href={hrefFor('/map')}>{t('empty.chooseSite')}</a>}>
         <div className="gp-tiles">
           {list.map((p) => <ProjectTile key={p.id} p={p} site={siteName.get(p.siteId) ?? p.siteId} />)}
         </div>
@@ -59,12 +60,12 @@ function NewProject({ siteId }: { siteId: string | null }) {
   const { api } = useData();
   const site = useResource(() => (siteId ? api.site(siteId) : Promise.resolve(null)), [siteId]);
   const [title, setTitle] = useState('');
-  const [season, setSeason] = useState('Весна 2027');
+  const [season, setSeason] = useState(tr("Весна 2027"));
   const [error, setError] = useState<unknown>(null);
   const [key] = useState(newIdempotencyKey);
   const { run, busy } = useGuarded();
   useEffect(() => {
-    if (site.data && !title) setTitle(`Озеленение: ${site.data.name}`);
+    if (site.data && !title) setTitle(t('dynamic.004', { p0: String(site.data.name) }));
   }, [site.data, title]);
   if (!siteId) return <div className="gp-page"><div className="gp-alert gp-alert--warn">{t('projects.pickSite')} <a href={hrefFor('/map')}>{t('nav.map')}</a></div></div>;
   return (

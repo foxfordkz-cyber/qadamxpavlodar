@@ -7,6 +7,8 @@ import { analyzeZone, type PlanOptions } from './plan';
 import { detectProblems, PROBLEM_LABEL, priorities, roadmap, DEFAULT_PRIORITY_WEIGHTS } from './city';
 import { factSources, searchFacts } from '../api/pavlodar';
 import { searchAddress } from '../api/geocode';
+import { speciesName, tFor, type Key, type Lang } from '../i18n';
+import { analysisText } from '../i18n/templateText';
 
 // Вопросы о нормах, климате, воздухе, зелёном фонде — отвечаем проверенными фактами о Павлодаре со ссылками.
 const FACT_WORDS = /норм|отступ|расстоян|климат|мороз|температур|осадк|ветер|ветр|снег|воздух|загрязн|компенсац|вырубк|населен|жител|почв|инвентаризац|безмороз|микрорайон|госзакуп/;
@@ -89,9 +91,14 @@ function findSpecies(q: string, catalog: Species[]): Species[] {
 }
 
 export function answer(q: string, ctx: AskContext, sites: CandidateSite[], catalog: Species[], rates: Rates): AssistantReply {
+  // Same letters as server questionLang; never mutate the UI/global language.
+  const language: Lang = /[әғқңөұүһі]/i.test(q) ? 'kk' : 'ru';
+  const t = (key: Key, params?: Record<string, string | number>) => tFor(language, key, params);
+  const name = (sp: Species | undefined) => speciesName(sp, '', language);
+  const display = (value: string) => analysisText(value, catalog, language);
   const said = q.trim();
   const prev = [...(ctx.history ?? [])].reverse().find((m) => m.role === 'user')?.text;
-  const followUp = !!prev && said.split(/\s+/).length <= 4 && !INTENT.test(said.toLowerCase());
+  const followUp = !!prev && said.split(/\s+/).length <= 4 && !INTENT.test(said.toLowerCase()) && !(language === 'kk' && /бірінші|кезек|басымдық|мәселе|жерсін|әсер|оттегі|көмірқышқыл/.test(said.toLowerCase()));
   const text = followUp ? `${prev} ${said}` : said;
   const low = text.toLowerCase();
   let site = sites.find((s) => s.id === ctx.siteId) ?? null;
@@ -100,26 +107,26 @@ export function answer(q: string, ctx: AskContext, sites: CandidateSite[], catal
 
   if (/млн|млрд|тыс|бюджет|на сумм/.test(low)) {
     const budget = parseBudget(low);
-    if (!budget) return { text: 'Не понял сумму бюджета. Напишите, например: «Что можно озеленить на 50 млн при максимальном эффекте?»', zones: [], method: 'rules', intent: 'budget' };
+    if (!budget) return { text: t('rules.budgetHelp'), zones: [], method: 'rules', intent: 'budget' };
     const pr = priorities(sites, catalog, rates, DEFAULT_PRIORITY_WEIGHTS);
     const rm = roadmap(pr, budget);
-    if (!rm.chosen.length) return { text: `На ${money(budget)} не помещается ни одна зона в варианте «оптимальный» (самая дешёвая — ${money(Math.min(...pr.map((p) => p.cost)))}). Попробуйте вариант «эконом» в панели зоны.`, zones: [], method: 'rules', intent: 'budget' };
-    return { text: `На ${money(budget)} по дорожной карте можно озеленить ${rm.chosen.length} зон(ы), потрачено ${money(rm.spent)}, остаток ${money(rm.left)}. Оценка поглощения CO₂ через 20 лет — ${rm.co2t20.toFixed(1)} т/год. ${rm.method}`, zones: rm.chosen.slice(0, 8).map((c) => zone(c.siteId)), method: 'rules', intent: 'budget', data: rm };
+    if (!rm.chosen.length) return { text: t('rules.budgetNone', { p0: money(budget), p1: money(Math.min(...pr.map((p) => p.cost))) }), zones: [], method: 'rules', intent: 'budget' };
+    return { text: t('rules.budget', { p0: money(budget), p1: rm.chosen.length, p2: money(rm.spent), p3: money(rm.left), p4: rm.co2t20.toFixed(1), p5: display(rm.method) }), zones: rm.chosen.slice(0, 8).map((c) => zone(c.siteId)), method: 'rules', intent: 'budget', data: rm };
   }
-  if (/перв|очеред|приоритет|в первую/.test(low)) {
+  if (/перв|очеред|приоритет|в первую/.test(low) || (language === 'kk' && /бірінші|кезек|басымдық/.test(low))) {
     const pr = priorities(sites, catalog, rates, DEFAULT_PRIORITY_WEIGHTS).slice(0, 5);
-    return { text: `Первая пятёрка по индексу приоритета (веса по умолчанию):\n${pr.map((p, i) => `${i + 1}. ${zone(p.siteId).name} — индекс ${p.index}; ${p.explanation.join('; ')}`).join('\n')}\nДанных о районах нет, поэтому фильтр «район N» пока недоступен — показываю весь демонстрационный участок.`, zones: pr.map((p) => zone(p.siteId)), method: 'rules', intent: 'priority' };
+    return { text: t('rules.priority', { p0: pr.map((p, i) => t('rules.priorityRow', { p0: i + 1, p1: zone(p.siteId).name, p2: p.index, p3: p.explanation.map(display).join('; ') })).join('\n') }), zones: pr.map((p) => zone(p.siteId)), method: 'rules', intent: 'priority' };
   }
-  if (/проблем/.test(low)) {
+  if (/проблем/.test(low) || (language === 'kk' && /мәселе/.test(low))) {
     const { problems, notDetectable } = detectProblems(sites);
-    const counts = Object.entries(PROBLEM_LABEL).map(([k, v]) => `${v}: ${problems.filter((p) => p.type === k).length}`).join('; ');
+    const counts = Object.entries(PROBLEM_LABEL).map(([k, v]) => `${display(v)}: ${problems.filter((p) => p.type === k).length}`).join('; ');
     const high = problems.filter((p) => p.severity === 'high').slice(0, 5);
-    return { text: `Выявлено проблем: ${problems.length} (${counts}). С высокой остротой — ${problems.filter((p) => p.severity === 'high').length}.\n${high.map((p) => `• ${zone(p.siteId).name}: ${PROBLEM_LABEL[p.type]} — ${p.cause}`).join('\n')}\n${notDetectable.join(' ')}`, zones: high.map((p) => zone(p.siteId)), method: 'rules', intent: 'problems' };
+    return { text: t('rules.problems', { p0: problems.length, p1: counts, p2: problems.filter((p) => p.severity === 'high').length, p3: high.map((p) => t('rules.problemRow', { p0: zone(p.siteId).name, p1: display(PROBLEM_LABEL[p.type]), p2: display(p.cause) })).join('\n'), p4: notDetectable.map(display).join(' ') }), zones: high.map((p) => zone(p.siteId)), method: 'rules', intent: 'problems' };
   }
   // Вопрос про выбранную зону («какая почва здесь») — к расчёту зоны, а не к общим фактам о городе.
   if (FACT_WORDS.test(low) && !(site && /зон|участ|здесь/.test(low))) {
     const found = searchFacts(low, 3);
-    if (found.length) return { text: found.map((f) => `• ${f.title}: ${f.text}`).join('\n'), zones: [], method: 'rules', intent: 'facts', sources: factSources(found) };
+    if (found.length) return { text: t('rules.facts', { facts: found.map((f) => t('rules.factRow', { title: f.title, text: f.text })).join('\n') }), zones: [], method: 'rules', intent: 'facts', sources: factSources(found) };
   }
   // Зона не выбрана, но названо место («у вокзала», «Едиге би 1») — считаем ближайшую зону и говорим, какую.
   let lead = '';
@@ -128,10 +135,10 @@ export function answer(q: string, ctx: AskContext, sites: CandidateSite[], catal
     const first = p.zones[0];
     if (first) {
       site = first.site;
-      lead = p.from === 'address' ? `Ближайшая к «${p.place}» зона — ${site.name} (≈${fmt(first.distanceM)} м). ` : `Зона не выбрана, адреса из вопроса нет в снимке OSM района — беру ближайшую к центру карты: ${site.name} (≈${fmt(first.distanceM)} м). `;
+      lead = p.from === 'address' ? t('rules.nearAddress', { p0: p.place ?? '', p1: site.name, p2: fmt(first.distanceM) }) : t('rules.nearMap', { p0: site.name, p1: fmt(first.distanceM) });
     }
   }
-  if (!site) return { text: ctx.view || PLACE_CUE.test(low) ? 'Не нашёл это место в снимке района прототипа (центр Павлодара). Выберите зону на карте, найдите адрес строкой над картой или обведите участок кнопкой «✎ Нарисовать зону».' : 'Выберите зону на карте — и я посчитаю подбор, смету, приживаемость или эффект для неё. Без выбранной зоны могу ответить про приоритеты, бюджет и проблемные зоны.', zones: [], method: 'rules', intent: 'need_zone' };
+  if (!site) return { text: ctx.view || PLACE_CUE.test(low) ? t('rules.placeMissing') : t('rules.needZone'), zones: [], method: 'rules', intent: 'need_zone' };
   const out = (r: AssistantReply): AssistantReply => (lead ? { ...r, text: lead + r.text } : r);
 
   const years = (low.match(/(\d)\s*(год|лет|года)/)?.[1] as unknown as number) ?? null;
@@ -145,20 +152,20 @@ export function answer(q: string, ctx: AskContext, sites: CandidateSite[], catal
     const ok = new Set(a0.ranked.filter((r) => !r.excludedBy).map((r) => r.speciesId));
     const inScheme = findSpecies(fromText, catalog).find((s) => a0.scheme.some((r) => r.speciesId === s.id || r.replacedFrom === s.id));
     const target = findSpecies(toText, catalog).filter((s) => s.id !== inScheme?.id && ok.has(s.id)).sort((x, y) => (a0.ranked.find((r) => r.speciesId === y.id)?.score ?? 0) - (a0.ranked.find((r) => r.speciesId === x.id)?.score ?? 0))[0];
-    if (!inScheme || !target) return out({ text: `Чтобы сравнить замену, назовите вид из текущей схемы и вид-замену. В схеме сейчас: ${[...new Set(a0.scheme.map((r) => byId.get(r.speciesId)?.nameRu))].join(', ')}.`, zones: [zone(site.id)], method: 'rules', intent: 'replace' });
+    if (!inScheme || !target) return out({ text: t('rules.replaceHelp', { p0: [...new Set(a0.scheme.map((r) => name(byId.get(r.speciesId))))].join(', ') }), zones: [zone(site.id)], method: 'rules', intent: 'replace' });
     const a1 = analyzeZone(site, catalog, rates, { ...base, replacements: { [inScheme.id]: target.id } });
     const s0 = a0.survival.find((s) => s.speciesId === inScheme.id);
     const s1 = a1.survival.find((s) => s.speciesId === target.id);
-    return out({ text: `${site.name}: замена «${inScheme.nameRu}» на «${target.nameRu}». Приживаемость за 1 год: ${s0?.y1 ?? '?'}% → ${s1?.y1 ?? '?'}% (диапазон ${s1?.low}–${s1?.high}%). Средняя по зоне: ${a0.survivalAvg.y1}% → ${a1.survivalAvg.y1}%. Смета: ${money(a0.cost.total)} → ${money(a1.cost.total)}. Главные риски замены: ${(s1?.risks ?? []).map((r) => `${r.label} ${r.pp} п.п.`).join('; ') || 'нет'}.`, zones: [zone(site.id)], method: 'rules', intent: 'replace' });
+    return out({ text: t('rules.replace', { p0: site.name, p1: name(inScheme), p2: name(target), p3: s0?.y1 ?? '?', p4: s1?.y1 ?? '?', p5: s1?.low ?? 'undefined', p6: s1?.high ?? 'undefined', p7: a0.survivalAvg.y1, p8: a1.survivalAvg.y1, p9: money(a0.cost.total), p10: money(a1.cost.total), p11: (s1?.risks ?? []).map((r) => t('rules.risk', { p0: display(r.label), p1: r.pp })).join('; ') || t('rules.none') }), zones: [zone(site.id)], method: 'rules', intent: 'replace' });
   }
   const a = analyzeZone(site, catalog, rates, base);
-  if (/прижив/.test(low)) {
-    return out({ text: `${site.name}: средняя приживаемость — ${a.survivalAvg.y1}% за 1 год, ${a.survivalAvg.y2}% за 2, ${a.survivalAvg.y3}% за 3 (оценка по правилам, не калибрована). ${a.measures.length ? `Как повысить: ${a.measures.map((m) => `${m.label} (${m.effect})`).join('; ')}.` : ''}`, zones: [zone(site.id)], method: 'rules', intent: 'survival' });
+  if (/прижив/.test(low) || (language === 'kk' && /жерсін/.test(low))) {
+    return out({ text: t('rules.survival', { p0: site.name, p1: a.survivalAvg.y1, p2: a.survivalAvg.y2, p3: a.survivalAvg.y3, p4: a.measures.length ? t('rules.measures', { p0: a.measures.map((m) => `${display(m.label)} (${display(m.effect)})`).join('; ') }) : '' }), zones: [zone(site.id)], method: 'rules', intent: 'survival' });
   }
-  if (/эффект|co2|со2|углекисл|кислород/.test(low)) {
+  if (/эффект|co2|со2|углекисл|кислород/.test(low) || (language === 'kk' && /әсер|көмірқышқыл|оттегі/.test(low))) {
     const e = a.effect;
-    return out({ text: `${site.name}: поглощение CO₂ ≈ ${e[0].co2t.toFixed(2)} / ${e[1].co2t.toFixed(2)} / ${e[2].co2t.toFixed(2)} т в год через 5 / 10 / 20 лет; охлаждение до ${e[2].coolingC} °C; задержание дождя ≈ ${fmt(e[2].rainM3)} м³ в год. ${a.costPerTonCo2 ? `Стоимость тонны CO₂ за 20 лет ≈ ${money(a.costPerTonCo2)}.` : ''} Все значения оценочные.`, zones: [zone(site.id)], method: 'rules', intent: 'effect' });
+    return out({ text: t('rules.effect', { p0: site.name, p1: e[0].co2t.toFixed(2), p2: e[1].co2t.toFixed(2), p3: e[2].co2t.toFixed(2), p4: e[2].coolingC, p5: fmt(e[2].rainM3), p6: a.costPerTonCo2 ? t('rules.effectCost', { p0: money(a.costPerTonCo2) }) : '' }), zones: [zone(site.id)], method: 'rules', intent: 'effect' });
   }
-  const top = a.ranked.filter((r) => !r.excludedBy).slice(0, 5).map((r) => `${byId.get(r.speciesId)?.nameRu} (${r.score})`).join(', ');
-  return out({ text: `${site.name} (${a.facts.purposeLabel.toLowerCase()}, ${a.facts.areaM2} м²). Лучшие виды по пригодности: ${top}. Схема: ${a.scheme.map((r) => `${byId.get(r.speciesId)?.nameRu} × ${r.quantity}`).join(', ')}. Смета на ${a.options.careYears} г. ухода — ${money(a.cost.total)} (${a.cost.items.map((i) => `${i.label.toLowerCase()} ${money(i.amount)}`).join('; ')}). Средняя приживаемость за 1 год — ${a.survivalAvg.y1}%. Расценки демонстрационные.`, zones: [zone(site.id)], method: 'rules', intent: 'select' });
+  const top = a.ranked.filter((r) => !r.excludedBy).slice(0, 5).map((r) => `${name(byId.get(r.speciesId))} (${r.score})`).join(', ');
+  return out({ text: t('rules.selection', { p0: site.name, p1: display(a.facts.purposeLabel).toLowerCase(), p2: a.facts.areaM2 ?? 'null', p3: top, p4: a.scheme.map((r) => `${name(byId.get(r.speciesId))} × ${r.quantity}`).join(', '), p5: a.options.careYears, p6: money(a.cost.total), p7: a.cost.items.map((i) => `${display(i.label).toLowerCase()} ${money(i.amount)}`).join('; '), p8: a.survivalAvg.y1 }), zones: [zone(site.id)], method: 'rules', intent: 'select' });
 }

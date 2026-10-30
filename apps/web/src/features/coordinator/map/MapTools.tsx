@@ -5,8 +5,9 @@ import type { GeoHit } from '../../../shared/api/geocode';
 import type { CandidateSite } from '../../../shared/api/types';
 import { makeProjection, ringAreaXY } from '../../../shared/geo';
 import { ErrorNote } from '../../../shared/ui/components';
+import { t, type Key } from '../../../shared/i18n';
 
-const KIND: Record<GeoHit['kind'], string> = { address: 'дом', street: 'улица', place: 'место', zone: 'зона' };
+const KIND: Record<GeoHit['kind'], Key> = { address: 'mapSearch.kind.address', street: 'mapSearch.kind.street', place: 'mapSearch.kind.place', zone: 'mapSearch.kind.zone' };
 
 /** ТЗ 3.1.4: поиск по адресу, улице, месту или зоне — по снимку OSM района (сервер или тестовый источник). */
 export function MapSearch({ onPick }: { onPick: (hit: GeoHit) => void }) {
@@ -36,8 +37,8 @@ export function MapSearch({ onPick }: { onPick: (hit: GeoHit) => void }) {
   const pick = (h: GeoHit) => { picked.current = h.label; onPick(h); setQ(h.label); setHits(null); };
   return (
     <div className="gp-mapsearch" ref={box}>
-      <label className="gp-sr" htmlFor={id}>Поиск по адресу</label>
-      <input id={id} className="gp-input" type="search" placeholder="Адрес, улица, место или зона" value={q} autoComplete="off"
+      <label className="gp-sr" htmlFor={id}>{t('mapSearch.label')}</label>
+      <input id={id} className="gp-input" type="search" placeholder={t('mapSearch.placeholder')} value={q} autoComplete="off"
         role="combobox" aria-expanded={!!hits?.length} aria-controls={`${id}-list`} aria-activedescendant={hits?.length ? `${id}-${active}` : undefined}
         onChange={(e) => setQ(e.target.value)}
         onKeyDown={(e) => {
@@ -48,13 +49,13 @@ export function MapSearch({ onPick }: { onPick: (hit: GeoHit) => void }) {
           if (e.key === 'Escape') setHits(null);
         }} />
       {hits && (
-        <ul id={`${id}-list`} className="gp-mapsearch__list gp-card" role="listbox" aria-label="Найденные места">
+        <ul id={`${id}-list`} className="gp-mapsearch__list gp-card" role="listbox" aria-label={t('mapSearch.results')}>
           {hits.map((h, i) => (
             <li key={`${h.kind}-${h.label}`} id={`${id}-${i}`} role="option" aria-selected={i === active}>
-              <button type="button" onMouseEnter={() => setActive(i)} onClick={() => pick(h)}><span className="gp-badge">{KIND[h.kind]}</span> {h.label}</button>
+              <button type="button" onMouseEnter={() => setActive(i)} onClick={() => pick(h)}><span className="gp-badge">{t(KIND[h.kind])}</span> {h.label}</button>
             </li>
           ))}
-          {!hits.length && <li className="gp-small gp-muted gp-mapsearch__empty">{error instanceof ApiError ? error.message : 'Ничего не найдено в районе карты. Попробуйте улицу без номера дома.'}</li>}
+          {!hits.length && <li className="gp-small gp-muted gp-mapsearch__empty">{error instanceof ApiError ? error.message : t('mapSearch.empty')}</li>}
         </ul>
       )}
     </div>
@@ -97,23 +98,23 @@ export function DrawBar({ points, onUndo, onCancel, onSaved }: { points: [number
     } catch (e) { setError(e); setStep('draw'); } finally { setBusy(false); }
   };
   return (
-    <div className="gp-drawbar" role="group" aria-label="Рисование зоны">
+    <div className="gp-drawbar" role="group" aria-label={t('draw.label')}>
       {step === 'draw' ? (
         <>
           <span className="gp-small" aria-live="polite">
-            {points.length < 3 ? `Кликайте по карте — углы контура (${points.length} из минимум 3).` : `Углов: ${points.length} · ≈${area.toLocaleString('ru-RU')} м²`}
-            {points.length >= 3 && area <= 50 && ' — меньше 50 м², сервер не примет'}
+            {points.length < 3 ? t('draw.pointsHint', { n: points.length }) : t('draw.area', { n: points.length, area: area.toLocaleString('ru-RU') })}
+            {points.length >= 3 && area <= 50 && t('draw.tooSmall')}
           </span>
-          <button type="button" className="gp-btn" onClick={onUndo} disabled={!points.length}>Отменить точку</button>
-          <button type="button" className="gp-btn gp-btn--primary" onClick={() => setStep('name')} disabled={points.length < 3}>Готово</button>
-          <button type="button" className="gp-btn gp-btn--ghost" onClick={onCancel}>Отмена</button>
+          <button type="button" className="gp-btn" onClick={onUndo} disabled={!points.length}>{t('draw.undo')}</button>
+          <button type="button" className="gp-btn gp-btn--primary" onClick={() => setStep('name')} disabled={points.length < 3}>{t('draw.done')}</button>
+          <button type="button" className="gp-btn gp-btn--ghost" onClick={onCancel}>{t('form.cancel')}</button>
         </>
       ) : (
         <form className="gp-drawbar__form" onSubmit={(e) => { e.preventDefault(); void save(); }}>
-          <label className="gp-sr" htmlFor="draw-name">Название зоны</label>
-          <input id="draw-name" className="gp-input" maxLength={120} placeholder="Название (необязательно)" value={name} onChange={(e) => setName(e.target.value)} autoFocus />
-          <button type="submit" className="gp-btn gp-btn--primary" disabled={busy} aria-busy={busy || undefined}>{busy ? 'Сохраняю…' : 'Сохранить зону'}</button>
-          <button type="button" className="gp-btn" onClick={() => setStep('draw')} disabled={busy}>Назад</button>
+          <label className="gp-sr" htmlFor="draw-name">{t('draw.name')}</label>
+          <input id="draw-name" className="gp-input" maxLength={120} placeholder={t('draw.namePlaceholder')} value={name} onChange={(e) => setName(e.target.value)} autoFocus />
+          <button type="submit" className="gp-btn gp-btn--primary" disabled={busy} aria-busy={busy || undefined}>{t(busy ? 'draw.saving' : 'draw.save')}</button>
+          <button type="button" className="gp-btn" onClick={() => setStep('draw')} disabled={busy}>{t('draw.back')}</button>
         </form>
       )}
       {error !== null && <ErrorNote error={error} notSaved />}

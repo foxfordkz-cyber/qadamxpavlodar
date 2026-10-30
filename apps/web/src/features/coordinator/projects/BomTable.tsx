@@ -1,3 +1,4 @@
+import { speciesName } from '../../../shared/i18n';
 import { useEffect, useMemo, useRef } from 'react';
 import type { ProjectItem, Species } from '../../../shared/api/types';
 import { Badge, Button } from '../../../shared/ui/components';
@@ -43,7 +44,7 @@ export function BomTable({ items, species, selectedId, onSelect, onQuantity, onD
                   <tr key={it.id} ref={(el) => { rowRef.current[it.id] = el; }} className={it.id === selectedId ? 'is-selected' : ''} onClick={() => onSelect(it.id)}>
                     <td>{i + 1}</td>
                     <td>
-                      <button className="gp-linkbtn" onClick={(e) => { e.stopPropagation(); onSelect(it.id); }}>{sp?.nameRu ?? it.speciesId}</button>
+                      <button className="gp-linkbtn" onClick={(e) => { e.stopPropagation(); onSelect(it.id); }}>{speciesName(sp, it.speciesId)}</button>
                       <div className="gp-muted">{it.kind === 'bed' ? t('ed.kind.bed') : t('ed.kind.point')}</div>
                       {it.origin === 'suggested' && (
                         <div><Badge tone="info" icon="✦">{t('ed.bom.suggested')}</Badge>{editable && <Button variant="ghost" onClick={(e) => { e.stopPropagation(); onAccept(it.id); }}>{t('ed.bom.accept')}</Button>}</div>
@@ -70,16 +71,16 @@ export function BomTable({ items, species, selectedId, onSelect, onQuantity, onD
       {totals.length > 0 && (
         <>
           <h3 className="gp-subhead gp-small">{t('ed.bom.totals')}</h3>
-          <ul className="gp-small gp-bom__totals">{totals.map(([id, q]) => <li key={id}>{species.get(id)?.nameRu ?? id}: <strong>{q}</strong></li>)}</ul>
+          <ul className="gp-small gp-bom__totals">{totals.map(([id, q]) => <li key={id}>{speciesName(species.get(id), id)}: <strong>{q}</strong></li>)}</ul>
         </>
       )}
       <div className={`gp-bom__cost ${cost.complete ? '' : 'is-partial'}`} aria-live="polite">
         {items.length === 0 ? null : cost.complete ? (
           <><strong>{cost.known.toLocaleString('ru-RU')} ₸</strong> <span className="gp-small gp-muted">{t('ed.bom.costDemo')}</span></>
         ) : cost.known > 0 ? (
-          <><strong>{t('ed.bom.costPartial', { sum: cost.known.toLocaleString('ru-RU') })}</strong><div className="gp-small">{t('ed.bom.costMissing', { list: cost.missing.map((m) => `${species.get(m.speciesId)?.nameRu ?? m.speciesId} (${m.quantity})`).join(', ') })}</div></>
+          <><strong>{t('ed.bom.costPartial', { sum: cost.known.toLocaleString('ru-RU') })}</strong><div className="gp-small">{t('ed.bom.costMissing', { list: cost.missing.map((m) => `${speciesName(species.get(m.speciesId), m.speciesId)} (${m.quantity})`).join(', ') })}</div></>
         ) : (
-          <><strong>{t('ed.bom.costUnknown')}</strong><div className="gp-small">{t('ed.bom.costMissing', { list: cost.missing.map((m) => species.get(m.speciesId)?.nameRu ?? m.speciesId).join(', ') })}</div></>
+          <><strong>{t('ed.bom.costUnknown')}</strong><div className="gp-small">{t('ed.bom.costMissing', { list: cost.missing.map((m) => speciesName(species.get(m.speciesId), m.speciesId)).join(', ') })}</div></>
         )}
       </div>
     </div>

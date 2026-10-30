@@ -1,3 +1,4 @@
+import { tr } from '../../../shared/i18n';
 import { useRef, useState } from 'react';
 import { useData, useResource } from '../../../shared/api/DataProvider';
 import { ApiError, newIdempotencyKey } from '../../../shared/api/transport';
@@ -69,9 +70,9 @@ export function TaskForm({ initial, onDone, onCancel }: { initial: TaskDraft; on
     if (brigade) {
       const crew = Number(v.minCrew);
       if (!Number.isInteger(crew) || crew < 1) e.minCrew = 'Целое число от 1.';
-      else if (crew > brigade.memberIds.length) e.minCrew = `В бригаде ${brigade.memberIds.length} чел.`;
-      if (!brigade.skills.includes(v.action)) e.brigadeId = `У бригады нет навыка «${t(`action.${v.action}` as Key)}».`;
-      if (!brigade.active) e.brigadeId = `${brigade.name} сейчас недоступна.`;
+      else if (crew > brigade.memberIds.length) e.minCrew = t('dynamic.007', { p0: String(brigade.memberIds.length) });
+      if (!brigade.skills.includes(v.action)) e.brigadeId = t('dynamic.008', { p0: String(t(`action.${v.action}` as Key)) });
+      if (!brigade.active) e.brigadeId = t('dynamic.009', { p0: String(brigade.name) });
     }
     setErrors(e);
     return !Object.keys(e).length;
@@ -131,13 +132,13 @@ export function TaskForm({ initial, onDone, onCancel }: { initial: TaskDraft; on
           <span aria-hidden="true">✓ </span>{t('form.created', { id: final.id, status: t(`status.${final.status}` as Key), v: final.version })}
         </div>
         <dl className="gp-dl">
-          <dt>Статус</dt><dd><TaskStatusBadge status={final.status} /></dd>
-          <dt>{t('form.brigade')}</dt><dd>{br ? `${br.name}, минимум ${final.minCrew} чел.` : t('tasks.unassigned')}</dd>
+          <dt>{tr("Статус")}</dt><dd><TaskStatusBadge status={final.status} /></dd>
+          <dt>{t('form.brigade')}</dt><dd>{br ? t('dynamic.010', { p0: String(br.name), p1: String(final.minCrew) }) : t('tasks.unassigned')}</dd>
           {br && <><dt>{t('tasks.crew')}</dt><dd>{t('tasks.crewPending')}</dd></>}
           {final.scheduledStart && <><dt>{t('tasks.planned')}</dt><dd>{fmtDateTime(final.scheduledStart)} – {fmtTime(final.scheduledEnd)}</dd></>}
-          {final.projectId && <><dt>{t('form.project')}</dt><dd>{initial.projectTitle ?? final.projectId}, версия состава {final.projectDesignVersion}</dd></>}
-          <dt>Вода</dt><dd>{final.requiredWaterLiters == null ? t('form.waterUnknown') : `${final.requiredWaterLiters} л`}</dd>
-          <dt>Создано (время сервера)</dt><dd>{fmtDateTime(final.createdAt)}</dd>
+          {final.projectId && <><dt>{t('form.project')}</dt><dd>{initial.projectTitle ?? final.projectId}{tr(", версия состава")}{" "}{final.projectDesignVersion}</dd></>}
+          <dt>{tr("Вода")}</dt><dd>{final.requiredWaterLiters == null ? t('form.waterUnknown') : t('dynamic.011', { p0: String(final.requiredWaterLiters) })}</dd>
+          <dt>{tr("Создано (время сервера)")}</dt><dd>{fmtDateTime(final.createdAt)}</dd>
         </dl>
         {assignError ? <div className="gp-alert gp-alert--warn" role="alert">{t('form.assignFailed', { message: (assignError as Error).message })}</div> : null}
         <Button variant="primary" onClick={onDone}>{t('common.close')}</Button>
@@ -202,7 +203,7 @@ export function TaskForm({ initial, onDone, onCancel }: { initial: TaskDraft; on
             {(id, d) => (
               <select id={id} aria-describedby={d} className="gp-input" value={v.brigadeId} onChange={(e) => set('brigadeId', e.target.value)}>
                 <option value="">{t('form.noBrigade')}</option>
-                {(brigades.data ?? []).map((b) => <option key={b.id} value={b.id} disabled={!b.active}>{b.name} · {b.memberIds.length} чел. · {fmtTime(b.shiftStart)}–{fmtTime(b.shiftEnd)}</option>)}
+                {(brigades.data ?? []).map((b) => <option key={b.id} value={b.id} disabled={!b.active}>{b.name} · {b.memberIds.length}{" "}{tr("чел. ·")}{" "}{fmtTime(b.shiftStart)}–{fmtTime(b.shiftEnd)}</option>)}
               </select>
             )}
           </Field>
@@ -212,7 +213,7 @@ export function TaskForm({ initial, onDone, onCancel }: { initial: TaskDraft; on
             </Field>
           )}
           {v.brigadeId && (
-            <Field label={t('tasks.start')} hint={brigade ? `Смена ${fmtDateTime(brigade.shiftStart)} – ${fmtTime(brigade.shiftEnd)}` : undefined}>
+            <Field label={t('tasks.start')} hint={brigade ? t('dynamic.012', { p0: String(fmtDateTime(brigade.shiftStart)), p1: String(fmtTime(brigade.shiftEnd)) }) : undefined}>
               {(id, d) => <input id={id} aria-describedby={d} className="gp-input" type="datetime-local" value={v.start} onChange={(e) => set('start', e.target.value)} />}
             </Field>
           )}
@@ -220,7 +221,7 @@ export function TaskForm({ initial, onDone, onCancel }: { initial: TaskDraft; on
       </fieldset>
       {Object.keys(errors).length > 0 && <div className="gp-alert gp-alert--bad" role="alert">{t('form.fixErrors')}</div>}
       <ErrorNote error={error} notSaved />
-      {created && <div className="gp-alert gp-alert--info">Задание {created.id} уже создано на сервере; повторяется только назначение.</div>}
+      {created && <div className="gp-alert gp-alert--info">{tr("Задание")}{" "}{created.id}{" "}{tr("уже создано на сервере; повторяется только назначение.")}</div>}
       <div className="gp-btn-row">
         <Button variant="primary" type="submit" busy={busy}>{busy ? t('form.saving') : t('form.submit')}</Button>
         <Button type="button" onClick={onCancel}>{t('form.cancel')}</Button>
