@@ -112,7 +112,7 @@ test('mixed planting does not compete for cheapest surviving tree', async () => 
   for (const v of mixed) {
     assert.equal(v.costPerExpectedTreeKzt, null);
     assert.ok(!data.comparison.bestVariantIds.includes(v.id));
-    assert.ok(renderToStaticMarkup(createElement(VariantCard, { variant: v, best: false })).includes(t('outcomePage.issue.mixed_planting')));
+    assert.ok(renderToStaticMarkup(createElement(VariantCard, { variant: v, best: false })).includes(t('outcomes.issue.mixed')));
   }
 });
 test('missing rate gives missing total and no winner, never a free service', async () => {
@@ -182,6 +182,13 @@ test('reload clears previously successful data before a failed request', async (
 });
 test('mock forecast save: idempotent, unchanged after rate edit, and role checked', async () => {
   const previous = { ...mockControls };
+  const descriptor = Object.getOwnPropertyDescriptor(globalThis, 'localStorage');
+  const stored = new Map<string, string>();
+  let rejectStorage = false;
+  Object.defineProperty(globalThis, 'localStorage', { configurable: true, value: {
+    getItem: (key: string) => stored.get(key) ?? null,
+    setItem: (key: string, value: string) => { if (rejectStorage) throw new Error('quota'); stored.set(key, value); },
+  } });
   try {
     resetMockDb(); setMockControls({ role: 'coordinator', networkDown: false, latencyMs: 0 });
     const api = createApi(createMockTransport());
@@ -191,6 +198,11 @@ test('mock forecast save: idempotent, unchanged after rate edit, and role checke
     const second = await api.outcomes.saveForecast(OUTCOME_DEMO_SITE, input, 'test-save');
     assert.deepEqual(second, first);
     assert.equal((await api.outcomes.list(OUTCOME_DEMO_SITE)).forecasts.filter(f => f.id === first.id).length, 1);
+    rejectStorage = true;
+    const count = (await api.outcomes.list(OUTCOME_DEMO_SITE)).forecasts.length;
+    await assert.rejects(api.outcomes.saveForecast(OUTCOME_DEMO_SITE, input, 'quota'), (e: ApiError) => e.code === 'outcomes_storage');
+    assert.equal((await api.outcomes.list(OUTCOME_DEMO_SITE)).forecasts.length, count);
+    rejectStorage = false;
     setMockControls({ role: 'admin' });
     await api.patchRate({ key: 'work.tree', value: 12345, source: 'test', expectedVersion: 1 });
     assert.deepEqual((await api.outcomes.list(OUTCOME_DEMO_SITE)).forecasts.find(f => f.id === first.id), first);
@@ -202,5 +214,9 @@ test('mock forecast save: idempotent, unchanged after rate edit, and role checke
     await assert.rejects(api.outcomes.saveForecast(OUTCOME_DEMO_SITE, input, 'stale'), (e: ApiError) => e.status === 409);
     setMockControls({ networkDown: true });
     await assert.rejects(api.outcomes.list(OUTCOME_DEMO_SITE), (e: ApiError) => e.status === 0);
-  } finally { resetMockDb(); setMockControls(previous); }
+  } finally {
+    resetMockDb(); setMockControls(previous);
+    if (descriptor) Object.defineProperty(globalThis, 'localStorage', descriptor);
+    else Reflect.deleteProperty(globalThis, 'localStorage');
+  }
 });

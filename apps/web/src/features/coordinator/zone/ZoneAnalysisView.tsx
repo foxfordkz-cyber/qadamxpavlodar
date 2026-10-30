@@ -13,7 +13,7 @@ import { SpeciesPhoto } from '../species/SpeciesCardGrid';
 import { SurvivalMethod } from './SurvivalMethod';
 import { CareDrafts } from './CareDrafts';
 import { TimeMachinePanel } from './TimeMachinePanel';
-import { OutcomesPanel } from '../outcomes/OutcomesPanel';
+import { OutcomeZonePanel } from '../outcomes/OutcomeZonePanel';
 import { t } from '../../../shared/i18n';
 import { fmtPp } from '../../../shared/format';
 
@@ -41,7 +41,7 @@ export function ZoneAnalysisView({ site, tab, options, setOptions }: { site: Can
             <Facts a={a} onPurpose={(p) => set({ purpose: p })} />
             {res.loading && <p className="gp-small gp-muted" role="status">{tr("Пересчёт…")}</p>}
             {tab === 'plants' && <PlantsTab a={a} byId={byId} options={options} set={set} />}
-            {tab === 'cost' && <><CostTab a={a} site={site} options={options} set={set} /><OutcomesPanel siteId={site.id} requestKey={key} /></>}
+            {tab === 'cost' && <><CostTab a={a} site={site} options={options} set={set} /><OutcomeZonePanel siteId={site.id} requestKey={key} /></>}
             {tab === 'survival' && <SurvivalTab a={a} byId={byId} options={options} set={set} />}
             {tab === 'care' && <CareTab a={a} />}
             {tab === 'effect' && <EffectTab a={a} site={site} byId={byId} />}

@@ -1,4 +1,4 @@
-import { useEffect, useId, useState } from 'react';
+import { useEffect, useId, useState, type ReactNode } from 'react';
 import { getLang, speciesName, t, type Key } from '../../../shared/i18n';
 import { useLanguage } from '../../../shared/i18n/useLanguage';
 import type { OutcomeIssue, OutcomeIssueCode, OutcomeVariant } from '../../../shared/api/outcomes';
@@ -70,7 +70,7 @@ export function OutcomesPanel({ siteId, requestKey = '', load }: { siteId: strin
 }
 
 const costLabels = { material: 'outcomes.cost.material', prep: 'outcomes.cost.prep', work: 'outcomes.cost.work', care: 'outcomes.cost.care', reserve: 'outcomes.cost.reserve' } satisfies Record<string, Key>;
-function CostCard({ variant, best, eligible }: { variant: OutcomeVariant; best: boolean; eligible: boolean }) {
+export function CostCard({ variant, best, eligible, children }: { variant: OutcomeVariant; best: boolean; eligible: boolean; children?: ReactNode }) {
   return <article className={`gp-outcomes__card${best ? ' gp-outcomes__card--best' : ''}`} data-variant={variant.id}>
     <h4>{t(`outcomes.variant.${variant.variant}`)}</h4>
     <div className="gp-outcomes__tags"><Badge tone="info">{t('outcomes.forecast')}</Badge>{variant.isDemo && <Badge tone="demo">{t('outcomes.demo')}</Badge>}
@@ -86,6 +86,7 @@ function CostCard({ variant, best, eligible }: { variant: OutcomeVariant; best: 
     <dl className="gp-outcomes__metrics">{(['care', 'reserve'] as const).map(key => <div key={key}><dt>{t(costLabels[key])}{key === 'care' ? ` · ${t('outcomes.years', { n: variant.cost.careYears })}` : ''}</dt><dd>{money(variant.cost.items.find(i => i.key === key)?.amountKzt ?? null)}</dd></div>)}</dl>
     <p className="gp-small">{t(variant.cost.complete ? 'outcomes.complete' : 'outcomes.incomplete')} · {t(eligible ? 'outcomes.eligible' : 'outcomes.ineligible')}</p>
     <Issues issues={variant.issues} />
+    {children}
   </article>;
 }
 
@@ -157,7 +158,7 @@ function CohortDetail({ entry, catalog }: { entry: OutcomesView['cohorts'][numbe
       <h4>{t('outcomes.matched', { n: comparison.horizonYears! })}</h4>
       <dl className="gp-outcomes__metrics"><div><dt>{t('outcomes.forecastPct')}</dt><dd>{percent(comparison.expectedSurvivalPct)}</dd></div>
         <div><dt>{t('outcomes.observedPct')}</dt><dd>{percent(comparison.observedSurvivalPct)}</dd></div>
-        <div><dt>{t('outcomes.delta')}</dt><dd>{comparison.differencePp === null ? t('outcomes.unknown') : t('outcomes.pp', { n: number(comparison.differencePp) })}</dd></div></dl>
+        <div><dt>{t('outcomes.delta')}</dt><dd>{comparison.differencePp === null ? t('outcomes.unknown') : t('outcomes.pp', { n: `${comparison.differencePp > 0 ? '+' : ''}${number(comparison.differencePp)}` })}</dd></div></dl>
       <p>{t('outcomes.notValidation')}</p>
     </div> : <div className="gp-outcomes__comparison"><p>{t('outcomes.separate')}</p><Issues issues={comparison.issues} /></div>}
     <p className="gp-small gp-muted">{t('outcomes.noCurve')}</p>

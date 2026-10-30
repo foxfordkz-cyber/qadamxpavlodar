@@ -43,7 +43,7 @@ export function OutcomesPage() {
     <PageHeader title={t('nav.outcomes')} lead={t('outcomePage.lead')} />
     <Loaded state={sites}>{sites.data && <>
       <label className="gp-outcome-picker">{t('outcomePage.zone')}
-        <select className="gp-input" value={selected?.id ?? ''} onChange={e => navigate('/outcomes', { site: e.target.value })}>
+        <select className="gp-input" aria-label={t('outcomePage.zone')} value={selected?.id ?? ''} onChange={e => navigate('/outcomes', { site: e.target.value })}>
           <option value="" disabled>{t('outcomePage.noData')}</option>
           {sites.data.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
         </select>
@@ -69,7 +69,7 @@ function ZoneOutcomes({ site }: { site: CandidateSite }) {
       {!treesOnly && <p>{t('outcomePage.mixedNote')}</p>}
       <Loaded state={plans}>{plans.data && <>
         <p className="gp-small gp-muted">{t('outcomePage.bestNote')}</p>
-        <div className="gp-outcome-variants">{plans.data.variants.map((v, i) => <VariantCard key={v.id} variant={v} best={plans.data!.comparison.comparable && plans.data!.comparison.bestVariantIds.includes(v.id)}>
+        <div className="gp-outcome-variants gp-outcomes">{plans.data.variants.map((v, i) => <VariantCard key={v.id} variant={v} best={plans.data!.comparison.comparable && plans.data!.comparison.bestVariantIds.includes(v.id)}>
           {api.outcomes.available && me.role === 'coordinator' && <SaveForecast key={`${treesOnly}:${v.id}:${v.provenance.capturedAt}`}
             input={plans.data!.inputs[i]} onSaved={saved} />}
         </VariantCard>)}</div>
@@ -119,7 +119,7 @@ function CohortSelector({ data, catalog }: { data: OutcomeSiteData; catalog: Spe
   return <>
     <section className="gp-card gp-outcome-section">
       <h2>{t('outcomePage.planted')}</h2>
-      <label className="gp-outcome-picker">{t('outcomePage.cohort')}<select className="gp-input" value={cohort?.id ?? ''} onChange={e => setId(e.target.value)}>
+      <label className="gp-outcome-picker">{t('outcomePage.cohort')}<select className="gp-input" aria-label={t('outcomePage.cohort')} value={cohort?.id ?? ''} onChange={e => setId(e.target.value)}>
         <option value="" disabled>{t('outcomePage.noData')}</option>
         {data.cohorts.map((c, i) => <option key={c.id} value={c.id}>{cohortLabel(c.id, i)}</option>)}
       </select></label>
@@ -140,7 +140,7 @@ function InspectionSelector({ data, cohortId }: { data: OutcomeSiteData; cohortI
   const inspections = data.inspections.filter(i => i.cohortId === cohortId);
   const [id, setId] = useState(inspections[0]?.id ?? '');
   return <>
-    <label className="gp-outcome-picker">{t('outcomePage.inspection')}<select className="gp-input" value={id} onChange={e => setId(e.target.value)}>
+    <label className="gp-outcome-picker">{t('outcomePage.inspection')}<select className="gp-input" aria-label={t('outcomePage.inspection')} value={id} onChange={e => setId(e.target.value)}>
       <option value="">{t('outcomePage.withoutInspection')}</option>
       {inspections.map(i => <option key={i.id} value={i.id}>{fmtDate(i.observedOn)}</option>)}
     </select></label>
@@ -153,7 +153,7 @@ function SavedForecasts({ data, selectedId }: { data: OutcomeSiteData; selectedI
   return <section className="gp-card gp-outcome-section">
     <h2>{t('outcomePage.snapshots')}</h2><p className="gp-small gp-muted">{t('outcomePage.snapshotNote')}</p>
     {data.forecasts.length ? <>
-      <label className="gp-outcome-picker">{t('outcomePage.snapshots')}<select className="gp-input" value={selected?.id ?? ''} onChange={e => setId(e.target.value)}>
+      <label className="gp-outcome-picker">{t('outcomePage.snapshots')}<select className="gp-input" aria-label={t('outcomePage.snapshots')} value={selected?.id ?? ''} onChange={e => setId(e.target.value)}>
         <option value="" disabled>{t('outcomePage.noData')}</option>
         {data.forecasts.map((f, i) => <option value={f.id} key={f.id}>{t('outcomePage.snapshot', { n: i + 1, date: fmtDate(f.snapshot.provenance.capturedAt) })}</option>)}
       </select></label>

@@ -34,6 +34,7 @@ export function outcomeDelta(value: number | null): string {
 export function outcomeError(error: unknown): string {
   if (error instanceof ApiError) {
     if (error.code === 'outcomes_not_connected') return t('outcomePage.notConnected');
+    if (error.code === 'outcomes_storage') return t('outcomePage.storageError');
     if (error.status === 401) return t('state.unauthenticated');
     if (error.status === 403) return t('state.forbidden');
     if (error.status === 409) return t('outcomePage.conflict');

@@ -149,18 +149,28 @@ route('POST', /^\/outcomes\/([^/]+)\/forecasts$/, (m, o) => {
   if (!o.idempotencyKey) fail(400, 'idempotency_required', 'idempotency_required');
   const site = findSite(decodeURIComponent(m[1]));
   const body = o.body as SaveOutcomeForecast;
-  return withIdempotency(o.idempotencyKey, { siteId: site.id, ...body }, () => {
-    if (body.siteVersion !== site.version || body.ratesVersion !== db.ratesVersion) fail(409, 'version_conflict', 'version_conflict');
-    const store = ensureOutcomeDemo(db);
-    const id = nextId('forecast');
-    const snapshot = createOutcomeSnapshot({ id, site, catalog, rates: db.rates,
-      analysis: analyzeZone(site, catalog, ratesMap(db.rates), body.options),
-      provenance: { source: 'mock', capturedAt: nowIso(), dataClass: 'demo', isDemo: true,
-        evidenceIds: [...site.evidenceIds], siteVersion: site.version, ratesVersion: db.ratesVersion } });
-    const data = { id, snapshot };
-    store.forecasts.push(data);
-    return { data };
-  });
+  const hash = JSON.stringify({ siteId: site.id, ...body });
+  const previous = db.idempotency[o.idempotencyKey!];
+  if (previous) {
+    if (previous.hash !== hash) fail(409, 'idempotency_conflict', 'idempotency_conflict');
+    return previous.body as { data: unknown };
+  }
+  if (body.siteVersion !== site.version || body.ratesVersion !== db.ratesVersion) fail(409, 'version_conflict', 'version_conflict');
+  // Commit snapshot and replay record in one localStorage value; no success if durable storage failed.
+  const next = structuredClone(db);
+  const store = ensureOutcomeDemo(next);
+  const id = `forecast-${++next.seq}`;
+  const snapshot = createOutcomeSnapshot({ id, site, catalog, rates: next.rates,
+    analysis: analyzeZone(site, catalog, ratesMap(next.rates), body.options),
+    provenance: { source: 'mock', capturedAt: nowIso(), dataClass: 'demo', isDemo: true,
+      evidenceIds: [...site.evidenceIds], siteVersion: site.version, ratesVersion: next.ratesVersion } });
+  const result = { data: { id, snapshot } };
+  store.forecasts.push(result.data);
+  next.idempotency[o.idempotencyKey!] = { hash, status: 200, body: result };
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(next)); }
+  catch { return fail(507, 'outcomes_storage', 'outcomes_storage'); }
+  db = next;
+  return result;
 });
 
 route('GET', /^\/auth\/me$/, () => {

@@ -5,6 +5,8 @@ import { Badge, Button, DataClassTag } from '../../../shared/ui/components';
 import { speciesName, t, tr, type Key } from '../../../shared/i18n';
 import { fmtDate, fmtDateTime } from '../../../shared/format';
 import { ISSUE_KEYS, outcomeDelta, outcomeError, outcomeNumber, selectOutcomeInspection } from './pageModel';
+import { CostCard } from './OutcomesPanel';
+import { hrefFor } from '../../../shared/router';
 
 export function OutcomeError({ error, retry }: { error: unknown; retry?: () => void }) {
   return <div className="gp-alert gp-alert--bad" role="alert"><p>{outcomeError(error)}</p>{retry && <Button onClick={retry}>{t('state.retry')}</Button>}</div>;
@@ -19,24 +21,14 @@ export function OutcomeStat({ label, value, id }: { label: string; value: ReactN
 export function ProvenanceLine({ label, value }: { label: string; value: DeepReadonly<OutcomeProvenance> | null }) {
   return <div className="gp-outcome-source"><strong>{label}</strong>{value ? <>
     <DataClassTag value={value.dataClass} />{value.isDemo && <Badge tone="demo">{t('outcomePage.demo')}</Badge>}
-    <span>{fmtDateTime(value.capturedAt)} (UTC+5)</span>
+    <span>{fmtDateTime(value.capturedAt)}</span>
     <small>{value.evidenceIds.length ? t('outcomePage.evidence', { ids: value.evidenceIds.join(', ') }) : t('outcomePage.noData')}</small>
   </> : <span>{t('outcomePage.noData')}</span>}</div>;
 }
 
-export function VariantCard({ variant: v, best, children }: { variant: DeepReadonly<OutcomeVariant>; best: boolean; children?: ReactNode }) {
-  return <article className={`gp-card gp-outcome-variant${best ? ' gp-outcome-variant--best' : ''}`} data-testid={`outcome-${v.variant}`}>
-    <h3>{t(`outcomePage.${v.variant}`)}</h3>
-    {best && <Badge tone="ok">{t('outcomePage.best')}</Badge>}
-    <dl className="gp-outcome-stats">
-      <OutcomeStat label={t('outcomePage.treeCount')} value={outcomeNumber(v.treeCount)} />
-      <OutcomeStat label={t('outcomePage.expectedTrees')} value={outcomeNumber(v.expectedTreesY3)} />
-      <OutcomeStat label={t('outcomePage.totalCost')} value={outcomeNumber(v.cost.totalKzt, ' ₸', 0)} />
-      <OutcomeStat label={t('outcomePage.unitCost')} value={outcomeNumber(v.costPerExpectedTreeKzt, ' ₸', 0)} />
-    </dl>
-    <Badge tone="info">{t('outcomePage.estimate')}</Badge>{v.isDemo && <Badge tone="demo">{t('outcomePage.demo')}</Badge>}
-    <OutcomeIssues issues={v.issues} />{children}
-  </article>;
+export function VariantCard({ variant, best, children }: { variant: OutcomeVariant; best: boolean; children?: ReactNode }) {
+  return <div data-testid={`outcome-${variant.variant}`}><CostCard variant={variant} best={best}
+    eligible={variant.costPerExpectedTreeKzt !== null && variant.cost.complete}>{children}</CostCard></div>;
 }
 
 const costLabels: Record<string, Key> = { material: 'outcomePage.material', prep: 'outcomePage.prep', work: 'outcomePage.work', care: 'outcomePage.care', reserve: 'outcomePage.reserve' };
@@ -48,7 +40,7 @@ export function SnapshotView({ snapshot: s }: { snapshot: OutcomeForecastSnapsho
       <table className="gp-table gp-small"><caption>{t('outcomePage.snapshotCost')}</caption><tbody>
         {s.outcome.cost.items.map(item => <tr key={item.key}><th scope="row">{t(costLabels[item.key] ?? 'outcomePage.noData')}</th>
           <td>{outcomeNumber(item.amountKzt, ' ₸', 0)}</td><td><DataClassTag value={item.dataClass} /></td></tr>)}
-        <tr><th scope="row">{t('outcomePage.totalCost')}</th><td colSpan={2}>{outcomeNumber(s.outcome.cost.totalKzt, ' ₸', 0)}</td></tr>
+        <tr><th scope="row">{t('outcomePage.snapshotTotal', { years: s.outcome.cost.careYears })}</th><td colSpan={2}>{outcomeNumber(s.outcome.cost.totalKzt, ' ₸', 0)}</td></tr>
       </tbody></table>
     </div>
     <OutcomeIssues issues={s.outcome.issues} />
@@ -80,6 +72,8 @@ export function InspectionView({ data, cohortId, inspectionId }: { data: Outcome
     <section className="gp-card gp-outcome-section" aria-labelledby="outcome-observed">
       <h2 id="outcome-observed">{t('outcomePage.observed')}</h2>
       <ProvenanceLine label={t('outcomePage.source.inspection')} value={inspection?.provenance ?? null} />
+      {inspection && <ul>{[...new Set(inspection.observations.flatMap(o => o.reportId ? [o.reportId] : []))].map((id, i) =>
+        <li key={id}><a href={hrefFor('/reports', { report: id })}>{t('outcomes.report', { n: i + 1 })}</a></li>)}</ul>}
       <dl className="gp-outcome-stats gp-outcome-stats--wide">
         {(['total', 'inspected', 'assessed', 'alive', 'dead', 'unknown', 'notInspected'] as const).map(key =>
           <OutcomeStat key={key} id={`outcome-stat-${key}`} label={t(`outcomePage.${key}`)} value={outcomeNumber(s[key])} />)}

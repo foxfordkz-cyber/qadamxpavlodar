@@ -7,8 +7,8 @@
 .gp-outcome-toggle { display: flex; align-items: center; gap: 10px; padding-block: 8px; }
 .gp-outcome-toggle input { width: 20px; height: 20px; flex: 0 0 auto; }
 .gp-outcome-variants { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 20px; }
-.gp-outcome-variant { min-width: 0; border-top: 4px solid #cbd8d0; }
-.gp-outcome-variant--best { border-top-color: #28784b; }
+.gp-outcome-variants.gp-outcomes { border: 0; padding: 0; }
+.gp-outcome-variants > div { min-width: 0; }
 .gp-outcome-stats { display: grid; gap: 16px; margin-block: 20px; }
 .gp-outcome-stats--wide { grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); }
 .gp-outcome-stats dt { font-size: .85rem; color: #506158; line-height: 1.45; }
