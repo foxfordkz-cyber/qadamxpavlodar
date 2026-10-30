@@ -21,6 +21,8 @@ import { dashboardMetrics, greeneryLayer, soilsLayer, variantSummaries } from '.
 import { referenceFacts } from '../pavlodar';
 import { buildCareSchedule, parseCareRequest } from '../../analytics/careSchedule';
 import { GEOCODE_META, searchAddress } from '../geocode';
+import { decisionPlans, parseDecisionLabInput } from '../../analytics/decisionLab';
+import { decisionLabData } from '../decisionLabData';
 
 // v3: справочник с источниками по Павлодару. Старые данные не читаются.
 const STORAGE_KEY = 'gp-mock-db-v4';
@@ -630,6 +632,13 @@ route('GET', /^\/rates$/, () => {
   requireRole('coordinator', 'viewer' as Role);
   return { data: { rates: db.rates, version: db.ratesVersion } };
 });
+route('POST', /^\/decision-lab$/, (_m, o) => {
+  requireRole('coordinator', 'admin', 'viewer');
+  let input;
+  try { input = parseDecisionLabInput(o.body); }
+  catch { return fail(400, 'validation_error', 'lab.invalid'); }
+  return { data: decisionPlans({ ...decisionLabData(db.sites, catalog, db.rates, 'mock', db.ratesVersion, new Date().toISOString()), ...input }) };
+});
 route('PATCH', /^\/rates$/, (_m, o) => {
   requireRole('admin');
   const b = o.body as { key?: string; value?: number | null; source?: string; expectedVersion?: number };
@@ -693,8 +702,9 @@ export function createMockTransport(): Transport {
     kind: 'mock',
     async request<T>(method: HttpMethod, path: string, opts: RequestOptions = {}) {
       await sleep(mockControls.latencyMs * (0.6 + Math.random() * 0.8));
+      if (path === '/decision-lab') opts.signal?.throwIfAborted();
       if (mockControls.networkDown) throw new ApiError(0, 'network_error', 'Сервер недоступен или нет сети.');
-      const readOnlyPost = /^\/(zones\/[^/]+\/(analysis|variants|care-schedule)|priorities|assistant|sites\/rank-preview|sites\/[^/]+\/plant-selection|auth\/(login|logout))$/.test(path);
+      const readOnlyPost = /^\/(zones\/[^/]+\/(analysis|variants|care-schedule)|priorities|decision-lab|assistant|sites\/rank-preview|sites\/[^/]+\/plant-selection|auth\/(login|logout))$/.test(path);
       if (mockControls.role === 'viewer' && method !== 'GET' && !readOnlyPost) throw new ApiError(403, 'forbidden', 'Роль «Просмотр»: изменения недоступны.', `mock-${++reqSeq}`);
       // То же правило, что на сервере (README, «Роли»): администратор ведёт справочники и пользователей, согласует проекты
       // и отмечает проверки участков; зоны, проекты, задания и отчёты ведёт специалист.

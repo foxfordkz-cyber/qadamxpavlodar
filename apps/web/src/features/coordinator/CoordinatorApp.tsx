@@ -15,6 +15,7 @@ import { PeoplePage } from './PeoplePage';
 import { GuidePage } from './guide/GuidePage';
 import { ProblemsPage } from './tz/ProblemsPage';
 import { PrioritiesPage } from './tz/PrioritiesPage';
+import { DecisionLabPage } from './tz/DecisionLabPage';
 import { RatesPage } from './tz/RatesPage';
 import { ImportPage } from './tz/ImportPage';
 import { ReportPage } from './tz/ReportPage';
@@ -36,6 +37,7 @@ const PAGES: [string, () => ReactElement][] = [
   ['/guide', () => <GuidePage />],
   ['/problems', () => <ProblemsPage />],
   ['/priorities', () => <PrioritiesPage />],
+  ['/lab', () => <DecisionLabPage />],
   ['/rates', () => <RatesPage />],
   ['/import', () => <ImportPage />],
   ['/report', () => <ReportPage />],

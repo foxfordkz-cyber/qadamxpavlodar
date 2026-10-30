@@ -1,0 +1,109 @@
+import { existsSync, readFileSync, statSync } from 'node:fs';
+import { join } from 'node:path';
+import { profiles } from './profiles.mjs';
+import { redact } from './environment.mjs';
+
+export const screenNames = ['home', 'map', 'problems', 'priorities', 'species', 'projects', 'rates', 'import', 'guide', 'tasks', 'reports', 'time-planting', 'time-20-years'];
+export const expectedScreens = screenNames.flatMap(name => [1280, 375].map(width => `${name}-${width}.png`));
+export const statuses = ['passed', 'failed', 'fixme', 'skipped', 'flaky', 'notRun'];
+
+export function normalizeReport(data, profile, secrets = []) {
+  const tests = [];
+  const safe = value => redact(value, secrets);
+  if (profile === 'api') {
+    if (!Array.isArray(data.tests) || typeof data.status !== 'string') throw new Error('Invalid API report');
+    for (const test of data.tests) {
+      const fixme = test.fixme ?? /^E2E-\d+:/.test(test.note ?? '');
+      const status = test.status === 'passed' ? 'passed' : test.status === 'skipped' ? fixme ? 'fixme' : 'skipped' : 'failed';
+      tests.push({ title: safe(test.title), project: 'api', status, note: safe(test.note), durationMs: test.durationMs ?? 0 });
+    }
+  } else {
+    if (!Array.isArray(data.suites) || !data.stats) throw new Error('Invalid Playwright report');
+    const visit = suites => {
+      for (const suite of suites) {
+        for (const spec of suite.specs ?? []) {
+          for (const test of spec.tests ?? []) {
+            const last = test.results?.at(-1);
+            const annotation = test.annotations?.find(item => item.type === 'fixme') ?? test.annotations?.find(item => item.type === 'skip');
+            let status = 'notRun';
+            if (test.status === 'flaky') status = 'flaky';
+            else if (test.status === 'unexpected') status = 'failed';
+            else if (last?.status === 'skipped') status = annotation?.type === 'fixme' ? 'fixme' : 'skipped';
+            else if (last?.status === 'passed') status = 'passed';
+            else if (last) status = 'failed';
+            const outOfScope = status === 'skipped' && test.projectName === 'desktop' && [
+              'mobile: bottom sheet expands from under 60% to about 90%',
+              'mobile report: document fits the viewport and wide tables scroll internally',
+            ].includes(spec.title);
+            tests.push({ title: safe(spec.title), project: safe(test.projectName), status, outOfScope,
+              note: safe(annotation?.description), durationMs: last?.duration ?? 0 });
+          }
+        }
+        visit(suite.suites ?? []);
+      }
+    };
+    visit(data.suites);
+  }
+  return { tests, counts: Object.fromEntries(statuses.map(status => [status, tests.filter(test => test.status === status).length])),
+    runnerFailed: profile === 'api' ? data.status !== 'passed' : !!data.errors?.length,
+    durationMs: profile === 'api' ? tests.reduce((sum, test) => sum + test.durationMs, 0) : data.stats.duration };
+}
+
+export function runIsComplete(run) {
+  return run.available && run.current && run.meta?.state === 'finished' && run.meta.exitCode === 0 &&
+    run.meta.selection === 'full' && !run.runnerFailed && run.counts.passed > 0 &&
+    statuses.filter(status => !['passed', 'skipped'].includes(status)).every(status => run.counts[status] === 0) &&
+    run.tests.filter(test => test.status === 'skipped').every(test => run.profile === 'mock' && test.outOfScope);
+}
+
+export function acceptance(runs, revision) {
+  const required = ['mock', 'api'].map(profile => runs.find(run => run.profile === profile));
+  const ready = /^[a-f0-9]{40}$/.test(revision ?? '') && required.every(run => run && runIsComplete(run) && run.meta.revision === revision && !run.meta.dirty);
+  return { ready, message: ready ? 'Полные mock и API пройдены на текущем коммите' : 'Полная приёмка mock + API ещё не подтверждена' };
+}
+
+function json(file) { return JSON.parse(readFileSync(file, 'utf8')); }
+
+export function collectRuns(root, secrets = []) {
+  return profiles.map(profile => {
+    const file = join(root, profile === 'api' ? 'playwright-report' : 'test-results', profile, 'results.json');
+    const metaFile = join(root, 'playwright-report', 'runs', `${profile}.json`);
+    let meta;
+    try {
+      if (existsSync(metaFile)) {
+        const raw = json(metaFile);
+        // Only publish the fields needed to identify a run, never arbitrary environment/argv.
+        meta = { state: raw.state, startedAt: raw.startedAt, endedAt: raw.endedAt, exitCode: raw.exitCode,
+          revision: /^[a-f0-9]{40}$/.test(raw.revision) ? raw.revision : null, dirty: !!raw.dirty,
+          selection: raw.selection, capturesScreens: raw.capturesScreens === true,
+          target: raw.target ? new URL(raw.target).origin : undefined };
+      }
+      if (!existsSync(file)) return { profile, available: false, meta };
+      const normalized = normalizeReport(json(file), profile, secrets);
+      // A failed new invocation must not silently reuse a previous green JSON report.
+      const current = !!meta?.startedAt && statSync(file).mtimeMs >= Date.parse(meta.startedAt);
+      return { profile, available: true, current, meta, ...normalized };
+    } catch {
+      return { profile, available: false, invalid: true, meta };
+    }
+  });
+}
+
+export function inspectScreens(root, runs = []) {
+  const screenshotRun = runs.filter(run => ['mock', 'screens'].includes(run.profile) && run.meta?.capturesScreens && run.meta.startedAt)
+    .sort((a, b) => Date.parse(b.meta.startedAt) - Date.parse(a.meta.startedAt))[0];
+  return expectedScreens.map(name => {
+    const width = name.endsWith('-375.png') ? 375 : 1280;
+    const height = width === 375 ? 812 : 800;
+    const file = join(root, 'screens', name);
+    try {
+      const bytes = readFileSync(file);
+      const valid = bytes.length >= 24 && bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])) &&
+        bytes.readUInt32BE(16) === width && bytes.readUInt32BE(20) === height;
+      const capturedAt = statSync(file).mtime.toISOString();
+      return { name, width, height, valid, capturedAt,
+        fresh: !!screenshotRun?.current && screenshotRun.meta.state === 'finished' && screenshotRun.meta.exitCode === 0 &&
+          Date.parse(capturedAt) >= Date.parse(screenshotRun.meta.startedAt) };
+    } catch { return { name, width, height, valid: false, fresh: false }; }
+  });
+}

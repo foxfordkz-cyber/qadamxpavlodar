@@ -11,7 +11,7 @@ import { ApiError } from '../errors.js';
 import { allow, fail, id, listDocs, mutate, now, text, version, type User } from '../v2/core.js';
 import { actor } from '../v2/auth.js';
 import { type Api, param } from '../v2/router.js';
-import { analyze, candidate, candidates, priorities, ratesList, ratesVersion, reference, speciesList } from './data.js';
+import { analyze, candidate, candidates, decisionLab, priorities, ratesList, ratesVersion, reference, speciesList } from './data.js';
 import { insertZone } from './seed.js';
 import { web, type Json } from './shared.js';
 import * as municipal from '../municipal/data.js';
@@ -26,6 +26,7 @@ const object = z.object({}).passthrough();
 const options = z.object({ options: object.default({}) }).strict();
 const weights = z.record(z.string(), z.number().min(0).max(1));
 const prioritiesInput = z.object({ weights: weights.optional(), budget: z.number().nonnegative().nullable().optional() }).strict();
+const decisionLabInput = z.object({ budgetKzt: z.number().finite().positive(), waterLimitM3: z.number().finite().nonnegative().nullable().default(null), watering: z.enum(['regular', 'rare', 'none']), goal: z.enum(['balanced', 'schools', 'deficit', 'social']).default('balanced') }).strict();
 const rateInput = z.object({ key: z.string().min(1).max(80), value: z.number().nonnegative().finite().nullable(), source: text, expectedVersion: version }).strict();
 // history — последние реплики диалога (короткий ответ продолжает вопрос); view — центр карты, если зона не выбрана.
 const assistantInput = z.object({
@@ -97,6 +98,10 @@ export function tzRoutes(s: Store, api: Api, tz: TzOptions = {}) {
 
   route({ method: 'get', path: '/rates', summary: 'TZ 3.4/5.3: rates and coefficients with sources' }, (_req, res) => {
     reader(actor(res)); res.json({ data: { rates: ratesList(s), version: ratesVersion(s) } });
+  });
+  route({ method: 'post', path: '/decision-lab', input: decisionLabInput, readOnly: true, summary: 'Decision Lab: three budget/water portfolios and fixed-composition watering scenarios' }, (req, res) => {
+    reader(actor(res)); const input = decisionLabInput.parse(req.body);
+    res.json({ data: decisionLab(candidates(s), reference(s), input) });
   });
   write({ method: 'patch', path: '/rates', input: rateInput, summary: 'Admin: change one rate; source required; change history kept' }, a => allow(a, 'admin'), (a, b) => {
     if (b.expectedVersion !== ratesVersion(s)) fail('VERSION_CONFLICT', 'Rates changed; reload and retry');

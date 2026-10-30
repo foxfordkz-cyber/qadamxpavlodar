@@ -19,23 +19,25 @@ export async function openPage(page: Page, route = '/', mode = 'mock', lang = 'r
 
 export async function dismissHint(page: Page) {
   const hint = page.locator('.gp-firstrun');
-  if (await hint.isVisible()) await hint.getByRole('button', { name: 'Понятно, начать' }).click();
+  if (await hint.isVisible()) await hint.getByRole('button', { name: /^(Понятно, начать|Түсінікті, бастау)$/ }).click();
 }
 
-export async function selectZone(page: Page) {
-  await openPage(page, '/map');
+export async function selectZone(page: Page, siteId?: string) {
+  await openPage(page, siteId ? `/map?site=${encodeURIComponent(siteId)}` : '/map');
   await dismissHint(page);
-  const rows = page.locator('.gp-sites__items button');
-  await expect(rows.first()).toBeVisible();
-  await rows.first().click();
+  if (!siteId) {
+    const rows = page.locator('.gp-sites__items button');
+    await expect(rows.first()).toBeVisible();
+    await rows.first().click();
+  }
   await expect(page).toHaveURL(/[#&?]site=/);
   const card = page.locator('.gp-sites__card');
   await expect(card.getByRole('tablist', { name: 'Разделы зоны' })).toBeVisible();
   return card;
 }
 
-export async function openEffect(page: Page) {
-  const card = await selectZone(page);
+export async function openEffect(page: Page, siteId?: string) {
+  const card = await selectZone(page, siteId);
   await card.getByRole('tab', { name: 'Эффект', exact: true }).click();
   await expect(card.getByRole('heading', { name: 'Машина времени', exact: true })).toBeVisible();
   return card;
@@ -53,7 +55,16 @@ export async function screenshot(page: Page, name: string, info: TestInfo) {
   }
   await presentation(page);
   await page.evaluate(async () => { await document.fonts.ready; });
-  const dir = resolve('screens');
+  // Lazy external photos may still be downloading after the page and fonts are ready.
+  // Only images actually inside the captured viewport must finish; offscreen images
+  // must not hold a screenshot hostage. A broken visible image is not a ready frame.
+  await expect.poll(() => page.locator('img').evaluateAll(images => images.filter(image => {
+    const rect = image.getBoundingClientRect();
+    return rect.width > 0 && rect.height > 0 && rect.top < innerHeight && rect.bottom > 0 &&
+      rect.left < innerWidth && rect.right > 0 && (!image.complete || image.naturalWidth === 0);
+  }).length), { message: 'Visible presentation photos must finish loading', timeout: 60_000 }).toBe(0);
+  // Candidate captures are reviewed before replacing the presentation materials.
+  const dir = resolve(process.env.E2E_SCREEN_REVIEW === '1' ? 'test-results/screen-review' : 'screens');
   await mkdir(dir, { recursive: true });
   const file = resolve(dir, `${name}-${page.viewportSize()!.width}.png`);
   await page.screenshot({ path: file, fullPage: false, animations: 'disabled' });

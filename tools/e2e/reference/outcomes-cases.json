@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "status": "planned-reference-data-not-executable-tests",
+  "contractRevision": "7c9b387b2d69e4500bf799e8b11f509704a5537f",
+  "dataClass": "demo",
+  "isDemo": true,
+  "note": "Synthetic semantic examples, not OutcomeVariantInput or a valid analyzeZone/API fixture. Build a consistent isolated seed before binding these cases to UI/API. Percentages are 0..100, unknown is null. Totals are arithmetic examples, not Pavlodar prices.",
+  "costCases": [
+    {
+      "id": "C01", "careYears": 3, "costComplete": true, "totalKzt": 300000,
+      "rows": [{"tier":"tree","quantity":10,"y3Pct":60},{"tier":"tree","quantity":5,"y3Pct":80}],
+      "bill": {"material":180000,"prep":30000,"work":45000,"care":30000,"reserve":15000},
+      "expected": {"expectedTreesY3":10,"costPerExpectedTreeKzt":30000},
+      "arithmetic": "10*60/100 + 5*80/100 = 10; 300000/10 = 30000"
+    },
+    {
+      "id": "C02", "careYears": 3, "costComplete": true, "totalKzt": 9000,
+      "rows": [{"tier":"tree","quantity":3,"y3Pct":50}],
+      "expected": {"expectedTreesY3":1.5,"costPerExpectedTreeKzt":6000},
+      "arithmetic": "3*50/100 = 1.5; 9000/1.5 = 6000; do not round the denominator"
+    },
+    {
+      "id": "C03", "careYears": 3, "costComplete": false, "totalKzt": null,
+      "rows": [{"tier":"tree","quantity":10,"y3Pct":60},{"tier":"tree","quantity":5,"y3Pct":80}],
+      "missingInput": "required rate",
+      "expected": {"expectedTreesY3":10,"costPerExpectedTreeKzt":null,"bestEligible":false},
+      "arithmetic": "Expected trees remain known; an unknown numerator does not become 0"
+    },
+    {
+      "id": "C04", "careYears": 3, "costComplete": true, "totalKzt": 0,
+      "rows": [{"tier":"tree","quantity":10,"y3Pct":60},{"tier":"tree","quantity":5,"y3Pct":80}],
+      "expected": {"expectedTreesY3":10,"costPerExpectedTreeKzt":0},
+      "arithmetic": "All required rates explicitly known as zero; 0/10 = 0"
+    },
+    {
+      "id": "C05", "careYears": 3, "costComplete": true, "totalKzt": 300000,
+      "rows": [{"tier":"tree","quantity":4,"y3Pct":0}],
+      "expected": {"expectedTreesY3":0,"costPerExpectedTreeKzt":null,"bestEligible":false,"reason":"zero_expected_trees"},
+      "arithmetic": "4*0/100 = 0; division is unavailable, not Infinity or zero cost"
+    },
+    {
+      "id": "C06", "careYears": 3, "costComplete": true, "totalKzt": 420000,
+      "rows": [{"tier":"tree","quantity":10,"y3Pct":60},{"tier":"shrub","quantity":20,"y3Pct":50},{"tier":"flower","quantity":100,"y3Pct":10}],
+      "expected": {"expectedTreesY3":6,"costPerExpectedTreeKzt":null,"bestEligible":false,"reason":"mixed_planting","costScope":"unallocated-mixed-planting"},
+      "arithmetic": "Tree expectation is 6, not 26. The mixed total 420000 cannot be allocated as 70000/tree"
+    },
+    {
+      "id": "C07", "careYears": 1, "costComplete": true, "totalKzt": 120000,
+      "rows": [{"tier":"tree","quantity":10,"y3Pct":60},{"tier":"tree","quantity":5,"y3Pct":80}],
+      "expected": {"expectedTreesY3":10,"costPerExpectedTreeKzt":null,"bestEligible":false,"reason":"wrong_horizon"},
+      "arithmetic": "The 1-year total is not a 3-year estimate; never invent 120000*3"
+    },
+    {
+      "id": "C08", "careYears": 3, "costComplete": false, "totalKzt": null,
+      "rows": [{"tier":"tree","quantity":10,"y3Pct":60},{"tier":"tree","quantity":5,"y3Pct":80}],
+      "bill": {"material":180000,"prep":null,"work":45000,"care":30000,"reserve":15000},
+      "expected": {"expectedTreesY3":10,"knownSubtotalKzt":270000,"costPerExpectedTreeKzt":null,"bestEligible":false,"reason":"incomplete_cost"},
+      "arithmetic": "180000+45000+30000+15000 = 270000 known; missing prep keeps the total unknown"
+    }
+  ],
+  "comparisonCases": [
+    {
+      "id":"B01", "basis":"same zone/version/area/purpose/source/model/rates/catalog, 3 years, full tree-only costs",
+      "variants":[{"id":"A","totalKzt":300000,"expectedTrees":10},{"id":"B","totalKzt":150000,"expectedTrees":6},{"id":"C","totalKzt":50000,"expectedTrees":2}],
+      "expected":{"pricesKzt":[30000,25000,25000],"bestVariantIds":["B","C"]}
+    },
+    {
+      "id":"B02", "variants":[{"id":"A","totalKzt":300000,"expectedTrees":10,"careYears":3},{"id":"D","totalKzt":120000,"expectedTrees":10,"careYears":1}],
+      "expected":{"comparable":false,"bestVariantIds":[]},
+      "reason":"Different horizons; at most one eligible complete 3-year variant"
+    },
+    {
+      "id":"B03", "variants":[{"id":"A","totalKzt":300000,"expectedTrees":10,"ratesVersion":1},{"id":"B","totalKzt":150000,"expectedTrees":6,"ratesVersion":2}],
+      "expected":{"comparable":false,"bestVariantIds":[]},
+      "reason":"Different underlying rate versions, not merely different planting scenarios"
+    }
+  ],
+  "cohortReference": {
+    "id":"P4", "plantIds":["qa-p1","qa-p2","qa-p3","qa-p4"], "tier":"tree",
+    "plantedOn":"2023-10-30", "forecastCapturedAt":"2023-10-29T12:00:00+05:00", "asOf":"2026-10-30",
+    "y1Pct":90, "y2Pct":80, "y3Pct":75,
+    "evidenceRequirement":"Bind alive/dead to registered plants and actually seeded accepted reports/evidence, not invented proof IDs"
+  },
+  "inspectionCases": [
+    {
+      "id":"I01", "observations":null,
+      "expected":{"total":4,"inspected":0,"assessed":0,"alive":0,"dead":0,"unknown":4,"notInspected":4,"inspectionCoveragePct":0,"assessmentCoveragePct":0,"survivalAmongAssessedPct":null,"wholeCohortSurvivalPct":null,"differencePp":null}
+    },
+    {
+      "id":"I02", "observations":[{"plantId":"qa-p1","state":"alive"},{"plantId":"qa-p2","state":"alive"}],
+      "expected":{"total":4,"inspected":2,"assessed":2,"alive":2,"dead":0,"unknown":2,"notInspected":2,"inspectionCoveragePct":50,"assessmentCoveragePct":50,"survivalAmongAssessedPct":100,"wholeCohortSurvivalPct":null,"differencePp":null}
+    },
+    {
+      "id":"I03", "observations":[{"plantId":"qa-p1","state":"unknown"},{"plantId":"qa-p2","state":"unknown"},{"plantId":"qa-p3","state":"unknown"},{"plantId":"qa-p4","state":"unknown"}],
+      "expected":{"total":4,"inspected":4,"assessed":0,"alive":0,"dead":0,"unknown":4,"notInspected":0,"inspectionCoveragePct":100,"assessmentCoveragePct":0,"survivalAmongAssessedPct":null,"wholeCohortSurvivalPct":null,"differencePp":null}
+    },
+    {
+      "id":"I04", "observations":[{"plantId":"qa-p1","state":"alive"},{"plantId":"qa-p2","state":"alive"},{"plantId":"qa-p3","state":"dead"},{"plantId":"qa-p4","state":"unknown"}],
+      "expected":{"total":4,"inspected":4,"assessed":3,"alive":2,"dead":1,"unknown":1,"notInspected":0,"inspectionCoveragePct":100,"assessmentCoveragePct":75,"survivalAmongAssessedPct":{"numerator":200,"denominator":3},"wholeCohortSurvivalPct":null,"differencePp":null}
+    },
+    {
+      "id":"I05", "observations":[{"plantId":"qa-p1","state":"alive"},{"plantId":"qa-p2","state":"alive"},{"plantId":"qa-p3","state":"dead"},{"plantId":"qa-p4","state":"dead"}],
+      "expected":{"total":4,"inspected":4,"assessed":4,"alive":2,"dead":2,"unknown":0,"notInspected":0,"inspectionCoveragePct":100,"assessmentCoveragePct":100,"survivalAmongAssessedPct":50,"wholeCohortSurvivalPct":50,"differencePp":-25}
+    },
+    {
+      "id":"I06", "observations":[{"plantId":"qa-p1","state":"dead"},{"plantId":"qa-p2","state":"dead"},{"plantId":"qa-p3","state":"dead"},{"plantId":"qa-p4","state":"dead"}],
+      "expected":{"total":4,"inspected":4,"assessed":4,"alive":0,"dead":4,"unknown":0,"notInspected":0,"inspectionCoveragePct":100,"assessmentCoveragePct":100,"survivalAmongAssessedPct":0,"wholeCohortSurvivalPct":0,"differencePp":-75}
+    },
+    {
+      "id":"I07", "observations":[{"plantId":"qa-p1","state":"alive"},{"plantId":"qa-p2","state":"alive"},{"plantId":"qa-p3","state":"alive"},{"plantId":"qa-p4","state":"alive"}],
+      "expected":{"total":4,"inspected":4,"assessed":4,"alive":4,"dead":0,"unknown":0,"notInspected":0,"inspectionCoveragePct":100,"assessmentCoveragePct":100,"survivalAmongAssessedPct":100,"wholeCohortSurvivalPct":100,"differencePp":25}
+    }
+  ],
+  "inspectionComparisonDefault": {"observedOn":"2026-10-30","horizonYears":3,"expectedAlive":3,"expectedSurvivalPct":75},
+  "dateCases": [
+    {"id":"D01","plantedOn":"2023-10-30","observedOn":"2025-10-29","expected":{"horizonYears":null,"reason":"unmatched_horizon"}},
+    {"id":"D02","plantedOn":"2023-10-30","observedOn":"2025-10-31","expected":{"horizonYears":null,"reason":"unmatched_horizon"}},
+    {"id":"D03","plantedOn":"2023-10-30","observedOn":"2024-10-30","expected":{"horizonYears":1,"expectedAlive":3.6,"expectedSurvivalPct":90}},
+    {"id":"D04","plantedOn":"2023-10-30","observedOn":"2025-10-30","expected":{"horizonYears":2,"expectedAlive":3.2,"expectedSurvivalPct":80}},
+    {"id":"D05","plantedOn":"2023-10-30","observedOn":"2026-10-30","expected":{"horizonYears":3,"expectedAlive":3,"expectedSurvivalPct":75}},
+    {"id":"D06","plantedOn":"2020-02-29","observedOn":"2021-02-28","expected":{"horizonYears":1}},
+    {"id":"D07","plantedOn":"2020-02-29","observedOn":"2021-03-01","expected":{"horizonYears":null,"reason":"unmatched_horizon"}},
+    {"id":"D08","plantedOn":"2023-10-30","observedOn":"2026-10-31","asOf":"2026-10-30","expected":{"reject":true,"reason":"future inspection"}},
+    {"id":"D09","plantedOn":"2023-10-30","observedOn":"2023-10-29","expected":{"reject":true,"reason":"inspection before planting"}},
+    {"id":"D10","plantedOn":"2023-10-30","forecastCapturedAt":"2023-10-30T20:30:00Z","expected":{"reject":true,"localCapturedDate":"2023-10-31","reason":"snapshot after planting date in UTC+5"}},
+    {"id":"D11","plantedOn":"2023-10-30","forecastCapturedAt":"2023-10-29T22:30:00Z","expected":{"localCapturedDate":"2023-10-30","dateOrderValid":true}}
+  ]
+}
