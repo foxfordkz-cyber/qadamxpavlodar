@@ -38,13 +38,13 @@ for(const fork of ['municipal','tz'] as const)test(`Merge migration: ${fork} sch
   }
   const tables=old.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' ORDER BY name").all().map(r=>String(r.name));
   const original=new Map(tables.map(name=>[name,JSON.stringify(old.prepare(`SELECT * FROM "${name}" ORDER BY rowid`).all())]));old.close();
-  current=new Store(path);assert.equal(current.get('PRAGMA user_version')?.user_version,5);
+  current=new Store(path);assert.equal(current.get('PRAGMA user_version')?.user_version,6);
   for(const [name,rows] of original)assert.equal(JSON.stringify(current.all(`SELECT * FROM "${name}" ORDER BY rowid`)),rows,`${name} must survive migration unchanged`);
   assert.equal(getUser(current,'existing-viewer').role,'viewer');assert.equal(rates(current).version,7);assert.equal(rates(current).rates[0]!.value,12345);
   for(const name of ['tz_species','tz_rates','tz_rate_history','tz_assistant_history','municipal_state','municipal_imports','municipal_features','municipal_analyses','municipal_roles'])assert(current.get("SELECT name FROM sqlite_master WHERE type='table' AND name=?",name));
   await seedV2(current);assert.equal(current.get("SELECT id FROM v2_users WHERE login='viewer'")?.id,'existing-viewer');assert.equal(current.get("SELECT password_hash FROM v2_users WHERE id='existing-viewer'")?.password_hash,passwordHash);
   assert.equal(current.get("SELECT data FROM v2_reports WHERE id='old-report'")?.data,JSON.parse(original.get('v2_reports')!)[0].data);
   assert.deepEqual(current.all('PRAGMA foreign_key_check'),[]);assert.equal(current.get('PRAGMA integrity_check')?.integrity_check,'ok');
-  current.close();current=new Store(path);assert.equal(current.get('PRAGMA user_version')?.user_version,5);assert.equal(current.get('SELECT count(*) n FROM v2_sessions')?.n,1);
+  current.close();current=new Store(path);assert.equal(current.get('PRAGMA user_version')?.user_version,6);assert.equal(current.get('SELECT count(*) n FROM v2_sessions')?.n,1);
   assert.equal(current.get('SELECT response_json FROM v2_idempotency')?.response_json,'{"data":{"id":"old-report"}}');
 });
