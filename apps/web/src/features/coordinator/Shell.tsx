@@ -34,6 +34,10 @@ const NAV: { path: string; key: Key; roles: Role[]; works?: boolean }[] = [
   { path: '/people', key: 'nav.people', roles: ['admin'], works: true },
 ];
 
+// В основной строке меню — разделы сценария; справочные и рабочие страницы открываются из «Ещё».
+const MORE = new Set(['/rates', '/import', '/guide']);
+const isMore = (n: { path: string; works?: boolean }) => !!n.works || MORE.has(n.path);
+
 const SVC_ICON: Record<SvcState, string> = { ok: '●', down: '✕', unknown: '○' };
 
 export function Shell({ children }: { children: ReactNode }) {
@@ -73,6 +77,18 @@ export function Shell({ children }: { children: ReactNode }) {
     }
   });
   const nav = NAV.filter((n) => role && n.roles.includes(role));
+  const moreItems = nav.filter(isMore);
+  const [moreOpen, setMoreOpen] = useState(false);
+  const moreRef = useRef<HTMLDivElement>(null);
+  useEffect(() => setMoreOpen(false), [route.path]);
+  useEffect(() => {
+    if (!moreOpen) return;
+    const onDown = (e: MouseEvent) => { if (!moreRef.current?.contains(e.target as Node)) setMoreOpen(false); };
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setMoreOpen(false); };
+    document.addEventListener('mousedown', onDown);
+    document.addEventListener('keydown', onKey);
+    return () => { document.removeEventListener('mousedown', onDown); document.removeEventListener('keydown', onKey); };
+  }, [moreOpen]);
   const current = (path: string) => (path === '/' ? route.path === '/' || route.path === '' : route.path.startsWith(path));
   // Высота шапки зависит от языка, роли и ширины окна: карта и закреплённые панели считают от настоящей.
   const headerRef = useRef<HTMLElement>(null);
@@ -98,9 +114,17 @@ export function Shell({ children }: { children: ReactNode }) {
       <header className="gp-header" ref={headerRef}>
         <a className="gp-brand" href={hrefFor('/')}><span className="gp-brand__logo" aria-hidden="true">❦</span><span>{t('app.title')}</span></a>
         <nav className="gp-nav" aria-label={t('nav.label')}>
-          {nav.filter((n) => !n.works).map((n) => <a key={n.path} href={hrefFor(n.path)} aria-current={current(n.path) ? 'page' : undefined}>{t(n.key)}</a>)}
-          {nav.some((n) => n.works) && <span className="gp-nav__sep" aria-hidden="true">{t('nav.works')}:</span>}
-          {nav.filter((n) => n.works).map((n) => <a key={n.path} className="gp-nav__works" href={hrefFor(n.path)} aria-current={current(n.path) ? 'page' : undefined}>{t(n.key)}</a>)}
+          {nav.filter((n) => !isMore(n)).map((n) => <a key={n.path} href={hrefFor(n.path)} aria-current={current(n.path) ? 'page' : undefined}>{t(n.key)}</a>)}
+          {moreItems.length > 0 && (
+            <div className={`gp-nav__more ${moreOpen ? 'is-open' : ''}`} ref={moreRef}>
+              <button type="button" className={`gp-nav__morebtn ${moreItems.some((n) => current(n.path)) ? 'is-current' : ''}`} aria-expanded={moreOpen} onClick={() => setMoreOpen((o) => !o)}>{t('nav.more')} <span aria-hidden="true">▾</span></button>
+              <div className="gp-nav__menu">
+                {moreItems.filter((n) => !n.works).map((n) => <a key={n.path} href={hrefFor(n.path)} aria-current={current(n.path) ? 'page' : undefined}>{t(n.key)}</a>)}
+                {moreItems.some((n) => n.works) && <span className="gp-nav__sep" aria-hidden="true">{t('nav.works')}</span>}
+                {moreItems.filter((n) => n.works).map((n) => <a key={n.path} className="gp-nav__works" href={hrefFor(n.path)} aria-current={current(n.path) ? 'page' : undefined}>{t(n.key)}</a>)}
+              </div>
+            </div>
+          )}
         </nav>
         <div className="gp-header__right">
           {user && <span className="gp-small">{user.displayName}</span>}

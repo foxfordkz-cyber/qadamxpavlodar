@@ -166,6 +166,14 @@ export function buildGrowthScene(site: CandidateSite, a: ZoneAnalysis, species: 
   return { siteId: site.id, origin: site.centroid, ring: site.geometry.coordinates[0], species, items, shown: trees.length + shrubs.length, total };
 }
 
+const STREET = /^(motorway|trunk|primary|secondary|tertiary|unclassified|residential|living_street)(_link)?$/;
+/** Улицы рядом с зоной: ряды и бордюр цветов выстраиваются вдоль ближайшей. Тротуары и проезды
+ *  к домам вплотную к газону не в счёт — иначе бордюр уходит к подъездам, а не к улице. */
+export function streetLines(all: { kind: string; geometry: { coordinates: [number, number][] } }[]) {
+  const streets = all.filter((r) => STREET.test(r.kind));
+  return (streets.length ? streets : all).map((r) => r.geometry.coordinates);
+}
+
 /** Растения на карте в выбранный год: при посадке — все, дальше — только прижившиеся. */
 export function growthFrame(scene: GrowthScene, year: GrowthYear) {
   const items = scene.items.filter((x) => year === 0 || x.survives).map((x) => x.item);

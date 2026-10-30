@@ -136,7 +136,7 @@ export function SitesPage() {
   const tightMap = !!selectedId && matchMedia('(max-width: 1600px)').matches;
 
   return (
-    <div className={`gp-sites ${selectedId ? 'gp-sites--card' : ''} ${growth ? 'gp-sites--growth' : ''}`} data-tab={tab}>
+    <div className={`gp-sites ${selectedId ? 'gp-sites--card' : ''} ${growth ? 'gp-sites--growth' : ''} ${highlight ? 'gp-sites--hl' : ''}`} data-tab={tab}>
       <aside className="gp-sites__list gp-card" aria-label={t('filters.title')}>
         {highlight && <HighlightList title={hlTitle} ids={hlIds} names={names} selectedId={selectedId} onPick={(id) => select(id, true)} onClear={clearHl} />}
         <div className="gp-sites__filters">

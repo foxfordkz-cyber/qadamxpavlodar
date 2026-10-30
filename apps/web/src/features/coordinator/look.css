@@ -98,3 +98,74 @@
 .gp-btn--primary:hover:not(:disabled) { background: var(--gp-olive-800); }
 .gp-app .gp-home-sec__title { font-size: clamp(26px, 3vw, 38px); line-height: 1.15; max-width: 24ch; }
 .gp-app .gp-page__head .gp-h1 { line-height: 1.15; }
+
+/* Основные разделы в строке, справочные и рабочие страницы — в «Ещё» */
+.gp-nav__more { position: relative; display: inline-flex; }
+.gp-nav__morebtn { font: inherit; font-size: 13.5px; font-weight: 500; padding: 6px 10px; border: 0; border-radius: 7px; background: transparent; color: #3c4b41; cursor: pointer; white-space: nowrap; }
+.gp-nav__morebtn:hover, .gp-nav__more.is-open .gp-nav__morebtn { background: var(--gp-surface-2); color: var(--gp-text); }
+.gp-nav__morebtn.is-current { background: var(--gp-green-soft); color: var(--gp-olive-800); font-weight: 600; }
+.gp-nav__menu { display: none; position: absolute; z-index: 30; top: calc(100% + 4px); left: 0; min-width: 190px; padding: 6px; background: var(--gp-surface); border: 1px solid var(--gp-border); border-radius: 10px; box-shadow: 0 10px 28px rgb(20 41 31 / 16%); }
+.gp-nav__more.is-open .gp-nav__menu { display: grid; gap: 2px; }
+.gp-nav__menu .gp-nav__sep { width: auto; margin: 6px 8px 2px; padding: 0; background: none; color: var(--gp-muted); font-size: 11.5px; overflow: visible; }
+@media (min-width: 1500px) {
+  .gp-header { flex-wrap: nowrap; }
+  .gp-nav { order: 1; flex: 0 1 auto; }
+}
+@media (max-width: 760px) {
+  /* На телефоне меню прокручивается одной лентой: выпадающий список был бы обрезан. */
+  .gp-nav__more, .gp-nav__menu { display: contents; }
+  .gp-nav__morebtn, .gp-nav__menu .gp-nav__sep { display: none; }
+}
+
+/* Строка статуса: роль уже есть в шапке */
+.gp-status-row > .gp-kv:first-child { display: none; }
+
+/* Первый экран: карта во весь экран, сценарий на настоящем участке в одной панели */
+.gp-hero { min-height: min(calc(100dvh - var(--gp-chrome-h, 120px)), 720px); }
+.gp-hero__inner { max-width: none; margin: 0; padding: 20px; display: flex; align-items: center; }
+.gp-hero__panel { width: min(460px, 100%); padding: 24px; display: grid; gap: 14px; border: 0; border-radius: 16px; box-shadow: 0 14px 44px rgb(20 41 31 / 16%); background: rgb(255 255 255 / 97%); }
+.gp-hero__panel .gp-eyebrow { margin: 0; }
+.gp-app .gp-hero__panel .gp-hero__title { font-size: clamp(28px, 2.6vw, 36px); line-height: 1.15; margin: 0; }
+.gp-hero__note { margin: 0; }
+.gp-hero__caption { left: auto; right: 12px; bottom: 34px; padding: 2px 8px; border-radius: 6px; background: rgb(255 255 255 / 85%); max-width: 46%; }
+.gp-plansum { margin: 0; display: grid; gap: 0; }
+.gp-plansum > div { padding: 9px 0; border-top: 1px solid var(--gp-border); }
+.gp-plansum--place + .gp-plansum > div:first-child { border-top: 1px solid var(--gp-border); }
+.gp-plansum dt { font-size: 12px; font-weight: 600; color: var(--gp-green); margin-bottom: 1px; }
+.gp-plansum dd { margin: 0; font-size: 13.5px; color: var(--gp-muted); }
+.gp-plansum strong { font-family: var(--gp-display); font-size: 21px; font-weight: 600; color: var(--gp-text); font-variant-numeric: lining-nums; }
+.gp-plansum--place strong { font-size: 18px; display: block; }
+.gp-sitecard__body > .gp-plansum { margin: 10px 0 4px; }
+
+/* Показатели под первым экраном: одна строка вместо четырёх одинаковых плиток */
+.gp-statline { display: flex; flex-wrap: wrap; gap: 8px 28px; max-width: 1400px; margin: 0 auto; padding: 14px 20px; }
+.gp-statline__item { display: inline-flex; align-items: baseline; gap: 8px; color: var(--gp-muted); text-decoration: none; font-size: 14px; }
+.gp-statline__item strong { font-family: var(--gp-display); font-size: 24px; font-weight: 600; color: var(--gp-olive-600); font-variant-numeric: lining-nums; }
+.gp-statline__item:hover span { color: var(--gp-text); text-decoration: underline; }
+
+/* Карта главнее: при открытой карточке список убран, вернуться к нему можно кнопкой «Все зоны» */
+.gp-sitecard__back { display: none; }
+@media (min-width: 1101px) {
+  .gp-sites--card:not(.gp-sites--hl) { grid-template-columns: minmax(0, 1fr) minmax(380px, 440px); }
+  .gp-sites--card:not(.gp-sites--hl) .gp-sites__list { display: none; }
+  .gp-sites--card:not(.gp-sites--hl) .gp-sitecard__back { display: inline-flex; min-height: 30px; padding: 2px 8px; flex: none; order: -1; }
+  .gp-sitecard__head { flex-wrap: wrap; }
+  .gp-sitecard__head h2 { order: 1; flex: 1 1 100%; }
+  .gp-sitecard__head .gp-icon-btn { margin-left: auto; }
+}
+
+@media (max-width: 760px) {
+  .gp-hero { display: block; min-height: 0; }
+  .gp-hero__map { position: relative; height: 240px; }
+  .gp-hero__caption { display: none; }
+  .gp-hero__inner { padding: 0 12px 12px; margin-top: -24px; }
+  .gp-hero__panel { padding: 18px; }
+  .gp-legend { max-width: calc(100% - 150px); }
+}
+
+/* Подпись карты сверху: внизу справа её закрывали кнопка ассистента и атрибуция */
+.gp-hero__caption { top: 12px; bottom: auto; }
+.gp-zonetabs button { padding-left: 8px; padding-right: 8px; font-size: 13.5px; }
+@media (min-width: 761px) {
+  .gp-mapsearch { max-width: 230px; }
+}

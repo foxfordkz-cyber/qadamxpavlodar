@@ -1,26 +1,25 @@
 import { t } from '../../../shared/i18n';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useData, useResource } from '../../../shared/api/DataProvider';
 import type { CandidateSite, Species } from '../../../shared/api/types';
 import type { ZoneAnalysis } from '../../../shared/analytics/plan';
-import { buildGrowthScene, GROWTH_YEARS, timeMachine, useTimeMachine, YEAR_LABEL } from './timeMachine';
-
-const STREET = /^(motorway|trunk|primary|secondary|tertiary|unclassified|residential|living_street)(_link)?$/;
+import { buildGrowthScene, GROWTH_YEARS, streetLines, timeMachine, useTimeMachine, YEAR_LABEL } from './timeMachine';
 
 /** Вкладка «Эффект»: посадка по схеме растёт на основной карте через 5, 10, 20 лет; цифры — из того же расчёта. */
-export function TimeMachinePanel({ a, site, byId }: { a: ZoneAnalysis; site: CandidateSite; byId: Map<string, Species> }) {
+export function TimeMachinePanel({ a, site, byId, autoPlay }: { a: ZoneAnalysis; site: CandidateSite; byId: Map<string, Species>; autoPlay?: boolean }) {
   const { api } = useData();
   const tm = useTimeMachine();
-  // Улицы рядом с зоной: ряды и бордюр цветов выстраиваются вдоль ближайшей. Тротуары и проезды
-  // к домам вплотную к газону не в счёт — иначе бордюр уходит к подъездам, а не к улице.
   const ctx = useResource(() => api.siteContext(site.id, 50), [site.id]);
-  const roads = useMemo(() => {
-    const all = ctx.data?.roads ?? [];
-    const streets = all.filter((r) => STREET.test(r.kind));
-    return (streets.length ? streets : all).map((r) => r.geometry.coordinates);
-  }, [ctx.data]);
+  const roads = useMemo(() => streetLines(ctx.data?.roads ?? []), [ctx.data]);
   const scene = useMemo(() => (ctx.loading ? null : buildGrowthScene(site, a, byId, roads)), [site, a, byId, roads, ctx.loading]);
   const active = tm.scene?.siteId === site.id;
+  // Кнопка «Показать рост» в карточке и ссылка с первого экрана сразу запускают показ.
+  const autoStarted = useRef(false);
+  useEffect(() => {
+    if (!autoPlay || !scene || autoStarted.current) return;
+    autoStarted.current = true;
+    timeMachine.play(scene);
+  }, [autoPlay, scene]);
   // Пересчёт зоны (вариант, замена вида, полив) сразу меняет посадку на карте.
   useEffect(() => {
     if (active && scene && tm.scene !== scene) timeMachine.show(scene, tm.year);
