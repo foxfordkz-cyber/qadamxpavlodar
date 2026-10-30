@@ -7,4 +7,4 @@
 6. Локально API-скрипт сам читает `DEMO_PASSWORD` из `apps/server/.env`; без пароля тест пропускается.
 7. HTML-отчёт mock: `npm run report`; API: `playwright-report/api/results.json` без секретных деталей.
 8. Слайды: `screens/<страница>-<ширина>.png` (1280×800 и 375×812, Alt+P); ошибки: `test-results/`.
-9. Известные баги описаны в `BUGS.md`; `npm run e2e:bugs` повторно выполняет помеченные `fixme` проверки.
+9. Баги: `BUGS.md`, повтор: `npm run e2e:bugs`; быстрый прогон, диагностика и ZIP для показа — [DEMO-TOOLS.md](DEMO-TOOLS.md).
