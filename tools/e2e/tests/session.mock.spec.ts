@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../support/test';
 import { openPage } from '../support/helpers';
 import { mockRole, switchLanguage, expectSignedOut, expectNoOverflow } from '../support/session';
 

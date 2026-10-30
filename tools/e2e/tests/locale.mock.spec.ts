@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../support/test';
 import { ru } from '../../../apps/web/src/shared/i18n/ru';
 import { kk } from '../../../apps/web/src/shared/i18n/kk';
 import { pages, openPage } from '../support/helpers';

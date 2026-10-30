@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../support/test';
 import { species } from '../support/catalogue';
 import { inspectDocx } from '../support/docx';
 import { openPage, SITE } from '../support/helpers';

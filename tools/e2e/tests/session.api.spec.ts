@@ -1,4 +1,4 @@
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect, type Page } from '../support/test';
 import { dismissHint } from '../support/helpers';
 import { workerProfileButton } from '../support/worker';
 import { expectSignedOut } from '../support/session';

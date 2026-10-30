@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../support/test';
 import { openPage } from '../support/helpers';
 import { mockRole, expectNoOverflow } from '../support/session';
 import { workerProfileButton, workerReady } from '../support/worker';

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../support/test';
 import { openPage } from '../support/helpers';
 import { workerProfileButton } from '../support/worker';
 

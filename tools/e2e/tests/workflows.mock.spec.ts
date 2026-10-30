@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../support/test';
 import { openPage, dismissHint, selectZone, openEffect, chooseYear, mapReady } from '../support/helpers';
 
 test('zone list, six tabs, time machine statistics and hide', async ({ page }, info) => {

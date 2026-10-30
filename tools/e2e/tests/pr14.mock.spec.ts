@@ -1,4 +1,4 @@
-import { test, expect, type Page, type Locator } from '@playwright/test';
+import { test, expect, type Page, type Locator } from '../support/test';
 import { species } from '../support/catalogue';
 import { openPage, dismissHint, SITE } from '../support/helpers';
 import { expectNoOverflow } from '../support/session';

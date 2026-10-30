@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../support/test';
 import { pages, openPage, dismissHint, screenshot, openEffect, watchErrors, chooseYear, mapReady } from '../support/helpers';
 
 for (const [name, route] of pages) {

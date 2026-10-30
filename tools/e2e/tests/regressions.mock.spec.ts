@@ -1,4 +1,4 @@
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect, type Page } from '../support/test';
 import { SITE, openPage, dismissHint, openEffect, chooseYear } from '../support/helpers';
 
 function mapParams(url: string) {

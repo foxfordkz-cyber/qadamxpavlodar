@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../support/test';
 import { openPage, dismissHint, mapReady, watchErrors } from '../support/helpers';
 import { ru } from '../../../apps/web/src/shared/i18n/ru';
 import { kk } from '../../../apps/web/src/shared/i18n/kk';
