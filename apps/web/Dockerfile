@@ -5,6 +5,8 @@ WORKDIR /repo/apps/web
 COPY apps/web/package.json apps/web/package-lock.json ./
 RUN npm ci
 COPY fixtures /repo/fixtures
+# Кабинет работника в режиме mock берёт учебные данные из tools/worker-demo/demo (features/worker/demo-gateway.mjs).
+COPY tools/worker-demo/demo /repo/tools/worker-demo/demo
 COPY apps/web ./
 # По умолчанию — тестовый источник в браузере; для сервера участника 3: --build-arg DATA_SOURCE=api
 ARG DATA_SOURCE=mock
