@@ -61,7 +61,7 @@ export function PrioritiesPage() {
                     <span className="gp-rank-item__score"><strong>{it.index}</strong> / 100</span>
                   </div>
                   <Bar value={it.index} label={tr("Индекс приоритета")} />
-                  <p className="gp-small">{tr("Главное:")}{" "}{it.explanation.join(' · ')}{" "}{tr("· смета")}{" "}{money(it.cost)}</p>
+                  <p className="gp-small">{tr("Главное:")}{" "}{it.explanation.map((e) => { const [label, value] = e.split(': '); return `${tr(label!)}: ${value}`; }).join(' · ')}{" "}{tr("· смета")}{" "}{money(it.cost)}</p>
                   <details className="gp-small">
                     <summary>{tr("Все факторы")}</summary>
                     <table className="gp-table"><tbody>{FACTORS.map((f) => <tr key={f}><td>{tr(PRIORITY_LABEL[f])}</td><td style={{ width: '40%' }}><Bar value={it.factors[f]} label={tr(PRIORITY_LABEL[f])} /></td><td>{it.factors[f]}</td><td>× {weights[f].toFixed(2)}</td></tr>)}</tbody></table>

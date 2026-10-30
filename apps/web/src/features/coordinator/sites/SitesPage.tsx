@@ -136,13 +136,16 @@ export function SitesPage() {
   const tightMap = !!selectedId && matchMedia('(max-width: 1600px)').matches;
 
   return (
-    <div className={`gp-sites ${selectedId ? 'gp-sites--card' : ''}`} data-tab={tab}>
+    <div className={`gp-sites ${selectedId ? 'gp-sites--card' : ''} ${growth ? 'gp-sites--growth' : ''}`} data-tab={tab}>
       <aside className="gp-sites__list gp-card" aria-label={t('filters.title')}>
         {highlight && <HighlightList title={hlTitle} ids={hlIds} names={names} selectedId={selectedId} onPick={(id) => select(id, true)} onClear={clearHl} />}
         <div className="gp-sites__filters">
           <Metrics compact />
           <label className="gp-sr" htmlFor="site-q">{t('filters.search')}</label>
           <input id="site-q" className="gp-input" type="search" placeholder={t('filters.search')} value={f.q} onChange={(e) => set('q', e.target.value)} />
+          {/* Фильтры свёрнуты: на ноутбуке они занимали половину колонки и оставляли в списке две зоны. */}
+          <details className="gp-filters-more" open={isFiltered(f)}>
+          <summary>{t('filters.title')}</summary>
           <div className="gp-grid-2 gp-filters-grid">
             <label className="gp-field"><span className="gp-field__label">{t('filters.status')}</span>
               <select className="gp-input" value={f.elig} onChange={(e) => set('elig', e.target.value as SiteFilters['elig'])}>
@@ -169,6 +172,7 @@ export function SitesPage() {
             </label>
             <label className="gp-check gp-filters-hints"><input type="checkbox" checked={f.hints} onChange={(e) => set('hints', e.target.checked)} />{t('filters.hints')}</label>
           </div>
+          </details>
           <div className="gp-sites__count" aria-live="polite">
             <strong>{t('filters.found', { n: visible.length, total: sites.length })}</strong>
             {isFiltered(f) && <Button variant="ghost" onClick={() => setF(emptyFilters)}>✕ {t('filters.reset')}</Button>}
@@ -368,7 +372,6 @@ function SiteRow({ s, tasks, selected, onSelect }: { s: CandidateSite; tasks: Ta
         <span className="gp-list-item__title"><span>{s.name}</span><EligBadge value={eligibilityOf(s)} /></span>
         <span className="gp-list-item__meta">
           <span>{fmtArea(s.areaM2)}</span>
-          <span>· {s.id}</span>
           {open > 0 && <span>· {t('sites.taskCount', { n: open })}</span>}
           {!!s.context?.hints?.length && <span title={s.context.hints.join(' ')}>· <span aria-hidden="true">⚠</span> {t('sites.hintCount', { n: s.context.hints.length })}</span>}
           {s.isDemo && <span>· {t('data.demo')}</span>}

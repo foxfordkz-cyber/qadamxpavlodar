@@ -23,7 +23,7 @@ export function HeroMap({ sites, onFail }: { sites: CandidateSite[]; onFail: () 
     if (!box.current) return;
     let map: MlMap;
     try {
-      map = new MlMap({ container: box.current, style: STYLE_URL, center: [76.9520, 52.2868], zoom: 15.2, pitch: 62, bearing: -30, interactive: false, attributionControl: false });
+      map = new MlMap({ container: box.current, style: STYLE_URL, center: [76.9560, 52.2885], zoom: 14.7, pitch: 60, bearing: -30, interactive: false, attributionControl: false });
     } catch {
       onFail();
       return;
@@ -39,10 +39,15 @@ export function HeroMap({ sites, onFail }: { sites: CandidateSite[]; onFail: () 
       clearTimeout(timer);
       setReady(true);
       // Здания чуть теплее и светлее, чтобы фон не спорил с текстом.
-      if (map.getLayer('building-3d')) map.setPaintProperty('building-3d', 'fill-extrusion-color', '#e6e2d6');
+      if (map.getLayer('building-3d')) map.setPaintProperty('building-3d', 'fill-extrusion-color', '#eef0e8');
+      // Без подписей и цветных дорог город читается как макет, а зоны-кандидаты сразу видны.
+      for (const l of map.getStyle().layers) {
+        if (l.type === 'symbol') map.setLayoutProperty(l.id, 'visibility', 'none');
+        else if (l.type === 'line' && /road|highway|street|bridge|tunnel/.test(l.id)) map.setPaintProperty(l.id, 'line-color', '#ffffff');
+      }
       map.addSource('hero-sites', { type: 'geojson', data: { type: 'FeatureCollection', features: sitesRef.current.map((s) => ({ type: 'Feature', properties: {}, geometry: s.geometry })) } });
-      map.addLayer({ id: 'hero-sites', type: 'fill', source: 'hero-sites', paint: { 'fill-color': '#9fb83a', 'fill-opacity': 0.55 } });
-      map.addLayer({ id: 'hero-sites-line', type: 'line', source: 'hero-sites', paint: { 'line-color': '#4f5d2f', 'line-width': 1.5 } });
+      map.addLayer({ id: 'hero-sites', type: 'fill', source: 'hero-sites', paint: { 'fill-color': '#2f9e5f', 'fill-opacity': 0.72 } });
+      map.addLayer({ id: 'hero-sites-line', type: 'line', source: 'hero-sites', paint: { 'line-color': '#14603c', 'line-width': 1.5 } });
       if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       let last = performance.now();
       const spin = (now: number) => {

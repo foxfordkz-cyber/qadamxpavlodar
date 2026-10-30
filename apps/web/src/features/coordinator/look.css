@@ -1,0 +1,100 @@
+/* Финальный внешний вид: светлая тема, заголовки Lora, текст Onest (оба шрифта содержат все казахские буквы).
+   Подключается последним и только переопределяет прежние правила. */
+
+/* Типографика: без сплошных заглавных, они тяжело читаются на русском и казахском */
+.gp-display, .gp-app h1, .gp-h1, .gp-modal__head h2, .gp-assist__head strong, .gp-report-doc h2, .gp-guide__h, .gp-home-sec__title { text-transform: none; letter-spacing: -.01em; font-weight: 600; font-variant-numeric: lining-nums; }
+.gp-app h2, .gp-app h3 { letter-spacing: -.005em; }
+.gp-app .gp-eyebrow { color: var(--gp-green); letter-spacing: .1em; }
+.gp-btn, .gp-btn--primary, .gp-btn--lime, .gp-btn--outline-light, .gp-viewtabs button { font-family: var(--gp-font); text-transform: none; letter-spacing: 0; font-weight: 600; font-size: 14px; }
+.gp-hero-tile__label, .gp-lifecycle__k, .gp-zone__facts dt, .gp-status-row dt { letter-spacing: .04em; }
+
+/* Шапка */
+.gp-header { background: var(--gp-surface); border-bottom: 1px solid var(--gp-border); }
+.gp-brand { font-size: 21px; font-weight: 600; text-transform: none; letter-spacing: -.01em; color: var(--gp-olive-800); }
+.gp-brand__logo { border-radius: 9px; }
+.gp-nav { gap: 2px; }
+.gp-nav a { color: #3c4b41; border-radius: 7px; border-bottom: 0; text-transform: none; letter-spacing: 0; font-weight: 500; }
+.gp-nav a:hover { background: var(--gp-surface-2); color: var(--gp-text); }
+.gp-nav a[aria-current='page'], .gp-nav a[aria-current='page']:hover { background: var(--gp-green-soft); color: var(--gp-olive-800); font-weight: 600; }
+.gp-nav a.gp-nav__works { color: var(--gp-muted); }
+.gp-nav a.gp-nav__works[aria-current='page'] { color: var(--gp-olive-800); }
+.gp-nav__sep { text-transform: none; letter-spacing: 0; font-size: 12px; }
+.gp-header .gp-btn { text-transform: none; letter-spacing: 0; font-weight: 500; font-size: 13px; border-radius: 8px; color: #3c4b41; }
+.gp-header .gp-btn--primary, .gp-header .gp-btn--primary:hover:not(:disabled) { background: var(--gp-green-soft); border-color: var(--gp-green-soft); color: var(--gp-olive-800); font-weight: 600; }
+.gp-subbar { background: transparent; padding-top: 4px; padding-bottom: 4px; }
+
+@media (min-width: 761px) {
+  .gp-nav a { padding: 6px 10px; font-size: 13.5px; }
+}
+/* На обычном ноутбуке меню остаётся одной строкой: подпись «Работы» заменяет тонкий разделитель. */
+@media (min-width: 761px) and (max-width: 1500px) {
+  .gp-nav a { padding: 6px 8px; }
+  .gp-nav__sep { width: 1px; margin: 6px 5px; padding: 0; overflow: hidden; color: transparent; background: var(--gp-border); }
+}
+
+/* Карточки и элементы управления */
+.gp-card, .gp-tile { box-shadow: var(--gp-shadow); }
+.gp-tile { border-radius: 12px; transition: transform .15s, box-shadow .15s, border-color .15s; }
+.gp-tile:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgb(20 41 31 / 10%); }
+.gp-btn, .gp-input { border-radius: 8px; }
+.gp-badge { border-radius: 6px; }
+.gp-segment { border-radius: 8px; }
+.gp-assist-fab { background: var(--gp-olive-600); color: #fff; border-radius: 999px; padding: 12px 20px; box-shadow: 0 8px 24px rgb(20 41 31 / 24%); }
+.gp-assist-fab:hover { background: var(--gp-olive-800); }
+
+/* Первый экран: светлый, за текстом видна 3D-карта города с зелёными зонами */
+.gp-hero { background: linear-gradient(180deg, #f9fbf5 0%, #edf3e6 100%); min-height: 500px; }
+.gp-hero__veil { background: linear-gradient(90deg, rgb(248 250 244 / 98%) 0%, rgb(248 250 244 / 90%) 40%, rgb(248 250 244 / 28%) 72%, rgb(248 250 244 / 0%) 100%); }
+.gp-hero__inner { align-items: center; padding-top: 48px; padding-bottom: 56px; }
+.gp-app .gp-hero__title { font-size: clamp(42px, 5.8vw, 84px); line-height: 1.05; margin: 0 0 18px; }
+.gp-hero__lead { font-family: var(--gp-font); text-transform: none; letter-spacing: 0; font-size: 18px; line-height: 1.5; font-weight: 400; color: #3c4b41; max-width: 44ch; }
+.gp-hero-tile { min-height: 124px; padding: 14px; border-radius: 14px; border-color: rgb(255 255 255 / 70%); background: rgb(255 255 255 / 88%); backdrop-filter: blur(8px); box-shadow: 0 6px 22px rgb(20 41 31 / 10%); transition: transform .15s, box-shadow .15s; }
+.gp-hero-tile:hover, .gp-hero-tile:focus-visible { background: #fff; border-color: var(--gp-olive-300); transform: translateY(-2px); box-shadow: 0 12px 30px rgb(20 41 31 / 14%); }
+.gp-hero-tile__label { text-transform: none; font-size: 13px; font-weight: 600; letter-spacing: 0; }
+.gp-hero-tile__value { font-size: 44px; font-weight: 600; font-variant-numeric: lining-nums; }
+.gp-hero__caption { left: 20px; right: auto; bottom: 14px; background: none; padding: 0; color: var(--gp-muted); }
+.gp-tile__value, .gp-stage__count strong { font-variant-numeric: lining-nums; }
+
+/* Рейтинг приоритетов */
+.gp-rank-item a { color: var(--gp-text); text-decoration: none; }
+.gp-rank-item a:hover { color: var(--gp-olive-600); text-decoration: underline; }
+.gp-rank-item__pos { background: var(--gp-surface-2); color: var(--gp-olive-800); }
+.gp-rank-item:nth-child(-n + 3) .gp-rank-item__pos { background: var(--gp-olive-600); color: #fff; }
+.gp-rank-item__score strong { font-family: var(--gp-display); font-size: 24px; font-weight: 600; color: var(--gp-olive-600); font-variant-numeric: lining-nums; }
+
+/* Карта и список зон */
+.gp-sites__list, .gp-sites__card, .gp-map { border-radius: 14px; }
+.gp-map { overflow: hidden; }
+.gp-layers, .gp-legend, .gp-tm-bar { border-radius: 12px; border-color: transparent; background: rgb(255 255 255 / 96%); box-shadow: 0 4px 18px rgb(20 41 31 / 14%); }
+.gp-filters-more summary { cursor: pointer; font-weight: 600; font-size: 13.5px; padding: 2px 0; color: var(--gp-olive-800); }
+.gp-filters-more[open] summary { margin-bottom: 8px; }
+.gp-list-item { padding: 11px 14px; }
+.gp-list-item__meta { font-size: 12.5px; }
+
+/* Машина времени: на время показа список убирается, карта получает всё место */
+@media (min-width: 1101px) {
+  .gp-sites--growth.gp-sites--card { grid-template-columns: minmax(0, 1fr) minmax(340px, 400px); }
+  .gp-sites--growth .gp-sites__list { display: none; }
+}
+
+@media (max-width: 760px) {
+  .gp-hero { min-height: 0; }
+  .gp-hero__veil { background: rgb(248 250 244 / 86%); }
+  .gp-hero__inner { padding-top: 28px; padding-bottom: 44px; }
+  .gp-hero__lead { font-size: 16px; }
+  .gp-hero-tile { min-height: 96px; padding: 10px; }
+  .gp-hero-tile__value { font-size: 32px; }
+  .gp-tile:hover { transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gp-tile, .gp-hero-tile { transition: none; }
+  .gp-tile:hover, .gp-hero-tile:hover { transform: none; }
+}
+
+/* Строка статуса: непроверенные службы не показываем, на защите «не проверялся» выглядит как ошибка */
+.gp-svc--unknown { display: none; }
+.gp-btn--primary { background: var(--gp-olive-600); border-color: var(--gp-olive-600); color: #fff; }
+.gp-btn--primary:hover:not(:disabled) { background: var(--gp-olive-800); }
+.gp-app .gp-home-sec__title { font-size: clamp(26px, 3vw, 38px); line-height: 1.15; max-width: 24ch; }
+.gp-app .gp-page__head .gp-h1 { line-height: 1.15; }
