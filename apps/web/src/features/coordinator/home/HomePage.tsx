@@ -4,9 +4,11 @@ import { useData, useResource } from '../../../shared/api/DataProvider';
 import type { DashboardMetric } from '../../../shared/api/types';
 import { ErrorNote } from '../../../shared/ui/components';
 import { t, type Key } from '../../../shared/i18n';
-import { fmtDate } from '../../../shared/format';
+import { fmtArea, fmtDate } from '../../../shared/format';
 import { hrefFor } from '../../../shared/router';
 import { eligibilityOf } from '../sites/eligibility';
+import { PlanSummary } from '../zone/PlanSummary';
+import { buildGrowthScene, streetLines } from '../zone/timeMachine';
 import { metricPeriod } from '../dashboard/metricText';
 import { useMe } from '../me';
 import { ForestSilhouette, StageArt } from './art';
@@ -28,6 +30,20 @@ export function HomePage() {
   const [mapFailed, setMapFailed] = useState(false);
   const onMapFail = useCallback(() => setMapFailed(true), []);
 
+  // Сценарий показывается на настоящем участке: первый с завершёнными проверками, иначе первый с контуром.
+  const showcase = useMemo(() => {
+    const polygons = list.filter((s) => s.geometry.type === 'Polygon' && s.centroid);
+    return polygons.find((s) => eligibilityOf(s) === 'planting_candidate') ?? polygons[0] ?? null;
+  }, [list]);
+  const showcaseId = showcase?.id ?? null;
+  const analysis = useResource(() => (showcaseId ? api.zoneAnalysis(showcaseId, {}) : Promise.resolve(null)), [showcaseId]);
+  const catalog = useResource(() => api.species(), []);
+  const context = useResource(() => (showcaseId ? api.siteContext(showcaseId, 50) : Promise.resolve(null)), [showcaseId]);
+  const scene = useMemo(() => {
+    if (!showcase || !analysis.data || !catalog.data || context.loading) return null;
+    return buildGrowthScene(showcase, analysis.data, new Map(catalog.data.map((s) => [s.id, s])), streetLines(context.data?.roads ?? []));
+  }, [showcase, analysis.data, catalog.data, context.data, context.loading]);
+
   const hero: { href: string; key: Key; value: number | null; hint: Key }[] = [
     { href: '/map', key: 'nav.map', value: v('sites_total'), hint: 'home.tile.map' },
     { href: '/projects', key: 'nav.projects', value: v('projects_review'), hint: 'home.tile.projects' },
@@ -38,30 +54,43 @@ export function HomePage() {
   return (
     <div className="gp-home">
       <section className="gp-hero" aria-labelledby="hero-h">
-        {mapFailed ? <ForestSilhouette /> : <Suspense fallback={<ForestSilhouette />}><HeroMap sites={list} onFail={onMapFail} /></Suspense>}
-        <div className="gp-hero__veil" aria-hidden="true" />
+        {mapFailed ? <ForestSilhouette /> : <Suspense fallback={<ForestSilhouette />}><HeroMap sites={list} focus={showcase} scene={scene} onFail={onMapFail} /></Suspense>}
         {!mapFailed && <p className="gp-hero__caption">{t('home.hero.mapCaption')}</p>}
         <div className="gp-hero__inner">
-          <div className="gp-hero__text">
-            <p className="gp-eyebrow gp-hero__eyebrow">{t('home.eyebrow')}</p>
-            <h1 id="hero-h" className="gp-hero__title">{t('home.title')}</h1>
-            <p className="gp-hero__lead">{t('home.lead')}</p>
+          <div className="gp-hero__panel gp-card">
+            <p className="gp-eyebrow gp-hero__eyebrow">{t('home.story.eyebrow')}</p>
+            <h1 id="hero-h" className="gp-hero__title">{t('home.story.title')}</h1>
+            {showcase && (
+              <dl className="gp-plansum gp-plansum--place">
+                <div>
+                  <dt>{t('home.story.place')}</dt>
+                  <dd><strong>{showcase.name}</strong> {t('home.story.area', { area: fmtArea(showcase.areaM2) })}</dd>
+                </div>
+              </dl>
+            )}
+            {analysis.data ? <PlanSummary a={analysis.data} /> : analysis.loading && <p className="gp-small gp-muted" role="status">{t('home.story.loading')}</p>}
             <div className="gp-btn-row">
-              <a className="gp-btn gp-btn--lime" href={hrefFor('/map')}>{t('home.cta.map')}</a>
-              {me.role === 'admin' && <a className="gp-btn gp-btn--outline-light" href={hrefFor('/approval')}>{t('nav.approval')}{v('projects_review') ? ` · ${v('projects_review')}` : ''}</a>}
+              {showcase ? (
+                <>
+                  <a className="gp-btn gp-btn--primary" href={hrefFor('/map', { site: showcase.id, grow: '1' })}>▶ {t('home.story.grow')}</a>
+                  <a className="gp-btn" href={hrefFor('/report', { site: showcase.id })}>⤓ {t('home.story.doc')}</a>
+                </>
+              ) : <a className="gp-btn gp-btn--primary" href={hrefFor('/map')}>{t('home.cta.map')}</a>}
             </div>
-          </div>
-          <div className="gp-hero__tiles">
-            {hero.map((h) => (
-              <a key={h.href} className="gp-hero-tile" href={hrefFor(h.href)}>
-                <span className="gp-hero-tile__label">{t(h.key)}</span>
-                <span className="gp-hero-tile__value">{h.value ?? '—'}</span>
-                <span className="gp-hero-tile__hint">{t(h.hint)}</span>
-              </a>
-            ))}
+            {me.role === 'admin' && !!v('projects_review') && <a className="gp-small" href={hrefFor('/approval')}>{t('nav.approval')} · {v('projects_review')}</a>}
+            <p className="gp-small gp-muted gp-hero__note">{t('home.story.note')}</p>
           </div>
         </div>
       </section>
+
+      <div className="gp-statline">
+        {hero.map((h) => (
+          <a key={h.href} className="gp-statline__item" href={hrefFor(h.href)}>
+            <strong>{h.value ?? '—'}</strong>
+            <span>{t(h.hint)}</span>
+          </a>
+        ))}
+      </div>
 
       <div className="gp-home__body">
         <section className="gp-home-sec" aria-labelledby="why-h">
