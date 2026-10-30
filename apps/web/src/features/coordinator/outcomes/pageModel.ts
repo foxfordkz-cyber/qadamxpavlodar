@@ -46,6 +46,7 @@ export function outcomeError(error: unknown): string {
 /** One catalog/rate snapshot per comparison; no formula or fallback price lives in the view. */
 export async function loadOutcomePlans(api: Pick<Api, 'site' | 'species' | 'rates' | 'kind'>, siteId: string, treesOnly: boolean) {
   const [site, catalog, rateData] = await Promise.all([api.site(siteId), api.species(), api.rates()]);
+  if (site.id !== siteId) throw new Error('analysis_site_mismatch');
   const provenance = { source: api.kind, capturedAt: new Date().toISOString(), dataClass: 'estimate' as const,
     isDemo: api.kind === 'mock' || site.isDemo, evidenceIds: [...site.evidenceIds],
     siteVersion: site.version, ratesVersion: rateData.version };

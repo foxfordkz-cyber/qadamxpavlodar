@@ -58,7 +58,11 @@ function ZoneOutcomes({ site }: { site: CandidateSite }) {
   const me = useMe();
   const [treesOnly, setTreesOnly] = useState(true);
   const [savedId, setSavedId] = useState('');
-  const history = useOutcomeLoad(() => api.outcomes.list(site.id), `${site.id}:history`);
+  const history = useOutcomeLoad(async () => {
+    const data = await api.outcomes.list(site.id);
+    if (data.siteId !== site.id) throw new Error('history_site_mismatch');
+    return data;
+  }, `${site.id}:history`);
   const plans = useOutcomeLoad(() => loadOutcomePlans(api, site.id, treesOnly), `${site.id}:plans:${treesOnly}`);
   const saved = (id: string) => { setSavedId(id); history.reload(); };
   return <>

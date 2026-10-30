@@ -104,6 +104,10 @@ test('tree-only comparison uses analyzeZone and identical data for all variants'
   assert.ok(data.inputs.every(i => i.analysis.options.careYears === 3 && i.analysis.scheme.every(r => r.tier === 'tree')));
   assert.equal(new Set(data.variants.map(v => v.comparisonKey)).size, 1);
   assert.ok(data.variants.every(v => v.expectedTreesY3! > 0 && v.costPerExpectedTreeKzt! > 0));
+  const wrongSite = fakeApi();
+  const actual = await wrongSite.site(OUTCOME_DEMO_SITE);
+  wrongSite.site = async () => ({ ...actual, id: 'another-zone' });
+  await assert.rejects(loadOutcomePlans(wrongSite, OUTCOME_DEMO_SITE, true), /analysis_site_mismatch/);
 });
 test('mixed planting does not compete for cheapest surviving tree', async () => {
   const data = await loadOutcomePlans(fakeApi(), OUTCOME_DEMO_SITE, false);
