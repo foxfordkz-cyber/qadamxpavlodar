@@ -11,4 +11,10 @@ apps/server/uploads
 apps/server/dist
 apps/server/.env
 **/.env
+**/.env.*
+!**/.env.example
+**/*.sqlite
+**/*.sqlite-*
+**/*.db
+**/*.db-*
 .claude
