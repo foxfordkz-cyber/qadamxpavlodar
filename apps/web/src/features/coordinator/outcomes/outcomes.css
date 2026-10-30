@@ -1,31 +1,31 @@
-.gp-outcomes { --outcome-accent: #23634d; min-width: 0; margin-top: 24px; padding-top: 20px; border-top: 2px solid #d7e5dd; overflow-wrap: anywhere; }
+.gp-outcomes { --outcome-accent: var(--gp-green); min-width: 0; margin-top: 24px; padding-top: 20px; border-top: 2px solid var(--gp-border); overflow-wrap: anywhere; }
 .gp-outcomes * { box-sizing: border-box; }
 .gp-outcomes__header h3 { margin: 4px 0 8px; font-size: 22px; line-height: 1.25; }
 .gp-outcomes__header p { margin: 8px 0; }
 .gp-outcomes__eyebrow { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--outcome-accent); font-weight: 700; }
 .gp-outcomes__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 12px; align-items: start; }
-.gp-outcomes__card { min-width: 0; padding: 16px; background: #fff; border: 1px solid #d9e2dc; border-radius: 12px; }
-.gp-outcomes__card--best { border: 2px solid var(--outcome-accent); padding: 15px; background: #f3faf5; }
+.gp-outcomes__card { min-width: 0; padding: 16px; background: var(--gp-surface); border: 1px solid var(--gp-border); border-radius: 12px; }
+.gp-outcomes__card--best { border: 2px solid var(--outcome-accent); padding: 15px; background: var(--gp-green-soft); }
 .gp-outcomes h4 { margin: 0 0 10px; font-size: 16px; }
 .gp-outcomes h5 { font-size: 13px; margin: 18px 0 6px; }
 .gp-outcomes__tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
 .gp-outcomes__tags .gp-badge { white-space: normal; }
 .gp-outcomes__metrics { margin: 12px 0; font-size: 13px; }
-.gp-outcomes__metrics > div { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 7px 0; border-bottom: 1px solid #e7ece8; }
+.gp-outcomes__metrics > div { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 7px 0; border-bottom: 1px solid var(--gp-border); }
 .gp-outcomes__metrics dt { flex: 1; min-width: 0; }
 .gp-outcomes__metrics dd { margin: 0; text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; max-width: 55%; }
 .gp-outcomes__metrics .gp-outcomes__main-metric { display: block; border: 0; }
 .gp-outcomes__main-metric dd { margin-top: 8px; text-align: left; max-width: 100%; font-size: 25px; line-height: 1.2; color: var(--outcome-accent); }
-.gp-outcomes__issues { padding-left: 18px; font-size: 13px; line-height: 1.55; color: #73551d; }
+.gp-outcomes__issues { padding-left: 18px; font-size: 13px; line-height: 1.55; color: var(--gp-amber); }
 .gp-outcomes__issues li + li { margin-top: 6px; }
-.gp-outcomes__status { padding: 16px; border-radius: 8px; background: #f2f5f3; line-height: 1.55; }
+.gp-outcomes__status { padding: 16px; border-radius: 8px; background: var(--gp-surface-2); line-height: 1.55; }
 .gp-outcomes__status p { margin-top: 0; }
-.gp-outcomes__history { margin-top: 24px; padding-top: 12px; border-top: 1px solid #d9e2dc; }
+.gp-outcomes__history { margin-top: 24px; padding-top: 12px; border-top: 1px solid var(--gp-border); }
 .gp-outcomes__history > label { display: block; font-size: 13px; margin-bottom: 6px; }
 .gp-outcomes__history > select { width: 100%; max-width: 100%; margin-bottom: 16px; }
-.gp-outcomes__comparison { margin-top: 12px; padding: 16px; background: #eef4f0; border-radius: 8px; font-size: 13px; }
+.gp-outcomes__comparison { margin-top: 12px; padding: 16px; background: var(--gp-green-soft); border-radius: 8px; font-size: 13px; }
 .gp-outcomes__comparison p { margin: 6px 0; }
 .gp-outcomes__reports { padding-left: 18px; }
-.gp-outcomes a { color: #165a45; text-decoration: underline; }
-.gp-outcomes :is(a, button, select):focus-visible { outline: 3px solid #995b09; outline-offset: 3px; }
+.gp-outcomes a { color: var(--gp-green); text-decoration: underline; }
+.gp-outcomes :is(a, button, select):focus-visible { outline: 3px solid var(--gp-focus); outline-offset: 3px; }
 @media (max-width: 480px) { .gp-outcomes__grid { grid-template-columns: minmax(0, 1fr); } .gp-outcomes__card { padding: 12px; } .gp-outcomes__card--best { padding: 11px; } }

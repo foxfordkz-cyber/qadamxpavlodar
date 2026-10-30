@@ -161,6 +161,41 @@ test('production adapter uses the published read model; errors never become mock
   await assert.rejects(client.saveForecast('site', { options: {}, siteVersion: 1, ratesVersion: 1 }, 'key'), (e: ApiError) => e.code === 'outcomes_unsupported_plan');
   assert.deepEqual(calls, ['/outcomes/sites/site']);
 });
+
+test('inspection confirmation: only non-demo report-backed API observations receive the RU/KK manual label', () => {
+  const initial = getLang();
+  try {
+    const apiData = fixture();
+    apiData.registry = apiData.registry.map(p => ({ ...p, isDemo: false }));
+    apiData.cohorts = apiData.cohorts.map(c => ({ ...c, provenance: { ...c.provenance, source: 'api', dataClass: 'real', isDemo: false } }));
+    apiData.inspections = apiData.inspections.map(i => ({ ...i,
+      provenance: { ...i.provenance, source: 'api', dataClass: 'real', isDemo: false },
+      observations: i.observations.map(o => ({ ...o, reportId: 'accepted-inspect-report' })),
+    }));
+    const render = (data: typeof apiData, inspectionId: string | null = `${full}-annual`) =>
+      renderToStaticMarkup(createElement(InspectionView, { data, cohortId: full, inspectionId }));
+    for (const lang of ['ru', 'kk'] as const) {
+      setLang(lang);
+      const actual = render(apiData);
+      assert.ok(actual.includes(t('outcomePage.manualConfirmation')));
+      assert.ok(actual.includes(t('outcomePage.manualConfirmationNote')));
+      const counts = (html: string) => [...html.matchAll(/<dd>(.*?)<\/dd>/g)].map(m => m[1]);
+      assert.deepEqual(counts(actual), counts(render(fixture())), 'Explanation must not change counts');
+      assert.ok(!render(fixture()).includes('outcome-manual-confirmation'), 'Synthetic mock is not expert confirmation');
+      assert.ok(!render(apiData, null).includes('outcome-manual-confirmation'));
+      for (const provenance of [
+        { source: 'mock' as const, dataClass: 'real' as const, isDemo: false },
+        { source: 'api' as const, dataClass: 'demo' as const, isDemo: true },
+        { source: 'api' as const, dataClass: 'demo' as const, isDemo: false },
+      ]) {
+        const data = { ...apiData, inspections: apiData.inspections.map(i => ({ ...i, provenance: { ...i.provenance, ...provenance } })) };
+        assert.ok(!render(data).includes('outcome-manual-confirmation'));
+      }
+      const noReports = { ...apiData, inspections: apiData.inspections.map(i => ({ ...i, observations: i.observations.map(o => ({ ...o, reportId: null })) })) };
+      assert.ok(!render(noReports).includes('outcome-manual-confirmation'));
+    }
+  } finally { setLang(initial); }
+});
 test('API snapshot adapter sends stable ID and both versions, never a client-computed forecast', async () => {
   const calls: unknown[] = [];
   const client = createOutcomesClient({ kind: 'api', async request(method, path, options) { calls.push({ method, path, options }); return { data: null } as never; } });
