@@ -11,12 +11,15 @@ import { hrefFor } from '../../../shared/router';
 import { TaskForm } from './TaskForm';
 import { DayTimeline } from './DayTimeline';
 import { Metrics } from '../dashboard/Metrics';
+import { useMe } from '../me';
 
 const LOCKED = new Set(['in_progress', 'submitted', 'verified']);
 const dayOf = (iso: string) => new Date(Date.parse(iso) + 5 * 3600e3).toISOString().slice(0, 10);
 
 export function TasksPage() {
   const { api, bump } = useData();
+  // Просмотр видит план и задания, но ничего не меняет; права всё равно проверяет сервер.
+  const canEdit = useMe().role !== 'viewer';
   const [date, setDate] = useState('2026-10-28');
   const tasks = useResource(() => api.tasks(), [], 30000);
   const brigades = useResource(() => api.brigades(), []);
@@ -37,10 +40,10 @@ export function TasksPage() {
       <PageHeader eyebrow={t('tasks.eyebrow')} title={t('tasks.title')} lead={t('tasks.lead')} actions={<>
         <label className="gp-kv gp-small">{t('tasks.date')} <input className="gp-input" type="date" value={date} onChange={(e) => setDate(e.target.value)} /></label>
         <Freshness updatedAt={tasks.updatedAt} error={tasks.error} loading={tasks.loading} onRefresh={() => { tasks.reload(); plan.reload(); }} />
-        <Button variant="primary" onClick={() => setCreating(true)}>＋ {t('tasks.new')}</Button>
+        {canEdit && <Button variant="primary" onClick={() => setCreating(true)}>＋ {t('tasks.new')}</Button>}
       </>} />
 
-      <PlanBar plan={plan.data?.plan ?? null} changed={changedIds.size} onApprove={() => setConfirm(true)} loading={plan.loading} error={plan.error} />
+      <PlanBar plan={plan.data?.plan ?? null} changed={changedIds.size} onApprove={canEdit ? () => setConfirm(true) : undefined} loading={plan.loading} error={plan.error} />
       <Metrics />
 
       <StateView loading={tasks.loading || brigades.loading} error={tasks.error ?? brigades.error} hasData={!!tasks.data && !!brigades.data} onRetry={() => { tasks.reload(); brigades.reload(); }}>
@@ -87,7 +90,7 @@ function changedSince(plan: DayPlan | null, tasks: Task[], date: string) {
   return out;
 }
 
-function PlanBar({ plan, changed, onApprove, loading, error }: { plan: DayPlan | null; changed: number; onApprove: () => void; loading: boolean; error: unknown }) {
+function PlanBar({ plan, changed, onApprove, loading, error }: { plan: DayPlan | null; changed: number; onApprove?: () => void; loading: boolean; error: unknown }) {
   const approved = plan?.status === 'approved';
   return (
     <div className={`gp-planbar ${approved ? 'gp-planbar--approved' : 'gp-planbar--draft'}`} role="status">
@@ -97,7 +100,7 @@ function PlanBar({ plan, changed, onApprove, loading, error }: { plan: DayPlan |
         <span><Badge tone="neutral" icon="✎">{t('plan.draft')}</Badge> {t('plan.draftNote')}</span>
       )}
       {approved && changed > 0 && <Badge tone="warn" icon="Δ">{t('plan.changedAfter', { n: changed })}</Badge>}
-      <Button variant="primary" onClick={onApprove} disabled={loading}>{approved ? t('plan.reapprove') : t('plan.approve')}</Button>
+      {onApprove && <Button variant="primary" onClick={onApprove} disabled={loading}>{approved ? t('plan.reapprove') : t('plan.approve')}</Button>}
       <ErrorNote error={error} />
     </div>
   );
@@ -184,6 +187,7 @@ function BrigadeColumn({ brigade, people, tasks, siteById, date, changed }: { br
 
 function TaskRow({ task, site, brigades, onChanged, reason }: { task: Task; site?: CandidateSite; brigades: Brigade[]; onChanged: () => void; reason: string }) {
   const { api, bump } = useData();
+  const canEdit = useMe().role !== 'viewer';
   const [brigadeId, setBrigadeId] = useState('');
   const [minCrew, setMinCrew] = useState('1');
   const [start, setStart] = useState('');
@@ -216,7 +220,7 @@ function TaskRow({ task, site, brigades, onChanged, reason }: { task: Task; site
       <p className="gp-small gp-muted">{t('tasks.reason')}: {reason}</p>
       {result ? (
         <div className="gp-alert gp-alert--ok gp-small" role="status">✓ {t('tasks.assignedResult', { id: result.id, status: t(`status.${result.status}` as Key), brigade: brigades.find((b) => b.id === result.brigadeId)?.name ?? '—', v: result.version })} <Button variant="ghost" onClick={onChanged}>{t('state.refresh')}</Button></div>
-      ) : (
+      ) : canEdit && (
         <div className="gp-assign">
           <label className="gp-sr" htmlFor={`as-${task.id}`}>{t('form.brigade')}</label>
           <select id={`as-${task.id}`} className="gp-input" value={brigadeId} onChange={(e) => setBrigadeId(e.target.value)}>
