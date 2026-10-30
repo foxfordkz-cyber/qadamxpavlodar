@@ -35,6 +35,10 @@ export default defineConfig({
       name: `crew-${width}`, testMatch: '**/*.crew.spec.ts',
       use: { viewport: { width, height: width === 1280 ? 800 : 812 }, isMobile: width === 375, hasTouch: width <= 800 },
     })),
+    ...[1280, 1440].map(width => ({
+      name: `nav-${width}`, testMatch: '**/*.wide.spec.ts',
+      use: { viewport: { width, height: 900 } },
+    })),
   ],
   // An explicit URL means an already running server (including Docker).
   // Without a password API tests skip without requiring even a local web server.
