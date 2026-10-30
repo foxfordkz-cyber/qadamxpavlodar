@@ -1,6 +1,14 @@
 # Независимая QA-приёмка — 30.10.2026
 
-**E2E-07 остаётся активным для объединённого состояния:** на SHA **9665a69** (coordinator b53c180 + #27/#21/#23/#24 + QA16) специалист → `/?source=mock&lang=kk#/`, 1280×900 → открыть «Тағы» → ожидалось: каждый пункт внутри окна → факт: «Нұсқаулық», «Жұмыс жоспары», «Есептер» имеют right=1327.53125, выход 47.53125 px. [Снимок и измерения](https://github.com/foxfordkz-cyber/qadamxpavlodar/blob/7a8b3c76e79db0ab20fe875e58007e622d41ea54/tools/e2e/OUTCOMES-RUN-RESULTS.md#блокирующий-e2e-07). [Передано Дамиру/Claude](https://github.com/foxfordkz-cyber/qadamxpavlodar/pull/27#issuecomment-6524001908). Там полный mock: 181 passed / 1 failed / 2 skipped / 0 fixme; API: 37 passed / 0 failed / 0 skipped / 0 fixme. Тест не выключен. Ниже — результат базового PR #16 без новых разделов, где он проходит.
+## E2E-07 активен на объединённой сборке
+
+SHA приложения/тестов **9665a69636468e39ff487214204770b46a11849c**, отдельный worktree qa/acceptance-20261030: coordinator b53c180 + #27 6e5de2e, включая #21/#23/#24, + QA16. Полный mock **181 passed / 1 failed / 2 skipped / 0 fixme**; API на том же SHA **37 passed / 0 failed / 0 skipped / 0 fixme**.
+
+Специалист → `/?source=mock&lang=kk#/`, 1280×900 → дождаться шрифтов, раскрыть «Тағы» → ожидалось: каждый пункт целиком внутри окна → факт: ссылки «Нұсқаулық», «Жұмыс жоспары», «Есептер» имеют right=1327.53125, выходят на 47.53125 px. RU/1280, RU/1440 и KK/1440 прошли. [Измерения](evidence/E2E-07-integration-kk-1280.json), [просмотренный снимок](evidence/E2E-07-integration-kk-1280.png), [все результаты](OUTCOMES-RUN-RESULTS.md), [передано Дамиру/Claude](https://github.com/foxfordkz-cyber/qadamxpavlodar/pull/27#issuecomment-6524001908).
+
+Тест не отключён; приложение не исправлялось. Объединённая сборка не готова к приёмке. Новых дефектов в исполненных outcomes-проверках (12 mock + 14 API) не найдено. Ниже — отдельно результат исходной базы PR #16, где E2E-07 проходит.
+
+## База PR #16
 
 Продуктовая база: coordinator `b53c180a67686d1d2fc1f79d0295884783d5bb4b`. Тесты: `261491f2e6ad15e864685af5d129d8b875db38e0`, чистый qa/e2e. #9/#14/#17/#18/#20 действительно влиты по GitHub. Только обычные merge; продуктовый код не исправлялся.
 
