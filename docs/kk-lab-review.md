@@ -42,6 +42,13 @@ Three browser-control timeouts during calculation/loading were followed by succe
 verification; they were tooling interruptions, not silently counted as successful assertions. Browser
 snapshots and screenshots accompany the handoff. No API responses were intercepted or mocked.
 
+Follow-up on 31.10.2026: the local dev dependency junction caused Vite's filesystem allow-list to
+reject some font requests. No application/configuration change was made. All eight combinations
+were therefore checked again using the already-built frontend (`npm run preview`) and real API
+proxy where applicable: three cards, no horizontal overflow, no browser error/warning logs.
+All 14 bundled font assets returned HTTP 200 with bytes matching the build. The earlier dev
+screenshots are diagnostic evidence; the `built-lab-*` screenshots are the final layout evidence.
+
 Remaining language boundaries:
 
 - Source place names, user text and unverified botanical names may remain Russian.
