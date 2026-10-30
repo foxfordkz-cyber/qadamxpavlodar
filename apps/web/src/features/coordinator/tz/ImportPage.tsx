@@ -8,7 +8,7 @@ import { PageHeader } from '../PageHeader';
 
 type Feat = { geometry: { type: string; coordinates: unknown } | null; properties: Record<string, unknown> };
 
-/** Разбор файлов в браузере: GeoJSON, KML, CSV (lat/lng). Shapefile (zip) разбирает сервер (участник 3). */
+/** Разбор файлов в браузере: GeoJSON, KML, CSV (lat/lng). Shapefile (zip) разбирает сервер. */
 export function parseFile(name: string, text: string): { format: string; features: Feat[] } {
   const ext = name.toLowerCase().split('.').pop();
   if (ext === 'geojson' || ext === 'json') {
@@ -39,7 +39,7 @@ export function parseFile(name: string, text: string): { format: string; feature
     if (li < 0 || gi < 0) throw new Error(tr("В CSV не найдены колонки широты и долготы (lat, lng)."));
     return { format: 'csv', features: rows.map((r) => { const v = r.split(sep); return { geometry: { type: 'Point', coordinates: [Number(v[gi]), Number(v[li])] }, properties: Object.fromEntries(cols.map((c, i) => [c, v[i]])) }; }) };
   }
-  throw new Error(ext === 'zip' || ext === 'shp' ? tr("Shapefile (zip) разбирается на сервере — загрузите через импорт участника 3 или конвертируйте в GeoJSON.") : t('dynamic.013', { p0: String(ext) }));
+  throw new Error(ext === 'zip' || ext === 'shp' ? tr("Shapefile (zip) обрабатывается на сервере. В этой форме загрузите GeoJSON, KML или CSV либо конвертируйте файл в GeoJSON.") : t('dynamic.013', { p0: String(ext) }));
 }
 
 export function ImportPage() {

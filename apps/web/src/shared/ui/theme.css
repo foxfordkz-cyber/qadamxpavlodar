@@ -1,21 +1,21 @@
 /* Общая тема Green Pavlodar. Все классы с префиксом gp-, глобально задаются только
    токены и базовые свойства body — чтобы не ломать кабинет работника (участник 4). */
 :root {
-  /* Палитра «оливковый лес»: шалфейная бумага, тёмная олива, лаймовый акцент.
+  /* Палитра «светлый лес»: почти белый фон, глубокий зелёный, лаймовый акцент.
      Янтарный и красный оставлены для «внимание» и «проблема» — их нельзя заменять оттенком зелёного. */
-  --gp-bg: #eceee5;
-  --gp-surface: #fafbf6;
-  --gp-surface-2: #f0f2e8;
-  --gp-border: #d2d7c2;
-  --gp-text: #1e2614;
-  --gp-muted: #576049;
-  --gp-green: #4a5a2a;
-  --gp-green-soft: #e0e7c9;
-  --gp-lime: #c5dc5a;
-  --gp-olive-900: #232b15;
-  --gp-olive-800: #2f3a1c;
-  --gp-olive-600: #4f5d2f;
-  --gp-olive-300: #a9b38a;
+  --gp-bg: #f5f6f1;
+  --gp-surface: #ffffff;
+  --gp-surface-2: #f2f4ec;
+  --gp-border: #e3e6da;
+  --gp-text: #18241c;
+  --gp-muted: #56655b;
+  --gp-green: #256b4a;
+  --gp-green-soft: #e2f0e5;
+  --gp-lime: #b9dc5b;
+  --gp-olive-900: #14291f;
+  --gp-olive-800: #1b3a2b;
+  --gp-olive-600: #256b4a;
+  --gp-olive-300: #a6c4b1;
   --gp-amber: #855300;
   --gp-amber-soft: #f6e8c4;
   --gp-amber-line: #c98d1a;
@@ -26,10 +26,10 @@
   --gp-violet: #66508f;
   --gp-violet-soft: #ebe5f3;
   --gp-focus: #2c5a7a;
-  --gp-radius: 3px;
-  --gp-shadow: none;
-  --gp-font: Manrope, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --gp-display: Oswald, 'Arial Narrow', 'Roboto Condensed', system-ui, sans-serif;
+  --gp-radius: 10px;
+  --gp-shadow: 0 1px 2px rgb(35 43 21 / 5%), 0 4px 14px rgb(35 43 21 / 6%);
+  --gp-font: 'Onest Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --gp-display: 'Lora Variable', Georgia, 'Times New Roman', serif;
   --gp-header-h: 112px;
 }
 
