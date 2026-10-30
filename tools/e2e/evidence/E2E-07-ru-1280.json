@@ -1,0 +1,112 @@
+[
+  {
+    "label": "Обзор",
+    "href": "#/",
+    "left": 20,
+    "right": 78,
+    "top": 44,
+    "bottom": 75.5625,
+    "width": 58,
+    "viewport": 1280
+  },
+  {
+    "label": "Карта участков",
+    "href": "#/map",
+    "left": 80,
+    "right": 196.78125,
+    "top": 44,
+    "bottom": 75.5625,
+    "width": 116.78125,
+    "viewport": 1280
+  },
+  {
+    "label": "Проблемные зоны",
+    "href": "#/problems",
+    "left": 198.78125,
+    "right": 334.8125,
+    "top": 44,
+    "bottom": 75.5625,
+    "width": 136.03125,
+    "viewport": 1280
+  },
+  {
+    "label": "Приоритеты",
+    "href": "#/priorities",
+    "left": 336.8125,
+    "right": 433.46875,
+    "top": 44,
+    "bottom": 75.5625,
+    "width": 96.65625,
+    "viewport": 1280
+  },
+  {
+    "label": "Растения",
+    "href": "#/species",
+    "left": 435.46875,
+    "right": 512.40625,
+    "top": 44,
+    "bottom": 75.5625,
+    "width": 76.9375,
+    "viewport": 1280
+  },
+  {
+    "label": "Проекты озеленения",
+    "href": "#/projects",
+    "left": 514.40625,
+    "right": 668.03125,
+    "top": 44,
+    "bottom": 75.5625,
+    "width": 153.625,
+    "viewport": 1280
+  },
+  {
+    "label": "Справочники",
+    "href": "#/rates",
+    "left": 677.03125,
+    "right": 853.03125,
+    "top": 86.5625,
+    "bottom": 118.125,
+    "width": 176,
+    "viewport": 1280
+  },
+  {
+    "label": "Импорт",
+    "href": "#/import",
+    "left": 677.03125,
+    "right": 853.03125,
+    "top": 120.125,
+    "bottom": 151.6875,
+    "width": 176,
+    "viewport": 1280
+  },
+  {
+    "label": "Гайд",
+    "href": "#/guide",
+    "left": 677.03125,
+    "right": 853.03125,
+    "top": 153.6875,
+    "bottom": 185.25,
+    "width": 176,
+    "viewport": 1280
+  },
+  {
+    "label": "План работ",
+    "href": "#/tasks",
+    "left": 677.03125,
+    "right": 853.03125,
+    "top": 213.921875,
+    "bottom": 245.484375,
+    "width": 176,
+    "viewport": 1280
+  },
+  {
+    "label": "Отчёты",
+    "href": "#/reports",
+    "left": 677.03125,
+    "right": 853.03125,
+    "top": 247.484375,
+    "bottom": 279.046875,
+    "width": 176,
+    "viewport": 1280
+  }
+]
