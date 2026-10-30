@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useState, type ReactNode } from 'react';
-import { useData, useResource, type SvcState } from '../../shared/api/DataProvider';
+import { useData, type SvcState } from '../../shared/api/DataProvider';
+import { useSession } from '../../shared/api/useSession';
 import { ApiError } from '../../shared/api/transport';
 import { Button, ErrorNote, Field, StateView, useGuarded } from '../../shared/ui/components';
 import { t, type Key } from '../../shared/i18n';
@@ -12,7 +13,7 @@ const WorkerPage = lazy(() => import('../worker/WorkerPage').then((m) => ({ defa
 
 import { MeContext } from './me';
 import { AssistantPanel } from './tz/AssistantPanel';
-import type { Me, Role } from '../../shared/api/types';
+import type { Role } from '../../shared/api/types';
 
 // Навигация по роли. Права всё равно проверяет сервер; меню лишь не показывает лишнего.
 const ALL: Role[] = ['coordinator', 'admin', 'viewer'];
@@ -38,11 +39,9 @@ const SVC_ICON: Record<SvcState, string> = { ok: '●', down: '✕', unknown: '�
 export function Shell({ children }: { children: ReactNode }) {
   const { api, mode, services } = useData();
   const route = useRoute();
-  // V2 wraps the user in a session; mock (and the future compatibility layer) returns Me directly.
-  const me = useResource<Me & { csrfToken?: string }>(async () => {
-    const session = await api.me() as Me | { user: Me; csrfToken?: string };
-    return 'user' in session ? { ...session.user, csrfToken: session.csrfToken } : session;
-  }, []);
+  const me = useSession();
+  const [logoutError, setLogoutError] = useState<unknown>(null);
+  const { run: runLogout, busy: loggingOut } = useGuarded();
   const [dev, setDev] = useState(false);
   const [today, setToday] = useState(() => new Date().toISOString());
   useEffect(() => {
@@ -51,8 +50,7 @@ export function Shell({ children }: { children: ReactNode }) {
   }, []);
 
   const authError = me.error instanceof ApiError ? me.error.status : null;
-  // После выхода сервер отвечает 401, а прежние данные остаются в кэше запроса — в шапке их не показываем.
-  const user = authError === 401 ? null : me.data;
+  const user = me.data;
   const role = user?.role;
   const crew = role === 'foreman' || role === 'worker';
   // Бригадир и работник работают только в своём кабинете — держим их на маршруте #/worker, остальных уводим с него.
@@ -60,14 +58,20 @@ export function Shell({ children }: { children: ReactNode }) {
     if (crew && route.path !== '/worker') navigate('/worker', {}, true);
     else if (role && !crew && route.path === '/worker') navigate('/', {}, true);
   }, [crew, role, route.path]);
-  const logout = async () => {
+  const logout = () => runLogout(async () => {
+    setLogoutError(null);
     try {
       if (mode === 'api') {
         const { createV2Transport } = await import('../worker/contract-v2.mjs');
         await createV2Transport({ csrfToken: me.data?.csrfToken })('POST', '/auth/logout', { body: {} });
       } else await api.logout();
-    } finally { me.reload(); }
-  };
+      me.clear();
+    } catch (error) {
+      // The worker transport has its own error class with the same HTTP status.
+      if ((error as { status?: number } | null)?.status === 401) me.clear();
+      else setLogoutError(error);
+    }
+  });
   const nav = NAV.filter((n) => role && n.roles.includes(role));
   const current = (path: string) => (path === '/' ? route.path === '/' || route.path === '' : route.path.startsWith(path));
   return (
@@ -84,7 +88,7 @@ export function Shell({ children }: { children: ReactNode }) {
           {user && <span className="gp-small">{user.displayName}</span>}
           {mode === 'mock' && <Button onClick={() => setDev(true)}>⚙ {t('shell.devPanel')}</Button>}
           <LanguageSwitcher />
-          {user && <Button onClick={logout}>{t('shell.logout')}</Button>}
+          {user && <Button onClick={logout} busy={loggingOut}>{t('shell.logout')}</Button>}
         </div>
       </header>
       <div className="gp-subbar">
@@ -100,7 +104,8 @@ export function Shell({ children }: { children: ReactNode }) {
         </dl>
       </div>
       <main id="main" className="gp-main" tabIndex={-1}>
-        {authError === 401 ? (
+        {user && <ErrorNote error={logoutError} />}
+        {me.unauthenticated ? (
           <Login onDone={me.reload} />
         ) : authError === 403 ? (
           <Forbidden />
