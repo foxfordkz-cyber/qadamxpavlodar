@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState, type ReactNode } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState, type ReactNode } from 'react';
 import { useData, type SvcState } from '../../shared/api/DataProvider';
 import { useSession } from '../../shared/api/useSession';
 import { ApiError } from '../../shared/api/transport';
@@ -34,6 +34,10 @@ const NAV: { path: string; key: Key; roles: Role[]; works?: boolean }[] = [
   { path: '/approval', key: 'nav.approval', roles: ['admin'], works: true },
   { path: '/people', key: 'nav.people', roles: ['admin'], works: true },
 ];
+
+// В основной строке меню — разделы сценария; справочные и рабочие страницы открываются из «Ещё».
+const MORE = new Set(['/rates', '/import', '/guide']);
+const isMore = (n: { path: string; works?: boolean }) => !!n.works || MORE.has(n.path);
 
 const SVC_ICON: Record<SvcState, string> = { ok: '●', down: '✕', unknown: '○' };
 
@@ -74,16 +78,54 @@ export function Shell({ children }: { children: ReactNode }) {
     }
   });
   const nav = NAV.filter((n) => role && n.roles.includes(role));
+  const moreItems = nav.filter(isMore);
+  const [moreOpen, setMoreOpen] = useState(false);
+  const moreRef = useRef<HTMLDivElement>(null);
+  useEffect(() => setMoreOpen(false), [route.path]);
+  useEffect(() => {
+    if (!moreOpen) return;
+    const onDown = (e: MouseEvent) => { if (!moreRef.current?.contains(e.target as Node)) setMoreOpen(false); };
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setMoreOpen(false); };
+    document.addEventListener('mousedown', onDown);
+    document.addEventListener('keydown', onKey);
+    return () => { document.removeEventListener('mousedown', onDown); document.removeEventListener('keydown', onKey); };
+  }, [moreOpen]);
   const current = (path: string) => (path === '/' ? route.path === '/' || route.path === '' : route.path.startsWith(path));
+  // Высота шапки зависит от языка, роли и ширины окна: карта и закреплённые панели считают от настоящей.
+  const headerRef = useRef<HTMLElement>(null);
+  const subbarRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const header = headerRef.current;
+    const subbar = subbarRef.current;
+    if (!header || !subbar) return;
+    const root = document.documentElement.style;
+    const sync = () => {
+      root.setProperty('--gp-header-h', `${header.offsetHeight}px`);
+      root.setProperty('--gp-chrome-h', `${header.offsetHeight + subbar.offsetHeight}px`);
+    };
+    sync();
+    const observer = new ResizeObserver(sync);
+    observer.observe(header);
+    observer.observe(subbar);
+    return () => observer.disconnect();
+  }, []);
   return (
     <div className="gp-app">
       <a href="#main" className="gp-skip" onClick={(e) => { e.preventDefault(); document.getElementById('main')?.focus(); }}>{t('shell.skip')}</a>
-      <header className="gp-header">
+      <header className="gp-header" ref={headerRef}>
         <a className="gp-brand" href={hrefFor('/')}><span className="gp-brand__logo" aria-hidden="true">❦</span><span>{t('app.title')}</span></a>
         <nav className="gp-nav" aria-label={t('nav.label')}>
-          {nav.filter((n) => !n.works).map((n) => <a key={n.path} href={hrefFor(n.path)} aria-current={current(n.path) ? 'page' : undefined}>{t(n.key)}</a>)}
-          {nav.some((n) => n.works) && <span className="gp-nav__sep" aria-hidden="true">{t('nav.works')}:</span>}
-          {nav.filter((n) => n.works).map((n) => <a key={n.path} className="gp-nav__works" href={hrefFor(n.path)} aria-current={current(n.path) ? 'page' : undefined}>{t(n.key)}</a>)}
+          {nav.filter((n) => !isMore(n)).map((n) => <a key={n.path} href={hrefFor(n.path)} aria-current={current(n.path) ? 'page' : undefined}>{t(n.key)}</a>)}
+          {moreItems.length > 0 && (
+            <div className={`gp-nav__more ${moreOpen ? 'is-open' : ''}`} ref={moreRef}>
+              <button type="button" className={`gp-nav__morebtn ${moreItems.some((n) => current(n.path)) ? 'is-current' : ''}`} aria-expanded={moreOpen} onClick={() => setMoreOpen((o) => !o)}>{t('nav.more')} <span aria-hidden="true">▾</span></button>
+              <div className="gp-nav__menu">
+                {moreItems.filter((n) => !n.works).map((n) => <a key={n.path} href={hrefFor(n.path)} aria-current={current(n.path) ? 'page' : undefined}>{t(n.key)}</a>)}
+                {moreItems.some((n) => n.works) && <span className="gp-nav__sep" aria-hidden="true">{t('nav.works')}</span>}
+                {moreItems.filter((n) => n.works).map((n) => <a key={n.path} className="gp-nav__works" href={hrefFor(n.path)} aria-current={current(n.path) ? 'page' : undefined}>{t(n.key)}</a>)}
+              </div>
+            </div>
+          )}
         </nav>
         <div className="gp-header__right">
           {user && <span className="gp-small">{user.displayName}</span>}
@@ -92,7 +134,7 @@ export function Shell({ children }: { children: ReactNode }) {
           {user && <Button onClick={logout} busy={loggingOut}>{t('shell.logout')}</Button>}
         </div>
       </header>
-      <div className="gp-subbar">
+      <div className="gp-subbar" ref={subbarRef}>
         <dl className="gp-status-row">
           <div className="gp-kv"><dt>{t('shell.role')}</dt><dd>{user ? <>{t(`shell.role.${user.role}` as Key)}{user.isDemoAccount && <> <span className="gp-badge gp-badge--demo">{t('shell.demoAccount')}</span></>}</> : '—'}</dd></div>
           <div className="gp-kv"><dt>{t('shell.today')}</dt><dd>{fmtDate(today)} (UTC+5)</dd></div>

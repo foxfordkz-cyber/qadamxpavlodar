@@ -23,6 +23,7 @@ import './coordinator.css';
 import './v2.css';
 import './v3.css';
 import './tz.css';
+import './look.css';
 
 const PAGES: [string, () => ReactElement][] = [
   ['/map', () => <SitesPage />],

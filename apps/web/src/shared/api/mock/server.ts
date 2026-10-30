@@ -1,6 +1,6 @@
 // Тестовый источник: эмулирует сервер /api/v1 по контракту в браузере.
 // Проверяет версии (409), повтор Idempotency-Key, роли (401/403), отказ сети и AI (503).
-// Не является сервером участника 3 — нужен, чтобы экраны работали до его готовности.
+// Не является настоящим сервером — нужен, чтобы экраны работали до его готовности.
 import { ApiError, type HttpMethod, type RequestOptions, type Transport } from '../transport';
 import type { CandidateSite, CheckKey, CheckState, DayPlan, Me, PlantingProject, ProjectItem, Plant, Report, Role, Task } from '../types';
 import { siteContext } from './context';
@@ -52,6 +52,8 @@ function load(): MockDb {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const saved = JSON.parse(raw) as MockDb;
+      // База в браузере могла сохраниться со старой формой названий зон.
+      saved.sites.forEach((s) => { s.name = s.name.replace(/^(Газон|Травяной участок) у /, '$1, '); });
       if (addCareDemoPlants(saved)) {
         try { localStorage.setItem(STORAGE_KEY, JSON.stringify(saved)); } catch { /* keep migrated data in memory */ }
       }
@@ -686,7 +688,7 @@ route('GET', /^\/assistant\/history$/, () => {
 route('POST', /^\/imports\/preview$/, (_m, o) => {
   requireRole('coordinator');
   const b = o.body as { format?: string; features?: ImportFeature[] };
-  return { data: previewImport(b?.format, b?.features, 'Предпросмотр: в базу ничего не записано. Сохранение — после подтверждения (участник 3).') };
+  return { data: previewImport(b?.format, b?.features, 'Предпросмотр: в базу ничего не записано. Сохранение — после подтверждения.') };
 });
 
 route('GET', /^\/dashboard$/, () => {
