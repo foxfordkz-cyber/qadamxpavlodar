@@ -39,7 +39,7 @@ export function isMember(s:Store,crewId:string,userId:string,start=now(),end=sta
   const c=crew(s,crewId); if(c.foremanId===userId)return true;
   return !!s.get('SELECT id FROM v2_memberships WHERE crew_id=? AND user_id=? AND active=1 AND valid_from<=? AND (valid_until IS NULL OR valid_until>=?)',crewId,userId,start,end);
 }
-export function canCrew(s:Store,a:User,c:Doc) { return a.role==='admin'||a.role==='coordinator'||a.role==='specialist'||(a.role==='foreman'&&c.foremanId===a.id)||(a.role==='worker'&&isMember(s,c.id,a.id)); }
+export function canCrew(s:Store,a:User,c:Doc) { return a.role==='admin'||a.role==='coordinator'||a.role==='specialist'||a.role==='viewer'||(a.role==='foreman'&&c.foremanId===a.id)||(a.role==='worker'&&isMember(s,c.id,a.id)); }
 export function ownCrew(s:Store,a:User,crewId:string) { const c=crew(s,crewId); if(!canCrew(s,a,c))fail('NOT_FOUND','Crew not found',404); return c; }
 function checkForeman(s:Store,userId:string) { const u=getUser(s,userId);if(!u.active||u.role!=='foreman')fail('INVALID_FOREMAN','An active foreman is required',400); }
 function checkResources(s:Store,ids:string[]) { for(const resourceId of ids)getDoc(s,'resource',resourceId); }
@@ -68,7 +68,7 @@ export function membership(s:Store,a:User,crewId:string,b:z.infer<typeof members
 export function members(s:Store,crewId:string) { return s.all('SELECT * FROM v2_memberships WHERE crew_id=? ORDER BY valid_from,id',crewId).map(r=>({id:r.id,crewId:r.crew_id,userId:r.user_id,validFrom:r.valid_from,validUntil:r.valid_until,active:r.active===1})); }
 export function listUsers(s:Store,a:User) { allow(a,'admin');return s.all('SELECT u.*,r.role AS municipal_role FROM v2_users u LEFT JOIN municipal_roles r ON r.user_id=u.id ORDER BY u.id').map(r=>({...userDto(r),profile:profile(s,String(r.id))})); }
 export function workers(s:Store,a:User) {
-  return s.all("SELECT * FROM v2_users WHERE role IN ('worker','foreman') ORDER BY id").map(userDto).filter(u=>a.role==='admin'||a.role==='coordinator'||a.role==='specialist'||u.id===a.id||
+  return s.all("SELECT * FROM v2_users WHERE role IN ('worker','foreman') ORDER BY id").map(userDto).filter(u=>a.role==='admin'||a.role==='coordinator'||a.role==='specialist'||a.role==='viewer'||u.id===a.id||
     (a.role==='foreman'&&s.all('SELECT id FROM v2_crews WHERE foreman_id=? AND active=1',a.id).some(c=>isMember(s,String(c.id),u.id))))
     .map(u=>({...u,profile:profile(s,u.id)}));
 }

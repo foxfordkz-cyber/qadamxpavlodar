@@ -69,8 +69,8 @@ export function peopleRoutes(s:Store,api:Api) {
       res.set('Idempotency-Replayed',String(result.replayed)).status(result.status).json(result.body);
     });
   }
-  route({method:'get',path:'/workers',summary:'Role-scoped employees and availability'},(_req,res)=>res.json({data:people.workers(s,actor(res))}));
-  route({method:'get',path:'/crews',summary:'Role-scoped crews and membership history'},(_req,res)=>res.json({data:s.all('SELECT data FROM v2_crews ORDER BY id').map(r=>parseRow(r)).filter(c=>people.canCrew(s,actor(res),c)).map(c=>({...c,members:people.members(s,c.id)}))}));
+  route({method:'get',path:'/workers',summary:'Viewer reads public employee DTOs and availability; workers/foremen retain scope'},(_req,res)=>res.json({data:people.workers(s,actor(res))}));
+  route({method:'get',path:'/crews',summary:'Viewer reads crews and membership history; workers/foremen retain scope'},(_req,res)=>res.json({data:s.all('SELECT data FROM v2_crews ORDER BY id').map(r=>parseRow(r)).filter(c=>people.canCrew(s,actor(res),c)).map(c=>({...c,members:people.members(s,c.id)}))}));
   write({method:'post',path:'/crews',input:people.crewCreate,status:201,summary:'Admin: create crew'},admin,(a,b)=>people.createCrew(s,a,b));
   write({method:'patch',path:'/crews/:id',input:people.crewPatch,summary:'Admin: change crew or foreman'},admin,(a,b,req)=>people.patchCrew(s,a,param(req),b));
   write({method:'post',path:'/crews/:id/members',input:people.membershipInput,summary:'Admin: add/remove effective membership; preserve history'},admin,(a,b,req)=>people.membership(s,a,param(req),b));

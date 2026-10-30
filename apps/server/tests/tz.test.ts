@@ -52,13 +52,15 @@ async function tzFixture(t: TestContext) {
   const f = await fixture(t); await seedV2(f.store); const seeded = seedTz(f.store);
   const sessions = new Map<string, { cookie: string; csrf: string }>(); let n = 0;
   async function login(user: string) {
-    const r = await fetch(f.base + '/api/v1/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ login: user, password: DEMO_PASSWORD }) });
+    const r = await fetch(f.base + '/api/v1/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json', Connection: 'close' }, body: JSON.stringify({ login: user, password: DEMO_PASSWORD }) });
     const b = await r.json(); assert.equal(r.status, 200, JSON.stringify(b));
     const session = { cookie: r.headers.get('set-cookie')!.split(';')[0]!, csrf: b.data.csrfToken }; sessions.set(user, session); return b.data;
   }
   async function call(path: string, method = 'GET', user = 'coordinator', body?: unknown, key: string | null = `tz-${++n}`) {
     const session = sessions.get(user) ?? (await login(user), sessions.get(user)!);
-    const r = await fetch(f.base + '/api/v1' + path, { method, headers: { Cookie: session.cookie, 'X-CSRF-Token': session.csrf, ...(body !== undefined ? { 'Content-Type': 'application/json' } : {}), ...(key ? { 'Idempotency-Key': key } : {}) }, body: body === undefined ? undefined : JSON.stringify(body) });
+    // Shared/mock calculations can outlive keep-alive while blocking this test's event loop.
+    // Do not reuse a closing test socket; authentication and all response assertions stay unchanged.
+    const r = await fetch(f.base + '/api/v1' + path, { method, headers: { Connection: 'close', Cookie: session.cookie, 'X-CSRF-Token': session.csrf, ...(body !== undefined ? { 'Content-Type': 'application/json' } : {}), ...(key ? { 'Idempotency-Key': key } : {}) }, body: body === undefined ? undefined : JSON.stringify(body) });
     return { status: r.status, body: await r.json() };
   }
   return { ...f, seeded, login, call };
