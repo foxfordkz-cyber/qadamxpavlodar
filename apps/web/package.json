@@ -14,6 +14,7 @@
     "check:survival": "esbuild scripts/check-survival.ts --bundle --platform=node --format=esm --outfile=dist-scripts/check-survival.mjs --log-level=warning && node dist-scripts/check-survival.mjs",
     "check:care": "esbuild scripts/check-care.ts --bundle --define:import.meta.env.DEV=false --platform=node --format=esm --outfile=dist-scripts/check-care.mjs --log-level=warning && node dist-scripts/check-care.mjs",
     "test": "node scripts/test.mjs",
+    "test:coverage": "node scripts/test.mjs --coverage",
     "check:i18n": "esbuild scripts/check-i18n.ts --bundle --platform=node --format=esm --outfile=dist-scripts/check-i18n.mjs --log-level=warning && node dist-scripts/check-i18n.mjs"
   },
   "dependencies": {
