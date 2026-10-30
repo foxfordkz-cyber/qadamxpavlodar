@@ -3,7 +3,7 @@ import { test, expect } from '../support/test';
 import { apiLogin, apiCall } from '../support/api-login';
 import { SITE } from '../support/helpers';
 import { expectNoOverflow } from '../support/session';
-import { observed, reference } from '../support/outcomes-oracle';
+import { auditForecast, numericText, observed, reference } from '../support/outcomes-oracle';
 import { checkObserved, outcomeWords } from '../support/outcomes-ui';
 
 test.describe.configure({ mode: 'default' }); // Shared disposable rates are changed and restored sequentially.
@@ -83,6 +83,10 @@ test('outcomes API: save/reload, identical replay, conflicts, and immutable fore
   expect(response.status()).toBe(201);
   const saved = (await response.json()).data;
   await expect(card.locator('[role=status]')).toContainText('Прогноз сохранён');
+  const checked = auditForecast(saved.snapshot);
+  const metrics = card.locator('.gp-outcomes__metrics').first().locator('dd');
+  for (const [index, value] of [checked.unit, checked.expected, checked.trees, checked.total].entries())
+    expect(numericText(await metrics.nth(index).innerText())).toBeCloseTo(value!, 2);
   await page.reload({ waitUntil: 'domcontentloaded' });
   await expect(card).toBeVisible();
   const read = await apiCall(page, path);
