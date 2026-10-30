@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState, type ReactNode } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState, type ReactNode } from 'react';
 import { useData, type SvcState } from '../../shared/api/DataProvider';
 import { useSession } from '../../shared/api/useSession';
 import { ApiError } from '../../shared/api/transport';
@@ -74,10 +74,28 @@ export function Shell({ children }: { children: ReactNode }) {
   });
   const nav = NAV.filter((n) => role && n.roles.includes(role));
   const current = (path: string) => (path === '/' ? route.path === '/' || route.path === '' : route.path.startsWith(path));
+  // Высота шапки зависит от языка, роли и ширины окна: карта и закреплённые панели считают от настоящей.
+  const headerRef = useRef<HTMLElement>(null);
+  const subbarRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const header = headerRef.current;
+    const subbar = subbarRef.current;
+    if (!header || !subbar) return;
+    const root = document.documentElement.style;
+    const sync = () => {
+      root.setProperty('--gp-header-h', `${header.offsetHeight}px`);
+      root.setProperty('--gp-chrome-h', `${header.offsetHeight + subbar.offsetHeight}px`);
+    };
+    sync();
+    const observer = new ResizeObserver(sync);
+    observer.observe(header);
+    observer.observe(subbar);
+    return () => observer.disconnect();
+  }, []);
   return (
     <div className="gp-app">
       <a href="#main" className="gp-skip" onClick={(e) => { e.preventDefault(); document.getElementById('main')?.focus(); }}>{t('shell.skip')}</a>
-      <header className="gp-header">
+      <header className="gp-header" ref={headerRef}>
         <a className="gp-brand" href={hrefFor('/')}><span className="gp-brand__logo" aria-hidden="true">❦</span><span>{t('app.title')}</span></a>
         <nav className="gp-nav" aria-label={t('nav.label')}>
           {nav.filter((n) => !n.works).map((n) => <a key={n.path} href={hrefFor(n.path)} aria-current={current(n.path) ? 'page' : undefined}>{t(n.key)}</a>)}
@@ -91,7 +109,7 @@ export function Shell({ children }: { children: ReactNode }) {
           {user && <Button onClick={logout} busy={loggingOut}>{t('shell.logout')}</Button>}
         </div>
       </header>
-      <div className="gp-subbar">
+      <div className="gp-subbar" ref={subbarRef}>
         <dl className="gp-status-row">
           <div className="gp-kv"><dt>{t('shell.role')}</dt><dd>{user ? <>{t(`shell.role.${user.role}` as Key)}{user.isDemoAccount && <> <span className="gp-badge gp-badge--demo">{t('shell.demoAccount')}</span></>}</> : '—'}</dd></div>
           <div className="gp-kv"><dt>{t('shell.today')}</dt><dd>{fmtDate(today)} (UTC+5)</dd></div>

@@ -132,6 +132,8 @@ export function SitesPage() {
   }, [savedNote]);
   const set = <K extends keyof SiteFilters>(k: K, v: SiteFilters[K]) => setF((p) => ({ ...p, [k]: v }));
   const osmMeta = sitesRes.data?.meta?.osm as { osmBase?: string } | undefined;
+  // С открытой карточкой на обычном экране карте мало места: панели поверх неё закрывают саму зону.
+  const tightMap = !!selectedId && matchMedia('(max-width: 1600px)').matches;
 
   return (
     <div className={`gp-sites ${selectedId ? 'gp-sites--card' : ''}`} data-tab={tab}>
@@ -198,6 +200,7 @@ export function SitesPage() {
             <div className="gp-segment">
               {GROWTH_YEARS.map((y) => <label key={y}><input type="radio" name="tm-bar" checked={tm.year === y} onChange={() => timeMachine.setYear(y)} />{t(YEAR_LABEL[y])}</label>)}
             </div>
+            {tm.scene && <button className="gp-icon-btn" onClick={() => (tm.playing ? timeMachine.stop() : timeMachine.play(tm.scene!))} aria-label={t(tm.playing ? 'timeMachine.stop' : 'timeMachine.play')}>{tm.playing ? '⏸' : '▶'}</button>}
             <button className="gp-icon-btn" onClick={() => timeMachine.hide()} aria-label={t('timeMachine.hide')}>✕</button>
           </div>
         )}
@@ -207,9 +210,9 @@ export function SitesPage() {
             <button className="gp-icon-btn" onClick={clearHl} aria-label={t('highlight.clearLabel')}>✕</button>
           </div>
         )}
-        <LayerPanel layers={layers} toggle={toggleLayer} loading={soilsRes.loading || greenRes.loading || problemsRes.loading || prioRes.loading}
+        <LayerPanel collapsed={tightMap} layers={layers} toggle={toggleLayer} loading={soilsRes.loading || greenRes.loading || problemsRes.loading || prioRes.loading}
           priority={layers.priority ? <PriorityControls prio={prio} items={prioRes.data?.items ?? null} names={names} onPick={(id) => select(id, true)} /> : null} />
-        <MapLegend osmBase={osmMeta?.osmBase} />
+        <MapLegend osmBase={osmMeta?.osmBase} autoClose={tightMap} />
       </section>
       <FirstRunHint canDraw={canDraw} />
 
@@ -336,7 +339,7 @@ function PriorityControls({ prio, items, names, onPick }: { prio: ReturnType<typ
 }
 
 /** ТЗ 3.1.3: многослойная карта — пользователь включает и отключает слои. */
-function LayerPanel({ layers, toggle, loading, priority }: { layers: LayerState; toggle: (k: keyof LayerState) => void; loading: boolean; priority?: ReactNode }) {
+function LayerPanel({ collapsed, layers, toggle, loading, priority }: { collapsed: boolean; layers: LayerState; toggle: (k: keyof LayerState) => void; loading: boolean; priority?: ReactNode }) {
   const rows: [keyof LayerState, string, string][] = [
     ['soils', t('layers.soils'), t('layers.soilsHint')],
     ['greenery', t('layers.greenery'), t('layers.greeneryHint')],
@@ -345,7 +348,7 @@ function LayerPanel({ layers, toggle, loading, priority }: { layers: LayerState;
     ['proposed', t('layers.proposed'), t('layers.proposedHint')],
   ];
   return (
-    <details className="gp-layers gp-card" open={!matchMedia('(max-width: 760px)').matches}>
+    <details className="gp-layers gp-card" open={!collapsed && !matchMedia('(max-width: 760px)').matches}>
       <summary><strong>{t('layers.title')}</strong> {loading && <span className="gp-spinner" aria-label={t('layers.loading')} />}</summary>
       {rows.map(([k, label, hint]) => (
         <Fragment key={k}>
@@ -389,8 +392,12 @@ function readLegendMode(): LegendMode {
 }
 
 /** Легенда: свернуть, компактно (значки), полностью (с пояснениями; угол тянется мышью). */
-function MapLegend({ osmBase }: { osmBase?: string }) {
-  const [mode, setModeState] = useState<LegendMode>(readLegendMode);
+function MapLegend({ osmBase, autoClose }: { osmBase?: string; autoClose: boolean }) {
+  const [saved, setModeState] = useState<LegendMode>(readLegendMode);
+  // Карточка зоны сжимает карту: легенда сворачивается, но открытая вручную остаётся открытой.
+  const [opened, setOpened] = useState(false);
+  useEffect(() => { if (!autoClose) setOpened(false); }, [autoClose]);
+  const mode = autoClose && !opened ? 'closed' : saved;
   const setMode = (m: LegendMode) => {
     setModeState(m);
     try {
@@ -411,7 +418,7 @@ function MapLegend({ osmBase }: { osmBase?: string }) {
   ];
   if (mode === 'closed')
     return (
-      <button className="gp-legend gp-legend--closed gp-card" onClick={() => setMode('compact')} aria-expanded="false">
+      <button className="gp-legend gp-legend--closed gp-card" onClick={() => { setOpened(true); if (saved === 'closed') setMode('compact'); }} aria-expanded="false">
         <span aria-hidden="true">▤ </span>{t('map.legend')}
       </button>
     );

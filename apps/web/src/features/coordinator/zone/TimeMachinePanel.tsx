@@ -53,7 +53,10 @@ export function TimeMachinePanel({ a, site, byId }: { a: ZoneAnalysis; site: Can
           )}
         </div>
       )}
-      {active && <button className="gp-btn gp-btn--ghost" onClick={() => timeMachine.hide()}>{t('timeMachine.hideMap')}</button>}
+      <div className="gp-tm__actions">
+        <button className="gp-btn gp-btn--primary" onClick={() => (active && tm.playing ? timeMachine.stop() : timeMachine.play(scene))}>{active && tm.playing ? `⏸ ${t('timeMachine.stop')}` : `▶ ${t('timeMachine.play')}`}</button>
+        {active && <button className="gp-btn gp-btn--ghost" onClick={() => timeMachine.hide()}>{t('timeMachine.hideMap')}</button>}
+      </div>
       <p className="gp-small gp-muted">
         {t('timeMachine.method')}{scene.shown < scene.total ? t('timeMachine.shown', { shown: scene.shown, total: scene.total }) : ''}
       </p>

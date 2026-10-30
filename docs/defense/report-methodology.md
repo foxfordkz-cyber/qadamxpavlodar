@@ -5,7 +5,7 @@
 Пакет использует настоящий расчёт `analyzeZone`, `priorities`, `roadmap`, `detectProblems` из текущего исходного кода на fixtures. Существующий `docs/example-report.md` не изменён. Контрольные числа совпали с этим сохранённым примером от 28.10.2026.
 
 - База: `18c254109478e336beab220f5e492701b29c2897`.
-- Зона: `site-osm-1569993037`, «Газон у улица Толстого», 3 782 м².
+- Зона: `site-osm-1569993037`, «Газон, улица Толстого», 3 782 м².
 - Параметры: `variant=optimal`, `careYears=3`, полив regular, без улучшения почвы, лимит доли вида 0,3.
 - Источники: `fixtures/osm/sites.json`; `apps/web/src/shared/api/mock/species.ts`; `apps/web/src/shared/analytics/{zone,rates,plan,city}.ts`.
 - Пересчёт: 29.10.2026, Node v24.19.0. Промежуточный набор и SHA-256 источников: `qadam-defense/work/demo-data.json`; воспроизведение: `qadam-defense/work/generate-demo-data.mjs`.

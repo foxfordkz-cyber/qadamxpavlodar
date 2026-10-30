@@ -159,7 +159,8 @@
 .gp-tm__stats strong { font-size: 17px; }
 .gp-tm__stats span { font-size: 12px; color: var(--gp-muted); }
 .gp-tm__stats > p { grid-column: 1 / -1; margin: 0; }
-.gp-tm-bar { position: absolute; z-index: 6; left: 50%; transform: translateX(-50%); bottom: 54px; display: flex; gap: 8px; align-items: center; margin: 0; padding: 4px 6px 4px 10px; max-width: calc(100% - 20px); }
+.gp-tm__actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.gp-tm-bar { position: absolute; z-index: 6; left: 50%; transform: translateX(-50%); bottom: 54px; display: flex; width: max-content; gap: 8px; align-items: center; margin: 0; padding: 4px 6px 4px 10px; max-width: calc(100% - 20px); }
 
 /* Первый вход: три шага поверх карты. */
 .gp-firstrun { position: fixed; z-index: 47; left: 50%; top: calc(var(--gp-header-h, 56px) + 72px); transform: translateX(-50%); width: min(460px, calc(100% - 24px)); margin: 0; padding: 14px 16px; box-shadow: 0 12px 40px rgb(0 0 0 / 22%); }
@@ -209,4 +210,13 @@
 /* Отчёт на телефоне: широкие таблицы листаются внутри себя, страница не уезжает вбок. */
 @media (max-width: 760px) {
   .gp-report-doc table { display: block; max-width: 100%; overflow-x: auto; }
+}
+
+/* Шапка на компьютере: бренд и кнопки в одну строку, под ними всё меню. Пункты переносятся, а не прячутся за край окна. */
+@media (min-width: 761px) {
+  .gp-header { padding: 8px 20px; gap: 4px 20px; }
+  .gp-header__right { order: 2; }
+  .gp-nav { order: 3; flex: 1 0 100%; flex-wrap: wrap; overflow: visible; }
+  .gp-nav a { padding: 6px 8px; font-size: 12px; }
+  .gp-nav__sep { padding-left: 8px; }
 }

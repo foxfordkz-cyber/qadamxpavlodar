@@ -137,7 +137,7 @@ export function buildDrawnZone(id: string, name: string, ring: LngLat[], maxBuil
   if (maintenance === null) missingData.push({ field: 'factors.maintenanceFeasibility', reason: 'Рядом нет проездов в данных OSM.' });
   return {
     id,
-    name: name || `Нарисованная зона${street ? ` у ${street}` : ''}`,
+    name: name || `Нарисованная зона${street ? `, ${street}` : ''}`,
     osmId: null,
     geometry: { type: 'Polygon', coordinates: [ring] },
     geometryAccuracy: 'Контур нарисован пользователем на карте; точность зависит от масштаба при рисовании.',

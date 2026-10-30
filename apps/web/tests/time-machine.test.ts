@@ -1,4 +1,4 @@
-import { test } from 'node:test';
+import { mock, test } from 'node:test';
 import assert from 'node:assert/strict';
 import osm from '../../../fixtures/osm/sites.json';
 import { species } from '../src/shared/api/mock/species';
@@ -6,7 +6,7 @@ import type { CandidateSite, Species } from '../src/shared/api/types';
 import { analyzeZone } from '../src/shared/analytics/plan';
 import { DEFAULT_RATES, ratesMap } from '../src/shared/analytics/rates';
 import { makeProjection, pointInRing, distPointLine, type XY } from '../src/shared/geo';
-import { buildGrowthScene } from '../src/features/coordinator/zone/timeMachine';
+import { buildGrowthScene, timeMachine, type GrowthScene } from '../src/features/coordinator/zone/timeMachine';
 
 const origin = { lat: 52.28, lng: 76.95 };
 const projection = makeProjection(origin);
@@ -91,5 +91,34 @@ test('buildGrowthScene: без дорог бордюр идёт по длинн�
       assert.ok(length > 5 * width, `${angle}°: border does not follow the 80 m side (${length} × ${width})`);
       assert.ok(ys.every(y => Math.abs(y) >= 9.95 && Math.abs(y) < 12), `${angle}°: border is not near a long edge`);
     }
+  }
+});
+
+test('growth playback walks every year once and can be stopped or hidden', () => {
+  mock.timers.enable({ apis: ['setTimeout'] });
+  try {
+    const scene = { siteId: 'z' } as GrowthScene;
+    timeMachine.play(scene);
+    assert.deepEqual([timeMachine.current().year, timeMachine.current().playing], [0, true]);
+    // The first step also waits for the camera flight to the zone.
+    const seen = [];
+    for (let i = 0; i < 3; i++) {
+      mock.timers.tick(i === 0 ? 3400 : 1900);
+      seen.push(timeMachine.current().year);
+    }
+    assert.deepEqual(seen, [5, 10, 20]);
+    assert.equal(timeMachine.current().playing, false);
+
+    timeMachine.play(scene);
+    timeMachine.setYear(10);
+    mock.timers.tick(20000);
+    assert.deepEqual([timeMachine.current().year, timeMachine.current().playing], [10, false]);
+
+    timeMachine.play(scene);
+    timeMachine.hide();
+    mock.timers.tick(20000);
+    assert.deepEqual([timeMachine.current().scene, timeMachine.current().year, timeMachine.current().playing], [null, 0, false]);
+  } finally {
+    mock.timers.reset();
   }
 });
