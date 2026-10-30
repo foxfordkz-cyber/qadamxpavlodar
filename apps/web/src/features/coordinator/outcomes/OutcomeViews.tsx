@@ -68,10 +68,16 @@ export function InspectionView({ data, cohortId, inspectionId }: { data: Outcome
   try { selected = selectOutcomeInspection(data, data.siteId, cohortId, inspectionId); }
   catch (error) { return <OutcomeError error={error} />; }
   const { cohort, inspection, summary: s, comparison: c } = selected;
+  const manualConfirmation = inspection?.provenance.source === 'api' && !s.isDemo &&
+    inspection.provenance.dataClass !== 'demo' &&
+    inspection.observations.some(o => o.state !== 'unknown' && o.reportId !== null);
   return <>
     <section className="gp-card gp-outcome-section" aria-labelledby="outcome-observed">
       <h2 id="outcome-observed">{t('outcomePage.observed')}</h2>
       <ProvenanceLine label={t('outcomePage.source.inspection')} value={inspection?.provenance ?? null} />
+      {manualConfirmation && <p className="gp-small" data-testid="outcome-manual-confirmation">
+        <strong>{t('outcomePage.manualConfirmation')}</strong> — {t('outcomePage.manualConfirmationNote')}
+      </p>}
       {inspection && <ul>{[...new Set(inspection.observations.flatMap(o => o.reportId ? [o.reportId] : []))].map((id, i) =>
         <li key={id}><a href={hrefFor('/reports', { report: id })}>{t('outcomes.report', { n: i + 1 })}</a></li>)}</ul>}
       <dl className="gp-outcome-stats gp-outcome-stats--wide">

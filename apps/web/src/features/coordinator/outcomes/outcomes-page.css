@@ -11,7 +11,7 @@
 .gp-outcome-variants > div { min-width: 0; }
 .gp-outcome-stats { display: grid; gap: 16px; margin-block: 20px; }
 .gp-outcome-stats--wide { grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); }
-.gp-outcome-stats dt { font-size: .85rem; color: #506158; line-height: 1.45; }
+.gp-outcome-stats dt { font-size: .85rem; color: var(--gp-muted); line-height: 1.45; }
 .gp-outcome-stats dd { font-size: 1.35rem; font-weight: 650; margin: 5px 0 0; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
 .gp-outcome-source { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-block: 14px; font-size: .85rem; }
 .gp-outcome-source small { flex-basis: 100%; overflow-wrap: anywhere; }
