@@ -10,6 +10,7 @@ import type { AskContext, AssistantReply } from '../analytics/assistant';
 import type { referenceFacts } from './pavlodar';
 import type { CareRequest, CareSchedule } from '../analytics/careSchedule';
 import type { GeoHit } from './geocode';
+import type { DecisionLabInput, DecisionPlans } from '../analytics/decisionLab';
 
 export interface VariantSummary { variant: Variant; label: string; careYears: number; plants: number; cost: number; survival: { y1: number; y2: number; y3: number }; co2t20: number; coolingC: number; rainM3: number; costPerTonCo2: number | null }
 export interface ImportPreview { id?: string; format: string; total: number; valid: number; invalid: number; issues: { row: number; level: 'error' | 'warning'; text: string }[]; committed: boolean; note: string }
@@ -102,6 +103,7 @@ export function createApi(t: Transport) {
     zoneVariants: (id: ID, options: Partial<PlanOptions>) => d(t.request<VariantSummary[]>('POST', `/zones/${encodeURIComponent(id)}/variants`, { body: { options } })),
     problems: () => t.request<{ problems: Problem[]; notDetectable: string[] }>('GET', '/problems'),
     priorities: (weights: Record<PriorityFactor, number>, budget: number | null) => d(t.request<{ items: PriorityItem[]; roadmap: { chosen: PriorityItem[]; spent: number; left: number; co2t20: number; method: string } | null }>('POST', '/priorities', { body: { weights, budget } })),
+    decisionLab: (body: DecisionLabInput, signal?: AbortSignal) => d(t.request<DecisionPlans>('POST', '/decision-lab', { body, signal })),
     rates: () => d(t.request<{ rates: RateEntry[]; version: number }>('GET', '/rates')),
     patchRate: (body: { key: string; value: number | null; source: string; expectedVersion: number }) => d(t.request<{ rates: RateEntry[]; version: number }>('PATCH', '/rates', { body, idempotencyKey: newIdempotencyKey() })),
     soilsLayer: () => t.request<FC>('GET', '/layers/soils'),

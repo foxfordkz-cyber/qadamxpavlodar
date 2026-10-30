@@ -52,7 +52,7 @@ test('Readiness: planning snapshot retains effective roles; OpenAPI requires rea
   const users=(await f.call('/users','GET','admin')).body.data,snapshot=(await f.call('/integration/snapshot')).body.data;
   for(const user of users)assert.equal(snapshot.workers.find((x:any)=>x.id===user.id)?.role,user.role,'Snapshot must retain the canonical effective role of every account');
   assert(!JSON.stringify(snapshot).includes('password_hash'));assert(!JSON.stringify(snapshot).includes('csrf'));
-  const spec=await (await fetch(f.base+'/api/v1/openapi.json')).json();assert.equal(Object.values(spec.paths).reduce((n:number,p:any)=>n+Object.keys(p).length,0),101);
+  const spec=await (await fetch(f.base+'/api/v1/openapi.json')).json();assert.equal(Object.values(spec.paths).reduce((n:number,p:any)=>n+Object.keys(p).length,0),102);
   for(const path of ['/plans/preview','/observations/interpret'])assert(spec.paths[path].post.parameters.some((p:any)=>p.name==='Idempotency-Key'&&p.required));
   for(const name of ['date','objectId','workerId','crewId'])assert(spec.paths['/tasks'].get.parameters.some((p:any)=>p.in==='query'&&p.name===name));
   const payload={constraints:{shiftDate:'2026-10-28',crewIds:['demo-crew-1']}};

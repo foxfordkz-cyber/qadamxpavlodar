@@ -12,7 +12,7 @@ import { migration3 } from '../src/v2/migration.js';
 import { seedV2, DEMO_PASSWORD } from '../src/v2/seed.js';
 import { seedTz } from '../src/tz/seed.js';
 import { web } from '../src/tz/shared.js';
-import { cacheSize } from '../src/tz/data.js';
+import { cacheSize, candidates, reference } from '../src/tz/data.js';
 import { insertDoc } from '../src/v2/core.js';
 
 test('care schedule: shared result, registered plants only, validation, roles and V2 task creation', async t => {
@@ -65,6 +65,44 @@ async function tzFixture(t: TestContext) {
 }
 const firstZone = (f: { store: Store }) => String(f.store.get("SELECT id FROM v2_documents WHERE kind='site' AND id LIKE 'site-osm-%' ORDER BY id LIMIT 1")!.id);
 const square = (lng: number, lat: number, d: number) => ({ type: 'Polygon', coordinates: [[[lng, lat], [lng + d, lat], [lng + d, lat + d * 0.6], [lng, lat + d * 0.6], [lng, lat]]] });
+
+test('decision lab: reader roles, strict validation and generated OpenAPI', async t => {
+  const f = await tzFixture(t);
+  const body = { budgetKzt: 50e6, waterLimitM3: 500, watering: 'regular' };
+  for (const user of ['coordinator', 'admin', 'viewer']) assert.equal((await f.call('/decision-lab', 'POST', user, body, null)).status, 200);
+  for (const user of ['worker1', 'foreman1']) assert.equal((await f.call('/decision-lab', 'POST', user, body, null)).status, 403);
+  for (const invalid of [{ ...body, budgetKzt: 0 }, { ...body, budgetKzt: -1 }, { ...body, budgetKzt: '50' },
+    { ...body, waterLimitM3: -1 }, { ...body, watering: 'winter' }, { ...body, extra: 1 }, {}]) {
+    assert.equal((await f.call('/decision-lab', 'POST', 'viewer', invalid, null)).status, 400);
+  }
+  const doc = await fetch(f.base + '/api/v1/openapi.json').then(r => r.json());
+  assert.ok(doc.paths['/decision-lab']?.post || doc.paths['/api/v1/decision-lab']?.post);
+});
+
+test('decision lab: real API matches shared/mock seed, cache, limits and fixed scenarios', async t => {
+  const f = await tzFixture(t);
+  const ref = reference(f.store), sites = candidates(f.store);
+  const input = { budgetKzt: 50e6, waterLimitM3: 500, watering: 'regular' };
+  const response = await f.call('/decision-lab', 'POST', 'viewer', input, null);
+  assert.equal(response.status, 200);
+  const baseline = response.body.data;
+  assert.deepEqual(baseline, web.decisionPlans({ sites, catalog: ref.species, rates: ref.map, ...input }));
+  // The unmodified demo data must also yield the browser mock's numbers.
+  assert.deepEqual(baseline, web.decisionPlans({ sites: web.seed().sites, catalog: web.species, rates: web.ratesMap(web.DEFAULT_RATES), ...input }));
+  assert.deepEqual((await f.call('/decision-lab', 'POST', 'viewer', input, null)).body.data, baseline);
+  for (const p of baseline.plans) { assert.ok(p.baseline.spentKzt <= input.budgetKzt); assert.ok(p.baseline.waterM3 <= input.waterLimitM3); }
+  for (const watering of ['rare', 'none']) {
+    const scenario = (await f.call('/decision-lab', 'POST', 'viewer', { ...input, watering }, null)).body.data;
+    assert.deepEqual(scenario.plans.map((p: any) => p.zones.map((z: any) => z.siteId)), baseline.plans.map((p: any) => p.zones.map((z: any) => z.siteId)));
+    if (watering === 'none') assert.ok(scenario.plans.every((p: any) => p.scenario.waterM3 === 0));
+  }
+  const before = cacheSize();
+  const changed = await f.call('/rates', 'PATCH', 'admin', { key: 'care.water.tree', value: 100, source: 'Decision Lab test', expectedVersion: ref.version });
+  assert.equal(changed.status, 200);
+  const after = (await f.call('/decision-lab', 'POST', 'viewer', input, null)).body.data;
+  assert.ok(cacheSize() > before);
+  assert.notDeepEqual(after, baseline);
+});
 
 test('migration 4 rebuilds v2_users with the viewer role and keeps every reference', () => {
   const dir = mkdtempSync(join(tmpdir(), 'green-pavlodar-migration4-'));
