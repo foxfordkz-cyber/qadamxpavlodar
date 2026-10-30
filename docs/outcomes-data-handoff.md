@@ -1,8 +1,8 @@
 # Outcomes storage / handoff (2026-10-30)
 
-Dependency: PR #18 is OPEN, not merged, head 7c9b387b2d69e4500bf799e8b11f509704a5537f.
-This branch fast-forwards from coordinator e6d9079840bd7a7469488031ab777a851c7f8d78 to that exact
-head, then adds storage. Merge #18 first, then review this PR's own diff. No #19/deployment changes.
+PR #18 is **MERGED**. This branch was synchronized by normal merge with coordinator `cf07b97`
+(includes #18/#20), retaining original shared DTOs/formulas. BLOCKED_BY_PR18 is cleared.
+Deployment changes remain in #22, botanical changes in #19, UI/read-model extensions in #24.
 
 ## Transport extension proposed for captain review
 
@@ -54,20 +54,38 @@ marked isDemo=true while the bundled model/prices include synthetic/demo inputs.
 Alive/dead needs an accepted, reviewed **inspect** report for this plant and observation calendar day.
 Current V2 report has no structured alive/dead property: admin/coordinator explicitly attests the state
 when creating an inspection. The module does not infer death from prose or watering deadlines. This
-attestation workflow needs captain sign-off; a worker cannot claim acceptance or change an inspection.
+workflow is accepted by the captain as **«Ручное подтверждение специалиста»**; a worker cannot
+claim acceptance or change an inspection. Use this exact Russian phrase in UI examples (Kazakh:
+«Маманның қолмен растауы»). It is not automatic verification, computer vision, AI recognition or
+a scientifically validated field assessment. Existing rights/date/source/accepted-report checks remain.
 Evidence ID alone is insufficient, except the explicitly synthetic outcomes-demo-evidence on demo cohorts.
 All inspection rows retain reviewer and sources; absent observations stay unknown.
 
 ## Demo and frontend / E2E
 
 Use an isolated DB with private DEMO_PASSWORD; run existing npm run seed:tz, then from apps/server:
-node --env-file-if-exists=.env --import ./scripts/local-network-guard.mjs --import tsx src/outcomes/seed-cli.ts
+`npm run seed:outcomes`.
 Opt-in only, not automatic startup. Repeating seed returns created:false and preserves records.
 IDs: outcomes-demo-cohort / outcomes-demo-forecast / outcomes-demo-inspection; trees outcomes-demo-tree-N.
 On the audited base the econom tree-only calculation creates 32 synthetic registered trees;
 the control inspection records 3 observations (alive, dead, unknown), leaving the others unknown.
 Snapshot is captured on seed day before synthetic planting; observations are synthetic alive/dead/unknown,
 not historical field validation. Non-anniversary comparison is unmatched_horizon, not a fabricated delta.
+
+To use several **already registered** demo plant IDs without adding any plants:
+`npm run seed:outcomes -- --site-id SITE_ID --plant-ids ID1,ID2,ID3`.
+Supply at least three distinct trees in the same explicit zone with `isDemo: true`; missing, real,
+foreign-zone or already-cohorted plants fail without partial writes. Existing registry rows remain byte-for-byte
+unchanged. Unknown/differing planting dates remain null. This path creates no retrospective forecast;
+missing_forecast is an honest result. Without options, the previous 32-tree synthetic scenario is retained:
+it first registers fixtures in the canonical V2 registry and then references those IDs, never a second registry.
+An existing `outcomes-demo-cohort` always wins: repeat seed preserves it and returns created:false.
+
+After #22 and #23 are accepted into the same container image:
+`docker compose -p green-pavlodar exec -T server npm run seed:outcomes`.
+Dockerfile already copies package.json, scripts and src; normal start runs TZ seed, Outcomes stays opt-in.
+The matching deployment command was added **in #22's own worktree**, not copied across branches.
+Container execution remains BLOCKED by unavailable Engine. Local npm command is checked on disposable storage.
 
 Тәңірберді: use exact envelopes above and original #18 DTOs; display provenance for cohort, forecast
 and inspection independently. Render missing forecast/date and null percentages with issues. Select an
@@ -90,7 +108,7 @@ Before schema 6 rollout, take a coherent DB/uploads backup. Old coordinator code
 schema 5: rollback requires the matching pre-migration backup in a separate restored volume,
 not running the old binary against schema 6. Migration preservation tests compare every old row.
 
-## Actual verification
+## Previous implementation verification (before final integration follow-up)
 
 - Backend typecheck and build: PASS.
 - Complete backend suite: **73 passed, 0 failed, 0 skipped**, including 8 new outcomes tests,
@@ -107,10 +125,10 @@ not running the old binary against schema 6. Migration preservation tests compar
   idempotent replay, stale versions, duplicate submission, injected rollback, closed-DB/server restart,
   session continuity, immutable snapshot after rate change and repeat seed covered.
 - Docker runtime and public HTTPS: BLOCKED; no engine socket or approved hosting. Browser E2E: NOT RUN.
-- Domain limitation: a report supports an explicit coordinator/admin attestation, not automatic inference
-  of alive/dead. The new route/permission extension and reviewer workflow require captain review.
+- Domain limitation: a report supports «Ручное подтверждение специалиста», not automatic inference
+  of alive/dead. This workflow is now explicitly accepted by the captain; no formula/contract rewrite.
 
-## Current integration with the UI PR (2026-10-30)
+## Earlier integration snapshot (superseded by final review below)
 
 Git fetch and GitHub confirm coordinator is still e6d9079840bd7a7469488031ab777a851c7f8d78.
 #18 and #19 are open; #22/#23 remain Draft. No duplicate PRs or implementation were created.

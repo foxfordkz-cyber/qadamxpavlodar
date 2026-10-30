@@ -82,7 +82,11 @@ test('outcomes: pending versus accepted report status, date and target validatio
  assert.equal((await f.call('/cohorts/cohort','GET',undefined,'worker3')).status,404);
 });
 test('outcomes: immutable snapshot, real SQLite reopen, repeat seed and no registry duplication',async t=>{
- const f=await setup(t);const seeded=seedOutcomes(f.store);assert.equal(seeded.created,true);
+ const f=await setup(t);const oldPlants=f.store.all("SELECT * FROM v2_documents WHERE kind='plant' ORDER BY id");
+ const seeded=seedOutcomes(f.store);assert.equal(seeded.created,true);
+ for(const p of oldPlants)assert.deepEqual(f.store.get("SELECT * FROM v2_documents WHERE kind='plant' AND id=?",p.id!),p);
+ const members=f.store.all('SELECT plant_id FROM outcome_members');assert.equal(members.length,seeded.trees);
+ for(const p of members)assert(f.store.get("SELECT id FROM v2_documents WHERE kind='plant' AND id=?",p.plant_id!),'Cohort must reference canonical registry IDs');
  const before=f.store.all('SELECT * FROM outcome_snapshots');const plants=f.store.get("SELECT count(*) n FROM v2_documents WHERE kind='plant'")?.n;
  assert.equal(seedOutcomes(f.store).created,false);assert.equal(f.store.get("SELECT count(*) n FROM v2_documents WHERE kind='plant'")?.n,plants);
  assert.throws(()=>f.store.run("UPDATE outcome_snapshots SET data='{}'"));
@@ -92,6 +96,20 @@ test('outcomes: immutable snapshot, real SQLite reopen, repeat seed and no regis
  const c=(await f.call('/cohorts/outcomes-demo-cohort')).body.data;
  assert.equal(c.provenance.isDemo,true);assert.ok(c.forecast);assert.equal(c.forecast.provenance.isDemo,true);
  const result=(await f.call('/cohorts/outcomes-demo-cohort/summary?inspectionId=outcomes-demo-inspection')).body.data;assert.equal(result.summary.dead,1);assert.ok(result.summary.unknown>0);
+});
+
+test('outcomes: optional existing demo plant IDs preserve registry and reject real/foreign data',async t=>{
+ const f=await setup(t),before=f.store.all("SELECT * FROM v2_documents WHERE kind='plant' ORDER BY id");
+ const input={siteId:f.input.siteId,plantIds:f.input.plantIds};
+ assert.throws(()=>seedOutcomes(f.store,{...input,plantIds:['oc-tree-1','oc-tree-2','oc-tree-6']}));
+ f.store.run("UPDATE v2_documents SET data=json_set(data,'$.isDemo',json('false')) WHERE kind='plant' AND id='oc-tree-3'");
+ assert.throws(()=>seedOutcomes(f.store,input));
+ f.store.run("UPDATE v2_documents SET data=? WHERE kind='plant' AND id='oc-tree-3'",before.find(x=>x.id==='oc-tree-3')!.data!);
+ assert.equal(seedOutcomes(f.store,input).trees,3);assert.equal(seedOutcomes(f.store,input).created,false);
+ assert.deepEqual(f.store.all("SELECT * FROM v2_documents WHERE kind='plant' ORDER BY id"),before);
+ const c=(await f.call('/cohorts/outcomes-demo-cohort')).body.data;assert.equal(c.forecast,null);assert.equal(c.plantedOn,null);
+ const r=(await f.call('/cohorts/outcomes-demo-cohort/summary?inspectionId=outcomes-demo-inspection')).body.data;
+ assert.equal(r.summary.alive,1);assert.equal(r.summary.dead,1);assert.equal(r.summary.unknown,1);
 });
 
 test('outcomes: transaction failure rolls back history, sources, version and idempotency',async t=>{
