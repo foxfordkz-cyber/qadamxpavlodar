@@ -282,3 +282,171 @@ Kazakh fonts. Node dependencies were refreshed using the checked-in lockfile. Co
 were repeated successfully. Final full backend rerun: **69 passed, 0 failed, 0 skipped**, including
 all four deployment tests, on b53c180 + this PR. Backend typecheck/build PASS; frontend typecheck/build PASS.
 All validation sources/fixtures were compared byte-for-byte with this worktree; no user DB was copied.
+
+## Captain Docker acceptance: two isolated cases (final handoff)
+
+**Runtime has not been accepted here. PR #22 remains Draft.** Damir/Claude runs these
+commands on an Engine-enabled machine. Both cases use the same clean accepted SHA, including
+this PR's latest commit. Before common acceptance also integrate PR #29 (captain only).
+The examples below use a POSIX shell, Git, Docker Engine, Compose and curl. Check the Engine
+and Compose separately; an installed client or successful `config` is not runtime PASS.
+
+```sh
+docker version
+docker compose version
+```
+
+`docker version` must show a reachable **Server**, not just Client. If it fails, stop acceptance
+and mark runtime BLOCKED; do not install Docker or change system settings implicitly.
+Never use shell tracing (`set -x`), print resolved Compose config, export an authenticated HAR,
+or show `.env`, Cookie, Set-Cookie, CSRF values or login payloads in screenshots/logs.
+
+### Case A — new checkout, no server .env, default mock
+
+From an existing repository set `ACCEPTED_SHA` to the captain-approved full commit SHA.
+Use a new checkout and project every acceptance attempt. These commands do not delete old data.
+
+```sh
+ACCEPTED_SHA=<CAPTAIN_APPROVED_FULL_SHA>
+CASE_TAG=$(date -u +%Y%m%d%H%M%S)-$$
+REVIEW_ROOT=$(pwd)
+CASE_A_DIR="${REVIEW_ROOT}/../docker-accept-a-${CASE_TAG}"
+CASE_A="gp-accept-a-${CASE_TAG}"
+git worktree add --detach "$CASE_A_DIR" "$ACCEPTED_SHA"
+cd "$CASE_A_DIR"
+test ! -e apps/server/.env || exit 1
+unset DEMO_PASSWORD DATA_SOURCE DB_PATH UPLOADS_PATH STORAGE_ROOT
+export WEB_PORT=18080
+export FRONTEND_ORIGINS=http://localhost:18080,http://127.0.0.1:18080
+docker compose -p "$CASE_A" config --quiet
+docker compose -p "$CASE_A" build
+docker compose -p "$CASE_A" up -d --wait
+docker compose -p "$CASE_A" ps
+curl --fail --silent --show-error http://127.0.0.1:18080/health
+```
+
+Expected: two running services, server healthy, health HTTP 200. Open
+`http://127.0.0.1:18080/#/`: default **mock**, no server login required. Record the data-source
+badge. An unknown generated server password stays hidden; do not try to recover it from logs.
+This case cannot validate authenticated API uploads: use a labelled synthetic file probe below,
+then perform an actual photo upload in Case B. Free the chosen ports by selecting other free ports
+and matching FRONTEND_ORIGINS, never by stopping another participant's processes.
+
+Create one synthetic persistence probe only in this newly named project:
+
+```sh
+docker compose -p "$CASE_A" exec -T server node --input-type=module - <<'NODE'
+import { DatabaseSync } from 'node:sqlite';
+import { mkdirSync, writeFileSync } from 'node:fs';
+const db = new DatabaseSync('/data/db/green-pavlodar.sqlite');
+db.exec("CREATE TABLE acceptance_probe(value TEXT NOT NULL); INSERT INTO acceptance_probe VALUES ('case-a-persistent')");
+if (db.prepare('PRAGMA integrity_check').get().integrity_check !== 'ok') throw Error('integrity');
+db.close();
+mkdirSync('/data/uploads', { recursive: true });
+writeFileSync('/data/uploads/acceptance-probe.txt', 'case-a-persistent', { flag: 'wx' });
+console.log('Case A isolated DB/file probes written');
+NODE
+docker compose -p "$CASE_A" restart server
+docker compose -p "$CASE_A" up -d --wait
+curl --fail --silent --show-error http://127.0.0.1:18080/health
+docker compose -p "$CASE_A" exec -T server node --input-type=module - <<'NODE'
+import assert from 'node:assert/strict';
+import { DatabaseSync } from 'node:sqlite';
+import { readFileSync } from 'node:fs';
+const db = new DatabaseSync('/data/db/green-pavlodar.sqlite', { readOnly: true });
+assert.equal(db.prepare('SELECT value FROM acceptance_probe').get().value, 'case-a-persistent');
+assert.equal(db.prepare('PRAGMA integrity_check').get().integrity_check, 'ok');
+assert.deepEqual(db.prepare('PRAGMA foreign_key_check').all(), []);
+assert.equal(readFileSync('/data/uploads/acceptance-probe.txt', 'utf8'), 'case-a-persistent');
+db.close(); console.log('Case A SQLite/uploads persistence PASS');
+NODE
+```
+
+Expected: restart repeats the normal seed and retains both probes, SQLite integrity `ok`, no FK errors.
+The extra table/file are disposable acceptance evidence, never a migration for a user database.
+Retain the project and volume; stopping containers is optional, deleting volumes is not part of acceptance.
+
+### Case B — separate new project, private .env, explicit API
+
+Return to the original repository; use another fresh directory and a different named volume.
+Do not copy Case A's storage. In the same shell (CASE_TAG and ACCEPTED_SHA are retained):
+
+```sh
+cd "$REVIEW_ROOT"
+CASE_B_DIR="${REVIEW_ROOT}/../docker-accept-b-${CASE_TAG}"
+CASE_B="gp-accept-b-${CASE_TAG}"
+git worktree add --detach "$CASE_B_DIR" "$ACCEPTED_SHA"
+cd "$CASE_B_DIR"
+umask 077
+test ! -e apps/server/.env || exit 1
+cp apps/server/.env.example apps/server/.env
+chmod 600 apps/server/.env
+git check-ignore apps/server/.env
+```
+
+Open this private file in an editor (outside screen sharing) and set a fresh test `DEMO_PASSWORD`
+with 12–128 characters. Do not put its value in any command. Leave DB_PATH/UPLOADS_PATH commented,
+leave provider keys empty; close the file before screenshots. The first startup must happen only
+AFTER saving the private password. Existing accounts are never reset by re-seeding or editing `.env`.
+
+```sh
+unset DEMO_PASSWORD DB_PATH UPLOADS_PATH STORAGE_ROOT
+export DATA_SOURCE=api
+export WEB_PORT=18081
+export FRONTEND_ORIGINS=http://localhost:18081,http://127.0.0.1:18081
+docker compose -p "$CASE_B" config --quiet
+docker compose -p "$CASE_B" build
+docker compose -p "$CASE_B" up -d --wait
+curl --fail --silent --show-error http://127.0.0.1:18081/health
+```
+
+Open `http://127.0.0.1:18081/?source=api#/`. Log in as coordinator, then admin and viewer in separate
+private browser sessions, entering the password only in the password field. Confirm each role
+with `GET /api/v1/auth/me` HTTP 200. Privately inspect the session cookie: HttpOnly, SameSite=Strict.
+This loopback HTTP case does not prove HTTPS Secure; the approved TLS endpoint needs separate acceptance.
+
+For CSRF, use DevTools Network on a disposable session: sign out once using the UI, then log in again.
+Use the existing logout request's **Edit and Resend** feature, removing only X-CSRF-Token and using
+the current authenticated cookie. Expect `POST /api/v1/auth/logout` HTTP 403 and the session still valid
+(`GET /api/v1/auth/me` HTTP 200). Normal UI logout includes CSRF and must succeed, then `/auth/me` is 401.
+Do not copy tokens to shell, evidence or chat. If that browser lacks Edit and Resend, use the existing
+local deployment regression below as supporting evidence and mark the container CSRF check NOT RUN
+until the captain exercises it in a capable browser; do not infer container PASS from local tests.
+
+For real uploads, use a demo worker's existing report-photo control in `#/worker` on an assigned task
+(when the new TZ seed has no task, coordinator/admin first assigns a disposable demo task through the
+normal UI and foreman assigns the worker). Upload a non-personal test image. Record only the report/task
+ID, version, photo ID/URL and file length, never credentials. Reopen the report/photo and record HTTP 200.
+Keep an authenticated coordinator session and one modified zone/report ID plus its version for comparison.
+
+```sh
+docker compose -p "$CASE_B" restart server
+docker compose -p "$CASE_B" up -d --wait
+curl --fail --silent --show-error http://127.0.0.1:18081/health
+docker compose -p "$CASE_B" exec -T server npm run seed:tz
+```
+
+Expected: same session still returns `/auth/me` 200; the same record ID/version and report/photo remain;
+the uploaded image can be retrieved again; all three original private logins still work. No duplicate
+seed records or password reset. Also run Case A's read-only integrity/FK commands against Case B's project
+(without the probe-table assertion). The persistent volume names are `${CASE_A}_gp-data` and
+`${CASE_B}_gp-data`; the two databases and upload directories are separate.
+
+### Captain evidence and exit criterion
+
+Record full SHA/image IDs, date, both Compose project names, Engine Server/Compose versions, build/up/health
+exit codes, restart, record/photo IDs and versions, login roles, session/CSRF outcomes, SQLite/FK status.
+Attach screenshots of the **logged-in UI and non-sensitive photo**, not login forms or DevTools headers.
+The exact existing local supporting command is:
+
+```sh
+cd apps/server
+node --import ./scripts/local-network-guard.mjs --import ./tests/setup-env.mjs --import tsx --test tests/deployment.test.ts
+```
+
+It uses independent temporary databases and is not container acceptance. Backup/restore and update
+procedures above remain mandatory for a real operator upgrade. No acceptance command resets passwords,
+deletes volumes, disables CSRF or deploys publicly. Case A/B runtime checklists stay **BLOCKED / captain**
+until actual evidence exists. Only then may the captain request PR #22 Ready.
+
+**PR #22 подготовлен к Docker acceptance капитаном.**
