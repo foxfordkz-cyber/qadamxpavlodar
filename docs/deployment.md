@@ -131,3 +131,61 @@ Reproduction: start app from a dot-directory and GET /api-docs/assets/swagger-ui
 Expected: 200 for explicitly allowlisted assets; actual: 500 NotFoundError. Owner: backend static
 asset handler; suggested separate fix is a narrowly scoped explicit asset root, not global dotfile access.
 The container path /app has no dot component, but container runtime is still BLOCKED, not inferred PASS.
+
+## Local fallback without Docker (PowerShell, Node 24)
+
+Use the existing deploy-readiness worktree, or a separately approved final checkout. From its root,
+install missing dependencies with `npm --prefix apps/server ci` and `npm --prefix apps/web ci`.
+Do not use a real user database for demonstration. In terminal 1, create a new disposable storage root
+and enter a private password; the commands do not write .env or print the password:
+
+```powershell
+$env:STORAGE_ROOT = Join-Path ([IO.Path]::GetTempPath()) ('gp-local-demo-' + [guid]::NewGuid().ToString('N'))
+$env:DB_PATH = Join-Path $env:STORAGE_ROOT 'db/green-pavlodar.sqlite'
+$env:UPLOADS_PATH = Join-Path $env:STORAGE_ROOT 'uploads'
+$demoSecret = Read-Host 'Private demo password (at least 12 characters)' -AsSecureString
+$env:DEMO_PASSWORD = [Net.NetworkCredential]::new('', $demoSecret).Password
+$env:NODE_ENV = 'development'
+$env:HOST = '127.0.0.1'
+$env:PORT = '13100'
+$env:ALLOWED_HOSTS = '127.0.0.1,localhost'
+$env:FRONTEND_ORIGINS = 'http://127.0.0.1:15173'
+$env:TRUST_PROXY = ''
+$env:LLM_API_KEY = ''
+$env:LLM2_API_KEY = ''
+Set-Location apps/server
+node --import ./scripts/local-network-guard.mjs --import tsx src/tz/seed-cli.ts
+node --import ./scripts/local-network-guard.mjs --import tsx src/server.ts
+```
+
+Direct node commands intentionally do not read any existing .env. Keep the terminal/environment
+for restart: Ctrl+C and rerun only the server command, preserving STORAGE_ROOT. Do not repeat the
+new-folder line when demonstrating persistence. A second seed in this same environment is safe.
+For outcomes, use its own worktree or an approved integrated checkout and additionally run its documented
+opt-in outcomes seed before starting the server; that module is not part of deployment PR #22.
+
+Terminal 2, from the same checkout root:
+
+```powershell
+$env:VITE_API_PROXY = 'http://127.0.0.1:13100'
+npm --prefix apps/web run dev -- --host 127.0.0.1 --port 15173 --strictPort
+```
+
+Open `http://127.0.0.1:15173/?source=api&lang=kk#/map` (or lang=ru), then log in with
+coordinator and the private password. Worker/foreman accounts are routed to #/worker.
+Health is `http://127.0.0.1:13100/health`. These are local URLs, not an external deployment.
+For an explicit offline browser demonstration use `?source=mock&lang=kk#/map`: mock data is browser-side,
+not SQLite, and map tiles may still need network access. Rules needs no LLM key; API mode needs backend.
+If either port is occupied, choose free ports and change PORT, FRONTEND_ORIGINS and VITE_API_PROXY
+together; do not stop another developer's process. No system or Docker settings need changing.
+
+## Repeat check and integration status, 2026-10-30
+
+GitHub and explicit fetch reconfirm coordinator e6d9079840bd7a7469488031ab777a851c7f8d78;
+#17 merged, #18/#19 open, #22/#23 Draft. Existing PRs are continued, not recreated.
+Docker Engine remains BLOCKED; Compose config --quiet passed again. Local production frontend HTML
+and bundled JavaScript were fetched successfully over HTTP (not browser E2E).
+The two deployment tests were rerun: **2 passed, 0 failed/skipped**, covering all five logins,
+CSRF, logout, session restart, repeat seed and separate SQLite/files backup/restore.
+The complete previously recorded 67/67 backend and 80/80 web results apply to unchanged application code;
+this follow-up changes documentation/comments only and does not claim another complete suite run.
