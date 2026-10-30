@@ -1,0 +1,113 @@
+import { test, expect, type Page, type Locator } from '@playwright/test';
+import { species } from '../support/catalogue';
+import { openPage, dismissHint, SITE } from '../support/helpers';
+import { pr14LanguageIntegrated, pr14HeaderIntegrated, pr14Pending } from '../support/pr14';
+import { runKnownBugs } from '../support/known-bugs';
+
+test.beforeEach(() => test.skip(!pr14LanguageIntegrated && !runKnownBugs, pr14Pending));
+
+async function switchLanguage(page: Page, language: 'Рус' | 'Қаз') {
+  const button = page.getByRole('group', { name: 'Язык / Тіл', exact: true }).getByRole('button', { name: language, exact: true });
+  await button.click();
+  await expect(button).toHaveAttribute('aria-pressed', 'true');
+}
+
+async function translatedSpecies(page: Page, container: Locator) {
+  const russian = await container.innerText();
+  const used = species.filter(s => russian.includes(s.nameRu));
+  expect(used.length, 'The selected view must contain actual catalogue species').toBeGreaterThan(0);
+  const latin = used.filter(s => russian.includes(s.latin)).map(s => s.latin);
+  await switchLanguage(page, 'Қаз');
+  for (const s of used) await expect(container).toContainText(s.nameKk || s.nameRu);
+  for (const name of latin) await expect(container).toContainText(name);
+}
+
+test('PR14: header language persists after reload and preserves the current route', async ({ page }) => {
+  test.skip(!pr14HeaderIntegrated && !runKnownBugs, 'DEP-14: header integration afdd003 is not merged');
+  await openPage(page, '/priorities');
+  const route = new URL(page.url()).hash;
+  await switchLanguage(page, 'Қаз');
+  await expect(page.locator('nav.gp-nav').getByRole('link', { name: 'Басымдықтар', exact: true })).toHaveAttribute('aria-current', 'page');
+  expect(new URL(page.url()).hash).toBe(route);
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await expect(page.locator('nav.gp-nav').getByRole('link', { name: 'Басымдықтар', exact: true })).toHaveAttribute('aria-current', 'page');
+  expect(new URL(page.url()).hash).toBe(route);
+  await switchLanguage(page, 'Рус');
+  await expect(page.locator('nav.gp-nav').getByRole('link', { name: 'Приоритеты', exact: true })).toHaveAttribute('aria-current', 'page');
+});
+
+test('PR14: catalogue finds the same pine by Russian, Kazakh and Latin names', async ({ page }) => {
+  await openPage(page, '/species', 'mock', 'kk');
+  const pine = species.find(s => s.id === 'sp-pinus-sylvestris')!;
+  expect(pine.nameKk).toBe('Кәдімгі қарағай');
+  const search = page.locator('#main input[type=search]');
+  for (const query of [pine.nameRu, pine.nameKk!, pine.latin]) {
+    await search.fill(query);
+    const cards = page.locator('.gp-spcard');
+    await expect(cards).toHaveCount(1);
+    await expect(cards.locator('.gp-spcard__name')).toHaveText('Кәдімгі қарағай');
+    await expect(cards.locator('i')).toHaveText(pine.latin);
+  }
+});
+
+test('PR14: unconfirmed Kazakh plant names fall back to the Russian catalogue name', async ({ page }) => {
+  await openPage(page, '/species', 'mock', 'kk');
+  const fallback = species.filter(s => s.nameKk === null);
+  expect(fallback.length).toBeGreaterThan(0);
+  // Read the current catalogue instead of freezing the historical 24/26 translation counts.
+  for (const s of fallback) {
+    await page.locator('#main input[type=search]').fill(s.latin);
+    const card = page.locator('.gp-spcard').filter({ has: page.locator('i', { hasText: s.latin }) });
+    await expect(card.locator('.gp-spcard__name')).toHaveText(s.nameRu);
+    await expect(card.locator('i')).toHaveText(s.latin);
+  }
+});
+
+for (const tab of ['Растения', 'Смета', 'Приживаемость']) {
+  test(`PR14: translated species in zone tab ${tab} preserve Latin names`, async ({ page }) => {
+    test.skip(!pr14HeaderIntegrated && !runKnownBugs, 'DEP-14: header integration afdd003 is not merged');
+    await openPage(page, `/map?site=${SITE}`);
+    await dismissHint(page);
+    const card = page.locator('.gp-sites__card');
+    await card.getByRole('tab', { name: tab, exact: true }).click();
+    await expect(card.locator('.gp-zone')).toHaveAttribute('aria-busy', 'false');
+    await translatedSpecies(page, card.locator('.gp-zone'));
+    expect(new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('site')).toBe(SITE);
+  });
+}
+
+test('PR14: zone report translates plant names while retaining Latin names and numbers', async ({ page }) => {
+  test.skip(!pr14HeaderIntegrated && !runKnownBugs, 'DEP-14: header integration afdd003 is not merged');
+  await openPage(page, `/report?site=${SITE}`);
+  const report = page.locator('.gp-report-doc');
+  const numbers = () => report.locator('tbody tr').evaluateAll(rows => rows.map(row => [...row.querySelectorAll('td')]
+    .slice(1).map(cell => cell.textContent?.match(/\d+(?:[.,]\d+)?/g) ?? [])));
+  const before = await numbers();
+  await translatedSpecies(page, report);
+  expect(await numbers()).toEqual(before);
+});
+
+test('PR14: rule assistant answers Kazakh then Russian with identical priorities and factors', async ({ page }) => {
+  await openPage(page, '/map');
+  await dismissHint(page);
+  await page.getByRole('button', { name: 'Открыть ассистента', exact: true }).click();
+  const ask = async (question: string, prefix: RegExp) => {
+    const messages = page.locator('.gp-assist__msg--bot');
+    const count = await messages.count();
+    await page.getByRole('textbox', { name: 'Вопрос ассистенту' }).fill(question);
+    await page.getByRole('button', { name: 'Спросить', exact: true }).click();
+    await expect(messages).toHaveCount(count + 1);
+    const reply = messages.last();
+    await expect(reply.locator('p').first()).toHaveText(prefix);
+    await expect(reply.locator('.gp-assist__proof')).toContainText(/правил/i);
+    const paragraphs = await reply.locator(':scope > p').allTextContents();
+    const ids = await reply.locator('.gp-assist__zones a').evaluateAll(links => links.map(link =>
+      new URLSearchParams(new URL((link as HTMLAnchorElement).href).hash.split('?')[1]).get('site')));
+    expect(ids.length).toBeGreaterThan(0);
+    await expect.poll(() => new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('hl')?.split(',')).toEqual(ids);
+    return { ids, numbers: paragraphs.join('\n').match(/\d+(?:[.,]\d+)?/g) };
+  };
+  const kk = await ask('Бірінші кезекте қай аумақтарды көгалдандыру керек?', /^Басымдық индексі бойынша алғашқы бестік/);
+  const ru = await ask('Какие зоны озеленять в первую очередь?', /^Первая пятёрка/);
+  expect(kk).toEqual(ru);
+});

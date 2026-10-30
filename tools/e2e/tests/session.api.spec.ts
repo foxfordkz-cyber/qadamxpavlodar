@@ -1,5 +1,6 @@
 import { test, expect, type Page } from '@playwright/test';
 import { dismissHint } from '../support/helpers';
+import { workerProfileButton } from '../support/worker';
 
 test.beforeEach(() => test.skip(!process.env.E2E_PASSWORD, 'E2E_PASSWORD is not set'));
 
@@ -28,12 +29,18 @@ test('API: coordinator login, server data indicator, map, estimate, priorities, 
   await expect(page.locator('input[type=password]')).toBeVisible();
 });
 
-test('API: worker1 login opens shift cabinet', async ({ page }) => {
+test('API: worker1 login opens shift cabinet and cabinet logout ends the session', async ({ page }) => {
   await page.goto('/?source=api#/', { waitUntil: 'domcontentloaded' });
   await login(page, 'worker1');
   await expect(page).toHaveURL(/#\/worker/);
   await expect(page.locator('green-worker')).toBeVisible();
   await expect(page.locator('green-worker').getByRole('heading', { name: 'Моя смена', exact: true })).toBeVisible();
+  await (await workerProfileButton(page)).click();
+  await page.locator('green-worker').getByRole('button', { name: 'Завершить сессию', exact: true }).click();
+  await expect(page.locator('input[type=password]')).toBeVisible();
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await expect(page.locator('input[type=password]')).toBeVisible();
+  await expect(page.locator('green-worker')).toHaveCount(0);
 });
 
 test('API: foreman1 login opens the crew shift cabinet', async ({ page }) => {
@@ -42,7 +49,29 @@ test('API: foreman1 login opens the crew shift cabinet', async ({ page }) => {
   await expect(page).toHaveURL(/#\/worker$/);
   await expect(page.locator('green-worker')).toBeVisible();
   await expect(page.locator('green-worker').getByRole('heading', { name: 'Смена бригады', exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Выйти', exact: true }).click();
+  await expect(page.locator('input[type=password]')).toBeVisible();
+  await expect(page.locator('green-worker')).toHaveCount(0);
 });
+
+for (const username of ['viewer', 'admin']) {
+  test(`API: ${username} reads the map, cannot draw or enter a crew cabinet, and logs out`, async ({ page }) => {
+    await page.goto('/?source=api#/', { waitUntil: 'domcontentloaded' });
+    await login(page, username);
+    await page.locator('nav.gp-nav').getByRole('link', { name: 'Карта участков', exact: true }).click();
+    await dismissHint(page);
+    await expect(page.locator('.gp-sites__items button').first()).toBeVisible();
+    await expect(page.getByRole('button', { name: /Нарисовать зону/ })).toHaveCount(0);
+    await page.evaluate(() => { location.hash = '#/map?draw=1'; });
+    await expect(page).toHaveURL(/#\/map$/);
+    await expect(page.locator('.gp-drawbar')).toHaveCount(0);
+    await page.evaluate(() => { location.hash = '#/worker'; });
+    await expect(page).toHaveURL(/#\/$/);
+    await expect(page.locator('green-worker')).toHaveCount(0);
+    await page.getByRole('button', { name: 'Выйти', exact: true }).click();
+    await expect(page.locator('input[type=password]')).toBeVisible();
+  });
+}
 
 test('API: coordinator cannot open the worker route and returns home', async ({ page }) => {
   await page.goto('/?source=api#/worker', { waitUntil: 'domcontentloaded' });
