@@ -1,0 +1,235 @@
+{
+  "archiveSha256": "5f1952dc9b8b947fe492778282a67c7ecd84c66052977f1400f3e6b817f30b61",
+  "version": "5.0.0",
+  "crs": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137.0,298.257223563]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+  "features": [
+    {
+      "name": "Mount Everest",
+      "neId": 1159105715,
+      "bbox": [
+        86.8805960349296,
+        27.980480509130615,
+        86.8805960349296,
+        27.980480509130615
+      ],
+      "vertices": 1,
+      "consecutiveDuplicate": false
+    },
+    {
+      "name": "Mount Kilimanjaro",
+      "neId": 1159105301,
+      "bbox": [
+        37.35325164703161,
+        -3.075714746279047,
+        37.35325164703161,
+        -3.075714746279047
+      ],
+      "vertices": 1,
+      "consecutiveDuplicate": false
+    },
+    {
+      "name": "Vinson Massif",
+      "neId": 1159105413,
+      "bbox": [
+        -85.633729484895,
+        -78.52936249227913,
+        -85.633729484895,
+        -78.52936249227913
+      ],
+      "vertices": 1,
+      "consecutiveDuplicate": false
+    },
+    {
+      "name": "Turpan Depression",
+      "neId": 1159105721,
+      "bbox": [
+        89.34011996654479,
+        42.76868522184947,
+        89.34011996654479,
+        42.76868522184947
+      ],
+      "vertices": 1,
+      "consecutiveDuplicate": false
+    },
+    {
+      "name": "",
+      "neId": 1159105723,
+      "bbox": [
+        35.47472016487373,
+        31.515389797694517,
+        35.47472016487373,
+        31.515389797694517
+      ],
+      "vertices": 1,
+      "consecutiveDuplicate": false
+    },
+    {
+      "name": "Khyber Pass",
+      "neId": 1159105727,
+      "bbox": [
+        71.09782951165829,
+        34.09839078145032,
+        71.09782951165829,
+        34.09839078145032
+      ],
+      "vertices": 1,
+      "consecutiveDuplicate": false
+    },
+    {
+      "name": "K2",
+      "neId": 1159105729,
+      "bbox": [
+        76.51320907809574,
+        35.88240597247014,
+        76.51320907809574,
+        35.88240597247014
+      ],
+      "vertices": 1,
+      "consecutiveDuplicate": false
+    },
+    {
+      "name": "Muztag Feng",
+      "neId": 1159105731,
+      "bbox": [
+        87.41319937465036,
+        36.41650380055506,
+        87.41319937465036,
+        36.41650380055506
+      ],
+      "vertices": 1,
+      "consecutiveDuplicate": false
+    },
+    {
+      "name": "Kailash",
+      "neId": 1159105733,
+      "bbox": [
+        81.31253630588449,
+        31.066598981098316,
+        81.31253630588449,
+        31.066598981098316
+      ],
+      "vertices": 1,
+      "consecutiveDuplicate": false
+    },
+    {
+      "name": "",
+      "neId": 1159105951,
+      "bbox": [
+        49.00953383900048,
+        44.257559156738566,
+        49.00953383900048,
+        44.257559156738566
+      ],
+      "vertices": 1,
+      "consecutiveDuplicate": false
+    },
+    {
+      "name": "Gora Elbrus",
+      "neId": 1159105953,
+      "bbox": [
+        42.43919750811773,
+        43.35517092583443,
+        42.43919750811773,
+        43.35517092583443
+      ],
+      "vertices": 1,
+      "consecutiveDuplicate": false
+    },
+    {
+      "name": "Death Valley",
+      "neId": 1159106291,
+      "bbox": [
+        -116.82822550135457,
+        36.24225453561077,
+        -116.82822550135457,
+        36.24225453561077
+      ],
+      "vertices": 1,
+      "consecutiveDuplicate": false
+    },
+    {
+      "name": "Denali",
+      "neId": 1159106297,
+      "bbox": [
+        -151.0072955641745,
+        63.06941124467545,
+        -151.0072955641745,
+        63.06941124467545
+      ],
+      "vertices": 1,
+      "consecutiveDuplicate": false
+    },
+    {
+      "name": "Mount Whitney",
+      "neId": 1159106313,
+      "bbox": [
+        -118.29221822455945,
+        36.582715141594875,
+        -118.29221822455945,
+        36.582715141594875
+      ],
+      "vertices": 1,
+      "consecutiveDuplicate": false
+    },
+    {
+      "name": "",
+      "neId": 1159106743,
+      "bbox": [
+        137.2844376526123,
+        -28.448653493871916,
+        137.2844376526123,
+        -28.448653493871916
+      ],
+      "vertices": 1,
+      "consecutiveDuplicate": false
+    },
+    {
+      "name": "Mount Kosciuszko",
+      "neId": 1159106753,
+      "bbox": [
+        148.26319152511533,
+        -36.45587979951783,
+        148.26319152511533,
+        -36.45587979951783
+      ],
+      "vertices": 1,
+      "consecutiveDuplicate": false
+    },
+    {
+      "name": "Cerro Aconcagua",
+      "neId": 1159108719,
+      "bbox": [
+        -70.01580098903159,
+        -32.65567863052878,
+        -70.01580098903159,
+        -32.65567863052878
+      ],
+      "vertices": 1,
+      "consecutiveDuplicate": false
+    },
+    {
+      "name": "",
+      "neId": 1159108751,
+      "bbox": [
+        -63.96877793506543,
+        -42.62399680255744,
+        -63.96877793506543,
+        -42.62399680255744
+      ],
+      "vertices": 1,
+      "consecutiveDuplicate": false
+    },
+    {
+      "name": "Cero Raya",
+      "neId": 1159108759,
+      "bbox": [
+        -66.3755908581613,
+        5.4516742932455315,
+        -66.3755908581613,
+        5.4516742932455315
+      ],
+      "vertices": 1,
+      "consecutiveDuplicate": false
+    }
+  ]
+}
