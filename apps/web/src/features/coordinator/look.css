@@ -25,6 +25,8 @@
 
 @media (min-width: 761px) {
   .gp-nav a { padding: 6px 10px; font-size: 13.5px; }
+  /* Если меню переносится на вторую строку, «Ещё» остаётся справа и его список не выходит за левый край окна. */
+  .gp-nav__more { margin-left: auto; }
 }
 /* На обычном ноутбуке меню остаётся одной строкой: подпись «Работы» заменяет тонкий разделитель. */
 @media (min-width: 761px) and (max-width: 1500px) {
@@ -169,4 +171,11 @@
 .gp-zonetabs button { padding-left: 8px; padding-right: 8px; font-size: 13.5px; }
 @media (min-width: 761px) {
   .gp-mapsearch { max-width: 230px; }
+}
+
+/* На телефоне помощник — круглая кнопка: подпись закрывала стоимость и другие строки панели */
+@media (max-width: 760px) {
+  .gp-assist-fab { width: 52px; height: 52px; padding: 0; right: 12px; display: grid; place-items: center; font-size: 20px; }
+  .gp-assist-fab__label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .gp-plansum dd { padding-right: 40px; }
 }

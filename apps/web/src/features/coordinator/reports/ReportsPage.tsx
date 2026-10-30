@@ -9,6 +9,7 @@ import { t, type Key } from '../../../shared/i18n';
 import { fmtDateTime } from '../../../shared/format';
 import { hrefFor, navigate, useRoute } from '../../../shared/router';
 import { distanceM } from '../map/geo';
+import { useMe } from '../me';
 
 export function ReportsPage() {
   const { api } = useData();
@@ -70,6 +71,8 @@ export function ReportsPage() {
 
 function ReportDetail({ report, task, authorName, reviewerName, onChanged }: { report: Report; task?: Task; authorName: string; reviewerName: string; onChanged: () => void }) {
   const { api, bump } = useData();
+  // Просмотр читает отчёт, но решение по нему принять не может.
+  const canReview = useMe().role !== 'viewer';
   const site = useResource(() => (task ? api.site(task.objectId) : Promise.resolve(null)), [task?.objectId]);
   const [comment, setComment] = useState('');
   const [commentErr, setCommentErr] = useState('');
@@ -147,7 +150,7 @@ function ReportDetail({ report, task, authorName, reviewerName, onChanged }: { r
         <div className="gp-alert gp-alert--ok" role="status">
           ✓ {t('reports.accepted', { id: result.task.id, status: t(`status.${result.task.status}` as Key) })} <Button variant="ghost" onClick={onChanged}>{t('state.refresh')}</Button>
         </div>
-      ) : (
+      ) : canReview && (
         <div className="gp-review">
           <h3 className="gp-subhead">{t('reports.review')}</h3>
           <Field label={t('reports.comment')} hint={t('reports.commentWhy')} error={commentErr}>
