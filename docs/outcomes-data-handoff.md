@@ -109,3 +109,57 @@ not running the old binary against schema 6. Migration preservation tests compar
 - Docker runtime and public HTTPS: BLOCKED; no engine socket or approved hosting. Browser E2E: NOT RUN.
 - Domain limitation: a report supports an explicit coordinator/admin attestation, not automatic inference
   of alive/dead. The new route/permission extension and reviewer workflow require captain review.
+
+## Current integration with the UI PR (2026-10-30)
+
+Git fetch and GitHub confirm coordinator is still e6d9079840bd7a7469488031ab777a851c7f8d78.
+#18 and #19 are open; #22/#23 remain Draft. No duplicate PRs or implementation were created.
+PR #24 (`codex/outcomes-workflow`, inspected head d18a959888d597e20d514f4bebfdda66219c2af6)
+already builds on #18/#21/#23 and owns the screen at `#/outcomes`. Its two backend extensions are
+in that PR's outcomes module. They are intentionally not duplicated in #23:
+
+| Integration item | #23 alone | Added by #24 |
+| --- | --- | --- |
+| GET /api/v1/outcomes/sites/:id | Absent; do not call it against #23 alone | {data:{siteId,asOf,cohorts,inspections,registry,forecasts}}; admin/coordinator/viewer |
+| POST /api/v1/outcomes/snapshots | id, siteId, expectedVersion, variant | Optional expectedRatesVersion; stale rates rejected with 409 |
+| #/outcomes UI | Not present in coordinator or this backend branch | Screen, navigation and API/mock integration |
+
+This is a source review of #24, not an independent rerun of its reported browser tests. Captain should
+review #18 and #23, #21/#24 integration and those two extensions, then select a final coordinator SHA.
+Do not cherry-pick an unreviewed UI into this backend worktree or claim #24's screenshots as our own tests.
+With #23 alone the new UI client's extra request field would be rejected (400), and its site endpoint
+is missing. Deploy the reviewed integrated source rather than mixing builds from these different stages.
+
+The eight backend outcomes tests were repeated against this branch: 8 passed, 0 failed/skipped.
+The full 73/73 backend and 119/119 web results above are from the preceding unchanged-code run;
+this follow-up adds documentation only. Docker/public HTTPS/browser E2E statuses remain unchanged.
+
+## Бекзатқа арналған қысқа көрсетілім мәтіні
+
+Бұл backend handoff ішіндегі сөйлеу нұсқасы; команданың docs/defense материалдарын алмастырмайды.
+Қазіргі coordinator-де жаңа экран әлі жоқ. Төмендегі UI қадамдары #24 қабылданып, соңғы біріктірілген
+нұсқа тексерілгеннен кейін орындалады. Әзірге #23 нәтижесін авторизацияланған API арқылы көрсетуге болады.
+
+1. **Сайтты ашу.** «Қазір қосымшаның жергілікті нұсқасын көрсетемін. Бұл жария HTTPS-сайт емес».
+   Жергілікті іске қосу нұсқаулығымен `http://127.0.0.1:15173/?source=api&lang=kk#/map` ашылады.
+   Жария көрсетілімге тек капитан мақұлдаған және тексерілген HTTPS-мекенжай қолданылады.
+2. **Кіру.** «coordinator демонстрациялық тіркелгісімен кіремін. Құпиясөзді экранға шығармаймын.
+   Сервер сессияны және рұқсаттарды тексереді». Жұмысшы мен бригадир өз #/worker кабинетіне өтеді.
+3. **Карта мен аймақтар.** «Картадан аймақты таңдаймыз. Бұл интерфейсті командадағы frontend
+   әзірлеушілер жасады; мен серверлік деректердің сақталуын және API арқылы берілуін қамтамасыз еттім».
+4. **Болжам және нақты нәтиже.** #24 қабылданғаннан кейін
+   `?source=api&lang=kk#/outcomes?site=site-osm-1569993037` ашып, `outcomes-demo-cohort` партиясы
+   мен `outcomes-demo-inspection` осмотрын таңдаймыз. «Бұл — 32 ағаштан тұратын синтетикалық мысал:
+   біреуі тірі, біреуі қураған, біреуінің күйі белгісіз, қалған 29-ы қаралмаған. Белгісіз күйді
+   өлім деп есептемейміз. Бұл толық жылдық нәтиже немесе модель дәлелділігі емес».
+   Егер UI әлі қосылмаса, осыны `/api/v1/outcomes/cohorts/outcomes-demo-cohort` және оның
+   `/summary?inspectionId=outcomes-demo-inspection` жауаптарынан көрсетіп, шектеуді ашық айтамыз.
+5. **Деректердің сақталуы.** «Бетті жаңартқаннан кейін сол партия мен осмотр сақталады.
+   Серверді сол тесттік SQLite-пен қайта іске қосқанда да жазбалар жоғалмайды. Бастапқы болжам
+   жаңа бағалармен қайта есептелмейді». Қайта қосқанда жаңа STORAGE_ROOT жасамау керек.
+   Mock қолданылса, оның дерегі браузерде сақталатынын, серверлік сақтау емес екенін түсіндіреміз.
+6. **Жеке үлесім.** «Мен backend API, SQLite миграциясы, партиялар мен осмотрлар тарихы,
+   бастапқы болжамның өзгермеуі, рөлдік рұқсаттар, CSRF, қайталанған сұраулардан қорғаныс,
+   сақтау және backup/restore тексерулеріне жауап бердім. Есептеу формулалары — ортақ модульден,
+   интерфейс пен AI — тиісті команда мүшелерінің еңбегі. Docker runtime мен жария хостинг
+   тексерілмейінше жүйені толық жарияланған деп атамаймыз».
