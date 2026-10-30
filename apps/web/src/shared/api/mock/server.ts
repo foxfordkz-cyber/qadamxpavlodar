@@ -22,6 +22,7 @@ import { referenceFacts } from '../pavlodar';
 import { buildCareSchedule, parseCareRequest } from '../../analytics/careSchedule';
 import { GEOCODE_META, searchAddress } from '../geocode';
 import { decisionPlans, parseDecisionLabInput } from '../../analytics/decisionLab';
+import { decisionLabData } from '../decisionLabData';
 
 // v3: справочник с источниками по Павлодару. Старые данные не читаются.
 const STORAGE_KEY = 'gp-mock-db-v4';
@@ -636,7 +637,7 @@ route('POST', /^\/decision-lab$/, (_m, o) => {
   let input;
   try { input = parseDecisionLabInput(o.body); }
   catch { return fail(400, 'validation_error', 'lab.invalid'); }
-  return { data: decisionPlans({ sites: db.sites, catalog, rates: rates(), ...input }) };
+  return { data: decisionPlans({ ...decisionLabData(db.sites, catalog, db.rates, 'mock', db.ratesVersion, new Date().toISOString()), ...input }) };
 });
 route('PATCH', /^\/rates$/, (_m, o) => {
   requireRole('admin');

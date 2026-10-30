@@ -72,7 +72,7 @@ test('decision lab: reader roles, strict validation and generated OpenAPI', asyn
   for (const user of ['coordinator', 'admin', 'viewer']) assert.equal((await f.call('/decision-lab', 'POST', user, body, null)).status, 200);
   for (const user of ['worker1', 'foreman1']) assert.equal((await f.call('/decision-lab', 'POST', user, body, null)).status, 403);
   for (const invalid of [{ ...body, budgetKzt: 0 }, { ...body, budgetKzt: -1 }, { ...body, budgetKzt: '50' },
-    { ...body, waterLimitM3: -1 }, { ...body, watering: 'winter' }, { ...body, extra: 1 }, {}]) {
+    { ...body, waterLimitM3: -1 }, { ...body, watering: 'winter' }, { ...body, goal: 'imaginary' }, { ...body, extra: 1 }, {}]) {
     assert.equal((await f.call('/decision-lab', 'POST', 'viewer', invalid, null)).status, 400);
   }
   const doc = await fetch(f.base + '/api/v1/openapi.json').then(r => r.json());
@@ -86,9 +86,11 @@ test('decision lab: real API matches shared/mock seed, cache, limits and fixed s
   const response = await f.call('/decision-lab', 'POST', 'viewer', input, null);
   assert.equal(response.status, 200);
   const baseline = response.body.data;
-  assert.deepEqual(baseline, web.decisionPlans({ sites, catalog: ref.species, rates: ref.map, ...input }));
+  assert.deepEqual(baseline, web.decisionPlans({ ...web.decisionLabData(sites, ref.species, ref.rates, 'api', ref.version, baseline.basis.provenance.capturedAt), ...input }));
   // The unmodified demo data must also yield the browser mock's numbers.
-  assert.deepEqual(baseline, web.decisionPlans({ sites: web.seed().sites, catalog: web.species, rates: web.ratesMap(web.DEFAULT_RATES), ...input }));
+  // Server sites carry registry-only fields; compare every displayed/calculated field, not those source extensions.
+  const comparable = (plans: any[]) => plans.map(p => ({...p, zones:p.zones.map(({site, ...zone}: any)=>zone)}));
+  assert.deepEqual(comparable(baseline.plans), comparable(web.decisionPlans({ ...web.decisionLabData(web.seed().sites, web.species, web.DEFAULT_RATES, 'mock', 1, baseline.basis.provenance.capturedAt), ...input }).plans));
   assert.deepEqual((await f.call('/decision-lab', 'POST', 'viewer', input, null)).body.data, baseline);
   for (const p of baseline.plans) { assert.ok(p.baseline.spentKzt <= input.budgetKzt); assert.ok(p.baseline.waterM3 <= input.waterLimitM3); }
   for (const watering of ['rare', 'none']) {

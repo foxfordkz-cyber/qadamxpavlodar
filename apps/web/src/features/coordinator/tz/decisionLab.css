@@ -40,3 +40,14 @@
 .gp-lab-empty { padding: 12px; border-radius: 8px; background: #f5f7f4; font-size: 13px; }
 @media (max-width: 1050px) { .gp-lab-grid { grid-template-columns: 1fr; } .gp-lab-card__head { min-height: 0; } }
 @media (max-width: 480px) { .gp-lab-controls, .gp-lab-card { padding: 16px; } .gp-lab-controls fieldset { flex-basis: 100%; } .gp-lab-controls > label { flex-basis: 100%; } }
+.gp-lab-table { max-width: 100%; overflow-x: auto; }
+.gp-lab-table table { border-collapse: collapse; width: 100%; min-width: 280px; }
+.gp-lab-table th, .gp-lab-table td { padding: 6px; text-align: start; border-bottom: 1px solid var(--gp-border); font-variant-numeric: tabular-nums; }
+.gp-lab-table th:first-child { width: 50%; }
+.gp-lab-controls > h2, .gp-lab-controls > p { flex-basis: 100%; margin: 0; }
+.gp-lab-controls .gp-btn { white-space: normal; }
+.gp-lab-risks { padding: 22px; margin-top: 24px; min-width: 0; overflow-wrap: anywhere; }
+.gp-lab-risks .gp-lab-controls { padding: 0; }
+.gp-lab-reasons dl > div { display: flex; justify-content: space-between; gap: 12px; }
+.gp-lab-reasons dd { margin: 0; }
+.gp-lab :focus-visible { outline: 3px solid #3084aa; outline-offset: 3px; }

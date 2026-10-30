@@ -26,7 +26,7 @@ const object = z.object({}).passthrough();
 const options = z.object({ options: object.default({}) }).strict();
 const weights = z.record(z.string(), z.number().min(0).max(1));
 const prioritiesInput = z.object({ weights: weights.optional(), budget: z.number().nonnegative().nullable().optional() }).strict();
-const decisionLabInput = z.object({ budgetKzt: z.number().finite().positive(), waterLimitM3: z.number().finite().nonnegative().nullable().default(null), watering: z.enum(['regular', 'rare', 'none']) }).strict();
+const decisionLabInput = z.object({ budgetKzt: z.number().finite().positive(), waterLimitM3: z.number().finite().nonnegative().nullable().default(null), watering: z.enum(['regular', 'rare', 'none']), goal: z.enum(['balanced', 'schools', 'deficit', 'social']).default('balanced') }).strict();
 const rateInput = z.object({ key: z.string().min(1).max(80), value: z.number().nonnegative().finite().nullable(), source: text, expectedVersion: version }).strict();
 // history — последние реплики диалога (короткий ответ продолжает вопрос); view — центр карты, если зона не выбрана.
 const assistantInput = z.object({

@@ -5,15 +5,16 @@ export type Json = Record<string, any>;
 
 const root = new URL('../../../web/src/shared/', import.meta.url);
 const load = (path: string): Promise<Json> => import(new URL(path, root).href);
-const [plan, city, rates, zone, assistant, species, fixtures, context, drawn, rules, imports, compat, views, pavlodar, care, geocode, decisionLab] = await Promise.all([
+const [plan, city, rates, zone, assistant, species, fixtures, context, drawn, rules, imports, compat, views, pavlodar, care, geocode, decisionLab, decisionData] = await Promise.all([
   load('analytics/plan.ts'), load('analytics/city.ts'), load('analytics/rates.ts'), load('analytics/zone.ts'), load('analytics/assistant.ts'),
   load('api/mock/species.ts'), load('api/mock/fixtures.ts'), load('api/mock/context.ts'), load('api/mock/drawnZone.ts'),
   load('api/mock/rules.ts'), load('api/mock/imports.ts'), load('api/v2compat.ts'), load('api/tzViews.ts'), load('api/pavlodar.ts'),
-  load('analytics/careSchedule.ts'), load('api/geocode.ts'), load('analytics/decisionLab.ts'),
+  load('analytics/careSchedule.ts'), load('api/geocode.ts'), load('analytics/decisionLab.ts'), load('api/decisionLabData.ts'),
 ]);
 
 export const web = {
   decisionPlans: decisionLab.decisionPlans as (input: Json) => Json,
+  decisionLabData: decisionData.decisionLabData as (sites: Json[], catalog: Json[], rates: Json[], source: string, version: number, capturedAt: string) => Json,
   buildCareSchedule: care.buildCareSchedule as (site: Json, plants: Json[], catalog: Json[], rates: Json, input: Json, now?: Date) => Json,
   analyzeZone: plan.analyzeZone as (site: Json, catalog: Json[], rates: Json, options?: Json) => Json,
   VARIANT_LABEL: plan.VARIANT_LABEL as Record<string, string>,
