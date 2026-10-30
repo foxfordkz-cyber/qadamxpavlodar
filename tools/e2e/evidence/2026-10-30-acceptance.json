@@ -1,0 +1,1269 @@
+{
+  "applicationBase": "b53c180a67686d1d2fc1f79d0295884783d5bb4b",
+  "testsSha": "261491f2e6ad15e864685af5d129d8b875db38e0",
+  "mock": {
+    "metadata": {
+      "profile": "mock",
+      "selection": "full",
+      "target": "http://localhost:5174",
+      "revision": "261491f2e6ad15e864685af5d129d8b875db38e0",
+      "dirty": false,
+      "capturesScreens": true,
+      "startedAt": "2026-10-30T12:51:21.152Z",
+      "state": "finished",
+      "exitCode": 0,
+      "endedAt": "2026-10-30T12:59:32.983Z"
+    },
+    "counts": {
+      "passed": 170,
+      "failed": 0,
+      "skipped": 2,
+      "fixme": 0
+    },
+    "tests": [
+      {
+        "title": "zone report downloads Russian and Kazakh Word memos through export settings",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "zone report downloads Russian and Kazakh Word memos through export settings",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "drawing ru: search counters, undo, save a polygon and reopen after reload",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "drawing kk: search counters, undo, save a polygon and reopen after reload",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "drawing ru: search counters, undo, save a polygon and reopen after reload",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "drawing kk: search counters, undo, save a polygon and reopen after reload",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "Kazakh navigation is enabled with ?lang=kk",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/: Kazakh controls have no Russian service labels",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/map: Kazakh controls have no Russian service labels",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/problems: Kazakh controls have no Russian service labels",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/priorities: Kazakh controls have no Russian service labels",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/species: Kazakh controls have no Russian service labels",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/projects: Kazakh controls have no Russian service labels",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/rates: Kazakh controls have no Russian service labels",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/import: Kazakh controls have no Russian service labels",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/guide: Kazakh controls have no Russian service labels",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/tasks: Kazakh controls have no Russian service labels",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/reports: Kazakh controls have no Russian service labels",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "Kazakh navigation is enabled with ?lang=kk",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/: Kazakh controls have no Russian service labels",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/map: Kazakh controls have no Russian service labels",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/problems: Kazakh controls have no Russian service labels",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/priorities: Kazakh controls have no Russian service labels",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/species: Kazakh controls have no Russian service labels",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/projects: Kazakh controls have no Russian service labels",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/rates: Kazakh controls have no Russian service labels",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/import: Kazakh controls have no Russian service labels",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/guide: Kazakh controls have no Russian service labels",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/tasks: Kazakh controls have no Russian service labels",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/reports: Kazakh controls have no Russian service labels",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/: opens without JavaScript errors or horizontal overflow",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/: presentation screenshot",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/map: opens without JavaScript errors or horizontal overflow",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/map: presentation screenshot",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/problems: opens without JavaScript errors or horizontal overflow",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/problems: presentation screenshot",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/priorities: opens without JavaScript errors or horizontal overflow",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/priorities: presentation screenshot",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/species: opens without JavaScript errors or horizontal overflow",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/species: presentation screenshot",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/projects: opens without JavaScript errors or horizontal overflow",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/projects: presentation screenshot",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/rates: opens without JavaScript errors or horizontal overflow",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/rates: presentation screenshot",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/import: opens without JavaScript errors or horizontal overflow",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/import: presentation screenshot",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/guide: opens without JavaScript errors or horizontal overflow",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/guide: presentation screenshot",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/tasks: opens without JavaScript errors or horizontal overflow",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/tasks: presentation screenshot",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/reports: opens without JavaScript errors or horizontal overflow",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/reports: presentation screenshot",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "time machine: Посадка presentation screenshot",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "time machine: 20 лет presentation screenshot",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/: opens without JavaScript errors or horizontal overflow",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/: presentation screenshot",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/map: opens without JavaScript errors or horizontal overflow",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/map: presentation screenshot",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/problems: opens without JavaScript errors or horizontal overflow",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/problems: presentation screenshot",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/priorities: opens without JavaScript errors or horizontal overflow",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/priorities: presentation screenshot",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/species: opens without JavaScript errors or horizontal overflow",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/species: presentation screenshot",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/projects: opens without JavaScript errors or horizontal overflow",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/projects: presentation screenshot",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/rates: opens without JavaScript errors or horizontal overflow",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/rates: presentation screenshot",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/import: opens without JavaScript errors or horizontal overflow",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/import: presentation screenshot",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/guide: opens without JavaScript errors or horizontal overflow",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/guide: presentation screenshot",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/tasks: opens without JavaScript errors or horizontal overflow",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/tasks: presentation screenshot",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/reports: opens without JavaScript errors or horizontal overflow",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "/reports: presentation screenshot",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "time machine: Посадка presentation screenshot",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "time machine: 20 лет presentation screenshot",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "PR14: header language persists after reload and preserves the current route",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "PR14: catalogue finds the same pine by Russian, Kazakh and Latin names",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "PR14: unconfirmed Kazakh plant names fall back to the Russian catalogue name",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "PR14: translated species in zone tab Растения preserve Latin names",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "PR14: translated species in zone tab Приживаемость preserve Latin names",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "PR14: estimate translates service headings and preserves every numeric cost cell",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "PR14: zone report translates plant names while retaining Latin names and numbers",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "PR14: dashboard counters translate their labels while preserving data values",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "PR14: rule assistant answers Kazakh then Russian with identical priorities and factors",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "PR14: header language persists after reload and preserves the current route",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "PR14: catalogue finds the same pine by Russian, Kazakh and Latin names",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "PR14: unconfirmed Kazakh plant names fall back to the Russian catalogue name",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "PR14: translated species in zone tab Растения preserve Latin names",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "PR14: translated species in zone tab Приживаемость preserve Latin names",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "PR14: estimate translates service headings and preserves every numeric cost cell",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "PR14: zone report translates plant names while retaining Latin names and numbers",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "PR14: dashboard counters translate their labels while preserving data values",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "PR14: rule assistant answers Kazakh then Russian with identical priorities and factors",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "assistant drawing: specialist sends «нарисуй зону» from priorities and cancels",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "assistant drawing: viewer is denied «нарисуй зону»",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "assistant drawing: specialist sends «аймақ сыз» from priorities and cancels",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "assistant drawing: viewer is denied «аймақ сыз»",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "time machine: canopy grows at 5, 10, 20 years; planting describes seedlings",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "mobile report: document fits the viewport and wide tables scroll internally",
+        "project": "desktop",
+        "status": "skipped",
+        "fixme": false,
+        "skipReason": "The report overflow regression targets 375×812"
+      },
+      {
+        "title": "empty map list: reset restores every zone",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "empty species list: reset restores every species",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "empty problems list: show all clears both filters and restores rows",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "presentation: present=1 enables the mode and the exit pill disables it",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "priorities: top ten IDs and numbered rows persist when selecting a zone",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "assistant drawing: specialist sends «нарисуй зону» from priorities and cancels",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "assistant drawing: viewer is denied «нарисуй зону»",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "assistant drawing: specialist sends «аймақ сыз» from priorities and cancels",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "assistant drawing: viewer is denied «аймақ сыз»",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "time machine: canopy grows at 5, 10, 20 years; planting describes seedlings",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "mobile report: document fits the viewport and wide tables scroll internally",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "empty map list: reset restores every zone",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "empty species list: reset restores every species",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "empty problems list: show all clears both filters and restores rows",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "presentation: present=1 enables the mode and the exit pill disables it",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "priorities: top ten IDs and numbered rows persist when selecting a zone",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "language switcher: Специалист switches labels and persists language without changing route",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "language switcher: Администратор switches labels and persists language without changing route",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "language switcher: Просмотр switches labels and persists language without changing route",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "logout: Специалист immediately clears the previous name, role and navigation",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "logout: Администратор immediately clears the previous name, role and navigation",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "logout: Просмотр immediately clears the previous name, role and navigation",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "logout: Работник immediately clears the previous name, role and navigation",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "logout: Бригадир immediately clears the previous name, role and navigation",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "language switcher: login form translates and remembers the language while signed out",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "language switcher: Специалист switches labels and persists language without changing route",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "language switcher: Администратор switches labels and persists language without changing route",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "language switcher: Просмотр switches labels and persists language without changing route",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "logout: Специалист immediately clears the previous name, role and navigation",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "logout: Администратор immediately clears the previous name, role and navigation",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "logout: Просмотр immediately clears the previous name, role and navigation",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "logout: Работник immediately clears the previous name, role and navigation",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "logout: Бригадир immediately clears the previous name, role and navigation",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "language switcher: login form translates and remembers the language while signed out",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "E2E-06: embedded worker cabinet exposes Profile navigation at desktop and phone widths",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "E2E-06: embedded worker cabinet exposes Profile navigation at desktop and phone widths",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "zone list, six tabs, time machine statistics and hide",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "priorities highlight a numbered queue and clear it",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "assistant: budget answer uses rules and highlights zones automatically; Escape closes",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "assistant: without a selected zone explains the nearest zone",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "first visit hint stays dismissed after reload; Alt+P toggles presentation",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "mobile: bottom sheet expands from under 60% to about 90%",
+        "project": "desktop",
+        "status": "skipped",
+        "fixme": false,
+        "skipReason": "Only the 375×812 layout has a bottom sheet"
+      },
+      {
+        "title": "mock roles: worker opens shift cabinet, specialist returns home",
+        "project": "desktop",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "zone list, six tabs, time machine statistics and hide",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "priorities highlight a numbered queue and clear it",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "assistant: budget answer uses rules and highlights zones automatically; Escape closes",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "assistant: without a selected zone explains the nearest zone",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "first visit hint stays dismissed after reload; Alt+P toggles presentation",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "mobile: bottom sheet expands from under 60% to about 90%",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "mock roles: worker opens shift cabinet, specialist returns home",
+        "project": "mobile",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "E2E-06: Работник keyboard navigation with Kazakh shell",
+        "project": "crew-375",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "E2E-06: Бригадир keyboard navigation with Kazakh shell",
+        "project": "crew-375",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "E2E-06: Работник keyboard navigation with Kazakh shell",
+        "project": "crew-800",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "E2E-06: Бригадир keyboard navigation with Kazakh shell",
+        "project": "crew-800",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "E2E-06: Работник keyboard navigation with Kazakh shell",
+        "project": "crew-801",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "E2E-06: Бригадир keyboard navigation with Kazakh shell",
+        "project": "crew-801",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "E2E-06: Работник keyboard navigation with Kazakh shell",
+        "project": "crew-1280",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "E2E-06: Бригадир keyboard navigation with Kazakh shell",
+        "project": "crew-1280",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "E2E-06: Работник can switch Shift, Journal and Profile without navigation covering content",
+        "project": "crew-375",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "E2E-06: Бригадир can switch Shift, Journal and Profile without navigation covering content",
+        "project": "crew-375",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "E2E-06: Работник can switch Shift, Journal and Profile without navigation covering content",
+        "project": "crew-800",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "E2E-06: Бригадир can switch Shift, Journal and Profile without navigation covering content",
+        "project": "crew-800",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "E2E-06: Работник can switch Shift, Journal and Profile without navigation covering content",
+        "project": "crew-801",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "E2E-06: Бригадир can switch Shift, Journal and Profile without navigation covering content",
+        "project": "crew-801",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "E2E-06: Работник can switch Shift, Journal and Profile without navigation covering content",
+        "project": "crew-1280",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "E2E-06: Бригадир can switch Shift, Journal and Profile without navigation covering content",
+        "project": "crew-1280",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "E2E-07: every coordinator menu destination fits the viewport (ru)",
+        "project": "nav-1280",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "E2E-07: every coordinator menu destination fits the viewport (kk)",
+        "project": "nav-1280",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "E2E-07: every coordinator menu destination fits the viewport (ru)",
+        "project": "nav-1440",
+        "status": "passed",
+        "fixme": false
+      },
+      {
+        "title": "E2E-07: every coordinator menu destination fits the viewport (kk)",
+        "project": "nav-1440",
+        "status": "passed",
+        "fixme": false
+      }
+    ]
+  },
+  "api": {
+    "metadata": {
+      "profile": "api",
+      "selection": "full",
+      "target": "http://localhost:5175",
+      "revision": "261491f2e6ad15e864685af5d129d8b875db38e0",
+      "dirty": false,
+      "capturesScreens": false,
+      "startedAt": "2026-10-30T12:51:41.568Z",
+      "state": "finished",
+      "exitCode": 0,
+      "endedAt": "2026-10-30T12:52:55.121Z"
+    },
+    "report": {
+      "status": "passed",
+      "counts": {
+        "passed": 23,
+        "failed": 0,
+        "timedOut": 0,
+        "skipped": 0
+      },
+      "tests": [
+        {
+          "title": "E2E-06 API: worker1, 375px, ru, direct route/reload and keyboard",
+          "status": "passed",
+          "fixme": false,
+          "durationMs": 5715,
+          "note": "",
+          "errors": []
+        },
+        {
+          "title": "E2E-06 API: foreman1, 375px, ru, direct route/reload and keyboard",
+          "status": "passed",
+          "fixme": false,
+          "durationMs": 6975,
+          "note": "",
+          "errors": []
+        },
+        {
+          "title": "E2E-06 API: worker1, 375px, kk, direct route/reload and keyboard",
+          "status": "passed",
+          "fixme": false,
+          "durationMs": 5322,
+          "note": "",
+          "errors": []
+        },
+        {
+          "title": "E2E-06 API: foreman1, 375px, kk, direct route/reload and keyboard",
+          "status": "passed",
+          "fixme": false,
+          "durationMs": 6152,
+          "note": "",
+          "errors": []
+        },
+        {
+          "title": "E2E-06 API: worker1, 800px, ru, direct route/reload and keyboard",
+          "status": "passed",
+          "fixme": false,
+          "durationMs": 3674,
+          "note": "",
+          "errors": []
+        },
+        {
+          "title": "E2E-06 API: foreman1, 800px, ru, direct route/reload and keyboard",
+          "status": "passed",
+          "fixme": false,
+          "durationMs": 9004,
+          "note": "",
+          "errors": []
+        },
+        {
+          "title": "E2E-06 API: worker1, 800px, kk, direct route/reload and keyboard",
+          "status": "passed",
+          "fixme": false,
+          "durationMs": 19700,
+          "note": "",
+          "errors": []
+        },
+        {
+          "title": "E2E-06 API: foreman1, 800px, kk, direct route/reload and keyboard",
+          "status": "passed",
+          "fixme": false,
+          "durationMs": 13799,
+          "note": "",
+          "errors": []
+        },
+        {
+          "title": "E2E-06 API: worker1, 801px, ru, direct route/reload and keyboard",
+          "status": "passed",
+          "fixme": false,
+          "durationMs": 4164,
+          "note": "",
+          "errors": []
+        },
+        {
+          "title": "E2E-06 API: foreman1, 801px, ru, direct route/reload and keyboard",
+          "status": "passed",
+          "fixme": false,
+          "durationMs": 5385,
+          "note": "",
+          "errors": []
+        },
+        {
+          "title": "E2E-06 API: worker1, 801px, kk, direct route/reload and keyboard",
+          "status": "passed",
+          "fixme": false,
+          "durationMs": 4653,
+          "note": "",
+          "errors": []
+        },
+        {
+          "title": "E2E-06 API: foreman1, 801px, kk, direct route/reload and keyboard",
+          "status": "passed",
+          "fixme": false,
+          "durationMs": 4422,
+          "note": "",
+          "errors": []
+        },
+        {
+          "title": "E2E-06 API: worker1, 1280px, ru, direct route/reload and keyboard",
+          "status": "passed",
+          "fixme": false,
+          "durationMs": 3344,
+          "note": "",
+          "errors": []
+        },
+        {
+          "title": "E2E-06 API: foreman1, 1280px, ru, direct route/reload and keyboard",
+          "status": "passed",
+          "fixme": false,
+          "durationMs": 3295,
+          "note": "",
+          "errors": []
+        },
+        {
+          "title": "E2E-06 API: worker1, 1280px, kk, direct route/reload and keyboard",
+          "status": "passed",
+          "fixme": false,
+          "durationMs": 3337,
+          "note": "",
+          "errors": []
+        },
+        {
+          "title": "E2E-06 API: foreman1, 1280px, kk, direct route/reload and keyboard",
+          "status": "passed",
+          "fixme": false,
+          "durationMs": 4776,
+          "note": "",
+          "errors": []
+        },
+        {
+          "title": "API: coordinator login, server data indicator, map, estimate, priorities, logout",
+          "status": "passed",
+          "fixme": false,
+          "durationMs": 5782,
+          "note": "",
+          "errors": []
+        },
+        {
+          "title": "API: worker1 login opens shift cabinet and cabinet logout ends the session",
+          "status": "passed",
+          "fixme": false,
+          "durationMs": 2792,
+          "note": "",
+          "errors": []
+        },
+        {
+          "title": "API: foreman1 login opens the crew shift cabinet",
+          "status": "passed",
+          "fixme": false,
+          "durationMs": 1870,
+          "note": "",
+          "errors": []
+        },
+        {
+          "title": "API: admin reads the map, cannot draw or enter a crew cabinet, and logs out",
+          "status": "passed",
+          "fixme": false,
+          "durationMs": 3620,
+          "note": "",
+          "errors": []
+        },
+        {
+          "title": "API: viewer reads the map, cannot draw or enter a crew cabinet, and logs out",
+          "status": "passed",
+          "fixme": false,
+          "durationMs": 5053,
+          "note": "",
+          "errors": []
+        },
+        {
+          "title": "API: coordinator cannot open the worker route and returns home",
+          "status": "passed",
+          "fixme": false,
+          "durationMs": 1797,
+          "note": "",
+          "errors": []
+        },
+        {
+          "title": "API: worker1 header logout clears identity and remains signed out after reload",
+          "status": "passed",
+          "fixme": false,
+          "durationMs": 2381,
+          "note": "",
+          "errors": []
+        }
+      ]
+    }
+  }
+}
