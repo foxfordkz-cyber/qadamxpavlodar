@@ -1,7 +1,8 @@
 # Outcomes storage / handoff (2026-10-30)
 
-PR #18 is **MERGED**. This branch was synchronized by normal merge with coordinator `cf07b97`
-(includes #18/#20), retaining original shared DTOs/formulas. BLOCKED_BY_PR18 is cleared.
+PR #18 is **MERGED**. This branch was synchronized by normal merges with coordinator `cf07b97`
+(includes #18/#20), then `b53c180` (UI/fonts/site names), retaining original shared DTOs/formulas.
+BLOCKED_BY_PR18 is cleared.
 Deployment changes remain in #22, botanical changes in #19, UI/read-model extensions in #24.
 
 ## Transport extension proposed for captain review
@@ -151,6 +152,45 @@ is missing. Deploy the reviewed integrated source rather than mixing builds from
 The eight backend outcomes tests were repeated against this branch: 8 passed, 0 failed/skipped.
 The full 73/73 backend and 119/119 web results above are from the preceding unchanged-code run;
 this follow-up adds documentation only. Docker/public HTTPS/browser E2E statuses remain unchanged.
+
+## Final integration acceptance — 2026-10-30
+
+Tested against coordinator `b53c180a67686d1d2fc1f79d0295884783d5bb4b` + this branch:
+
+| Check | Actual result |
+| --- | --- |
+| Backend typecheck / build | PASS / PASS |
+| Full backend suite | **75 passed, 0 failed, 0 skipped**; test-concurrency=2 |
+| Outcomes subset | **9 passed**, including reuse of existing demo plant IDs |
+| V2 snapshot regression | **1 passed**; exact live generator match and compiled JSON schemas |
+| Web tests | **120 passed, 0 failed, 0 skipped** |
+| Web typecheck / build | PASS / PASS; existing large-chunk warning |
+| check:i18n | **1570/1570**, no missing/extra/placeholder mismatch |
+| Actual npm run seed:outcomes twice | PASS on disposable storage; one cohort/inspection, unchanged forecast/registry on repeat |
+| Migration / real HTTP / session restart | PASS in full suite; previous V2/municipal behavior retained |
+| Docker runtime | BLOCKED: Engine unavailable, no installation/settings changes |
+| Browser integrated Outcomes UI | Not independently executed here; belongs to accepted #24 integration / Айдана |
+
+Backend tests used an isolated non-hidden directory to avoid the unchanged Swagger sendFile dot-path
+defect. 182 tracked server/shared/fixture files matched this branch byte-for-byte; no user database copied.
+`apps/server/openapi-v2.json` already matches **101 V2 operations** from the existing generator: no JSON
+rewrite was needed. New regression compiles request/response schemas and checks cookie/CSRF requirements.
+Outcomes retains its separately authenticated `/api/v1/outcomes/openapi.json`; it is not silently folded
+into the V2 snapshot. Existing route-inventory and DTO tests continue to pass.
+
+PR #24 head reviewed: `f3af41c11d2b8fc4457a32f3e2f1b597dcdba46e`.
+[Review and precise UI wording comment](https://github.com/foxfordkz-cyber/qadamxpavlodar/pull/24#pullrequestreview-5711813420).
+Source inspection confirms explicit mock/API selection, propagated API errors, empty-state rendering,
+role checks and the expected site read model/rates-version additions. Those additions are owned by #24;
+no second adapter or modification to its worktree was made. Owner should label report-backed observations
+«Ручное подтверждение специалиста», keeping demo fixtures distinct, and merge the accepted current #23/base.
+This is not a claim that #24's browser tests were independently rerun.
+
+PR #24 is still open; post-merge Kazakh Outcomes review is **PENDING_PR24_MERGE**. No speculative i18n PR
+was created. Review the final accepted strings for прогноз/факт/посадка/контрольный осмотр/приживаемость/
+подтверждение специалиста/неизвестное состояние/демоданные after merge, without changing formulas/API.
+Release owner: Дамир reviews and merges; Айдана performs final integrated browser, role, restart and
+container Cases A/B checks on the accepted SHA. Public deploy requires separate authorization.
 
 ## Бекзатқа арналған қысқа көрсетілім мәтіні
 
