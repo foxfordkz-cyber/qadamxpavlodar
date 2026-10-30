@@ -13,5 +13,5 @@ try {
   await seedMunicipal(store);
   store.transaction(()=>syncMunicipalZones(store));
   console.log(JSON.stringify({ accounts: accounts.accounts.map(a => `${a.login} (${a.role})`), crews: accounts.crews, ...tz }, null, 2));
-  if (accounts.generatedPassword) console.log(`DEMO_PASSWORD не задан: пароль демо-аккаунтов — ${accounts.generatedPassword}. Задайте свой в apps/server/.env.`);
+  if (accounts.generatedPassword) console.log('DEMO_PASSWORD не задан: создан случайный пароль демо-аккаунтов; значение не выводится. Для API-входа задайте приватный пароль до первого seed новой демонстрационной базы.');
 } finally { store.close(); }

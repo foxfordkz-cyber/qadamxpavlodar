@@ -1,15 +1,14 @@
 # Запуск одной командой (ТЗ 4): docker compose up --build → http://localhost:8080
-# DEMO_PASSWORD задаётся в окружении Compose; остальные серверные настройки — в приватном apps/server/.env.
-# DEMO_PASSWORD required: supply a private local value; never print it in logs.
+# Необязательный apps/server/.env передаётся серверу через env_file, а не в образ.
 services:
   web:
     build:
       context: .
       dockerfile: apps/web/Dockerfile
       args:
-        # Сборка по умолчанию использует реальный сервер; mock выбирается явно через URL.
+        # По умолчанию данные mock; API выбирается явно через URL.
         # Режим можно сменить и без пересборки: http://localhost:8080/?source=api
-        DATA_SOURCE: api
+        DATA_SOURCE: ${DATA_SOURCE:-mock}
     ports:
       - "127.0.0.1:${WEB_PORT:-8080}:80"
     depends_on:
@@ -24,7 +23,6 @@ services:
       - path: apps/server/.env
         required: false
     environment:
-      DEMO_PASSWORD: ${DEMO_PASSWORD:?Set a private demo password in the process environment}
       ALLOWED_HOSTS: ${ALLOWED_HOSTS:-localhost,127.0.0.1}
       FRONTEND_ORIGINS: ${FRONTEND_ORIGINS:-http://localhost:8080,http://127.0.0.1:8080}
       NODE_ENV: production

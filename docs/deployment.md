@@ -1,6 +1,7 @@
 # Deployment readiness (2026-10-30)
 
-Base e6d9079840bd7a7469488031ab777a851c7f8d78. Public hosting: **BLOCKED_PENDING_HOSTING**.
+Base synchronized by normal merge with coordinator cf07b97 (PR #18 and #20 merged).
+Public hosting: **BLOCKED_PENDING_HOSTING**. PR #22 stays Draft until Docker runtime acceptance.
 Required from captain: approved Linux host, domain, SSH access via secure channel,
 budget and permission to publish a specific accepted coordinator SHA. No paid resources provisioned.
 
@@ -30,9 +31,27 @@ Web Dockerfile includes tools/worker-demo/demo; server includes shared analytics
 
 ## Environment and network
 
-Set DEMO_PASSWORD privately in the invoking shell/secret manager (>=12 chars); never log it.
-Compose fails closed if absent. An optional apps/server/.env is ignored by Git; do not use
-the previous example password. Compose process variables override that file for the keys below.
+Default URL `http://localhost:8080` opens **mock**. `http://localhost:8080/?source=api`
+explicitly opens API mode. `DATA_SOURCE` build argument defaults to mock; no API/model/key is
+needed for mock data. Map tiles can still need network. Compose still starts the backend and
+waits for health; a standalone frontend mock session does not request backend data.
+
+For API login, create a private `apps/server/.env` from the example and set DEMO_PASSWORD
+(>=12 characters) **before first seed of a new demo database**. It is ignored by Git and excluded
+from the Docker build context. Compose `env_file` (optional, `required: false`) injects its values
+into the server process; the physical file is not copied into the image. No required password
+interpolation and no DEMO_PASSWORD environment override remain in Compose. A shell-only password
+is not automatically passed through: use this private file or an approved secret injection override.
+
+With no file/password, existing seed generates random demo credentials. The deployment seed CLI
+now prints only a notice, never their value. This one-line CLI change is the necessary scope extension
+to prevent the existing Docker CMD from leaking generated credentials in container logs; password
+generation/hashing/authentication are unchanged. Mock needs no known server password. Adding a password
+later does not change existing account hashes; use a separate new demo volume/project or an authorized
+account reset, never delete/reseed user data. `docker compose config --quiet` is safe to display;
+plain `config`/`docker inspect` may expose injected secrets and must not be shared.
+
+Compose process variables override the env_file for the explicit network keys below.
 ALLOWED_HOSTS=approved.example.org; FRONTEND_ORIGINS=https://approved.example.org (replace with approved domain).
 WEB_PORT defaults 8080. STORAGE_ROOT=/data; DB_PATH and UPLOADS_PATH must be unset for defaults
 /data/db/green-pavlodar.sqlite and /data/uploads. NODE_ENV=production, HOST=0.0.0.0, PORT=3100,
@@ -62,6 +81,21 @@ Migrations run transactionally when Store opens, with foreign_key_check before c
 The named gp-data volume stores SQLite WAL files, sessions and uploads. Keep Compose project name
 green-pavlodar stable between release directories. Never use down -v or volume prune.
 Stop writes before consistent database-plus-files backup; copying only a live .sqlite misses WAL.
+
+After PR #23 is accepted into the same release image, opt-in Outcomes demonstration data is seeded by:
+
+```sh
+docker compose -p green-pavlodar exec -T server npm run seed:outcomes
+```
+
+Run after the normal server startup seed. PR #22 alone does not contain this npm script; it belongs
+to PR #23. Repeat is idempotent and does not overwrite the saved forecast or user records. UI `#/outcomes`
+also needs accepted PR #24. See `docs/outcomes-data-handoff.md` in the integrated release.
+
+To check persistence, record a cohort/report ID and its version through authenticated API, run
+`docker compose -p green-pavlodar restart server`, wait for healthy status, then read the same record
+and session again. Use the same project name/volume; do not run `down -v`. Confirm uploaded-file download
+and repeat seed as well. These container checks remain BLOCKED here until Engine is available.
 
 ## Backup and restore
 
@@ -98,7 +132,7 @@ Before public release, Ayдана verifies API mode, all five roles, logout revo
 RU/KK, Word export and rules labels using the final URL/SHA. Word export is client-side and requires
 browser E2E; this infrastructure task does not claim browser acceptance from server tests.
 
-## Verification
+## Earlier verification (before final captain corrections)
 
 Docker client 29.1.5 and Compose 5.0.1 are installed. Docker Engine socket missing:
 **BLOCKED** image build, container startup, nginx runtime, container recreate and HTTPS cookie test.
@@ -179,7 +213,7 @@ not SQLite, and map tiles may still need network access. Rules needs no LLM key;
 If either port is occupied, choose free ports and change PORT, FRONTEND_ORIGINS and VITE_API_PROXY
 together; do not stop another developer's process. No system or Docker settings need changing.
 
-## Repeat check and integration status, 2026-10-30
+## Earlier repeat check, 2026-10-30 (superseded below)
 
 GitHub and explicit fetch reconfirm coordinator e6d9079840bd7a7469488031ab777a851c7f8d78;
 #17 merged, #18/#19 open, #22/#23 Draft. Existing PRs are continued, not recreated.
@@ -189,3 +223,24 @@ The two deployment tests were rerun: **2 passed, 0 failed/skipped**, covering al
 CSRF, logout, session restart, repeat seed and separate SQLite/files backup/restore.
 The complete previously recorded 67/67 backend and 80/80 web results apply to unchanged application code;
 this follow-up changes documentation/comments only and does not claim another complete suite run.
+
+## Final captain corrections / acceptance, 2026-10-30
+
+- DATA_SOURCE is `${DATA_SOURCE:-mock}`; optional env_file supplies the password, with no required
+  Compose interpolation. One-line TZ CLI log redaction prevents the no-password case from exposing
+  the generated credential. Auth/RBAC/CSRF/versions and seed generation are unchanged.
+- Isolated Compose Case A, no .env and DEMO_PASSWORD removed from process: **PASS config**.
+  Case B, separate private .env: **PASS config**, verified resolved environment equals its password
+  without displaying it. Explicit DATA_SOURCE=api override, loopback bind, health dependency and /data verified.
+- Real local seed/HTTP equivalents: **4/4 deployment tests PASS**, including both environment cases,
+  existing credentials preserved on repeat seed, admin/coordinator/viewer login, all five roles,
+  HttpOnly/SameSite cookie, CSRF denial, logout, DB/server reopen and backup/restore/files.
+  The first added test expected nine users but TZ also creates the specialist alias; corrected to ten.
+- Full backend after coordinator merge: **69 passed, 0 failed, 0 skipped**; typecheck/build PASS.
+  Run in an isolated non-hidden source copy because of the pre-existing Swagger asset path defect above.
+- Docker client/Compose available; `docker compose build` fails because Docker Engine pipe is absent.
+  Case A/B container startup, nginx runtime, container restart and HTTPS cookie: **BLOCKED**, not PASS.
+  No actual user .env, SQLite, volume or system settings changed. PR #22 remains **Draft**.
+- Before Ready: Ayдана/operator must execute both cases using separate Compose project names and
+  disposable volumes, preserve user env/data, verify mock without an API session and API login/restart.
+  Public deployment remains BLOCKED_PENDING_HOSTING and requires separate authorization.
