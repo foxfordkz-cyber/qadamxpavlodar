@@ -1,0 +1,102 @@
+name: Quality
+
+on:
+  pull_request:
+    branches: [codex/coordinator]
+  push:
+    branches: [codex/coordinator]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: quality-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  web:
+    name: Web / types, build, tests, checks and coverage
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: apps/web
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+      - run: npm ci
+      - run: npx tsc -b
+      - run: npm run build
+      - run: npm test
+      - name: Run every check script
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync } from 'node:fs';
+          import { spawnSync } from 'node:child_process';
+          const { scripts } = JSON.parse(readFileSync('package.json', 'utf8'));
+          for (const name of Object.keys(scripts).filter(name => name.startsWith('check:')).sort()) {
+            const result = spawnSync('npm', ['run', name], { stdio: 'inherit' });
+            if (result.error) throw result.error;
+            if (result.status !== 0) process.exit(result.status ?? 1);
+          }
+          NODE
+      - name: Measure coverage (no threshold)
+        run: npm run test:coverage
+      - name: Save source coverage reports
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: web-coverage-${{ github.sha }}
+          path: |
+            apps/web/dist-tests/coverage/lcov.info
+            apps/web/dist-tests/coverage/summary.json
+          if-no-files-found: warn
+          retention-days: 7
+
+  server:
+    name: Server / types, build and tests without .env
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: apps/server
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: apps/server/package-lock.json
+      - name: Confirm a clean test environment
+        run: test ! -f .env
+      - run: npm ci
+      - run: npx tsc --noEmit
+      - run: npm run build
+      # setup-env.mjs generates the temporary test password; no repository secrets needed.
+      - run: npm test -- --test-concurrency=2
+
+  worker:
+    name: Worker / node tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    defaults:
+      run:
+        working-directory: tools/worker-demo
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      # This package has no external dependencies or lockfile.
+      - run: npm test
