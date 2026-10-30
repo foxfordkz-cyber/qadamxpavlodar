@@ -178,6 +178,72 @@ fixtures/photos/                 фото со свободной лицензи
 6. **✦ Ассистент** → спросите своими словами, например: «что можно озеленить на 50 млн».
 
 
+## Проверки качества и покрытие
+
+[Quality](.github/workflows/quality.yml) запускается на pull request в `codex/coordinator`
+и push в эту ветку. Три независимых задания используют Node 24: веб (типы, сборка,
+тесты, все `check:*` и покрытие), сервер (типы, сборка и тесты) и кабинет работника.
+Установка — `npm ci` по существующим lockfiles; пакет работника внешних зависимостей
+не имеет. Ключи моделей и секреты репозитория не нужны. Серверные тесты работают без
+`.env`: одноразовый пароль создаёт `tests/setup-env.mjs`.
+
+Основные команды из корня:
+
+```powershell
+npm --prefix apps/web ci
+npm --prefix apps/server ci
+npm --prefix apps/web run typecheck
+npm --prefix apps/web run build
+npm --prefix apps/web test
+npm --prefix apps/web run check:i18n
+npm --prefix apps/web run check:zones
+npm --prefix apps/web run check:survival
+npm --prefix apps/web run check:care
+npm --prefix apps/web run test:coverage
+npm --prefix apps/server run typecheck
+npm --prefix apps/server run build
+npm --prefix apps/server test -- --test-concurrency=2
+npm --prefix tools/worker-demo test
+```
+
+`npm run test:coverage` использует [встроенное покрытие Node](https://nodejs.org/docs/latest-v24.x/api/test.html#collecting-code-coverage),
+без дополнительной библиотеки и без порога. Esbuild создаёт общие ESM-фрагменты и
+связанные source maps с исходным текстом; сторонние пакеты остаются внешними.
+Тот же набор тестов измеряется последовательно в одном процессе: это устраняет
+повторные копии модулей и зависимость счётчиков source maps от порядка объединения
+процессов. Обычный `npm test` сохраняет изоляцию файлов тестов отдельными процессами.
+
+Измерено **30.10.2026**, Windows, Node **v24.17.0**, чистый коммит
+`f82f4015b2cf819ae8ddc5a78fa16e7e11c6e5bb`: **169 тестов**, отчёт по **52 исходным TS/TSX-файлам**.
+Повторные измерения совпали по каждому файлу.
+
+| Метрика | Покрыто / учтено | Процент |
+|---|---:|---:|
+| Строки | 2999 / 5650 | 53,08% |
+| Ветви | 1641 / 1903 | 86,23% |
+| Функции | 579 / 763 | 75,88% |
+
+Это покрытие исходников, достигнутых данным набором Node-тестов и сопоставленных
+встроенным экспериментальным механизмом Node, **не всего приложения**. В знаменатель
+не входят незагруженные файлы, тесты, `node_modules`, fixtures, JSON-данные и диапазоны,
+которые Node не смог сопоставить с исходниками. Показатель не измеряет браузерные
+сценарии, сервер или визуальное качество. Не следует складывать его с результатами E2E.
+
+После запуска доступны `apps/web/dist-tests/coverage/lcov.info` и `summary.json`.
+JSON содержит дату, Node, SHA, признак незакоммиченных изменений, список файлов,
+исключения и числители/знаменатели. CI сохраняет эти два отчёта как артефакт на семь
+дней. Старые отчёты удаляются перед измерением; пустой отчёт, дубли путей или строки
+из bundle вместо `src` считаются ошибкой, а не успешным измерением.
+
+Прямые тесты `v2compat` проверяют соответствия сайтов, проверок, задач, бригад,
+проектов/согласованных ревизий, отчётов и ошибок; отдельно — версии, ключи повторов,
+пагинацию и передачу ошибок API. Сами преобразования этим изменением не переписываются.
+
+Playwright остаётся отдельной приёмкой в `tools/e2e`. Дополнительное задание E2E в CI
+пока не включено: расширенный набор #16 нужно проверить вместе с исправлением #20
+на интегрированной версии. При создании ветки `main` для жюри капитан должен добавить
+её в фильтры workflow; текущие фильтры относятся только к `codex/coordinator`.
+
 ## Municipal backend integration
 
 The recovered municipal backend is integrated with the coordinator server on `feature/backend-municipal`. See [merge verification](apps/server/BACKEND_MERGE_VERIFICATION.md) for schema 5 migration from both historical schema 4 layouts, durable imports/snapshots/PDF/XLSX, tests and remaining Docker/provider checks; [workspace recovery](WORKSPACE_RECOVERY_REPORT.md) records source preservation. Use `?source=api` for real HTTP integration.
