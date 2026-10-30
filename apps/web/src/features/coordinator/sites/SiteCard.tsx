@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useData, useResource } from '../../../shared/api/DataProvider';
 import type { FactorKey, Plant, PlantingProject, SiteContext, Task, Worker } from '../../../shared/api/types';
-import { hrefFor } from '../../../shared/router';
+import { hrefFor, useRoute } from '../../../shared/router';
 import { ProjectStatusBadge } from '../projects/status';
 import { Bar, Button, CheckBadge, DataClassTag, EligBadge, ErrorNote, EvidenceList, Freshness, MissingList, Modal, PriorityBadge, Section, StateView, TaskStatusBadge } from '../../../shared/ui/components';
 import { t, tr, type Key } from '../../../shared/i18n';
@@ -10,6 +10,7 @@ import { CHECK_KEYS, eligibilityOf, lastCheckAt } from './eligibility';
 import { ChecksForm } from './ChecksForm';
 import { PlantSelectionPanel } from './PlantSelectionPanel';
 import { TaskForm, type TaskDraft } from '../tasks/TaskForm';
+import { PlanSummary } from '../zone/PlanSummary';
 import { ZoneAnalysisView, ZONE_TABS, type ZoneTab } from '../zone/ZoneAnalysisView';
 import type { PlanOptions } from '../../../shared/analytics/plan';
 
@@ -33,10 +34,17 @@ export function SiteCard({ id, tasks, onClose, onChanged, context, projects, pla
   const [draft, setDraft] = useState<TaskDraft | null>(null);
   const [copied, setCopied] = useState(false);
   // Вкладка и параметры плана общие для всех вкладок анализа (ТЗ: кросс-модульный пересчёт).
-  const [tab, setTab] = useState<'overview' | ZoneTab>('overview');
+  const route = useRoute();
+  const [autoGrow, setAutoGrow] = useState(() => route.params.get('grow') === '1');
+  const [tab, setTab] = useState<'overview' | ZoneTab>(autoGrow ? 'effect' : 'overview');
   const [planOptions, setPlanOptions] = useState<Partial<PlanOptions>>({});
+  const summary = useResource(() => (tab === 'overview' ? api.zoneAnalysis(id, planOptions) : Promise.resolve(null)), [id, tab, JSON.stringify(planOptions)]);
   const s = site.data;
 
+  const grow = () => {
+    setAutoGrow(true);
+    setTab('effect');
+  };
   const openTask = (d: TaskDraft) => {
     setDraft(d);
     setModal('task');
@@ -61,6 +69,7 @@ export function SiteCard({ id, tasks, onClose, onChanged, context, projects, pla
   return (
     <div className="gp-sitecard">
       <div className="gp-sitecard__head">
+        <button className="gp-btn gp-btn--ghost gp-sitecard__back" onClick={onClose}>← {t('site.allZones')}</button>
         <h2>{s?.name ?? t('site.card')}</h2>
         <button className="gp-icon-btn" onClick={onClose} aria-label={t('site.close')}>✕</button>
       </div>
@@ -75,19 +84,22 @@ export function SiteCard({ id, tasks, onClose, onChanged, context, projects, pla
             <Freshness updatedAt={site.updatedAt} error={site.error} loading={site.loading} onRefresh={site.reload} />
             <div className="gp-zonetabs" role="tablist" aria-label={t('site.sections')}>
               {([['overview', 'Обзор'], ...ZONE_TABS] as ['overview' | ZoneTab, string][]).map(([k, label]) => (
-                <button key={k} role="tab" aria-selected={tab === k} onClick={() => setTab(k)}>{tr(label)}</button>
+                <button key={k} role="tab" aria-selected={tab === k} onClick={() => { setAutoGrow(false); setTab(k); }}>{tr(label)}</button>
               ))}
             </div>
-            {tab !== 'overview' ? <ZoneAnalysisView site={s} tab={tab} options={planOptions} setOptions={setPlanOptions} /> : (<>
+            {tab !== 'overview' ? <ZoneAnalysisView site={s} tab={tab} options={planOptions} setOptions={setPlanOptions} autoPlay={autoGrow} /> : (<>
 
+            {summary.data && <PlanSummary a={summary.data} />}
+            {/* Одно главное действие по состоянию участка: нужна проверка — обследование, есть ограничение — проверки, иначе — рост. */}
             <div className="gp-btn-row gp-sitecard__actions">
-              <Button variant="primary" onClick={() => openTask({ objectId: s.id, action: 'inspect', priority: 'medium', description: t('site.surveyDraft') })}>＋ {t('site.createSurvey')}</Button>
+              <Button variant={eligibilityOf(s) === 'planting_candidate' ? 'primary' : undefined} onClick={grow}>▶ {t('timeMachine.play')}</Button>
+              <Button variant={eligibilityOf(s) === 'survey_needed' ? 'primary' : undefined} onClick={() => openTask({ objectId: s.id, action: 'inspect', priority: 'medium', description: t('site.surveyDraft') })}>＋ {t('site.createSurvey')}</Button>
+              <Button variant={eligibilityOf(s) === 'blocked' ? 'primary' : undefined} onClick={() => setModal('checks')}>✓ {t('site.editChecks')}</Button>
               <Button onClick={() => setModal('select')}>❀ {t('site.selectPlants')}</Button>
-              <Button onClick={() => setModal('checks')}>✓ {t('site.editChecks')}</Button>
               <Button variant="ghost" onClick={copyLink}>🔗 {copied ? t('site.copied') : t('site.link')}</Button>
             </div>
 
-            <Section title={t('site.projects')} id="sec-projects" actions={<a className="gp-btn gp-btn--primary" href={hrefFor('/projects/new', { site: s.id })}>＋ {t('site.newProject')}</a>}>
+            <Section title={t('site.projects')} id="sec-projects" actions={<a className="gp-btn" href={hrefFor('/projects/new', { site: s.id })}>＋ {t('site.newProject')}</a>}>
               {projects.length === 0 ? <p className="gp-muted gp-small">{t('site.noProjects')}</p> : (
                 <ul className="gp-list">{projects.map((p) => <li key={p.id} className="gp-issue"><a href={hrefFor(`/projects/${encodeURIComponent(p.id)}`)}>{p.title}</a> <ProjectStatusBadge p={p} /> <span className="gp-small gp-muted">v{p.designVersion}</span></li>)}</ul>
               )}

@@ -153,7 +153,7 @@ const sites = raw_.map((r, i) => {
   const id = `site-osm-${r.el.id}`;
   const street = r.namedRoad?.name ?? null;
   const kindLabel = r.el.tags.landuse === 'grass' ? 'Газон' : 'Травяной участок';
-  const name = `${kindLabel} ${street ? `у ${street}` : `№${i + 1}`}`;
+  const name = street ? `${kindLabel}, ${street}` : `${kindLabel} №${i + 1}`;
   // Дефицит озеленения: чем дальше ближайшая зелёная зона и меньше деревьев рядом, тем выше.
   const greeneryGap = clamp((Math.min(r.dGreen, 400) / 400) * 70 + Math.max(0, 30 - r.trees150 * 3));
   // Общественная значимость: соцобъекты в 400 м, остановки в 300 м, плотность застройки в 200 м.

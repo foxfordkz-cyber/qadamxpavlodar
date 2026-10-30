@@ -202,6 +202,28 @@ export interface SceneInput {
   stage: Growth;
 }
 
+const TWEEN_MS = 1100;
+
+/** Растение на своём месте зоны; поворот зависит только от id, поэтому при смене года модель не крутится. */
+function placed(it: ProjectItem, sp: Species | undefined, stage: Growth, proj: ReturnType<typeof makeProjection>) {
+  const [x, y] = proj.toXY((it.geometry as GeoJsonPoint).coordinates);
+  const m = plantModel(sp, stage, it.id);
+  m.position.set(x, 0, -y);
+  m.rotation.y = rng(it.id + 'r')() * Math.PI * 2;
+  return m;
+}
+
+/** Смена года пересобирает сотни моделей: без освобождения памяти видеокарты анимация быстро её исчерпает. */
+function disposeModels(root: THREE.Object3D) {
+  root.traverse((o) => {
+    const mesh = o as THREE.Mesh;
+    mesh.geometry?.dispose();
+    const material = mesh.material as THREE.Material | undefined;
+    if (material && material !== shadowMat) material.dispose();
+    if (mesh instanceof THREE.InstancedMesh) mesh.dispose();
+  });
+}
+
 /** Слой MapLibre с three.js-сценой. update() пересобирает модели без пересоздания карты. */
 export function createPlantingLayer(input: SceneInput) {
   const scene = new THREE.Scene();
@@ -216,10 +238,42 @@ export function createPlantingLayer(input: SceneInput) {
   let renderer: THREE.WebGLRenderer | null = null;
   let map: MlMap | null = null;
   let origin = mercator(input.origin.lng, input.origin.lat);
+  let previous: SceneInput | null = null;
+  let tween = 0;
+
+  // Плавный переход между годами: модели уже нового размера, масштаб идёт от прежнего к 1.
+  // Выпавшие растения остаются на время перехода и уменьшаются до нуля.
+  const animate = (parts: { model: THREE.Group; from: THREE.Vector3; to: THREE.Vector3 }[]) => {
+    cancelAnimationFrame(tween);
+    if (!parts.length || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      parts.forEach(({ model, to }) => model.scale.copy(to));
+      return;
+    }
+    const start = performance.now();
+    const step = (now: number) => {
+      const p = Math.min(1, (now - start) / TWEEN_MS);
+      const eased = 1 - (1 - p) ** 3;
+      parts.forEach(({ model, from, to }) => model.scale.lerpVectors(from, to, eased));
+      map?.triggerRepaint();
+      if (p < 1) tween = requestAnimationFrame(step);
+    };
+    parts.forEach(({ model, from }) => model.scale.copy(from));
+    tween = requestAnimationFrame(step);
+  };
 
   const build = (inp: SceneInput) => {
+    cancelAnimationFrame(tween);
+    disposeModels(root);
     root.clear();
     origin = mercator(inp.origin.lng, inp.origin.lat);
+    const prev = previous && previous.origin.lat === inp.origin.lat && previous.origin.lng === inp.origin.lng ? previous : null;
+    previous = inp;
+    const parts: { model: THREE.Group; from: THREE.Vector3; to: THREE.Vector3 }[] = [];
+    const k0 = prev ? kOf(prev.stage) : null;
+    const k1 = kOf(inp.stage);
+    const moved = !!k0 && (k0.h !== k1.h || k0.crown !== k1.crown);
+    const one = new THREE.Vector3(1, 1, 1);
+    const growFrom = moved ? new THREE.Vector3(k0.crown / k1.crown, k0.h / k1.h, k0.crown / k1.crown) : one;
     const proj = makeProjection(inp.origin);
     if (inp.siteRing) {
       const ring = inp.siteRing.map(proj.toXY);
@@ -231,15 +285,26 @@ export function createPlantingLayer(input: SceneInput) {
     for (const it of inp.items) {
       const sp = inp.species.get(it.speciesId);
       if (it.kind === 'bed') {
-        root.add(bedModel((it.geometry as GeoJsonPolygon).coordinates[0].map(proj.toXY), sp, inp.stage, it.id));
+        const bed = bedModel((it.geometry as GeoJsonPolygon).coordinates[0].map(proj.toXY), sp, inp.stage, it.id);
+        root.add(bed);
+        // Клумба растёт только вверх: её координаты отсчитаны от центра зоны, а не от самой клумбы.
+        if (moved) parts.push({ model: bed, from: new THREE.Vector3(1, growFrom.y, 1), to: one });
       } else {
-        const [x, y] = proj.toXY((it.geometry as GeoJsonPoint).coordinates);
-        const m = plantModel(sp, inp.stage, it.id);
-        m.position.set(x, 0, -y);
-        m.rotation.y = rng(it.id + 'r')() * Math.PI * 2;
+        const m = placed(it, sp, inp.stage, proj);
         root.add(m);
+        if (moved) parts.push({ model: m, from: growFrom, to: one });
       }
     }
+    if (moved && prev) {
+      const kept = new Set(inp.items.map((it) => it.id));
+      for (const it of prev.items) {
+        if (kept.has(it.id) || it.kind === 'bed') continue;
+        const m = placed(it, prev.species.get(it.speciesId), prev.stage, proj);
+        root.add(m);
+        parts.push({ model: m, from: one, to: new THREE.Vector3(0.001, 0.001, 0.001) });
+      }
+    }
+    animate(parts);
     map?.triggerRepaint();
   };
   build(input);
@@ -261,6 +326,8 @@ export function createPlantingLayer(input: SceneInput) {
       renderer.render(scene, camera);
     },
     onRemove() {
+      cancelAnimationFrame(tween);
+      disposeModels(root);
       renderer?.dispose();
       renderer = null;
     },
