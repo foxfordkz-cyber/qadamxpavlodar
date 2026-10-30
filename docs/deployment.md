@@ -1,6 +1,6 @@
 # Deployment readiness (2026-10-30)
 
-Base synchronized by normal merge with coordinator cf07b97 (PR #18 and #20 merged).
+Base synchronized by normal merges with coordinator cf07b97, then b53c180 (UI/fonts/site names).
 Public hosting: **BLOCKED_PENDING_HOSTING**. PR #22 stays Draft until Docker runtime acceptance.
 Required from captain: approved Linux host, domain, SSH access via secure channel,
 budget and permission to publish a specific accepted coordinator SHA. No paid resources provisioned.
@@ -244,3 +244,9 @@ this follow-up changes documentation/comments only and does not claim another co
 - Before Ready: Ayдана/operator must execute both cases using separate Compose project names and
   disposable volumes, preserve user env/data, verify mock without an API session and API login/restart.
   Public deployment remains BLOCKED_PENDING_HOSTING and requires separate authorization.
+
+The final source tree also includes coordinator b53c180; frontend typecheck/build PASS with the bundled
+Kazakh fonts. Node dependencies were refreshed using the checked-in lockfile. Compose config Cases A/B
+were repeated successfully. Final full backend rerun: **69 passed, 0 failed, 0 skipped**, including
+all four deployment tests, on b53c180 + this PR. Backend typecheck/build PASS; frontend typecheck/build PASS.
+All validation sources/fixtures were compared byte-for-byte with this worktree; no user DB was copied.
