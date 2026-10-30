@@ -132,7 +132,14 @@ export class GreenWorker extends HTMLElement {
     if (this.busy) return;
     if (action === 'logout') { await this.writeChain.catch(() => {}); await this.configure({ gateway: null, user: null, scope: this.scope, date: this.date, demo: this.demo }); this.dispatchEvent(new CustomEvent('worker-logout', { bubbles: true, composed: true })); return; }
     if (!this.workflow) return;
-    if (action === 'nav') { this.page = id; this.draft = null; this.mobileDetail = false; this.message = null; this.render(); return; }
+    if (action === 'nav') {
+      if (!['tasks','history','profile'].includes(id) || this.page === id) return;
+      // Keep the open task and its draft when visiting the journal or profile.
+      this.page = id; this.render();
+      [...this.root.querySelectorAll('[data-action="nav"]')]
+        .find(button => button.dataset.id === id && button.getClientRects().length)?.focus({ preventScroll: true });
+      return;
+    }
     if (action === 'refresh') return this.refresh();
     if (action === 'reload-assignment') {this.assignmentDraft=null;return this.refresh();}
     if (action === 'rebase-draft' && ['conflict','rejected'].includes(this.draft?.delivery)){await this.workflow.rebase(this.draft);await this.refresh(false);this.render();return;}
@@ -273,8 +280,14 @@ export class GreenWorker extends HTMLElement {
     </section>`;
   }
   render() {
-    const css = `<link rel="stylesheet" href="${new URL('./journal.css', import.meta.url).href}">`;
-    this.root.innerHTML = cabinetLayout(this, css);
+    let content = this.root.querySelector('[data-cabinet-content]');
+    if (!content) {
+      // Keep the stylesheet mounted so rerenders cannot briefly reveal both
+      // navigation bars or move keyboard focus to a soon-to-be-hidden button.
+      this.root.innerHTML = `<link rel="stylesheet" href="${new URL('./journal.css', import.meta.url).href}"><div data-cabinet-content></div>`;
+      content = this.root.querySelector('[data-cabinet-content]');
+    }
+    content.innerHTML = cabinetLayout(this, '');
     if (this.busy) this.root.querySelectorAll('[data-action="select"],[data-action="tab"],[data-action="nav"],[data-action="open-draft"],[data-action="back"],[data-field="date"]').forEach(element => { element.disabled = true; });
   }
 }
