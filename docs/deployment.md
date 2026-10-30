@@ -44,12 +44,44 @@ interpolation and no DEMO_PASSWORD environment override remain in Compose. A she
 is not automatically passed through: use this private file or an approved secret injection override.
 
 With no file/password, existing seed generates random demo credentials. The deployment seed CLI
-now prints only a notice, never their value. This one-line CLI change is the necessary scope extension
+now prints only a notice, never their value. If that random password is unknown, you cannot log in
+to API mode; mock mode remains available without a password. This one-line CLI change is the necessary scope extension
 to prevent the existing Docker CMD from leaking generated credentials in container logs; password
 generation/hashing/authentication are unchanged. Mock needs no known server password. Adding a password
 later does not change existing account hashes; use a separate new demo volume/project or an authorized
 account reset, never delete/reseed user data. `docker compose config --quiet` is safe to display;
 plain `config`/`docker inspect` may expose injected secrets and must not be shared.
+
+### First API login without touching existing users
+
+1. If `apps/server/.env` does not exist, copy `apps/server/.env.example` to that path in your editor.
+   Set a new private test `DEMO_PASSWORD` (12–128 characters). Do not paste it into chat, command
+   arguments or screenshots. Verify `git check-ignore apps/server/.env`; never add the file to Git.
+   For Compose, keep `DB_PATH` and `UPLOADS_PATH` commented out so storage stays in `/data`.
+2. For a **new, isolated demo database**, choose a Compose project name that has never been used,
+   such as `green-pavlodar-api-demo-20261030`. Keep that name for subsequent starts. Do not reuse
+   the established `green-pavlodar` project if its accounts already have an unknown password.
+   Compose uses the project-scoped `gp-data` volume; this creates separate demo storage.
+3. Run `docker compose -p green-pavlodar-api-demo-20261030 config --quiet`, then
+   `docker compose -p green-pavlodar-api-demo-20261030 up -d --build --wait`.
+   The existing container startup runs `seed:tz`'s implementation against that new volume and
+   applies the private password to newly created demo accounts. If port 8080 is occupied, set
+   `WEB_PORT` to a free local port and set the Compose process variable `FRONTEND_ORIGINS` to
+   `http://localhost:PORT,http://127.0.0.1:PORT` with that same port before both commands.
+   Leave the existing deployment running.
+4. Open `http://localhost:8080/?source=api#/` (or the selected `WEB_PORT`). Log in as `admin`,
+   `coordinator` or `viewer` with the private password. The mock URL needs no server password.
+5. **Changing `.env` and restarting/repeating seed does not reset any existing account.**
+   There is no bulk demo-account reset command in this project. If a known administrator can
+   sign in, the existing admin workflow can change the password of an explicitly selected,
+   confirmed demo account (`PATCH /api/v1/users/:id`, current `expectedVersion`, session,
+   CSRF and Idempotency-Key required); each such reset needs owner authorization.
+   If no administrator password is known, use a new isolated demo project as above, or arrange
+   authorized recovery separately. Never delete users, the existing database or `gp-data`, and
+   never recreate all accounts to obtain a working demo login.
+
+The commands above are instructions for the captain's Engine-enabled machine, not a claim that
+Docker runtime was verified on this workstation. Keep PR #22 Draft until that acceptance.
 
 Compose process variables override the env_file for the explicit network keys below.
 ALLOWED_HOSTS=approved.example.org; FRONTEND_ORIGINS=https://approved.example.org (replace with approved domain).
