@@ -32,8 +32,19 @@ The backup/plan check is not a substitute for stopping writers: unrelated change
 
 ## Verification
 
-13 targeted tests pass: old-seed reproduction, exact old value, already-correct/user/unrelated preservation, IDs and all analytical fields, versions/history, repeat apply/seed, project/task/report snapshots, integrity/FKs, stale plan, permissions, transaction rollback, CLI dry-run/backup/reopen/idempotency. Fixtures are isolated temporary databases. No real gp-data or user databases were changed.
+14 targeted tests pass: old-seed reproduction, exact old value, already-correct/user/unrelated preservation, IDs and all analytical fields, versions/history, repeat apply/seed, project/task/report snapshots, integrity/FKs, stale plan, permissions, transaction rollback, CLI dry-run/backup/reopen/idempotency. Fixtures are isolated temporary databases. No real gp-data or user databases were changed.
 
 Run from apps/server:
 
     node --import ./scripts/local-network-guard.mjs --import ./tests/setup-env.mjs --import tsx --test tests/zone-names.test.ts
+
+
+Fresh acceptance, 2026-10-30: targeted **14 passed / 0 failed / 0 skipped**;
+full `npm test` in apps/server **79 passed / 0 failed / 0 skipped**; typecheck/build PASS.
+The added CLI regression starts with all 114 old names and forces two backup failures
+(existing destination and missing parent directory). The source database remains byte-identical;
+site versions, the full history and the reviewed plan are unchanged; integrity/FKs remain valid.
+No authentication or application routes were changed. GitHub #29 had no review comments at the check.
+Ready means ready for code review, not permission to migrate user data. Captain must integrate
+this PR and the latest #22 before repeating final integrated acceptance; this branch alone still
+has the coordinator's schema-5 baseline. Re-run against the final schema-6 integrated release.

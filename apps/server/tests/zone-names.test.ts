@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { mkdtempSync, readFileSync } from 'node:fs';
+import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { execFileSync } from 'node:child_process';
@@ -144,4 +144,32 @@ test('CLI dry-run, reviewed plan, exclusive verified backup, restart and repeat 
   assert.throws(() => cli('--apply', '--actor', f.actor.id, '--plan-hash', empty.hash, '--backup', saved));
   assert.deepEqual(readFileSync(saved), backupBytes);
   assert.equal(JSON.parse(cli('--apply', '--actor', f.actor.id, '--plan-hash', empty.hash, '--backup', join(f.dir, 'repeat.sqlite'))).updated, 0);
+});
+
+test('CLI backup failure leaves the old database, versions and history unchanged', async () => {
+  const f = await oldDatabase();
+  const before = listDocs(f.store, 'site'), history = f.store.all('SELECT * FROM v2_history ORDER BY id');
+  const plan = planZoneNames(f.store.db);
+  assert.equal(plan.changes.length, 114);
+  f.store.close();
+  const bytes = readFileSync(f.file), existing = join(f.dir, 'reserved-backup.sqlite');
+  writeFileSync(existing, 'Existing backup must not be overwritten');
+  const backupBytes = readFileSync(existing);
+  for (const destination of [existing, join(f.dir, 'missing-directory', 'backup.sqlite')]) {
+    assert.throws(() => execFileSync(process.execPath, ['--import', 'tsx',
+      resolve('src/maintenance/zone-names-cli.ts'), '--db', f.file, '--apply',
+      '--actor', f.actor.id, '--plan-hash', plan.hash, '--backup', destination],
+    { encoding: 'utf8', stdio: 'pipe' }), /EEXIST|ENOENT/);
+    // Boolean equality deliberately avoids dumping database/account bytes on failure.
+    assert.ok(readFileSync(f.file).equals(bytes), 'Failed backup must not modify source bytes');
+    const db = new DatabaseSync(f.file, { readOnly: true });
+    try {
+      assert.deepEqual(db.prepare("SELECT data FROM v2_documents WHERE kind='site' ORDER BY id").all().map(r => JSON.parse(String(r.data))), before);
+      assert.deepEqual(db.prepare('SELECT * FROM v2_history ORDER BY id').all(), history);
+      assert.deepEqual(planZoneNames(db), plan);
+      assert.equal(db.prepare('PRAGMA integrity_check').get()?.integrity_check, 'ok');
+      assert.deepEqual(db.prepare('PRAGMA foreign_key_check').all(), []);
+    } finally { db.close(); }
+  }
+  assert.ok(readFileSync(existing).equals(backupBytes), 'Existing backup must stay unchanged');
 });
