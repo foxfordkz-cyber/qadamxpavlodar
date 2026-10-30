@@ -1,0 +1,35 @@
+.gp-outcomes-page { max-width: 1200px; margin-inline: auto; min-width: 0; }
+.gp-outcomes-page h2 { font-size: 1.3rem; margin: 0 0 16px; }
+.gp-outcomes-page h3 { margin: 0 0 12px; }
+.gp-outcome-section { margin-block: 28px; }
+.gp-outcome-picker { display: flex; flex-direction: column; gap: 8px; font-weight: 600; margin-block: 18px; max-width: 650px; }
+.gp-outcome-picker .gp-input { width: 100%; min-width: 0; max-width: 100%; }
+.gp-outcome-toggle { display: flex; align-items: center; gap: 10px; padding-block: 8px; }
+.gp-outcome-toggle input { width: 20px; height: 20px; flex: 0 0 auto; }
+.gp-outcome-variants { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 20px; }
+.gp-outcome-variant { min-width: 0; border-top: 4px solid #cbd8d0; }
+.gp-outcome-variant--best { border-top-color: #28784b; }
+.gp-outcome-stats { display: grid; gap: 16px; margin-block: 20px; }
+.gp-outcome-stats--wide { grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); }
+.gp-outcome-stats dt { font-size: .85rem; color: #506158; line-height: 1.45; }
+.gp-outcome-stats dd { font-size: 1.35rem; font-weight: 650; margin: 5px 0 0; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.gp-outcome-source { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-block: 14px; font-size: .85rem; }
+.gp-outcome-source small { flex-basis: 100%; overflow-wrap: anywhere; }
+.gp-outcome-save { margin-top: 18px; }
+.gp-outcome-issues { padding-left: 20px; font-size: .85rem; line-height: 1.5; }
+.gp-outcome-issues li + li { margin-top: 6px; }
+.gp-outcome-snapshot { margin-top: 18px; }
+.gp-outcome-snapshot caption { text-align: left; font-weight: 600; padding: 12px 0; }
+.gp-outcome-prices { padding-left: 20px; }
+.gp-outcome-prices li { margin-block: 10px; }
+.gp-outcome-prices small { display: block; }
+.gp-outcomes-page .gp-table-wrap { max-width: 100%; overflow-x: auto; }
+.gp-outcomes-page .gp-table { width: 100%; }
+.gp-outcomes-page .gp-card { min-width: 0; }
+.gp-outcomes-page .gp-badge { white-space: normal; }
+@media (max-width: 800px) { .gp-outcome-variants { grid-template-columns: 1fr; } }
+@media (max-width: 420px) {
+  .gp-outcome-stats--wide { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gp-outcomes-page .gp-card { padding: 16px; }
+  .gp-outcomes-page .gp-btn { max-width: 100%; white-space: normal; }
+}

@@ -25,6 +25,7 @@ const NAV: { path: string; key: Key; roles: Role[]; works?: boolean }[] = [
   { path: '/priorities', key: 'nav.priorities', roles: ALL },
   { path: '/species', key: 'nav.species', roles: ALL },
   { path: '/projects', key: 'nav.projects', roles: ALL },
+  { path: '/outcomes', key: 'nav.outcomes', roles: ALL },
   { path: '/rates', key: 'nav.rates', roles: ALL },
   { path: '/import', key: 'nav.import', roles: ['coordinator', 'admin'] },
   { path: '/guide', key: 'nav.guide', roles: ALL },

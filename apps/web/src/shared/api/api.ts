@@ -1,4 +1,5 @@
 import { newIdempotencyKey, type Transport } from './transport';
+import { createOutcomesClient } from './outcomesClient';
 import type {
   Brigade, CandidateSite, CheckKey, GeoJsonPolygon, CheckState, DashboardMetric, DayPlan, DayPlanSummary, EvidenceRef, ID, Issue, Me, Plant, PlantingProject, PlantSelection,
   Priority, ProjectItem, RankWeights, Report, SiteContext, SiteRanking, Species, Task, TaskAction, TaskStatus, Upload, Worker,
@@ -46,6 +47,7 @@ export function createApi(t: Transport) {
   const d = async <T,>(p: Promise<{ data: T; meta?: Record<string, unknown> }>) => (await p).data;
   return {
     kind: t.kind,
+    outcomes: createOutcomesClient(t),
     me: () => d(t.request<Me>('GET', '/auth/me')),
     login: (login: string, password: string) => d(t.request<Me>('POST', '/auth/login', { body: { login, password } })),
     logout: () => d(t.request<null>('POST', '/auth/logout', { body: {} })),

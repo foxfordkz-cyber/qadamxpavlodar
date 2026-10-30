@@ -18,6 +18,7 @@ import { PrioritiesPage } from './tz/PrioritiesPage';
 import { RatesPage } from './tz/RatesPage';
 import { ImportPage } from './tz/ImportPage';
 import { ReportPage } from './tz/ReportPage';
+import { OutcomesPage } from './outcomes/OutcomesPage';
 import './coordinator.css';
 import './v2.css';
 import './v3.css';
@@ -38,6 +39,7 @@ const PAGES: [string, () => ReactElement][] = [
   ['/rates', () => <RatesPage />],
   ['/import', () => <ImportPage />],
   ['/report', () => <ReportPage />],
+  ['/outcomes', () => <OutcomesPage />],
 ];
 
 const PRESENT_KEY = 'gp-present';

@@ -21,6 +21,9 @@ import { dashboardMetrics, greeneryLayer, soilsLayer, variantSummaries } from '.
 import { referenceFacts } from '../pavlodar';
 import { buildCareSchedule, parseCareRequest } from '../../analytics/careSchedule';
 import { GEOCODE_META, searchAddress } from '../geocode';
+import { ensureOutcomeDemo, readMockOutcomes } from './outcomes';
+import { createOutcomeSnapshot } from '../../analytics/outcomes';
+import type { SaveOutcomeForecast } from '../outcomesClient';
 
 // v3: справочник с источниками по Павлодару. Старые данные не читаются.
 const STORAGE_KEY = 'gp-mock-db-v4';
@@ -132,6 +135,33 @@ function withIdempotency<T>(key: string | undefined, body: unknown, run: () => T
 type Handler = (m: RegExpMatchArray, o: RequestOptions) => { data: unknown; meta?: Record<string, unknown> };
 const routes: [HttpMethod, RegExp, Handler][] = [];
 const route = (method: HttpMethod, re: RegExp, h: Handler) => routes.push([method, re, h]);
+
+// UI-only mock routes. The production outcomes module is connected through its own adapter.
+route('GET', /^\/outcomes\/([^/]+)$/, (m) => {
+  requireRole('coordinator');
+  const site = findSite(decodeURIComponent(m[1]));
+  const data = readMockOutcomes(db, site.id);
+  save();
+  return { data };
+});
+route('POST', /^\/outcomes\/([^/]+)\/forecasts$/, (m, o) => {
+  requireRole('coordinator');
+  if (!o.idempotencyKey) fail(400, 'idempotency_required', 'idempotency_required');
+  const site = findSite(decodeURIComponent(m[1]));
+  const body = o.body as SaveOutcomeForecast;
+  return withIdempotency(o.idempotencyKey, { siteId: site.id, ...body }, () => {
+    if (body.siteVersion !== site.version || body.ratesVersion !== db.ratesVersion) fail(409, 'version_conflict', 'version_conflict');
+    const store = ensureOutcomeDemo(db);
+    const id = nextId('forecast');
+    const snapshot = createOutcomeSnapshot({ id, site, catalog, rates: db.rates,
+      analysis: analyzeZone(site, catalog, ratesMap(db.rates), body.options),
+      provenance: { source: 'mock', capturedAt: nowIso(), dataClass: 'demo', isDemo: true,
+        evidenceIds: [...site.evidenceIds], siteVersion: site.version, ratesVersion: db.ratesVersion } });
+    const data = { id, snapshot };
+    store.forecasts.push(data);
+    return { data };
+  });
+});
 
 route('GET', /^\/auth\/me$/, () => {
   if (mockControls.role === 'anonymous') fail(401, 'unauthenticated', 'Сессия не найдена.');

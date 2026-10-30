@@ -7,8 +7,10 @@ import { contextEvidence } from './context';
 import { centroidXY, makeProjection, pointInRing, type XY } from '../../geo';
 import { DEFAULT_RATES, type RateEntry } from '../../analytics/rates';
 import { pavlodarSources } from '../pavlodar';
+import type { MockOutcomeStore } from './outcomes';
 
 export interface MockDb {
+  outcomes?: MockOutcomeStore;
   seededAt: string;
   sites: CandidateSite[];
   evidence: EvidenceRef[];
