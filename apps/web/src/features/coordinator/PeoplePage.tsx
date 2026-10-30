@@ -3,7 +3,7 @@ import { StateView } from '../../shared/ui/components';
 import { t } from '../../shared/i18n';
 import { fmtTime } from '../../shared/format';
 
-// Управление людьми и бригадами — модуль участника 3. Здесь только просмотр текущего состава
+// Управление людьми и бригадами — модуль сервера. Здесь только просмотр текущего состава
 // и точка подключения; редактирование выполняется в его интерфейсе на сервере.
 export function PeoplePage() {
   const { api } = useData();
