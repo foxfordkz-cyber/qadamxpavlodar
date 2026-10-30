@@ -94,12 +94,36 @@ export async function runOutcomeWorkflow(source = 'mock', password) {
         await expect(page.locator('[data-testid="outcome-comparison"]')).toBeVisible();
         await expect(page.locator('[data-testid="outcome-econom"]')).toBeVisible();
       } else {
-        await expect(page.locator('.gp-outcomes-page [role="alert"]')).toContainText(words.unavailable);
+        await expect(page.getByLabel(words.cohort, { exact: true })).toBeVisible();
         await expect(page.locator('[data-testid="outcome-comparison"]')).toHaveCount(0);
-        await expect(page.getByRole('button', { name: words.save, exact: true })).toHaveCount(0);
+        await expect(page.locator('[data-testid="outcome-stat-total"] dd')).toHaveText('32');
+        await expect(page.locator('[data-testid="outcome-stat-alive"] dd')).toHaveText('1');
+        await expect(page.locator('[data-testid="outcome-stat-dead"] dd')).toHaveText('1');
+        await expect(page.locator('[data-testid="outcome-whole"] dd')).toHaveText(words.unknown);
+        const displayedCost = await page.locator('[data-testid="outcome-econom"] .gp-outcomes__metrics').first().locator('dd').nth(3).innerText();
+        const post = page.waitForResponse(r => r.url().endsWith('/outcomes/snapshots') && r.request().method() === 'POST');
+        await page.getByRole('button', { name: words.save, exact: true }).first().click();
+        const response = await post; assert.equal(response.status(), 201);
+        const saved = (await response.json()).data;
+        const value = await page.evaluate(({ text, lang }) => {
+          const parts = new Intl.NumberFormat(lang === 'kk' ? 'kk-KZ' : 'ru-RU').formatToParts(12345.6);
+          const group = parts.find(p => p.type === 'group')?.value ?? '';
+          const decimal = parts.find(p => p.type === 'decimal')?.value ?? '.';
+          return Number(text.split(group).join('').replace(decimal, '.').replace(/[^\d.-]/g, ''));
+        }, { text: displayedCost, lang });
+        assert.ok(Math.abs(value - saved.snapshot.outcome.cost.totalKzt) < 0.01,
+          `saved server estimate must match displayed cost (${lang}: ${displayedCost}; saved: ${saved.snapshot.outcome.cost.totalKzt})`);
+        await expect(page.locator('.gp-outcome-save [role="status"]')).toContainText(words.saveDone);
         assert.ok(apiPaths.some(p => p.endsWith('/sites')) && apiPaths.some(p => p.endsWith('/rates')) && apiPaths.some(p => p.endsWith('/species')));
-        assert.ok(!apiPaths.some(p => p.includes('/outcomes')));
-        await page.reload(); await expect(page.locator('[data-testid="outcome-econom"]')).toBeVisible();
+        const reloadRead = page.waitForResponse(r => r.url().includes('/outcomes/sites/') && r.request().method() === 'GET');
+        await page.reload();
+        const restored = (await (await reloadRead).json()).data.forecasts.find(f => f.id === saved.id);
+        assert.deepEqual(restored.snapshot, saved.snapshot);
+        await expect(page.locator('[data-testid="outcome-econom"]')).toBeVisible();
+        await page.locator('.gp-outcome-toggle input').uncheck();
+        await expect(page.getByRole('button', { name: words.save, exact: true })).toHaveCount(0);
+        await page.locator('.gp-outcome-toggle input').check();
+        await expect(page.getByRole('button', { name: words.save, exact: true })).toHaveCount(3);
       }
       await geometry(page);
       await page.screenshot({ path: fileURLToPath(new URL(`${source}-${lang}-${width}.png`, root)) });

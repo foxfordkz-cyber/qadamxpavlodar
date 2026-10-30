@@ -74,7 +74,7 @@ function ZoneOutcomes({ site }: { site: CandidateSite }) {
       <Loaded state={plans}>{plans.data && <>
         <p className="gp-small gp-muted">{t('outcomePage.bestNote')}</p>
         <div className="gp-outcome-variants gp-outcomes">{plans.data.variants.map((v, i) => <VariantCard key={v.id} variant={v} best={plans.data!.comparison.comparable && plans.data!.comparison.bestVariantIds.includes(v.id)}>
-          {api.outcomes.available && me.role === 'coordinator' && <SaveForecast key={`${treesOnly}:${v.id}:${v.provenance.capturedAt}`}
+          {api.outcomes.available && (me.role === 'coordinator' || (mode === 'api' && me.role === 'admin')) && (mode === 'mock' || treesOnly) && <SaveForecast key={`${treesOnly}:${v.id}:${v.provenance.capturedAt}`}
             input={plans.data!.inputs[i]} onSaved={saved} />}
         </VariantCard>)}</div>
         <OutcomeIssues issues={plans.data.comparison.issues} />
@@ -82,6 +82,7 @@ function ZoneOutcomes({ site }: { site: CandidateSite }) {
         <p className="gp-small gp-muted">{t('outcomePage.synthetic')}</p>
       </>}</Loaded>
       {mode === 'mock' && <p className="gp-small gp-muted">{t('outcomePage.localSave')}</p>}
+      {mode === 'api' && <p className="gp-small gp-muted">{t('outcomePage.apiSave')}</p>}
     </section>
     <Loaded state={history}>{history.data && <>
       {history.data.cohorts.some(c => c.id.startsWith('outcome-demo-') && c.provenance.isDemo) && <p className="gp-alert gp-alert--warn">{t('outcomePage.demoHistory')}</p>}

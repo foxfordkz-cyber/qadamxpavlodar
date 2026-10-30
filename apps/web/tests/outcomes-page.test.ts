@@ -152,14 +152,22 @@ test('provenance: demo forecast prices do not relabel real field observations', 
   assert.equal(selected.summary.isDemo, false); assert.equal(selected.summary.dataClass, 'real');
   assert.equal(selected.cohort.forecast!.outcome.isDemo, true);
 });
-test('production adapter is explicit: no guessed HTTP route and no mock fallback', async () => {
-  let calls = 0;
-  const transport: Transport = { kind: 'api', async request() { calls++; throw new Error('must not request'); } };
+test('production adapter uses the published read model; errors never become mock', async () => {
+  const calls: string[] = [];
+  const transport: Transport = { kind: 'api', async request(_method, path) { calls.push(path); throw new ApiError(503, 'offline', 'offline'); } };
   const client = createOutcomesClient(transport);
-  assert.equal(client.available, false);
-  await assert.rejects(client.list('site'), (e: ApiError) => e.code === 'outcomes_not_connected');
-  await assert.rejects(client.saveForecast('site', { options: {}, siteVersion: 1, ratesVersion: 1 }, 'key'));
-  assert.equal(calls, 0);
+  assert.equal(client.available, true);
+  await assert.rejects(client.list('site'), (e: ApiError) => e.status === 503);
+  await assert.rejects(client.saveForecast('site', { options: {}, siteVersion: 1, ratesVersion: 1 }, 'key'), (e: ApiError) => e.code === 'outcomes_unsupported_plan');
+  assert.deepEqual(calls, ['/outcomes/sites/site']);
+});
+test('API snapshot adapter sends stable ID and both versions, never a client-computed forecast', async () => {
+  const calls: unknown[] = [];
+  const client = createOutcomesClient({ kind: 'api', async request(method, path, options) { calls.push({ method, path, options }); return { data: null } as never; } });
+  const plans = await loadOutcomePlans(fakeApi(), OUTCOME_DEMO_SITE, true);
+  await client.saveForecast(OUTCOME_DEMO_SITE, { options: plans.inputs[0].analysis.options, siteVersion: 2, ratesVersion: 3 }, 'stable');
+  assert.deepEqual(calls, [{ method: 'POST', path: '/outcomes/snapshots', options: { idempotencyKey: 'stable',
+    body: { id: 'outcome-stable', siteId: OUTCOME_DEMO_SITE, expectedVersion: 2, expectedRatesVersion: 3, variant: 'econom' } } }]);
 });
 test('a connected backend failure propagates, without creating demo data', async () => {
   const error = new ApiError(503, 'network', 'not shown');

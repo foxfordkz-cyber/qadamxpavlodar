@@ -20,6 +20,16 @@ export function canRead(s:Store,a:User,c:Json) {
 }
 export function cohort(s:Store,a:User,id:string){const row=s.get('SELECT * FROM outcome_cohorts WHERE id=?',id);const c=parseRow(row,'Cohort');if(!canRead(s,a,c))fail('NOT_FOUND','Cohort not found',404);return{data:c,meta:metadata(row!)};}
 export function cohorts(s:Store,a:User){return s.all('SELECT * FROM outcome_cohorts ORDER BY created_at,id').map(r=>({data:parseRow(r),meta:metadata(r)})).filter(r=>canRead(s,a,r.data));}
+/** Read model for the specialist screen; all domain records retain the #18 DTOs. */
+export function siteOutcomes(s:Store,a:User,siteId:string){
+ allow(a,'admin','coordinator','viewer');getDoc(s,'site',siteId);
+ const cs=cohorts(s,a).map(r=>r.data).filter(c=>c.siteId===siteId);
+ const plantIds=[...new Set<string>(cs.flatMap(c=>c.plants.map((p:Json)=>p.plantId)))];
+ return{siteId,asOf:today(),cohorts:cs,inspections:cs.flatMap(c=>history(s,a,c.id).map(r=>r.data)),
+  registry:plantIds.map(id=>registry(s,id)),
+  forecasts:s.all('SELECT id,data FROM outcome_snapshots WHERE site_id=? ORDER BY created_at,id',siteId)
+   .map(row=>({id:row.id,snapshot:parseRow(row)}))};
+}
 export function registry(s:Store,plantId:string){
  const p=getDoc(s,'plant',plantId);if(p.kind!=='tree')fail('TREE_ONLY','MVP requires individually registered trees',400);
  const receipt=s.get("SELECT r.data AS report,t.data AS task FROM v2_planting_receipts x JOIN v2_reports r ON r.id=x.report_id JOIN v2_tasks t ON t.id=x.task_id WHERE x.plant_id=? AND r.status='accepted'",plantId);
@@ -39,6 +49,7 @@ function provenance(s:Store,isDemo:boolean,evidenceIds:string[],siteId:string){
 export function snapshot(s:Store,a:User,b:Json){
  allow(a,'admin','coordinator');if(s.get('SELECT id FROM outcome_snapshots WHERE id=?',b.id))fail('DUPLICATE_ID','Snapshot already exists');
  const site=candidate(s,b.siteId), ref=reference(s);matchVersion(getDoc(s,'site',b.siteId),b.expectedVersion);
+ if(b.expectedRatesVersion!==undefined)matchVersion({version:ref.version},b.expectedRatesVersion);
  const analysis=analyze(site,ref,{variant:b.variant,careYears:3,excluded:ref.species.filter(sp=>sp.form!=='tree').map(sp=>sp.id)});
  const p={source:'api',capturedAt:now(),dataClass:'estimate',isDemo:true,evidenceIds:site.evidenceIds??[],siteVersion:site.version??null,ratesVersion:ref.version};
  const result=validate(()=>shared.createOutcomeSnapshot({id:b.id,site,analysis,catalog:ref.species,rates:ref.rates,provenance:p}));

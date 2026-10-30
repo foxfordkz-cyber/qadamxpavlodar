@@ -23,12 +23,22 @@ export interface OutcomesClient {
   saveForecast(siteId: string, input: SaveOutcomeForecast, idempotencyKey: string): Promise<SavedOutcomeForecast>;
 }
 
-/** No speculative production routes or silent API → mock fallback. Inject Bekzat's adapter when agreed. */
+/** Published #23 routes plus its read model. API failures never select mock implicitly. */
 export function createOutcomesClient(transport: Transport, backend?: OutcomesClient): OutcomesClient {
   if (transport.kind === 'api') return backend ?? {
-    available: false,
-    async list() { throw new ApiError(503, 'outcomes_not_connected', 'outcomes_not_connected'); },
-    async saveForecast() { throw new ApiError(503, 'outcomes_not_connected', 'outcomes_not_connected'); },
+    available: true,
+    async list(siteId) {
+      return (await transport.request<OutcomeSiteData>('GET', `/outcomes/sites/${encodeURIComponent(siteId)}`)).data;
+    },
+    async saveForecast(siteId, input, idempotencyKey) {
+      const o = input.options;
+      if (o.careYears !== 3 || o.watering !== 'regular' || o.improveSoil || o.locked?.length || Object.keys(o.replacements ?? {}).length || o.purpose || o.maxSpeciesShare !== 0.3)
+        throw new ApiError(400, 'outcomes_unsupported_plan', 'outcomes_unsupported_plan');
+      return (await transport.request<SavedOutcomeForecast>('POST', '/outcomes/snapshots', {
+        idempotencyKey, body: { id: `outcome-${idempotencyKey}`, siteId, expectedVersion: input.siteVersion,
+          expectedRatesVersion: input.ratesVersion, variant: o.variant },
+      })).data;
+    },
   };
   return {
     available: true,
