@@ -2,13 +2,15 @@
 // на основной карте через 5, 10 и 20 лет. Рост — те же доли, что в расчёте экоэффекта (plan.ts ecoEffect),
 // выпавшие растения убираются по прогнозу приживаемости за 3 года. Это иллюстрация расчёта, не проект посадки.
 import { useSyncExternalStore } from 'react';
+import type { Key } from '../../../shared/i18n';
 import type { CandidateSite, ProjectItem, Species } from '../../../shared/api/types';
 import type { ZoneAnalysis } from '../../../shared/analytics/plan';
 import { distPointLine, longAxis, makeProjection, pointInRing, type XY } from '../../../shared/geo';
 
 export type GrowthYear = 0 | 5 | 10 | 20;
 export const GROWTH_YEARS: GrowthYear[] = [0, 5, 10, 20];
-export const YEAR_LABEL: Record<GrowthYear, string> = { 0: 'Посадка', 5: '5 лет', 10: '10 лет', 20: '20 лет' };
+// Keys are resolved at render time, including after a language switch.
+export const YEAR_LABEL: Record<GrowthYear, Key> = { 0: 'timeMachine.year0', 5: 'timeMachine.year5', 10: 'timeMachine.year10', 20: 'timeMachine.year20' };
 /** Доля роста к году — как в ecoEffect; площадь кроны ∝ min(1, g + 0.1), поэтому радиус — корень из неё. */
 const GROWTH = { 5: 0.3, 10: 0.6, 20: 1 } as const;
 const PLANTING = { h: 0.15, crown: 0.25 };

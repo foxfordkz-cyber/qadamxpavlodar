@@ -1,3 +1,4 @@
+import { tr } from '../../../shared/i18n';
 import { lazy, Suspense, useCallback, useMemo, useState } from 'react';
 import { useData, useResource } from '../../../shared/api/DataProvider';
 import type { DashboardMetric } from '../../../shared/api/types';
@@ -6,6 +7,7 @@ import { t, type Key } from '../../../shared/i18n';
 import { fmtDate } from '../../../shared/format';
 import { hrefFor } from '../../../shared/router';
 import { eligibilityOf } from '../sites/eligibility';
+import { metricPeriod } from '../dashboard/metricText';
 import { useMe } from '../me';
 import { ForestSilhouette, StageArt } from './art';
 import photos from './cityPhotos.json';
@@ -114,8 +116,8 @@ function CityGallery() {
   const list = (photos as Photo[]).filter((p) => tag === 'all' || p.tag === tag);
   return (
     <>
-      <div className="gp-segment gp-city__tags" role="radiogroup" aria-label="Тема фото">
-        {TAGS.map(([k, v]) => <label key={k}><input type="radio" name="city-tag" checked={tag === k} onChange={() => setTag(k)} />{v} · {k === 'all' ? photos.length : (photos as Photo[]).filter((p) => p.tag === k).length}</label>)}
+      <div className="gp-segment gp-city__tags" role="radiogroup" aria-label={tr("Тема фото")}>
+        {TAGS.map(([k, v]) => <label key={k}><input type="radio" name="city-tag" checked={tag === k} onChange={() => setTag(k)} />{tr(v)} · {k === 'all' ? photos.length : (photos as Photo[]).filter((p) => p.tag === k).length}</label>)}
       </div>
       <div className="gp-city">{list.map((p, i) => <CityPhoto key={p.src} p={p} big={i === 0} />)}</div>
     </>
@@ -147,10 +149,10 @@ function MetricTile({ m }: { m: DashboardMetric }) {
     <a className="gp-tile gp-tile--metric" href={hrefFor(TILE_LINK[m.key] ?? '/')}>
       <span className="gp-tile__head">
         <span className="gp-tile__value">{m.value ?? '—'}</span>
-        <span className="gp-tile__label">{m.label}</span>
+        <span className="gp-tile__label">{tr(m.label)}</span>
       </span>
-      <span className="gp-small gp-muted gp-tile__def">{m.definition}</span>
-      <span className="gp-tile__period">{m.period}</span>
+      <span className="gp-small gp-muted gp-tile__def">{tr(m.definition)}</span>
+      <span className="gp-tile__period">{metricPeriod(m.period)}</span>
     </a>
   );
 }

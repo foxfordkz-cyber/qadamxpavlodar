@@ -1,3 +1,5 @@
+import { speciesName } from '../../../shared/i18n';
+import { tr } from '../../../shared/i18n';
 import { useMemo, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react';
 import type { CandidateSite, GeoJsonPoint, GeoJsonPolygon, Plant, ProjectItem, SiteContext, Species } from '../../../shared/api/types';
 import { bboxXY, makeProjection, ringAreaXY, type XY } from '../../../shared/geo';
@@ -144,7 +146,7 @@ export function SchemeEditor({ site, context, items, species, existingPlants, se
           const sel = it.id === selectedId;
           const conflict = it.conflicts.length > 0;
           const cls = `gp-scheme__item ${sel ? 'is-selected' : ''} ${conflict ? 'is-conflict' : ''} ${it.origin === 'suggested' ? 'is-suggested' : ''}`;
-          const label = `${i + 1}. ${sp?.nameRu ?? it.speciesId}, ${it.kind === 'bed' ? t('ed.kind.bed') : t('ed.kind.point')}${conflict ? `, ${t('ed.conflict')}` : ''}`;
+          const label = `${i + 1}. ${speciesName(sp, it.speciesId)}, ${it.kind === 'bed' ? t('ed.kind.bed') : t('ed.kind.point')}${conflict ? `, ${t('ed.conflict')}` : ''}`;
           if (it.kind === 'bed') {
             const ring = (it.geometry as GeoJsonPolygon).coordinates[0].map(proj.toXY);
             return (
@@ -172,9 +174,9 @@ export function SchemeEditor({ site, context, items, species, existingPlants, se
         )}
         <g className="gp-scheme__scalebar" transform={`translate(${box.minX + 2 * k} ${-box.minY - 2 * k})`}>
           <line x1={0} x2={10} y1={0} y2={0} />
-          <text x={5} y={-k} fontSize={1.6 * k} textAnchor="middle">10 м</text>
+          <text x={5} y={-k} fontSize={1.6 * k} textAnchor="middle">{tr("10 м")}</text>
         </g>
-        <text x={box.maxX - 2 * k} y={-box.maxY + 3 * k} fontSize={2 * k} textAnchor="end" className="gp-scheme__north">С ↑</text>
+        <text x={box.maxX - 2 * k} y={-box.maxY + 3 * k} fontSize={2 * k} textAnchor="end" className="gp-scheme__north">{tr("С ↑")}</text>
       </svg>
     </div>
   );

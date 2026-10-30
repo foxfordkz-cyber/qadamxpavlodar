@@ -1,3 +1,4 @@
+import { speciesName } from '../../../shared/i18n';
 import { useEffect, useMemo, useState } from 'react';
 import { useData, useResource } from '../../../shared/api/DataProvider';
 import { ApiError } from '../../../shared/api/transport';
@@ -64,8 +65,8 @@ export function PlantSelectionPanel({ site }: { site: CandidateSite; onCreateTas
                 return (
                   <li key={it.speciesId} className="gp-card gp-species-item">
                     <label className="gp-species-item__head">
-                      <input type="checkbox" checked={picked.includes(it.speciesId)} onChange={() => toggle(it.speciesId)} aria-label={`${t('sel.pick')}: ${sp?.nameRu ?? it.speciesId}`} />
-                      <span><strong>{sp?.nameRu ?? it.speciesId}</strong> <i className="gp-muted">{sp?.latin}</i></span>
+                      <input type="checkbox" checked={picked.includes(it.speciesId)} onChange={() => toggle(it.speciesId)} aria-label={`${t('sel.pick')}: ${speciesName(sp, it.speciesId)}`} />
+                      <span><strong>{speciesName(sp, it.speciesId)}</strong> <i className="gp-muted">{sp?.latin}</i></span>
                       {it.fit === 'suitable' ? <Badge tone="ok" icon="✓">{t('sel.suitable')}</Badge> : <Badge tone="warn" icon="!">{t('sel.conditional')}</Badge>}
                       {sp && <span className="gp-muted gp-small">{t(`species.form.${sp.form}`)}</span>}
                       {sp && <DataClassTag value={sp.dataClass} />}
@@ -79,7 +80,7 @@ export function PlantSelectionPanel({ site }: { site: CandidateSite; onCreateTas
             {sel.excluded.length > 0 && (
               <details className="gp-excluded">
                 <summary>{t('sel.excluded')}: {sel.excluded.length}</summary>
-                <ul className="gp-small">{sel.excluded.map((x) => <li key={x.speciesId}><strong>{byId.get(x.speciesId)?.nameRu ?? x.speciesId}</strong> — {x.reason}</li>)}</ul>
+                <ul className="gp-small">{sel.excluded.map((x) => <li key={x.speciesId}><strong>{speciesName(byId.get(x.speciesId), x.speciesId)}</strong> — {x.reason}</li>)}</ul>
               </details>
             )}
           </StateView>

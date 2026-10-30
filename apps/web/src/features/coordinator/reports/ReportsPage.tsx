@@ -1,3 +1,4 @@
+import { tr } from '../../../shared/i18n';
 import { useMemo, useState } from 'react';
 import { PageHeader } from '../PageHeader';
 import { useData, useResource } from '../../../shared/api/DataProvider';
@@ -33,7 +34,7 @@ export function ReportsPage() {
             <label><input type="radio" name="rtab" checked={tab === 'pending'} onChange={() => setTab('pending')} />{t('reports.pending')} ({all.filter((r) => r.reviewStatus === 'pending').length})</label>
             <label><input type="radio" name="rtab" checked={tab === 'reviewed'} onChange={() => setTab('reviewed')} />{t('reports.reviewed')}</label>
           </div>
-          <StateView loading={reports.loading} error={reports.error} hasData={!!reports.data} onRetry={reports.reload} empty={!!reports.data && shown.length === 0} emptyText={t('reports.empty')} emptyAction={<a className="gp-btn" href={hrefFor('/tasks')}>План работ: назначить задание</a>}>
+          <StateView loading={reports.loading} error={reports.error} hasData={!!reports.data} onRetry={reports.reload} empty={!!reports.data && shown.length === 0} emptyText={t('reports.empty')} emptyAction={<a className="gp-btn" href={hrefFor('/tasks')}>{t('empty.assignTask')}</a>}>
             <ul className="gp-list">
               {shown.map((r) => {
                 const task = taskOf(r);
@@ -46,7 +47,7 @@ export function ReportsPage() {
                       </span>
                       <span className="gp-report-row">
                         {r.photoIds[0] ? <Photo id={r.photoIds[0]} thumb /> : <span className="gp-report-row__nophoto" aria-hidden="true">∅</span>}
-                        <span className="gp-list-item__meta">{name(r.authorId)}<br />{fmtDateTime(r.createdAt)} · фото: {r.photoIds.length}</span>
+                        <span className="gp-list-item__meta">{name(r.authorId)}<br />{fmtDateTime(r.createdAt)}{" "}{tr("· фото:")}{" "}{r.photoIds.length}</span>
                       </span>
                     </button>
                   </li>
@@ -120,7 +121,7 @@ function ReportDetail({ report, task, authorName, reviewerName, onChanged }: { r
         <div>
           <Badge tone="info">{t(`obs.${report.confirmedObservation.category}` as Key)}</Badge>
           <ul>{report.confirmedObservation.extractedFacts.map((f) => <li key={f}>{f}</li>)}</ul>
-          <p className="gp-small gp-muted">Подтвердил работник: {authorName}, {fmtDateTime(report.confirmedObservation.confirmedAt)}. Наблюдение не меняет проверки участка автоматически.</p>
+          <p className="gp-small gp-muted">{tr("Подтвердил работник:")}{" "}{authorName}, {fmtDateTime(report.confirmedObservation.confirmedAt)}{tr(". Наблюдение не меняет проверки участка автоматически.")}</p>
         </div>
       ) : (
         <p className="gp-muted">{t('reports.noObservation')}</p>
@@ -176,7 +177,7 @@ function Photo({ id, thumb }: { id: string; thumb?: boolean }) {
       <StateView loading={u.loading} error={u.error} hasData={!!u.data}>
         {u.data && (
           <a href={u.data.url} target="_blank" rel="noreferrer">
-            <img src={u.data.url} alt={`Фото ${id}${u.data.isDemo ? ' (демо-заглушка)' : ''}`} loading="lazy" />
+            <img src={u.data.url} alt={t('dynamic.005', { p0: String(id), p1: String(u.data.isDemo ? ' (демо-заглушка)' : '') })} loading="lazy" />
           </a>
         )}
       </StateView>

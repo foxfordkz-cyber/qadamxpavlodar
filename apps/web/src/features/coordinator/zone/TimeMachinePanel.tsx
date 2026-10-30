@@ -1,3 +1,4 @@
+import { t } from '../../../shared/i18n';
 import { useEffect, useMemo } from 'react';
 import { useData, useResource } from '../../../shared/api/DataProvider';
 import type { CandidateSite, Species } from '../../../shared/api/types';
@@ -27,35 +28,34 @@ export function TimeMachinePanel({ a, site, byId }: { a: ZoneAnalysis; site: Can
   }, [scene]);
   // Ушли со вкладки или закрыли карточку — карта возвращается к обычному виду.
   useEffect(() => () => timeMachine.hide(), []);
-  if (ctx.loading) return <p className="gp-small gp-muted" role="status">Машина времени: загружаю окружение зоны…</p>;
-  if (!scene) return <p className="gp-small gp-muted">Машина времени доступна для зон с контуром.</p>;
+  if (ctx.loading) return <p className="gp-small gp-muted" role="status">{t('timeMachine.loading')}</p>;
+  if (!scene) return <p className="gp-small gp-muted">{t('timeMachine.noContour')}</p>;
   const year = active ? tm.year : null;
   const e = year ? a.effect.find((x) => x.years === year) : null;
   const area = a.facts.areaM2;
   return (
     <section className="gp-tm" aria-labelledby="z-tm">
-      <h3 id="z-tm" className="gp-subhead">Машина времени</h3>
-      <p className="gp-small">Посадка по этой схеме вырастает на карте: так зона будет выглядеть через годы.</p>
-      <div className="gp-segment" role="radiogroup" aria-label="Год после посадки">
-        {GROWTH_YEARS.map((y) => <label key={y}><input type="radio" name="tm-year" checked={year === y} onChange={() => timeMachine.show(scene, y)} />{YEAR_LABEL[y]}</label>)}
+      <h3 id="z-tm" className="gp-subhead">{t('timeMachine.title')}</h3>
+      <p className="gp-small">{t('timeMachine.lead')}</p>
+      <div className="gp-segment" role="radiogroup" aria-label={t('timeMachine.yearLabel')}>
+        {GROWTH_YEARS.map((y) => <label key={y}><input type="radio" name="tm-year" checked={year === y} onChange={() => timeMachine.show(scene, y)} />{t(YEAR_LABEL[y])}</label>)}
       </div>
       {active && (
         <div className="gp-tm__stats" aria-live="polite">
           {e ? (
             <>
-              <div><strong>{e.canopyM2.toLocaleString('ru-RU')} м²</strong><span>крона{area ? ` · ${Math.min(100, Math.round((e.canopyM2 / area) * 100))}% зоны` : ''}</span></div>
-              <div><strong>{e.co2t.toFixed(2)} т/год</strong><span>поглощение CO₂</span></div>
-              <div><strong>−{e.coolingC} °C</strong><span>охлаждение в зоне</span></div>
+              <div><strong>{e.canopyM2.toLocaleString('ru-RU')} м²</strong><span>{t('timeMachine.canopy')}{area ? t('timeMachine.zoneShare', { n: Math.min(100, Math.round((e.canopyM2 / area) * 100)) }) : ''}</span></div>
+              <div><strong>{e.co2t.toFixed(2)} {t('timeMachine.tonnesYear')}</strong><span>{t('timeMachine.co2')}</span></div>
+              <div><strong>−{e.coolingC} °C</strong><span>{t('timeMachine.cooling')}</span></div>
             </>
           ) : (
-            <p className="gp-small">Саженцы: эффект начнётся после приживания.</p>
+            <p className="gp-small">{t('timeMachine.initial')}</p>
           )}
         </div>
       )}
-      {active && <button className="gp-btn gp-btn--ghost" onClick={() => timeMachine.hide()}>Скрыть с карты</button>}
+      {active && <button className="gp-btn gp-btn--ghost" onClick={() => timeMachine.hide()}>{t('timeMachine.hideMap')}</button>}
       <p className="gp-small gp-muted">
-        Схематичные 3D-модели: высота и крона — из справочника видов, рост — те же доли, что в расчёте эффекта; к 5, 10 и 20 годам выпавшие растения убраны по прогнозу приживаемости.
-        Ряды и бордюр цветов идут вдоль ближайшей улицы; места растений условные — точную раскладку делает проект озеленения.{scene.shown < scene.total ? ` На карте ${scene.shown} из ${scene.total} растений.` : ''}
+        {t('timeMachine.method')}{scene.shown < scene.total ? t('timeMachine.shown', { shown: scene.shown, total: scene.total }) : ''}
       </p>
     </section>
   );

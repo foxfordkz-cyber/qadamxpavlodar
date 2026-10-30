@@ -1,3 +1,4 @@
+import { speciesName } from '../../../shared/i18n';
 import { useMemo, useState } from 'react';
 import { PageHeader } from '../PageHeader';
 import { useData, useResource } from '../../../shared/api/DataProvider';
@@ -33,7 +34,7 @@ export function ApprovalPage() {
         <aside className="gp-card gp-reports__list">
           <StateView loading={projects.loading} error={projects.error} hasData={!!projects.data} onRetry={projects.reload}>
             <h2 className="gp-eyebrow gp-pad">{t('approval.queue')} · {queue.length}</h2>
-            {queue.length === 0 && <p className="gp-muted gp-pad">{t('approval.empty')} <a href={hrefFor('/projects')}>Все проекты озеленения →</a></p>}
+            {queue.length === 0 && <p className="gp-muted gp-pad">{t('approval.empty')} <a href={hrefFor('/projects')}>{t('empty.allProjects')}</a></p>}
             <ul className="gp-list">{queue.map((p) => <Row key={p.id} p={p} site={siteName(p.siteId)} selected={p.id === selected?.id} />)}</ul>
             {done.length > 0 && <><h2 className="gp-eyebrow gp-pad">{t('approval.done')}</h2><ul className="gp-list">{done.map((p) => <Row key={p.id} p={p} site={siteName(p.siteId)} selected={p.id === selected?.id} />)}</ul></>}
           </StateView>
@@ -108,7 +109,7 @@ function Review({ project, onChanged }: { project: PlantingProject; onChanged: (
             <tbody>
               {project.items.map((it) => (
                 <tr key={it.id} className={it.id === selected ? 'is-selected' : ''} onClick={() => setSelected(it.id)}>
-                  <td>{byId.get(it.speciesId)?.nameRu ?? it.speciesId} <span className="gp-muted">({it.kind === 'bed' ? t('ed.kind.bed') : t('ed.kind.point')})</span></td>
+                  <td>{speciesName(byId.get(it.speciesId), it.speciesId)} <span className="gp-muted">({it.kind === 'bed' ? t('ed.kind.bed') : t('ed.kind.point')})</span></td>
                   <td>{it.quantity}</td>
                   <td>{it.conflicts.map((c) => <div key={c.type}><Badge tone="bad" icon="!">{c.message}</Badge> {t('ed.bom.resolution')}: {c.resolution}</div>)}{byId.get(it.speciesId)?.invasiveRisk && <Badge tone="bad" icon="!">{t('species.invasive')}</Badge>}</td>
                 </tr>

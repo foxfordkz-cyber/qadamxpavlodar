@@ -3,6 +3,7 @@ import { useData, useResource, type SvcState } from '../../shared/api/DataProvid
 import { ApiError } from '../../shared/api/transport';
 import { Button, ErrorNote, Field, StateView, useGuarded } from '../../shared/ui/components';
 import { t, type Key } from '../../shared/i18n';
+import { LanguageSwitcher } from '../../shared/i18n/LanguageSwitcher';
 import { fmtDate } from '../../shared/format';
 import { hrefFor, navigate, useRoute } from '../../shared/router';
 
@@ -50,7 +51,9 @@ export function Shell({ children }: { children: ReactNode }) {
   }, []);
 
   const authError = me.error instanceof ApiError ? me.error.status : null;
-  const role = me.data?.role;
+  // После выхода сервер отвечает 401, а прежние данные остаются в кэше запроса — в шапке их не показываем.
+  const user = authError === 401 ? null : me.data;
+  const role = user?.role;
   const crew = role === 'foreman' || role === 'worker';
   // Бригадир и работник работают только в своём кабинете — держим их на маршруте #/worker, остальных уводим с него.
   useEffect(() => {
@@ -78,14 +81,15 @@ export function Shell({ children }: { children: ReactNode }) {
           {nav.filter((n) => n.works).map((n) => <a key={n.path} className="gp-nav__works" href={hrefFor(n.path)} aria-current={current(n.path) ? 'page' : undefined}>{t(n.key)}</a>)}
         </nav>
         <div className="gp-header__right">
-          {me.data && <span className="gp-small">{me.data.displayName}</span>}
+          {user && <span className="gp-small">{user.displayName}</span>}
           {mode === 'mock' && <Button onClick={() => setDev(true)}>⚙ {t('shell.devPanel')}</Button>}
-          {me.data && <Button onClick={logout}>{t('shell.logout')}</Button>}
+          <LanguageSwitcher />
+          {user && <Button onClick={logout}>{t('shell.logout')}</Button>}
         </div>
       </header>
       <div className="gp-subbar">
         <dl className="gp-status-row">
-          <div className="gp-kv"><dt>{t('shell.role')}</dt><dd>{me.data ? <>{t(`shell.role.${me.data.role}` as Key)}{me.data.isDemoAccount && <> <span className="gp-badge gp-badge--demo">{t('shell.demoAccount')}</span></>}</> : '—'}</dd></div>
+          <div className="gp-kv"><dt>{t('shell.role')}</dt><dd>{user ? <>{t(`shell.role.${user.role}` as Key)}{user.isDemoAccount && <> <span className="gp-badge gp-badge--demo">{t('shell.demoAccount')}</span></>}</> : '—'}</dd></div>
           <div className="gp-kv"><dt>{t('shell.today')}</dt><dd>{fmtDate(today)} (UTC+5)</dd></div>
           <div className="gp-kv"><dt>{t('shell.data')}</dt><dd><span className={`gp-badge ${mode === 'mock' ? 'gp-badge--demo' : 'gp-badge--info'}`}>{t(mode === 'mock' ? 'shell.data.mock' : 'shell.data.api')}</span></dd></div>
           <div className="gp-kv gp-svcs"><dt>{t('shell.services')}</dt>

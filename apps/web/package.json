@@ -12,10 +12,13 @@
     "check:zones": "esbuild scripts/check-drawn-zone.ts --bundle --platform=node --format=esm --outfile=dist-scripts/check-drawn-zone.mjs --log-level=warning && node dist-scripts/check-drawn-zone.mjs",
     "train:survival": "esbuild scripts/train-survival.ts --bundle --platform=node --format=esm --outfile=dist-scripts/train-survival.mjs --log-level=warning && node dist-scripts/train-survival.mjs",
     "check:survival": "esbuild scripts/check-survival.ts --bundle --platform=node --format=esm --outfile=dist-scripts/check-survival.mjs --log-level=warning && node dist-scripts/check-survival.mjs",
-    "check:care": "esbuild scripts/check-care.ts --bundle --define:import.meta.env.DEV=false --platform=node --format=esm --outfile=dist-scripts/check-care.mjs --log-level=warning && node dist-scripts/check-care.mjs"
+    "check:care": "esbuild scripts/check-care.ts --bundle --define:import.meta.env.DEV=false --platform=node --format=esm --outfile=dist-scripts/check-care.mjs --log-level=warning && node dist-scripts/check-care.mjs",
+    "test": "node scripts/test.mjs",
+    "check:i18n": "esbuild scripts/check-i18n.ts --bundle --platform=node --format=esm --outfile=dist-scripts/check-i18n.mjs --log-level=warning && node dist-scripts/check-i18n.mjs"
   },
   "dependencies": {
     "@types/three": "0.186.0",
+    "fflate": "0.8.3",
     "maplibre-gl": "6.12.0",
     "react": "19.3.1",
     "react-dom": "19.3.1",
@@ -25,6 +28,7 @@
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "@vitejs/plugin-react": "5.2.0",
+    "saxes": "6.0.0",
     "typescript": "5.9.3",
     "vite": "7.3.7"
   }

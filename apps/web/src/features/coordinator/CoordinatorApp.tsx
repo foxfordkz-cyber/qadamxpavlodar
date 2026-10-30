@@ -1,4 +1,6 @@
 import { useEffect, useState, type ReactElement } from 'react';
+import { t } from '../../shared/i18n';
+import { useLanguage } from '../../shared/i18n/useLanguage';
 import { useRoute } from '../../shared/router';
 import { Shell } from './Shell';
 import { HomePage } from './home/HomePage';
@@ -60,13 +62,14 @@ function usePresentation() {
 }
 
 export function CoordinatorApp() {
+  useLanguage();
   const { path } = useRoute();
   const [present, setPresent] = usePresentation();
   const page = PAGES.find(([p]) => path === p || path.startsWith(p + '/'))?.[1] ?? (() => <HomePage />);
   return (
     <>
       <Shell>{page()}</Shell>
-      {present && <button className="gp-present-pill" onClick={() => setPresent(false)} title="Alt+P">Режим презентации · выйти</button>}
+      {present && <button className="gp-present-pill" onClick={() => setPresent(false)} title="Alt+P">{t('present.exit')}</button>}
     </>
   );
 }
