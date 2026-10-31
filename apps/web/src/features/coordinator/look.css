@@ -179,3 +179,16 @@
   .gp-assist-fab__label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .gp-plansum dd { padding-right: 40px; }
 }
+
+/* Режим презентации: кнопка выхода живёт в шапке. Внизу слева она закрывала «Сохранить прогноз» и вкладки на телефоне. */
+.gp-present-pill { position: fixed; top: 12px; left: 240px; bottom: auto; z-index: 60; }
+@media (max-width: 1100px) {
+  .gp-present-pill { width: 30px; height: 30px; padding: 0; overflow: hidden; white-space: nowrap; text-indent: 40px; }
+  .gp-present-pill::before { content: '✕' / ''; position: absolute; inset: 0; display: grid; place-items: center; text-indent: 0; font-size: 13px; }
+}
+@media (max-width: 760px) {
+  /* Шапка на телефоне прокручивается вместе со страницей, и кнопка уезжает вместе с ней. */
+  .gp-present-pill { position: absolute; left: auto; right: 12px; top: 13px; }
+  /* Длинная подпись кнопки расчёта не должна уходить под помощника. */
+  .gp-lab-controls > button.gp-btn { max-width: calc(100% - 44px); }
+}
