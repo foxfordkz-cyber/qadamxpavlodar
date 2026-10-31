@@ -1,0 +1,72 @@
+{
+  "archive": "public-api-aee7242-unauth-evidence.zip",
+  "bytes": 112749,
+  "sha256": "2c4dd1623b3c0727aee50093d2a3146ce87ddcec5b2ba32334d3aa6528d8f670",
+  "entries": 12,
+  "pngCount": 4,
+  "crcAndHashes": "PASS",
+  "safeTextAndMetadataScan": "PASS",
+  "credentialFreeOnly": true,
+  "files": [
+    {
+      "path": "README.txt",
+      "bytes": 1029,
+      "sha256": "90bf1090104aeb14de9314105e17e05722ae7cd244ad58f80c6e6857d7e48a79"
+    },
+    {
+      "path": "summary.json",
+      "bytes": 8888,
+      "sha256": "5b413a8bb25cf8e49ec69bdfebbbe7778d0101547823fac916e198e06f75bf45"
+    },
+    {
+      "path": "http-probes.json",
+      "bytes": 11202,
+      "sha256": "ffa0107b9a34819c5c6bd1862734ceedecd047b026896993f5471840f869121d"
+    },
+    {
+      "path": "ui-results.json",
+      "bytes": 4697,
+      "sha256": "667faa9905ed09012c11ffad996a6144f66c9b681853a49509af63a36b56c71e"
+    },
+    {
+      "path": "static-verification.json",
+      "bytes": 35231,
+      "sha256": "fd16621581deb975b18a5ba60d1d1ef50ec454720faf52cfb7d4ba998801add0"
+    },
+    {
+      "path": "http-after-render-live.json",
+      "bytes": 2562,
+      "sha256": "b83b56a5b223bbd40827dcf6b35d69eeed2babdeb46c558f8d7db2efa458bb2e"
+    },
+    {
+      "path": "unauth-ru-1280.png",
+      "bytes": 31563,
+      "sha256": "2ed852cde3172cd324798261bc0112d9b1adbca21c716debcbd0efd068950b42"
+    },
+    {
+      "path": "unauth-kk-1280.png",
+      "bytes": 30651,
+      "sha256": "9af23db2dfbfd6e4bf3bce68e7e03a6e2e64f9fdaddb90f8704fd8e8da817c89"
+    },
+    {
+      "path": "unauth-ru-375.png",
+      "bytes": 25688,
+      "sha256": "2a4220da3fa9c24962657cf840ff1f077c24fac4cc72899c7f25c963c86f237f"
+    },
+    {
+      "path": "unauth-kk-375.png",
+      "bytes": 24552,
+      "sha256": "df9c161229a00ed0580454f5095bcf29d10c914074ebd7f37e0512900f025e61"
+    },
+    {
+      "path": "http-origin-recheck.json",
+      "bytes": 1327,
+      "sha256": "f85fcb6eb932faaf44e1c8bb6abc249fd45c7bf986cfe9ef054550111f0daee0"
+    },
+    {
+      "path": "http-origin-recheck-attempt-1.json",
+      "bytes": 1295,
+      "sha256": "e1ebec19f2a507dbb9174c58294584c2292d040a40c5973e65681bf41500ed63"
+    }
+  ]
+}

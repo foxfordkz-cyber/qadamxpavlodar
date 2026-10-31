@@ -1,6 +1,8 @@
 import test from 'node:test';
 import './contract-cases.mjs';
 import './ui-cases.mjs';
+import './locale.test.mjs';
+import './network-cases.mjs';
 import assert from 'node:assert/strict';
 import {createDemoSource,DEMO_SCOPE,seed} from '../demo/source.mjs';
 import {WorkerWorkflow} from '../../../apps/web/src/features/worker/workflow.mjs';
