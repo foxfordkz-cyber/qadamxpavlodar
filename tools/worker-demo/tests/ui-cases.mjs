@@ -7,6 +7,7 @@ import { safePhotoURL, parsePositions } from '../../../apps/web/src/features/wor
 import { scheme, reportQuantities, assignmentPanel } from '../../../apps/web/src/features/worker/v2-views.mjs';
 import { ru, dictionary } from '../../../apps/web/src/features/worker/strings.mjs';
 import { navigation } from '../../../apps/web/src/features/worker/cabinet-layout.mjs';
+import { displayText, taskLabels, localizedError, formatDateTime } from '../../../apps/web/src/features/worker/worker-display.mjs';
 
 // Import the component without constructing DOM nodes; restore import-only globals.
 const domDescriptors = new Map(['HTMLElement', 'customElements'].map(name => [name, Object.getOwnPropertyDescriptor(globalThis, name)]));
@@ -161,7 +162,7 @@ function ui() {
 }
 
 test('worker UI: network timeout releases busy state, keeps the draft and uses the selected dictionary', async () => {
-  for (const locale of ['ru', 'kk-draft']) {
+  for (const locale of ['ru', 'kk', 'kk-draft']) {
     const component = ui();
     const draft = { kind: 'report', note: 'Saved note', photo: picture(), idempotencyKey: 'same-operation' };
     component.t = dictionary(locale);
@@ -175,9 +176,9 @@ test('worker UI: network timeout releases busy state, keeps the draft and uses t
     assert.equal(component.busy, false);
     assert.equal(component.draft, draft);
     assert.deepEqual(component.queue, [draft]);
-    assert.equal(component.message.text, component.t.requestTimeout);
+    assert.equal(component.messageText(), component.t.requestTimeout);
     component.showError({ code: 'WORKER_REQUEST_ABORTED', message: 'AbortError: internal message' });
-    assert.equal(component.message.text, component.t.requestCancelled);
+    assert.equal(component.messageText(), component.t.requestCancelled);
   }
 });
 
@@ -291,14 +292,14 @@ test('worker language: RU/KK round trip keeps the open photo draft and pending s
     'workflow', 'gateway', 'busy'].map(field => [field, component[field]]));
   const renders = [];
   component.render = () => renders.push(component.form());
-  component.setLocale('kk-draft');
+  component.setLocale('kk');
   assert.equal(component.t.start, 'Тапсырманы бастау');
   assert.match(renders[0], /Фото таңдау/);
   assert.match(renders[0], /Тексеруге жіберу/);
   assert.match(renders[0], /Не потерять заметку/);
-  assert.equal(component.t.reportTitle, ru.reportTitle, 'untranslated labels retain the documented Russian fallback');
+  assert.notEqual(component.t.reportTitle, ru.reportTitle, 'the report form must use the complete Kazakh dictionary');
   component.setLocale('kk-draft');
-  assert.equal(renders.length, 1, 'same-language notification must not replace the form again');
+  assert.equal(renders.length, 1, 'the legacy alias must not replace an already Kazakh form');
   component.setLocale('ru');
   assert.match(renders[1], /Отправить на проверку/);
   for (const [field, value] of Object.entries(preserved)) assert.equal(component[field], value, `language replaced ${field}`);
@@ -332,7 +333,7 @@ test('worker language: switching during send keeps the frozen action and busy gu
   release.resolve(); await sending;
   assert.equal(component.busy, false); assert.equal(component.draft, draft);
   assert.deepEqual(component.queue, [draft]);
-  assert.equal(component.message.text, dictionary('kk-draft').requestTimeout);
+  assert.equal(component.messageText(), dictionary('kk-draft').requestTimeout);
   assert.equal(draft.idempotencyKey, 'same-operation'); assert.equal(draft.frozen, frozen);
 });
 
@@ -363,6 +364,250 @@ test('worker language: unconfirmed AI edits survive repaint and still require ex
   assert.equal(component.draft.analysis.decision, 'edited');
   assert.deepEqual(component.draft.analysis.provenance.suggestion, { category: 'other', facts: ['Original fact'] });
   assert.equal(saves, 1);
+});
+
+test('worker language: canonical kk and legacy alias configure the same locale and dictionary', async () => {
+  const kk = dictionary('kk');
+  assert.notEqual(kk.reportTitle, ru.reportTitle);
+  assert.deepEqual(dictionary('kk-draft'), kk);
+  for (const input of ['kk', 'kk-draft']) {
+    const component = ui(), env = setup();
+    component.toggleAttribute = () => {};
+    await component.configure({ user: { id: 'w', role: 'worker', displayName: 'Worker' }, gateway: env.gateway,
+      scope: 'locale-test', date: '2026-10-28', locale: input, drafts: env.drafts });
+    assert.equal(component.locale, 'kk', input);
+    assert.equal(component.t.reportTitle, kk.reportTitle, input);
+    let renders = 0; component.render = () => { renders++; };
+    component.setLocale('kk-draft'); component.setLocale('kk');
+    assert.equal(renders, 0, 'equivalent locale notifications must not recreate form DOM');
+    component.setLocale('ru');
+    assert.equal(component.locale, 'ru'); assert.equal(component.t.reportTitle, ru.reportTitle);
+  }
+});
+
+test('worker display: canonical task codes are translated without changing backend fields or authored values', () => {
+  const source = Object.freeze({ ...task(), actionCode: 'inspect', action: 'Осмотреть объект',
+    status: 'assigned', statusLabel: 'Назначено', revisionOf: 'previous-task', priority: 'high',
+    dueAt: '2026-10-31T09:30:00Z', estimatedMinutes: 30, objectType: 'site',
+    requiredWaterLiters: 25, address: 'ул. Тестовая, 7 — Сынақ көшесі', place: 'Авторское название',
+    instruction: 'Начать задание', coordinatorComment: 'Вернуть исходную заметку' });
+  const before = structuredClone(source), kk = dictionary('kk');
+  const translated = taskLabels(source, kk);
+  assert.equal(translated.action, 'Нысанды қарап тексеру');
+  assert.equal(translated.status, 'Түзету қажет', 'a revision assigned for correction must not look like a new task');
+  assert.equal(translated.priority, 'Жоғары');
+  assert.equal(translated.object, kk.siteObject);
+  assert.match(translated.due, /14:30/); assert.match(translated.duration, /30/); assert.match(translated.norm, /25/);
+  assert.equal(translated.address, source.address);
+  assert.deepEqual(source, before);
+  assert.equal(taskLabels({ ...source, revisionOf: null, status: 'verified' }, kk).status, 'Жұмыс расталды');
+  assert.equal(taskLabels({ ...source, revisionOf: null, status: 'in_progress' }, kk).status, 'Орындалуда');
+  assert.equal(taskLabels(source, ru).action, source.action);
+  assert.equal(displayText('Не хватает ресурсов', kk), 'Ресурстар жеткіліксіз');
+  assert.equal(displayText('Незнакомое исходное название', kk), 'Незнакомое исходное название');
+});
+
+test('worker display: localized error preserves status/code and dynamic validation limits', () => {
+  const kk = dictionary('kk');
+  const error = Object.assign(new Error('Opaque backend text'), { code: 'CONTEXT_STALE', status: 409, requestId: 'test-request' });
+  assert.equal(localizedError(error, kk), kk.errorConflict);
+  assert.equal(localizedError(error, ru), ru.errorConflict);
+  assert.equal(error.code, 'CONTEXT_STALE'); assert.equal(error.status, 409);
+  assert.equal(error.message, 'Opaque backend text'); assert.equal(error.requestId, 'test-request');
+  assert.equal(localizedError(new Error('Фотография больше 5 МБ. Выберите файл меньшего размера.'), kk),
+    kk.errorPhotoTooLarge.replace('{mb}', '5'));
+  assert.equal(localizedError(new Error('Можно отправить не больше 20 фотографий.'), kk),
+    kk.errorPhotoCount.replace('{maximum}', '20'));
+});
+
+test('worker display: Kazakh dates retain UTC+5 across year boundary and handle absent timestamps', () => {
+  const kk = dictionary('kk');
+  assert.equal(formatDateTime('2026-12-31T19:30:00Z', kk), '1 қаңтар, 00:30');
+  assert.equal(formatDateTime('2026-10-31T18:45:00Z', kk), '31 қазан, 23:45');
+  assert.equal(formatDateTime(null, kk), kk.noData);
+  assert.equal(formatDateTime('invalid', kk), kk.noData);
+});
+
+test('worker language: issue reason labels change while persisted and submitted canonical reason stays intact', async () => {
+  const component = ui(), env = setup(), kk = dictionary('kk');
+  Object.assign(component, { locale: 'ru', workflow: env.workflow, gateway: env.gateway, writeChain: Promise.resolve() });
+  component.draft = await env.workflow.draft('t', 'issue');
+  // Deliberately matches an application label: authored text must never be relocalized.
+  Object.assign(component.draft, { reason: 'Не хватает ресурсов', note: 'Начать задание' });
+  const draft = component.draft, key = draft.idempotencyKey;
+  component.setLocale('kk');
+  assert.match(component.form(), /<option value="Не хватает ресурсов" selected>Ресурстар жеткіліксіз<\/option>/);
+  assert.match(component.form(), /<textarea[^>]*>Начать задание<\/textarea>/);
+  assert.equal(draft.reason, 'Не хватает ресурсов'); assert.equal(draft.note, 'Начать задание');
+  await env.workflow.save(draft);
+  component.setLocale('ru'); component.setLocale('kk-draft');
+  const stored = await env.drafts.get(draft.storageKey);
+  assert.equal(stored.reason, draft.reason); assert.equal(stored.note, draft.note); assert.equal(stored.idempotencyKey, key);
+  await env.workflow.send(draft);
+  assert.equal(env.sent.reason, 'Не хватает ресурсов'); assert.equal(env.sent.note, 'Начать задание');
+  assert.equal(env.sent.idempotencyKey, key);
+  assert.ok(!JSON.stringify(env.sent).includes(kk.reasonNames['Не хватает ресурсов']));
+});
+
+test('worker language: already visible timeout and cancellation are translated without a new request', () => {
+  for (const [code, key] of [['WORKER_REQUEST_TIMEOUT', 'requestTimeout'], ['WORKER_REQUEST_ABORTED', 'requestCancelled']]) {
+    const component = ui(); component.locale = 'ru';
+    component.gateway = new Proxy({}, { get: () => assert.fail('a locale change must not retry requests') });
+    component.showError(Object.assign(new Error('Untranslated transport internals'), { code }));
+    assert.equal(component.messageText(), ru[key]);
+    component.setLocale('kk');
+    assert.equal(component.messageText(), dictionary('kk')[key]);
+    assert.equal(component.message.tone, 'error');
+    component.setLocale('ru');
+    assert.equal(component.messageText(), ru[key]);
+  }
+});
+
+test('worker language: already visible refresh notice changes language but refresh runs only once', async () => {
+  const component = ui(); component.locale = 'ru'; component.date = '2026-10-28'; component.section = 'current';
+  component.selected = null; delete component.refresh;
+  let requests = 0;
+  component.gateway = { listTasks: async () => { requests++; return []; } };
+  await component.refresh();
+  assert.equal(component.messageText(), ru.stale);
+  component.setLocale('kk');
+  assert.equal(component.messageText(), dictionary('kk').stale);
+  component.setLocale('ru');
+  assert.equal(component.messageText(), ru.stale);
+  assert.equal(requests, 1);
+});
+
+test('worker language: opaque errors use a localized fallback while preserving the original error', () => {
+  const component = ui(); component.locale = 'ru';
+  const error = new Error('Unrecognized provider diagnostic');
+  component.showError(error);
+  assert.equal(component.messageText(), ru.errorGeneric);
+  component.setLocale('kk');
+  assert.equal(component.messageText(), dictionary('kk').errorGeneric);
+  assert.equal(component.message.error, error);
+  assert.equal(error.message, 'Unrecognized provider diagnostic');
+  component.setLocale('ru');
+  assert.equal(component.messageText(), ru.errorGeneric);
+});
+
+test('worker language: arbitrary notification content is preserved instead of being translated as a label', () => {
+  const component = ui(); component.locale = 'ru';
+  const text = 'Учебный участок № 7 — түпнұсқа хабарлама';
+  component.notify(text, 'info'); component.setLocale('kk');
+  assert.equal(component.messageText(), text);
+  component.setLocale('ru');
+  assert.equal(component.messageText(), text);
+});
+
+test('worker language: a real validation error is relocalized without freezing or resubmitting the draft', async () => {
+  const component = ui(), env = setup(); env.t.reportMode = 'contribution';
+  Object.assign(component, { locale: 'ru', workflow: env.workflow, gateway: env.gateway, writeChain: Promise.resolve() });
+  component.draft = await env.workflow.draft('t'); component.draft.note = 'Фото пока не выбрано';
+  const draft = component.draft, key = draft.idempotencyKey;
+  let reads = 0; env.gateway.getTask = async () => { reads++; return env.t; };
+  await component.action('send');
+  const source = 'Добавьте фотографию результата.';
+  assert.equal(component.messageText(), source);
+  component.setLocale('kk');
+  assert.equal(component.messageText(), dictionary('kk').errorMessages[source]);
+  assert.notEqual(component.messageText(), source);
+  assert.equal(component.draft, draft); assert.equal(draft.frozen, null); assert.equal(draft.idempotencyKey, key);
+  assert.equal(reads, 1); assert.equal(env.sent, undefined);
+  component.setLocale('ru'); assert.equal(component.messageText(), source);
+});
+
+test('worker language: an already visible synchronization result retains counts and translates its error', async () => {
+  const component = ui(); component.locale = 'ru';
+  let synchronizations = 0;
+  component.workflow = { synchronize: async () => {
+    synchronizations++;
+    return [{ taskId: 'saved', saved: true }, { taskId: 'uncertain', saved: false,
+      errorCode: 'WORKER_REQUEST_TIMEOUT', error: 'Timeout internals' }];
+  } };
+  await component.action('sync');
+  assert.ok(component.messageText().includes(`${ru.syncSuccess}: 1`));
+  assert.ok(component.messageText().includes(`${ru.syncFailure}: 1`));
+  assert.ok(component.messageText().includes(ru.requestTimeout));
+  component.setLocale('kk');
+  const kk = dictionary('kk'), message = component.messageText();
+  assert.ok(message.includes(`${kk.syncSuccess}: 1`));
+  assert.ok(message.includes(`${kk.syncFailure}: 1`));
+  assert.ok(message.includes(kk.requestTimeout));
+  assert.equal(component.message.tone, 'error');
+  component.setLocale('ru');
+  assert.ok(component.messageText().includes(ru.requestTimeout));
+  assert.equal(synchronizations, 1, 'changing language is not synchronization');
+});
+
+test('worker language: existing history date follows the selected locale and retains authored content', () => {
+  const component = ui(); component.locale = 'ru';
+  const time = '2026-01-15T09:30:00Z';
+  const history = [{ type: 'report', time, note: 'Исходная заметка / бастапқы жазба', reviewLabel: 'Review fixture' }];
+  assert.match(component.historyCards(history, component.selected), /янв/u);
+  component.setLocale('kk');
+  const html = component.historyCards(history, component.selected);
+  assert.match(html, /қаң/u); assert.doesNotMatch(html, /янв|M0?1/);
+  assert.match(html, /14:30/, 'formatting must keep the UTC+5 time in either language');
+  assert.ok(html.includes(history[0].note));
+  assert.equal(history[0].time, time);
+  component.setLocale('ru');
+  assert.match(component.historyCards(history, component.selected), /янв/u);
+});
+
+test('worker language: upload then uncertain submit then manual retry retains photo, payload and operation identity', async () => {
+  const { component } = navigationUi(), env = setup();
+  env.t.reportMode = 'contribution';
+  component.locale = 'ru'; component.workflow = env.workflow; component.gateway = env.gateway;
+  component.selected = env.t; component.draft = await env.workflow.draft(env.t.id);
+  Object.assign(component.draft, { note: 'Материалы участника — өзгеріссіз', photo: picture() });
+  component.writeChain = Promise.resolve();
+  const draft = component.draft, photo = draft.photo, key = draft.idempotencyKey;
+  const selected = component.selected, page = component.page, version = component.contextVersion;
+  const uploadEntered = deferred(), uploadRelease = deferred(), retryEntered = deferred(), retryRelease = deferred();
+  const uploads = [], submissions = [];
+  env.gateway.uploadPhoto = async payload => {
+    uploads.push(payload); uploadEntered.resolve(); await uploadRelease.promise; return { id: 'uploaded-once' };
+  };
+  env.gateway.submitReport = async payload => {
+    submissions.push(structuredClone(payload));
+    if (submissions.length === 1) throw Object.assign(new Error('uncertain transport timeout'), { code: 'WORKER_REQUEST_TIMEOUT' });
+    retryEntered.resolve(); await retryRelease.promise;
+    return { id: 'saved-report', saved: true, submissionType: 'contribution' };
+  };
+
+  const first = component.action('send'); await uploadEntered.promise;
+  const frozen = draft.frozen;
+  assert.ok(frozen); assert.equal(component.busy, true);
+  component.setLocale('kk');
+  assert.equal(component.draft, draft); assert.equal(draft.photo, photo); assert.equal(draft.frozen, frozen);
+  assert.equal(draft.idempotencyKey, key); assert.equal(component.page, page);
+  assert.equal(component.selected, selected); assert.equal(component.contextVersion, version);
+  await component.action('send');
+  assert.equal(uploads.length, 1); assert.equal(submissions.length, 0);
+  uploadRelease.resolve(); await first;
+  assert.equal(component.busy, false); assert.equal(draft.delivery, 'uncertain');
+  assert.equal(component.messageText(), dictionary('kk').requestTimeout);
+  assert.equal(draft.upload.id, 'uploaded-once'); assert.equal(component.draft, draft);
+  component.setLocale('ru');
+  assert.equal(component.messageText(), ru.requestTimeout);
+  assert.equal(submissions.length, 1, 'language change must not automatically retry a possibly saved report');
+  const saved = await env.drafts.get(draft.storageKey);
+  assert.equal(saved.idempotencyKey, key); assert.deepEqual(saved.frozen, frozen);
+  assert.deepEqual(await saved.photo.arrayBuffer(), await photo.arrayBuffer());
+
+  const retry = component.action('send'); await retryEntered.promise;
+  component.setLocale('kk');
+  assert.equal(component.busy, true); assert.equal(draft.frozen, frozen); assert.equal(draft.idempotencyKey, key);
+  await component.action('send');
+  assert.equal(submissions.length, 2); assert.equal(uploads.length, 1);
+  retryRelease.resolve(); await retry;
+  assert.deepEqual(submissions[0], submissions[1], 'manual retry must use the original frozen operation');
+  assert.equal(uploads[0].idempotencyKey, `${key}:photo`);
+  assert.equal(component.messageText(), dictionary('kk').materialsSaved);
+  assert.equal(component.busy, false); assert.equal(component.draft, null);
+  assert.equal(await env.drafts.get(draft.storageKey), undefined);
+  component.setLocale('ru');
+  assert.equal(component.messageText(), ru.materialsSaved, 'already visible success must also follow locale');
 });
 
 test('real API UI: assignment retries preserve body/key and switching task creates a separate action', async () => {
@@ -438,6 +683,32 @@ async function withBitmapDecoder(decoder, run) {
     else delete globalThis.createImageBitmap;
   }
 }
+
+test('worker language: photo decoding survives locale repaint and saves the selected file to the same draft', async () => {
+  const component = ui(), env = setup(), entered = deferred(), release = deferred();
+  const oldPhoto = picture(), newPhoto = new File([await picture().arrayBuffer()], 'selected-once.png', { type: 'image/png' });
+  Object.assign(component, { locale: 'ru', workflow: env.workflow, writeChain: Promise.resolve() });
+  component.draft = await env.workflow.draft('t');
+  Object.assign(component.draft, { note: 'Сохранить исходный текст', photo: oldPhoto });
+  const draft = component.draft, key = draft.idempotencyKey, version = component.contextVersion;
+  let closes = 0;
+  await withBitmapDecoder(async () => { entered.resolve(); await release.promise; return { close() { closes++; } }; }, async () => {
+    const selecting = component.onChange({ target: { type: 'file', files: [newPhoto] } });
+    await entered.promise;
+    component.setLocale('kk'); component.setLocale('ru'); component.setLocale('kk-draft');
+    assert.equal(component.draft, draft); assert.equal(draft.photo, oldPhoto);
+    assert.equal(draft.idempotencyKey, key); assert.equal(component.contextVersion, version);
+    release.resolve(); await selecting;
+    assert.equal(draft.photo, newPhoto); assert.equal(draft.note, 'Сохранить исходный текст');
+    assert.equal(draft.idempotencyKey, key); assert.equal(closes, 1);
+    const saved = await env.drafts.get(draft.storageKey);
+    assert.equal(saved.photo.name, 'selected-once.png');
+    assert.deepEqual(await saved.photo.arrayBuffer(), await newPhoto.arrayBuffer());
+    assert.equal(saved.idempotencyKey, key);
+    assert.equal(component.saveState, 'saved');
+  });
+  component.setPreview(null);
+});
 
 test('real API UI: delayed photo decode preserves photo/upload after the draft becomes frozen or busy', async () => {
   for (const blockedBy of ['frozen', 'busy']) {
