@@ -1,0 +1,178 @@
+[
+  {
+    "profile": "mock",
+    "meta": {
+      "runId": "3355197d-c2c4-4765-adb3-1f6215310cc3",
+      "state": "finished",
+      "startedAt": "2026-10-31T10:02:13.439Z",
+      "endedAt": "2026-10-31T10:22:12.768Z",
+      "exitCode": 0,
+      "revision": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+      "dirty": false,
+      "selection": "full",
+      "capturesScreens": true,
+      "command": "node scripts/run.mjs mock",
+      "environment": {
+        "node": "24.22.2",
+        "playwright": "1.64.1",
+        "platform": "win32",
+        "arch": "x64",
+        "workers": 2,
+        "retries": 0
+      },
+      "target": "http://localhost:5176"
+    },
+    "counts": {
+      "passed": 272,
+      "failed": 0,
+      "fixme": 0,
+      "skipped": 2,
+      "flaky": 0,
+      "notRun": 0
+    },
+    "failed": []
+  },
+  {
+    "profile": "mock",
+    "meta": {
+      "runId": "41020230-be22-425b-b810-8975936ce381",
+      "state": "finished",
+      "startedAt": "2026-10-31T10:01:01.814Z",
+      "endedAt": "2026-10-31T10:01:28.309Z",
+      "exitCode": 0,
+      "revision": "98cf6c68d5370331d6f95aa9e749f82d504e5670",
+      "dirty": true,
+      "selection": "subset",
+      "capturesScreens": false,
+      "command": "node scripts/run.mjs mock",
+      "environment": {
+        "node": "24.22.2",
+        "playwright": "1.64.1",
+        "platform": "win32",
+        "arch": "x64",
+        "workers": 2,
+        "retries": 0
+      },
+      "target": "http://localhost:5176"
+    },
+    "counts": {
+      "passed": 6,
+      "failed": 0,
+      "fixme": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "notRun": 0
+    },
+    "failed": []
+  },
+  {
+    "profile": "mock",
+    "meta": {
+      "runId": "869791df-ec65-40dc-8bf3-e856eacad14f",
+      "state": "finished",
+      "startedAt": "2026-10-31T09:55:05.559Z",
+      "endedAt": "2026-10-31T09:55:52.350Z",
+      "exitCode": 0,
+      "revision": "98cf6c68d5370331d6f95aa9e749f82d504e5670",
+      "dirty": false,
+      "selection": "subset",
+      "capturesScreens": false,
+      "command": "node scripts/run.mjs mock",
+      "environment": {
+        "node": "24.22.2",
+        "playwright": "1.64.1",
+        "platform": "win32",
+        "arch": "x64",
+        "workers": 2,
+        "retries": 0
+      },
+      "target": "http://localhost:5176"
+    },
+    "counts": {
+      "passed": 4,
+      "failed": 0,
+      "fixme": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "notRun": 0
+    },
+    "failed": []
+  },
+  {
+    "profile": "mock",
+    "meta": {
+      "runId": "c2e791e5-7487-48c6-b595-a93f4b1efbb8",
+      "state": "finished",
+      "startedAt": "2026-10-31T09:57:27.102Z",
+      "endedAt": "2026-10-31T10:00:37.621Z",
+      "exitCode": 1,
+      "revision": "98cf6c68d5370331d6f95aa9e749f82d504e5670",
+      "dirty": true,
+      "selection": "subset",
+      "capturesScreens": false,
+      "command": "node scripts/run.mjs mock",
+      "environment": {
+        "node": "24.22.2",
+        "playwright": "1.64.1",
+        "platform": "win32",
+        "arch": "x64",
+        "workers": 2,
+        "retries": 0
+      },
+      "target": "http://localhost:5176"
+    },
+    "counts": {
+      "passed": 26,
+      "failed": 2,
+      "fixme": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "notRun": 0
+    },
+    "failed": [
+      {
+        "project": "desktop",
+        "title": "E2E-09 rate sources: ru, ordinary/presentation"
+      },
+      {
+        "project": "desktop",
+        "title": "E2E-09 rate sources: kk, ordinary/presentation"
+      }
+    ]
+  },
+  {
+    "profile": "api",
+    "meta": {
+      "runId": "cfdbf82c-a83f-4324-ab5e-9a2d0719ef42",
+      "state": "finished",
+      "startedAt": "2026-10-31T10:02:46.202Z",
+      "endedAt": "2026-10-31T10:12:34.231Z",
+      "exitCode": 0,
+      "browserExitCode": 0,
+      "privacyScan": "passed",
+      "revision": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+      "dirty": false,
+      "selection": "full",
+      "capturesScreens": false,
+      "command": "node scripts/run.mjs api",
+      "environment": {
+        "node": "24.22.2",
+        "playwright": "1.64.1",
+        "platform": "win32",
+        "arch": "x64",
+        "workers": 1,
+        "retries": 0
+      },
+      "target": "http://localhost:5177"
+    },
+    "counts": {
+      "passed": 74,
+      "failed": 0,
+      "fixme": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "notRun": 0
+    },
+    "failed": []
+  }
+]

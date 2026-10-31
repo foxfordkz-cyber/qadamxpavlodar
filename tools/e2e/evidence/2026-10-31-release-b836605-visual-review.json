@@ -1,0 +1,281 @@
+{
+  "schemaVersion": 1,
+  "testedSHA": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+  "applicationBase": "98cf6c68d5370331d6f95aa9e749f82d504e5670",
+  "mockRunId": "3355197d-c2c4-4765-adb3-1f6215310cc3",
+  "reviewedCount": 30,
+  "usableForSlides": 30,
+  "captureApprovalWritten": true,
+  "screenshots": [
+    {
+      "name": "guide-1280.png",
+      "sha256": "2fee8dd84030b65f4d3fdfd75ff05f69a58a214a5f33eea181fe2178547bcddf",
+      "runId": "3355197d-c2c4-4765-adb3-1f6215310cc3",
+      "revision": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Гайд загружен: четыре климатических блока и ссылки читаемы, помощник не перекрывает текст."
+    },
+    {
+      "name": "home-1280.png",
+      "sha256": "cdbe75e7e39bfe6439927c67d8c6608a7e105f3ab47cbdb8faa1491884779de4",
+      "runId": "3355197d-c2c4-4765-adb3-1f6215310cc3",
+      "revision": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Расчёт завершён: 1345 растений, стоимость 9,97 млн ₸, 1976 м² кроны и основные кнопки читаемы. Помощник находится в шапке."
+    },
+    {
+      "name": "import-1280.png",
+      "sha256": "ef7aaac744ae1abf806991fac6bbf4ffa3eaf7d698e6e3bb3fe9ae5cc4765a6c",
+      "runId": "3355197d-c2c4-4765-adb3-1f6215310cc3",
+      "revision": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Форма импорта и кнопка выбора файла готовы; элементы не перекрыты."
+    },
+    {
+      "name": "lab-1280.png",
+      "sha256": "4e9cbccf4374aa73e9f6733a5b915c7ea3ea6b13bb559cedbbe8e8bcccdf28f0",
+      "runId": "3355197d-c2c4-4765-adb3-1f6215310cc3",
+      "revision": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Все три плана рассчитаны: названия, зоны, бюджет, вода, приживаемость, CO₂, крона и неизвестная цена дерева видны. Правый нижний показатель больше не перекрыт."
+    },
+    {
+      "name": "map-1280.png",
+      "sha256": "abd2a57726e4c245c19e1b8a317f4050e7c7c72f14a88368649681f4ed1a48cc",
+      "runId": "3355197d-c2c4-4765-adb3-1f6215310cc3",
+      "revision": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Карта и список 114 зон загружены; новые названия улиц видны. Управление, CSV и легенда не перекрыты помощником."
+    },
+    {
+      "name": "outcomes-1280.png",
+      "sha256": "83f7e7d320946ec3baf8f4171e9adbfe08220a32db8d86429124629ee22b11b5",
+      "runId": "3355197d-c2c4-4765-adb3-1f6215310cc3",
+      "revision": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Три варианта рассчитаны; числа, сметы, demo/прогноз и кнопки сохранения читаемы, перекрытий нет."
+    },
+    {
+      "name": "priorities-1280.png",
+      "sha256": "887ad457af67e422813690294bfc790fca42f4846c8dd9576d5639f2c87decc7",
+      "runId": "3355197d-c2c4-4765-adb3-1f6215310cc3",
+      "revision": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Рейтинг и все шесть весов/ползунков читаемы. Помощник находится в шапке, перекрытий значений нет."
+    },
+    {
+      "name": "problems-1280.png",
+      "sha256": "f9681bdc557db617ee8469be60ade621e34f58684b3d946fd9980ae2e8e55349",
+      "runId": "3355197d-c2c4-4765-adb3-1f6215310cc3",
+      "revision": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Счётчики, фильтры и рекомендации первых строк загружены; правая колонка рекомендаций не перекрыта."
+    },
+    {
+      "name": "projects-1280.png",
+      "sha256": "4d2bc97d78620fd45aa7334280eec3d99944d49e6994716d89b2c1f7db0b05e6",
+      "runId": "3355197d-c2c4-4765-adb3-1f6215310cc3",
+      "revision": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Проект, состав посадки, статус и демонстрационная пометка читаемы; состояние загрузки отсутствует."
+    },
+    {
+      "name": "rates-1280.png",
+      "sha256": "d012d61d04963a95c347a15fb3d919290c0eb45decea3aa2db0aa1bcda8259fd",
+      "runId": "3355197d-c2c4-4765-adb3-1f6215310cc3",
+      "revision": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Значения, единицы и источники расценок читаемы, помощник их не перекрывает."
+    },
+    {
+      "name": "reports-1280.png",
+      "sha256": "9f1c9540e769a9ddda0d923f5ab4143d26cc2a08e692c6ded2f20dd62a4f30b8",
+      "runId": "3355197d-c2c4-4765-adb3-1f6215310cc3",
+      "revision": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Оба демонстрационных отчёта имеют загруженные миниатюры, многоточий нет. Пустая правая панель предлагает выбрать отчёт — это ожидаемое состояние выбора."
+    },
+    {
+      "name": "species-1280.png",
+      "sha256": "6bea0f38ec1ab9fd96b4c936917995c748638d06f21f240ea2aaa40be9f71089",
+      "runId": "3355197d-c2c4-4765-adb3-1f6215310cc3",
+      "revision": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Фотографии четырёх карточек загружены; текст пользы ели справа читаем и не перекрыт помощником."
+    },
+    {
+      "name": "tasks-1280.png",
+      "sha256": "81853b26438b7e883e8bb5931f72a2c6731890a8ff8cc7f9ebe23f394e2fb056",
+      "runId": "3355197d-c2c4-4765-adb3-1f6215310cc3",
+      "revision": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Показатели, план и начало карточки бригады загружены; прежнее перекрытие правой части карточки отсутствует."
+    },
+    {
+      "name": "time-20-years-1280.png",
+      "sha256": "bd647d318f60088cc776e0cc4f585c13d0382d6ce8e278082087c3843ae03e29",
+      "runId": "3355197d-c2c4-4765-adb3-1f6215310cc3",
+      "revision": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "20 лет выбраны; карта, 14451 м², 8,90 т/год и −0,9 °C видны. Помощник не перекрывает методическое пояснение; его продолжение ниже кадра доступно прокруткой карточки."
+    },
+    {
+      "name": "time-planting-1280.png",
+      "sha256": "c79bf7bad15752ca737f72230b7851ce8eb85ef01b23928a86be5df632407090",
+      "runId": "3355197d-c2c4-4765-adb3-1f6215310cc3",
+      "revision": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Посадка выбрана; карта, пояснение о саженцах, кнопки роста/скрытия и методическое пояснение читаемы без помощника поверх текста."
+    },
+    {
+      "name": "guide-375.png",
+      "sha256": "ec7d4e87040a99124c1b3ac4e2b9fbc906f257520248d30e294b5928e2bee8db",
+      "runId": "3355197d-c2c4-4765-adb3-1f6215310cc3",
+      "revision": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Заголовок, климатический блок и начало блока воды читаемы; помощник в шапке, перекрытий нет."
+    },
+    {
+      "name": "home-375.png",
+      "sha256": "b09472acfa4670250ac62b7c883a9ec1f7a3f74c299928a5c963319b864f1acb",
+      "runId": "3355197d-c2c4-4765-adb3-1f6215310cc3",
+      "revision": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Расчёт готов: 1345 растений, 9,97 млн ₸ и 1976 м² кроны читаемы. Помощник находится в шапке и не закрывает стоимость; кнопки роста/документа ниже текущего кадра."
+    },
+    {
+      "name": "import-375.png",
+      "sha256": "4b431f652c8e60d0e6781d7585158b4680896abca6b3cc34e4f38e76b20e94e1",
+      "runId": "3355197d-c2c4-4765-adb3-1f6215310cc3",
+      "revision": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Форма перенесена по строкам, поля и кнопка выбора файла помещаются по ширине и не перекрыты."
+    },
+    {
+      "name": "lab-375.png",
+      "sha256": "3a20daec8cb65a87c90d268eb5acfd45b8e37fb73e6619925d8568b035d560a6",
+      "runId": "3355197d-c2c4-4765-adb3-1f6215310cc3",
+      "revision": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Первый план рассчитан: название, стоимость, вода, приживаемость, CO₂ и 14826 м² кроны читаемы. Неизвестная цена дерева явно помечена и объяснена; перекрытий нет."
+    },
+    {
+      "name": "map-375.png",
+      "sha256": "b1e20a30090dff4f18a17742f349a80be37ed3df1264e09bd986d63d93da1e71",
+      "runId": "3355197d-c2c4-4765-adb3-1f6215310cc3",
+      "revision": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Показана загруженная 3D-карта, активна вкладка Карта. Поиск, рисование, масштаб, легенда и слои доступны без перекрытия помощником."
+    },
+    {
+      "name": "outcomes-375.png",
+      "sha256": "99934fa2a350d8b3f92aac687d85614a39d4bc2efd86df75f7ec82e80dc1f423",
+      "runId": "3355197d-c2c4-4765-adb3-1f6215310cc3",
+      "revision": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Экономный вариант рассчитан; прогноз/demo, 152962,7 ₸, ожидаемые деревья, смета и кнопка сохранения читаемы. Помощник не перекрывает карточку."
+    },
+    {
+      "name": "priorities-375.png",
+      "sha256": "02664b4c53995b2b720396d726143900bf3a5031c07f7fae034e7b1fd206da38",
+      "runId": "3355197d-c2c4-4765-adb3-1f6215310cc3",
+      "revision": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Все шесть числовых весов и ползунков помещаются в кадре и не перекрыты. Помощник расположен в отдельной строке шапки."
+    },
+    {
+      "name": "problems-375.png",
+      "sha256": "53b23a936bbad52ffd5428ade5900e548a5465a21dc81f6e2b9614ec627d3d8f",
+      "runId": "3355197d-c2c4-4765-adb3-1f6215310cc3",
+      "revision": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Заголовок, действия и пять счётчиков загружены; помощник не перекрывает показатели. Таблица рекомендаций ниже кадра."
+    },
+    {
+      "name": "projects-375.png",
+      "sha256": "c4960c8ed9a1af65db9d317224ee591aac7adec3ad0b0baeccf590d03fefb8e7",
+      "runId": "3355197d-c2c4-4765-adb3-1f6215310cc3",
+      "revision": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Проект, статус, 63 растения/4 позиции и demo-пометка читаемы; незагруженных блоков нет."
+    },
+    {
+      "name": "rates-375.png",
+      "sha256": "29565abbf8b306b26c3d39e4d88ffadb0c08d1e05c56f433c95d36a70224f09d",
+      "runId": "3355197d-c2c4-4765-adb3-1f6215310cc3",
+      "revision": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Значения и единицы читаемы без перекрытия помощником. Колонка источника частично за правым краем внутренней прокручиваемой таблицы; кадр не показывает источник целиком."
+    },
+    {
+      "name": "reports-375.png",
+      "sha256": "cdbfaded18d6f2e8c9fa95c0d0115c28723afce42fe58341b471ab6bcfc5a9e2",
+      "runId": "3355197d-c2c4-4765-adb3-1f6215310cc3",
+      "revision": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Оба отчёта показывают загруженные миниатюры вместо многоточий. Текст и статусы читаемы; приглашение выбрать отчёт ниже списка соответствует начальному состоянию."
+    },
+    {
+      "name": "species-375.png",
+      "sha256": "2c64a46060678ecd554ce6dd997718fec81db1ce724e088f5828fa4d425f3666",
+      "runId": "3355197d-c2c4-4765-adb3-1f6215310cc3",
+      "revision": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Поиск, фильтры, количество 50 и начало загруженной фотографии видны; помощник не перекрывает элементы. Название первой карточки ниже кадра."
+    },
+    {
+      "name": "tasks-375.png",
+      "sha256": "3e5da9c1d546b9396e5e9e0deec560b8da7853ad2c3c06fc7ccf004f2aaafb34",
+      "runId": "3355197d-c2c4-4765-adb3-1f6215310cc3",
+      "revision": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Дата, создание задания, подтверждение плана и первые счётчики читаемы; помощник не закрывает действия."
+    },
+    {
+      "name": "time-20-years-375.png",
+      "sha256": "9ec1c9a0cfa0cd4b5ba96534775a8f6e5f2d874c05891b9d7a196be0c285ec3b",
+      "runId": "3355197d-c2c4-4765-adb3-1f6215310cc3",
+      "revision": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Выбранный участок виден в заголовке; 20 лет активны. 14451 м², 8,90 т/год и −0,9 °C читаемы, подписи и методика не перекрыты помощником."
+    },
+    {
+      "name": "time-planting-375.png",
+      "sha256": "b249801cb8e0d6ff1b962efea5ed3c53568cb2ff2bc11f39634420da1a2ab0f9",
+      "runId": "3355197d-c2c4-4765-adb3-1f6215310cc3",
+      "revision": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Раскрыта карточка выбранного газона на проспекте Нурсултана Назарбаева. Посадка активна, пояснение о саженцах и методике полностью читаемо; кнопки роста и скрытия доступны."
+    }
+  ]
+}

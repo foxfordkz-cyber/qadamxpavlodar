@@ -1,0 +1,237 @@
+{
+  "target": "https://green-pavlodar-mock.pages.dev/",
+  "startedAt": "2026-10-31T10:14:32.319Z",
+  "testSHA": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+  "dirty": false,
+  "applicationSHA": null,
+  "deploymentId": null,
+  "publisherReportedSHA": "a66d542c63c527d608400c84b34d49f982855369",
+  "provenance": "Publisher-reported SHA from docs/cloud-web-deployment.md; no deployed SHA endpoint or deployment ID supplied. Not acceptance of the local fixed build.",
+  "environment": {
+    "node": "24.22.2",
+    "playwright": "1.64.1",
+    "platform": "win32",
+    "workers": 2,
+    "retries": 0
+  },
+  "scope": "Public HTTPS mock only. No API, cloud persistence, Microsoft Word opening or private credentials.",
+  "endedAt": "2026-10-31T10:15:50.968Z",
+  "exitCode": 1,
+  "counts": {
+    "passed": 14,
+    "failed": 2,
+    "skipped": 0,
+    "fixme": 0,
+    "flaky": 0
+  },
+  "tests": [
+    {
+      "title": "public-mock.public.spec.ts > public mock: complete menu and three calculated laboratory plans",
+      "project": "public-ru-1280",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "duration": 11105
+        }
+      ],
+      "failure": []
+    },
+    {
+      "title": "public-mock.public.spec.ts > public mock: site → recommendation/estimate → growth → RU/KK DOCX XML",
+      "project": "public-ru-1280",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "duration": 12158
+        }
+      ],
+      "failure": []
+    },
+    {
+      "title": "public-mock.public.spec.ts > public mock: Outcomes variants and inspection retain demonstration labels",
+      "project": "public-ru-1280",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "duration": 5456
+        }
+      ],
+      "failure": []
+    },
+    {
+      "title": "public-mock.public.spec.ts > public mock E2E-09: weight controls and values remain accessible in normal/presentation modes",
+      "project": "public-ru-1280",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "duration": 3919
+        }
+      ],
+      "failure": []
+    },
+    {
+      "title": "public-mock.public.spec.ts > public mock: complete menu and three calculated laboratory plans",
+      "project": "public-kk-1280",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "duration": 12580
+        }
+      ],
+      "failure": []
+    },
+    {
+      "title": "public-mock.public.spec.ts > public mock: site → recommendation/estimate → growth → RU/KK DOCX XML",
+      "project": "public-kk-1280",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "duration": 11419
+        }
+      ],
+      "failure": []
+    },
+    {
+      "title": "public-mock.public.spec.ts > public mock: Outcomes variants and inspection retain demonstration labels",
+      "project": "public-kk-1280",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "duration": 5673
+        }
+      ],
+      "failure": []
+    },
+    {
+      "title": "public-mock.public.spec.ts > public mock E2E-09: weight controls and values remain accessible in normal/presentation modes",
+      "project": "public-kk-1280",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "duration": 3856
+        }
+      ],
+      "failure": []
+    },
+    {
+      "title": "public-mock.public.spec.ts > public mock: complete menu and three calculated laboratory plans",
+      "project": "public-ru-375",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "duration": 14153
+        }
+      ],
+      "failure": []
+    },
+    {
+      "title": "public-mock.public.spec.ts > public mock: site → recommendation/estimate → growth → RU/KK DOCX XML",
+      "project": "public-ru-375",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "duration": 10949
+        }
+      ],
+      "failure": []
+    },
+    {
+      "title": "public-mock.public.spec.ts > public mock: Outcomes variants and inspection retain demonstration labels",
+      "project": "public-ru-375",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "duration": 3544
+        }
+      ],
+      "failure": []
+    },
+    {
+      "title": "public-mock.public.spec.ts > public mock E2E-09: weight controls and values remain accessible in normal/presentation modes",
+      "project": "public-ru-375",
+      "status": "unexpected",
+      "attempts": [
+        {
+          "status": "failed",
+          "duration": 3639
+        }
+      ],
+      "failure": [
+        "Error: normal: assistant covers a weight control or value expect(received).toEqual(expected) // deep equality - Expected  -  1",
+        "Error: presentation: assistant covers a weight control or value expect(received).toEqual(expected) // deep equality - Expected  -  1"
+      ]
+    },
+    {
+      "title": "public-mock.public.spec.ts > public mock: complete menu and three calculated laboratory plans",
+      "project": "public-kk-375",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "duration": 12148
+        }
+      ],
+      "failure": []
+    },
+    {
+      "title": "public-mock.public.spec.ts > public mock: site → recommendation/estimate → growth → RU/KK DOCX XML",
+      "project": "public-kk-375",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "duration": 9832
+        }
+      ],
+      "failure": []
+    },
+    {
+      "title": "public-mock.public.spec.ts > public mock: Outcomes variants and inspection retain demonstration labels",
+      "project": "public-kk-375",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "duration": 4573
+        }
+      ],
+      "failure": []
+    },
+    {
+      "title": "public-mock.public.spec.ts > public mock E2E-09: weight controls and values remain accessible in normal/presentation modes",
+      "project": "public-kk-375",
+      "status": "unexpected",
+      "attempts": [
+        {
+          "status": "failed",
+          "duration": 3565
+        }
+      ],
+      "failure": [
+        "Error: normal: assistant covers a weight control or value expect(received).toEqual(expected) // deep equality - Expected  -  1",
+        "Error: presentation: assistant covers a weight control or value expect(received).toEqual(expected) // deep equality - Expected  -  1"
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "browser/public-mock.public-public--9347d-n-normal-presentation-modes-public-kk-375/test-failed-1.png",
+      "sha256": "93efd2e00e811df339e257f144d447f62f312e4f3db73351e3c3c8b391a777ab"
+    },
+    {
+      "path": "browser/public-mock.public-public--9347d-n-normal-presentation-modes-public-ru-375/test-failed-1.png",
+      "sha256": "8ae0ac86f6637c660e24be085f888dc17401132015b23bf41228535540286d47"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+import {spawn} from 'node:child_process';
+import {writeFileSync,readFileSync} from 'node:fs';
+import {fileURLToPath} from 'node:url';
+import {resolve} from 'node:path';
+import {randomBytes} from 'node:crypto';
+const root=resolve(fileURLToPath(new URL('.',import.meta.url)),'../../../..');
+const secret=randomBytes(32).toString('hex');
+const args=['compose','-p','gp-aidana-qa-20261031-18083','-f','docker-compose.yml','-f','tools/e2e/test-results/docker-qa/compose.override.json','build'];
+const child=spawn('docker',args,{cwd:root,env:{...process.env,DEMO_PASSWORD:secret,WEB_PORT:'18083'},windowsHide:true,stdio:['ignore','pipe','pipe']});
+let output=''; for(const pipe of [child.stdout,child.stderr]) pipe.on('data',b=>{output+=b;});
+child.on('error',()=>{console.error('Docker build process could not start');process.exitCode=1;});
+child.on('exit',code=>{const clean=output.split(secret).join('[redacted]');writeFileSync(new URL('./build.log',import.meta.url),clean); console.log(JSON.stringify({stage:'docker-build',exitCode:code,log:'test-results/docker-qa/build.log'}));process.exitCode=code??1;});
