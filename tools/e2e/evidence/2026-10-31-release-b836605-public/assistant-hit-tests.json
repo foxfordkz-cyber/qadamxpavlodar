@@ -1,765 +1,577 @@
-﻿{
-    "target":  "https://green-pavlodar-mock.pages.dev/",
-    "testSHA":  "b836605ed1ecb5eea3425f52bf2f47b178487de5",
-    "startedAt":  "2026-10-31T10:14:32.319Z",
-    "applicationSHA":  null,
-    "deploymentId":  null,
-    "runs":  [
-                 {
-                     "project":  "public-ru-1280",
-                     "frames":  {
-                                    "value":  [
-                                                  {
-                                                      "mode":  "normal",
-                                                      "result":  [
-                                                                     {
-                                                                         "label":  "0.25",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.15",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.20",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.15",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.10",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.15",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "Бюджет, млн тенге",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     }
-                                                                 ]
-                                                  },
-                                                  {
-                                                      "mode":  "presentation",
-                                                      "result":  [
-                                                                     {
-                                                                         "label":  "0.25",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.15",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.20",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.15",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.10",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.15",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "Бюджет, млн тенге",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     }
-                                                                 ]
-                                                  }
-                                              ],
-                                    "Count":  2
-                                }
-                 },
-                 {
-                     "project":  "public-kk-1280",
-                     "frames":  {
-                                    "value":  [
-                                                  {
-                                                      "mode":  "normal",
-                                                      "result":  [
-                                                                     {
-                                                                         "label":  "0.25",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.15",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.20",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.15",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.10",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.15",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "Бюджет, млн теңге",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     }
-                                                                 ]
-                                                  },
-                                                  {
-                                                      "mode":  "presentation",
-                                                      "result":  [
-                                                                     {
-                                                                         "label":  "0.25",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.15",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.20",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.15",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.10",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.15",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "Бюджет, млн теңге",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     }
-                                                                 ]
-                                                  }
-                                              ],
-                                    "Count":  2
-                                }
-                 },
-                 {
-                     "project":  "public-ru-375",
-                     "frames":  {
-                                    "value":  [
-                                                  {
-                                                      "mode":  "normal",
-                                                      "result":  [
-                                                                     {
-                                                                         "label":  "0.25",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.15",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.20",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.15",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.10",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-                                                                                            {
-                                                                                                "left":  311,
-                                                                                                "right":  350,
-                                                                                                "top":  690.953125,
-                                                                                                "bottom":  706.953125,
-                                                                                                "intersectionPx":  624
-                                                                                            }
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.15",
-                                                                         "collisions":  [
-                                                                                            {
-                                                                                                "left":  320.96875,
-                                                                                                "right":  348,
-                                                                                                "top":  719.953125,
-                                                                                                "bottom":  737.953125,
-                                                                                                "intersectionPx":  486.5625
-                                                                                            }
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "Бюджет, млн тенге",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     }
-                                                                 ]
-                                                  },
-                                                  {
-                                                      "mode":  "presentation",
-                                                      "result":  [
-                                                                     {
-                                                                         "label":  "0.25",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.15",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.20",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.15",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.10",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.15",
-                                                                         "collisions":  [
-                                                                                            {
-                                                                                                "left":  320.96875,
-                                                                                                "right":  348,
-                                                                                                "top":  690,
-                                                                                                "bottom":  706.828125,
-                                                                                                "intersectionPx":  454.88525390625
-                                                                                            }
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-                                                                                            {
-                                                                                                "left":  311,
-                                                                                                "right":  350,
-                                                                                                "top":  712.125,
-                                                                                                "bottom":  728.125,
-                                                                                                "intersectionPx":  624
-                                                                                            }
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "Бюджет, млн тенге",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     }
-                                                                 ]
-                                                  }
-                                              ],
-                                    "Count":  2
-                                }
-                 },
-                 {
-                     "project":  "public-kk-375",
-                     "frames":  {
-                                    "value":  [
-                                                  {
-                                                      "mode":  "normal",
-                                                      "result":  [
-                                                                     {
-                                                                         "label":  "0.25",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.15",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.20",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.15",
-                                                                         "collisions":  [
-                                                                                            {
-                                                                                                "left":  320.96875,
-                                                                                                "right":  348,
-                                                                                                "top":  690,
-                                                                                                "bottom":  701.828125,
-                                                                                                "intersectionPx":  319.72900390625
-                                                                                            }
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-                                                                                            {
-                                                                                                "left":  311,
-                                                                                                "right":  350,
-                                                                                                "top":  707.125,
-                                                                                                "bottom":  723.125,
-                                                                                                "intersectionPx":  624
-                                                                                            }
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.10",
-                                                                         "collisions":  [
-                                                                                            {
-                                                                                                "left":  320.34375,
-                                                                                                "right":  348,
-                                                                                                "top":  736.125,
-                                                                                                "bottom":  742,
-                                                                                                "intersectionPx":  162.48046875
-                                                                                            }
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.15",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "Бюджет, млн теңге",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     }
-                                                                 ]
-                                                  },
-                                                  {
-                                                      "mode":  "presentation",
-                                                      "result":  [
-                                                                     {
-                                                                         "label":  "0.25",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.15",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.20",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.15",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-                                                                                            {
-                                                                                                "left":  311,
-                                                                                                "right":  350,
-                                                                                                "top":  690,
-                                                                                                "bottom":  692,
-                                                                                                "intersectionPx":  78
-                                                                                            }
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.10",
-                                                                         "collisions":  [
-                                                                                            {
-                                                                                                "left":  320.34375,
-                                                                                                "right":  348,
-                                                                                                "top":  705,
-                                                                                                "bottom":  723,
-                                                                                                "intersectionPx":  497.8125
-                                                                                            }
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-                                                                                            {
-                                                                                                "left":  311,
-                                                                                                "right":  350,
-                                                                                                "top":  728.296875,
-                                                                                                "bottom":  742,
-                                                                                                "intersectionPx":  534.421875
-                                                                                            }
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "0.15",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "range",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     },
-                                                                     {
-                                                                         "label":  "Бюджет, млн теңге",
-                                                                         "collisions":  [
-
-                                                                                        ]
-                                                                     }
-                                                                 ]
-                                                  }
-                                              ],
-                                    "Count":  2
-                                }
-                 }
-             ]
+{
+  "target": "https://green-pavlodar-mock.pages.dev/",
+  "testSHA": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+  "startedAt": "2026-10-31T10:14:32.319Z",
+  "applicationSHA": null,
+  "deploymentId": null,
+  "runs": [
+    {
+      "project": "public-ru-1280",
+      "frames": {
+        "value": [
+          {
+            "mode": "normal",
+            "result": [
+              {
+                "label": "0.25",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.15",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.20",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.15",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.10",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.15",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "Бюджет, млн тенге",
+                "collisions": []
+              }
+            ]
+          },
+          {
+            "mode": "presentation",
+            "result": [
+              {
+                "label": "0.25",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.15",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.20",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.15",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.10",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.15",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "Бюджет, млн тенге",
+                "collisions": []
+              }
+            ]
+          }
+        ],
+        "Count": 2
+      }
+    },
+    {
+      "project": "public-kk-1280",
+      "frames": {
+        "value": [
+          {
+            "mode": "normal",
+            "result": [
+              {
+                "label": "0.25",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.15",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.20",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.15",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.10",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.15",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "Бюджет, млн теңге",
+                "collisions": []
+              }
+            ]
+          },
+          {
+            "mode": "presentation",
+            "result": [
+              {
+                "label": "0.25",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.15",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.20",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.15",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.10",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.15",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "Бюджет, млн теңге",
+                "collisions": []
+              }
+            ]
+          }
+        ],
+        "Count": 2
+      }
+    },
+    {
+      "project": "public-ru-375",
+      "frames": {
+        "value": [
+          {
+            "mode": "normal",
+            "result": [
+              {
+                "label": "0.25",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.15",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.20",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.15",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.10",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": [
+                  {
+                    "left": 311,
+                    "right": 350,
+                    "top": 690.953125,
+                    "bottom": 706.953125,
+                    "intersectionPx": 624
+                  }
+                ]
+              },
+              {
+                "label": "0.15",
+                "collisions": [
+                  {
+                    "left": 320.96875,
+                    "right": 348,
+                    "top": 719.953125,
+                    "bottom": 737.953125,
+                    "intersectionPx": 486.5625
+                  }
+                ]
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "Бюджет, млн тенге",
+                "collisions": []
+              }
+            ]
+          },
+          {
+            "mode": "presentation",
+            "result": [
+              {
+                "label": "0.25",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.15",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.20",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.15",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.10",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.15",
+                "collisions": [
+                  {
+                    "left": 320.96875,
+                    "right": 348,
+                    "top": 690,
+                    "bottom": 706.828125,
+                    "intersectionPx": 454.88525390625
+                  }
+                ]
+              },
+              {
+                "label": "range",
+                "collisions": [
+                  {
+                    "left": 311,
+                    "right": 350,
+                    "top": 712.125,
+                    "bottom": 728.125,
+                    "intersectionPx": 624
+                  }
+                ]
+              },
+              {
+                "label": "Бюджет, млн тенге",
+                "collisions": []
+              }
+            ]
+          }
+        ],
+        "Count": 2
+      }
+    },
+    {
+      "project": "public-kk-375",
+      "frames": {
+        "value": [
+          {
+            "mode": "normal",
+            "result": [
+              {
+                "label": "0.25",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.15",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.20",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.15",
+                "collisions": [
+                  {
+                    "left": 320.96875,
+                    "right": 348,
+                    "top": 690,
+                    "bottom": 701.828125,
+                    "intersectionPx": 319.72900390625
+                  }
+                ]
+              },
+              {
+                "label": "range",
+                "collisions": [
+                  {
+                    "left": 311,
+                    "right": 350,
+                    "top": 707.125,
+                    "bottom": 723.125,
+                    "intersectionPx": 624
+                  }
+                ]
+              },
+              {
+                "label": "0.10",
+                "collisions": [
+                  {
+                    "left": 320.34375,
+                    "right": 348,
+                    "top": 736.125,
+                    "bottom": 742,
+                    "intersectionPx": 162.48046875
+                  }
+                ]
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.15",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "Бюджет, млн теңге",
+                "collisions": []
+              }
+            ]
+          },
+          {
+            "mode": "presentation",
+            "result": [
+              {
+                "label": "0.25",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.15",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.20",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "0.15",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": [
+                  {
+                    "left": 311,
+                    "right": 350,
+                    "top": 690,
+                    "bottom": 692,
+                    "intersectionPx": 78
+                  }
+                ]
+              },
+              {
+                "label": "0.10",
+                "collisions": [
+                  {
+                    "left": 320.34375,
+                    "right": 348,
+                    "top": 705,
+                    "bottom": 723,
+                    "intersectionPx": 497.8125
+                  }
+                ]
+              },
+              {
+                "label": "range",
+                "collisions": [
+                  {
+                    "left": 311,
+                    "right": 350,
+                    "top": 728.296875,
+                    "bottom": 742,
+                    "intersectionPx": 534.421875
+                  }
+                ]
+              },
+              {
+                "label": "0.15",
+                "collisions": []
+              },
+              {
+                "label": "range",
+                "collisions": []
+              },
+              {
+                "label": "Бюджет, млн теңге",
+                "collisions": []
+              }
+            ]
+          }
+        ],
+        "Count": 2
+      }
+    }
+  ]
 }
