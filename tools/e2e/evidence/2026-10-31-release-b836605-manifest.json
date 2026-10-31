@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "testedSHA": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+  "applicationBase": "98cf6c68d5370331d6f95aa9e749f82d504e5670",
+  "appsTree": "16454d07e3b76df4bf7b0bc86933f52acd394ad0",
+  "archive": "2026-10-31-release-b836605.zip",
+  "archiveSha256": "e1198799cae1b34d1822d8d16a97a2725b661c25f6e72522b4cb2d61142cfab8",
+  "archiveBytes": 4827113,
+  "archiveScope": "Only current local mock/API report and 30 approved fresh mock captures. Public old deployment and Docker artifacts are separate.",
+  "checks": {
+    "checkTools": {
+      "passed": 24,
+      "failed": 0,
+      "skipped": 0,
+      "fixme": 0,
+      "flaky": 0
+    },
+    "checkReportBefore": {
+      "passed": 3,
+      "failed": 0
+    },
+    "checkReportAfter": {
+      "passed": 3,
+      "failed": 0
+    },
+    "summaryExit": 0,
+    "packExit": 0,
+    "gateExit": 0
+  },
+  "local": [
+    {
+      "profile": "mock",
+      "meta": {
+        "runId": "3355197d-c2c4-4765-adb3-1f6215310cc3",
+        "state": "finished",
+        "startedAt": "2026-10-31T10:02:13.439Z",
+        "endedAt": "2026-10-31T10:22:12.768Z",
+        "exitCode": 0,
+        "revision": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+        "dirty": false,
+        "selection": "full",
+        "capturesScreens": true,
+        "command": "node scripts/run.mjs mock",
+        "environment": {
+          "node": "24.22.2",
+          "playwright": "1.64.1",
+          "platform": "win32",
+          "arch": "x64",
+          "workers": 2,
+          "retries": 0
+        },
+        "target": "http://localhost:5176"
+      },
+      "counts": {
+        "passed": 272,
+        "failed": 0,
+        "fixme": 0,
+        "skipped": 2,
+        "flaky": 0,
+        "notRun": 0
+      }
+    },
+    {
+      "profile": "api",
+      "meta": {
+        "runId": "cfdbf82c-a83f-4324-ab5e-9a2d0719ef42",
+        "state": "finished",
+        "startedAt": "2026-10-31T10:02:46.202Z",
+        "endedAt": "2026-10-31T10:12:34.231Z",
+        "exitCode": 0,
+        "browserExitCode": 0,
+        "privacyScan": "passed",
+        "revision": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+        "dirty": false,
+        "selection": "full",
+        "capturesScreens": false,
+        "command": "node scripts/run.mjs api",
+        "environment": {
+          "node": "24.22.2",
+          "playwright": "1.64.1",
+          "platform": "win32",
+          "arch": "x64",
+          "workers": 1,
+          "retries": 0
+        },
+        "target": "http://localhost:5177"
+      },
+      "counts": {
+        "passed": 74,
+        "failed": 0,
+        "fixme": 0,
+        "skipped": 0,
+        "flaky": 0,
+        "notRun": 0
+      }
+    }
+  ],
+  "docker": {
+    "counts": {
+      "passed": 16,
+      "failed": 0,
+      "skipped": 0,
+      "fixme": 0,
+      "flaky": 0
+    },
+    "resultSha256": "8ba514e7cca9951743d222ba9bf1be6a669b6f09495084af622b97fa21ecd9d4",
+    "applicationBase": "98cf6c68d5370331d6f95aa9e749f82d504e5670",
+    "testSHA": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+    "images": [
+      "sha256:afad6fe98abb04da4a1a63ed3b84eb9d34869f5506cd2bdafa22854afbda74fa",
+      "sha256:95cc8530c22d365e33f4824ff1af284fbc7a09029f2cd6cd94fb4ee0538147d2"
+    ],
+    "project": "gp-aidana-qa-1793441677776",
+    "volume": "gp-aidana-qa-1793441677776_gp-data",
+    "baseURL": "http://localhost:18083"
+  },
+  "publicMock": {
+    "counts": {
+      "passed": 14,
+      "failed": 2,
+      "skipped": 0,
+      "fixme": 0,
+      "flaky": 0
+    },
+    "testSHA": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+    "applicationSHA": null,
+    "deploymentId": null,
+    "publisherReportedSHA": "a66d542c63c527d608400c84b34d49f982855369",
+    "target": "https://green-pavlodar-mock.pages.dev/"
+  },
+  "publicApi": {
+    "status": "BLOCKED",
+    "reason": "No complete public API origin supplied; PRs #35/#39 remain Draft."
+  },
+  "manualFinding": {
+    "id": "E2E-10",
+    "severity": "minor",
+    "status": "open",
+    "scope": "Outdated first-run assistant location text; assistant remains functional."
+  }
+}
