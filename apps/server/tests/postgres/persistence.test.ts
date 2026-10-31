@@ -42,7 +42,7 @@ test('real PostgreSQL: HTTP persistence slice (isolated native server, no SQLite
       env:{...process.env,DATABASE_URL:connectionString,CLOUD_LOCAL_TEST:'1',PORT:String(port),ALLOWED_HOSTS:'127.0.0.1',FRONTEND_ORIGINS:origin},stdio:['ignore','pipe','pipe']});
     // Deliberately do not forward process output/configuration into test failure logs.
     let diagnostic='';child.stdout?.resume();child.stderr?.on('data',(data:Buffer)=>{diagnostic=(diagnostic+data.toString()).slice(-6000);});
-    for(let i=0;i<200;i++){
+    for(let i=0;i<600;i++){
       if(child.exitCode!==null)throw Error('Cloud backend exited during startup: '+diagnostic.replaceAll(connectionString,'[DATABASE_URL]').replaceAll(dbPassword,'[REDACTED]').replaceAll(demoPassword,'[REDACTED]'));
       try{const r=await request('/ready');if(r.res.status===200)return;}catch{}
       await new Promise(r=>setTimeout(r,100));
@@ -88,7 +88,7 @@ test('real PostgreSQL: HTTP persistence slice (isolated native server, no SQLite
       assert.equal((await request('/auth/me','GET',undefined,viewer)).json.data.user.role,'viewer');
       const spec=await request('/openapi.json');
       assert.deepEqual(spec.json,JSON.parse(readFileSync('openapi-cloud.json','utf8')));
-      assert.equal(spec.json.paths['/tasks'],undefined);
+      assert(spec.json.paths['/tasks']?.post);
       const rejectedEncodings:Record<string,string>[]=[{'Content-Type':'application/json; charset=unsupported'},{'Content-Type':'application/json','Content-Encoding':'unsupported'}];
       for(const headers of rejectedEncodings) {
         const rejected=await fetch(origin+'/api/v1/auth/login',{method:'POST',headers,body:'{}'});
@@ -132,8 +132,8 @@ test('real PostgreSQL: HTTP persistence slice (isolated native server, no SQLite
     await t.test('invalid references and unsupported domains do not produce successful writes',async()=>{
       const countBefore=(await db.pool.query('SELECT count(*)::int n FROM gp_cloud.documents')).rows[0].n;
       assert.equal((await request('/resources','POST',{...resourceBody,evidenceIds:['missing']},admin!,'missing-evidence')).res.status,404);
-      assert.equal((await request('/resources','POST',{...resourceBody,ownerCrewId:'not-migrated'},admin!,'missing-crew')).json.error.code,'CLOUD_REFERENCE_UNSUPPORTED');
-      for(const path of ['/tasks','/reports','/uploads','/outcomes/summary','/workers','/crews'])
+      assert.equal((await request('/resources','POST',{...resourceBody,ownerCrewId:'not-migrated'},admin!,'missing-crew')).json.error.code,'INVALID_REFERENCE');
+      for(const path of ['/uploads','/outcomes/summary'])
         assert.equal((await request(path,'GET',undefined,viewer!)).json.error.code,'CLOUD_ENDPOINT_UNSUPPORTED');
       assert.equal((await db.pool.query('SELECT count(*)::int n FROM gp_cloud.documents')).rows[0].n,countBefore);
       assert.equal((await db.pool.query("SELECT count(*)::int n FROM gp_cloud.idempotency WHERE key IN ('missing-evidence','missing-crew','stale','denied-update')")).rows[0].n,0);

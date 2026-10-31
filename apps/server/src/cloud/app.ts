@@ -10,6 +10,8 @@ import { PostgresReferenceRepository } from './reference-repository.js';
 import { PostgresDatabase } from './database.js';
 import { planningRoutes } from './planning-routes.js';
 import { PostgresPlanningRepository } from './planning-repository.js';
+import { workflowRoutes } from './workflow-routes.js';
+import { PostgresWorkflowRepository } from './workflow-repository.js';
 import { schemaVersion } from './migrations.js';
 import type { CloudConfig } from './config.js';
 
@@ -32,9 +34,9 @@ export function createCloudApp(db: PostgresDatabase, config: CloudConfig) {
     }
     if (req.method==='OPTIONS') {
       const headers=(req.get('Access-Control-Request-Headers')??'').toLowerCase().split(',').map(x=>x.trim()).filter(Boolean);
-      if (!origin || !['GET','POST','PATCH'].includes(req.get('Access-Control-Request-Method')??'') || headers.some(x=>!['content-type','x-csrf-token','idempotency-key'].includes(x)))
+      if (!origin || !['GET','POST','PATCH','PUT'].includes(req.get('Access-Control-Request-Method')??'') || headers.some(x=>!['content-type','x-csrf-token','idempotency-key'].includes(x)))
         return next(new ApiError(403,'CORS_FORBIDDEN','Preflight is not allowed'));
-      res.set({'Access-Control-Allow-Methods':'GET,POST,PATCH','Access-Control-Allow-Headers':'Content-Type,X-CSRF-Token,Idempotency-Key'}).sendStatus(204);return;
+      res.set({'Access-Control-Allow-Methods':'GET,POST,PATCH,PUT','Access-Control-Allow-Headers':'Content-Type,X-CSRF-Token,Idempotency-Key'}).sendStatus(204);return;
     }
     if (!config.localTest && !req.secure && !['/health','/api/v1/health','/api/v1/ready'].includes(req.path))
       return next(new ApiError(403,'HTTPS_REQUIRED','HTTPS ingress required'));
@@ -43,19 +45,20 @@ export function createCloudApp(db: PostgresDatabase, config: CloudConfig) {
     next();
   });
   app.use(express.json({limit:'32kb',strict:true}));
-  for (const path of ['/health','/api/v1/health']) app.get(path,(_req,res)=>res.json({status:'ok',mode:'DEMO',storage:'postgresql',scope:'auth-reference-planning'}));
-  app.get('/api/v1/ready',async(_req,res)=>{await db.ready();res.json({status:'ok',database:'ok',mode:'DEMO',schemaVersion,capabilities:['auth','evidence','resources','sites','context','analysis','rates','snapshots'],photos:'unsupported'});});
+  for (const path of ['/health','/api/v1/health']) app.get(path,(_req,res)=>res.json({status:'ok',mode:'DEMO',storage:'postgresql',scope:'auth-reference-planning-workflow'}));
+  app.get('/api/v1/ready',async(_req,res)=>{await db.ready();res.json({status:'ok',database:'ok',mode:'DEMO',schemaVersion,capabilities:['auth','evidence','resources','sites','context','analysis','rates','snapshots','crews','workers','designs','tasks','reports'],photos:'unsupported'});});
   const router=Router(),operations:Operation[]=[];
-  const route:Api['route']=(op,...handlers)=>{operations.push(op);router[op.method](op.path,...handlers);};
+  const route:Api['route']=(op,...handlers)=>{if(operations.some(x=>x.method===op.method&&x.path===op.path))throw Error('Duplicate cloud operation');operations.push(op);router[op.method](op.path,...handlers);};
   router.get('/openapi.json',(_req,res)=>{
     const spec=openApi(operations);
-    spec.info={...spec.info,title:'Green Pavlodar — PostgreSQL planning API',version:'2.2.0-cloud-planning',
-      description:'Auth, reference data and planning calculations are supported. Task/report/photo/Outcomes workflow is not migrated. Other domains return 503 CLOUD_ENDPOINT_UNSUPPORTED. Secure HttpOnly SameSite=Strict sessions; CSRF and idempotency required on writes. No SQLite or mock fallback.'};
+    spec.info={...spec.info,title:'Green Pavlodar — PostgreSQL workflow API',version:'2.3.0-cloud-workflow',
+      description:'Auth, reference data, planning, crews, profiles, designs, tasks and reports are supported. Photo/Outcomes workflow is not migrated. Other domains return 503 CLOUD_ENDPOINT_UNSUPPORTED. Secure HttpOnly SameSite=Strict sessions; CSRF and idempotency required on writes. No SQLite or mock fallback.'};
     res.json(spec);
   });
   sessionRoutes(new PostgresAuthRepository(db),{router,route},config.secureCookies);
   referenceDataRoutes({route},new PostgresReferenceRepository(db));
   planningRoutes({route},new PostgresPlanningRepository(db));
+  workflowRoutes({route},new PostgresWorkflowRepository(db));
   router.use((_req,_res,next)=>next(new ApiError(503,'CLOUD_ENDPOINT_UNSUPPORTED','This endpoint is not migrated; use the local SQLite release')));
   app.use('/api/v1',router);
   app.use((_req,_res,next)=>next(new ApiError(404,'NOT_FOUND','Route not found')));

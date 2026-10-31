@@ -9,16 +9,16 @@ export const planningReader=(a:User)=>allow(a,'admin','coordinator','viewer');
 export class PostgresPlanningRepository {
   constructor(readonly db:PostgresDatabase) {}
   async list(kind:string,c:Pick<PoolClient,'query'>=this.db.pool):Promise<Json[]> {
-    return (await c.query('SELECT data FROM gp_cloud.planning_documents WHERE kind=$1 ORDER BY position,id',[kind])).rows.map(r=>r.data);
+    return (await c.query(`SELECT data FROM gp_cloud.${['site','context','catalog'].includes(kind)?'documents':'planning_documents'} WHERE kind=$1 ORDER BY ${['site','context','catalog'].includes(kind)?'id':'position,id'}`,[kind])).rows.map(r=>r.data);
   }
   async get(kind:string,id:string,c:Pick<PoolClient,'query'>=this.db.pool):Promise<Json> {
-    const row=(await c.query('SELECT data FROM gp_cloud.planning_documents WHERE kind=$1 AND id=$2',[kind,id])).rows[0];
+    const row=(await c.query(`SELECT data FROM gp_cloud.${['site','context','catalog'].includes(kind)?'documents':'planning_documents'} WHERE kind=$1 AND id=$2`,[kind,id])).rows[0];
     if(!row)fail(kind==='settings'?'CLOUD_DATA_MISSING':'NOT_FOUND',kind==='settings'?'Run the explicit cloud planning seed':'Object not found',kind==='settings'?503:404);
     return row.data;
   }
   async context(id:string,radius:number) {
     const row=(await this.db.pool.query(`SELECT x.data,x.site_version,d.version FROM gp_cloud.zone_contexts x
-      JOIN gp_cloud.planning_documents d ON d.kind=x.site_kind AND d.id=x.site_id WHERE x.site_id=$1 AND x.radius=$2`,[id,radius])).rows[0];
+      JOIN gp_cloud.documents d ON d.kind=x.site_kind AND d.id=x.site_id WHERE x.site_id=$1 AND x.radius=$2`,[id,radius])).rows[0];
     if(!row)fail('NOT_FOUND','Zone context not found',404);
     if(row.site_version!==row.version)fail('CONTEXT_STALE','Context needs to be regenerated for the current geometry',409);
     return row.data;
@@ -46,12 +46,13 @@ export class PostgresPlanningRepository {
     if(!row)fail('NOT_FOUND','Snapshot not found',404);return row.data;
   }
   // Same transaction boundary as the reference slice: permissions precede replay, late errors roll back everything.
-  async mutate(a:User,method:string,path:string,key:string|undefined,body:Json,status:number,authorize:(a:User)=>void,change:(c:PoolClient)=>Promise<unknown>) {
+  async mutate(a:User,method:string,path:string,key:string|undefined,body:Json,status:number,authorize:(a:User,c:PoolClient)=>void|Promise<void>,change:(c:PoolClient)=>Promise<unknown>) {
     return this.db.transaction(async c=>{
+      await c.query('SELECT pg_advisory_xact_lock(733112623)');
       const row=(await c.query('SELECT * FROM gp_cloud.users WHERE id=$1 FOR UPDATE',[a.id])).rows[0];
       if(!row)fail('SESSION_REVOKED','Sign in again',401);
       const current=userDto(row);if(!current.active||current.version!==a.version||current.role!==a.role)fail('SESSION_REVOKED','Sign in again',401);
-      authorize(current);
+      await authorize(current,c);
       if(!key||!/^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$/.test(key))fail('INVALID_IDEMPOTENCY_KEY','Supply Idempotency-Key',400);
       const requestHash=hash(body),old=(await c.query('SELECT * FROM gp_cloud.idempotency WHERE actor_id=$1 AND method=$2 AND path=$3 AND key=$4',[a.id,method,path,key])).rows[0];
       if(old){if(old.request_hash!==requestHash)fail('IDEMPOTENCY_CONFLICT','Key already used with a different request');return {status:old.response_status,body:old.response_json,replayed:true};}

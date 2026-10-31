@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
 import { PostgresDatabase } from './database.js';
 import { migration2 } from './planning-migration.js';
+import { migration3 } from './workflow-migration.js';
 
 // Deliberately private schema, not public/PostgREST. No application data is imported from SQLite.
 export const migration1 = `
@@ -44,7 +45,7 @@ CREATE TABLE gp_cloud.idempotency (
 );
 REVOKE ALL ON ALL TABLES IN SCHEMA gp_cloud FROM PUBLIC;
 `;
-export const migrations = [migration1, migration2] as const;
+export const migrations = [migration1, migration2, migration3] as const;
 export const schemaVersion = migrations.length;
 export async function migrate(db: PostgresDatabase) {
   if ((await db.pool.query('SHOW server_encoding')).rows[0].server_encoding !== 'UTF8')

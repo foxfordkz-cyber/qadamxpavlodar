@@ -10,11 +10,6 @@ import { web } from '../tz/shared.js';
 import { PostgresPlanningRepository, planningReader } from './planning-repository.js';
 
 export function planningRoutes({route}:Pick<Api,'route'>,repo:PostgresPlanningRepository) {
-  for(const [path,kind] of [['/sites','site'],['/plant-catalog','catalog']] as const) {
-    route({method:'get',path,summary:'Persisted planning records; paginated V2 DTO'},async(q,r)=>{planningReader(actor(r));r.json(page(await repo.list(kind),q.query));});
-    if(kind==='site')route({method:'get',path:path+'/:id',summary:'Persisted V2 site and checks'},async(q,r)=>{planningReader(actor(r));r.json({data:await repo.get(kind,param(q))});});
-  }
-  route({method:'get',path:'/sites/:id/context',summary:'Persisted V2 context with source attribution'},async(q,r)=>{planningReader(actor(r));const site=await repo.get('site',param(q));r.json({data:await repo.get('context',site.contextId)});});
   const radius=z.object({radius:z.coerce.number().refine(n=>[30,50,100,200].includes(n),'radius: 30, 50, 100 or 200')}).strict();
   route({method:'get',path:'/zones/:id/context',summary:'Persisted OSM context at 30/50/100/200 m; geometry version checked'},async(q,r)=>{planningReader(actor(r));r.json({data:await repo.context(param(q),radius.parse(q.query).radius)});});
   route({method:'get',path:'/species',summary:'Persisted species, original IDs/prices/provenance'},async(_q,r)=>{planningReader(actor(r));r.json({data:await repo.list('species')});});
@@ -32,9 +27,15 @@ export function planningRoutes({route}:Pick<Api,'route'>,repo:PostgresPlanningRe
   });
   const labInput=z.object({budgetKzt:z.number().finite().positive(),waterLimitM3:z.number().finite().nonnegative().nullable().default(null),watering:z.enum(['regular','rare','none']),goal:z.enum(['balanced','schools','deficit','social']).default('balanced')}).strict();
   route({method:'post',path:'/decision-lab',input:labInput,readOnly:true,summary:'Existing shared Decision Lab using persistent inputs'},async(q,r)=>{planningReader(actor(r));const b=labInput.parse(q.body);r.json({data:await repo.read(input=>decisionLab(input.sites.map(s=>s.zone).filter(s=>s.areaM2!=null&&s.areaM2>0),repo.ref(input),b))});});
-  route({method:'get',path:'/dashboard/metrics',summary:'Site metrics from PostgreSQL; unmigrated workflow metrics explicitly unknown'},async(_q,r)=>{
-    planningReader(actor(r));const data=await repo.read(async(input,c)=>web.dashboardMetrics({sites:input.sites.map(s=>s.zone).filter(s=>s.areaM2!=null&&s.areaM2>0),tasks:[],reports:[],projects:[],osmBase:(await repo.get('settings','osm',c)).osm.osmBase})
-      .map(metric=>metric.key.startsWith('sites_')?metric:{...metric,value:null,unavailableReason:'CLOUD_WORKFLOW_NOT_MIGRATED'}));r.json({data,meta:{fetchedAt:now(),workflow:'unsupported'}});
+  route({method:'get',path:'/dashboard/metrics',summary:'Shared metrics over persisted sites, assignments, reports and projects'},async(_q,r)=>{
+    planningReader(actor(r));const data=await repo.read(async(input,c)=>{
+      const rows=async(table:string)=>(await c.query('SELECT data FROM gp_cloud.'+table)).rows.map(r=>r.data);
+      const projects=[];for(const design of await rows('designs')){
+        const revisions=(await c.query('SELECT data FROM gp_cloud.design_revisions WHERE design_id=$1 ORDER BY revision',[design.id])).rows.map(r=>r.data);
+        projects.push(web.projectFromDesign(design,revisions));
+      }
+      return web.dashboardMetrics({sites:input.sites.map(s=>s.zone).filter(s=>s.areaM2!=null&&s.areaM2>0),tasks:(await rows('tasks')).map(web.taskFromV2),reports:await rows('reports'),projects,osmBase:(await repo.get('settings','osm',c)).osm.osmBase});
+    });r.json({data,meta:{fetchedAt:now()}});
   });
   const ratesInput=z.object({key:z.string().max(100),value:z.number().nonnegative().max(1e9).nullable(),source:z.string().trim().min(3).max(2000),sourceUrl:z.url().optional(),dataClass:z.enum(['real','demo','estimate']).default('estimate'),expectedVersion:z.number().int().positive()}).strict();
   route({method:'patch',path:'/rates',input:ratesInput,idempotent:true,summary:'Admin: versioned persistent rate update and audit'},async(q,r)=>{

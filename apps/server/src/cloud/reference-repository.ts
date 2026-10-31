@@ -12,7 +12,8 @@ export class PostgresReferenceRepository implements ReferenceRepository {
   async mutate(input: ReferenceMutation) {
     const { actor, method, path, key, kind, body, id, status } = input;
     return this.db.transaction(async client => {
-      // Serialize writes by actor, including duplicate keys; authorization always precedes replay.
+      // Uniform lock ordering with planning and workflow preserves cross-entity invariants.
+      await client.query('SELECT pg_advisory_xact_lock(733112623)');
       const row = (await client.query('SELECT * FROM gp_cloud.users WHERE id=$1 FOR UPDATE', [actor.id])).rows[0];
       if (!row) fail('SESSION_REVOKED', 'Sign in again', 401);
       const current = userDto(row);
@@ -31,8 +32,7 @@ export class PostgresReferenceRepository implements ReferenceRepository {
         if (!before) fail('NOT_FOUND', `${kind} not found`, 404);
         matchVersion(before, body.expectedVersion);
       }
-      // Crews are intentionally not migrated in this first slice. Do not pretend a missing adapter is a missing record.
-      if (body.ownerCrewId) fail('CLOUD_REFERENCE_UNSUPPORTED', 'Crew ownership requires the crew persistence adapter', 503);
+      if (body.ownerCrewId && !(await client.query('SELECT id FROM gp_cloud.crews WHERE id=$1',[body.ownerCrewId])).rows[0]) fail('INVALID_REFERENCE','Owner crew not found',400);
       if (body.evidenceIds) for (const evidenceId of body.evidenceIds) {
         const found = (await client.query("SELECT id FROM gp_cloud.documents WHERE kind='evidence' AND id=$1", [evidenceId])).rows[0];
         if (!found) fail('NOT_FOUND', 'evidence not found', 404);

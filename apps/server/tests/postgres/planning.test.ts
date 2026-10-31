@@ -15,7 +15,7 @@ import { hashPassword } from '../../src/v2/auth.js';
 import { seedTz } from '../../src/tz/seed.js';
 import { seedMunicipal } from '../../src/municipal/data.js';
 import { PostgresDatabase } from '../../src/cloud/database.js';
-import { migrate, migration1 } from '../../src/cloud/migrations.js';
+import { migrate, migration1, schemaVersion } from '../../src/cloud/migrations.js';
 import { seedCloudDemo } from '../../src/cloud/seed.js';
 import { seedCloudPlanning } from '../../src/cloud/planning-seed.js';
 
@@ -85,7 +85,7 @@ test('Stage A: real PostgreSQL + HTTP frontend path, exact SQLite parity and bot
       assert(JSON.stringify((await db.pool.query('SELECT * FROM gp_cloud.sessions')).rows)===sessionRows,'Migration changed sessions');
       assert.equal((await db.pool.query("SELECT count(*)::int n FROM gp_cloud.documents WHERE id='upgrade-source'")).rows[0].n,1);
       assert.equal((await db.pool.query('SELECT checksum FROM gp_cloud.schema_migrations WHERE version=1')).rows[0].checksum,checksum);
-      assert.equal((await db.pool.query('SELECT count(*)::int n FROM gp_cloud.schema_migrations')).rows[0].n,2);
+      assert.equal((await db.pool.query('SELECT count(*)::int n FROM gp_cloud.schema_migrations')).rows[0].n,schemaVersion);
       assert(JSON.stringify((await db.pool.query('SELECT * FROM gp_cloud.users ORDER BY id')).rows)===before,'Upgrade changed account data');
       await assert.rejects(db.pool.query("INSERT INTO gp_cloud.zone_contexts(site_id,radius,site_version,data) VALUES ('missing',100,1,'{}')"),{code:'23503'});
       await assert.rejects(db.pool.query("INSERT INTO gp_cloud.planning_documents VALUES ('site','bad','{}',1,0)"),{code:'23514'});
@@ -95,7 +95,7 @@ test('Stage A: real PostgreSQL + HTTP frontend path, exact SQLite parity and bot
       const hash=await hashPassword(password),at=new Date().toISOString();
       for(const role of ['admin','coordinator','viewer'])sqlite.run('INSERT INTO v2_users VALUES (?,?,?,?,1,?,1,?,?)',`cloud-demo-${role}`,role,`Cloud DEMO ${role}`,role,hash,at,at);
       seedTz(sqlite);await seedMunicipal(sqlite);
-      const counts=(await db.pool.query('SELECT kind,count(*)::int n FROM gp_cloud.planning_documents GROUP BY kind ORDER BY kind')).rows;
+      const counts=(await db.pool.query('SELECT kind,count(*)::int n FROM (SELECT kind FROM gp_cloud.planning_documents UNION ALL SELECT kind FROM gp_cloud.documents) d GROUP BY kind ORDER BY kind')).rows;
       assert.equal(counts.find(r=>r.kind==='site')?.n,114);assert.equal(counts.find(r=>r.kind==='species')?.n,50);
       assert.equal((await db.pool.query('SELECT count(*)::int n FROM gp_cloud.zone_contexts')).rows[0].n,456);
       writeFileSync(join(dir,'seed-counts.json'),JSON.stringify(counts,null,2));
@@ -114,7 +114,7 @@ test('Stage A: real PostgreSQL + HTTP frontend path, exact SQLite parity and bot
       assert.deepEqual(await api.soilsLayer(),await sqlApi.soilsLayer());assert.deepEqual(await api.greeneryLayer(),await sqlApi.greeneryLayer());
       const dashboard=await api.dashboard(),sqliteDashboard=await sqlApi.dashboard();
       assert.deepEqual(dashboard.data.filter((x:any)=>x.key.startsWith('sites_')),sqliteDashboard.data.filter((x:any)=>x.key.startsWith('sites_')));
-      assert(dashboard.data.filter((x:any)=>!x.key.startsWith('sites_')).every((x:any)=>x.value===null&&x.unavailableReason==='CLOUD_WORKFLOW_NOT_MIGRATED'));
+      assert.deepEqual(dashboard.data,sqliteDashboard.data);
       await assert.rejects(api.siteContext(zoneId,75),{status:400});await assert.rejects(api.site('missing'),{status:404});
     });
     await step('exact recommendations, quantities, costs, survival, effects, variants and immutable inputs',async()=>{
@@ -173,7 +173,7 @@ test('Stage A: real PostgreSQL + HTTP frontend path, exact SQLite parity and bot
       assert.equal(noCsrf.status,403);assert.equal((await noCsrf.json() as any).error.code,'CSRF_REQUIRED');
       for(const role of ['worker','foreman']){
         await api.login(role,password);await assert.rejects(api.zoneAnalysis(zoneId,{}),{status:403});
-        await assert.rejects(api.sites(),{status:403});
+        assert.deepEqual((await api.sites()).data,[]); // Shared V2 read scope: no assigned sites.
       }
       await api.login('admin',password);
     });

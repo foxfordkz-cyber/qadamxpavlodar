@@ -1,13 +1,14 @@
-# Cloud API contract — PostgreSQL planning and reference data
+# Cloud API contract — PostgreSQL planning and workflow
 
 Status, 31 October 2026: **local PostgreSQL verified; public deployment BLOCKED**.
 The owner confirmed that Render/Supabase access is not available. No public backend origin exists
 for this work, and no paid service was created. The existing Cloudflare publication is a mock.
 
-Stage A extends the existing PR #39; base remains `98cf6c68d5370331d6f95aa9e749f82d504e5670`.
+Stages A/B extend the existing PR #39; base remains `98cf6c68d5370331d6f95aa9e749f82d504e5670`.
 Branch: `codex/cloud-api-persistence`; target: `codex/coordinator`, **Draft**.
 Current scope, real frontend route matrix, verification and remaining work:
-[cloud-stage-a-acceptance.md](cloud-stage-a-acceptance.md).
+[cloud-stage-a-acceptance.md](cloud-stage-a-acceptance.md) (historical Stage A) and
+[cloud-stage-b-acceptance.md](cloud-stage-b-acceptance.md) (workflow).
 Earlier source/results/failures remain historical in
 [cloud-persistence-verification.md](cloud-persistence-verification.md).
 
@@ -34,9 +35,9 @@ write. Foreman cannot create sources/resources. Coordinator can create evidence 
 resources. Role/active/version are rechecked inside the transaction before idempotent replay.
 Lists use `limit` (1–200, default 100) and `offset` (default 0).
 
-Resource `ownerCrewId` must remain `null` in this slice. A non-null crew reference returns
-503 `CLOUD_REFERENCE_UNSUPPORTED`; it is never silently cleared or accepted into an unimplemented
-relationship. `evidenceIds` must refer to existing sources. Evidence links have real foreign keys.
+Resource `ownerCrewId` may reference an existing crew; a missing crew returns 400
+`INVALID_REFERENCE`, matching SQLite. `evidenceIds` must refer to existing sources and have
+real foreign keys. Stage B adds canonical crew ownership without a second resource registry.
 Unknown `capacity`, dates and other nullable values remain `null`.
 
 Public service endpoints:
@@ -45,15 +46,15 @@ Public service endpoints:
 | --- | --- |
 | GET `/health`, `/api/v1/health` | Process liveness, PostgreSQL slice label; not a DB or full-release acceptance |
 | GET `/api/v1/ready` | DB connectivity and exact migration version; returns 503 on DB failure/unknown schema |
-| GET `/api/v1/openapi.json` | Live generator; 31 implemented operations; `openapi-cloud.json` is generated from this HTTP route |
+| GET `/api/v1/openapi.json` | Live generator; 76 implemented operations; `openapi-cloud.json` is generated from this HTTP route |
 
-Readiness reports migration version 2, `capabilities: ["auth","evidence","resources","sites","context","analysis","rates","snapshots"]`
+Readiness reports migration version 3, `capabilities: ["auth","evidence","resources","sites","context","analysis","rates","snapshots","crews","workers","designs","tasks","reports"]`
 and `photos: "unsupported"`. This is DB/schema readiness, not full-release or seeded-data acceptance.
 
 ## Added planning operations
 
-All paths have `/api/v1`. Planning readers are admin/coordinator/viewer. Worker/foreman city-wide
-planning access is denied until assignment-scoped reads are migrated. No write privilege is added to viewer.
+All paths have `/api/v1`. Planning calculation readers are admin/coordinator/viewer. Worker/foreman site/plant/design
+reads use the existing assignment scope; city-wide calculation access remains denied. No write privilege is added to viewer.
 
 | Method/path | DTO / behavior |
 | --- | --- |
@@ -64,7 +65,7 @@ planning access is denied until assignment-scoped reads are migrated. No write p
 | GET `/species`, `/rates` | Existing species array; `{rates,version}`; no fabricated price for null |
 | GET `/layers/sources`, `/reference/facts` | Persisted source metadata/facts and attribution |
 | GET `/layers/soils`, `/layers/greenery`, `/layers/city`, `/layers/zones` | Persisted GeoJSON; soil is explicitly synthetic until imported |
-| GET `/dashboard/metrics` | Site metrics from shared function; unmigrated workflow metrics are null with an unavailable reason |
+| GET `/dashboard/metrics` | Shared metrics from persisted sites, tasks, reports and design revisions |
 | POST `/zones/:id/analysis`, `/zones/:id/variants` | `{options}`; shared mathematical model; CSRF required, no write/idempotency key needed |
 | GET `/problems`; POST `/priorities`, `/decision-lab` | Existing shared calculations, persistent source inputs |
 | PATCH `/rates` | Admin only, expectedVersion + CSRF + idempotency; atomic history/version/replay |
@@ -90,18 +91,56 @@ Authenticated requests to other `/api/v1/*` routes return 503 `CLOUD_ENDPOINT_UN
 Unauthenticated requests receive 401 first; unsafe methods require CSRF even when unsupported.
 There is no SQLite/memory/mock response fallback. Fixtures are used only by the explicit seed.
 
-Stage B: user/profile/crew/member CRUD; plants, designs/approval, tasks/assignment/execution,
-reports/review/planting receipts and assignment-scoped worker/foreman reads remain unimplemented.
-Stage C: `/uploads`, photo ownership/metadata/download and remote-object reconciliation remain unimplemented;
-the existing private storage primitive is not a live integration.
-Stage D: Outcomes cohorts, observations, accepted-report links and immutable Outcomes forecasts remain
-unimplemented. Planning analysis snapshots implemented in Stage A are **not** Outcomes records.
-Imports, drawn-zone/site editing, geocode, care schedule, assistant, weather, RAG and generated images
-are not enabled in PostgreSQL. In particular the map's tasks/plants/design overlays still return 503.
-History/idempotency cover reference mutations, rates and saved analyses only.
+Stage B is implemented: profiles, crews/members, plants/sites/catalog/care policies, designs,
+approval/revisions, tasks/assignment/start, group drafts, contributions, reports/review, issues,
+planting receipts and history. See the endpoint/authorization matrix below. Shared domain generators
+run synchronously on SQLite and await real PostgreSQL statements on one transaction client.
+Writes take one database advisory lock before actor rows; this conservatively preserves SQLite's
+serialized cross-task scheduling/resource checks. It is a scalability limitation, not a queue.
 
-The complete local SQLite release remains available. Do not switch the complete frontend/worker UI
-to this cloud branch as a finished release. Full workflow acceptance must follow B/C/D.
+Stage C (`/uploads`) and Stage D (Outcomes) are pending in this checkpoint. The private-storage
+primitive is not yet an HTTP integration; Stage A calculations are not Outcomes records.
+GIS import/preview/commit, new drawn zones, geocode, care schedule, assistant, weather, RAG and
+generated images remain unsupported. Site PATCH/checks, plant map points and task/design reads
+are now available; the complete map editing/import scenario is still blocked.
+
+## Workflow API (Stage B)
+
+Every listed mutation requires CSRF and Idempotency-Key; edits/transitions use the schema's
+expectedVersion and, where applicable, expectedReportVersion/expectedDraftVersion. Viewer is
+read-only. Admin is not a substitute for coordinator on role-specific task/report actions.
+
+| Method/path | Permission / response |
+| --- | --- |
+| GET `/users`; POST `/users`; PATCH `/users/:id`; GET `/users/:id/history` | Admin only; public user/profile DTO, no hash/session; edits revoke sessions |
+| GET `/workers`, `/crews` | Viewer/admin/coordinator all; foreman own crew; worker own membership/context |
+| POST `/crews`; PATCH `/crews/:id`; POST `/crews/:id/members` | Admin; one active crew per worker, versioned membership history |
+| GET `/plants`, `/plants/geojson`, `/plants/:id`; `/sites`, `/sites/:id`, `/sites/:id/context` | Reader roles; worker/foreman assigned object scope |
+| POST `/plants`; PATCH `/plants/:id` | Coordinator; sourced DEMO registry records |
+| PATCH `/sites/:id` | Admin/coordinator; recorded checks use server reviewer/time |
+| GET/POST `/plant-catalog`; PATCH `/plant-catalog/:id` | Admin/coordinator writes; reader roles; worker catalog limited to assigned approved design |
+| GET/POST `/care-policies` | Admin/coordinator writes; reader roles except worker |
+| GET `/designs`, `/designs/:id` | Viewer/admin/coordinator; assigned workers/foremen only linked immutable revisions on detail |
+| POST `/designs`; PATCH `/designs/:id`; POST `/designs/:id/submit`, `/withdraw` | Coordinator; approved edit creates next revision |
+| POST `/designs/:id/review` | Admin, decision `approved` or `changes_requested`; cleared current site/checks required |
+| POST `/designs/:id/create-tasks` | Coordinator, exact approved revision, one issuance; never duplicate earlier planting |
+| GET `/tasks`, `/tasks/:id`, `/tasks/:id/history` | Viewer/admin/coordinator all; worker assigned; foreman own crew |
+| POST `/tasks`; POST `/tasks/:id/assign` | Coordinator; manual inspect/water/weed; plant tasks require approved design |
+| POST `/tasks/:id/assign-workers` | Own foreman; profiles, skills, intervals, capacity and conflicts checked |
+| POST `/tasks/:id/start` | Assigned worker/own foreman; revalidates assignment |
+| GET `/tasks/:id/report-draft`; PUT `/tasks/:id/report-draft` | Task read scope; own foreman writes current draft version |
+| POST `/tasks/:id/report-draft/contributions` | Assigned participant's own contribution only |
+| POST `/tasks/:id/reports` | Assigned solo executor, or own foreman for group; `{data:{report,task}}`, 201 |
+| GET `/reports`, `/reports/:id` | Viewer/admin/coordinator all, worker/foreman task scope |
+| POST `/reports/:id/review` | Coordinator; `accepted` or **`changes_requested`**; `{data:{report,task,plants,careTasks,warnings}}` |
+| GET/POST `/tasks/:id/issues` | Task read scope; worker/foreman/coordinator write; separate from completion |
+| GET `/plants/:id/care-history`; GET `/dashboard?from=…&to=…` | Admin/coordinator; accepted events/counts only |
+
+Task lifecycle is `draft → assigned → in_progress → submitted → verified`. A returned report is
+`changes_requested` and returns its task to `assigned`; `rejected` is not a contract state.
+Approval snapshots are immutable. Acceptance inserts plants/evidence/receipts, report state,
+care events, task history and the idempotency receipt atomically. Repeating acceptance does not
+insert a second plant. All rows are synthetic DEMO; acceptance is not evidence of field work.
 
 ## Sessions, proxy and transport
 

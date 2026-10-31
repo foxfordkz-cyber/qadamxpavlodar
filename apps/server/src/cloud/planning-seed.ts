@@ -15,8 +15,9 @@ export async function seedCloudPlanning(db: PostgresDatabase) {
     await c.query('SELECT pg_advisory_xact_lock(733112622)');
     await c.query('SELECT pg_advisory_xact_lock(733112623)');
     const add = async (kind:string,id:string,data:unknown,version=1,position=0) =>
-      c.query('INSERT INTO gp_cloud.planning_documents VALUES ($1,$2,$3,$4,$5) ON CONFLICT(kind,id) DO NOTHING',
-        [kind,id,JSON.stringify(data),version,position]);
+      ['site','context','catalog'].includes(kind)
+      ? c.query('INSERT INTO gp_cloud.documents VALUES ($1,$2,$3,$4) ON CONFLICT(kind,id) DO NOTHING',[kind,id,JSON.stringify(data),version])
+      : c.query('INSERT INTO gp_cloud.planning_documents VALUES ($1,$2,$3,$4,$5) ON CONFLICT(kind,id) DO NOTHING',[kind,id,JSON.stringify(data),version,position]);
     for (const e of fixture.evidence) {
       const doc={id:e.id,sourceType:e.sourceType,sourceLabel:e.sourceLabel,sourceUrl:e.sourceUrl??null,
         observedAt:e.observedAt??null,validUntil:e.validUntil??null,dataClass:e.dataClass,note:e.note??null,
