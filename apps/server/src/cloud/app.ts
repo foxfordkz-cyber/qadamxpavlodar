@@ -61,6 +61,7 @@ export function createCloudApp(db: PostgresDatabase, config: CloudConfig) {
     else if(error instanceof ZodError){status=400;code='VALIDATION_ERROR';message='Invalid request';details=error.issues.map(({path,message})=>({path,message}));}
     else if(error?.type==='entity.parse.failed'){status=400;code='INVALID_JSON';message='Malformed JSON body';}
     else if(error?.type==='entity.too.large'){status=413;code='BODY_TOO_LARGE';message='JSON body exceeds 32 KiB';}
+    else if(error?.type==='charset.unsupported'||error?.type==='encoding.unsupported'){status=415;code='UNSUPPORTED_MEDIA_TYPE';message='Unsupported body encoding';}
     else if(error?.code || /connection|timeout/i.test(String(error?.message))){status=503;code='DATABASE_UNAVAILABLE';message='Persistent database unavailable; retry with the same idempotency key';}
     if(status>=500)console.error('Cloud request failed',res.locals.requestId,code);
     res.status(status).json({error:{code,message,requestId:res.locals.requestId,...(details?{details}:{})}});
