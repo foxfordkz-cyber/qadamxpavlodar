@@ -1,6 +1,5 @@
-// Transport core only. There is deliberately no Pages Function or deployment
-// binding until a deployed origin and server SHA are accepted. The transport
-// follows docs/cloud-api-contract.md at a0e827a; that slice is not the full API.
+// Runtime-independent transport core, used by pages-worker.mjs. Reviewed against
+// docs/cloud-api-contract.md at a72131df; frontend/provider acceptance is separate.
 const HOP_BY_HOP = ['connection', 'keep-alive', 'proxy-authenticate', 'proxy-authorization',
   'te', 'trailer', 'transfer-encoding', 'upgrade'];
 const UNTRUSTED_FORWARDING = ['forwarded', 'x-forwarded-for', 'x-forwarded-host',
@@ -63,7 +62,7 @@ export function createApiProxy({ upstreamOrigin, publicOrigin, timeoutMs = 65000
     throw new TypeError('Proxy timeout must be between 1 and 120000 milliseconds.');
   return async function proxy(request) {
     const incoming = new URL(request.url);
-    if (!isApi(incoming.pathname)) return null; // Future adapter delegates static assets to Pages.
+    if (!isApi(incoming.pathname)) return null; // The adapter delegates static assets to Pages.
     if (incoming.origin !== publicSite.origin) return failure(421, 'PROXY_ORIGIN_MISMATCH');
     if (request.signal.aborted) return failure(502, 'PROXY_UNAVAILABLE');
     const target = new URL(upstream.origin);
