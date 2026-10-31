@@ -21,13 +21,17 @@ Local preparation and fresh test evidence: [cloud-deployment-readiness.md](cloud
 | Private Storage | green-pavlodar-photos; private, WebP only, max 5242880 bytes; actual upload/read/hash/replay PASS; provider anonymous public/authenticated paths denied |
 | Health/readiness / HTTPS role workflow | Actual HTTPS 200; schemaVersion 5, database ok, private-storage-configured; workflow/roles/CSRF PASS |
 | Restart/redeploy/same-SHA persistence | Actual restart, same-SHA redeploy and reseed/verify PASS; 31 tables / 956 rows unchanged by reseed; original passwords preserved |
-| Cloudflare fixed same-origin proxy | Owner reports 13/13 Node tests; actual Pages API runtime NOT RUN; mock unchanged |
+| Cloudflare fixed same-origin proxy | Actual Pages role scenario NOT RUN; direct probes at 21:58 UTC+5 returned 522 for `/` and `/api/v1/ready`; mock unchanged |
 | Source versions | PR #39 stays Draft; operator tooling HEAD is not automatically a new approved deployed SHA |
 
 Proxy configuration for Тәңірберді: fixed upstream origin above, upstream Host
 `green-pavlodar-api-demo.onrender.com`, preserve browser Origin. Current allowlisted browser origins:
-`https://green-pavlodar-mock.pages.dev` and the Render origin. If the API frontend uses another exact
-origin, add that approved origin before switching its proxy. The mock publication itself is unchanged.
+`https://green-pavlodar-mock.pages.dev` and the Render origin. The owner approved the exact additional
+`https://green-pavlodar-api.pages.dev`; it was saved in Render using **Save only** on 31 October,
+22:02 UTC+5. This is saved configuration, **not active runtime configuration**: applying it requires
+the restart/redeploy window requested from the frontend owner in
+[#35](https://github.com/foxfordkz-cyber/qadamxpavlodar/pull/35#issuecomment-6546478424).
+No wildcard or additional preview origin was added. The mock publication itself is unchanged.
 Allowed-origin OPTIONS was tested over real HTTPS (204, exact origin, credentials); an unapproved
 Origin returned 403. Preserve Cookie, separate Set-Cookie headers, multipart boundaries, binary bytes,
 status/error body, CSRF and Idempotency-Key; no caching/redirects or caller-selected upstream.

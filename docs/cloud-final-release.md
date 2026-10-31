@@ -80,6 +80,13 @@ npm run test:postgres
 Тестовый Storage в этих наборах — локальный HTTP-адаптер; **это не Supabase-приёмка**.
 Проверки старого SHA не переносятся на новый: итог содержит SHA и свежие результаты.
 
+На точном `87eaf687ec0bd6c0614f4a83ecbb90143f17465f` выполнены typecheck/build,
+backend/SQLite **105/105**, native PostgreSQL HTTP **62/62** и генерация OpenAPI **87 операций**.
+Пропусков/падений/отмен нет; JSON и Git blob OpenAPI не изменились.
+[CI Quality 41222085833](https://github.com/foxfordkz-cyber/qadamxpavlodar/actions/runs/41222085833):
+Server, Web, PostgreSQL, Worker — **4/4 success**. Последующие изменения этой передачи —
+только документация; результаты локального набора относятся именно к `87eaf68`.
+
 ## Настоящая HTTPS-приёмка и инструкции Айдане
 
 Стенд выше — отдельный синтетический DEMO, не рабочая база и не публичный mock frontend.
@@ -87,6 +94,46 @@ npm run test:postgres
 выдаются владельцем приватно; пароли, cookies и CSRF не копировать в issue/PR/чат.
 Существующие тестовые сценарии/фото не очищать. Новый сценарий получает отдельный manifest
 и уникальный префикс; повторная проверка использует **тот же manifest**.
+
+Готовый набор для проверки сохранности: `release-738f96b2`. Это синтетические записи в
+отдельном DEMO-проекте; не отдельная БД на каждого участника. Все пути ниже имеют `/api/v1`:
+
+| Объект | Существующий идентификатор / проверка |
+| --- | --- |
+| Принятое задание посадки | `/tasks/2f64e988-97f9-4970-9dcf-1ca016f66cb2`; история — тот же путь + `/history` |
+| Принятый отчёт посадки | `/reports/368df690-6894-4b67-9aab-2651a9c4fad9` |
+| Приватное фото | `/uploads/12ff65e8-d13d-49ca-bb9f-437baf3377bf`; viewer получает WebP, аноним — 401 |
+| История осмотра | `/tasks/1abe0f0e-88ff-4c66-a7ce-fef3b0347f19/history` |
+| Принятый отчёт осмотра | `/reports/32bf4fed-c476-4cf6-81f2-aec7813939bb` |
+| Партия / прогноз | `/outcomes/cohorts/release-738f96b2-cohort`; связанный snapshot `release-738f96b2-forecast` |
+| Осмотр / итог | `/outcomes/cohorts/release-738f96b2-cohort/summary?inspectionId=release-738f96b2-inspection`: alive 1, unknown 3, wholeCohortSurvivalPct null |
+| Бригада / работник | crew `13a40778-776f-46a6-93f9-c7f361bc1737`; worker `a1d3d1e8-d046-4511-bb48-ee5be5fc3905` |
+
+Операторский manifest: `apps/server/data/cloud-release-acceptance.json` (Git ignored).
+Последний реальный HTTPS verify: **31.10, 21:31 UTC+5, PASS** на deployed `3b14927`:
+7 неизменяемых DTO/history, 5 idempotent replay, фото по хешу, права/CSRF и unknown summary.
+Пароли/сессии/CSRF в manifest не сохраняются. Технические role-login имена и доступы
+передаются только через согласованное приватное окружение.
+
+Дополнительный прямой провайдерный HTTP/TLS повтор **22:05 UTC+5 — 19/19 PASS**:
+87 live OpenAPI операций совпадают с локальным JSON; прежний CORS-origin разрешён,
+посторонний запрещён, новый сохранённый origin ещё возвращает 403; все 11 backlog-маршрутов
+возвращают ожидаемый 503, устаревший radius-context — 409; оба TLS-участка подключения
+к PostgreSQL защищены, сертификат проверяется, прямой анонимный доступ к фотографии
+через Supabase public/authenticated object paths запрещён. PASS здесь подтверждает
+в том числе ожидаемые отказы, а не готовность этих 11 функций.
+
+Для этого готового набора команда повторной проверки:
+
+```sh
+node --env-file=.env.cloud-acceptance --import tsx scripts/cloud-https-acceptance.mjs verify data/cloud-release-acceptance.json
+```
+
+`verify` не меняет участок и не создаёт повторные сущности; он создаёт/отзывает только
+свои сессии, проверяет существующие idempotency receipts и ожидаемые отказы записи.
+`create` ниже изменяет checks/версию seed-участка `site-osm-1568405606`, поэтому новый
+сценарий запускать только после согласования с другими проверяющими. Уникальный префикс
+сам по себе не изолирует общую версию участка. Для повторной приёмки предпочтителен готовый набор.
 
 На разрешённой операторской машине `apps/server/.env.cloud-acceptance` уже хранит
 `CLOUD_ACCEPTANCE_DEMO`, `CLOUD_ACCEPTANCE_ORIGIN`, `CLOUD_ACCEPTANCE_BROWSER_ORIGIN`,
@@ -131,9 +178,11 @@ manifest. Схема остаётся v5, down migration/reset не нужен �
 - Капитан: принять SHA/результаты, управлять merge в coordinator и доступом QA к DEMO.
 - Тәңірберді: upstream HTTPS выше; `Host: green-pavlodar-api-demo.onrender.com`, исходный
   browser Origin, Cookie/Set-Cookie, CSRF/Idempotency-Key, multipart boundary и binary WebP
-  сохраняются. Никакого cache или caller-selected upstream. Разрешены Render-origin и
-  `https://green-pavlodar-mock.pages.dev`; другой точный frontend origin согласовать до включения.
-  В доступном Cloudflare аккаунте нет командного Pages проекта; реальный proxy переключает его владелец.
+  сохраняются. Никакого cache или caller-selected upstream. В живом процессе разрешены Render-origin и
+  `https://green-pavlodar-mock.pages.dev`. Владелец подтвердил точный новый
+  `https://green-pavlodar-api.pages.dev`; значение сохранено через Save only, применение ожидает
+  согласованного окна restart/redeploy. Реальный Pages proxy публикует его владелец; прямые
+  проверки `/` и `/api/v1/ready` в 21:58 UTC+5 вернули 522, ролевой сценарий через Pages — NOT RUN.
 - Айдана: принятый SHA + DEMO origin + отдельный сценарий/manifest; после согласованного restart
   проверять оба старый/новый сценария, фото/историю/unknown. Проверка другого устройства отдельно.
 - Публичный mock сохранить независимым резервом. Части с 503 не скрывать за пустыми данными.
