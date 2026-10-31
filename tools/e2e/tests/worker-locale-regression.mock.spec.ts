@@ -1,7 +1,7 @@
 import { test, expect, type Page } from '../support/test';
 import type { Locator } from '@playwright/test';
 import { openPage } from '../support/helpers';
-import { mockRole, switchLanguage, expectNoOverflow } from '../support/session';
+import { switchLanguage, expectNoOverflow } from '../support/session';
 import { workerReady } from '../support/worker';
 
 // The embedded cabinet currently supports a partial kk-draft dictionary. Check
@@ -11,13 +11,27 @@ const demoDay = '2026-10-28';
 const taskId = 'GP-104';
 const photoName = 'qa-demo-worker-locale.png';
 
-async function openCabinet(page: Page, role = 'Работник') {
-  await openPage(page, '/priorities');
-  await mockRole(page, role);
+async function selectMockRoleInCurrentDocument(page: Page, role = 'Работник') {
+  // mockControls.role is deliberately memory-only and resets to coordinator on a
+  // fresh document. Re-enter the fixture role through the real UI, without
+  // changing the selected language or injecting worker state. This does NOT test
+  // authenticated API session persistence or authorization on direct entry.
+  const languages = page.getByRole('group', { name: 'Язык / Тіл', exact: true });
+  await expect(languages).toBeVisible();
+  const kazakh = await languages.getByRole('button', { name: 'Қаз', exact: true }).getAttribute('aria-pressed') === 'true';
+  await page.getByRole('button', { name: kazakh ? '⚙ Тексеру режимі' : '⚙ Режим проверки', exact: true }).click();
+  const panel = page.locator('.gp-dev');
+  await panel.getByRole('radio', { name: kazakh && role === 'Работник' ? 'Жұмысшы' : role, exact: true }).check();
+  await panel.getByRole('button', { name: kazakh ? 'Жабу' : 'Закрыть', exact: true }).click();
   await expect(page).toHaveURL(/#\/worker/);
   await workerReady(page);
   await expect(page.locator('green-worker #shift-date')).toHaveValue(demoDay);
   return page.locator('green-worker');
+}
+
+async function openCabinet(page: Page) {
+  await openPage(page, '/priorities');
+  return selectMockRoleInCurrentDocument(page);
 }
 
 async function expectKazakhShift(page: Page) {
@@ -44,20 +58,19 @@ async function expectPhotoDraft(cabinet: Locator, note: string, expectedBytes: n
 }
 
 for (const role of ['Работник', 'Бригадир']) {
-  test(`E2E-11: ${role}, direct Kazakh entry and reload translate available service controls`, async ({ page }) => {
-    await openCabinet(page, role);
+  test(`E2E-11: ${role}, Kazakh document and reload translate controls after explicit mock role re-entry`, async ({ page }) => {
     await page.goto('/?source=mock&lang=kk#/worker', { waitUntil: 'domcontentloaded' });
-    await workerReady(page);
+    await selectMockRoleInCurrentDocument(page, role);
     await expect(page.getByRole('group', { name: 'Язык / Тіл', exact: true }).getByRole('button', { name: 'Қаз', exact: true })).toHaveAttribute('aria-pressed', 'true');
     await expectKazakhShift(page);
     await page.reload({ waitUntil: 'domcontentloaded' });
-    await workerReady(page);
+    await selectMockRoleInCurrentDocument(page, role);
     await expect(page.locator('green-worker #shift-date')).toHaveValue(demoDay);
     await expectKazakhShift(page);
   });
 }
 
-test('E2E-11: switching RU/KK updates cabinet and persists without a language URL override', async ({ page }) => {
+test('E2E-11: switching RU/KK persists without a language URL override after mock role re-entry', async ({ page }) => {
   const cabinet = await openCabinet(page);
   const refresh = cabinet.locator('.date-tools button[data-action=refresh]');
   await expect(refresh).toHaveAccessibleName('Обновить');
@@ -65,18 +78,18 @@ test('E2E-11: switching RU/KK updates cabinet and persists without a language UR
   await expectKazakhShift(page);
   // A fresh document without ?lang exercises the saved choice rather than a URL override.
   await page.goto('/?source=mock#/worker', { waitUntil: 'domcontentloaded' });
-  await workerReady(page);
+  await selectMockRoleInCurrentDocument(page);
   await expect(page.getByRole('group', { name: 'Язык / Тіл', exact: true }).getByRole('button', { name: 'Қаз', exact: true })).toHaveAttribute('aria-pressed', 'true');
   await expectKazakhShift(page);
   await switchLanguage(page, 'Рус');
   await expect(refresh).toHaveAccessibleName('Обновить');
   await page.reload({ waitUntil: 'domcontentloaded' });
-  await workerReady(page);
+  await selectMockRoleInCurrentDocument(page);
   await expect(page.getByRole('group', { name: 'Язык / Тіл', exact: true }).getByRole('button', { name: 'Рус', exact: true })).toHaveAttribute('aria-pressed', 'true');
   await expect(refresh).toHaveAccessibleName('Обновить');
 });
 
-test('E2E-11: language repaint preserves the unsent note and synthetic photo, including reload', async ({ page }) => {
+test('E2E-11: note and synthetic photo survive language repaint and reload with mock role re-entry', async ({ page }) => {
   const cabinet = await openCabinet(page);
   await cabinet.locator(`[data-action=select][data-id="${taskId}"]`).click();
   await cabinet.locator('button[data-action=start]').click();
@@ -104,7 +117,7 @@ test('E2E-11: language repaint preserves the unsent note and synthetic photo, in
   await expectPhotoDraft(cabinet, note, [...bytes]);
   await switchLanguage(page, 'Қаз');
   await page.reload({ waitUntil: 'domcontentloaded' });
-  await workerReady(page);
+  await selectMockRoleInCurrentDocument(page);
   await cabinet.locator('button[data-action=open-draft]').filter({ hasText: taskId }).click();
   await expectPhotoDraft(cabinet, note, [...bytes]);
   await expectNoOverflow(page);
