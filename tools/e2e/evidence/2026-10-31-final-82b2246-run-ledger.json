@@ -1,0 +1,418 @@
+{
+  "note": "Only two full clean runs at testedSHA are final. Dirty/subset/interrupted runs are historical; null counts mean no current matching report.",
+  "testedSHA": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+  "runs": [
+    {
+      "profile": "mock",
+      "runId": "fee7650e-2f5b-4b4d-ab48-c8066e9110be",
+      "available": true,
+      "revision": "a39b8be348e4214aff9713992a9c3ade5ed4a912",
+      "startedAt": "2026-10-30T17:49:14.517Z",
+      "endedAt": "2026-10-30T17:51:11.362Z",
+      "exitCode": 1,
+      "selection": "subset",
+      "dirty": true,
+      "target": "http://localhost:5176",
+      "command": "node scripts/run.mjs mock",
+      "environment": {
+        "node": "24.22.2",
+        "playwright": "1.64.1",
+        "platform": "win32",
+        "arch": "x64",
+        "workers": 2,
+        "retries": 0
+      },
+      "counts": {
+        "passed": 9,
+        "failed": 7,
+        "fixme": 0,
+        "skipped": 0,
+        "flaky": 0,
+        "notRun": 0
+      }
+    },
+    {
+      "profile": "api",
+      "runId": "93b4b28c-8208-4621-a52c-e9725517017e",
+      "available": true,
+      "revision": "a39b8be348e4214aff9713992a9c3ade5ed4a912",
+      "startedAt": "2026-10-30T17:50:48.521Z",
+      "endedAt": "2026-10-30T17:53:03.538Z",
+      "exitCode": 1,
+      "selection": "subset",
+      "dirty": true,
+      "target": "http://localhost:5177",
+      "command": "node scripts/run.mjs api",
+      "environment": {
+        "node": "24.22.2",
+        "playwright": "1.64.1",
+        "platform": "win32",
+        "arch": "x64",
+        "workers": 1,
+        "retries": 0
+      },
+      "counts": {
+        "passed": 3,
+        "failed": 6,
+        "fixme": 0,
+        "skipped": 0,
+        "flaky": 0,
+        "notRun": 0
+      }
+    },
+    {
+      "profile": "mock",
+      "runId": "3f1b94af-75e9-441b-9025-d853d8bdeced",
+      "available": true,
+      "revision": "1fb189e194ab29b9fe2cda2d591ef55d955babd7",
+      "startedAt": "2026-10-30T18:00:41.358Z",
+      "endedAt": "2026-10-30T18:02:48.370Z",
+      "exitCode": 1,
+      "selection": "subset",
+      "dirty": false,
+      "target": "http://localhost:5176",
+      "command": "node scripts/run.mjs mock",
+      "environment": {
+        "node": "24.22.2",
+        "playwright": "1.64.1",
+        "platform": "win32",
+        "arch": "x64",
+        "workers": 2,
+        "retries": 0
+      },
+      "counts": {
+        "passed": 26,
+        "failed": 2,
+        "fixme": 0,
+        "skipped": 0,
+        "flaky": 0,
+        "notRun": 0
+      }
+    },
+    {
+      "profile": "api",
+      "runId": "c77c9e50-5621-4f76-a0cc-a37a0b3fb72b",
+      "available": true,
+      "revision": "1fb189e194ab29b9fe2cda2d591ef55d955babd7",
+      "startedAt": "2026-10-30T18:01:00.855Z",
+      "endedAt": "2026-10-30T18:03:12.460Z",
+      "exitCode": 1,
+      "selection": "subset",
+      "dirty": false,
+      "target": "http://localhost:5177",
+      "command": "node scripts/run.mjs api",
+      "environment": {
+        "node": "24.22.2",
+        "playwright": "1.64.1",
+        "platform": "win32",
+        "arch": "x64",
+        "workers": 1,
+        "retries": 0
+      },
+      "counts": {
+        "passed": 8,
+        "failed": 3,
+        "fixme": 0,
+        "skipped": 0,
+        "flaky": 0,
+        "notRun": 0
+      }
+    },
+    {
+      "profile": "mock",
+      "runId": "caae0aa0-2068-48c5-ad48-cd9ed2937164",
+      "available": true,
+      "revision": "ebb6c4fd0094452d7610b441c1cf7b9936ff1dea",
+      "startedAt": "2026-10-30T18:11:57.325Z",
+      "endedAt": "2026-10-30T18:24:49.738Z",
+      "exitCode": 0,
+      "selection": "full",
+      "dirty": false,
+      "target": "http://localhost:5176",
+      "command": "node scripts/run.mjs mock",
+      "environment": {
+        "node": "24.22.2",
+        "playwright": "1.64.1",
+        "platform": "win32",
+        "arch": "x64",
+        "workers": 2,
+        "retries": 0
+      },
+      "counts": {
+        "passed": 244,
+        "failed": 0,
+        "fixme": 0,
+        "skipped": 2,
+        "flaky": 0,
+        "notRun": 0
+      }
+    },
+    {
+      "profile": "api",
+      "runId": "71922909-7599-4d00-bac9-c79d3e559dd3",
+      "available": true,
+      "revision": "ebb6c4fd0094452d7610b441c1cf7b9936ff1dea",
+      "startedAt": "2026-10-30T18:12:21.422Z",
+      "endedAt": "2026-10-30T18:23:00.984Z",
+      "exitCode": 1,
+      "selection": "full",
+      "dirty": false,
+      "target": "http://localhost:5177",
+      "command": "node scripts/run.mjs api",
+      "environment": {
+        "node": "24.22.2",
+        "playwright": "1.64.1",
+        "platform": "win32",
+        "arch": "x64",
+        "workers": 1,
+        "retries": 0
+      },
+      "counts": {
+        "passed": 60,
+        "failed": 14,
+        "fixme": 0,
+        "skipped": 0,
+        "flaky": 0,
+        "notRun": 0
+      }
+    },
+    {
+      "profile": "mock",
+      "runId": "44826887-0c2c-486f-9470-24b4b91294f3",
+      "available": true,
+      "revision": "ebb6c4fd0094452d7610b441c1cf7b9936ff1dea",
+      "startedAt": "2026-10-30T18:28:38.084Z",
+      "endedAt": "2026-10-30T18:29:18.037Z",
+      "exitCode": 0,
+      "selection": "subset",
+      "dirty": true,
+      "target": "http://localhost:5176",
+      "command": "node scripts/run.mjs mock",
+      "environment": {
+        "node": "24.22.2",
+        "playwright": "1.64.1",
+        "platform": "win32",
+        "arch": "x64",
+        "workers": 2,
+        "retries": 0
+      },
+      "counts": {
+        "passed": 8,
+        "failed": 0,
+        "fixme": 0,
+        "skipped": 0,
+        "flaky": 0,
+        "notRun": 0
+      }
+    },
+    {
+      "profile": "mock",
+      "runId": "f4339a0a-7f5a-417b-b117-37b92aa8ac69",
+      "available": true,
+      "revision": "70a22dc590fac619bde818d14082129e092710cf",
+      "startedAt": "2026-10-31T01:36:20.705Z",
+      "endedAt": "2026-10-31T01:47:49.347Z",
+      "exitCode": 1,
+      "selection": "full",
+      "dirty": false,
+      "target": "http://localhost:5176",
+      "command": "node scripts/run.mjs mock",
+      "environment": {
+        "node": "24.22.2",
+        "playwright": "1.64.1",
+        "platform": "win32",
+        "arch": "x64",
+        "workers": 2,
+        "retries": 0
+      },
+      "counts": {
+        "passed": 240,
+        "failed": 4,
+        "fixme": 0,
+        "skipped": 2,
+        "flaky": 0,
+        "notRun": 0
+      }
+    },
+    {
+      "profile": "api",
+      "runId": "6a1eb34d-51e1-454a-8808-5659d31a2069",
+      "available": true,
+      "revision": "70a22dc590fac619bde818d14082129e092710cf",
+      "startedAt": "2026-10-31T01:36:43.852Z",
+      "endedAt": "2026-10-31T01:43:43.375Z",
+      "exitCode": 1,
+      "browserExitCode": 1,
+      "privacyScan": "passed",
+      "selection": "full",
+      "dirty": false,
+      "target": "http://localhost:5177",
+      "command": "node scripts/run.mjs api",
+      "environment": {
+        "node": "24.22.2",
+        "playwright": "1.64.1",
+        "platform": "win32",
+        "arch": "x64",
+        "workers": 1,
+        "retries": 0
+      },
+      "counts": {
+        "passed": 70,
+        "failed": 4,
+        "fixme": 0,
+        "skipped": 0,
+        "flaky": 0,
+        "notRun": 0
+      }
+    },
+    {
+      "profile": "mock",
+      "runId": "dc1946c1-9af4-4c53-868f-2dd3a66729e4",
+      "available": true,
+      "revision": "70a22dc590fac619bde818d14082129e092710cf",
+      "startedAt": "2026-10-31T01:48:32.743Z",
+      "endedAt": "2026-10-31T01:48:34.533Z",
+      "exitCode": 1,
+      "selection": "subset",
+      "dirty": true,
+      "target": "http://localhost:5176",
+      "command": "node scripts/run.mjs mock",
+      "environment": {
+        "node": "24.22.2",
+        "playwright": "1.64.1",
+        "platform": "win32",
+        "arch": "x64",
+        "workers": 2,
+        "retries": 0
+      },
+      "counts": {
+        "passed": 0,
+        "failed": 0,
+        "fixme": 0,
+        "skipped": 0,
+        "flaky": 0,
+        "notRun": 0
+      }
+    },
+    {
+      "profile": "mock",
+      "runId": "cfad38e0-73b7-4981-a2e4-cb358a128a95",
+      "available": true,
+      "revision": "70a22dc590fac619bde818d14082129e092710cf",
+      "startedAt": "2026-10-31T01:48:45.747Z",
+      "endedAt": "2026-10-31T01:48:54.637Z",
+      "exitCode": 0,
+      "selection": "subset",
+      "dirty": true,
+      "target": "http://localhost:5176",
+      "command": "node scripts/run.mjs mock",
+      "environment": {
+        "node": "24.22.2",
+        "playwright": "1.64.1",
+        "platform": "win32",
+        "arch": "x64",
+        "workers": 2,
+        "retries": 0
+      },
+      "counts": {
+        "passed": 2,
+        "failed": 0,
+        "fixme": 0,
+        "skipped": 0,
+        "flaky": 0,
+        "notRun": 0
+      }
+    },
+    {
+      "profile": "api",
+      "runId": "6282d033-7122-421f-90f3-90b657c7d731",
+      "available": true,
+      "revision": "70a22dc590fac619bde818d14082129e092710cf",
+      "startedAt": "2026-10-31T01:49:19.914Z",
+      "endedAt": "2026-10-31T01:49:37.538Z",
+      "exitCode": 0,
+      "browserExitCode": 0,
+      "privacyScan": "passed",
+      "selection": "subset",
+      "dirty": true,
+      "target": "http://localhost:5177",
+      "command": "node scripts/run.mjs api",
+      "environment": {
+        "node": "24.22.2",
+        "playwright": "1.64.1",
+        "platform": "win32",
+        "arch": "x64",
+        "workers": 1,
+        "retries": 0
+      },
+      "counts": {
+        "passed": 4,
+        "failed": 0,
+        "fixme": 0,
+        "skipped": 0,
+        "flaky": 0,
+        "notRun": 0
+      }
+    },
+    {
+      "profile": "mock",
+      "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+      "available": true,
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "startedAt": "2026-10-31T01:51:28.855Z",
+      "endedAt": "2026-10-31T02:01:53.513Z",
+      "exitCode": 1,
+      "selection": "full",
+      "dirty": false,
+      "target": "http://localhost:5176",
+      "command": "node scripts/run.mjs mock",
+      "environment": {
+        "node": "24.22.2",
+        "playwright": "1.64.1",
+        "platform": "win32",
+        "arch": "x64",
+        "workers": 2,
+        "retries": 0
+      },
+      "counts": {
+        "passed": 240,
+        "failed": 4,
+        "fixme": 0,
+        "skipped": 2,
+        "flaky": 0,
+        "notRun": 0
+      }
+    },
+    {
+      "profile": "api",
+      "runId": "5c058ae9-b698-42be-b8dc-20cda2b18561",
+      "available": true,
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "startedAt": "2026-10-31T01:51:47.934Z",
+      "endedAt": "2026-10-31T01:56:57.005Z",
+      "exitCode": 0,
+      "browserExitCode": 0,
+      "privacyScan": "passed",
+      "selection": "full",
+      "dirty": false,
+      "target": "http://localhost:5177",
+      "command": "node scripts/run.mjs api",
+      "environment": {
+        "node": "24.22.2",
+        "playwright": "1.64.1",
+        "platform": "win32",
+        "arch": "x64",
+        "workers": 1,
+        "retries": 0
+      },
+      "counts": {
+        "passed": 74,
+        "failed": 0,
+        "fixme": 0,
+        "skipped": 0,
+        "flaky": 0,
+        "notRun": 0
+      }
+    }
+  ]
+}
