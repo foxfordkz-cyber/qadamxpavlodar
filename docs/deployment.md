@@ -1,7 +1,9 @@
 # Deployment readiness (updated 2026-10-31)
 
-Current integration base: `a66d542c63c527d608400c84b34d49f982855369` on `codex/coordinator`.
-PR #31, viewer fix #33 and Kazakh review #34 are already merged. Outcomes is included in this
+Current integration base: `55b8bde315ba6f295e33fad263aa802d16cc4b5b` on `codex/coordinator`.
+PR #31, viewer fix #33, Kazakh review #34 and independent acceptance #32 are merged.
+Historical #32 API acceptance: 74 passed on 82b2246. E2E-09 remains an unconfirmed
+UI blocker owned by Damir/Claude. See release-api-acceptance-2026-10-31.md for provenance. Outcomes is included in this
 source tree; an older healthy `gp-integration` image is not evidence for this release.
 The 2026-10-30 verification sections below are historical results, not tests of a newer SHA.
 Public hosting: **BLOCKED_PENDING_HOSTING**. Container and HTTPS acceptance remain captain-owned.
