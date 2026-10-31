@@ -9,10 +9,19 @@ const root=fileURLToPath(new URL('..',import.meta.url));
 const folder=join(root,'test-results/public-mock'); mkdirSync(folder,{recursive:true});
 const require=createRequire(import.meta.url);
 const git=args=>execFileSync('git',args,{cwd:root,encoding:'utf8',windowsHide:true}).trim();
+function reported(name, pattern) {
+  const value=process.env[name]?.trim();
+  if (!value) return null;
+  if (!pattern.test(value)) throw new Error(`Invalid ${name}; only non-secret publication metadata is accepted`);
+  return value;
+}
+const publisherReportedSHA=reported('E2E_PUBLIC_PUBLISHER_SHA', /^[a-f0-9]{40}$/i);
+const publisherReportedDeploymentId=reported('E2E_PUBLIC_DEPLOYMENT_ID', /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i);
+const publisherReportedImmutableUrl=reported('E2E_PUBLIC_IMMUTABLE_URL', /^https:\/\/[a-f0-9]{8}\.green-pavlodar-mock\.pages\.dev\/$/i);
 const metadata={target:'https://green-pavlodar-mock.pages.dev/',startedAt:new Date().toISOString(),
   testSHA:git(['rev-parse','HEAD']),dirty:!!git(['status','--porcelain','--untracked-files=normal']),
-  applicationSHA:null,deploymentId:null,publisherReportedSHA:'a66d542c63c527d608400c84b34d49f982855369',
-  provenance:'Publisher-reported SHA from docs/cloud-web-deployment.md; no deployed SHA endpoint or deployment ID supplied. Not acceptance of the local fixed build.',
+  applicationSHA:null,deploymentId:null,publisherReportedSHA,publisherReportedDeploymentId,publisherReportedImmutableUrl,
+  provenance:'Optional publisher-reported metadata is supplied explicitly through E2E_PUBLIC_PUBLISHER_SHA, E2E_PUBLIC_DEPLOYMENT_ID and E2E_PUBLIC_IMMUTABLE_URL. Browser results alone do not infer an application SHA or deployment ID; independent HTTP hash evidence is recorded separately.',
   environment:{node:process.versions.node,playwright:require('@playwright/test/package.json').version,platform:process.platform,workers:2,retries:0},
   scope:'Public HTTPS mock only. No API, cloud persistence, Microsoft Word opening or private credentials.'};
 const env={...process.env}; delete env.E2E_PASSWORD; delete env.DEMO_PASSWORD;
