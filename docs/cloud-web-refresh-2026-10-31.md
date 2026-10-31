@@ -1,6 +1,6 @@
 # Тәңірберді: публикации и приёмка — 31.10.2026
 
-## Текущее состояние после 22:17 UTC+5
+## Текущее состояние: публикации и непубликовавшийся кандидат
 
 Действующий подробный журнал — [cloud-web-deployment.md](cloud-web-deployment.md). Ниже текущие публикации отделены от сохранённых исторических проверок.
 
@@ -11,7 +11,7 @@
 | API-архив | `green-pavlodar-api.zip`, 1 633 963 байта / 36 файлов; SHA256 `da8bc83dd448b114b78f100d933187f686099ddcdb01c012f8f61e19222ac1d9`. Чистая сборка aee7242, Node 24.22.1; compatibility date `2026-06-16`, flags `[]`, Fail closed. Позднейший HEAD документов не является новой опубликованной сборкой |
 | Backend | Фактический Render `https://green-pavlodar-api-demo.onrender.com`, runtime SHA `3b14927def04b35bf97782eae6b550da276c779f`; redeploy `dep-dbj223h42hec73bqnttg` начат в 22:10:38 UTC+5, Live через 1 мин 25 с. Без latest/seed, применён сохранённый точный Pages Origin |
 | API без credentials | 68/68 static-хешей; 4/4 RU/KK форм входа и protected worker route, четыре PNG просмотрены, 0 pageErrors. Первоначальный HTTP 6/7 сохранён; после Live affected Origin GET стал 401 `AUTH_REQUIRED`, readiness200 и OPTIONS204 — 2/2 PASS. Полный HTTP-набор заново не объявлен 7/7 |
-| Реальная приёмка production Pages | У Бекзата: HTTP workflow пяти ролей, cookies/CSRF, multipart/private binary, идемпотентные повторы и Outcomes PASS; viewer login/reload/отчёт/фото/Outcomes/logout также browser PASS. [Отчёт 22:17](https://github.com/foxfordkz-cyber/qadamxpavlodar/pull/35#issuecomment-6546637443). Полный worker/coordinator UI и авторизованная RU/KK × 375/1280 матрица пока не подтверждены |
+| Реальная приёмка production Pages | У Бекзата: HTTP workflow пяти ролей, cookies/CSRF, multipart/private binary, идемпотентные повторы и Outcomes PASS; viewer login/reload/отчёт/фото/Outcomes/logout также browser PASS. [Отчёт 22:17](https://github.com/foxfordkz-cyber/qadamxpavlodar/pull/35#issuecomment-6546637443). Позднее worker/coordinator/viewer UI после API setup подтверждён; public KK worker дефект остаётся. Кандидат a7e2b96 исправляет bridge локально, но ещё не опубликован |
 
 [API-сводка](cloudflare-evidence/2026-10-31-api-unauth-aee7242.json), [static evidence](cloudflare-evidence/2026-10-31-api-static-aee7242.json), [архив API-проверки](cloudflare-evidence/2026-10-31-api-unauth-aee7242.zip); [mock-публикация](cloudflare-evidence/2026-10-31-published-fdc6e75.json) и [public suite](cloudflare-evidence/2026-10-31-public-smoke-fdc6e75.json).
 
@@ -19,7 +19,7 @@
 
 В [актуальной передаче backend 05bc924](https://github.com/foxfordkz-cyber/qadamxpavlodar/blob/05bc92492f72cc909ee6ae94d18d5b9bf1a3d54b/docs/cloud-final-release.md) описаны уже доступные A/B/C/D, приватные фото и reusable DEMO-набор. Поиск, новая нарисованная зона, GIS import, автоматический календарь и LLM/история остаются явными ограничениями. Пароль и ключи в документы не включены; старые локальные пароли не подбирались.
 
-Актуальная защита/офлайн-пакет описаны в [едином сценарии](defense/scenario.md). Runtime резерва fdc6e75 проверен отдельно (17/17 offline, 0 pageErrors, 39/39 файлов), медиа a66d542 сохраняют исходную маркировку. Свежий RU/KK Word care=3 сверяется отдельным evidence. Физический телефон, общая устная репетиция и полный браузерный cloud workflow остаются отдельными непроверенными пунктами.
+Актуальная защита/офлайн-пакет описаны в [едином сценарии](defense/scenario.md). Runtime резерва fdc6e75 проверен отдельно (17/17 offline, 0 pageErrors, 39/39 файлов), медиа a66d542 сохраняют исходную маркировку. Свежий RU/KK Word care=3 сверяется отдельным evidence. Физический телефон, общая устная репетиция и начало planning UI остаются отдельными непроверенными пунктами. Новая основная932574e влита только в собственную ветку; публичные версии не менялись. [Свежий кандидат, проверки и блокер Direct Upload](cloud-web-deployment.md#кандидат-после-повторного-fetch--a7e2b96-ещё-не-deployment).
 
 ## Исторический журнал 98cf6c6 / 1916d19
 

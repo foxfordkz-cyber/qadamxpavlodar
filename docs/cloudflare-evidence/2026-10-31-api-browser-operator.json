@@ -1,0 +1,55 @@
+{
+  "schema": "green-pavlodar-operator-browser-acceptance-summary-v1",
+  "observer": "Backend operator bekzatwr; attributed external evidence, not rerun by frontend owner",
+  "source": "https://github.com/foxfordkz-cyber/qadamxpavlodar/blob/235615a0fd2ddfae8b0ce9a7fa0f106cbf566902/docs/cloud-browser-acceptance.md",
+  "comment": "https://github.com/foxfordkz-cyber/qadamxpavlodar/pull/35#issuecomment-6546828382",
+  "periodLocal": "2026-10-31 22:23–22:36 UTC+5",
+  "publicFrontendSha": "aee7242ee899f1f596a704adba6e1279c37af9df",
+  "backendSha": "3b14927def04b35bf97782eae6b550da276c779f",
+  "production": "https://green-pavlodar-api.pages.dev/",
+  "setup": "Dedicated synthetic task created and assigned through API, not UI",
+  "browserFlow": [
+    "worker login",
+    "open assigned task",
+    "start",
+    "native file chooser PNG plus DEMO note",
+    "submit at 375px",
+    "coordinator login",
+    "inspect photo and note",
+    "accept in KK at 375px",
+    "viewer read same accepted report and photo",
+    "Outcomes"
+  ],
+  "viewerDisplayChecks": {
+    "passed": 8,
+    "pages": [
+      "report",
+      "Outcomes"
+    ],
+    "languages": [
+      "ru",
+      "kk"
+    ],
+    "widths": [
+      375,
+      1280
+    ],
+    "overflow": false,
+    "privateImageDecoded": true,
+    "outcomes": {
+      "alive": 1,
+      "unknown": 3,
+      "wholeCohortPercentage": null
+    }
+  },
+  "cycles": 1,
+  "publicKnownFailure": "UI-KK-WORKER: shell KK while cabinet RU, including reload; locally fixed candidate is not yet deployed",
+  "notProven": [
+    "UI site -> estimate -> task creation and assignment",
+    "four complete role cycles",
+    "physical phone",
+    "actual ambiguous-response/outage recovery"
+  ],
+  "data": "Synthetic DEMO green-square photo, not field evidence",
+  "secretsIncluded": false
+}
