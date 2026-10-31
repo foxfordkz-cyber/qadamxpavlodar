@@ -1,0 +1,46 @@
+{
+  "kind": "manual-browser-probe-not-full-suite-count",
+  "startedAt": "2026-10-31T10:23:20.043Z",
+  "testSHA": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+  "target": "http://localhost:5178",
+  "applicationBase": "98cf6c68d5370331d6f95aa9e749f82d504e5670",
+  "checks": [
+    {
+      "lang": "ru",
+      "width": 1280,
+      "height": 800,
+      "url": "http://localhost:5178/?source=mock&lang=ru#/map",
+      "wrongLocationPresent": true,
+      "locationPhrase": "внизу справа",
+      "launcherInHeader": true,
+      "launcherBounds": {
+        "x": 1078.453125,
+        "y": 8,
+        "width": 108,
+        "height": 34
+      },
+      "assistantOpens": true,
+      "screenshot": "onboarding-ru-1280.png",
+      "sha256": "138dbaf20d469c6763b3816bee6364f18234a9e256d407cec6fd2ae99b7138d7"
+    },
+    {
+      "lang": "kk",
+      "width": 1280,
+      "height": 800,
+      "url": "http://localhost:5178/?source=mock&lang=kk#/map",
+      "wrongLocationPresent": true,
+      "locationPhrase": "төменгі оң жақта",
+      "launcherInHeader": true,
+      "launcherBounds": {
+        "x": 1095.25,
+        "y": 8,
+        "width": 95.84375,
+        "height": 34
+      },
+      "assistantOpens": true,
+      "screenshot": "onboarding-kk-1280.png",
+      "sha256": "def80b492d0523288d80524539ec3d05594b33b62d4b9aa85c60ae74f9a6e388"
+    }
+  ],
+  "endedAt": "2026-10-31T10:23:32.854Z"
+}

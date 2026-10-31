@@ -1,0 +1,6 @@
+{
+  "services": {
+    "web": { "image": "gp-aidana-qa-20261031-web", "build": { "args": { "DATA_SOURCE": "mock" } } },
+    "server": { "image": "gp-aidana-qa-20261031-server", "environment": { "DEMO_PASSWORD": "${DEMO_PASSWORD:?QA process password required}", "FRONTEND_ORIGINS": "http://localhost:18083,http://127.0.0.1:18083" } }
+  }
+}

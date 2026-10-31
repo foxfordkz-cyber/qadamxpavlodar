@@ -114,6 +114,11 @@ export async function screenshot(page: Page, name: string, info: TestInfo) {
     await expect(card.locator('.gp-tm__stats')).toBeInViewport({ ratio: 1 });
   }
   // Lazy external photos may still be downloading after the page and fonts are ready.
+  // Report thumbnails first resolve upload metadata, before an <img> exists.
+  // Waiting only for existing images would accept the temporary ellipsis frame.
+  if (name === 'reports') {
+    await expect(page.locator('.gp-report-row__nophoto').filter({ hasText: /^…$/ })).toHaveCount(0);
+  }
   // Only images actually inside the captured viewport must finish; offscreen images
   // must not hold a screenshot hostage. A broken visible image is not a ready frame.
   await expect.poll(() => page.locator('img').evaluateAll(images => images.filter(image => {
