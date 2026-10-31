@@ -82,7 +82,7 @@ const manifest = {
   archive, archiveBytes: zip.length, archiveSha256: digest(zip),
   inputHashes: await Promise.all(inputs.map(async path => ({ path, sha256: digest(await readFile(join(root, path))) }))), entries,
   runtimeStatus: 'not-deployed', prerequisites: ['Exact publicOrigin must be allowlisted by backend before login.',
-    'Set runtimeCompatibility date and flags in Pages Settings > Runtime; ZIP does not configure them.',
+    'Set runtimeCompatibility date and listed flags (none when empty) in Pages Settings > Runtime; ZIP does not configure them.',
     'Set Pages Functions fail-open/closed mode to fail closed.', 'Upload only to the separate API Pages project.'],
 };
 await writeFile(join(out, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
