@@ -9,7 +9,12 @@ are unchanged from that exact SHA. No old 30.10 test result is being attributed 
 | --- | --- |
 | #33, `fa762f0b4f009e8cad9c55f53efa59b89192a324` | Merged as `3eedceecdcf6e199784e666b833032293b923391` |
 | #34, `85d2eb6b2a3bb05aab5531da70c0401a4a6be711` | Merged as `c08efea51900e11cdea63944bddb79a078712db5` |
-| #32, `ebb6c4fd0094452d7610b441c1cf7b9936ff1dea` | Open Draft; Git ancestry does not contain #33 |
+| #32, `30fdbb798c4525d633a9148417b762495f8f2d49` | Merged as `55b8bde315ba6f295e33fad263aa802d16cc4b5b`; contains #33/#34 |
+
+Integration update: Aidana's completed browser run on `82b2246` recorded API **74 passed** and
+mock **240 passed / 4 failed / 2 skipped**. Four failures reproduce E2E-09 (the assistant launcher
+covers mobile priority controls). Merging the QA report did not fix that UI defect or constitute
+full release acceptance. The historical local test results below still describe `a66d542`.
 
 All three recorded CI checks on #33/#34 heads are successful; no review comments or requested changes
 were returned. No duplicate implementation or PR for those fixes was created.
@@ -67,8 +72,9 @@ fingerprint checks: [deployment.md](deployment.md#captain-docker-acceptance-two-
 
 ## Remaining owners
 
-- **Aidana:** update the existing QA branch by ordinary merge of fresh `origin/codex/coordinator`,
-  then rerun independent API/browser acceptance. The QA branch and its E2E tools were not edited here.
+- **Aidana:** after the UI owner fixes E2E-09, start a new QA branch from fresh
+  `origin/codex/coordinator` and rerun independent API/browser acceptance. #32 is already merged;
+  its test results and artifacts keep their original SHA. E2E tools were not edited here.
 - **Damir/Claude:** merge documentation if accepted, pin the release SHA and rebuild new isolated
   Docker projects; check actual image contents, all roles, viewer writes, SQLite/uploads restart,
   repeat seed and restore. An old healthy image without Outcomes is insufficient.

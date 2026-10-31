@@ -1,6 +1,7 @@
 import { t, type Key } from '../../../shared/i18n';
 import type { HighlightTitleKey } from '../sites/highlightTitle';
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useData, useResource } from '../../../shared/api/DataProvider';
 import { ApiError } from '../../../shared/api/transport';
 import type { AssistantReply } from '../../../shared/analytics/assistant';
@@ -54,7 +55,7 @@ function ReplyProof({ reply }: { reply: AssistantReply }) {
 
 /** ТЗ 3.10: диалоговый ассистент в боковой панели. На сервере с ключом модели отвечает модель (Grok и др.)
  *  с расчётами модулей; в тестовом источнике и при сбое модели — правила. */
-export function AssistantPanel() {
+export function AssistantPanel({ launcherTarget }: { launcherTarget: HTMLElement | null }) {
   const { api } = useData();
   const route = useRoute();
   const siteId = route.path === '/map' ? route.params.get('site') : null;
@@ -109,9 +110,10 @@ export function AssistantPanel() {
     }
   };
 
-  if (!open) return <button className="gp-assist-fab" onClick={() => setOpen(true)} aria-label={t('assistant.open')}><span aria-hidden="true">✦</span> <span className="gp-assist-fab__label">{t('assistant.title')}</span></button>;
   return (
-    <aside className="gp-assist" aria-label={t('assistant.label')}>
+    <>
+      {launcherTarget && createPortal(<button className="gp-assist-fab" onClick={() => setOpen(true)} aria-label={t('assistant.open')} aria-expanded={open} aria-controls={open ? 'gp-assistant-panel' : undefined}><span aria-hidden="true">✦</span> <span className="gp-assist-fab__label">{t('assistant.title')}</span></button>, launcherTarget)}
+      {open && <aside id="gp-assistant-panel" className="gp-assist" aria-label={t('assistant.label')}>
       <div className="gp-assist__head">
         <strong>{t('assistant.title')}</strong>
         <span className="gp-small gp-muted gp-assist__zone">{siteId ? t('assistant.zone', { name: zoneName || t(zone.loading ? 'state.loading' : 'assistant.zoneUnavailable') }) : t('assistant.noZone')}</span>
@@ -144,6 +146,7 @@ export function AssistantPanel() {
         <textarea id="assist-q" ref={input} className="gp-input" rows={2} value={q} placeholder={t('assistant.placeholder')} onChange={(e) => setQ(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(q); } }} />
         <button className="gp-btn gp-btn--primary" type="submit" disabled={busy || !q.trim()}>{t('assistant.ask')}</button>
       </form>
-    </aside>
+      </aside>}
+    </>
   );
 }
