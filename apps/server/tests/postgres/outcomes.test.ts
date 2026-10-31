@@ -132,7 +132,8 @@ test('Stage D/F: real planning → planting → private photo → acceptance →
   assert.equal((await api.upload(photo.id)).url,'/api/v1/uploads/'+photo.id);
   const plan=await api.dayPlan(today());assert.equal(plan.plan,null);
   await assert.rejects(api.approveDayPlan(today(),null),(e:any)=>e.status===503&&e.code==='integration_unavailable');
-  const pending:[string,string][]=[['POST','/zones'],['GET','/geocode?q=Pavlodar'],['POST','/imports/preview'],['POST','/imports/test/commit'],['POST','/zones/'+site.id+'/care-schedule'],['POST','/assistant'],['GET','/assistant/history'],['POST','/sites/rank-preview'],['POST','/sites/'+site.id+'/plant-selection'],['POST','/observations/interpret']];
+  const search=await api.geocode('Торайгырова 1/5');assert(search.data.some((hit:any)=>hit.kind==='address'));
+  const pending:[string,string][]=[['POST','/zones'],['POST','/imports/preview'],['POST','/imports/test/commit'],['POST','/zones/'+site.id+'/care-schedule'],['POST','/assistant'],['GET','/assistant/history'],['POST','/sites/rank-preview'],['POST','/sites/'+site.id+'/plant-selection'],['POST','/observations/interpret']];
   const a=f.sessions.get('coordinator')!,result:{method:string;path:string;status:number;code:string}[]=[];
   for(const [method,path] of pending){
    const response=await fetch(f.base+path,{method,headers:{Cookie:a.cookie,'X-CSRF-Token':a.csrf,'Idempotency-Key':'backlog-'+result.length,...(method==='POST'?{'Content-Type':'application/json'}:{})},...(method==='POST'?{body:'{}'}:{})});

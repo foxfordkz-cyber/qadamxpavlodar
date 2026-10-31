@@ -2,7 +2,7 @@ name: Quality
 
 on:
   pull_request:
-    branches: [codex/coordinator]
+    branches: [codex/coordinator, codex/cloud-api-persistence]
   push:
     branches: [codex/coordinator]
 

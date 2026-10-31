@@ -8,8 +8,16 @@ import { exportAnalysis } from '../municipal/exports.js';
 import { decisionLab, priorities } from '../tz/data.js';
 import { web } from '../tz/shared.js';
 import { PostgresPlanningRepository, planningReader } from './planning-repository.js';
+import { geocode, geocodeBudget, geocodeQuery, geoHit } from './geocode.js';
+import { ApiError } from '../errors.js';
 
 export function planningRoutes({route}:Pick<Api,'route'>,repo:PostgresPlanningRepository) {
+  const searchBudget = geocodeBudget();
+  route({method:'get',path:'/geocode',query:geocodeQuery,response:z.array(geoHit).max(8),summary:'Address/street/place search over the attributed OSM snapshot and persistent zones'},async(q,r)=>{
+    const a=actor(r);planningReader(a);const input=geocodeQuery.parse(q.query),retry=searchBudget(a.id);
+    if(retry){r.set('Retry-After',String(retry));throw new ApiError(429,'GEOCODE_RATE_LIMIT','Search limit reached; retry after the indicated interval');}
+    r.json(await geocode(repo.db,input.q));
+  });
   const radius=z.object({radius:z.coerce.number().refine(n=>[30,50,100,200].includes(n),'radius: 30, 50, 100 or 200')}).strict();
   route({method:'get',path:'/zones/:id/context',summary:'Persisted OSM context at 30/50/100/200 m; geometry version checked'},async(q,r)=>{planningReader(actor(r));r.json({data:await repo.context(param(q),radius.parse(q.query).radius)});});
   route({method:'get',path:'/species',summary:'Persisted species, original IDs/prices/provenance'},async(_q,r)=>{planningReader(actor(r));r.json({data:await repo.list('species')});});

@@ -1,4 +1,4 @@
-# Cloud route coverage — Stage E, PR #39
+# Cloud route coverage — Stage E follow-up to PR #39
 
 Reviewed from the actual source in this worktree (base `98cf6c6` plus PR #39), not from the
 public mock: [DataProvider](../apps/web/src/shared/api/DataProvider.tsx),
@@ -8,6 +8,10 @@ public mock: [DataProvider](../apps/web/src/shared/api/DataProvider.tsx),
 [worker gateway](../apps/web/src/features/worker/contract-v2.mjs),
 [report export](../apps/web/src/features/coordinator/tz/ReportPage.tsx).
 No frontend/map/worker/tools/e2e files were changed.
+
+Stage E source is unreleased. The live backend remains on `3b14927`; its actual B/C/D
+provider acceptance is recorded in [deployment readiness](cloud-deployment-readiness.md).
+See [Stage E evidence and limits](cloud-stage-e.md) for new local-only capabilities.
 
 API mode selects the V2 compatibility layer. Its logical `/projects`, `/brigades`, `/dashboard`
 names are not literal backend calls. Mock-only Outcomes URLs are also not cloud requirements.
@@ -30,7 +34,7 @@ verification of every listed method; full HTTP traces are retained with the suit
 | GET /zones/:id/context?radius=30/50/100/200 | Yes | Persisted context | A | No | 409 CONTEXT_STALE after site-version change; regeneration not implemented |
 | GET /sites/:id/context | Yes | V2 persisted context | B | No | Worker/design source; no live geospatial claim |
 | POST /zones (drawn zone) | Yes | No | D denial | Yes | New zone creation blocks drawing/save |
-| GET /geocode?q=... | Yes, attributed snapshot | No | D denial | Yes | Search unavailable in cloud |
+| GET /geocode?q=... | Yes, attributed snapshot | Yes | E1 exact SQLite/PG HTTP parity | No in Stage E; live 3b149 still 503 | 8 hits, RU/KK, fixed district, request budgets; provider NOT RUN |
 | GET /layers/sources | Yes | Persisted source metadata | A/D | No | No new live fetch |
 | GET /layers/soils; /layers/greenery | Yes | Persisted display layers | A | No | Synthetic soil labelled; new import unavailable |
 | GET /layers/city; /layers/zones | Yes | Persisted imported layer slots | A | No | Empty until actual supported import; no invented features |
