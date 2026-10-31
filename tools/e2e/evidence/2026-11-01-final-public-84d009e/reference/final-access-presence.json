@@ -1,0 +1,10 @@
+{
+  "checkedAt": "2026-10-31T19:27:19.6634024Z",
+  "processPresence": {
+    "CLOUD_ACCEPTANCE_BROWSER_ORIGIN": false,
+    "CLOUD_ACCEPTANCE_PASSWORD": false,
+    "CLOUD_ACCEPTANCE_ORIGIN": false,
+    "CLOUD_ACCEPTANCE_DEMO": false
+  },
+  "baselineManifestPresentAtDefaultPath": false
+}

@@ -1,0 +1,32 @@
+{
+  "applicationBase": "84d009e3b72c4fe637ef30607e29701054b6c621",
+  "appsTree": "2fd878cfbec10d93942afeb5add57a39a230304f",
+  "testSHA": "c7f15755c80292509aaeeb9f9e4638f62c8b6810",
+  "software": {
+    "node": "24.22.2",
+    "playwright": "1.64.1",
+    "platform": "win32",
+    "arch": "x64",
+    "workers": 2,
+    "retries": 0
+  },
+  "apiSoftware": {
+    "node": "24.22.2",
+    "playwright": "1.64.1",
+    "platform": "win32",
+    "arch": "x64",
+    "workers": 1,
+    "retries": 0
+  },
+  "memorySample": {
+    "utc": "2026-10-31T18:57:25.175Z",
+    "method": "node:os",
+    "platform": "win32",
+    "release": "10.0.26200",
+    "arch": "x64",
+    "totalMemoryBytes": 16450961408,
+    "freeMemoryBytes": 942497792,
+    "cimSample": "unavailable: sandbox access denied; no causal claim"
+  },
+  "limitation": "Memory sample describes the environment, not a causal diagnosis; local SQLite/API does not prove cloud or Docker"
+}

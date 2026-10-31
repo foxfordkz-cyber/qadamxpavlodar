@@ -1,2 +1,5 @@
 # Evidence hashes refer to exact bytes; never normalize these files on checkout.
 * -text
+
+# Preserve the exact Windows runtime config snapshot while recognizing CRLF.
+2026-11-01-final-public-84d009e/method/playwright.config.ts whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
