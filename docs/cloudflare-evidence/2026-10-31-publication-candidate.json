@@ -1,0 +1,239 @@
+{
+  "schema": "green-pavlodar-direct-upload-v1",
+  "createdUtc": "2026-10-31T10:15:24.3547318Z",
+  "source": {
+    "repository": "foxfordkz-cyber/qadamxpavlodar",
+    "sha": "98cf6c68d5370331d6f95aa9e749f82d504e5670",
+    "detached": true,
+    "trackedTreeClean": true,
+    "packageLockSha256": "476b3f07724841766b3627d936477111dea6d331e2b577d4d704f2b5e6e0720f"
+  },
+  "toolchain": {
+    "node": "v24.14.1",
+    "npm": "11.11.0",
+    "vite": "7.3.7"
+  },
+  "build": {
+    "installCommand": "npm --prefix apps/web ci",
+    "installExitCode": 0,
+    "command": "npm --prefix apps/web run build",
+    "exitCode": 0,
+    "environment": {
+      "VITE_DATA_SOURCE": "mock",
+      "NODE_ENV": "production"
+    },
+    "inheritedViteVariablesRemoved": true,
+    "loadedLocalEnvFiles": [],
+    "envExampleExcluded": true,
+    "log": "publication-98cf6c6-build.log",
+    "warning": "Vite chunks >500 kB; build passed"
+  },
+  "archive": {
+    "file": "green-pavlodar-mock-98cf6c6.zip",
+    "bytes": 1605704,
+    "sha256": "7660c181f3626f60b60a64fc8b2df4c488a7e1c288744a8edfb3fec6447904d2",
+    "rootIndexHtml": true,
+    "contents": "Only apps/web/dist contents; no parent dist directory",
+    "entryCount": 34,
+    "allEntryHashesMatchDist": true,
+    "allowedExtensions": [
+      ".html",
+      ".js",
+      ".css",
+      ".woff2"
+    ],
+    "containsEnvBackendCredentialsOrNodeRuntimeFiles": false,
+    "note": "Standard compiled frontend API adapters and synthetic mock fixtures remain part of the pinned app; no backend, Pages Functions, credential/config files or Node runtime included"
+  },
+  "files": [
+    {
+      "path": "assets/contract-v2-ClrjjIFG.js",
+      "bytes": 13616,
+      "sha256": "be6cc8680f115db9efc354e9126470fdf02af601f71080af588ab08dd3051bbf"
+    },
+    {
+      "path": "assets/demo-gateway-BYYLNsb6.js",
+      "bytes": 27519,
+      "sha256": "8ff10a097fc75895d020cc01c08910915237f46f39fadf4285691494a46b1099"
+    },
+    {
+      "path": "assets/DevPanel-B1Jrx0XN.js",
+      "bytes": 2442,
+      "sha256": "0c90dc77f79c4cec6490953a51f64d79d7b6d0c8bdab9d2e1c91edbaa4942344"
+    },
+    {
+      "path": "assets/HeroMap-BkVEgxRz.js",
+      "bytes": 2982,
+      "sha256": "fb88deea2da184767116a4b35a352a1ac9f698e5c7e08878d7545fb7e3724bb2"
+    },
+    {
+      "path": "assets/index-B2HVvz9V.css",
+      "bytes": 83538,
+      "sha256": "db6b09c91df317ad939fbdee1546505806d7be6df14137371ee9722a6899fd42"
+    },
+    {
+      "path": "assets/index-Lsf9z6iL.js",
+      "bytes": 975699,
+      "sha256": "2c87a09b324e9c8e99e3013f5000ed8ba99331266e02b609088c4ad5d75f20a2"
+    },
+    {
+      "path": "assets/journal-DUiVZ3Jx.css",
+      "bytes": 28323,
+      "sha256": "1f628101378a4d324955e84cff516f62990004c0970dbfe2b1c673398f08048e"
+    },
+    {
+      "path": "assets/loadMemo-CD6TAO6h.js",
+      "bytes": 637,
+      "sha256": "0e9eb0e4fcad2c9bef4319b2db9600ebbfe6330dd6bac92ad957794832bbc1bc"
+    },
+    {
+      "path": "assets/lora-cyrillic-ext-wght-normal-YcVxMP-u.woff2",
+      "bytes": 23636,
+      "sha256": "0e523e4bc3c6308f002a3208ea2990cb4f64282d4fbb67c12f5726d13b66eef6"
+    },
+    {
+      "path": "assets/lora-cyrillic-wght-normal-UWPuZLjM.woff2",
+      "bytes": 21232,
+      "sha256": "c57d9ca3bd42e6bc093badc7744dd2059a78f66a3a4dc6ca40574480c870f553"
+    },
+    {
+      "path": "assets/lora-latin-ext-wght-normal-C2Wlntb9.woff2",
+      "bytes": 20088,
+      "sha256": "2a2d9c22c9863086a23f5013fede1428585321812b25f2662542c39d02967c5e"
+    },
+    {
+      "path": "assets/lora-latin-wght-normal-BiLcIKcI.woff2",
+      "bytes": 37788,
+      "sha256": "ddb8c66035104e233fc024669183aad3738b6daa16deee2ebb1241bd0f98ace1"
+    },
+    {
+      "path": "assets/lora-math-wght-normal-sOy7rEfW.woff2",
+      "bytes": 29240,
+      "sha256": "a8c4cb778ab6202d22bdea2ccc8d7e7caf802cfe0a7ce37df7b212f82341468f"
+    },
+    {
+      "path": "assets/lora-symbols-wght-normal-DQ5VrUkH.woff2",
+      "bytes": 17248,
+      "sha256": "2df52199eac56e2ec7a735e609bb151bdab79422c3e73948f4b6580c66bb5a50"
+    },
+    {
+      "path": "assets/lora-vietnamese-wght-normal-CfJ7gtf3.woff2",
+      "bytes": 8992,
+      "sha256": "98c22de85f6e83bcd6ae1a443e12e256fbc8de7142bec4f76b059f8ff9c2797e"
+    },
+    {
+      "path": "assets/mapFlags-KArXQfJZ.js",
+      "bytes": 203,
+      "sha256": "7be91119586dd5e482676ee9daf7276bd60ca59617953d84a2df1b5be897244b"
+    },
+    {
+      "path": "assets/maplibre-gl-qdodsIIj.js",
+      "bytes": 1033029,
+      "sha256": "f79f4edfa86b9c76b92fdac87e45cfe00cf38ac384909017b39bc3de37c7b306"
+    },
+    {
+      "path": "assets/maplibre-gl-RZO-t2LB.css",
+      "bytes": 83127,
+      "sha256": "3c3faf7116e0ea3f4dd664bc9d6207bebf71dda2f9d3108b65527615011f2b2b"
+    },
+    {
+      "path": "assets/maplibre-gl-worker-DYHVkJJJ.js",
+      "bytes": 508793,
+      "sha256": "2d7087f4c4bf47b51da6498b27f32c287a4c01dbf9aa0f90446a50b13a9677f6"
+    },
+    {
+      "path": "assets/memo-CcAGxRtw.js",
+      "bytes": 17325,
+      "sha256": "a0c8130763346781e658307bcd4c8a28e8b91a92c86bc053e5238370180ad7a7"
+    },
+    {
+      "path": "assets/memoData-mJ3ORfy0.js",
+      "bytes": 276,
+      "sha256": "28d821cacfd97c3e4f4c6f25c8e326de85347b17c05fbc88ebbd7a2c07724afd"
+    },
+    {
+      "path": "assets/onest-cyrillic-ext-wght-normal-DOFToQv1.woff2",
+      "bytes": 10540,
+      "sha256": "268f03691b3d06e57abcf20f9277e314ea8784298983aab5b40c1b91965027e1"
+    },
+    {
+      "path": "assets/onest-cyrillic-wght-normal-DayYxulF.woff2",
+      "bytes": 15860,
+      "sha256": "68e5e01d6265bd68967746d4f5a9d18d0e6cbb5d15583c7082d6384ab1229b27"
+    },
+    {
+      "path": "assets/onest-latin-ext-wght-normal-QAhDxQuo.woff2",
+      "bytes": 28452,
+      "sha256": "14e7d3079b75860e2ab50efc6c318c398fdb46ede9b56e625f12ae70a3c5d9a4"
+    },
+    {
+      "path": "assets/onest-latin-wght-normal-Dun_Rd-l.woff2",
+      "bytes": 33760,
+      "sha256": "052df74533250c2e0ca0c4bdd32de594e107d99c1648e63820ef9c6142067828"
+    },
+    {
+      "path": "assets/onest-math-wght-normal-Bl4ZGkZl.woff2",
+      "bytes": 25480,
+      "sha256": "c74952a8c0c8c558c4f879f83773cf529d11350609f7073f5b2c5999dec46041"
+    },
+    {
+      "path": "assets/onest-symbols-wght-normal-DxQzqQfC.woff2",
+      "bytes": 18168,
+      "sha256": "2ec2d45d2ec0770e2c18cba2dba5126cf2dcff181d23ad192e9fffeb4af4b0b6"
+    },
+    {
+      "path": "assets/onest-vietnamese-wght-normal-BBxOatbv.woff2",
+      "bytes": 12400,
+      "sha256": "d852d4d094a3a46d701d16245deb7ca83b16b5bd69e20aa0aba089392ad69474"
+    },
+    {
+      "path": "assets/ProjectMap3D-DnRlvOdZ.js",
+      "bytes": 3558,
+      "sha256": "4fa5eaab39c0953c79ae0d00aa479da48d5c4b7b3d1cfdd631094d59446a0da6"
+    },
+    {
+      "path": "assets/scene3d-DmEe6oVp.js",
+      "bytes": 567194,
+      "sha256": "6fb22ee7fda8fcb3e5d2213487907dba5079fa70a2111b093e985059eb4e5d7b"
+    },
+    {
+      "path": "assets/server-CnG0pOTl.js",
+      "bytes": 1976966,
+      "sha256": "5870f47a9c796740785d0a46388575b76a7f89d13989e19e98c881bffc423f98"
+    },
+    {
+      "path": "assets/SiteMap-BSa_MOYA.js",
+      "bytes": 16642,
+      "sha256": "ae2d476854f01dc23c32fed04bda6103ab021d961aa429c00f904f2aa6691550"
+    },
+    {
+      "path": "assets/WorkerPage-DS1a_1Zb.js",
+      "bytes": 72603,
+      "sha256": "ea57cd97b3779b3a4e6f2912ab15c66f821bb71b3446fe33db7e375e6ac145f7"
+    },
+    {
+      "path": "index.html",
+      "bytes": 609,
+      "sha256": "d1c0621bf7756ebffc476b4bfa04968b547701329d74932b53d2b475cba0f335"
+    }
+  ],
+  "publicExisting": {
+    "comparisonFile": "public-existing-http-comparison.json",
+    "checkedUtc": "2026-10-31T10:14:16.001Z",
+    "productionOrigin": "https://green-pavlodar-mock.pages.dev",
+    "immutableOrigin": "https://eb0cd70c.green-pavlodar-mock.pages.dev",
+    "verifiedPathCount": 34,
+    "verifiedAssetCount": 33,
+    "allHashesEqual": true,
+    "sourceCommitNotInferred": true,
+    "excludedHtmlFallbackPaths": [
+      "/assets/photo.jpg"
+    ]
+  },
+  "publication": {
+    "deployed": false,
+    "status": "READY_FOR_DIRECT_UPLOAD_NOT_DEPLOYED",
+    "reason": "Cloudflare login/CLI authorization unavailable; existing deployment not changed",
+    "requiresFreshPublicVerificationAfterUpload": true
+  }
+}

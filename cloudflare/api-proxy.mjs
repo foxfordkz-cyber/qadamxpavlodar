@@ -1,5 +1,6 @@
 // Transport core only. There is deliberately no Pages Function or deployment
-// binding until Bekzat supplies the reviewed origin/header/cookie contract.
+// binding until a deployed origin and server SHA are accepted. The transport
+// follows docs/cloud-api-contract.md at a0e827a; that slice is not the full API.
 const HOP_BY_HOP = ['connection', 'keep-alive', 'proxy-authenticate', 'proxy-authorization',
   'te', 'trailer', 'transfer-encoding', 'upgrade'];
 const UNTRUSTED_FORWARDING = ['forwarded', 'x-forwarded-for', 'x-forwarded-host',
@@ -52,7 +53,7 @@ function failure(status, code) {
  * Parameters must come from reviewed deployment configuration, never a request.
  * Retains the client's Origin; the API must explicitly allow the public origin.
  * Host is derived from the fixed upstream URL. Forwarded headers are removed,
- * not trusted or synthesised before the backend contract is agreed.
+ * not trusted or synthesised by this transport.
  * Cookies are preserved without rewriting Domain/Secure/SameSite/Path.
  */
 export function createApiProxy({ upstreamOrigin, publicOrigin, timeoutMs = 65000 }, fetcher = fetch) {
@@ -83,17 +84,14 @@ export function createApiProxy({ upstreamOrigin, publicOrigin, timeoutMs = 65000
       const outbound = new Request(target, { method: request.method, headers, body,
         redirect: 'manual', signal: controller.signal, ...(body ? { duplex: 'half' } : {}) });
       const response = await fetcher(outbound, { cache: 'no-store', cf: { cacheTtlByStatus: { '100-599': -1 }, cacheEverything: false } });
-      const resultHeaders = noStore(copyHeaders(response.headers));
-      if (REDIRECTS.has(response.status) && resultHeaders.has('location')) {
-        let destination;
-        try { destination = new URL(resultHeaders.get('location'), target); }
-        catch { await response.body?.cancel(); return failure(502, 'PROXY_REDIRECT_REJECTED'); }
-        if (destination.origin !== upstream.origin || destination.username || destination.password || !isApi(destination.pathname)) {
-          await response.body?.cancel();
-          return failure(502, 'PROXY_REDIRECT_REJECTED');
-        }
-        resultHeaders.set('location', publicSite.origin + destination.pathname + destination.search + destination.hash);
+      if (REDIRECTS.has(response.status)) {
+        // Reject even same-origin or Location-less redirects. Returning them can
+        // make the browser replay a mutation. Do not forward their cookies, and
+        // do not wait for upstream stream cleanup before returning the failure.
+        void response.body?.cancel().catch(() => {});
+        return failure(502, 'PROXY_REDIRECT_REJECTED');
       }
+      const resultHeaders = noStore(copyHeaders(response.headers));
       return new Response(response.body, { status: response.status, statusText: response.statusText, headers: resultHeaders });
     } catch {
       return failure(timedOut ? 504 : 502, timedOut ? 'PROXY_TIMEOUT' : 'PROXY_UNAVAILABLE');

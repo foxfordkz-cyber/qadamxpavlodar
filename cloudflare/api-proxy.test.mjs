@@ -63,14 +63,44 @@ test('multiple cookies retain attributes and Expires commas; failed login status
   assert.deepEqual(response.headers.getSetCookie(), cookies);
 });
 
-test('same upstream API redirects stay on the public origin and are not followed', async () => {
+test('all upstream redirects reject POST once without location, cookies or caching', async () => {
   for (const status of [301, 302, 303, 307, 308]) {
-    let count = 0;
-    const proxy = createApiProxy(config, async () => { count++; return new Response(null, { status, headers: { Location: 'https://api.invalid/api/v1/auth/me?x=1' } }); });
-    const response = await proxy(request('/api/v1/auth/login', { method: 'POST', body: '{}' }));
-    assert.equal(count, 1); assert.equal(response.status, status);
-    assert.equal(response.headers.get('Location'), 'https://web.invalid/api/v1/auth/me?x=1');
+    for (const location of ['https://api.invalid/api/v1/auth/me?x=1', null]) {
+      let count = 0;
+      const proxy = createApiProxy(config, async out => {
+        count++;
+        assert.equal(out.method, 'POST');
+        assert.equal(out.redirect, 'manual');
+        assert.equal(await out.text(), '{}');
+        const headers = new Headers({ 'Set-Cookie': 'gp_v2_session=redirect; Path=/api/v1; Secure', 'Cache-Control': 'public, max-age=3600' });
+        if (location) headers.set('Location', location);
+        return new Response('upstream redirect body', { status, headers });
+      });
+      const response = await proxy(request('/api/v1/auth/login', { method: 'POST', body: '{}' }));
+      assert.equal(count, 1); assert.equal(response.status, 502);
+      assert.equal(response.headers.get('Location'), null);
+      assert.deepEqual(response.headers.getSetCookie(), []);
+      assert.equal(response.headers.get('Cache-Control'), 'no-store, private');
+      assert.equal(response.headers.get('CDN-Cache-Control'), 'no-store');
+      assert.equal(response.headers.get('Cloudflare-CDN-Cache-Control'), 'no-store');
+      assert.deepEqual(await response.json(), { error: { code: 'PROXY_REDIRECT_REJECTED' } });
+    }
   }
+});
+
+test('redirect failure does not wait for an upstream body that stalls during cancellation', { timeout: 1000 }, async () => {
+  let cancelled = false, calls = 0;
+  const proxy = createApiProxy(config, async () => {
+    calls++;
+    return new Response(new ReadableStream({ cancel() { cancelled = true; return new Promise(() => {}); } }), {
+      status: 307, headers: { Location: '/api/v1/evidence' },
+    });
+  });
+  const response = await proxy(request('/api/v1/evidence', { method: 'POST', body: '{}' }));
+  assert.equal(calls, 1);
+  assert.equal(cancelled, true);
+  assert.equal(response.status, 502);
+  assert.deepEqual(await response.json(), { error: { code: 'PROXY_REDIRECT_REJECTED' } });
 });
 
 test('external, HTTP, credential-bearing and non-API redirects fail closed', async () => {
@@ -81,6 +111,24 @@ test('external, HTTP, credential-bearing and non-API redirects fail closed', asy
     assert.equal(calls, 1); assert.equal(response.status, 502);
     assert.equal(response.headers.get('Location'), null);
     assert.deepEqual(await response.json(), { error: { code: 'PROXY_REDIRECT_REJECTED' } });
+  }
+});
+
+test('cold-start HTML failures preserve status and body without replay or mock fallback', async () => {
+  for (const status of [502, 503]) {
+    let calls = 0;
+    const body = '<!doctype html><p>Service is starting</p>';
+    const proxy = createApiProxy(config, async () => {
+      calls++;
+      return new Response(body, { status, headers: { 'Content-Type': 'text/html', 'Retry-After': '5' } });
+    });
+    const response = await proxy(request('/api/v1/resources'));
+    assert.equal(calls, 1);
+    assert.equal(response.status, status);
+    assert.equal(response.headers.get('Content-Type'), 'text/html');
+    assert.equal(response.headers.get('Retry-After'), '5');
+    assert.equal(response.headers.get('Cache-Control'), 'no-store, private');
+    assert.equal(await response.text(), body);
   }
 });
 
