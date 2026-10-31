@@ -1,6 +1,31 @@
-# Танирберди: повтор Git, защита и PR #35 — 31.10.2026
+# Тәңірберді: публикации и приёмка — 31.10.2026
 
-## Что уже сделано в других окружениях
+## Текущее состояние после 22:17 UTC+5
+
+Действующий подробный журнал — [cloud-web-deployment.md](cloud-web-deployment.md). Ниже текущие публикации отделены от сохранённых исторических проверок.
+
+| Область | Проверенный результат |
+|---|---|
+| Независимый публичный mock | Принятая coordinator `fdc6e756be99dc5ba3a7a48ca1df17c4bfbef5ef`, deployment `f816c350-5722-4b56-a180-4124da01c5ba`; [production](https://green-pavlodar-mock.pages.dev/), [immutable](https://f816c350.green-pavlodar-mock.pages.dev/). HTTP 68/68, исходный public suite 16/16 и отдельный E2E-10 RU/KK × 375/1280 — 4/4 PASS |
+| Отдельный API frontend | Опубликован `aee7242ee899f1f596a704adba6e1279c37af9df`, deployment `ff01f45d-69ed-45a9-af1c-ad1d26b8983a`; [production](https://green-pavlodar-api.pages.dev/), [immutable assets](https://ff01f45d.green-pavlodar-api.pages.dev/). API на immutable намеренно закрыт 421 |
+| API-архив | `green-pavlodar-api.zip`, 1 633 963 байта / 36 файлов; SHA256 `da8bc83dd448b114b78f100d933187f686099ddcdb01c012f8f61e19222ac1d9`. Чистая сборка aee7242, Node 24.22.1; compatibility date `2026-06-16`, flags `[]`, Fail closed. Позднейший HEAD документов не является новой опубликованной сборкой |
+| Backend | Фактический Render `https://green-pavlodar-api-demo.onrender.com`, runtime SHA `3b14927def04b35bf97782eae6b550da276c779f`; redeploy `dep-dbj223h42hec73bqnttg` начат в 22:10:38 UTC+5, Live через 1 мин 25 с. Без latest/seed, применён сохранённый точный Pages Origin |
+| API без credentials | 68/68 static-хешей; 4/4 RU/KK форм входа и protected worker route, четыре PNG просмотрены, 0 pageErrors. Первоначальный HTTP 6/7 сохранён; после Live affected Origin GET стал 401 `AUTH_REQUIRED`, readiness200 и OPTIONS204 — 2/2 PASS. Полный HTTP-набор заново не объявлен 7/7 |
+| Реальная приёмка production Pages | У Бекзата: HTTP workflow пяти ролей, cookies/CSRF, multipart/private binary, идемпотентные повторы и Outcomes PASS; viewer login/reload/отчёт/фото/Outcomes/logout также browser PASS. [Отчёт 22:17](https://github.com/foxfordkz-cyber/qadamxpavlodar/pull/35#issuecomment-6546637443). Полный worker/coordinator UI и авторизованная RU/KK × 375/1280 матрица пока не подтверждены |
+
+[API-сводка](cloudflare-evidence/2026-10-31-api-unauth-aee7242.json), [static evidence](cloudflare-evidence/2026-10-31-api-static-aee7242.json), [архив API-проверки](cloudflare-evidence/2026-10-31-api-unauth-aee7242.zip); [mock-публикация](cloudflare-evidence/2026-10-31-published-fdc6e75.json) и [public suite](cloudflare-evidence/2026-10-31-public-smoke-fdc6e75.json).
+
+Локальный proxy/core+adapter: 15/15 Node PASS; готовый bundle aee7242 — 7/7 local workerd PASS на date 2026-06-16 без flags, без provider-запросов. [CI опубликованного aee7242](https://github.com/foxfordkz-cyber/qadamxpavlodar/actions/runs/41222309589) — Web/Server/Worker 3/3 SUCCESS. В Dashboard недоступен enable_request_signal: передачу отмены входящего соединения не обещаем; собственный 65-секундный header timeout и отсутствие автоматического повтора мутации сохранены.
+
+В [актуальной передаче backend 05bc924](https://github.com/foxfordkz-cyber/qadamxpavlodar/blob/05bc92492f72cc909ee6ae94d18d5b9bf1a3d54b/docs/cloud-final-release.md) описаны уже доступные A/B/C/D, приватные фото и reusable DEMO-набор. Поиск, новая нарисованная зона, GIS import, автоматический календарь и LLM/история остаются явными ограничениями. Пароль и ключи в документы не включены; старые локальные пароли не подбирались.
+
+Актуальная защита/офлайн-пакет описаны в [едином сценарии](defense/scenario.md). Runtime резерва fdc6e75 проверен отдельно (17/17 offline, 0 pageErrors, 39/39 файлов), медиа a66d542 сохраняют исходную маркировку. Свежий RU/KK Word care=3 сверяется отдельным evidence. Физический телефон, общая устная репетиция и полный браузерный cloud workflow остаются отдельными непроверенными пунктами.
+
+## Исторический журнал 98cf6c6 / 1916d19
+
+Следующий текст сохраняет прежние результаты, версии и ограничения на момент тех прогонов. Формулировки «нет origin», Stage A, текущий 98cf6c6 и открытый #40 здесь исторические; они не описывают публикации из текущей сводки выше. Независимая QA принятой основной не переносится на новые изменения #35.
+
+### Что уже сделано в других окружениях
 
 Сверены GitHub PR и свежие remote refs после `git fetch origin`.
 
@@ -19,7 +44,7 @@
 
 Старый незакоммиченный локальный пакет `codex/defense-demo` на 8dfebc7 сохранён отдельно. Он не опубликован поверх более нового #37. Merge #35 с основной зафиксирован коммитом **`02814fdb21cbba5b0512e179541f66494618269d`**, без rebase, force push и изменений основной ветки.
 
-## Независимая QA #40: принятая основная, не новые изменения #35
+### Независимая QA #40: принятая основная, не новые изменения #35
 
 [Отчёт Айданы](https://github.com/foxfordkz-cyber/qadamxpavlodar/blob/3995322943d1973942698e6fe4287b82423ded18/tools/e2e/RUN-RESULTS.md) относится к чистому tested SHA **`b836605ed1ecb5eea3425f52bf2f47b178487de5`**. Последующие коммиты до head #40 добавляют отчёты и доказательства. Дерево `apps` **`16454d07e3b76df4bf7b0bc86933f52acd394ad0`** независимо сверено через Git и одинаково у основной **`98cf6c68d5370331d6f95aa9e749f82d504e5670`**, tested SHA и head #40. Все изменения QA находятся в `tools/e2e/**`. Это подтверждает принятую основную; новые состояния подключения и worker transport из #35 этим полным прогоном не проверялись.
 
@@ -34,7 +59,7 @@
 
 QA также записала небольшое **E2E-10**: подсказка «Три шага» RU/KK указывает помощника внизу справа, хотя рабочая кнопка находится в шапке. Это отдельное замечание к принятой 98cf6c6, не скрытый skip полного набора; статус исправления последующих веток этот отчёт не устанавливает. Нативный Word/видео QA #40 не проверяла; выполненные здесь проверки пакета #37 описаны ниже.
 
-## Свежие проверки объединённого web/worker
+### Свежие проверки объединённого web/worker
 
 Windows, Node **24.14.1**, зависимости из lockfile (`npm ci`). Production web собран с `VITE_DATA_SOURCE=mock`; явный query `source=api` проверялся отдельно. Во время этого прогона все web/worker исходники совпадали с merge `02814fd`; последующее изменение transport-прокси не входит в frontend bundle. Результаты не переносятся автоматически на будущие изменения #35.
 
@@ -54,7 +79,7 @@ Worker-набор отдельно проверяет потерю ответа 
 
 E2E-09 использует исходный hit-test Айданы для home/lab/outcomes/priorities, RU/KK, 375×812, включая Alt+P и верх приоритетов. Он запущен в обоих исходных browser projects; все четыре целевых теста прошли. Полный mock/API-набор в этой работе не запускался. Собственных изменений в `tools/e2e` нет.
 
-## Прокси и контракт Бекзата
+### Прокси и контракт Бекзата
 
 [Контракт Stage A на 3e25d3d](https://github.com/foxfordkz-cyber/qadamxpavlodar/blob/3e25d3dd49498afdf879c92770f74c0cdba06b03/docs/cloud-api-contract.md) заменяет первоначальный срез a0e827a. Транспортные требования не изменились. При сверке с a0e827a было выявлено и исправлено одно расхождение: старый transport возвращал same-origin redirect браузеру, что могло инициировать повтор POST. Теперь 301/302/303/307/308 возвращают **502 PROXY_REDIRECT_REJECTED**, без Location/Set-Cookie; исходящий запрос выполняется один раз. Отказ не ждёт зависшего закрытия upstream body.
 
@@ -64,7 +89,7 @@ Stage A расширил PostgreSQL API с 8 до **31 операции**: auth/
 
 Полный frontend по-прежнему не подключён к #39. Stage B (бригады/задачи/назначения/отчёты/приёмка), C (авторизованные фото и storage) и D (Outcomes) не реализованы; map overlays tasks/plants/designs, рисование/изменение зон и assistant также не готовы. Planning snapshots не являются Outcomes forecasts. **Публичного Render-origin нет**, HTTPS/redeploy/другое устройство не приняты. Server-only ключи не добавлялись в frontend; работа #35 не меняла расчёты, модели или сервер.
 
-## Повтор пакета защиты #37
+### Повтор пакета защиты #37
 
 Код записи и portable mock остаётся **a66d542c63c527d608400c84b34d49f982855369**. Не выдаём их за видео фикса E2E-09 или текущего #35.
 
@@ -77,7 +102,7 @@ Stage A расширил PostgreSQL API с 8 до **31 операции**: auth/
 
 Синтетическая модель, вымышленная история, неполный KK кабинета/экспорта, русские fallback-названия растений и отсутствие новых форм Outcomes явно перечислены в [едином сценарии](defense/scenario.md). Регламент организаторов и устная общая репетиция остаются внешними непроверенными пунктами.
 
-## Публичные режимы и оставшиеся действия
+### Публичные режимы и оставшиеся действия
 
 Текущий mock: [green-pavlodar-mock.pages.dev](https://green-pavlodar-mock.pages.dev/). **Публикация 98cf6c6 выполнена** через Cloudflare Direct Upload; фактический deployment ID **`1079de0b-d78a-4350-8242-e718d2aad30e`**, [immutable URL](https://1079de0b.green-pavlodar-mock.pages.dev/). Production URL и QR не изменились. Это не автоматическая Git-сборка и не публикация изменений #35. Предыдущий deployment **`eb0cd70c-0f25-4930-820c-e57bf614c719`** на a66d542 сохранён как исторический резерв для rollback.
 

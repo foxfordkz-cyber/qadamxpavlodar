@@ -1,141 +1,101 @@
-# Cloudflare Pages: mock и облачный API
+# Cloudflare Pages: публикации и облачный кандидат
 
-Обновлено 31.10.2026, UTC+5. Рабочая ветка `codex/cloud-web-and-demo`. Текущий публичный mock обновлён до принятой основной **`98cf6c68d5370331d6f95aa9e749f82d504e5670`**, deployment **`1079de0b-d78a-4350-8242-e718d2aad30e`**. Полный облачный API пока не опубликован и не принят. Исходный a66d542 сохранён в истории и как резерв для rollback.
+Обновлено 31.10.2026, UTC+5. Ветка `codex/cloud-web-and-demo`, PR #35. Coordinator объединяет капитан; в этой работе выполнен только обычный merge `origin/codex/coordinator`, без rebase/force push.
 
-## Повтор после работы на нескольких компьютерах
+## Публичный mock: принят и проверен владельцем
 
-Основная обновлена до `98cf6c68d5370331d6f95aa9e749f82d504e5670`; #36/#37/#38 уже влиты. В #35 выполнен обычный merge основной — `02814fdb21cbba5b0512e179541f66494618269d`. Пять конфликтов защиты сведены содержательно: сохранены готовые 9 слайдов/PDF/оба ролика #37 и отдельные публичные свидетельства, QR и резерв #35. Старые локальные материалы другого SHA не заменяют этот пакет.
-
-Свежий прогон web/worker на объединённых исходниках: **201/201 и 90/90**, typecheck/build и четыре check:* PASS. Браузерные состояния подключения RU/KK × 375/1280 — **4/4**, исходные проверки E2E-09 без правок — **4/4**. Это локальная проверка, не приёмка Render или Pages Functions. Повтор сохранения черновика/фото и прежнего ключа идемпотентности покрыт существующими worker-тестами с потерей ответа после сохранения. Подробности и точная привязка к исходникам: [cloud-web-refresh-2026-10-31.md](cloud-web-refresh-2026-10-31.md).
-
-Текущий контракт Бекзата опубликован в [Draft #39, SHA 3e25d3dd49498afdf879c92770f74c0cdba06b03](https://github.com/foxfordkz-cyber/qadamxpavlodar/blob/3e25d3dd49498afdf879c92770f74c0cdba06b03/docs/cloud-api-contract.md). Stage A расширяет первоначальные auth/evidence/resources до **31 операции**: добавлены persistent zones/context/catalog/rates/sources, существующие расчёты и immutable analysis snapshots. Локальный PostgreSQL/HTTP подтверждён, CI **4/4 PASS**; browser WebGL, native Word и provider runtime этим не приняты. Задачи/назначения/отчёты/приёмка (B), авторизованные фото (C) и Outcomes (D) ещё не реализованы; analysis snapshots не заменяют Outcomes. Фактический Render-origin отсутствует; полный frontend к этому срезу не подключён. Транспортный контракт не изменился: прокси отклоняет все upstream-редиректы, включая same-origin, без повторного POST; Node-проверки **13/13**. Публичный runtime остаётся непроверенным.
-
-Первая попытка 31.10.2026 была заблокирована: вкладка Cloudflare Dashboard требовала входа, локальной CLI-авторизации не было; CUA остановил Windows-управление по policy из-за невозможности определить текущий browser URL (`unable to determine current browser URL`). Тогда загрузка ещё не была выполнена. Затем пользователь вошёл в Cloudflare, CUA открыл авторизованную главную страницу и управление восстановилось. Публикация 98cf6c6 успешно завершена и подтверждена Cloudflare UI; прежний login/CUA block сохранён только как история.
-
-Опубликована отдельная статическая mock-сборка принятой основной `98cf6c6`; она не включает ещё не принятый #35. ZIP `green-pavlodar-mock-98cf6c6.zip`: 1 605 704 байт, SHA256 `7660c181f3626f60b60a64fc8b2df4c488a7e1c288744a8edfb3fec6447904d2`, 34/34 проверенных файлов загрузки с `index.html` в корне. [Манифест сборки и всех файлов](cloudflare-evidence/2026-10-31-publication-candidate.json). Deployment ID **`1079de0b-d78a-4350-8242-e718d2aad30e`**, [immutable URL](https://1079de0b.green-pavlodar-mock.pages.dev/); production URL и QR прежние. [HTTP-сверка нового deployment](cloudflare-evidence/2026-10-31-published-98cf6c6.json) на `2026-10-31T10:38:58.651Z` — **68/68 PASS**: по 34 файла на production и immutable origin, HTTPS 200, точное совпадение байтов и SHA256 с ZIP. Публичный повтор владельца RU/KK × 375/1280 — **16/16 PASS**, 0 failed/skipped/flaky, exit 0; это не новый независимый прогон Айданы. Новый portable runtime 98cf6c6 с неизменёнными медиа a66d542 отдельно прошёл **17/17 PASS**, 86 внешних запросов заблокировано, 0 pageErrors, 39/39 хешей совпали. Новый архив `green-pavlodar-show-98cf6c6.zip` запускается корневым `start-mock.cmd`; старые offline scripts не заменены. SHA256 готового ZIP — в соседнем `.sha256`, состав — в manifest.
-
-[Свидетельство публичного повтора владельца](cloudflare-evidence/2026-10-31-public-smoke-98cf6c6.json): **16/16 PASS**, RU/KK × 375/1280, 0 failed/skipped/flaky; неизменённые тесты из QA head `3995322943d1973942698e6fe4287b82423ded18`. Оба прежних E2E-09 на 375 проходят, как и desktop/обычный/презентационный режимы. Это проверка нового deployment 1079de0b, не новый независимый прогон Айданы и не полный облачный API.
-
-Историческая [HTTP-сверка production до обновления с immutable eb0cd70c](cloudflare-evidence/2026-10-31-public-existing.json): index и 33 настоящих assets совпали **34/34**, HTTPS 200. Это проверка прежней публикации a66d542; она не заменяет HTTP- или браузерный повтор нового deployment 1079de0b и не выводит commit SHA только из HTTP.
-
-## Независимая QA #40 и границы принятой версии
-
-[PR #40](https://github.com/foxfordkz-cyber/qadamxpavlodar/pull/40) открыт, не Draft, head **`3995322943d1973942698e6fe4287b82423ded18`**, CI **3/3 PASS**. Его чистый tested SHA — **`b836605ed1ecb5eea3425f52bf2f47b178487de5`**. Дерево `apps` **`16454d07e3b76df4bf7b0bc86933f52acd394ad0`** совпадает у tested SHA, head QA и принятой основной **`98cf6c68d5370331d6f95aa9e749f82d504e5670`**; совпадение проверено через Git. Изменения #40 ограничены `tools/e2e/**`. Эти результаты **не являются полным прогоном новых connection/worker transport изменений #35**.
-
-Независимые результаты: local mock **272 PASS / 0 failed / 2 skipped** (мобильные сценарии в desktop-project, на mobile выполнены), изолированный SQLite API **74 PASS**, отдельный Docker/nginx сценарий **16 PASS**, public mock **14 PASS / 2 failed**. Retries=0; Docker проверяет фото, историю, прогноз и сохранность после restart/reseed/recreate в новом томе, но не повторяет полный API-набор. Архив локальной приёмки и Docker result прошли дополнительную проверку хешей; точные условия и артефакты — в [отчёте #40](https://github.com/foxfordkz-cyber/qadamxpavlodar/blob/3995322943d1973942698e6fe4287b82423ded18/tools/e2e/RUN-RESULTS.md) и [локальной сводке](cloud-web-refresh-2026-10-31.md).
-
-На старом публичном mock QA зафиксировала **E2E-09**: помощник перекрывал веса RU/KK на 375 px в обычном и презентационном режимах. В независимом public result фактический application SHA и deployment ID оставлены `null`; a66d542 указан только как версия по передаче владельца. Это не приёмка новой публикации 98cf6c6: её отдельный публичный повтор владельца завершён: **16/16 PASS**; исходники тестов QA #40 не менялись. QA также зафиксировала небольшое **E2E-10** принятой основной: текст RU/KK «Три шага» направляет к помощнику внизу справа, хотя рабочая кнопка находится в шапке. Его исправление в последующей ветке не входит автоматически в опубликованную 98cf6c6.
-
-В public-наборе #40 пройдены меню/расчёт лаборатории, участок → смета → рост → DOCX/XML и demo Outcomes для RU/KK × 375/1280; два падения относятся к E2E-09. Нативное открытие Word, физическое другое устройство, полный HTTPS API и облачная постоянность этим набором не проверялись. Историческая таблица первоначального публичного просмотра ниже сохранена с собственными условиями и не переписана результатами #40.
-
-## Опубликованный mock: фактический способ и версия
-
-Публичный адрес: **[green-pavlodar-mock.pages.dev](https://green-pavlodar-mock.pages.dev/)**. Проект `green-pavlodar-mock` обновлён в Cloudflare Pages методом **Direct Upload**: 34 статических файла из проверенного ZIP на SHA **98cf6c68d5370331d6f95aa9e749f82d504e5670**, deployment **1079de0b-d78a-4350-8242-e718d2aad30e**. Это не автоматическая Git-сборка. Предыдущий deployment **eb0cd70c-0f25-4930-820c-e57bf614c719** на a66d542 сохранён для rollback; его исходная публикация не подключала платный план, а Git integration тогда не предоставила доступ к нужному репозиторию.
-
-Исторический архив резерва `baseline-mock-a66d542.zip`, SHA-256: `aa3e9d933a304423a400b0163fa9a54401075e4345289c8b048dd2600dee94bc`. Он собран локально с Node 24.22.1, `VITE_DATA_SOURCE=mock` и штатной командой ниже. Переменные сборки Cloudflare не использовались для Direct Upload готового dist. При его проверке все 34 публичных файла ответили HTTPS 200; хеши совпали с baseline manifest. Первоначальный частичный UI-прогон и его границы записаны в [публичном отчёте](cloud-public-review.md). Независимая QA #40 старой публикации описана выше; её E2E-09 нельзя переносить как результат теста нового deployment. Полный API ни одна mock-публикация не подтверждает.
-
-QR этого адреса: [PNG](defense/media/mock-demo-qr.png), [SVG](defense/media/mock-demo-qr.svg). PNG независимо декодирован обратно в точный URL. Для полного API QR пока нет, поскольку окончательный адрес не передан и не проверен. Ссылка без query открывает mock по параметрам опубликованной сборки.
-
-**Изменения #35 сверх принятой основной 98cf6c6 не входят в опубликованный ZIP.** Новые состояния подключения, исправления сетевого повтора worker и подготовленное ядро прокси проверены локально отдельно. Полный API не следует объявлять доступным по ссылке mock. Приватная БД, фотографии и серверное сохранение там не предоставляются.
-
-## Настройки будущей Git integration
-
-После появления доступа к `foxfordkz-cyber/qadamxpavlodar` использовать следующие настройки отдельного Git-integrated Pages-проекта; не считать их уже применёнными к опубликованному Direct Upload. Сохранять доступный mock до проверки замены. Работать в бесплатном аккаунте, без подключения платного плана.
-
-| Поле | Значение |
+| Поле | Фактическое значение |
 |---|---|
-| Repository | `foxfordkz-cyber/qadamxpavlodar` |
-| Production branch | `codex/cloud-web-and-demo` после обычного push; точный согласованный SHA проверяется в deployment details |
-| Framework preset | `None`, чтобы явно сохранить команду ниже |
-| Root directory | Корень репозитория; поле оставить пустым/default |
-| Build command | `npm --prefix apps/web ci && npm --prefix apps/web run build` |
-| Build output directory | `apps/web/dist` |
-| Environment variable | `NODE_VERSION=24` |
-| Environment variable | `VITE_DATA_SOURCE=mock` |
+| Production | https://green-pavlodar-mock.pages.dev/ |
+| Неизменяемый URL | https://f816c350.green-pavlodar-mock.pages.dev/ |
+| Deployment ID | `f816c350-5722-4b56-a180-4124da01c5ba` |
+| Исходники | `fdc6e756be99dc5ba3a7a48ca1df17c4bfbef5ef` — чистая принятая coordinator |
+| Способ | Cloudflare Pages Direct Upload, автоматическое обновление Git не настроено |
+| Архив | `green-pavlodar-mock-fdc6e75.zip`, 1 586 756 байт |
+| SHA256 архива | `c89772c72d44590acf79f980be27a452bad696439bad2cacc8b5d948179ff804` |
 
-Переменные задать и для Production, и для Preview, если preview deployments используются. В mock-проект не добавлять Render-origin, ключи Supabase/LLM или административные ключи. Команда использует lock-файл `apps/web/package-lock.json`; зависимость от корня не означает наличие корневого package.json.
+Mock собран в отдельном чистом detached worktree из основной. Непринятые изменения #35 в него не включены. E2E-10 исправлен в исходной основной: RU/KK подсказка указывает на ассистента в верхней панели. Загрузка 34/34 файлов завершилась успешно в Cloudflare Dashboard.
 
-Не устанавливать root directory в `apps/web`: исходники импортируют данные из корневых `fixtures/` и учебный источник из `tools/worker-demo/demo`. Проверено на базе a66d542: эти пути есть в Git, `npm ci` и Vite build из корня выполняются успешно. Данные и worker demo включаются в скомпилированные chunks; публикуется содержимое `apps/web/dist`, а не весь репозиторий.
+[Манифест сборки](cloudflare-evidence/2026-10-31-publication-fdc6e75-candidate.json), [HTTP-сверка](cloudflare-evidence/2026-10-31-published-fdc6e75.json), [публичный прогон](cloudflare-evidence/2026-10-31-public-smoke-fdc6e75.json), [безопасный архив свидетельств](cloudflare-evidence/2026-10-31-public-evidence-fdc6e75.zip).
 
-Приложение использует hash-маршруты (`#/map`, `#/worker`), поэтому для текущего mock не нужен HTTP-redirect на API и не требуется отдельное правило подстановки таких маршрутов. На исходной базе нет Pages Functions, `_routes.json`, `_headers` или `_redirects`. Если в этой ветке позже появятся Functions для полного API-проекта, перед новым mock-деплоем проверить их включение/маршрутизацию: сохранённый резерв не должен начать зависеть от Render. Зафиксированный deployment и его SHA хранить до замены успешно проверенной версией.
+Результаты: 68/68 HTTP200 и совпадений размера/байтов/SHA256 (34 файла × production/immutable); исходные 16 public-тестов QA #40 без изменений — 16 PASS, 0 failed/skipped/flaky; дополнительный E2E-10 RU/KK × 375/1280 — 4/4 PASS. Все 24 PNG просмотрены. Это повтор владельца публикации, а не новая независимая приёмка Айданы и не проверка общего облачного workflow. Исходный public suite использует care=2; презентационный care=3 проверен отдельно свежим экспортом Word.
 
-Cloudflare описывает создание проекта через **Workers & Pages → Create application → Pages → Connect to Git**. Для фиксации принятой демо-версии после публикации можно отключить автоматические production deployments в настройках branch control и запускать обновление осознанно. [Git integration](https://developers.cloudflare.com/pages/get-started/git-integration/), [build configuration](https://developers.cloudflare.com/pages/configuration/build-configuration/), [branch controls](https://developers.cloudflare.com/pages/configuration/branch-build-controls/).
+Предыдущие deployments сохранены для отката: `1079de0b-d78a-4350-8242-e718d2aad30e` (98cf6c6) и `eb0cd70c-0f25-4930-820c-e57bf614c719` (a66d542). Их свидетельства не перезаписаны. Production QR сохраняет тот же адрес. Mock не имеет общей серверной БД и приватного облачного хранения фото; внешняя карта может требовать сеть.
 
-## Действия владельца для будущего Git-подключения
+## Backend: тот же SHA, новый origin применён
 
-1. Владелец входит в Cloudflare в браузере и открывает Workers & Pages. Пароль, код MFA и API-токен в чат не передаются.
-2. При первом подключении GitHub разрешает Cloudflare доступ к репозиторию `foxfordkz-cyber/qadamxpavlodar` в штатном окне авторизации. Не расширять доступ на все репозитории без необходимости.
-3. После появления нужного репозитория создаёт отдельный Git-integrated Pages-проект по таблице выше и проверяет бесплатный вариант. Существующий опубликованный mock не удаляет.
-4. После успешного build сохраняет фактический URL, deployment ID, ветку и полный SHA. Адрес нового проекта не угадывается заранее.
-5. На новом URL выполняется матрица ниже; принятый резерв меняется только после успешной проверки. Уже созданный QR относится исключительно к текущему Direct Upload mock-адресу.
+- Фиксированный origin: https://green-pavlodar-api-demo.onrender.com.
+- Развёрнутый application SHA: `3b14927def04b35bf97782eae6b550da276c779f`.
+- Render deployment `dep-dbj223h42hec73bqnttg`: начат **31.10.2026 в 22:10:38 UTC+5**, завершён за **1 мин 25 с**, статус **Live** подтверждён в Dashboard. Это redeploy именно того же SHA с сохранёнными env; latest commit, seed и новый merge не запускались.
+- Последняя прочитанная передача #39 — документация `05bc92492f72cc909ee6ae94d18d5b9bf1a3d54b`. Это не SHA работающего сервера. [Контракт](https://github.com/foxfordkz-cyber/qadamxpavlodar/blob/05bc92492f72cc909ee6ae94d18d5b9bf1a3d54b/docs/cloud-api-contract.md), [границы релиза и готовый QA-набор](https://github.com/foxfordkz-cyber/qadamxpavlodar/blob/05bc92492f72cc909ee6ae94d18d5b9bf1a3d54b/docs/cloud-final-release.md), [покрытие маршрутов](https://github.com/foxfordkz-cyber/qadamxpavlodar/blob/05bc92492f72cc909ee6ae94d18d5b9bf1a3d54b/docs/cloud-route-coverage.md).
 
-Git-integrated Pages поддерживает автоматические сборки из подключённого репозитория. Наличие локального ZIP или успешного Vite build не означает, что проект уже опубликован. Не заменять этот шаг единственной временной ссылкой `trycloudflare`. [Создание Git-проекта](https://developers.cloudflare.com/pages/get-started/git-integration/).
+Бекзат ранее подтвердил Render + Supabase PostgreSQL/TLS/private Storage, стадии A/B/C/D, роли, фото, отчёты, Outcomes и сохранность после restart/redeploy/reseed. Его отчёт содержит 956 строк / 31 таблицу и 87 OpenAPI операций; это свидетельство backend-команды, не повтор этих проверок Тәңірберді через браузер.
 
-## Исторический первоначальный просмотр публичного mock и оставшаяся матрица
+Дополнительный `https://green-pavlodar-api.pages.dev` был сохранён в Render через **Save only**, поэтому начальная публичная проверка с этим Origin вернула 403 `LOCAL_ONLY`. После согласованного redeploy в **22:13:08 UTC+5** affected-проверка `/api/v1/auth/me` без cookie вернула **401 `AUTH_REQUIRED`** с точным Allow-Origin и credentials=true; `/api/v1/ready` — **200**, preflight `OPTIONS /api/v1/tasks` — **204**. Readiness: schemaVersion=5, `photos=private-storage-configured`, no-store. Первоначальный отказ сохранён в свидетельствах, а не заменён новым PASS. [Результаты](cloudflare-evidence/2026-10-31-api-unauth-aee7242.json).
 
-Статусы таблицы относятся к первому публичному отчёту a66d542. Более поздние 16 публичных сценариев #40 приведены выше отдельно; это сохраняет происхождение прежних PASS/PARTIAL/PENDING.
+`ALLOWED_HOSTS` проверяет hostname Render; `FRONTEND_ORIGINS` — точный browser origin; `CLOUD_ALLOWED_HOSTS` относится к PostgreSQL, не к frontend. Обычный Render Restart сохраняет прежние user env; Save only применяется следующим deployment. Поэтому использован redeploy принятого SHA. [Поведение Render](https://render.com/docs/deploys).
 
-| Проверка | Ожидаемый результат | Текущий статус документа |
-|---|---|---|
-| RU/KK, 375 и 1280 px | Читаемые экраны, корректный активный язык, доступная навигация | ЧАСТИЧНО: перечисленные состояния в публичном отчёте; не вся перекрёстная матрица |
-| Карта → существующая зона → растения → смета → рост | Источник mock явно обозначен; числа сняты с этой версии | PASS указанного RU/1280 прохода; KK/375 смета отдельно подтверждена |
-| Лаборатория | Изменение лимита/перестроение показаны раздельно; нет обещания математического оптимума | ЧАСТИЧНО: RU/375, 1600→800 м³, дефициты прежнего плана; публичное перестроение отдельно не зафиксировано |
-| «Прогноз и факт» | Demo-история видимо названа вымышленной; неизвестное состояние не считается гибелью | PASS перечисленных полного/частичного состояний RU/375 и частичного KK/1280 |
-| Word RU/KK | Скачиваются оба документа; одинаковые входы и числа; оба открыты в Microsoft Word | Скачаны обе версии для optimal/2 года; визуальный просмотр Microsoft Word **PENDING** |
-| Работник/бригадир | «Смена / Журнал / Профиль» доступны; режим и учебные данные обозначены | ЧАСТИЧНО: worker RU/375 и оболочка KK/1280; не приёмка обеих реальных API-ролей |
-| Независимость от компьютера команды | Локальный backend и туннель остановлены; ссылка открыта с телефона через мобильный интернет | NOT RUN |
-| Браузерные запросы | Нет запросов к localhost/частным адресам команды, смешанного HTTP/HTTPS и скрытого перехода на API | PENDING |
+Поиск/geocode, новые/нарисованные зоны, GIS import, календарь ухода, ассистент/история и интерпретация заметки остаются ограниченными в cloud mode. Их 503 не превращается в успешный mock-ответ. Модель использует синтетическое обучение; прогноз не гарантирует приживаемость.
 
-Mock не сохраняет данные в общую серверную БД. Основной mock и worker-demo имеют отдельные учебные хранилища. Перезагрузка и сохранение в одном браузере не являются общим облачным процессом. Внешние карта/фотографии могут зависеть от Интернета.
+## Отдельный API frontend: опубликован, полная приёмка ещё не выполнена
 
-Известное ограничение исходной базы: оболочка переключается RU/KK, встроенный кабинет пока остаётся русским; экспериментальный standalone kk-draft не является полной локализацией. Не считать успешное переключение оболочки доказательством перевода всего кабинета.
-
-## Полный облачный API — отдельный проект
-
-До настройки нужны **фактический Render URL, принятый развёрнутый SHA Бекзата и полный рабочий контракт**. На исходной базе a66d542 файла контракта не было; сейчас Stage A доступен в Draft #39 на точном SHA по ссылке выше. `ready` сообщает migration 2 и capabilities `auth,evidence,resources,sites,context,analysis,rates,snapshots`, одновременно `photos: unsupported`; это не полная приёмка. Контракт задаёт production-cookie `gp_v2_session`, Secure/HttpOnly/SameSite=Strict/Path=/api/v1 без Domain. Состояние полного облачного режима — **BLOCKED: нет публичного origin и постоянного task/report/photo/Outcomes workflow**. Map tasks/plants/design overlays, редактирование/рисование зон и assistant также не включены в PostgreSQL Stage A; локальный Docker #40 не устраняет эти ограничения.
-
-Для отдельного API-проекта сохраняются корень/команда/output/Node из таблицы; режим явно задаётся `VITE_DATA_SOURCE=api`. Браузер обращается к относительному `/api/v1` на origin сайта. Pages Functions или другой проверяемый прокси `/api/*` обращается только к зафиксированному серверу из согласованной конфигурации. HTTP-redirect на Render и прямой отдельный API-домен с ослаблением cookie не подходят.
-
-С Бекзатом согласовать Host, Origin, HTTPS, cookie, CSRF, безопасный readiness-запрос и контракт ошибок/редиректов. Прокси должен передавать методы, query, body/multipart/binary, статусы, Cookie/Set-Cookie/CSRF/Idempotency-Key и контрактные заголовки; API и приватные файлы не кэшируются. Пароли, cookie, токены и чувствительные тела не логируются. Статические файлы не должны без необходимости проходить через Function. Секреты Supabase/LLM остаются только на сервере Бекзата. [Маршрутизация Pages Functions](https://developers.cloudflare.com/pages/functions/routing/).
-
-Готовность API объявляется после подтверждения постоянной БД/фото Бекзатом и браузерной проверки Айданой. Облачный веб при выключенном локальном backend — отдельное доказательство; успешный локальный Docker или отключённый Vite его не заменяют.
-
-## Локальная версия сохраняется
-
-Существующие Docker и SQLite остаются отдельным рабочим способом запуска. Cloudflare/Render-настройки не должны требоваться локально. Не добавлять облачные ключи в публичные VITE-переменные и не переключать локальный API на mock при ошибках. Для защиты различать три источника: локальный API, облачный API с общими данными, учебный mock.
-
-## Baseline проверки перед изменениями подключения
-
-Проверена чистая база **a66d542c63c527d608400c84b34d49f982855369**, Node 24.22.1, npm 11.6.2, `VITE_DATA_SOURCE=mock`. На этой Windows-машине npm отсутствует в PATH, поэтому npm CLI вызван через Node; выполнялись штатные scripts без изменений.
-
-| Команда / проверка | Результат |
+| Поле | Фактическое значение |
 |---|---|
-| `npm --prefix apps/web ci` | PASS, 106 packages; audit: 0 vulnerabilities |
-| web `typecheck` (`tsc -b`) | PASS |
-| web `build` | PASS; предупреждение Vite о chunks больше 500 kB |
-| web `test` | 192 passed, 0 failed, 0 skipped |
-| `check:i18n` | PASS, 1927/1927; missing/extra/placeholders = 0 |
-| `check:zones` | PASS, 7 проверок |
-| `check:care` | PASS |
-| `check:survival` | PASS; метрики относятся только к синтетическому набору |
-| worker `npm test` | 79 passed, 0 failed, 0 skipped |
+| Production API | https://green-pavlodar-api.pages.dev/ |
+| Неизменяемые статические файлы | https://ff01f45d.green-pavlodar-api.pages.dev/ |
+| Cloudflare deployment ID | `ff01f45d-69ed-45a9-af1c-ad1d26b8983a` |
+| Опубликованные frontend/proxy исходники | `aee7242ee899f1f596a704adba6e1279c37af9df` |
+| Чистая сборка | Node 24.22.1, `VITE_DATA_SOURCE=api`, `sourceDirty=false`, отдельный detached worktree |
+| ZIP | `green-pavlodar-api.zip`, 1 633 963 байта, 36 файлов |
+| SHA256 ZIP | `da8bc83dd448b114b78f100d933187f686099ddcdb01c012f8f61e19222ac1d9` |
+| SHA256 manifest | `5371062af0acd8befac3e08e549025284a06e3a3b930bf4d0ff550d099b87eba` |
+| Подтверждённые настройки Pages | compatibility date `2026-06-16`, flags `[]`, **Fail closed** |
 
-Журналы и baseline dist находятся вне репозитория в `C:/Users/User/Documents/Codex/2026-10-31/green-pavlodar-defense-script/work/cloud-validation`: `baseline-web-*.log`, `baseline-worker-test.log`, `baseline-web-results.json`, `baseline-mock-build-manifest.json`, `baseline-mock-a66d542.zip`. Manifest содержит SHA, параметры сборки и хеши файлов. Этот baseline ZIP опубликован описанным выше Direct Upload; результаты не переносятся автоматически на более новый коммит.
+API-проект отделён от mock. Commit `aee7242` включает обычный merge основной `760506090b7007cb8628a5cedf499a70760bff71`. Последующие commits документов и свидетельств меняют HEAD PR, но не SHA этой публикации. Финальный ZIP побайтово совпал с ранее загруженным пакетом `f2004e7` (проверка `fc.exe /b`); новый manifest относится к чистому `aee7242` и фактическим runtime settings.
 
-## Историческая проверка рабочего дерева после первоначальных изменений подключения
+[Снимок Dashboard](cloudflare-evidence/2026-10-31-api-published-dashboard.png) подтверждает успешный deployment ff01f45d; боковая панель аккаунта скрыта.
 
-Отдельно от опубликованной базы повторно проверено незакоммиченное рабочее дерево ветки `codex/cloud-web-and-demo` поверх a66d542. Это **не опубликованный новый SHA** и не приёмка облачного API.
+**Реальная transport/API приёмка production Pages — PASS у Бекзата, 22:17 UTC+5.** После redeploy он сравнил прежний baseline: все 956 строк / 31 таблица сохранены. Проверены пять ролей и cookies/CSRF, приватное фото, задания/отчёты/приёмка и повторы с тем же ключом, Outcomes. Новый синтетический inspect-сценарий: 10 проверок / 35 HTTP-запросов. В настоящем браузере выполнены viewer login/reload, Outcomes, принятый отчёт, приватное фото и logout. [Отчёт оператора](https://github.com/foxfordkz-cyber/qadamxpavlodar/pull/35#issuecomment-6546637443), [зафиксированная сводка](cloudflare-evidence/2026-10-31-api-operator-acceptance.json).
 
-| Проверка | Результат |
+**Полный worker/coordinator UI-процесс и авторизованная RU/KK × 375/1280 матрица ещё не подтверждены.** HTTP PASS не заменяет эти проверки. На этом компьютере нет облачного DEMO_PASSWORD; локальные пароли не подбирались. Оставшийся браузерный путь передан оператору с существующим приватным доступом; пароль, cookie/CSRF и ключи не публикуются. Это DEMO inspection, не полевые наблюдения.
+
+### Транспорт и воспроизводимость
+
+`cloudflare/pages-worker.mjs` + `build-api.mjs` создают готовый ESM `_worker.js` и `_routes.json` только для `/api` и `/api/*`. Статика обслуживается Pages, fallback worker — `env.ASSETS.fetch`. Upstream зафиксирован в исходнике, не берётся из query/header; фиксируется также доверенный frontend origin. На immutable/preview API намеренно возвращает 421, потому что такой origin не принят. Пользовательский сценарий проверяется на production URL.
+
+Прокси сохраняет method/path/query/body, multipart boundary, binary response, Cookie/отдельные Set-Cookie, CSRF, Idempotency-Key и status. Host следует upstream URL, Origin браузера сохраняется; Forwarded/X-Forwarded-* не доверяются. Host-only Secure/HttpOnly/SameSite=Strict cookie с Path=/api/v1 не переписывается. API/private photos имеют no-store. Ошибки/HTML502/503 не подменяются SPA/mock. Все upstream 301/302/303/307/308 отклоняются без повторного запроса и без передачи Location/cookies.
+
+Нет автоматического повтора мутации после неопределённой сетевой ошибки. Worker сохраняет исходный черновик/фото/ключ для явного повтора; timeout не означает отсутствие сохранения на сервере. Разрешённый контрактом повтор после явного CSRF-отказа сохраняет ключ и тело. Proxy timeout 65 с ограничивает получение заголовков, не полное скачивание.
+
+[Инструкция сборки/runtime](../cloudflare/README.md), [исходный build manifest](cloudflare-evidence/2026-10-31-api-build-aee7242.json), [локальная QA](cloudflare-evidence/2026-10-31-api-local-qa-aee7242.json). Manifest и local QA фиксируют состояние до публикации; фактические deployment и приёмка приведены выше. Pages требует compatibility date `2026-06-16`, flags `[]`, fail closed. Флаг передачи отмены входящего клиентского запроса в списке Dashboard недоступен; эту возможность не заявляем. Собственный proxy timeout работает. Эти настройки подтверждены в Dashboard отдельно от ZIP. Сборка из чистого SHA, Node 24 / lockfile; VITE_DATA_SOURCE=api, прочие VITE_* очищены, разработческие apps/web/.env* запрещены. Серверные секреты в Pages передавать не требуется.
+
+### Что проверено локально
+
+- После merge: web 201/201, worker 90/90; typecheck и check:i18n/zones/care/survival PASS, RU/KK 1945/1945 без missing/extra/placeholders.
+- Proxy/core+adapter: 15/15 Node PASS.
+- Настоящий локальный workerd через Miniflare 4.20260730.0: 7/7 PASS, все outbound синтетические, providerRequests=0. Separate cookies, multipart/CSRF/idem/Origin, binary, redirects, no-store/503, static/origin guard. Windows diagnostic WSARecv #64 при закрытии соединения сохранён в журнале, exit 0.
+
+**Локальный workerd и Node-тесты не заменяют приёмку публикации.** Финальный bundle из чистого `aee7242` прошёл 7/7 workerd checks на date `2026-06-16`, flags `[]`; TypeScript/Vite build PASS. [CI опубликованного `aee7242`](https://github.com/foxfordkz-cyber/qadamxpavlodar/actions/runs/41222309589): Web, Server, Worker — 3/3 SUCCESS. Это CI приложения; последующий HEAD документов имеет отдельную историю проверок.
+
+### Публичная матрица приёмки
+
+[Сводка без credentials](cloudflare-evidence/2026-10-31-api-unauth-aee7242.json), [статические хеши](cloudflare-evidence/2026-10-31-api-static-aee7242.json), [архив с четырьмя просмотренными PNG и исходными попытками](cloudflare-evidence/2026-10-31-api-unauth-aee7242.zip). Архив: 112 749 байт, SHA256 `2c4dd1623b3c0727aee50093d2a3146ce87ddcec5b2ba32334d3aa6528d8f670`.
+
+| Проверка | Фактический результат / граница |
 |---|---|
-| web typecheck / build | PASS / PASS, `VITE_DATA_SOURCE=mock` |
-| web tests | **201 passed**, 0 failed, 0 skipped |
-| worker tests | **90 passed**, 0 failed, 0 skipped |
-| proxy transport tests | **11 passed**, 0 failed, 0 skipped; Node runtime, не Cloudflare |
-| check:i18n | **1945/1945**, missing/extra/placeholders = 0 |
-| check:zones / check:care / check:survival | PASS (7 проверок) / PASS / PASS (только синтетические данные) |
-| git diff --check | PASS |
+| Статические файлы | **68/68 PASS**: 34 файла × production/immutable, HTTP200, размер/байты/SHA256. `_worker.js` и `_routes.json` — служебные файлы, не публичные static endpoints |
+| HTTP без credentials | Начальный прогон **6 PASS / 1 failed**: correct-Origin получил 403. После Render Live повторён именно affected GET: **401 PASS**; дополнительно readiness200 + OPTIONS204 — **2/2 PASS**. Это не новый полный прогон 7/7 |
+| Immutable API | **421 `PROXY_ORIGIN_MISMATCH` PASS**, no-store; вход выполняется через production |
+| RU/KK × 375/1280 | **4/4 PASS**, 0 pageErrors, без горизонтального overflow: пустая форма входа и защита `#/worker`. Пароль не вводился, login не отправлялся; четыре PNG просмотрены |
+| Login/logout, cookie/CSRF, пять ролей | **HTTP PASS у Бекзата** через production Pages; viewer login/reload/logout подтверждён браузером |
+| Task → worker → photo → report → coordinator acceptance | **NOT RUN** в браузере; foreman проверяет вклад и отправляет итог группы, не подменяет coordinator |
+| Multipart/private binary, повтор с тем же ключом, Viewer/Outcomes | **HTTP PASS у Бекзата** через production Pages; viewer report/private image/Outcomes также browser PASS |
+| Другое физическое устройство | **NOT RUN**; мобильные проверки выше — эмуляция на этом компьютере |
 
-Во время web/worker-прогона их исходники не менялись. Два изменения тестов/ядра прокси были проверены отдельным повтором 11/11. Сохраняется предупреждение Vite о chunks больше 500 kB.
+## Защита и резерв
 
-Точные журналы и хеши проверенных файлов: `working-checks-summary.json`, `working-tree-verified-files.json`, `working-web-*.log`, `working-worker-test.log`, `review-proxy-test.log` в том же `work/cloud-validation`. Сервер Бекзата, package scripts/locks и `tools/e2e` не менялись этой работой. Публичный UI-прогон, открытие двух записок в Microsoft Word, физический телефон и доказательство отсутствия локального backend/туннеля фиксируются отдельно; данная таблица их не подтверждает.
+Единый [сценарий](defense/scenario.md) определяет живой показ и запасной ход. Новый локальный runtime fdc6e75 прошёл 17/17 offline checks, 0 pageErrors, 86 внешних запросов заблокированы; 39/39 файлов сверены. Видео 2:40/5:00 и 9 слайдов сохранены на исходной версии a66d542 с честными подписями; это не запись нового API.
+
+Свежие RU/KK Word выгружены из immutable f816c350 (optimal / care 3 / Tolstogo). Числовая сверка 2/2: 12 видов, 1345 растений, 3782 м²; итог 10 825 627,5 ₸ в Word, округлённый экран 10 825 628 ₸. Оба исходных DOCX открыты в Word 2016, все 12 страниц PDF просмотрены; найден дефект символа ₂ в CO₂/O₂. Отдельные копии для печати подготовлены, их проверка в Word 2016 / Microsoft Print to PDF — все 12 страниц PASS; исходники сохранены. [Точный статус Word](defense/README.md). Демо-цены и синтетические оценки требуют проверки специалистом.
+
+Исторический статус до публикации API передан в [комментарии #35 от 21:46](https://github.com/foxfordkz-cyber/qadamxpavlodar/pull/35#issuecomment-6546269519). Контрольное время 20:00 уже прошло к началу текущего продолжения; время отчёта не подменяется. После 23:00 только критические исправления. Финальный release SHA и merge coordinator утверждает капитан.
