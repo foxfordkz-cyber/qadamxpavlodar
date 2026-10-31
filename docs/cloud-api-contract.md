@@ -8,7 +8,8 @@ and the exact deployment record in [PR #39](https://github.com/foxfordkz-cyber/q
 Real HTTPS workflow, restart, same-SHA redeploy and different-password reseed persistence passed;
 see the dated [provider evidence](cloud-deployment-readiness.md).
 This is an isolated synthetic DEMO, not field observations or a completed full cloud UI release.
-The existing Cloudflare mock is preserved as an independent reserve; its proxy is not connected here.
+The existing Cloudflare mock is preserved as an independent reserve. A separate API frontend now
+uses the real fixed proxy at https://green-pavlodar-api.pages.dev; the verified scope is recorded below.
 
 **Owner-ready deployment:** [exact Dashboard steps, env checklist and executable HTTPS/restart/reseed acceptance](cloud-provider-deployment.md).
 Local preparation and fresh test evidence: [cloud-deployment-readiness.md](cloud-deployment-readiness.md).
@@ -21,16 +22,17 @@ Local preparation and fresh test evidence: [cloud-deployment-readiness.md](cloud
 | Private Storage | green-pavlodar-photos; private, WebP only, max 5242880 bytes; actual upload/read/hash/replay PASS; provider anonymous public/authenticated paths denied |
 | Health/readiness / HTTPS role workflow | Actual HTTPS 200; schemaVersion 5, database ok, private-storage-configured; workflow/roles/CSRF PASS |
 | Restart/redeploy/same-SHA persistence | Actual restart, same-SHA redeploy and reseed/verify PASS; 31 tables / 956 rows unchanged by reseed; original passwords preserved |
-| Cloudflare fixed same-origin proxy | Actual Pages role scenario NOT RUN; direct probes at 21:58 UTC+5 returned 522 for `/` and `/api/v1/ready`; mock unchanged |
+| Cloudflare fixed same-origin proxy | Production https://green-pavlodar-api.pages.dev: real HTTP role/photo/report/acceptance/replay PASS; viewer browser login/reload/Outcomes/private image/logout PASS; full independent UI/device acceptance still separate |
 | Source versions | PR #39 stays Draft; operator tooling HEAD is not automatically a new approved deployed SHA |
 
 Proxy configuration for Тәңірберді: fixed upstream origin above, upstream Host
 `green-pavlodar-api-demo.onrender.com`, preserve browser Origin. Current allowlisted browser origins:
-`https://green-pavlodar-mock.pages.dev` and the Render origin. The owner approved the exact additional
-`https://green-pavlodar-api.pages.dev`; it was saved in Render using **Save only** on 31 October,
-22:02 UTC+5. This is saved configuration, **not active runtime configuration**: applying it requires
-the restart/redeploy window requested from the frontend owner in
-[#35](https://github.com/foxfordkz-cyber/qadamxpavlodar/pull/35#issuecomment-6546478424).
+`https://green-pavlodar-mock.pages.dev`, the Render origin and `https://green-pavlodar-api.pages.dev`.
+The owner approved the sole new origin; it was first saved using Save only, then applied during
+the [coordinated same-SHA redeploy](https://github.com/foxfordkz-cyber/qadamxpavlodar/pull/35#issuecomment-6546546312).
+Render deployment `dep-dbj223h42hec73bqnttg` is Live on unchanged app `3b14927`.
+At 22:13 UTC+5 all three origins returned OPTIONS 204 with exact origin/credentials;
+an unapproved origin still returned 403. The earlier 522 and saved-but-inactive 403 are resolved.
 No wildcard or additional preview origin was added. The mock publication itself is unchanged.
 Allowed-origin OPTIONS was tested over real HTTPS (204, exact origin, credentials); an unapproved
 Origin returned 403. Preserve Cookie, separate Set-Cookie headers, multipart boundaries, binary bytes,
@@ -207,7 +209,9 @@ insert a second plant. All rows are synthetic DEMO; acceptance is not evidence o
 - `CLOUD_TRUST_PROXY_HOPS=1` is for the single Render ingress immediately in front of Express.
   Render must overwrite forwarding headers. Do not use it for a directly exposed Node port.
   Cloudflare must discard caller-supplied forwarding headers. Secure-cookie behavior passed local ingress simulation and real Render HTTPS acceptance.
-  Actual Cloudflare same-origin browser runtime remains NOT RUN; proxy unit tests are separate.
+  Actual Cloudflare HTTP acceptance and viewer browser login/reload/private photo/logout passed
+  on 31 October; see [scope and exact versions](cloud-final-release.md). Proxy unit tests and
+  independent complete UI/another-device acceptance remain separate evidence.
 - JSON limit is 32 KiB. Multipart `POST /uploads` accepts one `file` plus `taskId`, JPEG/PNG/WebP
   up to 5 MiB. Image bytes are checked, single-frame decoded images are limited to 4096×4096,
   EXIF/metadata are removed and bytes are normalized to WebP. At most two normalizations run

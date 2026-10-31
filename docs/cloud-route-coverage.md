@@ -27,7 +27,7 @@ verification of every listed method; full HTTP traces are retained with the suit
 
 | Actual endpoint or frontend mapping | SQLite | PostgreSQL | Real HTTP tested | Unsupported 503 | Remaining / impact |
 | --- | --- | --- | --- | --- | --- |
-| POST /auth/login; GET /auth/me; POST /auth/logout | Yes | Yes | A/B/C/D | No | Real Render HTTPS/cookies/CSRF tested on 3b14927; live Cloudflare proxy NOT RUN |
+| POST /auth/login; GET /auth/me; POST /auth/logout | Yes | Yes | A/B/C/D | No | Real Render and production Cloudflare HTTP/cookies/CSRF PASS on backend 3b14927; viewer browser login/reload/logout PASS; full UI matrix separate |
 | GET /sites; GET /sites/:id | Yes | Yes, canonical registry | A/B/D | No | Existing zones only |
 | PATCH /sites/:id | Yes | Yes, versions/source checks | B/D | No | Current web adapter sends checks/water; full geometry lifecycle still incomplete |
 | GET /zones/:id/context?radius=30/50/100/200 | Yes | Persisted context | A | No | 409 CONTEXT_STALE after site-version change; regeneration not implemented |

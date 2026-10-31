@@ -87,6 +87,47 @@ backend/SQLite **105/105**, native PostgreSQL HTTP **62/62** и генераци
 Server, Web, PostgreSQL, Worker — **4/4 success**. Последующие изменения этой передачи —
 только документация; результаты локального набора относятся именно к `87eaf68`.
 
+## Согласованное подключение настоящего Cloudflare frontend
+
+31 октября, 22:12–22:17 UTC+5: Тәңірберді согласовал окно и выполнил redeploy того же
+backend SHA; второй deployment здесь не запускался. В Render независимо подтверждён
+**Live `dep-dbj223h42hec73bqnttg`**, app SHA **`3b14927def04b35bf97782eae6b550da276c779f`**.
+Одобренный `https://green-pavlodar-api.pages.dev` теперь активен в FRONTEND_ORIGINS,
+оба прежних origin сохранены. Все три OPTIONS — 204 с credentials, посторонний origin — 403.
+
+API frontend: **https://green-pavlodar-api.pages.dev**. По
+[записи его владельца](https://github.com/foxfordkz-cyber/qadamxpavlodar/pull/35#issuecomment-6546546312):
+source SHA `aee7242ee899f1f596a704adba6e1279c37af9df`, Cloudflare deployment
+`ff01f45d-69ed-45a9-af1c-ad1d26b8983a`. Здесь проверялся именно production URL;
+его frontend-сборка не пересобиралась и чужие исходники не изменялись.
+Immutable assets URL не использовать для входа: API на preview origin намеренно закрыт.
+
+| Реальная проверка | Результат и граница доказательства |
+| --- | --- |
+| Данные после согласованного redeploy | PASS: до новых записей хеши полных строк всех 956 записей в 31 постоянной таблице совпали с baseline; sessions/login_attempts исключены |
+| Готовый набор через Pages | PASS в 22:13 и 22:17: 7 DTO/history, 5 идемпотентных повторов, приватное фото по SHA-256, viewer/worker/foreman/CSRF, Outcomes alive 1 / unknown 3 / процент всей партии null |
+| Новый multipart/report roundtrip через Pages | 10 проверок PASS, 35 HTTP-запросов: пять ролей и Secure/HttpOnly/Strict host-only cookie; task replay; viewer и CSRF 403; версия 409; назначение/start; чужой worker 404; upload/replay; report/acceptance/replay; приватный binary WebP; anonymous 401; старый Outcomes неизменён |
+| Принятие нового inspect-отчёта | PASS: новых растений 0, повтор принятия возвращает тот же receipt; не повторная посадка |
+| Настоящий браузер | PASS: viewer login, reload с сохранённой сессией, прогноз/партия на странице Outcomes, список/деталь принятого отчёта, приватное изображение 16×16 с same-origin URL, logout |
+| Полный UI на всех ролях/другом устройстве | NOT RUN здесь; независимая проверка Айданы. HTTP роли не выдаются за полное прохождение интерфейса |
+| Restart/redeploy после создания нового inspect-отчёта | NOT RUN: повторно сервис не перезапускался. Текущий redeploy доказал сохранность прежнего набора; прежние restart/reseed проверки отдельно в журнале |
+
+Новый синтетический набор `pages-e9ec5477` использует существующую выделенную DEMO-бригаду,
+не меняет checks/геометрию/версию общего участка, старый прогноз или осмотр партии.
+Task `2eca89f9-87c8-4b41-bebb-a57443ddeea9`; report `e539e63d-87fa-4130-915d-f6a7db32516e`;
+photo `fcf7097d-0790-485d-9792-7b8ef5a9061d` — искусственный зелёный квадрат, не полевое фото.
+[Отчёт в API frontend](https://green-pavlodar-api.pages.dev/#/reports?report=e539e63d-87fa-4130-915d-f6a7db32516e)
+требует входа. Тестовые HTTP/browser-сессии завершены; cookies/CSRF/пароли не опубликованы.
+
+Локальные доказательства вне Git: `../cloud-final-evidence-20261031/` —
+`provider-upgrade-preservation.json`, `origin-after-redeploy.json`, `pages-existing-data-results.json`,
+`render-coordinated-live.jpg`, `pages-viewer-report.jpg`, `pages-logout.jpg`.
+Приватные ignored manifests: `apps/server/data/cloud-pages-acceptance.json` и
+`apps/server/data/cloud-pages-photo-roundtrip.json`. Первый переиспользует прежние сущности,
+но имеет отдельные origin/checks/trace; исторические Render PASS не копируются в Pages results.
+Операторские scripts для этого разового повторения находятся в каталоге evidence; они не входят
+в deployed runtime. Полный повтор `create` по штатному runner остаётся отдельным согласованным действием.
+
 ## Настоящая HTTPS-приёмка и инструкции Айдане
 
 Стенд выше — отдельный синтетический DEMO, не рабочая база и не публичный mock frontend.
@@ -178,16 +219,15 @@ manifest. Схема остаётся v5, down migration/reset не нужен �
 - Капитан: принять SHA/результаты, управлять merge в coordinator и доступом QA к DEMO.
 - Тәңірберді: upstream HTTPS выше; `Host: green-pavlodar-api-demo.onrender.com`, исходный
   browser Origin, Cookie/Set-Cookie, CSRF/Idempotency-Key, multipart boundary и binary WebP
-  сохраняются. Никакого cache или caller-selected upstream. В живом процессе разрешены Render-origin и
-  `https://green-pavlodar-mock.pages.dev`. Владелец подтвердил точный новый
-  `https://green-pavlodar-api.pages.dev`; значение сохранено через Save only, применение ожидает
-  согласованного окна restart/redeploy. Реальный Pages proxy публикует его владелец; прямые
-  проверки `/` и `/api/v1/ready` в 21:58 UTC+5 вернули 522, ролевой сценарий через Pages — NOT RUN.
+  сохраняются. Никакого cache или caller-selected upstream. В живом процессе разрешены Render-origin,
+  `https://green-pavlodar-mock.pages.dev` и подтверждённый `https://green-pavlodar-api.pages.dev`.
+  Реальная проверка production Pages выше прошла; исторические 522/403 до публикации/применения
+  allowlist устранены. Mock сохранён независимым; полная UI-приёмка остаётся отдельной.
 - Айдана: принятый SHA + DEMO origin + отдельный сценарий/manifest; после согласованного restart
   проверять оба старый/новый сценария, фото/историю/unknown. Проверка другого устройства отдельно.
 - Публичный mock сохранить независимым резервом. Части с 503 не скрывать за пустыми данными.
-- Полный cloud UI не объявляется завершённым. PDF/font runtime, forced cold start, реальная
-  Cloudflare browser-интеграция и новый legacy-key replacement не входят в доказанную приёмку.
+- Полный cloud UI не объявляется завершённым. PDF/font runtime, forced cold start, полная
+  независимая браузерная матрица и новый legacy-key replacement не входят в доказанную приёмку.
 - Зависимости: существующие 8 moderate advisories требуют отдельного проверенного исправления;
   без major/audit fix --force и расширения финального кандидата некритическими изменениями.
 

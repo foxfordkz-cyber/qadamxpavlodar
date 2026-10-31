@@ -135,7 +135,10 @@ The final checked-in record and PR distinguish earlier failures, latest local re
 
 ## Remaining limits and handoff
 
-Real Cloudflare same-origin proxy/frontend runtime and another-device acceptance: **NOT RUN**.
+Update 31 October, 22:17 UTC+5: actual Cloudflare production proxy HTTP role/photo/report/replay
+acceptance and viewer browser smoke **PASS** after a coordinated same-SHA Render redeploy.
+See [exact versions, 31-table preservation and scope](cloud-final-release.md).
+Complete independent UI/another-device acceptance remains **NOT RUN** here.
 The published mock remains independent. A forced 15-minute idle/cold-start cycle was not measured;
 Render warns that waking Free instances can take 50 seconds or more. Do not add automatic write retries
 or claim an SLA. Free-tier limits and provider-managed backups remain release-planning constraints.
@@ -151,7 +154,7 @@ The full cloud UI is not release-complete.
 
 Owner: retain provider account access and private DEMO credentials; no further manual deployment
 configuration is required for this tested backend slice. Do not publish the ignored env files.
-Тәңірберді: use the actual origin and [proxy requirements](cloud-api-contract.md) to configure the
-separate fixed same-origin API deployment; preserve mock. Add an approved new exact frontend Origin
-if it differs from the current allowlist. No Supabase/database secrets go to Cloudflare.
+Тәңірберді: the separate API deployment is connected and its exact origin is active; retain the
+[proxy requirements](cloud-api-contract.md), preserve mock and coordinate any further restart.
+No Supabase/database secrets go to Cloudflare.
 Айдана: independent API/roles/another-device acceptance. Captain alone owns coordinator merge.
