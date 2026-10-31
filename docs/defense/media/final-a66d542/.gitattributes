@@ -8,3 +8,4 @@
 *.jpeg binary
 # Raw DOM captures retain tabs and terminal whitespace as evidence.
 screenshots/*.txt -text -diff
+qa/*.log -text -diff

@@ -1,0 +1,52 @@
+
+Running 22 tests using 2 workers
+
+(node:25488) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:4548) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [desktop] › tests\regressions.mock.spec.ts:144:1 › presentation: present=1 enables the mode and the exit pill disables it (1.6s)
+  ok  2 [desktop] › tests\lab.mock.spec.ts:18:1 › lab: three plans render without browser errors or horizontal overflow (2.8s)
+(node:6844) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  3 [desktop] › tests\worker-navigation.mock.spec.ts:5:1 › E2E-06: embedded worker cabinet exposes Profile navigation at desktop and phone widths (4.6s)
+  ok  4 [mobile] › tests\lab.mock.spec.ts:18:1 › lab: three plans render without browser errors or horizontal overflow (3.0s)
+(node:20440) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  6 [mobile] › tests\regressions.mock.spec.ts:144:1 › presentation: present=1 enables the mode and the exit pill disables it (1.3s)
+(node:28108) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  5 [mobile] › tests\worker-navigation.mock.spec.ts:5:1 › E2E-06: embedded worker cabinet exposes Profile navigation at desktop and phone widths (2.5s)
+(node:10036) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  7 [crew-375] › tests\navigation-language.crew.spec.ts:7:3 › E2E-06: Работник keyboard navigation with Kazakh shell (4.3s)
+  ok  8 [crew-375] › tests\navigation-language.crew.spec.ts:7:3 › E2E-06: Бригадир keyboard navigation with Kazakh shell (5.8s)
+  ok  9 [crew-375] › tests\navigation.crew.spec.ts:7:3 › E2E-06: Работник can switch Shift, Journal and Profile without navigation covering content (3.8s)
+(node:24060) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 10 [crew-375] › tests\navigation.crew.spec.ts:7:3 › E2E-06: Бригадир can switch Shift, Journal and Profile without navigation covering content (4.2s)
+(node:16660) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 11 [crew-800] › tests\navigation-language.crew.spec.ts:7:3 › E2E-06: Работник keyboard navigation with Kazakh shell (3.6s)
+  ok 13 [crew-800] › tests\navigation.crew.spec.ts:7:3 › E2E-06: Работник can switch Shift, Journal and Profile without navigation covering content (3.3s)
+  ok 12 [crew-800] › tests\navigation-language.crew.spec.ts:7:3 › E2E-06: Бригадир keyboard navigation with Kazakh shell (4.0s)
+(node:24152) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 14 [crew-800] › tests\navigation.crew.spec.ts:7:3 › E2E-06: Бригадир can switch Shift, Journal and Profile without navigation covering content (4.6s)
+(node:28424) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 15 [crew-801] › tests\navigation-language.crew.spec.ts:7:3 › E2E-06: Работник keyboard navigation with Kazakh shell (3.1s)
+  ok 17 [crew-801] › tests\navigation.crew.spec.ts:7:3 › E2E-06: Работник can switch Shift, Journal and Profile without navigation covering content (3.3s)
+  ok 16 [crew-801] › tests\navigation-language.crew.spec.ts:7:3 › E2E-06: Бригадир keyboard navigation with Kazakh shell (4.9s)
+(node:7808) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 18 [crew-801] › tests\navigation.crew.spec.ts:7:3 › E2E-06: Бригадир can switch Shift, Journal and Profile without navigation covering content (4.7s)
+(node:25148) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 19 [crew-1280] › tests\navigation-language.crew.spec.ts:7:3 › E2E-06: Работник keyboard navigation with Kazakh shell (4.7s)
+  ok 21 [crew-1280] › tests\navigation.crew.spec.ts:7:3 › E2E-06: Работник can switch Shift, Journal and Profile without navigation covering content (3.7s)
+  ok 20 [crew-1280] › tests\navigation-language.crew.spec.ts:7:3 › E2E-06: Бригадир keyboard navigation with Kazakh shell (4.4s)
+  ok 22 [crew-1280] › tests\navigation.crew.spec.ts:7:3 › E2E-06: Бригадир can switch Shift, Journal and Profile without navigation covering content (4.4s)
+
+  22 passed (55.4s)
+Summary: playwright-report/summary/index.html

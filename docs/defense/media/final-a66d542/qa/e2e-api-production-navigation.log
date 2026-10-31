@@ -1,0 +1,18 @@
+[passed] E2E-06 API: worker1, 375px, ru, direct route/reload and keyboard
+[passed] E2E-06 API: foreman1, 375px, ru, direct route/reload and keyboard
+[passed] E2E-06 API: worker1, 375px, kk, direct route/reload and keyboard
+[passed] E2E-06 API: foreman1, 375px, kk, direct route/reload and keyboard
+[passed] E2E-06 API: worker1, 800px, ru, direct route/reload and keyboard
+[passed] E2E-06 API: foreman1, 800px, ru, direct route/reload and keyboard
+[failed] E2E-06 API: worker1, 800px, kk, direct route/reload and keyboard — Browser assertion failed. Reproduce the named scenario; sensitive action details are omitted.
+[passed] E2E-06 API: foreman1, 800px, kk, direct route/reload and keyboard
+[passed] E2E-06 API: worker1, 801px, ru, direct route/reload and keyboard
+[passed] E2E-06 API: foreman1, 801px, ru, direct route/reload and keyboard
+[passed] E2E-06 API: foreman1, 801px, kk, direct route/reload and keyboard
+[passed] E2E-06 API: worker1, 801px, kk, direct route/reload and keyboard
+[passed] E2E-06 API: worker1, 1280px, ru, direct route/reload and keyboard
+[passed] E2E-06 API: foreman1, 1280px, ru, direct route/reload and keyboard
+[passed] E2E-06 API: worker1, 1280px, kk, direct route/reload and keyboard
+[passed] E2E-06 API: foreman1, 1280px, kk, direct route/reload and keyboard
+API: 15 passed, 1 failed, 0 skipped. Report: playwright-report/api/results.json
+Summary: playwright-report/summary/index.html
