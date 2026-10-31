@@ -1,0 +1,36 @@
+# Optional owner-applied blueprint. Creating this file does not deploy a service.
+# PostgreSQL workflow/photos/Outcomes; remaining API coverage is documented. No auto-deploy.
+services:
+  - type: web
+    name: green-pavlodar-api-demo
+    runtime: node
+    plan: free
+    branch: codex/cloud-api-persistence
+    # Shared analytics live in apps/web; Render must retain the repository root.
+    buildCommand: npm ci --prefix apps/server --include=dev && npm run build --prefix apps/server
+    startCommand: npm run start:cloud --prefix apps/server
+    healthCheckPath: /api/v1/ready
+    autoDeployTrigger: 'off'
+    envVars:
+      - key: NODE_VERSION
+        value: 24.21.0
+      - key: NODE_ENV
+        value: production
+      - key: CLOUD_TRUST_PROXY_HOPS
+        value: '1'
+      - key: DATABASE_URL
+        sync: false
+      - key: ALLOWED_HOSTS
+        sync: false
+      - key: FRONTEND_ORIGINS
+        sync: false
+      - key: CLOUD_ALLOWED_HOSTS
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_STORAGE_BUCKET
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: STORAGE_ALLOWED_HOSTS
+        sync: false

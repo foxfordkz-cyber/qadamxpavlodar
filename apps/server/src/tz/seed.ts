@@ -37,6 +37,14 @@ export function insertZone(s: Store, site: Json, at: string) {
   return doc;
 }
 
+export function catalogFromSpecies(sp: Json) {
+  return { id: sp.id, displayName: sp.nameRu, botanicalName: sp.latin, kind: KIND[sp.form] ?? 'shrub', colors: [], bloomPeriod: sp.floweringMonths?.length ? `месяцы ${sp.floweringMonths.join(', ')}` : null,
+        lightRequirement: null, soilRequirement: null, moistureRequirement: null, climateSuitabilityNotes: sp.notes?.join(' ') || null, matureHeightM: sp.matureHeightM?.[1] ?? null,
+        // Цена остаётся в справочнике видов (pricePerUnitKzt + priceEvidenceId): у демо-цен нет даты, а V2 требует её для известной цены.
+        spreadM: sp.crownDiameterM ?? null, spacingM: sp.spacingM ?? null, carePolicyId: null, unitCost: null, currency: null,
+        priceDate: null, stockQuantity: null, evidenceIds: sp.evidenceIds, reviewedBy: null, isDemo: true, version: 1 };
+}
+
 export function seedTz(s: Store) {
   const db = web.seed();
   const at = now();
@@ -55,11 +63,7 @@ export function seedTz(s: Store) {
     for (const sp of web.species) {
       counts.species += Number(s.run('INSERT INTO tz_species VALUES (?,?,1) ON CONFLICT(id) DO NOTHING', sp.id, JSON.stringify(sp)).changes);
       // Тот же вид — позиция каталога V2 (проекты и кабинет работника ссылаются на catalogItemId = id вида).
-      const item = { id: sp.id, displayName: sp.nameRu, botanicalName: sp.latin, kind: KIND[sp.form] ?? 'shrub', colors: [], bloomPeriod: sp.floweringMonths?.length ? `месяцы ${sp.floweringMonths.join(', ')}` : null,
-        lightRequirement: null, soilRequirement: null, moistureRequirement: null, climateSuitabilityNotes: sp.notes?.join(' ') || null, matureHeightM: sp.matureHeightM?.[1] ?? null,
-        // Цена остаётся в справочнике видов (pricePerUnitKzt + priceEvidenceId): у демо-цен нет даты, а V2 требует её для известной цены.
-        spreadM: sp.crownDiameterM ?? null, spacingM: sp.spacingM ?? null, carePolicyId: null, unitCost: null, currency: null,
-        priceDate: null, stockQuantity: null, evidenceIds: sp.evidenceIds, reviewedBy: null, isDemo: true, version: 1 };
+      const item = catalogFromSpecies(sp);
       s.run("INSERT INTO v2_documents VALUES ('catalog',?,?,1) ON CONFLICT(kind,id) DO NOTHING", item.id, JSON.stringify(item));
     }
     (db.rates as Json[]).forEach((r, i) => { counts.rates += Number(s.run('INSERT INTO tz_rates VALUES (?,?,?) ON CONFLICT(key) DO NOTHING', r.key, i, JSON.stringify(r)).changes); });
