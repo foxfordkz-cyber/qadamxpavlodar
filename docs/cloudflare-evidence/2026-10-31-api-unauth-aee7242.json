@@ -1,0 +1,237 @@
+{
+  "schema": "green-pavlodar-public-api-unauth-summary-v1",
+  "origin": "https://green-pavlodar-api.pages.dev",
+  "deploymentId": "ff01f45d-69ed-45a9-af1c-ad1d26b8983a",
+  "frontendSha": "aee7242ee899f1f596a704adba6e1279c37af9df",
+  "backendSha": "3b14927def04b35bf97782eae6b550da276c779f",
+  "contractSha": "a72131df86272804f95d8331d0f627e62272b3ea",
+  "archiveSha256": "da8bc83dd448b114b78f100d933187f686099ddcdb01c012f8f61e19222ac1d9",
+  "initialHttp": {
+    "startedAt": "2026-10-31T17:00:36.719Z",
+    "endedAt": "2026-10-31T17:00:40.336Z",
+    "counts": {
+      "passed": 6,
+      "failed": 1
+    },
+    "failed": [
+      {
+        "name": "allowed-public-origin",
+        "status": 403,
+        "errorCode": "LOCAL_ONLY",
+        "originHeader": "https://green-pavlodar-api.pages.dev"
+      }
+    ]
+  },
+  "originRecheck": {
+    "schema": "green-pavlodar-public-api-origin-recheck-v1",
+    "deploymentId": "ff01f45d-69ed-45a9-af1c-ad1d26b8983a",
+    "frontendSha": "aee7242ee899f1f596a704adba6e1279c37af9df",
+    "backendSha": "3b14927def04b35bf97782eae6b550da276c779f",
+    "startedAt": "2026-10-31T17:13:07.939Z",
+    "method": "GET",
+    "path": "/api/v1/auth/me",
+    "originHeader": "https://green-pavlodar-api.pages.dev",
+    "reason": "Root confirmed Render deployment dep-dbj223h42hec73bqnttg Live on exact3b14927 after1m25s, applying saved public frontend Origin configuration; single affected GET after deploy.",
+    "status": 401,
+    "error": {
+      "code": "AUTH_REQUIRED",
+      "message": "Sign in with a server session",
+      "requestId": "0a0ff393-5412-4e96-be8c-85598e7acf03"
+    },
+    "bodySha256": "3584ed1f3f6310a9fe2dfde4a6d477e3f2f1d883a4808e72240bceeec949af20",
+    "headers": {
+      "content-type": "application/json; charset=utf-8",
+      "cache-control": "no-store, private",
+      "cdn-cache-control": "no-store",
+      "cloudflare-cdn-cache-control": "no-store",
+      "age": null,
+      "cf-cache-status": "DYNAMIC",
+      "x-request-id": "0a0ff393-5412-4e96-be8c-85598e7acf03",
+      "access-control-allow-origin": "https://green-pavlodar-api.pages.dev",
+      "access-control-allow-credentials": "true"
+    },
+    "pass": true,
+    "endedAt": "2026-10-31T17:13:08.541Z"
+  },
+  "postRenderLive": {
+    "schema": "green-pavlodar-api-after-render-live-v1",
+    "frontendSha": "aee7242ee899f1f596a704adba6e1279c37af9df",
+    "cloudflareDeploymentId": "ff01f45d-69ed-45a9-af1c-ad1d26b8983a",
+    "backendSha": "3b14927def04b35bf97782eae6b550da276c779f",
+    "renderDeploymentId": "dep-dbj223h42hec73bqnttg",
+    "trigger": "Root observed Render Live after1m25s deployment; started22:10:38UTC+5. Only GET/OPTIONS, no credentials.",
+    "startedAt": "2026-10-31T17:13:07.983Z",
+    "probes": [
+      {
+        "name": "ready-after-render-live",
+        "method": "GET",
+        "path": "/api/v1/ready",
+        "headers": {},
+        "status": 200,
+        "responseHeaders": {
+          "content-type": "application/json; charset=utf-8",
+          "cache-control": "no-store, private",
+          "cdn-cache-control": "no-store",
+          "access-control-allow-origin": null,
+          "access-control-allow-credentials": null,
+          "access-control-allow-methods": null,
+          "access-control-allow-headers": null,
+          "x-request-id": "7ff34035-6ad9-4511-9356-e4106f6eedf1"
+        },
+        "body": {
+          "status": "ok",
+          "database": "ok",
+          "mode": "DEMO",
+          "schemaVersion": 5,
+          "capabilities": [
+            "auth",
+            "evidence",
+            "resources",
+            "sites",
+            "context",
+            "analysis",
+            "rates",
+            "snapshots",
+            "crews",
+            "workers",
+            "designs",
+            "tasks",
+            "reports",
+            "outcomes",
+            "photos"
+          ],
+          "photos": "private-storage-configured"
+        },
+        "pass": true
+      },
+      {
+        "name": "public-origin-preflight",
+        "method": "OPTIONS",
+        "path": "/api/v1/tasks",
+        "headers": {
+          "Origin": "https://green-pavlodar-api.pages.dev",
+          "Access-Control-Request-Method": "POST",
+          "Access-Control-Request-Headers": "content-type,x-csrf-token,idempotency-key"
+        },
+        "status": 204,
+        "responseHeaders": {
+          "content-type": null,
+          "cache-control": "no-store, private",
+          "cdn-cache-control": "no-store",
+          "access-control-allow-origin": "https://green-pavlodar-api.pages.dev",
+          "access-control-allow-credentials": "true",
+          "access-control-allow-methods": "GET,POST,PATCH,PUT",
+          "access-control-allow-headers": "Content-Type,X-CSRF-Token,Idempotency-Key",
+          "x-request-id": "bc3dafae-c212-4c8b-aacb-ffd388c210c8"
+        },
+        "pass": true
+      }
+    ],
+    "endedAt": "2026-10-31T17:13:08.788Z",
+    "counts": {
+      "passed": 2,
+      "failed": 0
+    }
+  },
+  "staticFiles": {
+    "filesPerOrigin": 34,
+    "matchingResponses": 68,
+    "totalResponses": 68,
+    "allStaticMatched": true,
+    "immutableGuardPass": true
+  },
+  "immutableApiGuard": {
+    "path": "/api/v1/ready",
+    "status": 421,
+    "body": {
+      "error": {
+        "code": "PROXY_ORIGIN_MISMATCH"
+      }
+    },
+    "cacheControl": "no-store, private",
+    "pass": true
+  },
+  "unauthenticatedUi": {
+    "counts": {
+      "passed": 4,
+      "failed": 0
+    },
+    "startedAt": "2026-10-31T17:00:40.435Z",
+    "endedAt": "2026-10-31T17:01:28.775Z",
+    "toolchain": {
+      "node": "24.14.1",
+      "playwright": "1.64.1"
+    },
+    "visualReview": {
+      "status": "PASS_WITH_SCOPE_LIMITS",
+      "inspected": 4,
+      "total": 4,
+      "method": "All four original 1280x800/375x812 screenshots individually opened and visually inspected.",
+      "findings": [],
+      "limitations": [
+        "Only blank unauthenticated login forms and protected worker-route fallback are inspected; no successful sign-in or role workflow is inferred.",
+        "Mobile status strip uses the existing viewport clipping; login fields and submit controls are fully visible."
+      ]
+    }
+  },
+  "currentCredentialFreeChecks": "All seven baseline HTTP expectations satisfied across the retained initial run and final affected Origin recheck, not a fresh complete7/7 rerun. After Render Live, readiness+OPTIONS2/2 also PASS; UI4/4, static68/68, immutable421PASS. Initial Origin403 and the first403 recheck are retained.",
+  "authentication": "NOT RUN: no demo password was available; no login attempt, cookie or CSRF token was used or printed.",
+  "boundary": "Backend-owner HTTPS acceptance is separate. These checks do not accept authenticated frontend workflows, private-photo writes, cookies/CSRF, idempotent mutations, persistence across redeploy or a physical second device.",
+  "cacheHeaderInterpretation": {
+    "source": "https://developers.cloudflare.com/cache/concepts/cdn-cache-control/",
+    "note": "Cloudflare consumes Cloudflare-CDN-Cache-Control rather than proxying it downstream. Its absence at the client is not a failure; require client Cache-Control:no-store,private and forwarded CDN-Cache-Control:no-store, with no observed cache HIT or Age."
+  },
+  "artifactsBase": "outputs/tanirberdi-cloud-final-2026-10-31/public-api/",
+  "files": [
+    {
+      "path": "http-probes.json",
+      "bytes": 11202,
+      "sha256": "ffa0107b9a34819c5c6bd1862734ceedecd047b026896993f5471840f869121d"
+    },
+    {
+      "path": "ui-results.json",
+      "bytes": 4697,
+      "sha256": "667faa9905ed09012c11ffad996a6144f66c9b681853a49509af63a36b56c71e"
+    },
+    {
+      "path": "static-verification.json",
+      "bytes": 35231,
+      "sha256": "fd16621581deb975b18a5ba60d1d1ef50ec454720faf52cfb7d4ba998801add0"
+    },
+    {
+      "path": "http-after-render-live.json",
+      "bytes": 2562,
+      "sha256": "b83b56a5b223bbd40827dcf6b35d69eeed2babdeb46c558f8d7db2efa458bb2e"
+    },
+    {
+      "path": "unauth-ru-1280.png",
+      "bytes": 31563,
+      "sha256": "2ed852cde3172cd324798261bc0112d9b1adbca21c716debcbd0efd068950b42"
+    },
+    {
+      "path": "unauth-kk-1280.png",
+      "bytes": 30651,
+      "sha256": "9af23db2dfbfd6e4bf3bce68e7e03a6e2e64f9fdaddb90f8704fd8e8da817c89"
+    },
+    {
+      "path": "unauth-ru-375.png",
+      "bytes": 25688,
+      "sha256": "2a4220da3fa9c24962657cf840ff1f077c24fac4cc72899c7f25c963c86f237f"
+    },
+    {
+      "path": "unauth-kk-375.png",
+      "bytes": 24552,
+      "sha256": "df9c161229a00ed0580454f5095bcf29d10c914074ebd7f37e0512900f025e61"
+    },
+    {
+      "path": "http-origin-recheck.json",
+      "bytes": 1327,
+      "sha256": "f85fcb6eb932faaf44e1c8bb6abc249fd45c7bf986cfe9ef054550111f0daee0"
+    },
+    {
+      "path": "http-origin-recheck-attempt-1.json",
+      "bytes": 1295,
+      "sha256": "e1ebec19f2a507dbb9174c58294584c2292d040a40c5973e65681bf41500ed63"
+    }
+  ]
+}

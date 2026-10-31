@@ -1,0 +1,64 @@
+{
+  "schema": "green-pavlodar-pages-api-local-qa-v1",
+  "checkedDate": "2026-10-31",
+  "frontendSourceSha": "aee7242ee899f1f596a704adba6e1279c37af9df",
+  "sourceDirtyAfterBuild": false,
+  "node": "v24.22.1",
+  "nodeEnv": "production",
+  "publicOrigin": "https://green-pavlodar-api.pages.dev",
+  "upstreamOrigin": "https://green-pavlodar-api-demo.onrender.com",
+  "archive": "green-pavlodar-api.zip",
+  "archiveSha256": "da8bc83dd448b114b78f100d933187f686099ddcdb01c012f8f61e19222ac1d9",
+  "archiveBytes": 1633963,
+  "archiveEntries": 36,
+  "manifestSha256": "5371062af0acd8befac3e08e549025284a06e3a3b930bf4d0ff550d099b87eba",
+  "build": {
+    "typescript": "PASS",
+    "vite": "PASS",
+    "zipRoundtrip": "PASS"
+  },
+  "nodeTests": {
+    "passed": 15,
+    "failed": 0,
+    "skipped": 0,
+    "exitCode": 0,
+    "testedSourceSha": "f2004e7d3de8acbd19ed65a8bab236c89591a665"
+  },
+  "runtime": {
+    "kind": "local workerd through Miniflare",
+    "miniflareVersion": "4.20260730.0",
+    "compatibilityDate": "2026-06-16",
+    "compatibilityFlags": [],
+    "passed": 7,
+    "failed": 0,
+    "exitCode": 0,
+    "providerRequests": 0,
+    "outboundMode": "explicit synthetic outboundService expectations; cf:false",
+    "checks": [
+      "ASSETS fallback",
+      "origin guard",
+      "separate Set-Cookie and attributes",
+      "multipart bytes and Origin/Cookie/CSRF/Idempotency-Key",
+      "private binary bytes/no-store",
+      "301/302/303/307/308 rejected with one POST and no Location/cookies",
+      "HTML503 preserved without static fallback"
+    ]
+  },
+  "diagnostics": [
+    "Vite: chunks larger than 500 kB warning.",
+    "Vite: output outside application root is not emptied; build script requires new empty output directory.",
+    "Windows workerd logged WSARecv #64 while closing a connection. All runtime assertions completed and process exited 0."
+  ],
+  "publicDeploymentAcceptance": false,
+  "next": [
+    "Apply documented Pages runtime settings and backend exact-origin allowlist.",
+    "Upload to separate API project and perform real HTTPS/browser acceptance."
+  ],
+  "incomingCancellationLimitation": "Request.signal exists and normal transport works without flags. Incoming client cancellation propagation is not enabled; own upstream header timeout remains active.",
+  "archiveByteComparison": {
+    "comparedWith": "../release-f2004e7/green-pavlodar-api.zip",
+    "exitCode": 0,
+    "equal": true,
+    "method": "Windows fc.exe /b on resolved absolute paths"
+  }
+}

@@ -6,8 +6,8 @@ import { icon } from './icons.mjs';
 import { OBSERVATION_CATEGORIES } from './contract-v2.mjs';
 import { scheme, assignmentPanel, sharedMaterials, reportQuantities, reportHistoryAmounts, localInput } from './v2-views.mjs';
 import { cabinetLayout, navigation, taskRow } from './cabinet-layout.mjs';
+import { normalizeWorkerLocale, localizedError, displayText, taskLabels, formatDateTime } from './worker-display.mjs';
 const escape = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[char]));
-const dateTime = value => new Intl.DateTimeFormat('ru-KZ', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Qyzylorda' }).format(new Date(value));
 export class GreenWorker extends HTMLElement {
   constructor() {
     super(); this.attachShadow({ mode: 'open' }); this.t = dictionary('ru'); this.tasks = []; this.section = 'current'; this.page = 'tasks';
@@ -17,7 +17,7 @@ export class GreenWorker extends HTMLElement {
     this.root.addEventListener('click', event => { const button = event.target.closest('[data-action]'); if (button && !button.disabled) this.action(button.dataset.action, button.dataset.id).catch(error => this.showError(error)); });
     this.root.addEventListener('input', event => this.onInput(event));
     this.root.addEventListener('change', event => this.onChange(event));
-    this.onConnectivity = () => { if (!navigator.onLine) this.message = { text: this.t.networkOffline, tone: 'info' }; this.render(); };
+    this.onConnectivity = () => { if (!navigator.onLine) this.message = { key: 'networkOffline', text: this.t.networkOffline, tone: 'info' }; this.render(); };
     this.onVisible = () => { if (document.visibilityState === 'visible' && this.workflow && !this.busy) this.refresh(false); };
   }
   connectedCallback() { window.addEventListener('offline', this.onConnectivity); window.addEventListener('online', this.onConnectivity); document.addEventListener('visibilitychange', this.onVisible); this.render(); }
@@ -25,7 +25,8 @@ export class GreenWorker extends HTMLElement {
   async configure({ gateway, user, scope, date, demo = false, locale = 'ru', drafts, timeoutMs, embedded = false }) {
     ++this.contextVersion;
     this.toggleAttribute('embedded',embedded);
-    this.user = user ? {...user,name:user.displayName || user.name} : null; this.scope = scope; this.date = date; this.demo = demo; this.locale = locale; this.t = {...dictionary(locale)};
+    this.user = user ? {...user,name:user.displayName || user.name} : null; this.scope = scope; this.date = date; this.demo = demo; this.locale = normalizeWorkerLocale(locale); this.t = {...dictionary(this.locale)};
+    this.setAttribute?.('lang', this.locale);
     if(user?.role==='foreman'){this.t.myTasks=this.t.crewTasks;this.t.workerSpace=this.t.foremanSpace;}
     this.crewWorkspace=null;this.assignmentDraft=null;
     this.pendingStarts=new Map();
@@ -33,7 +34,43 @@ export class GreenWorker extends HTMLElement {
     this.gateway = gateway; this.tasks = []; this.selected = null; this.draft = null; this.suggestion = null; this.message = null; this.queue = []; this.section = 'current'; this.page = 'tasks'; this.busy = false; this.aiBusy = false; this.geoBusy = false; this.mobileDetail = false;
     this.setPreview(null); this.render(); if (user) await this.refresh(false);
   }
-  showError(error) { this.message = { text: error.message || String(error), tone: 'error' }; this.render(); }
+  setLocale(locale) {
+    const next = normalizeWorkerLocale(locale);
+    if (this.locale === next) return;
+    // These unconfirmed edits live in the form until accept-ai. Keep them separate
+    // from the original suggestion so changing language never accepts or rewrites it.
+    const edits = ['#ai-category', '#ai-facts'].map(selector => [selector, this.root.querySelector(selector)?.value]);
+    const active = this.root.activeElement;
+    const focusId = active?.id;
+    const selection = active && typeof active.selectionStart === 'number' ? [active.selectionStart, active.selectionEnd] : null;
+    this.locale = next; this.t = { ...dictionary(next) };
+    this.setAttribute?.('lang', next);
+    if (this.user?.role === 'foreman') { this.t.myTasks = this.t.crewTasks; this.t.workerSpace = this.t.foremanSpace; }
+    if (this.message) this.message.text = this.messageText();
+    this.render();
+    for (const [selector, value] of edits) {
+      const field = this.root.querySelector(selector);
+      if (field && value !== undefined) field.value = value;
+    }
+    if (focusId) {
+      const field = this.root.getElementById?.(focusId);
+      field?.focus({ preventScroll: true });
+      if (selection && field?.setSelectionRange) field.setSelectionRange(...selection);
+    }
+  }
+  errorText(error) { return localizedError(error, this.t); }
+  messageText() {
+    const message = this.message;
+    if (!message) return '';
+    if (message.error) return this.errorText(message.error);
+    if (message.key) return this.t[message.key];
+    if (message.sync) {
+      const { saved, failed, failure } = message.sync;
+      return `${this.t.syncSuccess}: ${saved}. ${this.t.syncFailure}: ${failed}.${failure ? ' ' + this.errorText(failure) : ''}`;
+    }
+    return displayText(message.text, this.t);
+  }
+  showError(error) { this.message = { error, text: this.errorText(error), tone: 'error' }; this.render(); }
   notify(text, tone = '') { this.message = { text, tone }; this.render(); }
   async refresh(showNotice = true) {
     if (!this.workflow) return;
@@ -55,8 +92,8 @@ export class GreenWorker extends HTMLElement {
       const queue = await this.workflow.pending();
       if (version !== this.contextVersion) return;
       this.queue = queue;
-      if (showNotice) this.message = { text: this.t.stale, tone: 'info' };
-    } catch (error) { if (version === this.contextVersion) this.message = { text: error.message, tone: 'error' }; }
+      if (showNotice) this.message = { key: 'stale', text: this.t.stale, tone: 'info' };
+    } catch (error) { if (version === this.contextVersion) this.message = { error, text: this.errorText(error), tone: 'error' }; }
     finally { if (version === this.contextVersion) { this.loading = false; this.render(); } }
   }
   setPreview(file) { ++this.photoSelectionVersion; if (this.previewURL) URL.revokeObjectURL(this.previewURL); this.previewURL = file ? URL.createObjectURL(file) : null; }
@@ -175,7 +212,7 @@ export class GreenWorker extends HTMLElement {
       if (this.aiBusy || !this.draft || this.draft.frozen) return;
       const text = this.draft.note, key = this.draft.storageKey, version = this.contextVersion; this.aiBusy = true; this.render();
       try { const result = await this.workflow.analyze(text,{objectId:this.selected.objectId,taskId:this.selected.id}); if (version === this.contextVersion && this.draft?.storageKey === key && this.draft.note === text && !this.draft.frozen) this.suggestion = result; }
-      catch (error) { if (version === this.contextVersion && this.draft?.storageKey === key) this.message = { text: error.message, tone: 'error' }; }
+      catch (error) { if (version === this.contextVersion && this.draft?.storageKey === key) this.message = { error, text: this.errorText(error), tone: 'error' }; }
       finally { if (version === this.contextVersion) { this.aiBusy = false; this.render(); } } return;
     }
     if (action === 'remove-geo' && !this.draft?.frozen) { this.draft.geo = null; await this.saveDraft(); this.render(); return; }
@@ -188,7 +225,7 @@ export class GreenWorker extends HTMLElement {
         if (version === this.contextVersion && this.draft?.storageKey === key && !this.draft.frozen) {
           this.draft.geo = { latitude: pos.coords.latitude, longitude: pos.coords.longitude, accuracy: pos.coords.accuracy, deviceTime: new Date(pos.timestamp).toISOString() }; await this.saveDraft();
         }
-      } catch { if (version === this.contextVersion) this.message = { text: this.t.geoDenied, tone: 'info' }; }
+      } catch { if (version === this.contextVersion) this.message = { key: 'geoDenied', text: this.t.geoDenied, tone: 'info' }; }
       finally { if (version === this.contextVersion) { this.geoBusy = false; this.render(); } } return;
     }
     if (this.busy) return;
@@ -198,7 +235,7 @@ export class GreenWorker extends HTMLElement {
         const a=this.assignmentDraft?.taskId===this.selected.id?this.assignmentDraft:{taskId:this.selected.id,workerIds:this.selected.assignedWorkerIds,responsibleUserId:this.selected.responsibleUserId||this.selected.assignedWorkerIds[0],start:localInput(this.selected.scheduledStart),end:localInput(this.selected.scheduledEnd),expectedVersion:this.selected.version,idempotencyKey:crypto.randomUUID()};
         this.assignmentDraft={...a,taskId:this.selected.id};
         const task=await this.gateway.assignWorkers(this.selected.id,{...a,scheduledStart:`${a.start}:00+05:00`,scheduledEnd:`${a.end}:00+05:00`});
-        if(version===this.contextVersion){this.selected=task;this.assignmentDraft=null;this.message={text:this.t.assignmentSaved};}
+        if(version===this.contextVersion){this.selected=task;this.assignmentDraft=null;this.message={key:'assignmentSaved',text:this.t.assignmentSaved};}
       }
       if (action === 'start') {
         const id=this.selected.id;
@@ -213,27 +250,29 @@ export class GreenWorker extends HTMLElement {
         await this.writeChain;
         const kind = this.draft.kind;
         const receipt=await this.workflow.send(this.draft);
-        if (version === this.contextVersion) { this.draft = null; this.suggestion = null; this.setPreview(null); this.message = { text: kind === 'report' ? receipt.submissionType==='contribution'?this.t.materialsSaved:this.t.waitingReview : this.t.issueSaved }; }
+        if (version === this.contextVersion) { this.draft = null; this.suggestion = null; this.setPreview(null); this.message = { key: kind === 'report' ? receipt.submissionType === 'contribution' ? 'materialsSaved' : 'waitingReview' : 'issueSaved' }; this.message.text = this.messageText(); }
       }
       if (action === 'sync') {
         const results = await this.workflow.synchronize();
         if (version === this.contextVersion) {
           const saved = results.filter(r => r.saved).length, failed = results.length - saved;
-          this.message = { text: results.length ? `${this.t.syncSuccess}: ${saved}. ${this.t.syncFailure}: ${failed}.${failed ? ' ' + results.find(r => !r.saved).error : ''}` : this.t.noQueued, tone: failed ? 'error' : 'info' };
+          const failure = results.find(r => !r.saved);
+          this.message = results.length ? { sync: { saved, failed, failure: failure ? { code: failure.errorCode, message: failure.error } : null }, tone: failed ? 'error' : 'info' } : { key: 'noQueued', tone: 'info' }; this.message.text = this.messageText();
           if (this.draft?.frozen && results.some(r => r.taskId === this.draft.taskId && r.saved)) { this.draft = null; this.setPreview(null); }
         }
       }
       if (version === this.contextVersion) await this.refresh(false);
-    } catch (error) { if (version === this.contextVersion) { this.message = { text: error.message, tone: 'error' }; this.queue = await this.workflow.pending(); } }
+    } catch (error) { if (version === this.contextVersion) { this.message = { error, text: this.errorText(error), tone: 'error' }; this.queue = await this.workflow.pending(); } }
     finally { if (version === this.contextVersion) { this.busy = false; this.render(); this.dispatchEvent(new CustomEvent('worker-busy', { detail: false })); } }
   }
   button(action, label, css = '', iconName = '', id = '', disabled = false) { return `<button type="button" class="button ${css}" data-action="${action}" ${id ? `data-id="${escape(id)}"` : ''} ${disabled ? 'disabled' : ''}>${iconName ? icon(iconName) : ''}${escape(label)}</button>`; }
   nav() { return navigation(this); }
-  badge(task) { return `<span class="badge ${task.coordinatorComment ? 'warn' : task.section === 'confirmed' ? 'ok' : ''}">${escape(task.statusLabel)}</span>`; }
+  badge(task) { return `<span class="badge ${task.coordinatorComment ? 'warn' : task.section === 'confirmed' ? 'ok' : ''}">${escape(taskLabels(task, this.t).status)}</span>`; }
   card(task, index = 0) { return taskRow(this, task, index); }
-  historyCards(history, task) { return history.length ? `<div class="history-list">${[...history].reverse().map(item => `<article class="history-card"><div class="row"><strong>${item.type === 'issue' ? this.t.issue : this.t.report}</strong><span class="badge">${escape(item.reviewLabel)}</span></div><small>${escape(dateTime(item.time))}</small>${item.reason ? `<p><strong>${escape(item.reason)}</strong></p>` : ''}<p>${escape(item.note || this.t.emptyNote)}</p>${item.photoName ? `<small>${icon('photo')} ${this.t.photoAttached}: ${escape(item.photoName)}</small>${safePhotoURL(item.contentUrl||item.photoUrl||item.photos?.[0]?.contentUrl||item.photos?.[0]?.url) ? `<img src="${escape(safePhotoURL(item.contentUrl||item.photoUrl||item.photos?.[0]?.contentUrl||item.photos?.[0]?.url))}" alt="${escape(this.t.photoAttached)}" loading="lazy">` : `<small>${this.demo ? this.t.previewUnavailable : ''}</small>`}` : ''}${item.analysis ? `<p><strong>${this.t.confirmedAnalysis}: ${escape(item.analysis.category)}</strong><br>${item.analysis.facts.map(escape).join('<br>')}</p><small>${this.t.origin}: ${escape(item.analysis.provenance?.provider)} · ${escape(item.analysis.decision)}</small>` : ''}${item.geo ? `<p>${Number(item.geo.latitude).toFixed(5)}, ${Number(item.geo.longitude).toFixed(5)} · ±${Math.round(item.geo.accuracy)} м</p><small>${this.t.geoEvidence}</small>` : ''}${reportHistoryAmounts(task,item,this.crewWorkspace,this.t)}${item.coordinatorComment ? `<blockquote><strong>${this.t.reviewComment}</strong><br>${escape(item.coordinatorComment)}</blockquote>` : ''}</article>`).join('')}</div>` : `<p class="small muted">${this.t.noHistory}</p>`; }
+  historyCards(history, task) { return history.length ? `<div class="history-list">${[...history].reverse().map(item => `<article class="history-card"><div class="row"><strong>${item.type === 'issue' ? this.t.issue : this.t.report}</strong><span class="badge">${escape(displayText(item.reviewLabel, this.t))}</span></div><small>${escape(formatDateTime(item.time, this.t))}</small>${item.reason ? `<p><strong>${escape(this.t.reasonNames[item.reason] || item.reason)}</strong></p>` : ''}<p>${escape(item.note || this.t.emptyNote)}</p>${item.photoName ? `<small>${icon('photo')} ${this.t.photoAttached}: ${escape(/^\d+ файл\(а\)$/.test(item.photoName) ? `${this.t.photos}: ${item.photoName.split(' ')[0]}` : item.photoName)}</small>${safePhotoURL(item.contentUrl||item.photoUrl||item.photos?.[0]?.contentUrl||item.photos?.[0]?.url) ? `<img src="${escape(safePhotoURL(item.contentUrl||item.photoUrl||item.photos?.[0]?.contentUrl||item.photos?.[0]?.url))}" alt="${escape(this.t.photoAttached)}" loading="lazy">` : `<small>${this.demo ? this.t.previewUnavailable : ''}</small>`}` : ''}${item.analysis ? `<p><strong>${this.t.confirmedAnalysis}: ${escape(displayText(item.analysis.category, this.t))}</strong><br>${item.analysis.facts.map(escape).join('<br>')}</p><small>${this.t.origin}: ${escape(item.analysis.provenance?.provider)} · ${escape(this.t.analysisDecisions[item.analysis.decision] || this.t.noData)}</small>` : ''}${item.geo ? `<p>${Number(item.geo.latitude).toFixed(5)}, ${Number(item.geo.longitude).toFixed(5)} · ±${Math.round(item.geo.accuracy)} ${this.t.meterUnit}</p><small>${this.t.geoEvidence}</small>` : ''}${reportHistoryAmounts(task,item,this.crewWorkspace,this.t)}${item.coordinatorComment ? `<blockquote><strong>${this.t.reviewComment}</strong><br>${escape(item.coordinatorComment)}</blockquote>` : ''}</article>`).join('')}</div>` : `<p class="small muted">${this.t.noHistory}</p>`; }
   detail() {
     const task = this.selected, t = this.t; if (!task) return '';
+    const labels = taskLabels(task, t);
     const needsCrew = this.user.role === 'foreman' && task.status === 'assigned' && !task.assignedWorkerIds?.length && !!this.crewWorkspace?.crews.some(c => c.id === task.assignedCrewId);
     const actions = !this.draft ? [
       needsCrew ? this.button('goto-assignment', t.goAssign, 'primary', 'arrow') : '',
@@ -242,16 +281,16 @@ export class GreenWorker extends HTMLElement {
       task.permissions.issue ? this.button('open-issue', t.cannot, 'secondary', 'alert') : ''
     ].join('') : '';
     return `<section class="detail-panel" aria-label="${t.detail}">
-      <header class="detail-hero"><div class="row"><span class="task-code">${t.workSheet} / ${escape(task.id)}</span>${this.badge(task)}</div><h2 tabindex="-1">${escape(task.place)}</h2><p class="detail-action">${escape(task.action)}</p><div class="sheet-meta"><span>${escape(task.objectLabel)}</span><span>${escape(task.due)}</span><span>${escape(task.duration || t.noData)}</span></div></header>
+      <header class="detail-hero"><div class="row"><span class="task-code">${t.workSheet} / ${escape(task.id)}</span>${this.badge(task)}</div><h2 tabindex="-1">${escape(task.place)}</h2><p class="detail-action">${escape(labels.action)}</p><div class="sheet-meta"><span>${escape(labels.object)}</span><span>${escape(labels.due)}</span><span>${escape(labels.duration || t.noData)}</span></div></header>
       ${task.coordinatorComment ? `<div class="note-box return-note"><strong>${t.returnTitle}</strong><p>${escape(task.coordinatorComment)}</p></div>` : ''}
       ${actions ? `<div class="detail-footer">${actions}${needsCrew ? `<p class="small muted">${t.unconfirmedCrew}</p>` : ''}${task.permissions.start ? `<p class="small muted">${t.startHint}</p>` : ''}</div>` : ''}
       <div class="work-columns"><div class="detail-body">
         <section class="instruction-section"><p class="section-label">${t.instruction}</p><p class="body-text">${escape(task.instruction)}</p></section>
         ${scheme(task,t)}
-        <section><p class="section-label">${t.location}</p><div class="location-box">${icon('pin')}<div><strong>${escape(task.place)}</strong><p>${escape(task.address)}</p><p class="coordinate-line">${escape(task.coordinates?.latitude ?? t.noData)}, ${escape(task.coordinates?.longitude ?? t.noData)}</p></div></div><p class="small muted">${t.locationNote}</p></section>
+        <section><p class="section-label">${t.location}</p><div class="location-box">${icon('pin')}<div><strong>${escape(task.place)}</strong><p>${escape(labels.address)}</p><p class="coordinate-line">${escape(task.coordinates?.latitude ?? t.noData)}, ${escape(task.coordinates?.longitude ?? t.noData)}</p></div></div><p class="small muted">${t.locationNote}</p></section>
       </div><aside class="crew-context" aria-label="${t.workConditions}">
-        <div class="norm-box"><p class="section-label">${t.norm}</p><strong>${escape(task.norm || t.noNorm)}</strong><p class="small muted">${escape(task.norm ? task.normSource : t.noNormText)}</p></div>
-        <div class="metadata"><div><p class="section-label">${t.duration}</p><p>${escape(task.duration || t.noData)}</p></div>${task.startedAt ? `<div><p class="section-label">${t.started}</p><p>${escape(dateTime(task.startedAt))}</p></div>` : ''}</div>
+        <div class="norm-box"><p class="section-label">${t.norm}</p><strong>${escape(labels.norm || t.noNorm)}</strong><p class="small muted">${escape(task.norm ? labels.normSource : t.noNormText)}</p></div>
+        <div class="metadata"><div><p class="section-label">${t.duration}</p><p>${escape(labels.duration || t.noData)}</p></div>${task.startedAt ? `<div><p class="section-label">${t.started}</p><p>${escape(formatDateTime(task.startedAt, this.t))}</p></div>` : ''}</div>
         ${this.user.role === 'foreman' ? assignmentPanel(task,this.crewWorkspace,this.assignmentDraft,t,this.busy,this.demo) : ''}
         ${sharedMaterials(task,this.crewWorkspace,t)}
       </aside></div>
@@ -263,8 +302,8 @@ export class GreenWorker extends HTMLElement {
     return `<section class="form" aria-label="${issue ? t.issueTitle : t.reportTitle}"><div class="form-heading"><div class="row"><h3>${issue ? t.issueTitle :final?t.finalTitle:contribution?t.contributionTitle:t.reportTitle}</h3>${this.button('close-form', t.cancel, 'plain', '', '', this.busy)}</div><p>${issue ? t.issueSubtitle :final?t.finalSubtitle:contribution?t.contributionSubtitle:t.reportSubtitle}</p></div>
       ${d.frozen ? `<div class="note-box">${t.frozen}</div>` : ''}
       ${['conflict','rejected'].includes(d.delivery)?`<div class="note-box">${d.delivery==='rejected'?t.draftRejected:t.draftConflict}${this.button('rebase-draft',t.rebaseDraft,'secondary')}</div>`:''}
-      ${issue ? `<div class="field"><label for="reason">${t.reason}</label><select id="reason" data-field="reason" ${disabled}>${REASONS.map(reason => `<option ${d.reason === reason ? 'selected' : ''}>${escape(reason)}</option>`).join('')}</select></div>` : ''}
-      ${final||issue&&!this.demo?'':`<div class="field"><label>${issue ? t.issuePhotoStep : t.photoStep}</label>${this.previewURL ? `<figure class="preview"><img src="${this.previewURL}" alt="${t.photoAlt}"><figcaption>${escape(d.photo?.name || 'photo')} · ${((d.photo?.size || 0) / 1024).toFixed(0)} КБ</figcaption></figure>` : ''}
+      ${issue ? `<div class="field"><label for="reason">${t.reason}</label><select id="reason" data-field="reason" ${disabled}>${REASONS.map(reason => `<option value="${escape(reason)}" ${d.reason === reason ? 'selected' : ''}>${escape(t.reasonNames[reason] || reason)}</option>`).join('')}</select></div>` : ''}
+      ${final||issue&&!this.demo?'':`<div class="field"><label>${issue ? t.issuePhotoStep : t.photoStep}</label>${this.previewURL ? `<figure class="preview"><img src="${this.previewURL}" alt="${t.photoAlt}"><figcaption>${escape(d.photo?.name || 'photo')} · ${((d.photo?.size || 0) / 1024).toFixed(0)} ${t.kbUnit}</figcaption></figure>` : ''}
         <input type="file" id="photo" class="file-input" accept="image/jpeg,image/png,image/webp" aria-label="${t.choosePhoto}" ${disabled}><input type="file" id="camera" class="file-input" accept="image/jpeg,image/png,image/webp" capture="environment" aria-label="${t.takePhoto}" ${disabled}>
         <div class="field-actions">${this.button('choose-photo', d.photo ? t.replacePhoto : t.choosePhoto, 'secondary', 'photo', '', locked)}${this.button('camera', t.takePhoto, 'secondary', 'camera', '', locked)}${d.photo ? this.button('remove-photo', t.removePhoto, 'plain', '', '', locked) : ''}</div><small>${this.demo?t.photoHint:t.serverPhotoHint}</small>
       </div>`}
@@ -272,9 +311,9 @@ export class GreenWorker extends HTMLElement {
       ${final?`<fieldset class="people-picker"><legend>${t.actualWorkers}</legend>${this.selected.assignedWorkerIds.map(id=>`<label class="person-option"><input type="checkbox" data-actual-worker="${escape(id)}" ${d.actualWorkerIds.includes(id)?'checked':''} ${disabled}><span>${escape(this.crewWorkspace?.workers.find(w=>w.id===id)?.displayName||id)}</span></label>`).join('')}</fieldset>${!approvedDesign(this.selected)?`<label class="person-option"><input type="checkbox" data-field="foremanChecked" ${d.foremanChecked?'checked':''} ${disabled}><span>${t.foremanCheck}</span></label>`:''}`:''}
       <div class="field"><label for="note">${issue ? t.issueNote : t.noteStep}</label><textarea id="note" data-field="note" maxlength="4000" placeholder="${t.notePlaceholder}" ${disabled}>${escape(d.note)}</textarea><small>${issue||this.demo?t.noteOptional:t.noteRequired}</small></div>
       <div>${this.button('analyze', this.aiBusy ? t.analyzing : t.analyze, 'secondary full', 'spark', '', locked || this.aiBusy)}<p class="small muted" style="margin-top:7px">${t.aiOptional}</p>${this.demo ? `<p class="small muted" style="margin-top:4px">${t.aiDemo}</p>` : ''}</div>
-      ${this.suggestion ? `<div class="ai-box"><h3>${t.aiTitle}</h3><p class="small muted">${t.original}</p><blockquote>${escape(this.suggestion.provenance?.originalText)}</blockquote><div class="field"><label for="ai-category">${t.category}</label><select id="ai-category" ${disabled}>${Object.entries(OBSERVATION_CATEGORIES).map(([key,label])=>`<option value="${key}" ${key===this.suggestion.category?'selected':''}>${label}</option>`).join('')}</select></div><div class="field"><label for="ai-facts">${t.facts}</label><textarea id="ai-facts" maxlength="4000" ${disabled}>${escape(this.suggestion.facts.join('\n'))}</textarea></div><p class="small muted">${t.aiUnconfirmed}</p><div class="field-actions">${this.button('accept-ai', t.acceptAI, 'primary', 'check', '', locked)}${this.button('reject-ai', t.rejectAI, 'plain', '', '', locked)}</div></div>` : ''}
-      ${d.analysis ? `<div class="ai-box"><strong class="small">${t.aiAccepted}</strong><p class="small">${escape(OBSERVATION_CATEGORIES[d.analysis.category]||d.analysis.category)}: ${d.analysis.facts.map(escape).join('; ')}</p>${this.button('reject-ai', t.rejectAI, 'plain', '', '', locked)}</div>` : ''}
-      ${issue&&!this.demo?'':`<div class="geo-box"><h3>${t.geoTitle}</h3><p>${t.geoText}</p>${d.geo ? `<p>${Number(d.geo.latitude).toFixed(5)}, ${Number(d.geo.longitude).toFixed(5)} · ${t.accuracy}: ±${Math.round(d.geo.accuracy)} м</p>${this.button('remove-geo', t.removePhoto, 'plain', '', '', locked)}` : this.button('geo', this.geoBusy ? t.geoWaiting : t.geoAdd, 'secondary', 'pin', '', locked || this.geoBusy)}</div>`}
+      ${this.suggestion ? `<div class="ai-box"><h3>${t.aiTitle}</h3><p class="small muted">${t.original}</p><blockquote>${escape(this.suggestion.provenance?.originalText)}</blockquote><div class="field"><label for="ai-category">${t.category}</label><select id="ai-category" ${disabled}>${Object.entries(OBSERVATION_CATEGORIES).map(([key,label])=>`<option value="${key}" ${key===this.suggestion.category?'selected':''}>${escape(t.observationNames[key])}</option>`).join('')}</select></div><div class="field"><label for="ai-facts">${t.facts}</label><textarea id="ai-facts" maxlength="4000" ${disabled}>${escape(this.suggestion.facts.join('\n'))}</textarea></div><p class="small muted">${t.aiUnconfirmed}</p><div class="field-actions">${this.button('accept-ai', t.acceptAI, 'primary', 'check', '', locked)}${this.button('reject-ai', t.rejectAI, 'plain', '', '', locked)}</div></div>` : ''}
+      ${d.analysis ? `<div class="ai-box"><strong class="small">${t.aiAccepted}</strong><p class="small">${escape(t.observationNames[d.analysis.category]||d.analysis.category)}: ${d.analysis.facts.map(escape).join('; ')}</p>${this.button('reject-ai', t.rejectAI, 'plain', '', '', locked)}</div>` : ''}
+      ${issue&&!this.demo?'':`<div class="geo-box"><h3>${t.geoTitle}</h3><p>${t.geoText}</p>${d.geo ? `<p>${Number(d.geo.latitude).toFixed(5)}, ${Number(d.geo.longitude).toFixed(5)} · ${t.accuracy}: ±${Math.round(d.geo.accuracy)} ${this.t.meterUnit}</p>${this.button('remove-geo', t.removePhoto, 'plain', '', '', locked)}` : this.button('geo', this.geoBusy ? t.geoWaiting : t.geoAdd, 'secondary', 'pin', '', locked || this.geoBusy)}</div>`}
       <p class="save-status">${icon('cloud')}<span data-save-status>${this.saveState === 'saved' ? t.savedDevice : this.saveState === 'failed' ? t.saveFailed : t.savePending}</span></p>
       ${this.button('send', this.busy ? t.sending : d.frozen ? t.sendAgain : issue ? t.sendIssue : final?t.sendFinal:contribution?t.sendMaterials:t.sendReport, 'primary full', 'arrow', '', this.busy||['conflict','rejected'].includes(d.delivery))}
     </section>`;
