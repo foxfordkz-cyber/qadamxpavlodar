@@ -1,8 +1,29 @@
 # Cloud API contract — PostgreSQL planning and workflow
 
 Status, 31 October 2026: **local PostgreSQL verified; public deployment BLOCKED**.
-The owner confirmed that Render/Supabase access is not available. No public backend origin exists
-for this work, and no paid service was created. The existing Cloudflare publication is a mock.
+The owner reconfirmed that Render/Supabase access is not available. The available browser redirects
+all three provider dashboards to sign-in. No Render origin or deployed SHA has been verified for
+this work, and no service/payment/account setting was changed. The existing Cloudflare publication
+is a mock, preserved as an independent reserve.
+
+**Owner-ready deployment:** [exact Dashboard steps, env checklist and executable HTTPS/restart/reseed acceptance](cloud-provider-deployment.md).
+Local preparation and fresh test evidence: [cloud-deployment-readiness.md](cloud-deployment-readiness.md).
+
+| Handoff field for Тәңірберді | Actual state |
+| --- | --- |
+| Render service / HTTPS origin | Desired name green-pavlodar-api-demo; service existence unverified; URL NOT AVAILABLE |
+| Deployed SHA | NOT RUN; agreed application candidate 3b14927def04b35bf97782eae6b550da276c779f |
+| Supabase project / PostgreSQL | Desired separate green-pavlodar-demo; actual project/access BLOCKED |
+| Private Storage | Desired green-pavlodar-photos; actual bucket/provider acceptance NOT RUN |
+| Health/readiness / HTTPS role workflow | Locally verified; provider NOT RUN; ready must include configured photos and schemaVersion 5 |
+| Restart/redeploy/same-SHA persistence | Local native PG + private HTTP test storage verified; actual provider NOT RUN |
+| Cloudflare fixed same-origin proxy | Owner reports 13/13 Node tests; actual Pages API runtime NOT RUN; mock unchanged |
+| Source versions | PR #39 stays Draft; operator tooling HEAD is not automatically a new approved deployed SHA |
+
+The new check:cloud-deployment CLI is read-only and never applies migrations or seed.
+The cloud-https-acceptance runner is explicitly synthetic, makes real HTTP mutations only after
+owner opt-in, and retains a non-secret manifest for repeat verification. Neither tool controls
+Render restart/redeploy or proves the deployed SHA; record those independently from Dashboard.
 
 Stages A/B/C/D extend the existing PR #39; base remains `98cf6c68d5370331d6f95aa9e749f82d504e5670`.
 Branch: `codex/cloud-api-persistence`; target: `codex/coordinator`, **Draft**.
@@ -329,6 +350,12 @@ HTML/502/503 before Express is available; the proxy/client must preserve that fa
 bounded, cancelable read retry. Never infer write success from a timeout.
 
 ## Configuration and owner deployment steps
+
+The complete current runbook is [cloud-provider-deployment.md](cloud-provider-deployment.md).
+Use `cloud.production.env.example` for production, not the local-test defaults below.
+For the agreed SHA, SUPABASE_SERVICE_ROLE_KEY is a legacy service_role JWT: the adapter sends
+apikey and Bearer with the same credential. Modern sb_secret keys need separate compatibility
+verification; do not silently substitute an anon/publishable key or disable authentication.
 
 `apps/server/cloud.env.example` contains names and local defaults, no credentials. Copy it to the
 Git-ignored `.env.cloud` for an isolated local configuration. Production must omit

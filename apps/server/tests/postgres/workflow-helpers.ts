@@ -54,5 +54,5 @@ export async function postgresFixture(t:TestContext,backendEnv:Record<string,str
    let output='';proc.stdout.on('data',(b:Buffer)=>{output+=b.toString();});proc.stderr.resume();const [code]=await once(proc,'exit');return {code,output};
  }
  async function isolatedDatabase(name:string){assert(/^qa_[a-z_]+$/.test(name));await db.pool.query('CREATE DATABASE '+name);const url=new URL(connectionString);url.pathname='/'+name;return new PostgresDatabase({connectionString:url.toString(),ssl:false});}
- return {validate,cli,isolatedDatabase,get db(){return db;},dir,base,request,ok,login,sessions,start,stop,restart,reseed,snapshot,createUser,spec};
+ return {validate,cli,isolatedDatabase,get db(){return db;},dir,base,request,ok,login,sessions,start,stop,restart,reseed,snapshot,createUser,spec,acceptancePassword:password};
 }
