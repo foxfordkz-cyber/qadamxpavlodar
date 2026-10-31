@@ -35,7 +35,7 @@ async function expectKazakhCabinet(page: Page, role: 'worker' | 'foreman') {
   // Return only the role, never a session/CSRF response, to assertions/reporters.
   const actualRole = await page.evaluate(async () => {
     const response = await fetch('/api/v1/auth/me', { credentials: 'same-origin' });
-    return response.ok ? (await response.json()).data.role : `HTTP ${response.status}`;
+    return response.ok ? (await response.json()).data.user.role : `HTTP ${response.status}`;
   });
   expect(actualRole).toBe(role);
   const cabinet = page.locator('green-worker');
