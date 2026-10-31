@@ -1,0 +1,31 @@
+{
+  "reviewedBy": "root via view_image",
+  "reviewedCount": 5,
+  "screenshots": [
+    {
+      "name": "viewer-preserved-photo-1280.png",
+      "sha256": "e5ee90815393fe1d0f5a54b1ee08a25ac96cd1cf6eba90952f1d1a04b8d327fa",
+      "usableAsScenarioEvidence": true
+    },
+    {
+      "name": "worker-preserved-1280.png",
+      "sha256": "a830ce9748d5e0d28c0e71343a5ab7530b1da98dcc95200db95acfd372919f61",
+      "usableAsScenarioEvidence": true
+    },
+    {
+      "name": "worker-preserved-375.png",
+      "sha256": "e653e9e929ce73a9b4a8e94316ed349e95f9c834a6930159a67a40693b2e4624",
+      "usableAsScenarioEvidence": true
+    },
+    {
+      "name": "worker-submitted-375.png",
+      "sha256": "7b93daa5b441ef023d18c0bda4136b4d38dbfd0ab62651be46f571dc6fd78d4d",
+      "usableAsScenarioEvidence": true
+    }
+  ],
+  "diagnosticOnly": {
+    "name": "renamed-zone-1280.png",
+    "sha256": "c5736065c59916233e5ebf25527c1edf8f5a1fdcb2a82e9e51c2d8177941b118",
+    "reason": "First-run hint is open and map is not yet ready. Not approved for slides or as visual proof of the Tolstogo name. The DOM assertion is reported separately."
+  }
+}

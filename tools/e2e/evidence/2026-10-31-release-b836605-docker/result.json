@@ -1,0 +1,542 @@
+{
+  "kind": "independent-isolated-docker",
+  "startedAt": "2026-10-31T10:14:37.777Z",
+  "applicationBase": "98cf6c68d5370331d6f95aa9e749f82d504e5670",
+  "testSHA": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+  "appsTree": "16454d07e3b76df4bf7b0bc86933f52acd394ad0",
+  "project": "gp-aidana-qa-1793441677776",
+  "port": 18083,
+  "baseURL": "http://localhost:18083",
+  "volume": "gp-aidana-qa-1793441677776_gp-data",
+  "checks": [
+    {
+      "name": "isolated deployment identity and health",
+      "status": "passed",
+      "durationMs": 52879,
+      "details": {
+        "health": 200,
+        "newVolume": "gp-aidana-qa-1793441677776_gp-data",
+        "existing8080Untouched": true
+      }
+    },
+    {
+      "name": "image source provenance",
+      "status": "passed",
+      "durationMs": 4451,
+      "details": {
+        "apps/web/src/shared/analytics/decisionLab.ts": "88b621750bce300b2bb8891a30496ad5e980e5ae1c01630770a2abdfe5f6362d",
+        "apps/server/src/outcomes/service.ts": "6b7bc8f82b78fca439ec9c4340413f8b8bfcd9814449750a5a3a49b551291f3f",
+        "apps/server/src/v2/report-routes.ts": "81f5b45d998b292053f84e9d9008a76beb8e2074d8d972efb6a5b51d988f66c8",
+        "apps/server/src/tz/seed-cli.ts": "e29c81a9febe6e4e22468c496070f8fe2fb97f10bf7af75b9a54b4301d19bafc"
+      }
+    },
+    {
+      "name": "opt-in synthetic Outcomes seed",
+      "status": "passed",
+      "durationMs": 8984,
+      "details": {
+        "created": true,
+        "trees": 32
+      }
+    },
+    {
+      "name": "five real roles authenticate through nginx",
+      "status": "passed",
+      "durationMs": 1487,
+      "details": {
+        "roles": [
+          "admin",
+          "coordinator",
+          "viewer",
+          "worker",
+          "foreman"
+        ],
+        "httpOnly": true,
+        "sameSite": "Strict",
+        "passwordPersistedToFiles": false
+      }
+    },
+    {
+      "name": "snapshot and cohort from 32 canonical synthetic registry trees",
+      "status": "passed",
+      "durationMs": 1929,
+      "details": {
+        "siteId": "site-osm-1569993037",
+        "siteName": "Газон, улица Толстого",
+        "cohortId": "aidana-docker-cohort",
+        "forecastId": "aidana-docker-forecast",
+        "plants": 32,
+        "provenance": "demo"
+      }
+    },
+    {
+      "name": "task assignment and worker start through real API",
+      "status": "passed",
+      "durationMs": 69,
+      "details": {
+        "taskId": "f4272ae2-02e7-4dbb-bc20-202116b21661",
+        "status": "in_progress"
+      }
+    },
+    {
+      "name": "worker browser uploads synthetic photo and submits report through nginx",
+      "status": "passed",
+      "durationMs": 3350,
+      "details": {
+        "reportId": "2ae76265-cf0c-4886-bf0f-aa10cbe3a8b4",
+        "photoId": "80d3b05f-b45d-44b1-b0f0-b9127c94c463",
+        "status": "pending",
+        "browserWidth": 375
+      }
+    },
+    {
+      "name": "coordinator acceptance, replay and linked inspection",
+      "status": "passed",
+      "durationMs": 1128,
+      "details": {
+        "reportId": "2ae76265-cf0c-4886-bf0f-aa10cbe3a8b4",
+        "inspectionId": "aidana-docker-inspection",
+        "reportLinked": true,
+        "acceptanceReplay": true,
+        "inspectionReplay": true,
+        "summary": {
+          "cohortId": "aidana-docker-cohort",
+          "inspectionId": "aidana-docker-inspection",
+          "total": 32,
+          "inspected": 1,
+          "assessed": 1,
+          "alive": 1,
+          "dead": 0,
+          "unknown": 31,
+          "notInspected": 31,
+          "inspectionCoveragePct": 3.125,
+          "assessmentCoveragePct": 3.125,
+          "survivalAmongAssessedPct": 100,
+          "wholeCohortSurvivalPct": null,
+          "dataClass": "demo",
+          "isDemo": true
+        }
+      }
+    },
+    {
+      "name": "viewer reads existing data and cannot mutate",
+      "status": "passed",
+      "durationMs": 3245,
+      "details": {
+        "readPaths": 8,
+        "rejectedWrites": 3,
+        "photoBytes": 540,
+        "photoSha256": "e7f8de793ab16b1c2e487358f524f940880d125b635989d765c7a3ac543281df",
+        "businessStateUnchanged": true
+      }
+    },
+    {
+      "name": "saved forecast remains immutable after current price change",
+      "status": "passed",
+      "durationMs": 130,
+      "details": {
+        "forecastSha256": "9a502fa90184e20cd5256c1904aee6b54c4ad7e3c002260d954231f3218406e8",
+        "unchanged": true
+      }
+    },
+    {
+      "name": "restart retains data, photo, history, forecast and session",
+      "status": "passed",
+      "durationMs": 13414,
+      "details": {
+        "tablesPreserved": 16,
+        "readEndpointsPreserved": 7,
+        "photoSha256": "e7f8de793ab16b1c2e487358f524f940880d125b635989d765c7a3ac543281df",
+        "viewerSessionRetained": true,
+        "integrity": "ok",
+        "foreignKeyFailures": 0
+      }
+    },
+    {
+      "name": "repeated seed is idempotent with accepted report and inspection",
+      "status": "passed",
+      "durationMs": 18528,
+      "details": {
+        "tablesPreserved": 16,
+        "readEndpointsPreserved": 7,
+        "photoSha256": "e7f8de793ab16b1c2e487358f524f940880d125b635989d765c7a3ac543281df",
+        "viewerSessionRetained": true,
+        "integrity": "ok",
+        "foreignKeyFailures": 0
+      }
+    },
+    {
+      "name": "container recreation retains the same isolated volume",
+      "status": "passed",
+      "durationMs": 26111,
+      "details": {
+        "tablesPreserved": 16,
+        "readEndpointsPreserved": 7,
+        "photoSha256": "e7f8de793ab16b1c2e487358f524f940880d125b635989d765c7a3ac543281df",
+        "viewerSessionRetained": true,
+        "integrity": "ok",
+        "foreignKeyFailures": 0
+      }
+    },
+    {
+      "name": "browser reads preserved photo and real renamed zone through nginx",
+      "status": "passed",
+      "durationMs": 3215,
+      "details": {
+        "reportId": "2ae76265-cf0c-4886-bf0f-aa10cbe3a8b4",
+        "photoDecodedAfterReload": true,
+        "zoneName": "Газон, улица Толстого",
+        "viewerMutationControlsAbsent": true
+      }
+    },
+    {
+      "name": "worker navigation remains usable on desktop and phone after recreation",
+      "status": "passed",
+      "durationMs": 3251,
+      "details": {
+        "widths": [
+          1280,
+          375
+        ],
+        "sections": [
+          "shift",
+          "journal",
+          "profile"
+        ]
+      }
+    },
+    {
+      "name": "logout revokes session and fresh login still works",
+      "status": "passed",
+      "durationMs": 447,
+      "details": {
+        "logout": 200,
+        "oldSession": 401,
+        "relogin": 200
+      }
+    }
+  ],
+  "commands": [
+    {
+      "command": "docker ps names/ports only",
+      "exitCode": 0,
+      "at": "2026-10-31T10:14:42.635Z"
+    },
+    {
+      "command": "docker volume ls names only",
+      "exitCode": 0,
+      "at": "2026-10-31T10:14:44.423Z"
+    },
+    {
+      "command": "compose -p gp-aidana-qa-1793441677776 up -d --no-build",
+      "exitCode": 0,
+      "at": "2026-10-31T10:15:30.626Z"
+    },
+    {
+      "command": "docker image inspect [Id only]",
+      "exitCode": 0,
+      "at": "2026-10-31T10:15:31.832Z"
+    },
+    {
+      "command": "docker version server only",
+      "exitCode": 0,
+      "at": "2026-10-31T10:15:32.481Z"
+    },
+    {
+      "command": "compose exec server node [QA fixture/read-only hash program]",
+      "exitCode": 0,
+      "at": "2026-10-31T10:15:36.919Z"
+    },
+    {
+      "command": "compose exec server seed:outcomes",
+      "exitCode": 0,
+      "at": "2026-10-31T10:15:45.928Z"
+    },
+    {
+      "command": "compose exec server node [QA fixture/read-only hash program]",
+      "exitCode": 0,
+      "at": "2026-10-31T10:15:49.233Z"
+    },
+    {
+      "command": "compose exec server node [QA fixture/read-only hash program]",
+      "exitCode": 0,
+      "at": "2026-10-31T10:15:54.056Z"
+    },
+    {
+      "command": "compose exec server node [QA fixture/read-only hash program]",
+      "exitCode": 0,
+      "at": "2026-10-31T10:15:55.827Z"
+    },
+    {
+      "command": "compose exec server node [QA fixture/read-only hash program]",
+      "exitCode": 0,
+      "at": "2026-10-31T10:15:57.303Z"
+    },
+    {
+      "command": "compose exec server node [QA fixture/read-only hash program]",
+      "exitCode": 0,
+      "at": "2026-10-31T10:15:59.216Z"
+    },
+    {
+      "command": "compose -p gp-aidana-qa-1793441677776 restart server",
+      "exitCode": 0,
+      "at": "2026-10-31T10:16:00.475Z"
+    },
+    {
+      "command": "compose exec server node [QA fixture/read-only hash program]",
+      "exitCode": 0,
+      "at": "2026-10-31T10:16:12.081Z"
+    },
+    {
+      "command": "compose exec server seed:tz repeat",
+      "exitCode": 0,
+      "at": "2026-10-31T10:16:21.421Z"
+    },
+    {
+      "command": "compose exec server seed:outcomes repeat",
+      "exitCode": 0,
+      "at": "2026-10-31T10:16:27.760Z"
+    },
+    {
+      "command": "compose exec server node [QA fixture/read-only hash program]",
+      "exitCode": 0,
+      "at": "2026-10-31T10:16:29.891Z"
+    },
+    {
+      "command": "compose -p gp-aidana-qa-1793441677776 up --force-recreate server",
+      "exitCode": 0,
+      "at": "2026-10-31T10:16:37.361Z"
+    },
+    {
+      "command": "compose exec server node [QA fixture/read-only hash program]",
+      "exitCode": 0,
+      "at": "2026-10-31T10:16:56.826Z"
+    },
+    {
+      "command": "compose -p gp-aidana-qa-1793441677776 stop [only QA containers; volume preserved]",
+      "exitCode": 0,
+      "at": "2026-10-31T10:17:09.096Z"
+    }
+  ],
+  "limitations": [
+    "Local Docker HTTP through nginx; not public HTTPS or cloud storage.",
+    "All records and images are explicitly synthetic/demo.",
+    "No native Microsoft Word opening is claimed."
+  ],
+  "images": [
+    "sha256:afad6fe98abb04da4a1a63ed3b84eb9d34869f5506cd2bdafa22854afbda74fa",
+    "sha256:95cc8530c22d365e33f4824ff1af284fbc7a09029f2cd6cd94fb4ee0538147d2"
+  ],
+  "dockerEngine": "29.2.0",
+  "forecastHash": "9a502fa90184e20cd5256c1904aee6b54c4ad7e3c002260d954231f3218406e8",
+  "status": "PASS",
+  "summary": {
+    "alive": 1,
+    "dead": 0,
+    "unknown": 31,
+    "wholeCohortSurvivalPct": null
+  },
+  "persistenceBaseline": {
+    "tables": {
+      "v2_tasks": {
+        "count": 1,
+        "sha256": "3898d647f57a8210bdb64eab1fbadc70fce2f56af776f00bbe34e79dc8698d18"
+      },
+      "v2_reports": {
+        "count": 1,
+        "sha256": "0de7a292b02c360a177cd6f8c541cc38929bcf1a8229090dc74008d65f5606a8"
+      },
+      "v2_uploads": {
+        "count": 1,
+        "sha256": "9720a55892642fc8574a92af9deeb230f13a2b213f968b67f44290153bb6c070"
+      },
+      "v2_report_drafts": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "v2_history": {
+        "count": 17,
+        "sha256": "85c08ddda0ecce39fb9236e3ef4b316003e4481015f88d4ebd64e0e383934a90"
+      },
+      "v2_documents": {
+        "count": 404,
+        "sha256": "1b28e65f967ab4cad97d6081e62605279c382b2270a7cc5c7064f95513ba66dd"
+      },
+      "v2_crews": {
+        "count": 2,
+        "sha256": "d9286b64c353804e22af751ca4685a85aa29959fe31ba664c320ddb985f79fda"
+      },
+      "v2_memberships": {
+        "count": 4,
+        "sha256": "c58ab16e0480cf9caebcaaaeeddf2821dafa9e4823a8ec1c35cea4e015d88712"
+      },
+      "v2_users": {
+        "count": 10,
+        "sha256": "2aa29fbc5e69cfc42b1fc43a75e600eeaea06a79aeabbb852201a80787752229"
+      },
+      "v2_profiles": {
+        "count": 6,
+        "sha256": "15be82fc10040489c83a03acdac2f923efe418c2076d3d9139b2e17bb637ef2a"
+      },
+      "v2_idempotency": {
+        "count": 12,
+        "sha256": "1eb56e584688662cd146fdbc2288e46ec7f215998a61f5e76622ca83bd7db722"
+      },
+      "outcome_snapshots": {
+        "count": 2,
+        "sha256": "296aff6a8476ccf73566c75e282bfdc1dbbf6508475c53c07b26dc7aaf010468"
+      },
+      "outcome_cohorts": {
+        "count": 2,
+        "sha256": "5e36cc294320df6f0ffe63ee39551b3a9bcb2cfd34967e192368db039438c80f"
+      },
+      "outcome_members": {
+        "count": 64,
+        "sha256": "454baccbb5aa0640b95c73f7e1aab9398328ec3099fcaa390d8810c6535a4838"
+      },
+      "outcome_inspections": {
+        "count": 2,
+        "sha256": "08c87e133951b5d877498c4bb5f81afffadcc6e7327d68cfc0a7f223bfae7dfa"
+      },
+      "outcome_sources": {
+        "count": 4,
+        "sha256": "91fb72c730476de458ef40167b503003780ce19050045859ac7e34cd67bdbeed"
+      }
+    },
+    "integrity": "ok",
+    "foreignKeyFailures": 0
+  },
+  "ids": {
+    "task": "f4272ae2-02e7-4dbb-bc20-202116b21661",
+    "report": "2ae76265-cf0c-4886-bf0f-aa10cbe3a8b4",
+    "photo": "80d3b05f-b45d-44b1-b0f0-b9127c94c463",
+    "cohort": "aidana-docker-cohort",
+    "inspection": "aidana-docker-inspection",
+    "forecast": "aidana-docker-forecast"
+  },
+  "stopped": true,
+  "finishedAt": "2026-10-31T10:17:09.098Z",
+  "counts": {
+    "passed": 16,
+    "failed": 0,
+    "skipped": 0,
+    "fixme": 0,
+    "flaky": 0
+  },
+  "secretScan": "passed",
+  "imageBindings": {
+    "web": {
+      "name": "/gp-aidana-qa-1793441677776-web-1",
+      "imageId": "sha256:afad6fe98abb04da4a1a63ed3b84eb9d34869f5506cd2bdafa22854afbda74fa",
+      "imageTag": "gp-aidana-qa-20261031-web",
+      "state": "exited",
+      "project": "gp-aidana-qa-1793441677776",
+      "mounts": []
+    },
+    "server": {
+      "name": "/gp-aidana-qa-1793441677776-server-1",
+      "imageId": "sha256:95cc8530c22d365e33f4824ff1af284fbc7a09029f2cd6cd94fb4ee0538147d2",
+      "imageTag": "gp-aidana-qa-20261031-server",
+      "state": "exited",
+      "project": "gp-aidana-qa-1793441677776",
+      "mounts": [
+        {
+          "type": "volume",
+          "name": "gp-aidana-qa-1793441677776_gp-data",
+          "destination": "/data",
+          "readWrite": true
+        }
+      ]
+    }
+  },
+  "build": {
+    "exitCode": 0,
+    "webBuildArgs": {
+      "DATA_SOURCE": "mock"
+    },
+    "sourceSHA": "b836605ed1ecb5eea3425f52bf2f47b178487de5",
+    "applicationBase": "98cf6c68d5370331d6f95aa9e749f82d504e5670",
+    "appsTree": "16454d07e3b76df4bf7b0bc86933f52acd394ad0",
+    "logSha256": "4abb141a39f521b54a2c621d070a70ff70690ddf48020f86ecf0fbfc5fc2fc78",
+    "hostNode": "24.22.2"
+  },
+  "sourceArtifacts": {
+    "runner": {
+      "path": "tools/e2e/test-results/docker-qa/acceptance.mjs",
+      "sha256": "d218d734329b16cbe11db488f0d4773b0077354c0ed7056b8a35a5646ff79879"
+    },
+    "overlay": {
+      "path": "tools/e2e/test-results/docker-qa/compose.override.json",
+      "sha256": "2e9f72e463ad8ba89be57d391fdd1f7709503c4ef87a9aae3540f343bf594cd7"
+    },
+    "buildRunner": {
+      "path": "tools/e2e/test-results/docker-qa/build.mjs",
+      "sha256": "bf490258565d807d959286fed42cfe280f8ee22c5867ff140835688c135b35eb"
+    }
+  },
+  "artifacts": [
+    {
+      "name": "worker-submitted-375.png",
+      "sha256": "7b93daa5b441ef023d18c0bda4136b4d38dbfd0ab62651be46f571dc6fd78d4d",
+      "bytes": 38899,
+      "review": "pending independent visual review"
+    },
+    {
+      "name": "viewer-preserved-photo-1280.png",
+      "sha256": "e5ee90815393fe1d0f5a54b1ee08a25ac96cd1cf6eba90952f1d1a04b8d327fa",
+      "bytes": 125125,
+      "review": "pending independent visual review"
+    },
+    {
+      "name": "renamed-zone-1280.png",
+      "sha256": "c5736065c59916233e5ebf25527c1edf8f5a1fdcb2a82e9e51c2d8177941b118",
+      "bytes": 153878,
+      "review": "pending independent visual review"
+    },
+    {
+      "name": "worker-preserved-1280.png",
+      "sha256": "a830ce9748d5e0d28c0e71343a5ab7530b1da98dcc95200db95acfd372919f61",
+      "bytes": 69998,
+      "review": "pending independent visual review"
+    },
+    {
+      "name": "worker-preserved-375.png",
+      "sha256": "e653e9e929ce73a9b4a8e94316ed349e95f9c834a6930159a67a40693b2e4624",
+      "bytes": 53841,
+      "review": "pending independent visual review"
+    }
+  ],
+  "previousAttempt": {
+    "file": "result-attempt-01.json",
+    "sha256": "6b77c30f7306c466be003e38aa205eca50c388e3dfc09c0e5b6d3558c611aa4c",
+    "runner": "acceptance-attempt-01.mjs",
+    "runnerSha256": "f546f31290084d11194304c212b16b2192761f414b186a59b16c6a43c689e99a",
+    "classification": "QA fixture scheduling error",
+    "counts": {
+      "passed": 5,
+      "failed": 1,
+      "skipped": 0,
+      "fixme": 0,
+      "flaky": 0
+    },
+    "reason": "First fixture scheduled the seeded demo worker on Saturday 31.10 outside availability: actual 409 WORKER_UNAVAILABLE. Repeat used canonical seeded Wednesday 2026-10-28 in both task and browser shift selector, on a new isolated volume. No application or expectation weakening."
+  },
+  "runtimeVersions": {
+    "node": "24.22.2",
+    "nginx": "1.27.5",
+    "verification": "Read from the exact recorded image IDs in disposable networkless, read-only containers with no credentials or exposed ports; server /data was tmpfs, no existing volume was mounted. Both commands exited 0.",
+    "commands": [
+      "docker run --rm --network none --read-only --tmpfs /data --entrypoint node sha256:95cc8530c22d365e33f4824ff1af284fbc7a09029f2cd6cd94fb4ee0538147d2 --version",
+      "docker run --rm --network none --read-only --entrypoint nginx sha256:afad6fe98abb04da4a1a63ed3b84eb9d34869f5506cd2bdafa22854afbda74fa -v"
+    ]
+  },
+  "publicationSafety": {
+    "noEnvFilesUsed": true,
+    "passwordOnlyInProcessAndContainerEnvironment": true,
+    "noCredentialsOrCookieStateFiles": true,
+    "noApiTraceOrErrorContext": true,
+    "photosSyntheticOnly": true,
+    "onlyQaContainersStopped": true,
+    "allVolumesPreserved": true
+  }
+}
