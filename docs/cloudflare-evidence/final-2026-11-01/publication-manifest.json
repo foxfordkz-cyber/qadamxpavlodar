@@ -1,0 +1,211 @@
+{
+  "schema": "green-pavlodar-final-publication-v1",
+  "acceptedCoordinatorSha": "84d009e3b72c4fe637ef30607e29701054b6c621",
+  "status": "BOTH_PUBLICATIONS_CONFIRMED_AND_STATIC_FILES_VERIFIED; INDEPENDENT_QA_PENDING",
+  "publicationWindow": {
+    "start": "2026-11-01T00:00:00+05:00",
+    "end": "2026-11-01T00:20:00+05:00",
+    "confirmation": "Aidana confirmation relayed by user",
+    "evidenceUrl": "https://github.com/foxfordkz-cyber/qadamxpavlodar/pull/35#issuecomment-6547696482"
+  },
+  "frozenSince": "2026-11-01T00:04:00+05:00",
+  "freeze": {
+    "scope": "Both frontend production publications",
+    "instruction": "No further frontend deployments until Aidana acceptance is complete or a critical change is explicitly coordinated",
+    "backendRestartPerformed": false
+  },
+  "sourceAttribution": "Cloudflare Direct Upload confirms deployment UUID and immutable URL; exact frontend source SHA is attributed by the input ZIP build manifest and verified public byte/hash equality, not by a Git SHA returned by Cloudflare",
+  "publications": [
+    {
+      "project": "green-pavlodar-api",
+      "dataSource": "api",
+      "productionUrl": "https://green-pavlodar-api.pages.dev/",
+      "explicitModeUrl": "https://green-pavlodar-api.pages.dev/?source=api",
+      "immutableUrl": "https://a26bd214.green-pavlodar-api.pages.dev/",
+      "deploymentId": "a26bd214-1c78-4a83-9536-74a35c85b49f",
+      "providerStatus": "success",
+      "providerUiDisplayedCreationTime": "2026-11-01T00:00:00+05:00",
+      "providerTimePrecision": "minute",
+      "providerTimeZone": "UTC+5 from operator browser/client context",
+      "providerEvidence": "api-cloudflare-success.jpg",
+      "frontendSourceSha": "c970264919de2f7a62d0e1ea8a28cc70c95a3864",
+      "sourceEquivalentToAcceptedForDirectories": [
+        "apps/web",
+        "tools/worker-demo",
+        "cloudflare"
+      ],
+      "archive": {
+        "file": "green-pavlodar-api.zip",
+        "bytes": 1644189,
+        "sha256": "24118f721ba6becab51c5728ea87fb0154e85db76c9007db831979b66c36edc0"
+      },
+      "buildManifest": "api-build-c970264.json",
+      "staticVerification": {
+        "file": "published-api-a26bd214-static.json",
+        "filesPerOrigin": 34,
+        "origins": [
+          "https://green-pavlodar-api.pages.dev",
+          "https://a26bd214.green-pavlodar-api.pages.dev"
+        ],
+        "passed": 68,
+        "total": 68,
+        "startedAt": "2026-10-31T19:01:54.210701+00:00",
+        "finishedAt": "2026-10-31T19:02:13.282901+00:00",
+        "note": "Timestamps retain the explicit offset recorded by the verifier; the offset is authoritative"
+      },
+      "anonymousApiProbes": {
+        "scope": "Production only, unauthenticated GET without cookies/credentials/mutations",
+        "passed": 2,
+        "total": 2,
+        "readiness": "200 JSON; no-store, private",
+        "authMe": "401 JSON; no-store, private"
+      },
+      "proxy": {
+        "upstreamOrigin": "https://green-pavlodar-api-demo.onrender.com",
+        "sameOriginPath": "/api/*",
+        "compatibilityDate": "2026-06-16",
+        "compatibilityFlags": [],
+        "failureMode": "Fail closed",
+        "immutableApi": "Intentional 421; authenticated usage is through production only"
+      },
+      "backend": {
+        "origin": "https://green-pavlodar-api-demo.onrender.com",
+        "runtimeSha": "3b14927def04b35bf97782eae6b550da276c779f",
+        "renderDeploymentId": "dep-dbj223h42hec73bqnttg",
+        "confirmedBy": "Bekzat",
+        "confirmationUrl": "https://github.com/foxfordkz-cyber/qadamxpavlodar/pull/35#issuecomment-6547058611",
+        "note": "Backend was not redeployed for this frontend publication; PR39 HEAD is not the runtime SHA"
+      },
+      "previousPublication": {
+        "deploymentId": "ff01f45d-69ed-45a9-af1c-ad1d26b8983a",
+        "frontendSourceSha": "aee7242ee899f1f596a704adba6e1279c37af9df",
+        "immutableUrl": "https://ff01f45d.green-pavlodar-api.pages.dev/",
+        "archiveSha256": "da8bc83dd448b114b78f100d933187f686099ddcdb01c012f8f61e19222ac1d9",
+        "rollback": "Retain in provider history; coordinate any rollback with QA"
+      }
+    },
+    {
+      "project": "green-pavlodar-mock",
+      "dataSource": "mock",
+      "productionUrl": "https://green-pavlodar-mock.pages.dev/",
+      "immutableUrl": "https://d0e985d1.green-pavlodar-mock.pages.dev/",
+      "deploymentId": "d0e985d1-bbd0-4f8c-b1c1-31d20d164ef7",
+      "providerStatus": "success",
+      "providerUiDisplayedCreationTime": "2026-11-01T00:01:00+05:00",
+      "providerTimePrecision": "minute",
+      "providerTimeZone": "UTC+5 from operator browser/client context",
+      "providerEvidence": "mock-cloudflare-success.jpg",
+      "frontendSourceSha": "84d009e3b72c4fe637ef30607e29701054b6c621",
+      "archive": {
+        "file": "green-pavlodar-mock-84d009e.zip",
+        "bytes": 1589722,
+        "sha256": "c7e466ea13355bdd5b0a6506cb7412de0ca44dc54c6272059f5bb85d49b4903d"
+      },
+      "buildManifest": "mock-build-84d009e.json",
+      "staticVerification": {
+        "file": "published-mock-d0e985d1-static.json",
+        "filesPerOrigin": 34,
+        "origins": [
+          "https://green-pavlodar-mock.pages.dev",
+          "https://d0e985d1.green-pavlodar-mock.pages.dev"
+        ],
+        "passed": 68,
+        "total": 68,
+        "startedAt": "2026-10-31T19:02:49.964017+00:00",
+        "finishedAt": "2026-10-31T19:03:12.524681+00:00",
+        "note": "Timestamps retain the explicit offset recorded by the verifier; the offset is authoritative"
+      },
+      "backend": null,
+      "mode": "Independent static synthetic DEMO, no required login or backend, no Pages worker/routes",
+      "localPredeploymentQa": {
+        "summary": "mock-local-qa-summary.json",
+        "archive": "mock-84d009e-local-qa.zip",
+        "scope": "Local predeployment checks only; not new public authenticated acceptance or independent QA"
+      },
+      "previousPublication": {
+        "deploymentId": "f816c350-5722-4b56-a180-4124da01c5ba",
+        "frontendSourceSha": "fdc6e756be99dc5ba3a7a48ca1df17c4bfbef5ef",
+        "immutableUrl": "https://f816c350.green-pavlodar-mock.pages.dev/",
+        "archiveSha256": "c89772c72d44590acf79f980be27a452bad696439bad2cacc8b5d948179ff804",
+        "rollback": "Retain in provider history; coordinate any rollback with QA"
+      }
+    }
+  ],
+  "verificationTotals": {
+    "publicStaticPassed": 136,
+    "publicStaticTotal": 136,
+    "anonymousApiProbesPassed": 2,
+    "anonymousApiProbesTotal": 2
+  },
+  "authentication": {
+    "newAuthenticatedCloudUi": "NOT RUN",
+    "reason": "Agreed private DEMO credentials are not available on frontend owner's computer",
+    "cloudCredentialsUsed": false,
+    "previousOperatorAcceptance": "Bekzat's earlier aee7242 acceptance remains historical and is not attributed to c970264"
+  },
+  "independentQa": {
+    "owner": "sarsenbaevaaidana07",
+    "status": "PENDING",
+    "complete": false
+  },
+  "limitations": [
+    "New authenticated login/logout/worker/foreman/photo/report/acceptance/viewer workflow is NOT RUN by frontend owner; needs agreed DEMO access and independent QA.",
+    "Real Cloudflare outage/ambiguous mutation retry/cookies/CSRF/private photo transport are not established by these anonymous probes.",
+    "Cloud search/drawing/GIS/import/assistant returning 503 remain unavailable and are not replaced by synthetic success.",
+    "Local mock QA, downloaded Word OOXML checks and earlier media retain their stated scope and versions; native Word opening and independent full acceptance are not implied."
+  ],
+  "evidence": [
+    {
+      "path": "api-build-c970264.json",
+      "bytes": 7869,
+      "sha256": "d8b042398be87fc8c7283a82499dda317ee2d6e77f8d4979f55c226d93b67f60"
+    },
+    {
+      "path": "api-candidate-validation.json",
+      "bytes": 8692,
+      "sha256": "28f7c5a7460013b7e85799949f54a3f711fea63ee8f1692cd085c2bfeed6d872"
+    },
+    {
+      "path": "mock-build-84d009e.json",
+      "bytes": 7377,
+      "sha256": "42e03c5ebdc55275e7f6b94b19155ef92dd8e01dfa9b2463b6fa60485fa48c56"
+    },
+    {
+      "path": "published-api-a26bd214-static.json",
+      "bytes": 49474,
+      "sha256": "c2a4323f397d47e6ad91245600401cbf7959229e172787d59e17972144ebf1f5"
+    },
+    {
+      "path": "published-mock-d0e985d1-static.json",
+      "bytes": 48691,
+      "sha256": "f53eedb0f47c8f17dbfd332fad81de60c55d03f35b689c503758779434d9e914"
+    },
+    {
+      "path": "api-cloudflare-success.jpg",
+      "bytes": 57010,
+      "sha256": "a5943453db05f0db4757ec779b9d44aec6af0131dcb1b96f52b18b545e357c9d"
+    },
+    {
+      "path": "mock-cloudflare-success.jpg",
+      "bytes": 57661,
+      "sha256": "c907451b041731977dd2ed54ba6dedde738b80424c2a6d20dd65403c31c0f466"
+    },
+    {
+      "path": "mock-local-qa-summary.json",
+      "bytes": 3512,
+      "sha256": "19ef01d157a0310dce49edb472b322f41f58b273600666dce82774ad60507753"
+    },
+    {
+      "path": "mock-84d009e-local-qa.zip",
+      "bytes": 2495355,
+      "sha256": "3f1734b962e7c8b6700e75dbcd036c0de7580fa12a67bd43c1b626ceaebdd3a9"
+    }
+  ],
+  "safety": {
+    "credentialsOrPrivatePathsIncluded": false,
+    "publicSecretsUsed": false,
+    "successScreenshotsVisuallyReviewed": 2,
+    "secretPatternFindings": 0,
+    "scanScope": "Explicit file whitelist and known pattern checks; no secret values emitted"
+  }
+}
