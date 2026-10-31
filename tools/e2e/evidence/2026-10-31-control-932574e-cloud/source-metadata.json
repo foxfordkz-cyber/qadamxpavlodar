@@ -1,0 +1,12 @@
+{
+  "recordedAt": "2026-10-31T17:46:25.858Z",
+  "handoffRef": "05bc92492f72cc909ee6ae94d18d5b9bf1a3d54b",
+  "handoffPath": "docs/cloud-final-release.md",
+  "handoffUrl": "https://github.com/foxfordkz-cyber/qadamxpavlodar/blob/05bc92492f72cc909ee6ae94d18d5b9bf1a3d54b/docs/cloud-final-release.md",
+  "apiFrontend": "https://green-pavlodar-api.pages.dev/",
+  "backend": "https://green-pavlodar-api-demo.onrender.com",
+  "statusFile": "readiness-and-public-index.json",
+  "statusSha256": "49cdca4da94fb0d568df8577764a1589913474ed20e14cb17d84c1e6a22dd5d8",
+  "handoffSha256": "1209f58faa80bf9f90ae5a5ea975e746705db38464c1ac16da3c21aac584d228",
+  "note": "Copied the exact independent unauthenticated GET results, not a new network run. No previous evidence overwritten. Cloud source/deployment values in the handoff are owner-reported."
+}

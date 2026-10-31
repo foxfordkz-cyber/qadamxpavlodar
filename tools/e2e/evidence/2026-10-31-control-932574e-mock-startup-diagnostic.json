@@ -1,0 +1,476 @@
+{
+  "kind": "offline-mock-fixture-timeout-diagnostic",
+  "recordedAt": "2026-10-31T17:56:34.868Z",
+  "testSHA": "cdc3ec257726ef937b0bbf953253a755f2e225a9",
+  "sourceTrace": "test-results/mock/drawing.mock-drawing-kk-se-e74c7-gon-and-reopen-after-reload-desktop/trace.zip",
+  "traceSha256": "05e67e050faab925662e2067d7d490a51b054ee207df2196c8adee51c40297f6",
+  "run": {
+    "runId": "316395a6-3c9e-4b36-84d7-2d6a0652bf5f",
+    "revision": "cdc3ec257726ef937b0bbf953253a755f2e225a9",
+    "dirty": false,
+    "startedAt": "2026-10-31T17:39:26.501Z",
+    "endedAt": "2026-10-31T17:53:34.909Z",
+    "exitCode": 1
+  },
+  "files": [
+    {
+      "name": "test.trace",
+      "eventTypes": [
+        "context-options",
+        "before",
+        "after",
+        "error"
+      ],
+      "calls": [
+        {
+          "callId": "skpp@4275",
+          "title": "Before Hooks",
+          "class": "Test",
+          "method": "hook",
+          "startTime": 90940.057,
+          "endTime": 135965.238,
+          "durationMs": 45025.181,
+          "completed": true,
+          "error": "Test timeout of 45000ms exceeded while setting up \"page\"."
+        },
+        {
+          "callId": "skpp@4302",
+          "title": "Fixture \"context\"",
+          "class": "Test",
+          "method": "fixture",
+          "startTime": 90952.106,
+          "endTime": 90981.142,
+          "durationMs": 29.036,
+          "completed": true,
+          "error": null
+        },
+        {
+          "callId": "skpp@4303",
+          "title": "Create context",
+          "class": "Test",
+          "method": "pw:api",
+          "startTime": 90952.948,
+          "endTime": 90968.666,
+          "durationMs": 15.718,
+          "completed": true,
+          "error": null
+        },
+        {
+          "callId": "skpp@4310",
+          "title": "Fixture \"context\"",
+          "class": "Test",
+          "method": "fixture",
+          "startTime": 90981.368,
+          "endTime": 90986.276,
+          "durationMs": 4.908,
+          "completed": true,
+          "error": null
+        },
+        {
+          "callId": "skpp@4311",
+          "title": "Route requests",
+          "class": "Test",
+          "method": "pw:api",
+          "startTime": 90983.429,
+          "endTime": 90985.343,
+          "durationMs": 1.914,
+          "completed": true,
+          "error": null
+        },
+        {
+          "callId": "skpp@4313",
+          "title": "Route requests",
+          "class": "Test",
+          "method": "pw:api",
+          "startTime": 90985.713,
+          "endTime": 90986.198,
+          "durationMs": 0.485,
+          "completed": true,
+          "error": null
+        },
+        {
+          "callId": "skpp@4315",
+          "title": "Fixture \"page\"",
+          "class": "Test",
+          "method": "fixture",
+          "startTime": 90986.631,
+          "endTime": 135965.123,
+          "durationMs": 44978.492,
+          "completed": true,
+          "error": "Test timeout of 45000ms exceeded while setting up \"page\"."
+        },
+        {
+          "callId": "skpp@4316",
+          "title": "Create page",
+          "class": "Test",
+          "method": "pw:api",
+          "startTime": 90987.128,
+          "endTime": null,
+          "durationMs": null,
+          "completed": false,
+          "error": null
+        },
+        {
+          "callId": "skpp@4318",
+          "title": "After Hooks",
+          "class": "Test",
+          "method": "hook",
+          "startTime": 135965.717,
+          "endTime": 136088.218,
+          "durationMs": 122.501,
+          "completed": true,
+          "error": null
+        },
+        {
+          "callId": "skpp@4319",
+          "title": "Fixture \"page\"",
+          "class": "Test",
+          "method": "fixture",
+          "startTime": 135966.378,
+          "endTime": 135966.471,
+          "durationMs": 0.093,
+          "completed": true,
+          "error": null
+        },
+        {
+          "callId": "skpp@4320",
+          "title": "Fixture \"context\"",
+          "class": "Test",
+          "method": "fixture",
+          "startTime": 135966.505,
+          "endTime": 135966.538,
+          "durationMs": 0.033,
+          "completed": true,
+          "error": null
+        },
+        {
+          "callId": "skpp@4321",
+          "title": "Fixture \"context\"",
+          "class": "Test",
+          "method": "fixture",
+          "startTime": 135966.773,
+          "endTime": 136068.055,
+          "durationMs": 101.282,
+          "completed": true,
+          "error": null
+        },
+        {
+          "callId": "skpp@4327",
+          "title": "Close context",
+          "class": "Test",
+          "method": "pw:api",
+          "startTime": 136062.741,
+          "endTime": 136067.999,
+          "durationMs": 5.258,
+          "completed": true,
+          "error": null
+        },
+        {
+          "callId": "skpp@4331",
+          "title": "Fixture \"navigationTimeout\"",
+          "class": "Test",
+          "method": "fixture",
+          "startTime": 136069.028,
+          "endTime": 136069.057,
+          "durationMs": 0.029,
+          "completed": true,
+          "error": null
+        },
+        {
+          "callId": "skpp@4332",
+          "title": "Fixture \"actionTimeout\"",
+          "class": "Test",
+          "method": "fixture",
+          "startTime": 136069.065,
+          "endTime": 136069.079,
+          "durationMs": 0.014,
+          "completed": true,
+          "error": null
+        },
+        {
+          "callId": "skpp@4334",
+          "title": "Attach \"error-context\"",
+          "class": "Test",
+          "method": "test.attach",
+          "startTime": 136078.028,
+          "endTime": 136078.056,
+          "durationMs": 0.028,
+          "completed": true,
+          "error": null
+        },
+        {
+          "callId": "skpp@4337",
+          "title": "Fixture \"baseURL\"",
+          "class": "Test",
+          "method": "fixture",
+          "startTime": 136079.194,
+          "endTime": 136079.227,
+          "durationMs": 0.033,
+          "completed": true,
+          "error": null
+        },
+        {
+          "callId": "skpp@4339",
+          "title": "Fixture \"timezoneId\"",
+          "class": "Test",
+          "method": "fixture",
+          "startTime": 136079.656,
+          "endTime": 136079.678,
+          "durationMs": 0.022,
+          "completed": true,
+          "error": null
+        },
+        {
+          "callId": "skpp@4340",
+          "title": "Fixture \"viewport\"",
+          "class": "Test",
+          "method": "fixture",
+          "startTime": 136079.683,
+          "endTime": 136079.691,
+          "durationMs": 0.008,
+          "completed": true,
+          "error": null
+        },
+        {
+          "callId": "skpp@4347",
+          "title": "Fixture \"locale\"",
+          "class": "Test",
+          "method": "fixture",
+          "startTime": 136082.399,
+          "endTime": 136082.411,
+          "durationMs": 0.012,
+          "completed": true,
+          "error": null
+        },
+        {
+          "callId": "skpp@4363",
+          "title": "Worker Cleanup",
+          "class": "Test",
+          "method": "hook",
+          "startTime": 136088.484,
+          "endTime": 161096.941,
+          "durationMs": 25008.457,
+          "completed": true,
+          "error": null
+        },
+        {
+          "callId": "skpp@4367",
+          "title": "Fixture \"video\"",
+          "class": "Test",
+          "method": "fixture",
+          "startTime": 136089.546,
+          "endTime": 136089.57,
+          "durationMs": 0.024,
+          "completed": true,
+          "error": null
+        },
+        {
+          "callId": "skpp@4368",
+          "title": "Fixture \"browser\"",
+          "class": "Test",
+          "method": "fixture",
+          "startTime": 136089.892,
+          "endTime": 161095.629,
+          "durationMs": 25005.737,
+          "completed": true,
+          "error": null
+        },
+        {
+          "callId": "skpp@4372",
+          "title": "Fixture \"browserName\"",
+          "class": "Test",
+          "method": "fixture",
+          "startTime": 161096.18,
+          "endTime": 161096.192,
+          "durationMs": 0.012,
+          "completed": true,
+          "error": null
+        },
+        {
+          "callId": "skpp@4373",
+          "title": "Fixture \"screenshot\"",
+          "class": "Test",
+          "method": "fixture",
+          "startTime": 161096.198,
+          "endTime": 161096.204,
+          "durationMs": 0.006,
+          "completed": true,
+          "error": null
+        },
+        {
+          "callId": "skpp@4377",
+          "title": "Fixture \"launchOptions\"",
+          "class": "Test",
+          "method": "fixture",
+          "startTime": 161096.685,
+          "endTime": 161096.692,
+          "durationMs": 0.007,
+          "completed": true,
+          "error": null
+        }
+      ],
+      "errors": [
+        {
+          "message": "Test timeout of 45000ms exceeded while setting up \"page\".",
+          "time": null
+        }
+      ],
+      "logs": [],
+      "networkCount": 0,
+      "browserConsoleErrors": []
+    },
+    {
+      "name": "1-trace.trace",
+      "eventTypes": [
+        "context-options",
+        "before",
+        "after"
+      ],
+      "calls": [
+        {
+          "callId": "skpp@4311",
+          "title": "Route requests",
+          "class": "BrowserContext",
+          "method": "setNetworkInterceptionPatterns",
+          "startTime": 90984.529,
+          "endTime": 90985.029,
+          "durationMs": 0.5,
+          "completed": true,
+          "error": null
+        },
+        {
+          "callId": "skpp@4313",
+          "title": "Route requests",
+          "class": "BrowserContext",
+          "method": "setNetworkInterceptionPatterns",
+          "startTime": 90985.955,
+          "endTime": 90986.027,
+          "durationMs": 0.072,
+          "completed": true,
+          "error": null
+        },
+        {
+          "callId": "skpp@4316",
+          "class": "BrowserContext",
+          "method": "newPage",
+          "startTime": 90987.413,
+          "endTime": null,
+          "durationMs": null,
+          "completed": false,
+          "error": null
+        }
+      ],
+      "errors": [],
+      "logs": [],
+      "networkCount": 0,
+      "browserConsoleErrors": []
+    },
+    {
+      "name": "1-trace.network",
+      "eventTypes": [],
+      "calls": [],
+      "errors": [],
+      "logs": [],
+      "networkCount": 0,
+      "browserConsoleErrors": []
+    },
+    {
+      "name": "0-trace.trace",
+      "eventTypes": [
+        "context-options"
+      ],
+      "calls": [],
+      "errors": [],
+      "logs": [],
+      "networkCount": 0,
+      "browserConsoleErrors": []
+    },
+    {
+      "name": "0-trace.network",
+      "eventTypes": [],
+      "calls": [],
+      "errors": [],
+      "logs": [],
+      "networkCount": 0,
+      "browserConsoleErrors": []
+    }
+  ],
+  "logExcerpts": [
+    {
+      "line": 294,
+      "lines": [
+        "",
+        "",
+        "  1) [desktop] › tests\\drawing.mock.spec.ts:6:47 › drawing kk: search counters, undo, save a polygon and reopen after reload ",
+        "",
+        "    Test timeout of 45000ms exceeded while setting up \"page\".",
+        "",
+        "    Error Context: test-results\\mock\\drawing.mock-drawing-kk-se-e74c7-gon-and-reopen-after-reload-desktop\\error-context.md",
+        "",
+        "    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────",
+        "    test-results\\mock\\drawing.mock-drawing-kk-se-e74c7-gon-and-reopen-after-reload-desktop\\trace.zip",
+        "    Usage:",
+        "",
+        "        npx playwright show-trace test-results\\mock\\drawing.mock-drawing-kk-se-e74c7-gon-and-reopen-after-reload-desktop\\trace.zip",
+        "",
+        "    ────────────────────────────────────────────────────────────────────────────────────────────────"
+      ]
+    }
+  ],
+  "nearbyTestLog": [
+    {
+      "line": 34,
+      "lines": [
+        "  ok  27 [desktop] › tests\\lab.mock.spec.ts:83:1 › lab: invalid, empty budget and zero water limit have honest recoverable states (10.3s)",
+        "  ok  28 [desktop] › tests\\lab.mock.spec.ts:102:1 › lab: request error/retry and late requests do not display stale scenario values (13.4s)",
+        "  ok  29 [desktop] › tests\\lab.mock.spec.ts:125:1 › lab: presentation capture for review (4.7s)",
+        "  ok  30 [desktop] › tests\\lab.mock.spec.ts:138:1 › lab: water minus 30% freezes species/counts; only explicit rebuilding changes membership (8.9s)",
+        "  ok  31 [desktop] › tests\\lab.mock.spec.ts:161:1 › lab: school goal, risk diagnosis and keyboard choices expose evidence without fake climate predictions (6.8s)",
+        "  x   21 [desktop] › tests\\drawing.mock.spec.ts:6:47 › drawing kk: search counters, undo, save a polygon and reopen after reload (45.1s)",
+        "  ok  32 [desktop] › tests\\lab.mock.spec.ts:176:1 › lab: an eligible species replacement changes only the chosen plan after explicit action (4.4s)",
+        "  ok  33 [desktop] › tests\\locale.mock.spec.ts:21:3 › /: Kazakh controls have no Russian service labels (2.6s)",
+        "  ok  34 [desktop] › tests\\locale.mock.spec.ts:14:1 › Kazakh navigation is enabled with ?lang=kk (3.7s)",
+        "  ok  35 [desktop] › tests\\locale.mock.spec.ts:21:3 › /map: Kazakh controls have no Russian service labels (2.5s)",
+        "  ok  36 [desktop] › tests\\locale.mock.spec.ts:21:3 › /problems: Kazakh controls have no Russian service labels (2.4s)"
+      ]
+    },
+    {
+      "line": 158,
+      "lines": [
+        "  ok 150 [mobile] › tests\\defence-final.mock.spec.ts:9:42 › mobile assistant: ru, cost and primary actions stay uncovered at 375px (12.3s)",
+        "  ok 152 [mobile] › tests\\download.mock.spec.ts:6:1 › zone report downloads Russian and Kazakh Word memos through export settings (5.4s)",
+        "  ok 151 [mobile] › tests\\defence-final.mock.spec.ts:9:42 › mobile assistant: kk, cost and primary actions stay uncovered at 375px (12.3s)",
+        "  ok 153 [mobile] › tests\\drawing.mock.spec.ts:6:47 › drawing ru: search counters, undo, save a polygon and reopen after reload (7.4s)",
+        "  ok 155 [mobile] › tests\\lab.mock.spec.ts:18:1 › lab: three plans render without browser errors or horizontal overflow (4.3s)",
+        "  ok 154 [mobile] › tests\\drawing.mock.spec.ts:6:47 › drawing kk: search counters, undo, save a polygon and reopen after reload (8.5s)",
+        "  ok 157 [mobile] › tests\\lab.mock.spec.ts:45:1 › lab: show plan on map preserves IDs and opens numbered highlight list (5.0s)",
+        "  ok 156 [mobile] › tests\\lab.mock.spec.ts:27:1 › lab: rare/none change metrics, retain composition, and regular restores results (5.6s)",
+        "  ok 158 [mobile] › tests\\lab.mock.spec.ts:56:1 › lab: Kazakh service phrases, scenario and reasons, names may retain source language (5.1s)",
+        "  ok 159 [mobile] › tests\\lab.mock.spec.ts:69:1 › lab: all zones remain reachable when a portfolio exceeds the existing 30-zone map limit (8.1s)",
+        "  ok 160 [mobile] › tests\\lab.mock.spec.ts:83:1 › lab: invalid, empty budget and zero water limit have honest recoverable states (11.5s)"
+      ]
+    },
+    {
+      "line": 307,
+      "lines": [
+        "        npx playwright show-trace test-results\\mock\\drawing.mock-drawing-kk-se-e74c7-gon-and-reopen-after-reload-desktop\\trace.zip",
+        "",
+        "    ────────────────────────────────────────────────────────────────────────────────────────────────",
+        "",
+        "  1 failed",
+        "    [desktop] › tests\\drawing.mock.spec.ts:6:47 › drawing kk: search counters, undo, save a polygon and reopen after reload ",
+        "  2 skipped",
+        "  283 passed (14.1m)",
+        "Summary: playwright-report/summary/index.html",
+        ""
+      ]
+    }
+  ],
+  "interpretation": {
+    "phase": "page fixture / BrowserContext.newPage",
+    "applicationActionsStarted": false,
+    "recordedNetworkRequests": 0,
+    "rootCause": "Not established. The trace proves a page-creation stall before app navigation, not a drawing assertion failure. No explicit browser crash or disconnect message was found in the trace or mock log."
+  },
+  "privacy": "No raw DOM, screenshots, input values, response bodies, headers, cookies, private database or environment values exported. Original trace and reports are unchanged."
+}

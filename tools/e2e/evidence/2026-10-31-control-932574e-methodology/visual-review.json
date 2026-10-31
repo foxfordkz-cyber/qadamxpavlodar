@@ -1,0 +1,190 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root/survival42_visual_review",
+  "reviewedAt": "2026-10-31T18:04:13.126Z",
+  "status": "approved-for-control-visual-evidence",
+  "testSHA": "cdc3ec257726ef937b0bbf953253a755f2e225a9",
+  "applicationBase": "932574e630621a6bc9aeacc46703e6ade5e7bdfc",
+  "appsTree": "72b065f072e006dc35600da693036ccedefed265",
+  "scope": "Eight RU/KK, desktop/mobile component PNGs from control base 932574e; this is not final release acceptance, a full-page capture, native Word opening, or print pagination.",
+  "method": "Each exact element PNG opened using view_image, then independently verified against capture metadata hash and dimensions.",
+  "captures": [
+    {
+      "file": "methodology-ru-1280-collapsed.png",
+      "language": "ru",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "state": "collapsed",
+      "route": "/?source=mock&lang=ru#/report?site=site-osm-1569993037",
+      "kind": "element",
+      "target": ".gp-survival-method",
+      "width": 930,
+      "height": 117,
+      "bytes": 12274,
+      "sha256": "6dc6767604283218f7a246eb4fe21102aa759060c6e1a7c32022cb0a919a1979",
+      "capturedAt": "2026-10-31T18:03:09.232Z",
+      "readiness": "settled-report-and-fonts",
+      "visualReview": "approved",
+      "hashMatches": true,
+      "viewed": true,
+      "notes": "Synthetic-data and uncalibrated-Pavlodar limitations remain visible; reveal control readable; text wraps inside notice."
+    },
+    {
+      "file": "methodology-ru-1280-expanded.png",
+      "language": "ru",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "state": "expanded",
+      "route": "/?source=mock&lang=ru#/report?site=site-osm-1569993037",
+      "kind": "element",
+      "target": ".gp-survival-method",
+      "width": 930,
+      "height": 345,
+      "bytes": 53946,
+      "sha256": "7c583db741a5db5ef6d9788988d6b04c861dc1173d11e634a30566fe2aa66620",
+      "capturedAt": "2026-10-31T18:03:09.424Z",
+      "readiness": "settled-report-and-fonts",
+      "visualReview": "approved",
+      "hashMatches": true,
+      "viewed": true,
+      "notes": "Full limitation text, 12,000/2,400 counts and ROC-AUC/Brier values readable; hide control visible; mobile text wraps with no clipped lines."
+    },
+    {
+      "file": "methodology-ru-375-collapsed.png",
+      "language": "ru",
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "state": "collapsed",
+      "route": "/?source=mock&lang=ru#/report?site=site-osm-1569993037",
+      "kind": "element",
+      "target": ".gp-survival-method",
+      "width": 301,
+      "height": 178,
+      "bytes": 12699,
+      "sha256": "e841367dd33bda12e3339433504d27439a1324c68791e96611b4baa1179e523f",
+      "capturedAt": "2026-10-31T18:03:10.895Z",
+      "readiness": "settled-report-and-fonts",
+      "visualReview": "approved",
+      "hashMatches": true,
+      "viewed": true,
+      "notes": "Synthetic-data and uncalibrated-Pavlodar limitations remain visible; reveal control readable; text wraps inside notice."
+    },
+    {
+      "file": "methodology-ru-375-expanded.png",
+      "language": "ru",
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "state": "expanded",
+      "route": "/?source=mock&lang=ru#/report?site=site-osm-1569993037",
+      "kind": "element",
+      "target": ".gp-survival-method",
+      "width": 301,
+      "height": 661,
+      "bytes": 55436,
+      "sha256": "171c3eae9ebac82a1839b1d34a74f8ea213531ea6d35a1842941740934c3bdbf",
+      "capturedAt": "2026-10-31T18:03:11.043Z",
+      "readiness": "settled-report-and-fonts",
+      "visualReview": "approved",
+      "hashMatches": true,
+      "viewed": true,
+      "notes": "Full limitation text, 12,000/2,400 counts and ROC-AUC/Brier values readable; hide control visible; mobile text wraps with no clipped lines."
+    },
+    {
+      "file": "methodology-kk-1280-collapsed.png",
+      "language": "kk",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "state": "collapsed",
+      "route": "/?source=mock&lang=kk#/report?site=site-osm-1569993037",
+      "kind": "element",
+      "target": ".gp-survival-method",
+      "width": 930,
+      "height": 137,
+      "bytes": 15259,
+      "sha256": "6d2cf67cd53ff3769da6d12af426ecd95aea317df8099d12b023533fdf32de9d",
+      "capturedAt": "2026-10-31T18:03:12.715Z",
+      "readiness": "settled-report-and-fonts",
+      "visualReview": "approved",
+      "hashMatches": true,
+      "viewed": true,
+      "notes": "Synthetic-data and uncalibrated-Pavlodar limitations remain visible; reveal control readable; text wraps inside notice."
+    },
+    {
+      "file": "methodology-kk-1280-expanded.png",
+      "language": "kk",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "state": "expanded",
+      "route": "/?source=mock&lang=kk#/report?site=site-osm-1569993037",
+      "kind": "element",
+      "target": ".gp-survival-method",
+      "width": 930,
+      "height": 346,
+      "bytes": 56468,
+      "sha256": "b3696c9a7d75d6efa713b50098f6c8ef51596c0501880a3479e2a7ca7692cbf8",
+      "capturedAt": "2026-10-31T18:03:12.867Z",
+      "readiness": "settled-report-and-fonts",
+      "visualReview": "approved",
+      "hashMatches": true,
+      "viewed": true,
+      "notes": "Full limitation text, 12,000/2,400 counts and ROC-AUC/Brier values readable; hide control visible; mobile text wraps with no clipped lines."
+    },
+    {
+      "file": "methodology-kk-375-collapsed.png",
+      "language": "kk",
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "state": "collapsed",
+      "route": "/?source=mock&lang=kk#/report?site=site-osm-1569993037",
+      "kind": "element",
+      "target": ".gp-survival-method",
+      "width": 301,
+      "height": 197,
+      "bytes": 15615,
+      "sha256": "e4fabe1d25319a24da02f5959168d798670ec5be3750c2b8e5fa0ca09fb48b8e",
+      "capturedAt": "2026-10-31T18:03:14.317Z",
+      "readiness": "settled-report-and-fonts",
+      "visualReview": "approved",
+      "hashMatches": true,
+      "viewed": true,
+      "notes": "Synthetic-data and uncalibrated-Pavlodar limitations remain visible; reveal control readable; text wraps inside notice."
+    },
+    {
+      "file": "methodology-kk-375-expanded.png",
+      "language": "kk",
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "state": "expanded",
+      "route": "/?source=mock&lang=kk#/report?site=site-osm-1569993037",
+      "kind": "element",
+      "target": ".gp-survival-method",
+      "width": 301,
+      "height": 679,
+      "bytes": 59094,
+      "sha256": "b3b95a046e923c1c808c8f19165a170ba0df50ec3d6168cb965472b7b8c7c010",
+      "capturedAt": "2026-10-31T18:03:14.465Z",
+      "readiness": "settled-report-and-fonts",
+      "visualReview": "approved",
+      "hashMatches": true,
+      "viewed": true,
+      "notes": "Full limitation text, 12,000/2,400 counts and ROC-AUC/Brier values readable; hide control visible; mobile text wraps with no clipped lines."
+    }
+  ],
+  "findings": []
+}

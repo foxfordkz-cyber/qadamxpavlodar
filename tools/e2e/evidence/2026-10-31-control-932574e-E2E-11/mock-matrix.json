@@ -1,0 +1,102 @@
+{
+  "profile": "mock",
+  "available": true,
+  "current": true,
+  "meta": {
+    "runId": "5f4059b3-dbd0-4edd-8f87-6793a9d0690a",
+    "state": "finished",
+    "startedAt": "2026-10-31T18:13:12.847Z",
+    "endedAt": "2026-10-31T18:15:37.395Z",
+    "exitCode": 1,
+    "revision": "916b0f700c91bb44d509d44f3607cfe1eaf047f1",
+    "dirty": false,
+    "selection": "subset",
+    "capturesScreens": false,
+    "command": "node scripts/run.mjs mock",
+    "environment": {
+      "node": "24.22.2",
+      "playwright": "1.64.1",
+      "platform": "win32",
+      "arch": "x64",
+      "workers": 2,
+      "retries": 0
+    },
+    "target": "http://localhost:5176"
+  },
+  "tests": [
+    {
+      "title": "E2E-11: Работник, Kazakh document and reload translate controls after explicit mock role re-entry",
+      "project": "desktop",
+      "status": "failed",
+      "outOfScope": false,
+      "note": "",
+      "durationMs": 35368
+    },
+    {
+      "title": "E2E-11: Бригадир, Kazakh document and reload translate controls after explicit mock role re-entry",
+      "project": "desktop",
+      "status": "failed",
+      "outOfScope": false,
+      "note": "",
+      "durationMs": 36141
+    },
+    {
+      "title": "E2E-11: switching RU/KK persists without a language URL override after mock role re-entry",
+      "project": "desktop",
+      "status": "failed",
+      "outOfScope": false,
+      "note": "",
+      "durationMs": 36933
+    },
+    {
+      "title": "E2E-11: note and synthetic photo survive language repaint and reload with mock role re-entry",
+      "project": "desktop",
+      "status": "failed",
+      "outOfScope": false,
+      "note": "",
+      "durationMs": 19436
+    },
+    {
+      "title": "E2E-11: Работник, Kazakh document and reload translate controls after explicit mock role re-entry",
+      "project": "mobile",
+      "status": "failed",
+      "outOfScope": false,
+      "note": "",
+      "durationMs": 30878
+    },
+    {
+      "title": "E2E-11: Бригадир, Kazakh document and reload translate controls after explicit mock role re-entry",
+      "project": "mobile",
+      "status": "failed",
+      "outOfScope": false,
+      "note": "",
+      "durationMs": 31456
+    },
+    {
+      "title": "E2E-11: switching RU/KK persists without a language URL override after mock role re-entry",
+      "project": "mobile",
+      "status": "failed",
+      "outOfScope": false,
+      "note": "",
+      "durationMs": 35072
+    },
+    {
+      "title": "E2E-11: note and synthetic photo survive language repaint and reload with mock role re-entry",
+      "project": "mobile",
+      "status": "failed",
+      "outOfScope": false,
+      "note": "",
+      "durationMs": 22141
+    }
+  ],
+  "counts": {
+    "passed": 0,
+    "failed": 8,
+    "fixme": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "notRun": 0
+  },
+  "runnerFailed": false,
+  "durationMs": 142743.36500000002
+}

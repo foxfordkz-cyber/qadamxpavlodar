@@ -1,0 +1,324 @@
+{
+  "profile": "api",
+  "available": true,
+  "current": true,
+  "meta": {
+    "runId": "fd0e4244-6e55-48d1-a413-29cbebb9c8c7",
+    "state": "finished",
+    "startedAt": "2026-10-31T18:15:49.020Z",
+    "endedAt": "2026-10-31T18:17:58.303Z",
+    "exitCode": 1,
+    "browserExitCode": 1,
+    "privacyScan": "passed",
+    "revision": "af240b79b991af4a1f3804afcfef955e022191e5",
+    "dirty": false,
+    "selection": "subset",
+    "capturesScreens": false,
+    "command": "node scripts/run.mjs api",
+    "environment": {
+      "node": "24.22.2",
+      "playwright": "1.64.1",
+      "platform": "win32",
+      "arch": "x64",
+      "workers": 1,
+      "retries": 0
+    },
+    "target": "http://localhost:5177"
+  },
+  "tests": [
+    {
+      "title": "E2E-11 API: worker1, 375px, authenticated direct KK entry and reload",
+      "project": "api",
+      "status": "failed",
+      "note": "Browser assertion failed. Reproduce the named scenario; sensitive action details are omitted.",
+      "durationMs": 25744,
+      "diagnostics": [
+        {
+          "errorLocation": {
+            "file": "tests/worker-locale-regression.api.spec.ts",
+            "line": 45,
+            "column": 73
+          }
+        },
+        {
+          "errorLocation": {
+            "file": "tests/worker-locale-regression.api.spec.ts",
+            "line": 48,
+            "column": 86
+          },
+          "matcher": "toContain"
+        },
+        {
+          "errorLocation": {
+            "file": "tests/worker-locale-regression.api.spec.ts",
+            "line": 48,
+            "column": 86
+          },
+          "matcher": "toContain"
+        },
+        {
+          "errorLocation": {
+            "file": "tests/worker-locale-regression.api.spec.ts",
+            "line": 48,
+            "column": 86
+          },
+          "matcher": "toContain"
+        },
+        {
+          "errorLocation": {
+            "file": "tests/worker-locale-regression.api.spec.ts",
+            "line": 45,
+            "column": 73
+          }
+        },
+        {
+          "errorLocation": {
+            "file": "tests/worker-locale-regression.api.spec.ts",
+            "line": 48,
+            "column": 86
+          },
+          "matcher": "toContain"
+        },
+        {
+          "errorLocation": {
+            "file": "tests/worker-locale-regression.api.spec.ts",
+            "line": 48,
+            "column": 86
+          },
+          "matcher": "toContain"
+        },
+        {
+          "errorLocation": {
+            "file": "tests/worker-locale-regression.api.spec.ts",
+            "line": 48,
+            "column": 86
+          },
+          "matcher": "toContain"
+        }
+      ]
+    },
+    {
+      "title": "E2E-11 API: foreman1, 375px, authenticated direct KK entry and reload",
+      "project": "api",
+      "status": "failed",
+      "note": "Browser assertion failed. Reproduce the named scenario; sensitive action details are omitted.",
+      "durationMs": 25893,
+      "diagnostics": [
+        {
+          "errorLocation": {
+            "file": "tests/worker-locale-regression.api.spec.ts",
+            "line": 45,
+            "column": 73
+          }
+        },
+        {
+          "errorLocation": {
+            "file": "tests/worker-locale-regression.api.spec.ts",
+            "line": 48,
+            "column": 86
+          },
+          "matcher": "toContain"
+        },
+        {
+          "errorLocation": {
+            "file": "tests/worker-locale-regression.api.spec.ts",
+            "line": 48,
+            "column": 86
+          },
+          "matcher": "toContain"
+        },
+        {
+          "errorLocation": {
+            "file": "tests/worker-locale-regression.api.spec.ts",
+            "line": 48,
+            "column": 86
+          },
+          "matcher": "toContain"
+        },
+        {
+          "errorLocation": {
+            "file": "tests/worker-locale-regression.api.spec.ts",
+            "line": 45,
+            "column": 73
+          }
+        },
+        {
+          "errorLocation": {
+            "file": "tests/worker-locale-regression.api.spec.ts",
+            "line": 48,
+            "column": 86
+          },
+          "matcher": "toContain"
+        },
+        {
+          "errorLocation": {
+            "file": "tests/worker-locale-regression.api.spec.ts",
+            "line": 48,
+            "column": 86
+          },
+          "matcher": "toContain"
+        },
+        {
+          "errorLocation": {
+            "file": "tests/worker-locale-regression.api.spec.ts",
+            "line": 48,
+            "column": 86
+          },
+          "matcher": "toContain"
+        }
+      ]
+    },
+    {
+      "title": "E2E-11 API: worker1, 1280px, authenticated direct KK entry and reload",
+      "project": "api",
+      "status": "failed",
+      "note": "Browser assertion failed. Reproduce the named scenario; sensitive action details are omitted.",
+      "durationMs": 25838,
+      "diagnostics": [
+        {
+          "errorLocation": {
+            "file": "tests/worker-locale-regression.api.spec.ts",
+            "line": 45,
+            "column": 73
+          }
+        },
+        {
+          "errorLocation": {
+            "file": "tests/worker-locale-regression.api.spec.ts",
+            "line": 48,
+            "column": 86
+          },
+          "matcher": "toContain"
+        },
+        {
+          "errorLocation": {
+            "file": "tests/worker-locale-regression.api.spec.ts",
+            "line": 48,
+            "column": 86
+          },
+          "matcher": "toContain"
+        },
+        {
+          "errorLocation": {
+            "file": "tests/worker-locale-regression.api.spec.ts",
+            "line": 48,
+            "column": 86
+          },
+          "matcher": "toContain"
+        },
+        {
+          "errorLocation": {
+            "file": "tests/worker-locale-regression.api.spec.ts",
+            "line": 45,
+            "column": 73
+          }
+        },
+        {
+          "errorLocation": {
+            "file": "tests/worker-locale-regression.api.spec.ts",
+            "line": 48,
+            "column": 86
+          },
+          "matcher": "toContain"
+        },
+        {
+          "errorLocation": {
+            "file": "tests/worker-locale-regression.api.spec.ts",
+            "line": 48,
+            "column": 86
+          },
+          "matcher": "toContain"
+        },
+        {
+          "errorLocation": {
+            "file": "tests/worker-locale-regression.api.spec.ts",
+            "line": 48,
+            "column": 86
+          },
+          "matcher": "toContain"
+        }
+      ]
+    },
+    {
+      "title": "E2E-11 API: foreman1, 1280px, authenticated direct KK entry and reload",
+      "project": "api",
+      "status": "failed",
+      "note": "Browser assertion failed. Reproduce the named scenario; sensitive action details are omitted.",
+      "durationMs": 25914,
+      "diagnostics": [
+        {
+          "errorLocation": {
+            "file": "tests/worker-locale-regression.api.spec.ts",
+            "line": 45,
+            "column": 73
+          }
+        },
+        {
+          "errorLocation": {
+            "file": "tests/worker-locale-regression.api.spec.ts",
+            "line": 48,
+            "column": 86
+          },
+          "matcher": "toContain"
+        },
+        {
+          "errorLocation": {
+            "file": "tests/worker-locale-regression.api.spec.ts",
+            "line": 48,
+            "column": 86
+          },
+          "matcher": "toContain"
+        },
+        {
+          "errorLocation": {
+            "file": "tests/worker-locale-regression.api.spec.ts",
+            "line": 48,
+            "column": 86
+          },
+          "matcher": "toContain"
+        },
+        {
+          "errorLocation": {
+            "file": "tests/worker-locale-regression.api.spec.ts",
+            "line": 45,
+            "column": 73
+          }
+        },
+        {
+          "errorLocation": {
+            "file": "tests/worker-locale-regression.api.spec.ts",
+            "line": 48,
+            "column": 86
+          },
+          "matcher": "toContain"
+        },
+        {
+          "errorLocation": {
+            "file": "tests/worker-locale-regression.api.spec.ts",
+            "line": 48,
+            "column": 86
+          },
+          "matcher": "toContain"
+        },
+        {
+          "errorLocation": {
+            "file": "tests/worker-locale-regression.api.spec.ts",
+            "line": 48,
+            "column": 86
+          },
+          "matcher": "toContain"
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "passed": 0,
+    "failed": 4,
+    "fixme": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "notRun": 0
+  },
+  "runnerFailed": true,
+  "durationMs": 103389
+}
