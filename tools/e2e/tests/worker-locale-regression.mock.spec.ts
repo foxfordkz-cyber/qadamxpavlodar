@@ -93,6 +93,10 @@ test('E2E-11: note and synthetic photo survive language repaint and reload with 
   const cabinet = await openCabinet(page);
   await cabinet.locator(`[data-action=select][data-id="${taskId}"]`).click();
   await cabinet.locator('button[data-action=start]').click();
+  // Start refresh can render the report button before its busy guard clears.
+  // Navigation stays disabled until that operation completes; wait for this
+  // observable completion before opening the independent language/photo draft.
+  await expect(cabinet.locator('button[data-action=nav][data-id=tasks]').filter({ visible: true })).toBeEnabled();
   await expect(cabinet.locator('button[data-action=open-report]')).toBeEnabled();
   await cabinet.locator('button[data-action=open-report]').click();
   const png = await page.evaluate(() => {
