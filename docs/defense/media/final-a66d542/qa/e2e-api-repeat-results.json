@@ -1,0 +1,139 @@
+{
+  "status": "passed",
+  "counts": {
+    "passed": 16,
+    "failed": 0,
+    "timedOut": 0,
+    "skipped": 0
+  },
+  "tests": [
+    {
+      "title": "E2E-06 API: worker1, 375px, ru, direct route/reload and keyboard",
+      "status": "passed",
+      "fixme": false,
+      "durationMs": 2408,
+      "note": "",
+      "errors": []
+    },
+    {
+      "title": "E2E-06 API: foreman1, 375px, ru, direct route/reload and keyboard",
+      "status": "passed",
+      "fixme": false,
+      "durationMs": 2451,
+      "note": "",
+      "errors": []
+    },
+    {
+      "title": "E2E-06 API: worker1, 375px, kk, direct route/reload and keyboard",
+      "status": "passed",
+      "fixme": false,
+      "durationMs": 1842,
+      "note": "",
+      "errors": []
+    },
+    {
+      "title": "E2E-06 API: foreman1, 375px, kk, direct route/reload and keyboard",
+      "status": "passed",
+      "fixme": false,
+      "durationMs": 1910,
+      "note": "",
+      "errors": []
+    },
+    {
+      "title": "E2E-06 API: worker1, 800px, ru, direct route/reload and keyboard",
+      "status": "passed",
+      "fixme": false,
+      "durationMs": 1713,
+      "note": "",
+      "errors": []
+    },
+    {
+      "title": "E2E-06 API: foreman1, 800px, ru, direct route/reload and keyboard",
+      "status": "passed",
+      "fixme": false,
+      "durationMs": 1659,
+      "note": "",
+      "errors": []
+    },
+    {
+      "title": "E2E-06 API: worker1, 800px, kk, direct route/reload and keyboard",
+      "status": "passed",
+      "fixme": false,
+      "durationMs": 1901,
+      "note": "",
+      "errors": []
+    },
+    {
+      "title": "E2E-06 API: foreman1, 800px, kk, direct route/reload and keyboard",
+      "status": "passed",
+      "fixme": false,
+      "durationMs": 2018,
+      "note": "",
+      "errors": []
+    },
+    {
+      "title": "E2E-06 API: worker1, 801px, ru, direct route/reload and keyboard",
+      "status": "passed",
+      "fixme": false,
+      "durationMs": 1680,
+      "note": "",
+      "errors": []
+    },
+    {
+      "title": "E2E-06 API: foreman1, 801px, ru, direct route/reload and keyboard",
+      "status": "passed",
+      "fixme": false,
+      "durationMs": 1702,
+      "note": "",
+      "errors": []
+    },
+    {
+      "title": "E2E-06 API: worker1, 801px, kk, direct route/reload and keyboard",
+      "status": "passed",
+      "fixme": false,
+      "durationMs": 1862,
+      "note": "",
+      "errors": []
+    },
+    {
+      "title": "E2E-06 API: foreman1, 801px, kk, direct route/reload and keyboard",
+      "status": "passed",
+      "fixme": false,
+      "durationMs": 1942,
+      "note": "",
+      "errors": []
+    },
+    {
+      "title": "E2E-06 API: worker1, 1280px, ru, direct route/reload and keyboard",
+      "status": "passed",
+      "fixme": false,
+      "durationMs": 1693,
+      "note": "",
+      "errors": []
+    },
+    {
+      "title": "E2E-06 API: foreman1, 1280px, ru, direct route/reload and keyboard",
+      "status": "passed",
+      "fixme": false,
+      "durationMs": 1760,
+      "note": "",
+      "errors": []
+    },
+    {
+      "title": "E2E-06 API: worker1, 1280px, kk, direct route/reload and keyboard",
+      "status": "passed",
+      "fixme": false,
+      "durationMs": 1918,
+      "note": "",
+      "errors": []
+    },
+    {
+      "title": "E2E-06 API: foreman1, 1280px, kk, direct route/reload and keyboard",
+      "status": "passed",
+      "fixme": false,
+      "durationMs": 1876,
+      "note": "",
+      "errors": []
+    }
+  ]
+}

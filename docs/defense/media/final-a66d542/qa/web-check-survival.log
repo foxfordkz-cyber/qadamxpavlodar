@@ -1,0 +1,5 @@
+
+> @green-pavlodar/web@0.1.0 check:survival
+> esbuild scripts/check-survival.ts --bundle --platform=node --format=esm --outfile=dist-scripts/check-survival.mjs --log-level=warning && node dist-scripts/check-survival.mjs
+
+Survival OK: n=12000, holdout=2400, ROC-AUC=0.732373, Brier=0.177188 (synthetic only)

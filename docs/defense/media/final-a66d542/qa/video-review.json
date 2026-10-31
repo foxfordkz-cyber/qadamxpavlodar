@@ -1,0 +1,288 @@
+{
+  "sourceSha": "a66d542c63c527d608400c84b34d49f982855369",
+  "createdUtc": "2026-10-31T01:05:23.791Z",
+  "files": [
+    {
+      "file": "green-pavlodar-full-5m-a66d542.mp4",
+      "sha256": "8442952a4a5f708882c8b5115af9a5e664e0f592d95078521e505192190fec73",
+      "metadata": {
+        "duration": 300.263333,
+        "width": 1280,
+        "height": 960,
+        "readyState": 1,
+        "codecSupport": "probably"
+      },
+      "playback": {
+        "start": 0,
+        "end": 1.160033,
+        "error": null,
+        "frames": 32,
+        "droppedFrames": 0
+      },
+      "seeks": [
+        {
+          "requested": 75,
+          "actual": 75,
+          "readyState": 4,
+          "error": null
+        },
+        {
+          "requested": 150,
+          "actual": 150,
+          "readyState": 4,
+          "error": null
+        },
+        {
+          "requested": 299.4,
+          "actual": 299.4,
+          "readyState": 4,
+          "error": null
+        }
+      ],
+      "browserEndScreenshot": "qa/green-pavlodar-full-5m-a66d542-browser-end.png",
+      "pass": true,
+      "fullDecode": {
+        "result": "PASS",
+        "performedBy": "render.py ffmpeg complete audio/video decode; empty error log inspected during QA"
+      }
+    },
+    {
+      "file": "green-pavlodar-short-a66d542.mp4",
+      "sha256": "540c99cb3fca1a265a8391657a5e5381b87f8e6e53978ee74199828968b4e91e",
+      "metadata": {
+        "duration": 160.263333,
+        "width": 1280,
+        "height": 960,
+        "readyState": 1,
+        "codecSupport": "probably"
+      },
+      "playback": {
+        "start": 0,
+        "end": 1.165307,
+        "error": null,
+        "frames": 33,
+        "droppedFrames": 0
+      },
+      "seeks": [
+        {
+          "requested": 40,
+          "actual": 40,
+          "readyState": 4,
+          "error": null
+        },
+        {
+          "requested": 80,
+          "actual": 80,
+          "readyState": 4,
+          "error": null
+        },
+        {
+          "requested": 159.4,
+          "actual": 159.4,
+          "readyState": 4,
+          "error": null
+        }
+      ],
+      "browserEndScreenshot": "qa/green-pavlodar-short-a66d542-browser-end.png",
+      "pass": true,
+      "fullDecode": {
+        "result": "PASS",
+        "performedBy": "render.py ffmpeg complete audio/video decode; empty error log inspected during QA"
+      }
+    }
+  ],
+  "network": "loopback only; no external media",
+  "visualReview": {
+    "status": "PASS",
+    "scope": "72 extracted final-MP4 frames: start, middle and end of each of 12 groups in both files. Additional dense samples for worker, draw, price and lab; selected frames inspected at 1280x960.",
+    "groups": [
+      {
+        "id": "overview",
+        "fullStartMidEnd": "PASS",
+        "shortStartMidEnd": "PASS",
+        "contactSheet": "qa/video-contact-sheets/overview.jpg"
+      },
+      {
+        "id": "draw",
+        "fullStartMidEnd": "PASS",
+        "shortStartMidEnd": "PASS",
+        "contactSheet": "qa/video-contact-sheets/draw.jpg"
+      },
+      {
+        "id": "plants",
+        "fullStartMidEnd": "PASS",
+        "shortStartMidEnd": "PASS",
+        "contactSheet": "qa/video-contact-sheets/plants.jpg"
+      },
+      {
+        "id": "cost",
+        "fullStartMidEnd": "PASS",
+        "shortStartMidEnd": "PASS",
+        "contactSheet": "qa/video-contact-sheets/cost.jpg"
+      },
+      {
+        "id": "growth",
+        "fullStartMidEnd": "PASS",
+        "shortStartMidEnd": "PASS",
+        "contactSheet": "qa/video-contact-sheets/growth.jpg"
+      },
+      {
+        "id": "word",
+        "fullStartMidEnd": "PASS",
+        "shortStartMidEnd": "PASS",
+        "contactSheet": "qa/video-contact-sheets/word.jpg"
+      },
+      {
+        "id": "worker",
+        "fullStartMidEnd": "PASS",
+        "shortStartMidEnd": "PASS",
+        "contactSheet": "qa/video-contact-sheets/worker.jpg"
+      },
+      {
+        "id": "lab",
+        "fullStartMidEnd": "PASS",
+        "shortStartMidEnd": "PASS",
+        "contactSheet": "qa/video-contact-sheets/lab.jpg"
+      },
+      {
+        "id": "price",
+        "fullStartMidEnd": "PASS",
+        "shortStartMidEnd": "PASS",
+        "contactSheet": "qa/video-contact-sheets/price.jpg"
+      },
+      {
+        "id": "full",
+        "fullStartMidEnd": "PASS",
+        "shortStartMidEnd": "PASS",
+        "contactSheet": "qa/video-contact-sheets/full.jpg"
+      },
+      {
+        "id": "partial",
+        "fullStartMidEnd": "PASS",
+        "shortStartMidEnd": "PASS",
+        "contactSheet": "qa/video-contact-sheets/partial.jpg"
+      },
+      {
+        "id": "finish",
+        "fullStartMidEnd": "PASS",
+        "shortStartMidEnd": "PASS",
+        "contactSheet": "qa/video-contact-sheets/finish.jpg"
+      }
+    ],
+    "loading": "No loading screens in the inspected final scene starts or final samples. Lab additionally inspected at group offsets 14,14.2,14.4,14.5,14.6,14.8,15,15.5,16,16.5,17,17.5,18,18.5,19,19.5,20 seconds; no spinner or loading message. Forecast post-reload ending shows a selected newly saved record.",
+    "readability": "Titles and captions fit the 1280x960 frame. Percent characters render correctly. Mobile viewport is centered at 375x800, with all three bottom navigation buttons visible, without stretching.",
+    "worker": {
+      "desktopSections": [
+        "Смена",
+        "Журнал",
+        "Профиль"
+      ],
+      "mobileSections": [
+        "Смена",
+        "Журнал",
+        "Профиль"
+      ],
+      "bothEditionsVerified": true,
+      "fullGroupSampleOffsetsSeconds": {
+        "desktopShift": [
+          1,
+          11,
+          13
+        ],
+        "desktopJournal": [
+          3,
+          5
+        ],
+        "desktopProfile": [
+          7,
+          9
+        ],
+        "mobileShift": [
+          19,
+          21
+        ],
+        "mobileJournal": [
+          23,
+          25
+        ],
+        "mobileProfile": [
+          27,
+          29
+        ]
+      },
+      "shortGroupSampleOffsetsSeconds": {
+        "desktopShift": [
+          1,
+          6
+        ],
+        "desktopJournal": [
+          2
+        ],
+        "desktopProfile": [
+          3.5
+        ],
+        "mobileShift": [
+          9
+        ],
+        "mobileJournal": [
+          11
+        ],
+        "mobileProfile": [
+          13
+        ]
+      },
+      "mobileReturnToShiftIncluded": false,
+      "physicalPhoneVerified": false
+    },
+    "drawCommands": {
+      "ru": "нарисуй зону",
+      "kk": "аймақ сыз",
+      "fullGroupOffsetsSeconds": [
+        2,
+        12
+      ],
+      "shortGroupOffsetsSeconds": [
+        1.1,
+        6.4
+      ],
+      "commandAndDrawingModeVisible": true
+    },
+    "demoAndSyntheticDisclosures": "Mock and synthetic narration remain visible in frame footer; synthetic model/demo observations and unknown-state limitations are stated in captions/content."
+  },
+  "browser": "156.0.8078.4",
+  "browserPlaybackAndSeekPassed": true,
+  "reviewedUtc": "2026-10-31T01:07:28.771146+00:00",
+  "resolvedFindings": [
+    {
+      "issue": "Overview displayed 9.97m then care3 displayed 10.83m without explaining different horizons.",
+      "resolution": "Caption now explicitly states overview care2 versus following care3. Actual UI was preserved.",
+      "status": "verified"
+    },
+    {
+      "issue": "Lab loading spinner after rebuild.",
+      "resolution": "Waiting segment removed and final duration retained; dense transition samples show loaded content.",
+      "status": "verified"
+    },
+    {
+      "issue": "Percent-containing comparison caption was absent.",
+      "resolution": "Text expansion disabled in renderer; 83% →84.4% →+1.4pp and demo warning visible.",
+      "status": "verified"
+    },
+    {
+      "issue": "Saved forecast scene ended with old default forecast.",
+      "resolution": "After reload, selected Прогноз 2 ·31.10.2026 is visible with current source/cost snapshot.",
+      "status": "verified"
+    }
+  ],
+  "limitations": [
+    "Review verifies browser decode/playback/seeking and stated visual samples; it is not an Aidana acceptance sign-off.",
+    "Clips are edited recordings with loading removed; short edition is accelerated. They are not an uninterrupted live session.",
+    "Voice is synthesized, as disclosed. This QA did not perform a separate human listening/pronunciation assessment.",
+    "All three worker sections are shown at desktop/mobile widths; the final mobile return from Profile to Shift is outside the edit.",
+    "Mobile is a browser viewport, not a physical-device or native-app test.",
+    "Container durations are 300.263333 and 160.263333 seconds; approximately 0.26s beyond timeline targets due to audio/container padding."
+  ],
+  "overall": "PASS",
+  "unresolvedDefects": [],
+  "evidencePathsRelativeTo": "docs/defense/media/final-a66d542/"
+}

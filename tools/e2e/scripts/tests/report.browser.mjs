@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, mkdirSync } from 'node:fs';
+import { existsSync, readFileSync, mkdirSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { chromium, expect } from '@playwright/test';
@@ -9,14 +10,34 @@ import { e2eDir } from '../environment.mjs';
 import { expectedScreens } from '../report-model.mjs';
 
 const folder = join(e2eDir, 'playwright-report/summary');
+const reportModel = JSON.parse(readFileSync(join(folder, 'results.json'), 'utf8'));
+const currentScreens = reportModel.screens.filter(screen => screen.fresh);
 
-test('demo ZIP has exactly the public report and 26 mock screenshots', () => {
-  const entries = unzipSync(readFileSync(join(folder, 'green-pavlodar-demo.zip')));
-  const allowed = ['index.html', 'DAMIR.md', 'results.json', ...expectedScreens.map(name => `screens/${name}`)].sort();
-  assert.deepEqual(Object.keys(entries).sort(), allowed);
-  const model = JSON.parse(new TextDecoder().decode(entries['results.json']));
-  assert.equal(model.screens.filter(screen => screen.valid && screen.fresh).length, 26);
-  for (const run of model.runs) for (const result of run.tests ?? []) {
+test('generated report and optional ZIP contain only current manifest-bound mock screenshots', () => {
+  assert.deepEqual(reportModel.screens.map(screen => screen.name).sort(), [...expectedScreens].sort());
+  for (const screen of currentScreens) {
+    assert.equal(screen.revision, reportModel.revision);
+    assert.match(screen.runId, /^[a-f0-9-]{36}$/);
+    const bytes = readFileSync(join(folder, 'screens', screen.name));
+    assert.equal(createHash('sha256').update(bytes).digest('hex'), screen.sha256);
+  }
+  if (reportModel.acceptance.ready) {
+    assert.equal(currentScreens.length, expectedScreens.length);
+    assert.ok(currentScreens.every(screen => screen.reviewed));
+    assert.equal(reportModel.packageKind, 'accepted-local-build');
+  } else assert.equal(reportModel.packageKind, 'diagnostic-not-accepted');
+  // check:report is intentionally valid before packing, then validates the ZIP
+  // as well if e2e:pack has already created it.
+  const archive = join(folder, 'green-pavlodar-demo.zip');
+  if (existsSync(archive)) {
+    const entries = unzipSync(readFileSync(archive));
+    const allowed = ['index.html', 'DAMIR.md', 'results.json', ...currentScreens.map(screen => `screens/${screen.name}`)].sort();
+    assert.deepEqual(Object.keys(entries).sort(), allowed);
+    const model = JSON.parse(new TextDecoder().decode(entries['results.json']));
+    assert.deepEqual(model, reportModel);
+    for (const screen of currentScreens) assert.equal(createHash('sha256').update(entries[`screens/${screen.name}`]).digest('hex'), screen.sha256);
+  }
+  for (const run of reportModel.runs) for (const result of run.tests ?? []) {
     assert.equal('errors' in result, false);
     assert.equal('attachments' in result, false);
   }
@@ -45,15 +66,18 @@ for (const viewport of [{ width: 1280, height: 800 }, { width: 375, height: 812 
       await expect(page.locator('tbody tr:visible')).toHaveCount(await page.locator('tbody tr[data-run=smoke]').count());
       await page.getByLabel('Прогон', { exact: true }).selectOption('');
       await page.getByLabel('Размер', { exact: true }).selectOption('375');
-      await expect(page.locator('.screen:visible')).toHaveCount(13);
-      const first = page.locator('.screen:visible').first();
-      await first.click();
-      await expect(page.getByRole('dialog')).toBeVisible();
-      await expect.poll(() => page.locator('dialog img').evaluate(img => img.naturalWidth)).toBe(375);
-      await page.keyboard.press('Escape');
-      await expect(page.getByRole('dialog')).not.toBeVisible();
+      const mobileScreens = currentScreens.filter(screen => screen.width === 375).length;
+      await expect(page.locator('.screen:visible')).toHaveCount(mobileScreens);
+      if (mobileScreens) {
+        const first = page.locator('.screen:visible').first();
+        await first.click();
+        await expect(page.getByRole('dialog')).toBeVisible();
+        await expect.poll(() => page.locator('dialog img').evaluate(img => img.naturalWidth)).toBe(375);
+        await page.keyboard.press('Escape');
+        await expect(page.getByRole('dialog')).not.toBeVisible();
+      } else await expect(page.getByRole('dialog')).not.toBeVisible();
       await page.getByLabel('Размер', { exact: true }).selectOption('');
-      await expect(page.locator('.screen:visible')).toHaveCount(26);
+      await expect(page.locator('.screen:visible')).toHaveCount(currentScreens.length);
       const size = await page.evaluate(() => ({ width: document.documentElement.clientWidth, scroll: document.documentElement.scrollWidth }));
       assert.ok(size.scroll <= size.width, `Page overflow: ${size.scroll} > ${size.width}`);
       assert.deepEqual(errors, []);

@@ -1,0 +1,5 @@
+
+> @green-pavlodar/web@0.1.0 check:zones
+> esbuild scripts/check-drawn-zone.ts --bundle --platform=node --format=esm --outfile=dist-scripts/check-drawn-zone.mjs --log-level=warning && node dist-scripts/check-drawn-zone.mjs
+
+SRV-02: 7 проверок пройдены. Пример: Нарисованная зона, улица Желтоксан, 3676 м², зелень в 200 м 0.072, зданий в 200 м 69, смета 9 678 685 ₸

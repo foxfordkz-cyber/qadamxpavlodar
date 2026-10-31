@@ -1,0 +1,222 @@
+{
+  "schemaVersion": 1,
+  "testedSHA": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+  "applicationBase": "a66d542c63c527d608400c84b34d49f982855369",
+  "mockRunId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+  "reviewType": "visual-audit-only-not-capture-approval",
+  "reviewedCount": 30,
+  "usableForSlides": 18,
+  "captureApprovalWritten": false,
+  "screenshots": [
+    {
+      "name": "guide-1280.png",
+      "sha256": "2d6ec02100527ff8c0a1ea5d2cc4872786de5861f00fcf03cf8dba0f7283bd72",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Гайд загружен; видимые блоки и ссылки читаемы."
+    },
+    {
+      "name": "guide-375.png",
+      "sha256": "44df715e0872e4623cbd2b8f3028b66dc3da6a07b87882fbb5ef6bba56ec10e1",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Климатический блок читаем, начало блока воды видно; обычная вертикальная обрезка следующего раздела."
+    },
+    {
+      "name": "home-1280.png",
+      "sha256": "81b1a611e45b4e0a642b6d41aa0931bb4e9190ac0f3266ea1a5ea8983ae770dc",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Расчёт завершён; рекомендация, стоимость, рост и основные кнопки читаемы."
+    },
+    {
+      "name": "home-375.png",
+      "sha256": "71a83fe536d40ba378437d87d35f9482ee7f5722eaaf451e87dedfba7f411bc3",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Расчёт завершён; рекомендация, стоимость и прогноз роста читаемы, помощник не закрывает цену."
+    },
+    {
+      "name": "import-1280.png",
+      "sha256": "b33ede139360d144e9fbc9bd332f278b5c272962fdb2b968c186553772400448",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Готовая форма импорта; поля и выбор файла читаемы, ожидания расчёта нет."
+    },
+    {
+      "name": "import-375.png",
+      "sha256": "af543f5efd06d538219ed018efe149aa205f4dbb682438d3bb322d063c129d6f",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Готовая форма импорта помещается в экран; выбор слоя, источник и кнопка выбора файла читаемы."
+    },
+    {
+      "name": "lab-1280.png",
+      "sha256": "4e5c4e94768be2080298564724e372acd57ad33685b1acf5155d08a6d7bc2930",
+      "reviewed": true,
+      "usableForSlides": false,
+      "note": "Три рассчитанных плана, бюджет и вода видны; помощник закрывает значение нижнего показателя цены дерева в правой карточке."
+    },
+    {
+      "name": "lab-375.png",
+      "sha256": "e7523adb33e52f4806aa22776149c916a176e347fc3c871e7e3983302e635d70",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Название плана, бюджет, вода, приживаемость, CO₂, крона и неизвестная цена дерева читаемы; расчёт завершён."
+    },
+    {
+      "name": "map-1280.png",
+      "sha256": "828c8b1c75c667933e2439c6c69d849a8cff97dfc9eed92cf543ef259f259b89",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Карта и список зон готовы; CSV виден, плашка презентации находится в шапке."
+    },
+    {
+      "name": "map-375.png",
+      "sha256": "41f2e6c7e9e1aa5319b411aac577e29ef1ff38be285d1fe5cc0cdb475e24d384",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Снята настоящая 3D-карта с элементами управления; это уже не только мобильный список зон."
+    },
+    {
+      "name": "outcomes-1280.png",
+      "sha256": "8a59429a98d222cd6f8023f7207597d903c3bd894e1eed9296a234fbd3073218",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Три варианта с числами, demo-пометками и кнопками сохранения отображаются полностью в видимой области."
+    },
+    {
+      "name": "outcomes-375.png",
+      "sha256": "81ff1da627387fe82cb0cdd01cec7f20fc78ebf43f37f868f59b56d905bc7205",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Первый вариант рассчитан, demo/прогноз различимы, числовые строки и кнопка сохранения видимы."
+    },
+    {
+      "name": "priorities-1280.png",
+      "sha256": "e6ea3fceed42da1d1d410c0817eaed2df53787be40e677cd86ef77b242cf3182",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Веса и рейтинг рассчитаны и читаемы; прежнее перекрытие слева плашкой устранено."
+    },
+    {
+      "name": "priorities-375.png",
+      "sha256": "8ae0ac86f6637c660e24be085f888dc17401132015b23bf41228535540286d47",
+      "reviewed": true,
+      "usableForSlides": false,
+      "note": "Помощник закрывает числовой вес и правый край ползунка. Отдельная активная регрессия подтверждает перекрытие в RU и KK."
+    },
+    {
+      "name": "problems-1280.png",
+      "sha256": "f934c1e182e25531b291bc937e982b0e8dee6a03ba2c5549ec181daaff74ec08",
+      "reviewed": true,
+      "usableForSlides": false,
+      "note": "Помощник перекрывает часть рекомендации в третьей видимой строке таблицы справа внизу."
+    },
+    {
+      "name": "problems-375.png",
+      "sha256": "93a95d4d1ccbcaf1486dee1098c3c73511bf5035e62f6837276dd704d0b5924a",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Счётчики проблем и основные действия загружены и читаемы."
+    },
+    {
+      "name": "projects-1280.png",
+      "sha256": "4c90616e347597142c47f0e98440c612921337e6ad9b1677bbd362ca4d5cd3ab",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Проект загружен, состав и демонстрационная пометка видны."
+    },
+    {
+      "name": "projects-375.png",
+      "sha256": "bfe2c2cd8c6b27bcff5afec99330c6cb7d246ee7de500b47f991480183c28551",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Проект, состав и demo-пометка загружены; важный текст не перекрыт."
+    },
+    {
+      "name": "rates-1280.png",
+      "sha256": "a17556bde222612b2b019da2a9531b6e4a85f73b355fec9b9caca3b9aa513af5",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Расценки, единицы и источники читаемы; прежнего перекрытия подписи слева нет."
+    },
+    {
+      "name": "rates-375.png",
+      "sha256": "704c690d4414391d84085058c9eb6e5b4fc6bc1d094cef00363ff1430e240066",
+      "reviewed": true,
+      "usableForSlides": false,
+      "note": "Числа и единицы читаемы, источник обрезан внутри прокручиваемой таблицы; помощник перекрывает нижнюю видимую часть ячейки источника. Не полный кадр справочника без перекрытий."
+    },
+    {
+      "name": "reports-1280.png",
+      "sha256": "d0e933954ae9e16d45e30c4579070a979a03640b669eff1af1c745103df75b90",
+      "reviewed": true,
+      "usableForSlides": false,
+      "note": "Два отчёта загружены, но обе миниатюры фотографий показывают многоточие; готовая загрузка изображений не подтверждена."
+    },
+    {
+      "name": "reports-375.png",
+      "sha256": "cd4d1a1bdf31ecf3eb74ccff16697a3cbeed60c05b40597c896c59a8014e7f59",
+      "reviewed": true,
+      "usableForSlides": false,
+      "note": "Список двух демонстрационных отчётов загружен и читаем. Миниатюры показывают многоточие; загрузка фотографий этим кадром не подтверждена."
+    },
+    {
+      "name": "species-1280.png",
+      "sha256": "29450f04ca3f40e06e95aae69a1640fc802f5e2a7534bf3b1d2dadbdb0319398",
+      "reviewed": true,
+      "usableForSlides": false,
+      "note": "Фотографии и каталог загружены; помощник перекрывает текст пользы крайней правой карточки ели."
+    },
+    {
+      "name": "species-375.png",
+      "sha256": "63efa4d1cdb9172f0f0eaa069eec504048b821f8698bfcf4b559e1f344f777a1",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Фильтры, количество растений и начало изображения загружены; важных перекрытых подписей в кадре нет."
+    },
+    {
+      "name": "tasks-1280.png",
+      "sha256": "db00a44dac49d7fde949db4d21d01ff83d91320425e74b107959bb2158ea5dae",
+      "reviewed": true,
+      "usableForSlides": false,
+      "note": "Показатели и бригады загружены; помощник перекрывает правый элемент первой карточки бригады внизу кадра."
+    },
+    {
+      "name": "tasks-375.png",
+      "sha256": "4bb3168f39427c2336b2310d3081f9809a1df07e2b902bcefce6a263c9c480fc",
+      "reviewed": true,
+      "usableForSlides": true,
+      "note": "Дата, основные действия и счётчики загружены и читаемы; помощник находится справа от текста определения."
+    },
+    {
+      "name": "time-20-years-1280.png",
+      "sha256": "28cff2f26ff8f7fd0070eb040caebd50563ee4793f2b61202ea50da1d4c05fca",
+      "reviewed": true,
+      "usableForSlides": false,
+      "note": "Выбраны 20 лет, метрики и карта готовы; помощник перекрывает нижний фрагмент пояснения."
+    },
+    {
+      "name": "time-20-years-375.png",
+      "sha256": "34d2bee3a0fe4effaa61d40b4eefb08bb961819a1c4ef062b9b03fc1e7e2d4c8",
+      "reviewed": true,
+      "usableForSlides": false,
+      "note": "Шторка раскрыта, 20 лет и все три метрики видны; помощник перекрывает правый фрагмент нижнего пояснения."
+    },
+    {
+      "name": "time-planting-1280.png",
+      "sha256": "0dd51db749e206b4eb718fdf042ad8b7b47430803a81d376e0bd6d83fa13e472",
+      "reviewed": true,
+      "usableForSlides": false,
+      "note": "Посадка, карта и управление готовы; помощник перекрывает нижний фрагмент пояснения модели."
+    },
+    {
+      "name": "time-planting-375.png",
+      "sha256": "491ef2c5463486eb5fd4f0dceacefd9754a4c711420454530d0ecad330a55975",
+      "reviewed": true,
+      "usableForSlides": false,
+      "note": "Шторка раскрыта, посадка и пояснение о саженцах видны; помощник перекрывает край нижнего пояснения."
+    }
+  ]
+}

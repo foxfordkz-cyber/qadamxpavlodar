@@ -14,7 +14,7 @@
     "e2e:summary": "node scripts/summary.mjs",
     "e2e:pack": "node scripts/summary.mjs --pack",
     "e2e:gate": "node scripts/summary.mjs --strict",
-    "check:tools": "node --test scripts/tests/tooling.test.mjs",
+    "check:tools": "node --test scripts/tests/tooling.test.mjs scripts/tests/api-privacy.browser.mjs",
     "check:report": "node --test scripts/tests/report.browser.mjs",
     "report": "playwright show-report playwright-report/mock"
   },

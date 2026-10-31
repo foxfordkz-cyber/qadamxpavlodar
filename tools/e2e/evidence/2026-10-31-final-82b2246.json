@@ -1,0 +1,3183 @@
+{
+  "generatedAt": "2026-10-31T02:03:11.256Z",
+  "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+  "dirty": false,
+  "runs": [
+    {
+      "profile": "mock",
+      "available": true,
+      "current": true,
+      "meta": {
+        "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+        "state": "finished",
+        "startedAt": "2026-10-31T01:51:28.855Z",
+        "endedAt": "2026-10-31T02:01:53.513Z",
+        "exitCode": 1,
+        "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+        "dirty": false,
+        "selection": "full",
+        "capturesScreens": true,
+        "command": "node scripts/run.mjs mock",
+        "environment": {
+          "node": "24.22.2",
+          "playwright": "1.64.1",
+          "platform": "win32",
+          "arch": "x64",
+          "workers": 2,
+          "retries": 0
+        },
+        "target": "http://localhost:5176"
+      },
+      "tests": [
+        {
+          "title": "defence journey: ru, site → recommendation/cost → growth → DOCX/XML",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 8753
+        },
+        {
+          "title": "defence journey: kk, site → recommendation/cost → growth → DOCX/XML",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 11180
+        },
+        {
+          "title": "mobile assistant: ru, cost and primary actions stay uncovered at 375px",
+          "project": "desktop",
+          "status": "failed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 13615
+        },
+        {
+          "title": "mobile assistant: kk, cost and primary actions stay uncovered at 375px",
+          "project": "desktop",
+          "status": "failed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 13253
+        },
+        {
+          "title": "defence journey: ru, site → recommendation/cost → growth → DOCX/XML",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 10586
+        },
+        {
+          "title": "defence journey: kk, site → recommendation/cost → growth → DOCX/XML",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 10343
+        },
+        {
+          "title": "mobile assistant: ru, cost and primary actions stay uncovered at 375px",
+          "project": "mobile",
+          "status": "failed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 12962
+        },
+        {
+          "title": "mobile assistant: kk, cost and primary actions stay uncovered at 375px",
+          "project": "mobile",
+          "status": "failed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 13571
+        },
+        {
+          "title": "zone report downloads Russian and Kazakh Word memos through export settings",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 6192
+        },
+        {
+          "title": "zone report downloads Russian and Kazakh Word memos through export settings",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5105
+        },
+        {
+          "title": "drawing ru: search counters, undo, save a polygon and reopen after reload",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 11755
+        },
+        {
+          "title": "drawing kk: search counters, undo, save a polygon and reopen after reload",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 13146
+        },
+        {
+          "title": "drawing ru: search counters, undo, save a polygon and reopen after reload",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 7806
+        },
+        {
+          "title": "drawing kk: search counters, undo, save a polygon and reopen after reload",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 7700
+        },
+        {
+          "title": "lab: three plans render without browser errors or horizontal overflow",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 6854
+        },
+        {
+          "title": "lab: rare/none change metrics, retain composition, and regular restores results",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 7261
+        },
+        {
+          "title": "lab: show plan on map preserves IDs and opens numbered highlight list",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5665
+        },
+        {
+          "title": "lab: Kazakh service phrases, scenario and reasons, names may retain source language",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4778
+        },
+        {
+          "title": "lab: all zones remain reachable when a portfolio exceeds the existing 30-zone map limit",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 8302
+        },
+        {
+          "title": "lab: invalid, empty budget and zero water limit have honest recoverable states",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 10781
+        },
+        {
+          "title": "lab: request error/retry and late requests do not display stale scenario values",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 13048
+        },
+        {
+          "title": "lab: presentation capture for review",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5132
+        },
+        {
+          "title": "lab: water minus 30% freezes species/counts; only explicit rebuilding changes membership",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 9755
+        },
+        {
+          "title": "lab: school goal, risk diagnosis and keyboard choices expose evidence without fake climate predictions",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 6873
+        },
+        {
+          "title": "lab: an eligible species replacement changes only the chosen plan after explicit action",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4987
+        },
+        {
+          "title": "lab: three plans render without browser errors or horizontal overflow",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4112
+        },
+        {
+          "title": "lab: rare/none change metrics, retain composition, and regular restores results",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5078
+        },
+        {
+          "title": "lab: show plan on map preserves IDs and opens numbered highlight list",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4216
+        },
+        {
+          "title": "lab: Kazakh service phrases, scenario and reasons, names may retain source language",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4329
+        },
+        {
+          "title": "lab: all zones remain reachable when a portfolio exceeds the existing 30-zone map limit",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 7416
+        },
+        {
+          "title": "lab: invalid, empty budget and zero water limit have honest recoverable states",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 10988
+        },
+        {
+          "title": "lab: request error/retry and late requests do not display stale scenario values",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 12649
+        },
+        {
+          "title": "lab: presentation capture for review",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4219
+        },
+        {
+          "title": "lab: water minus 30% freezes species/counts; only explicit rebuilding changes membership",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 8775
+        },
+        {
+          "title": "lab: school goal, risk diagnosis and keyboard choices expose evidence without fake climate predictions",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 6163
+        },
+        {
+          "title": "lab: an eligible species replacement changes only the chosen plan after explicit action",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4835
+        },
+        {
+          "title": "Kazakh navigation is enabled with ?lang=kk",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2665
+        },
+        {
+          "title": "/: Kazakh controls have no Russian service labels",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2880
+        },
+        {
+          "title": "/map: Kazakh controls have no Russian service labels",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2685
+        },
+        {
+          "title": "/problems: Kazakh controls have no Russian service labels",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2187
+        },
+        {
+          "title": "/priorities: Kazakh controls have no Russian service labels",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2429
+        },
+        {
+          "title": "/species: Kazakh controls have no Russian service labels",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2101
+        },
+        {
+          "title": "/projects: Kazakh controls have no Russian service labels",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1949
+        },
+        {
+          "title": "/rates: Kazakh controls have no Russian service labels",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1824
+        },
+        {
+          "title": "/import: Kazakh controls have no Russian service labels",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1616
+        },
+        {
+          "title": "/guide: Kazakh controls have no Russian service labels",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1678
+        },
+        {
+          "title": "/tasks: Kazakh controls have no Russian service labels",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2018
+        },
+        {
+          "title": "/reports: Kazakh controls have no Russian service labels",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1879
+        },
+        {
+          "title": "/lab: Kazakh controls have no Russian service labels",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 3962
+        },
+        {
+          "title": "/outcomes: Kazakh controls have no Russian service labels",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2050
+        },
+        {
+          "title": "Kazakh navigation is enabled with ?lang=kk",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2210
+        },
+        {
+          "title": "/: Kazakh controls have no Russian service labels",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2215
+        },
+        {
+          "title": "/map: Kazakh controls have no Russian service labels",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2087
+        },
+        {
+          "title": "/problems: Kazakh controls have no Russian service labels",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1913
+        },
+        {
+          "title": "/priorities: Kazakh controls have no Russian service labels",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2101
+        },
+        {
+          "title": "/species: Kazakh controls have no Russian service labels",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1869
+        },
+        {
+          "title": "/projects: Kazakh controls have no Russian service labels",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1471
+        },
+        {
+          "title": "/rates: Kazakh controls have no Russian service labels",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1829
+        },
+        {
+          "title": "/import: Kazakh controls have no Russian service labels",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1482
+        },
+        {
+          "title": "/guide: Kazakh controls have no Russian service labels",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1491
+        },
+        {
+          "title": "/tasks: Kazakh controls have no Russian service labels",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1576
+        },
+        {
+          "title": "/reports: Kazakh controls have no Russian service labels",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2053
+        },
+        {
+          "title": "/lab: Kazakh controls have no Russian service labels",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 3797
+        },
+        {
+          "title": "/outcomes: Kazakh controls have no Russian service labels",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1946
+        },
+        {
+          "title": "outcomes final mock: ru unknown is distinct from zero survival and demo history survives reload",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 8342
+        },
+        {
+          "title": "outcomes final mock: kk unknown is distinct from zero survival and demo history survives reload",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 9437
+        },
+        {
+          "title": "outcomes final mock: ru unknown is distinct from zero survival and demo history survives reload",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 7086
+        },
+        {
+          "title": "outcomes final mock: kk unknown is distinct from zero survival and demo history survives reload",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 8274
+        },
+        {
+          "title": "outcomes mock: ru real demo history, annual/early/partial/undated selections and no stale zone",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4158
+        },
+        {
+          "title": "outcomes mock: kk real demo history, annual/early/partial/undated selections and no stale zone",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4120
+        },
+        {
+          "title": "outcomes mock: P4 reference cases I01–I07 are calculated in the application, unknown is not dead",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5483
+        },
+        {
+          "title": "outcomes mock: independent prices, common basis, durable snapshots and unchanged saved rates",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 10462
+        },
+        {
+          "title": "outcomes mock: mixed or unknown cost never wins or becomes zero",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5076
+        },
+        {
+          "title": "outcomes mock: viewer cannot save; loading/error/retry never retain previous values",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5315
+        },
+        {
+          "title": "outcomes mock: ru real demo history, annual/early/partial/undated selections and no stale zone",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4158
+        },
+        {
+          "title": "outcomes mock: kk real demo history, annual/early/partial/undated selections and no stale zone",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 3451
+        },
+        {
+          "title": "outcomes mock: P4 reference cases I01–I07 are calculated in the application, unknown is not dead",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4905
+        },
+        {
+          "title": "outcomes mock: independent prices, common basis, durable snapshots and unchanged saved rates",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 9122
+        },
+        {
+          "title": "outcomes mock: mixed or unknown cost never wins or becomes zero",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4841
+        },
+        {
+          "title": "outcomes mock: viewer cannot save; loading/error/retry never retain previous values",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4915
+        },
+        {
+          "title": "/: opens without JavaScript errors or horizontal overflow",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2279
+        },
+        {
+          "title": "/: presentation screenshot",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5628
+        },
+        {
+          "title": "/map: opens without JavaScript errors or horizontal overflow",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5356
+        },
+        {
+          "title": "/map: presentation screenshot",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5527
+        },
+        {
+          "title": "/problems: opens without JavaScript errors or horizontal overflow",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2374
+        },
+        {
+          "title": "/problems: presentation screenshot",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 3161
+        },
+        {
+          "title": "/priorities: opens without JavaScript errors or horizontal overflow",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2179
+        },
+        {
+          "title": "/priorities: presentation screenshot",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 3256
+        },
+        {
+          "title": "/species: opens without JavaScript errors or horizontal overflow",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2088
+        },
+        {
+          "title": "/species: presentation screenshot",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4610
+        },
+        {
+          "title": "/projects: opens without JavaScript errors or horizontal overflow",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1509
+        },
+        {
+          "title": "/projects: presentation screenshot",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2103
+        },
+        {
+          "title": "/rates: opens without JavaScript errors or horizontal overflow",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2008
+        },
+        {
+          "title": "/rates: presentation screenshot",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 3050
+        },
+        {
+          "title": "/import: opens without JavaScript errors or horizontal overflow",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1414
+        },
+        {
+          "title": "/import: presentation screenshot",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1875
+        },
+        {
+          "title": "/guide: opens without JavaScript errors or horizontal overflow",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1864
+        },
+        {
+          "title": "/guide: presentation screenshot",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2409
+        },
+        {
+          "title": "/tasks: opens without JavaScript errors or horizontal overflow",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1821
+        },
+        {
+          "title": "/tasks: presentation screenshot",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2347
+        },
+        {
+          "title": "/reports: opens without JavaScript errors or horizontal overflow",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1819
+        },
+        {
+          "title": "/reports: presentation screenshot",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1765
+        },
+        {
+          "title": "/lab: opens without JavaScript errors or horizontal overflow",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4207
+        },
+        {
+          "title": "/lab: presentation screenshot",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4664
+        },
+        {
+          "title": "/outcomes: opens without JavaScript errors or horizontal overflow",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2179
+        },
+        {
+          "title": "/outcomes: presentation screenshot",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 3264
+        },
+        {
+          "title": "time machine: Посадка presentation screenshot",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 11514
+        },
+        {
+          "title": "time machine: 20 лет presentation screenshot",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 12265
+        },
+        {
+          "title": "/: opens without JavaScript errors or horizontal overflow",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2178
+        },
+        {
+          "title": "/: presentation screenshot",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4003
+        },
+        {
+          "title": "/map: opens without JavaScript errors or horizontal overflow",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2828
+        },
+        {
+          "title": "/map: presentation screenshot",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 3702
+        },
+        {
+          "title": "/problems: opens without JavaScript errors or horizontal overflow",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1819
+        },
+        {
+          "title": "/problems: presentation screenshot",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2225
+        },
+        {
+          "title": "/priorities: opens without JavaScript errors or horizontal overflow",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1799
+        },
+        {
+          "title": "/priorities: presentation screenshot",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2343
+        },
+        {
+          "title": "/species: opens without JavaScript errors or horizontal overflow",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1897
+        },
+        {
+          "title": "/species: presentation screenshot",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 3419
+        },
+        {
+          "title": "/projects: opens without JavaScript errors or horizontal overflow",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1441
+        },
+        {
+          "title": "/projects: presentation screenshot",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1840
+        },
+        {
+          "title": "/rates: opens without JavaScript errors or horizontal overflow",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1702
+        },
+        {
+          "title": "/rates: presentation screenshot",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2005
+        },
+        {
+          "title": "/import: opens without JavaScript errors or horizontal overflow",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1590
+        },
+        {
+          "title": "/import: presentation screenshot",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1403
+        },
+        {
+          "title": "/guide: opens without JavaScript errors or horizontal overflow",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1499
+        },
+        {
+          "title": "/guide: presentation screenshot",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2122
+        },
+        {
+          "title": "/tasks: opens without JavaScript errors or horizontal overflow",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1482
+        },
+        {
+          "title": "/tasks: presentation screenshot",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2037
+        },
+        {
+          "title": "/reports: opens without JavaScript errors or horizontal overflow",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1438
+        },
+        {
+          "title": "/reports: presentation screenshot",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1689
+        },
+        {
+          "title": "/lab: opens without JavaScript errors or horizontal overflow",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 3237
+        },
+        {
+          "title": "/lab: presentation screenshot",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4508
+        },
+        {
+          "title": "/outcomes: opens without JavaScript errors or horizontal overflow",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1995
+        },
+        {
+          "title": "/outcomes: presentation screenshot",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2839
+        },
+        {
+          "title": "time machine: Посадка presentation screenshot",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 8055
+        },
+        {
+          "title": "time machine: 20 лет presentation screenshot",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 7449
+        },
+        {
+          "title": "final viewer mock: ru, navigation includes work, reports, lab and outcomes",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 7454
+        },
+        {
+          "title": "final viewer mock: ru, existing tasks remain visible and changes unavailable",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4424
+        },
+        {
+          "title": "final viewer mock: ru, brigades and employees are readable",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 6094
+        },
+        {
+          "title": "final viewer mock: ru, existing report details are readable without review actions",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4422
+        },
+        {
+          "title": "final viewer mock: kk, navigation includes work, reports, lab and outcomes",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5759
+        },
+        {
+          "title": "final viewer mock: kk, existing tasks remain visible and changes unavailable",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 6697
+        },
+        {
+          "title": "final viewer mock: kk, brigades and employees are readable",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 7286
+        },
+        {
+          "title": "final viewer mock: kk, existing report details are readable without review actions",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5449
+        },
+        {
+          "title": "final viewer mock: ru, navigation includes work, reports, lab and outcomes",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5202
+        },
+        {
+          "title": "final viewer mock: ru, existing tasks remain visible and changes unavailable",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 3441
+        },
+        {
+          "title": "final viewer mock: ru, brigades and employees are readable",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5012
+        },
+        {
+          "title": "final viewer mock: ru, existing report details are readable without review actions",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4287
+        },
+        {
+          "title": "final viewer mock: kk, navigation includes work, reports, lab and outcomes",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4795
+        },
+        {
+          "title": "final viewer mock: kk, existing tasks remain visible and changes unavailable",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4885
+        },
+        {
+          "title": "final viewer mock: kk, brigades and employees are readable",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 3299
+        },
+        {
+          "title": "final viewer mock: kk, existing report details are readable without review actions",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4036
+        },
+        {
+          "title": "PR14: header language persists after reload and preserves the current route",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4997
+        },
+        {
+          "title": "PR14: catalogue finds the same pine by Russian, Kazakh and Latin names",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2942
+        },
+        {
+          "title": "PR14: unconfirmed Kazakh plant names fall back to the Russian catalogue name",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4458
+        },
+        {
+          "title": "PR14: translated species in zone tab Растения preserve Latin names",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 6231
+        },
+        {
+          "title": "PR14: translated species in zone tab Приживаемость preserve Latin names",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5822
+        },
+        {
+          "title": "PR14: estimate translates service headings and preserves every numeric cost cell",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5860
+        },
+        {
+          "title": "PR14: zone report translates plant names while retaining Latin names and numbers",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2844
+        },
+        {
+          "title": "PR14: dashboard counters translate their labels while preserving data values",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 3238
+        },
+        {
+          "title": "PR14: rule assistant answers Kazakh then Russian with identical priorities and factors",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 6933
+        },
+        {
+          "title": "PR14: header language persists after reload and preserves the current route",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 3309
+        },
+        {
+          "title": "PR14: catalogue finds the same pine by Russian, Kazakh and Latin names",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1838
+        },
+        {
+          "title": "PR14: unconfirmed Kazakh plant names fall back to the Russian catalogue name",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 3432
+        },
+        {
+          "title": "PR14: translated species in zone tab Растения preserve Latin names",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4875
+        },
+        {
+          "title": "PR14: translated species in zone tab Приживаемость preserve Latin names",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4711
+        },
+        {
+          "title": "PR14: estimate translates service headings and preserves every numeric cost cell",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5333
+        },
+        {
+          "title": "PR14: zone report translates plant names while retaining Latin names and numbers",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2630
+        },
+        {
+          "title": "PR14: dashboard counters translate their labels while preserving data values",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2773
+        },
+        {
+          "title": "PR14: rule assistant answers Kazakh then Russian with identical priorities and factors",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4710
+        },
+        {
+          "title": "assistant drawing: specialist sends «нарисуй зону» from priorities and cancels",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5648
+        },
+        {
+          "title": "assistant drawing: viewer is denied «нарисуй зону»",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4728
+        },
+        {
+          "title": "assistant drawing: specialist sends «аймақ сыз» from priorities and cancels",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4328
+        },
+        {
+          "title": "assistant drawing: viewer is denied «аймақ сыз»",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4551
+        },
+        {
+          "title": "time machine: canopy grows at 5, 10, 20 years; planting describes seedlings",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 10822
+        },
+        {
+          "title": "mobile report: document fits the viewport and wide tables scroll internally",
+          "project": "desktop",
+          "status": "skipped",
+          "outOfScope": true,
+          "note": "The report overflow regression targets 375×812",
+          "durationMs": 320
+        },
+        {
+          "title": "empty map list: reset restores every zone",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5065
+        },
+        {
+          "title": "empty species list: reset restores every species",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 3394
+        },
+        {
+          "title": "empty problems list: show all clears both filters and restores rows",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 3119
+        },
+        {
+          "title": "presentation: present=1 enables the mode and the exit pill disables it",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1023
+        },
+        {
+          "title": "priorities: top ten IDs and numbered rows persist when selecting a zone",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4073
+        },
+        {
+          "title": "assistant drawing: specialist sends «нарисуй зону» from priorities and cancels",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4386
+        },
+        {
+          "title": "assistant drawing: viewer is denied «нарисуй зону»",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 3976
+        },
+        {
+          "title": "assistant drawing: specialist sends «аймақ сыз» from priorities and cancels",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 3289
+        },
+        {
+          "title": "assistant drawing: viewer is denied «аймақ сыз»",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 3794
+        },
+        {
+          "title": "time machine: canopy grows at 5, 10, 20 years; planting describes seedlings",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 9051
+        },
+        {
+          "title": "mobile report: document fits the viewport and wide tables scroll internally",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 1945
+        },
+        {
+          "title": "empty map list: reset restores every zone",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 3211
+        },
+        {
+          "title": "empty species list: reset restores every species",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2893
+        },
+        {
+          "title": "empty problems list: show all clears both filters and restores rows",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 2652
+        },
+        {
+          "title": "presentation: present=1 enables the mode and the exit pill disables it",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 986
+        },
+        {
+          "title": "priorities: top ten IDs and numbered rows persist when selecting a zone",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 3844
+        },
+        {
+          "title": "language switcher: Специалист switches labels and persists language without changing route",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5852
+        },
+        {
+          "title": "language switcher: Администратор switches labels and persists language without changing route",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4642
+        },
+        {
+          "title": "language switcher: Просмотр switches labels and persists language without changing route",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5601
+        },
+        {
+          "title": "logout: Специалист immediately clears the previous name, role and navigation",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5896
+        },
+        {
+          "title": "logout: Администратор immediately clears the previous name, role and navigation",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 7054
+        },
+        {
+          "title": "logout: Просмотр immediately clears the previous name, role and navigation",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5482
+        },
+        {
+          "title": "logout: Работник immediately clears the previous name, role and navigation",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 6362
+        },
+        {
+          "title": "logout: Бригадир immediately clears the previous name, role and navigation",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4686
+        },
+        {
+          "title": "language switcher: login form translates and remembers the language while signed out",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 6222
+        },
+        {
+          "title": "language switcher: Специалист switches labels and persists language without changing route",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4749
+        },
+        {
+          "title": "language switcher: Администратор switches labels and persists language without changing route",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4321
+        },
+        {
+          "title": "language switcher: Просмотр switches labels and persists language without changing route",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5197
+        },
+        {
+          "title": "logout: Специалист immediately clears the previous name, role and navigation",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 3260
+        },
+        {
+          "title": "logout: Администратор immediately clears the previous name, role and navigation",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 3808
+        },
+        {
+          "title": "logout: Просмотр immediately clears the previous name, role and navigation",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4296
+        },
+        {
+          "title": "logout: Работник immediately clears the previous name, role and navigation",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4347
+        },
+        {
+          "title": "logout: Бригадир immediately clears the previous name, role and navigation",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 3113
+        },
+        {
+          "title": "language switcher: login form translates and remembers the language while signed out",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4435
+        },
+        {
+          "title": "E2E-06: embedded worker cabinet exposes Profile navigation at desktop and phone widths",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4563
+        },
+        {
+          "title": "E2E-06: embedded worker cabinet exposes Profile navigation at desktop and phone widths",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4562
+        },
+        {
+          "title": "zone list, six tabs, time machine statistics and hide",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 9023
+        },
+        {
+          "title": "priorities highlight a numbered queue and clear it",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 7798
+        },
+        {
+          "title": "assistant: budget answer uses rules and highlights zones automatically; Escape closes",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 6610
+        },
+        {
+          "title": "assistant: without a selected zone explains the nearest zone",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 6936
+        },
+        {
+          "title": "first visit hint stays dismissed after reload; Alt+P toggles presentation",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5695
+        },
+        {
+          "title": "mobile: bottom sheet expands from under 60% to about 90%",
+          "project": "desktop",
+          "status": "skipped",
+          "outOfScope": true,
+          "note": "Only the 375×812 layout has a bottom sheet",
+          "durationMs": 219
+        },
+        {
+          "title": "mock roles: worker opens shift cabinet, specialist returns home",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5664
+        },
+        {
+          "title": "zone list, six tabs, time machine statistics and hide",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 7327
+        },
+        {
+          "title": "priorities highlight a numbered queue and clear it",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 3329
+        },
+        {
+          "title": "assistant: budget answer uses rules and highlights zones automatically; Escape closes",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5438
+        },
+        {
+          "title": "assistant: without a selected zone explains the nearest zone",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4941
+        },
+        {
+          "title": "first visit hint stays dismissed after reload; Alt+P toggles presentation",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 3945
+        },
+        {
+          "title": "mobile: bottom sheet expands from under 60% to about 90%",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5226
+        },
+        {
+          "title": "mock roles: worker opens shift cabinet, specialist returns home",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5298
+        },
+        {
+          "title": "E2E-06: Работник keyboard navigation with Kazakh shell",
+          "project": "crew-375",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 6441
+        },
+        {
+          "title": "E2E-06: Бригадир keyboard navigation with Kazakh shell",
+          "project": "crew-375",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 6224
+        },
+        {
+          "title": "E2E-06: Работник keyboard navigation with Kazakh shell",
+          "project": "crew-800",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5533
+        },
+        {
+          "title": "E2E-06: Бригадир keyboard navigation with Kazakh shell",
+          "project": "crew-800",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 6246
+        },
+        {
+          "title": "E2E-06: Работник keyboard navigation with Kazakh shell",
+          "project": "crew-801",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 6410
+        },
+        {
+          "title": "E2E-06: Бригадир keyboard navigation with Kazakh shell",
+          "project": "crew-801",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 6120
+        },
+        {
+          "title": "E2E-06: Работник keyboard navigation with Kazakh shell",
+          "project": "crew-1280",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5346
+        },
+        {
+          "title": "E2E-06: Бригадир keyboard navigation with Kazakh shell",
+          "project": "crew-1280",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5775
+        },
+        {
+          "title": "E2E-06: Работник can switch Shift, Journal and Profile without navigation covering content",
+          "project": "crew-375",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 6096
+        },
+        {
+          "title": "E2E-06: Бригадир can switch Shift, Journal and Profile without navigation covering content",
+          "project": "crew-375",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5586
+        },
+        {
+          "title": "E2E-06: Работник can switch Shift, Journal and Profile without navigation covering content",
+          "project": "crew-800",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 6242
+        },
+        {
+          "title": "E2E-06: Бригадир can switch Shift, Journal and Profile without navigation covering content",
+          "project": "crew-800",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 6007
+        },
+        {
+          "title": "E2E-06: Работник can switch Shift, Journal and Profile without navigation covering content",
+          "project": "crew-801",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 6172
+        },
+        {
+          "title": "E2E-06: Бригадир can switch Shift, Journal and Profile without navigation covering content",
+          "project": "crew-801",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 6305
+        },
+        {
+          "title": "E2E-06: Работник can switch Shift, Journal and Profile without navigation covering content",
+          "project": "crew-1280",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 6009
+        },
+        {
+          "title": "E2E-06: Бригадир can switch Shift, Journal and Profile without navigation covering content",
+          "project": "crew-1280",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5368
+        },
+        {
+          "title": "E2E-07: every coordinator menu destination fits the viewport (ru)",
+          "project": "nav-1280",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4070
+        },
+        {
+          "title": "E2E-07: every coordinator menu destination fits the viewport (kk)",
+          "project": "nav-1280",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4206
+        },
+        {
+          "title": "E2E-07: every coordinator menu destination fits the viewport (ru)",
+          "project": "nav-1440",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 4026
+        },
+        {
+          "title": "E2E-07: every coordinator menu destination fits the viewport (kk)",
+          "project": "nav-1440",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 3907
+        }
+      ],
+      "counts": {
+        "passed": 240,
+        "failed": 4,
+        "fixme": 0,
+        "skipped": 2,
+        "flaky": 0,
+        "notRun": 0
+      },
+      "runnerFailed": false,
+      "durationMs": 622968.6730000001
+    },
+    {
+      "profile": "api",
+      "available": true,
+      "current": true,
+      "meta": {
+        "runId": "5c058ae9-b698-42be-b8dc-20cda2b18561",
+        "state": "finished",
+        "startedAt": "2026-10-31T01:51:47.934Z",
+        "endedAt": "2026-10-31T01:56:57.005Z",
+        "exitCode": 0,
+        "browserExitCode": 0,
+        "privacyScan": "passed",
+        "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+        "dirty": false,
+        "selection": "full",
+        "capturesScreens": false,
+        "command": "node scripts/run.mjs api",
+        "environment": {
+          "node": "24.22.2",
+          "playwright": "1.64.1",
+          "platform": "win32",
+          "arch": "x64",
+          "workers": 1,
+          "retries": 0
+        },
+        "target": "http://localhost:5177"
+      },
+      "tests": [
+        {
+          "title": "defence API: ru/1280, real site → analysis → growth → DOCX/XML",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 6341,
+          "diagnostics": []
+        },
+        {
+          "title": "defence API: ru/375, real site → analysis → growth → DOCX/XML",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 6767,
+          "diagnostics": []
+        },
+        {
+          "title": "defence API: kk/1280, real site → analysis → growth → DOCX/XML",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 7531,
+          "diagnostics": []
+        },
+        {
+          "title": "defence API: kk/375, real site → analysis → growth → DOCX/XML",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 8225,
+          "diagnostics": []
+        },
+        {
+          "title": "API lab: coordinator, ru/1280, real plans and frozen stress/rebuild",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 6764,
+          "diagnostics": []
+        },
+        {
+          "title": "API lab: coordinator, ru/375, real plans and frozen stress/rebuild",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2790,
+          "diagnostics": []
+        },
+        {
+          "title": "API lab: coordinator, kk/1280, real plans and frozen stress/rebuild",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 3132,
+          "diagnostics": []
+        },
+        {
+          "title": "API lab: coordinator, kk/375, real plans and frozen stress/rebuild",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2368,
+          "diagnostics": []
+        },
+        {
+          "title": "API lab: viewer, ru/1280, real plans and frozen stress/rebuild",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 3562,
+          "diagnostics": []
+        },
+        {
+          "title": "API lab: viewer, ru/375, real plans and frozen stress/rebuild",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 3385,
+          "diagnostics": []
+        },
+        {
+          "title": "API lab: viewer, kk/1280, real plans and frozen stress/rebuild",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 3479,
+          "diagnostics": []
+        },
+        {
+          "title": "API lab: viewer, kk/375, real plans and frozen stress/rebuild",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 3254,
+          "diagnostics": []
+        },
+        {
+          "title": "API lab: errors remain API errors; retry recovers without mock data",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 1920,
+          "diagnostics": []
+        },
+        {
+          "title": "API lab: displayed explanations and totals match independent cost, water and survival arithmetic",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 5444,
+          "diagnostics": []
+        },
+        {
+          "title": "E2E-06 API: worker1, 375px, ru, direct route/reload and keyboard",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2792,
+          "diagnostics": []
+        },
+        {
+          "title": "E2E-06 API: foreman1, 375px, ru, direct route/reload and keyboard",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 3073,
+          "diagnostics": []
+        },
+        {
+          "title": "E2E-06 API: worker1, 375px, kk, direct route/reload and keyboard",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2781,
+          "diagnostics": []
+        },
+        {
+          "title": "E2E-06 API: foreman1, 375px, kk, direct route/reload and keyboard",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2996,
+          "diagnostics": []
+        },
+        {
+          "title": "E2E-06 API: worker1, 800px, ru, direct route/reload and keyboard",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2782,
+          "diagnostics": []
+        },
+        {
+          "title": "E2E-06 API: foreman1, 800px, ru, direct route/reload and keyboard",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2875,
+          "diagnostics": []
+        },
+        {
+          "title": "E2E-06 API: worker1, 800px, kk, direct route/reload and keyboard",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2866,
+          "diagnostics": []
+        },
+        {
+          "title": "E2E-06 API: foreman1, 800px, kk, direct route/reload and keyboard",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2658,
+          "diagnostics": []
+        },
+        {
+          "title": "E2E-06 API: worker1, 801px, ru, direct route/reload and keyboard",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 3214,
+          "diagnostics": []
+        },
+        {
+          "title": "E2E-06 API: foreman1, 801px, ru, direct route/reload and keyboard",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2590,
+          "diagnostics": []
+        },
+        {
+          "title": "E2E-06 API: worker1, 801px, kk, direct route/reload and keyboard",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 3214,
+          "diagnostics": []
+        },
+        {
+          "title": "E2E-06 API: foreman1, 801px, kk, direct route/reload and keyboard",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2592,
+          "diagnostics": []
+        },
+        {
+          "title": "E2E-06 API: worker1, 1280px, ru, direct route/reload and keyboard",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2682,
+          "diagnostics": []
+        },
+        {
+          "title": "E2E-06 API: foreman1, 1280px, ru, direct route/reload and keyboard",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 4096,
+          "diagnostics": []
+        },
+        {
+          "title": "E2E-06 API: worker1, 1280px, kk, direct route/reload and keyboard",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 3632,
+          "diagnostics": []
+        },
+        {
+          "title": "E2E-06 API: foreman1, 1280px, kk, direct route/reload and keyboard",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 3174,
+          "diagnostics": []
+        },
+        {
+          "title": "outcomes final API: ru/1280 identical tree inputs have identical mock/API estimates and independent sums",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 10981,
+          "diagnostics": []
+        },
+        {
+          "title": "outcomes final API: ru/1280 identical P4 observations match mock, HTTP and visible history",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 7974,
+          "diagnostics": []
+        },
+        {
+          "title": "outcomes final API: kk/375 identical tree inputs have identical mock/API estimates and independent sums",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 13927,
+          "diagnostics": []
+        },
+        {
+          "title": "outcomes final API: kk/375 identical P4 observations match mock, HTTP and visible history",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 12003,
+          "diagnostics": []
+        },
+        {
+          "title": "outcomes API: ru/1280, today's partial demo is not an annual result",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 3076,
+          "diagnostics": []
+        },
+        {
+          "title": "outcomes API: kk/1280, today's partial demo is not an annual result",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 5282,
+          "diagnostics": []
+        },
+        {
+          "title": "outcomes API: ru/375, today's partial demo is not an annual result",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 3615,
+          "diagnostics": []
+        },
+        {
+          "title": "outcomes API: kk/375, today's partial demo is not an annual result",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 5080,
+          "diagnostics": []
+        },
+        {
+          "title": "outcomes API: viewer is read-only in UI and HTTP",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 4661,
+          "diagnostics": []
+        },
+        {
+          "title": "outcomes API: save/reload, identical replay, conflicts, and immutable forecast after rate edit",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 11272,
+          "diagnostics": []
+        },
+        {
+          "title": "outcomes API: read failure stays an API error and retry restores real partial data",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 3607,
+          "diagnostics": []
+        },
+        {
+          "title": "outcomes API: P4 I01 uses real registry/HTTP, independent counts, no duplicate saves",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 3423,
+          "diagnostics": []
+        },
+        {
+          "title": "outcomes API: P4 I02 uses real registry/HTTP, independent counts, no duplicate saves",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 3935,
+          "diagnostics": []
+        },
+        {
+          "title": "outcomes API: P4 I03 uses real registry/HTTP, independent counts, no duplicate saves",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 6597,
+          "diagnostics": []
+        },
+        {
+          "title": "outcomes API: P4 I04 uses real registry/HTTP, independent counts, no duplicate saves",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 3497,
+          "diagnostics": []
+        },
+        {
+          "title": "outcomes API: P4 I05 uses real registry/HTTP, independent counts, no duplicate saves",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 3874,
+          "diagnostics": []
+        },
+        {
+          "title": "outcomes API: P4 I06 uses real registry/HTTP, independent counts, no duplicate saves",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2801,
+          "diagnostics": []
+        },
+        {
+          "title": "outcomes API: P4 I07 uses real registry/HTTP, independent counts, no duplicate saves",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 3898,
+          "diagnostics": []
+        },
+        {
+          "title": "final viewer API: /tasks returns existing authorized records",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2806,
+          "diagnostics": []
+        },
+        {
+          "title": "final viewer API: /reports returns existing authorized records",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2677,
+          "diagnostics": []
+        },
+        {
+          "title": "final viewer API: /crews returns existing authorized records",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2183,
+          "diagnostics": []
+        },
+        {
+          "title": "final viewer API: /workers returns existing authorized records",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2091,
+          "diagnostics": []
+        },
+        {
+          "title": "final viewer API UI: ru/1280, work and report navigation remains available",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2765,
+          "diagnostics": []
+        },
+        {
+          "title": "final viewer API UI: ru/1280, tasks, crews and people are readable without writes",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 1558,
+          "diagnostics": []
+        },
+        {
+          "title": "final viewer API UI: ru/1280, report detail remains readable without review controls",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 1719,
+          "diagnostics": []
+        },
+        {
+          "title": "final viewer API UI: kk/1280, work and report navigation remains available",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2363,
+          "diagnostics": []
+        },
+        {
+          "title": "final viewer API UI: kk/1280, tasks, crews and people are readable without writes",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 1793,
+          "diagnostics": []
+        },
+        {
+          "title": "final viewer API UI: kk/1280, report detail remains readable without review controls",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 1772,
+          "diagnostics": []
+        },
+        {
+          "title": "final viewer API UI: ru/375, work and report navigation remains available",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 1760,
+          "diagnostics": []
+        },
+        {
+          "title": "final viewer API UI: ru/375, tasks, crews and people are readable without writes",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2963,
+          "diagnostics": []
+        },
+        {
+          "title": "final viewer API UI: ru/375, report detail remains readable without review controls",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2564,
+          "diagnostics": []
+        },
+        {
+          "title": "final viewer API UI: kk/375, work and report navigation remains available",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 4195,
+          "diagnostics": []
+        },
+        {
+          "title": "final viewer API UI: kk/375, tasks, crews and people are readable without writes",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2005,
+          "diagnostics": []
+        },
+        {
+          "title": "final viewer API UI: kk/375, report detail remains readable without review controls",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2420,
+          "diagnostics": []
+        },
+        {
+          "title": "final viewer API: valid task, crew and report mutations are rejected with 403",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2038,
+          "diagnostics": []
+        },
+        {
+          "title": "final worker API: 1280px, browser submits a real report and reload retains one server record",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2903,
+          "diagnostics": []
+        },
+        {
+          "title": "final worker API: 375px, browser submits a real report and reload retains one server record",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2420,
+          "diagnostics": []
+        },
+        {
+          "title": "API: coordinator login, server data indicator, map, estimate, priorities, logout",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 5596,
+          "diagnostics": []
+        },
+        {
+          "title": "API: worker1 login opens shift cabinet and cabinet logout ends the session",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 3292,
+          "diagnostics": []
+        },
+        {
+          "title": "API: foreman1 login opens the crew shift cabinet",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 1190,
+          "diagnostics": []
+        },
+        {
+          "title": "API: viewer reads the map, cannot draw or enter a crew cabinet, and logs out",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 3574,
+          "diagnostics": []
+        },
+        {
+          "title": "API: admin reads the map, cannot draw or enter a crew cabinet, and logs out",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 3364,
+          "diagnostics": []
+        },
+        {
+          "title": "API: coordinator cannot open the worker route and returns home",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 1539,
+          "diagnostics": []
+        },
+        {
+          "title": "API: worker1 header logout clears identity and remains signed out after reload",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 1975,
+          "diagnostics": []
+        }
+      ],
+      "counts": {
+        "passed": 74,
+        "failed": 0,
+        "fixme": 0,
+        "skipped": 0,
+        "flaky": 0,
+        "notRun": 0
+      },
+      "runnerFailed": false,
+      "durationMs": 288007
+    },
+    {
+      "profile": "smoke",
+      "available": false
+    },
+    {
+      "profile": "screens",
+      "available": false
+    },
+    {
+      "profile": "bugs",
+      "available": false
+    }
+  ],
+  "history": [
+    {
+      "profile": "mock",
+      "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+      "available": true,
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "startedAt": "2026-10-31T01:51:28.855Z",
+      "endedAt": "2026-10-31T02:01:53.513Z",
+      "exitCode": 1,
+      "selection": "full",
+      "dirty": false,
+      "target": "http://localhost:5176",
+      "command": "node scripts/run.mjs mock",
+      "environment": {
+        "node": "24.22.2",
+        "playwright": "1.64.1",
+        "platform": "win32",
+        "arch": "x64",
+        "workers": 2,
+        "retries": 0
+      },
+      "counts": {
+        "passed": 240,
+        "failed": 4,
+        "fixme": 0,
+        "skipped": 2,
+        "flaky": 0,
+        "notRun": 0
+      }
+    },
+    {
+      "profile": "api",
+      "runId": "5c058ae9-b698-42be-b8dc-20cda2b18561",
+      "available": true,
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "startedAt": "2026-10-31T01:51:47.934Z",
+      "endedAt": "2026-10-31T01:56:57.005Z",
+      "exitCode": 0,
+      "browserExitCode": 0,
+      "privacyScan": "passed",
+      "selection": "full",
+      "dirty": false,
+      "target": "http://localhost:5177",
+      "command": "node scripts/run.mjs api",
+      "environment": {
+        "node": "24.22.2",
+        "playwright": "1.64.1",
+        "platform": "win32",
+        "arch": "x64",
+        "workers": 1,
+        "retries": 0
+      },
+      "counts": {
+        "passed": 74,
+        "failed": 0,
+        "fixme": 0,
+        "skipped": 0,
+        "flaky": 0,
+        "notRun": 0
+      }
+    }
+  ],
+  "captureRun": {
+    "profile": "mock",
+    "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+    "state": "finished",
+    "exitCode": 1,
+    "successful": false
+  },
+  "screens": [
+    {
+      "name": "home-1280.png",
+      "width": 1280,
+      "height": 800,
+      "valid": true,
+      "fresh": true,
+      "reviewed": false,
+      "capturedAt": "2026-10-31T01:53:46.190Z",
+      "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "sha256": "81b1a611e45b4e0a642b6d41aa0931bb4e9190ac0f3266ea1a5ea8983ae770dc",
+      "readiness": "settled-plan",
+      "relativePath": "test-results/screen-review/home-1280.png",
+      "reason": "Current capture awaiting visual review"
+    },
+    {
+      "name": "home-375.png",
+      "width": 375,
+      "height": 812,
+      "valid": true,
+      "fresh": true,
+      "reviewed": false,
+      "capturedAt": "2026-10-31T01:58:29.380Z",
+      "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "sha256": "71a83fe536d40ba378437d87d35f9482ee7f5722eaaf451e87dedfba7f411bc3",
+      "readiness": "settled-plan",
+      "relativePath": "test-results/screen-review/home-375.png",
+      "reason": "Current capture awaiting visual review"
+    },
+    {
+      "name": "map-1280.png",
+      "width": 1280,
+      "height": 800,
+      "valid": true,
+      "fresh": true,
+      "reviewed": false,
+      "capturedAt": "2026-10-31T01:53:51.651Z",
+      "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "sha256": "828c8b1c75c667933e2439c6c69d849a8cff97dfc9eed92cf543ef259f259b89",
+      "readiness": "settled-map",
+      "relativePath": "test-results/screen-review/map-1280.png",
+      "reason": "Current capture awaiting visual review"
+    },
+    {
+      "name": "map-375.png",
+      "width": 375,
+      "height": 812,
+      "valid": true,
+      "fresh": true,
+      "reviewed": false,
+      "capturedAt": "2026-10-31T01:58:33.125Z",
+      "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "sha256": "41f2e6c7e9e1aa5319b411aac577e29ef1ff38be285d1fe5cc0cdb475e24d384",
+      "readiness": "settled-map",
+      "relativePath": "test-results/screen-review/map-375.png",
+      "reason": "Current capture awaiting visual review"
+    },
+    {
+      "name": "problems-1280.png",
+      "width": 1280,
+      "height": 800,
+      "valid": true,
+      "fresh": true,
+      "reviewed": false,
+      "capturedAt": "2026-10-31T01:53:53.069Z",
+      "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "sha256": "f934c1e182e25531b291bc937e982b0e8dee6a03ba2c5549ec181daaff74ec08",
+      "readiness": "settled-page",
+      "relativePath": "test-results/screen-review/problems-1280.png",
+      "reason": "Current capture awaiting visual review"
+    },
+    {
+      "name": "problems-375.png",
+      "width": 375,
+      "height": 812,
+      "valid": true,
+      "fresh": true,
+      "reviewed": false,
+      "capturedAt": "2026-10-31T01:58:35.073Z",
+      "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "sha256": "93a95d4d1ccbcaf1486dee1098c3c73511bf5035e62f6837276dd704d0b5924a",
+      "readiness": "settled-page",
+      "relativePath": "test-results/screen-review/problems-375.png",
+      "reason": "Current capture awaiting visual review"
+    },
+    {
+      "name": "priorities-1280.png",
+      "width": 1280,
+      "height": 800,
+      "valid": true,
+      "fresh": true,
+      "reviewed": false,
+      "capturedAt": "2026-10-31T01:53:56.367Z",
+      "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "sha256": "e6ea3fceed42da1d1d410c0817eaed2df53787be40e677cd86ef77b242cf3182",
+      "readiness": "settled-page",
+      "relativePath": "test-results/screen-review/priorities-1280.png",
+      "reason": "Current capture awaiting visual review"
+    },
+    {
+      "name": "priorities-375.png",
+      "width": 375,
+      "height": 812,
+      "valid": true,
+      "fresh": true,
+      "reviewed": false,
+      "capturedAt": "2026-10-31T01:58:37.340Z",
+      "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "sha256": "8ae0ac86f6637c660e24be085f888dc17401132015b23bf41228535540286d47",
+      "readiness": "settled-page",
+      "relativePath": "test-results/screen-review/priorities-375.png",
+      "reason": "Current capture awaiting visual review"
+    },
+    {
+      "name": "species-1280.png",
+      "width": 1280,
+      "height": 800,
+      "valid": true,
+      "fresh": true,
+      "reviewed": false,
+      "capturedAt": "2026-10-31T01:54:00.671Z",
+      "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "sha256": "29450f04ca3f40e06e95aae69a1640fc802f5e2a7534bf3b1d2dadbdb0319398",
+      "readiness": "settled-page",
+      "relativePath": "test-results/screen-review/species-1280.png",
+      "reason": "Current capture awaiting visual review"
+    },
+    {
+      "name": "species-375.png",
+      "width": 375,
+      "height": 812,
+      "valid": true,
+      "fresh": true,
+      "reviewed": false,
+      "capturedAt": "2026-10-31T01:58:40.407Z",
+      "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "sha256": "63efa4d1cdb9172f0f0eaa069eec504048b821f8698bfcf4b559e1f344f777a1",
+      "readiness": "settled-page",
+      "relativePath": "test-results/screen-review/species-375.png",
+      "reason": "Current capture awaiting visual review"
+    },
+    {
+      "name": "projects-1280.png",
+      "width": 1280,
+      "height": 800,
+      "valid": true,
+      "fresh": true,
+      "reviewed": false,
+      "capturedAt": "2026-10-31T01:54:00.084Z",
+      "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "sha256": "4c90616e347597142c47f0e98440c612921337e6ad9b1677bbd362ca4d5cd3ab",
+      "readiness": "settled-page",
+      "relativePath": "test-results/screen-review/projects-1280.png",
+      "reason": "Current capture awaiting visual review"
+    },
+    {
+      "name": "projects-375.png",
+      "width": 375,
+      "height": 812,
+      "valid": true,
+      "fresh": true,
+      "reviewed": false,
+      "capturedAt": "2026-10-31T01:58:40.656Z",
+      "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "sha256": "bfe2c2cd8c6b27bcff5afec99330c6cb7d246ee7de500b47f991480183c28551",
+      "readiness": "settled-page",
+      "relativePath": "test-results/screen-review/projects-375.png",
+      "reason": "Current capture awaiting visual review"
+    },
+    {
+      "name": "rates-1280.png",
+      "width": 1280,
+      "height": 800,
+      "valid": true,
+      "fresh": true,
+      "reviewed": false,
+      "capturedAt": "2026-10-31T01:54:03.784Z",
+      "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "sha256": "a17556bde222612b2b019da2a9531b6e4a85f73b355fec9b9caca3b9aa513af5",
+      "readiness": "settled-page",
+      "relativePath": "test-results/screen-review/rates-1280.png",
+      "reason": "Current capture awaiting visual review"
+    },
+    {
+      "name": "rates-375.png",
+      "width": 375,
+      "height": 812,
+      "valid": true,
+      "fresh": true,
+      "reviewed": false,
+      "capturedAt": "2026-10-31T01:58:42.657Z",
+      "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "sha256": "704c690d4414391d84085058c9eb6e5b4fc6bc1d094cef00363ff1430e240066",
+      "readiness": "settled-page",
+      "relativePath": "test-results/screen-review/rates-375.png",
+      "reason": "Current capture awaiting visual review"
+    },
+    {
+      "name": "import-1280.png",
+      "width": 1280,
+      "height": 800,
+      "valid": true,
+      "fresh": true,
+      "reviewed": false,
+      "capturedAt": "2026-10-31T01:54:05.439Z",
+      "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "sha256": "b33ede139360d144e9fbc9bd332f278b5c272962fdb2b968c186553772400448",
+      "readiness": "settled-page",
+      "relativePath": "test-results/screen-review/import-1280.png",
+      "reason": "Current capture awaiting visual review"
+    },
+    {
+      "name": "import-375.png",
+      "width": 375,
+      "height": 812,
+      "valid": true,
+      "fresh": true,
+      "reviewed": false,
+      "capturedAt": "2026-10-31T01:58:44.096Z",
+      "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "sha256": "af543f5efd06d538219ed018efe149aa205f4dbb682438d3bb322d063c129d6f",
+      "readiness": "settled-page",
+      "relativePath": "test-results/screen-review/import-375.png",
+      "reason": "Current capture awaiting visual review"
+    },
+    {
+      "name": "guide-1280.png",
+      "width": 1280,
+      "height": 800,
+      "valid": true,
+      "fresh": true,
+      "reviewed": false,
+      "capturedAt": "2026-10-31T01:54:07.775Z",
+      "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "sha256": "2d6ec02100527ff8c0a1ea5d2cc4872786de5861f00fcf03cf8dba0f7283bd72",
+      "readiness": "settled-page",
+      "relativePath": "test-results/screen-review/guide-1280.png",
+      "reason": "Current capture awaiting visual review"
+    },
+    {
+      "name": "guide-375.png",
+      "width": 375,
+      "height": 812,
+      "valid": true,
+      "fresh": true,
+      "reviewed": false,
+      "capturedAt": "2026-10-31T01:58:46.235Z",
+      "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "sha256": "44df715e0872e4623cbd2b8f3028b66dc3da6a07b87882fbb5ef6bba56ec10e1",
+      "readiness": "settled-page",
+      "relativePath": "test-results/screen-review/guide-375.png",
+      "reason": "Current capture awaiting visual review"
+    },
+    {
+      "name": "tasks-1280.png",
+      "width": 1280,
+      "height": 800,
+      "valid": true,
+      "fresh": true,
+      "reviewed": false,
+      "capturedAt": "2026-10-31T01:54:09.862Z",
+      "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "sha256": "db00a44dac49d7fde949db4d21d01ff83d91320425e74b107959bb2158ea5dae",
+      "readiness": "settled-page",
+      "relativePath": "test-results/screen-review/tasks-1280.png",
+      "reason": "Current capture awaiting visual review"
+    },
+    {
+      "name": "tasks-375.png",
+      "width": 375,
+      "height": 812,
+      "valid": true,
+      "fresh": true,
+      "reviewed": false,
+      "capturedAt": "2026-10-31T01:58:48.292Z",
+      "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "sha256": "4bb3168f39427c2336b2310d3081f9809a1df07e2b902bcefce6a263c9c480fc",
+      "readiness": "settled-page",
+      "relativePath": "test-results/screen-review/tasks-375.png",
+      "reason": "Current capture awaiting visual review"
+    },
+    {
+      "name": "reports-1280.png",
+      "width": 1280,
+      "height": 800,
+      "valid": true,
+      "fresh": true,
+      "reviewed": false,
+      "capturedAt": "2026-10-31T01:54:11.498Z",
+      "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "sha256": "d0e933954ae9e16d45e30c4579070a979a03640b669eff1af1c745103df75b90",
+      "readiness": "settled-page",
+      "relativePath": "test-results/screen-review/reports-1280.png",
+      "reason": "Current capture awaiting visual review"
+    },
+    {
+      "name": "reports-375.png",
+      "width": 375,
+      "height": 812,
+      "valid": true,
+      "fresh": true,
+      "reviewed": false,
+      "capturedAt": "2026-10-31T01:58:49.895Z",
+      "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "sha256": "cd4d1a1bdf31ecf3eb74ccff16697a3cbeed60c05b40597c896c59a8014e7f59",
+      "readiness": "settled-page",
+      "relativePath": "test-results/screen-review/reports-375.png",
+      "reason": "Current capture awaiting visual review"
+    },
+    {
+      "name": "time-planting-1280.png",
+      "width": 1280,
+      "height": 800,
+      "valid": true,
+      "fresh": true,
+      "reviewed": false,
+      "capturedAt": "2026-10-31T01:54:27.773Z",
+      "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "sha256": "0dd51db749e206b4eb718fdf042ad8b7b47430803a81d376e0bd6d83fa13e472",
+      "readiness": "settled-map",
+      "relativePath": "test-results/screen-review/time-planting-1280.png",
+      "reason": "Current capture awaiting visual review"
+    },
+    {
+      "name": "time-planting-375.png",
+      "width": 375,
+      "height": 812,
+      "valid": true,
+      "fresh": true,
+      "reviewed": false,
+      "capturedAt": "2026-10-31T01:59:02.464Z",
+      "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "sha256": "491ef2c5463486eb5fd4f0dceacefd9754a4c711420454530d0ecad330a55975",
+      "readiness": "settled-map",
+      "relativePath": "test-results/screen-review/time-planting-375.png",
+      "reason": "Current capture awaiting visual review"
+    },
+    {
+      "name": "time-20-years-1280.png",
+      "width": 1280,
+      "height": 800,
+      "valid": true,
+      "fresh": true,
+      "reviewed": false,
+      "capturedAt": "2026-10-31T01:54:31.599Z",
+      "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "sha256": "28cff2f26ff8f7fd0070eb040caebd50563ee4793f2b61202ea50da1d4c05fca",
+      "readiness": "settled-map",
+      "relativePath": "test-results/screen-review/time-20-years-1280.png",
+      "reason": "Current capture awaiting visual review"
+    },
+    {
+      "name": "time-20-years-375.png",
+      "width": 375,
+      "height": 812,
+      "valid": true,
+      "fresh": true,
+      "reviewed": false,
+      "capturedAt": "2026-10-31T01:59:03.884Z",
+      "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "sha256": "34d2bee3a0fe4effaa61d40b4eefb08bb961819a1c4ef062b9b03fc1e7e2d4c8",
+      "readiness": "settled-map",
+      "relativePath": "test-results/screen-review/time-20-years-375.png",
+      "reason": "Current capture awaiting visual review"
+    },
+    {
+      "name": "lab-1280.png",
+      "width": 1280,
+      "height": 800,
+      "valid": true,
+      "fresh": true,
+      "reviewed": false,
+      "capturedAt": "2026-10-31T01:54:16.160Z",
+      "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "sha256": "4e5c4e94768be2080298564724e372acd57ad33685b1acf5155d08a6d7bc2930",
+      "readiness": "settled-plan",
+      "relativePath": "test-results/screen-review/lab-1280.png",
+      "reason": "Current capture awaiting visual review"
+    },
+    {
+      "name": "lab-375.png",
+      "width": 375,
+      "height": 812,
+      "valid": true,
+      "fresh": true,
+      "reviewed": false,
+      "capturedAt": "2026-10-31T01:58:54.407Z",
+      "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "sha256": "e7523adb33e52f4806aa22776149c916a176e347fc3c871e7e3983302e635d70",
+      "readiness": "settled-plan",
+      "relativePath": "test-results/screen-review/lab-375.png",
+      "reason": "Current capture awaiting visual review"
+    },
+    {
+      "name": "outcomes-1280.png",
+      "width": 1280,
+      "height": 800,
+      "valid": true,
+      "fresh": true,
+      "reviewed": false,
+      "capturedAt": "2026-10-31T01:54:19.380Z",
+      "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "sha256": "8a59429a98d222cd6f8023f7207597d903c3bd894e1eed9296a234fbd3073218",
+      "readiness": "settled-outcomes",
+      "relativePath": "test-results/screen-review/outcomes-1280.png",
+      "reason": "Current capture awaiting visual review"
+    },
+    {
+      "name": "outcomes-375.png",
+      "width": 375,
+      "height": 812,
+      "valid": true,
+      "fresh": true,
+      "reviewed": false,
+      "capturedAt": "2026-10-31T01:58:56.399Z",
+      "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "sha256": "81ff1da627387fe82cb0cdd01cec7f20fc78ebf43f37f868f59b56d905bc7205",
+      "readiness": "settled-outcomes",
+      "relativePath": "test-results/screen-review/outcomes-375.png",
+      "reason": "Current capture awaiting visual review"
+    }
+  ],
+  "acceptance": {
+    "ready": false,
+    "message": "Полная приёмка mock + API ещё не подтверждена"
+  },
+  "packageKind": "diagnostic-not-accepted"
+}

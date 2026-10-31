@@ -11,7 +11,9 @@ for (const lang of ['ru', 'kk']) {
     const more = nav.getByRole('button', { name: lang === 'kk' ? /Тағы/ : /Ещё/ });
     if (await more.count()) await more.click();
     const links = nav.locator('a');
-    expect(await links.count()).toBeGreaterThanOrEqual(11);
+    expect(await links.count()).toBeGreaterThanOrEqual(13);
+    await expect(nav.locator('a[href="#/lab"]'), 'The complete shared build includes the laboratory').toBeVisible();
+    await expect(nav.locator('a[href="#/outcomes"]'), 'The complete shared build includes Outcomes').toBeVisible();
     const bounds = await links.evaluateAll(nodes => nodes.map(node => {
       const box = node.getBoundingClientRect();
       return { label: node.textContent?.trim(), href: node.getAttribute('href'), left: box.left,
