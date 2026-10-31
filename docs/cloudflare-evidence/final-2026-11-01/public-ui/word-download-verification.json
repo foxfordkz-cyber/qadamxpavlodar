@@ -1,0 +1,98 @@
+{
+  "schema": "green-pavlodar-public-ui-word-evidence-v1",
+  "scope": "Public immutable mock actual UI downloads observed by parent operator, followed by local read-only OOXML verification. Not API/real backend acceptance.",
+  "productionUrl": "https://green-pavlodar-mock.pages.dev/",
+  "immutableUrl": "https://d0e985d1.green-pavlodar-mock.pages.dev/",
+  "deploymentId": "d0e985d1-bbd0-4f8c-b1c1-31d20d164ef7",
+  "frontendSourceSha": "84d009e3b72c4fe637ef30607e29701054b6c621",
+  "applicationArchiveSha256": "c7e466ea13355bdd5b0a6506cb7412de0ca44dc54c6272059f5bb85d49b4903d",
+  "dataSource": "mock",
+  "backendRequired": false,
+  "passed": 2,
+  "total": 2,
+  "records": [
+    {
+      "language": "ru",
+      "file": "documents/memo-ru-d0e985d1.docx",
+      "originalUiDownloadFilename": "green-pavlodar-memo-ru-2026-10-31.docx",
+      "downloadedAtUtcPlus5": "2026-11-01T00:12:05+05:00",
+      "bytes": 9372,
+      "sha256": "694f23080f0f476c399b7516d1e1e4c743fec11ee8b1579f1a1db11933cec71e",
+      "zipCrc": "PASS",
+      "allXmlParse": "PASS",
+      "macroFree": true,
+      "title": "СЛУЖЕБНАЯ ЗАПИСКА",
+      "documentLanguage": "ru-RU",
+      "demoLabelPresent": true,
+      "tables": 5,
+      "site": {
+        "id": "site-osm-1569993037",
+        "name": "Газон, улица Толстого",
+        "areaM2": 3782
+      },
+      "careYears": 2,
+      "plantRows": 12,
+      "plantCount": 1345,
+      "trees": 54,
+      "shrubs": 270,
+      "flowers": 1021,
+      "costRows": 5,
+      "totalExactKzt": 9970477.5,
+      "roundedScreenTotalKzt": 9970478,
+      "downloadContentVerification": "PASS",
+      "uiNumericParityAgainstOperatorReportedValues": "PASS",
+      "nativeWordOpenedByThisVerifier": false
+    },
+    {
+      "language": "kk",
+      "file": "documents/memo-kk-d0e985d1.docx",
+      "originalUiDownloadFilename": "green-pavlodar-memo-kk-2026-10-31.docx",
+      "downloadedAtUtcPlus5": "2026-11-01T00:13:18+05:00",
+      "bytes": 9484,
+      "sha256": "cb0f99f25b4a26e9c31a5f2d75a1d520600da8d838aab37680981689500c9df2",
+      "zipCrc": "PASS",
+      "allXmlParse": "PASS",
+      "macroFree": true,
+      "title": "ҚЫЗМЕТТІК ЖАЗБА",
+      "documentLanguage": "kk-KZ",
+      "demoLabelPresent": true,
+      "tables": 5,
+      "site": {
+        "id": "site-osm-1569993037",
+        "name": "Газон, улица Толстого",
+        "areaM2": 3782
+      },
+      "careYears": 2,
+      "plantRows": 12,
+      "plantCount": 1345,
+      "trees": 54,
+      "shrubs": 270,
+      "flowers": 1021,
+      "costRows": 5,
+      "totalExactKzt": 9970477.5,
+      "roundedScreenTotalKzt": 9970478,
+      "downloadContentVerification": "PASS",
+      "uiNumericParityAgainstOperatorReportedValues": "PASS",
+      "nativeWordOpenedByThisVerifier": false
+    }
+  ],
+  "separationFromLocalCandidateQa": {
+    "publicDefaultCareYears": 2,
+    "publicScreenTotalKzt": 9970478,
+    "localCandidateCareYears": 3,
+    "localCandidateScreenTotalKzt": 10825628,
+    "note": "These are different explicitly selected care horizons; do not combine their expected totals."
+  },
+  "limitations": [
+    "UI origin, user interaction and screen values were observed and supplied by the parent browser operator. This verifier read the resulting downloaded documents.",
+    "No Microsoft Word opening or native page-layout acceptance claimed by this verifier; separate operator evidence is required.",
+    "Demonstration calculations and synthetic model assumptions are explicitly labeled in the documents. They are not authorization to plant or guaranteed survival.",
+    "Some species names in KK remain their existing RU fallback; this is retained source behavior, not an automatic translation."
+  ],
+  "safety": {
+    "cloudCredentialsUsed": false,
+    "privatePathsIncluded": false,
+    "documentContentEdited": false,
+    "sourceCodeChanged": false
+  }
+}

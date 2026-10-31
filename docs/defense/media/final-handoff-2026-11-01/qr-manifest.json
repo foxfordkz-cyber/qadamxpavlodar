@@ -1,0 +1,29 @@
+{
+  "schema": "green-pavlodar-defense-qr-v1",
+  "createdUtc": "2026-10-31T18:46:20.781714+00:00",
+  "urlKind": "stable-production-explicit-source",
+  "publicationProof": false,
+  "physicalPhoneScan": false,
+  "files": [
+    {
+      "label": "Облачное DEMO — production API",
+      "url": "https://green-pavlodar-api.pages.dev/?source=api",
+      "png": "api-demo-qr.png",
+      "svg": "api-demo-qr.svg",
+      "decode": "PASS",
+      "decodedText": "https://green-pavlodar-api.pages.dev/?source=api",
+      "sha256Png": "b3fe4cec0d7dc447080185fe090dae89c306f0d3c5c6fc67c02e5b4e751a8fdb",
+      "sha256Svg": "75c34162b8c8154cafdbe13e5d6b60451ced81a832ae22b5c38684b21979c4d2"
+    },
+    {
+      "label": "Учебный mock — независимый резерв",
+      "url": "https://green-pavlodar-mock.pages.dev/?source=mock",
+      "png": "mock-demo-qr.png",
+      "svg": "mock-demo-qr.svg",
+      "decode": "PASS",
+      "decodedText": "https://green-pavlodar-mock.pages.dev/?source=mock",
+      "sha256Png": "f782b08e61efb6c778412a3d1dd0a838e3222b16a0c1933f952baa6f67bb54ed",
+      "sha256Svg": "1d8ca47fa7f1cc36a0bb5932ba62ed4e7fff06fa8df1f83d04ae4de0f2b8ffd0"
+    }
+  ]
+}
