@@ -29,7 +29,7 @@ for (const role of ['coordinator','viewer']) for (const lang of ['ru','kk'] as c
     const cards=page.locator('.gp-lab-card'); await expect(cards).toHaveCount(3);
     const identity=()=>cards.locator('[data-scheme]').evaluateAll(nodes=>nodes.map(n=>[n.getAttribute('data-site-id'),n.getAttribute('data-scheme')]));
     const before=await identity(); expect(before.length).toBeGreaterThan(0);
-    await page.getByRole('radio',{name:lang==='ru'?'Без полива':'Суармай',exact:true}).check();
+    await page.getByRole('radio',{name:lang==='ru'?'Без полива':'Суарылмайды',exact:true}).check();
     expect(await cards.locator('[data-metric=water]').allTextContents()).toEqual(['0','0','0']);
     expect(await identity()).toEqual(before);
     const reply=await apiCall(page,'/decision-lab','POST',{budgetKzt:50e6,waterLimitM3:500,watering:'none',goal:'schools'});

@@ -79,6 +79,12 @@ export async function presentation(page: Page) {
 
 export async function screenshot(page: Page, name: string, info: TestInfo) {
   const readiness = await settledPage(page);
+  if (name === 'map' && page.viewportSize()!.width === 375) {
+    await page.locator('.gp-sites__tabs').getByRole('tab', { name: /Карта$/ }).click();
+    await expect(page.locator('.gp-sites')).toHaveAttribute('data-tab', 'map');
+    await expect(page.locator('.gp-sites__map')).toBeVisible();
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+  }
   if (await page.locator('.gp-sites__map').count()) await mapReady(page);
   if (await page.locator('.gp-hero').count()) {
     await expect(page.locator('.gp-hero__map:not(.is-ready)')).toHaveCount(0, { timeout: 20_000 });

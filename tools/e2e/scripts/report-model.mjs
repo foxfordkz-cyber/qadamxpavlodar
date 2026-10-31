@@ -138,7 +138,7 @@ export function collectHistory(root, revision) {
         selection: record.meta.selection, dirty: !!record.meta.dirty, target: record.meta.target,
         command: /^node scripts\/run\.mjs (mock|api|smoke|screens)$/.test(record.meta.command ?? '') ? record.meta.command : undefined,
         environment: publicEnvironment(record.meta.environment),
-        counts: record.available ? Object.fromEntries(statuses.map(status => [status, Number.isInteger(record.counts?.[status]) ? record.counts[status] : 0])) : null }];
+        counts: record.available && record.current === true ? Object.fromEntries(statuses.map(status => [status, Number.isInteger(record.counts?.[status]) ? record.counts[status] : 0])) : null }];
     } catch { return []; }
   }).sort((a, b) => Date.parse(a.startedAt) - Date.parse(b.startedAt));
 }

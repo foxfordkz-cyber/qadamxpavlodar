@@ -6,7 +6,7 @@ import { tmpdir } from 'node:os';
 import { basename, dirname, join } from 'node:path';
 import { apiPassword, baseUrl, redact } from '../environment.mjs';
 import { selectRun } from '../profiles.mjs';
-import { acceptance, captureRunIsComplete, collectRuns, inspectScreens, normalizeReport, runIsComplete } from '../report-model.mjs';
+import { acceptance, captureRunIsComplete, collectHistory, collectRuns, inspectScreens, normalizeReport, runIsComplete } from '../report-model.mjs';
 import { hashBytes, recordScreenCapture } from '../screen-provenance.mjs';
 import { errorDiagnostics } from '../api-diagnostics.mjs';
 import { unzipSync, zipSync } from 'fflate';
@@ -75,6 +75,20 @@ test('an isolated privacy failure blocks acceptance without inventing failed bro
   assert.equal(history.meta.privacyScan, 'failed');
   assert.equal(history.meta.exitCode, 1);
   assert.throws(() => savePrivacyVerdict(root, 'different-run', true));
+});
+
+test('history never attributes an older report to a run that produced no current result', t => {
+  const root = folder(t), runId = '22222222-2222-4222-8222-222222222222';
+  mkdirSync(join(root, 'playwright-report/history'), { recursive: true });
+  const record = run('mock', json([{}]));
+  Object.assign(record.meta, { runId, startedAt: '2026-10-31T00:00:00Z' });
+  record.current = false;
+  const path = join(root, 'playwright-report/history', `${runId}.json`);
+  writeFileSync(path, JSON.stringify(record));
+  assert.equal(collectHistory(root, revision)[0].counts, null);
+  record.current = true;
+  writeFileSync(path, JSON.stringify(record));
+  assert.equal(collectHistory(root, revision)[0].counts.passed, 1);
 });
 
 test('password precedence and absent .env never expose contents in errors', () => {
