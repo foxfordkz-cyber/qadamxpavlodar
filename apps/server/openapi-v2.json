@@ -5637,7 +5637,7 @@
     },
     "/workers": {
       "get": {
-        "summary": "Role-scoped employees and availability",
+        "summary": "Viewer reads public employee DTOs and availability; workers/foremen retain scope",
         "tags": [
           "Contract V2 / local DEMO"
         ],
@@ -5836,7 +5836,7 @@
     },
     "/crews": {
       "get": {
-        "summary": "Role-scoped crews and membership history",
+        "summary": "Viewer reads crews and membership history; workers/foremen retain scope",
         "tags": [
           "Contract V2 / local DEMO"
         ],
@@ -19669,7 +19669,7 @@
     },
     "/tasks": {
       "get": {
-        "summary": "Role-scoped assignments; date uses scheduledStart or dueAt in UTC+5 [start,end)",
+        "summary": "Viewer reads all assignments; workers/foremen retain scope; date uses scheduledStart or dueAt in UTC+5 [start,end)",
         "tags": [
           "Contract V2 / local DEMO"
         ],
@@ -20670,7 +20670,7 @@
     },
     "/tasks/{id}": {
       "get": {
-        "summary": "Task detail with reports and immutable assignment history",
+        "summary": "Task detail with reports; viewer reads all, workers/foremen retain assignment scope",
         "tags": [
           "Contract V2 / local DEMO"
         ],
@@ -22846,7 +22846,7 @@
     },
     "/uploads/{id}": {
       "get": {
-        "summary": "Read private normalized photo after server ownership check",
+        "summary": "Read private normalized photo within task read scope; viewer allowed, worker draft ownership retained",
         "tags": [
           "Contract V2 / local DEMO"
         ],
@@ -24997,7 +24997,7 @@
     },
     "/reports": {
       "get": {
-        "summary": "Role-scoped reports",
+        "summary": "Viewer reads all reports; workers/foremen retain task scope",
         "tags": [
           "Contract V2 / local DEMO"
         ],
@@ -25497,7 +25497,7 @@
     },
     "/reports/{id}": {
       "get": {
-        "summary": "Read an authorized report",
+        "summary": "Read report within task scope; viewer allowed",
         "tags": [
           "Contract V2 / local DEMO"
         ],

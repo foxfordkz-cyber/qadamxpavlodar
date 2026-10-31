@@ -14,7 +14,8 @@ const feature=(lng=76.94,name='Zone')=>({type:'Feature',geometry:{type:'Point',c
 test('Municipal roles: real sessions, viewer cannot edit, rate conflicts and revoked privileges',async t=>{const f=await setup(t);
  assert.equal((await f.call('/auth/me')).body.data.user.role,'coordinator');assert.equal((await f.call('/auth/me','GET','viewer')).body.data.user.role,'viewer');
  assert((await f.call('/crews')).body.data.length>0);assert((await f.call('/workers')).body.data.length>0);
- assert.equal((await f.call('/crews','GET','viewer')).body.data.length,0);
+ // Issue #10: viewer has the same public read scope; write permissions remain separate below.
+ assert.deepEqual((await f.call('/crews','GET','viewer')).body.data,(await f.call('/crews')).body.data);
  assert.equal((await f.call('/rates','GET','worker1')).status,403);const r=(await f.call('/rates')).body.data;
  const b={key:'price.tree',value:19000,source:'Estimate test source',expectedVersion:r.version};
  assert.equal((await f.call('/rates','PATCH','viewer',b)).status,403);assert.equal((await f.call('/rates','PATCH','specialist',b)).status,403);
