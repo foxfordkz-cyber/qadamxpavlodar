@@ -1,0 +1,936 @@
+{
+  "schema": "green-pavlodar-worker-locale-local-qa-v1",
+  "testedSourceSha": "c970264919de2f7a62d0e1ea8a28cc70c95a3864",
+  "claim": "Local candidate browser QA only; not a public deployment or independent acceptance by a teammate.",
+  "candidate": {
+    "previewBase": "http://127.0.0.1:5199",
+    "sourceDirty": false,
+    "archive": "green-pavlodar-api.zip",
+    "archiveBytes": 1644189,
+    "archiveSha256": "24118f721ba6becab51c5728ea87fb0154e85db76c9007db831979b66c36edc0",
+    "indexSha256": "b6fb8af09ee6b01e55a24cfa4c48a2eec049dc127baed9da39e9e82d7ddcfb65",
+    "localHttpExactCandidateFilesPassed": 36,
+    "localHttpExactCandidateFilesTotal": 36,
+    "localHttpUiStaticFilesPassed": 34,
+    "localHttpProxyMetadataFilesPassed": 2
+  },
+  "counts": {
+    "embeddedWorkerPassed": 8,
+    "embeddedForemanPassed": 4,
+    "embeddedTotal": 12,
+    "standalonePassed": 2,
+    "standaloneTotal": 2,
+    "screenshotsVisuallyReviewed": 38,
+    "embeddedScreenshots": 32,
+    "standaloneScreenshots": 6
+  },
+  "workers": [
+    {
+      "case": "mock-ru-375",
+      "mode": "mock",
+      "initialLocale": "ru",
+      "width": 375,
+      "status": "PASS",
+      "pageErrorCount": 0,
+      "directLocaleAndQuerylessReload": "PASS",
+      "realUiLogin": "PASS",
+      "threeSectionKeyboardNavigation": [
+        {
+          "section": "history",
+          "focusVisible": true,
+          "focusedControlVisible": true,
+          "horizontalOverflowPx": 0,
+          "footerOverlapped": false
+        },
+        {
+          "section": "profile",
+          "focusVisible": true,
+          "focusedControlVisible": true,
+          "horizontalOverflowPx": 0,
+          "footerOverlapped": false
+        },
+        {
+          "section": "tasks",
+          "focusVisible": true,
+          "focusedControlVisible": true,
+          "horizontalOverflowPx": 0,
+          "footerOverlapped": false
+        }
+      ],
+      "photoNoteSelectionContextAndKeyRetained": true,
+      "toggleSections": [
+        {
+          "page": "history",
+          "locale": "kk"
+        },
+        {
+          "page": "profile",
+          "locale": "ru"
+        },
+        {
+          "page": "tasks",
+          "locale": "kk"
+        }
+      ],
+      "formReopenedWithPreviewAndSendEnabled": true,
+      "finalTaskStatus": "submitted"
+    },
+    {
+      "case": "mock-ru-1280",
+      "mode": "mock",
+      "initialLocale": "ru",
+      "width": 1280,
+      "status": "PASS",
+      "pageErrorCount": 0,
+      "directLocaleAndQuerylessReload": "PASS",
+      "realUiLogin": "PASS",
+      "threeSectionKeyboardNavigation": [
+        {
+          "section": "history",
+          "focusVisible": true,
+          "focusedControlVisible": true,
+          "horizontalOverflowPx": 0,
+          "footerOverlapped": false
+        },
+        {
+          "section": "profile",
+          "focusVisible": true,
+          "focusedControlVisible": true,
+          "horizontalOverflowPx": 0,
+          "footerOverlapped": false
+        },
+        {
+          "section": "tasks",
+          "focusVisible": true,
+          "focusedControlVisible": true,
+          "horizontalOverflowPx": 0,
+          "footerOverlapped": false
+        }
+      ],
+      "photoNoteSelectionContextAndKeyRetained": true,
+      "toggleSections": [
+        {
+          "page": "history",
+          "locale": "kk"
+        },
+        {
+          "page": "profile",
+          "locale": "ru"
+        },
+        {
+          "page": "tasks",
+          "locale": "kk"
+        }
+      ],
+      "formReopenedWithPreviewAndSendEnabled": true,
+      "finalTaskStatus": "submitted"
+    },
+    {
+      "case": "mock-kk-375",
+      "mode": "mock",
+      "initialLocale": "kk",
+      "width": 375,
+      "status": "PASS",
+      "pageErrorCount": 0,
+      "directLocaleAndQuerylessReload": "PASS",
+      "realUiLogin": "PASS",
+      "threeSectionKeyboardNavigation": [
+        {
+          "section": "history",
+          "focusVisible": true,
+          "focusedControlVisible": true,
+          "horizontalOverflowPx": 0,
+          "footerOverlapped": false
+        },
+        {
+          "section": "profile",
+          "focusVisible": true,
+          "focusedControlVisible": true,
+          "horizontalOverflowPx": 0,
+          "footerOverlapped": false
+        },
+        {
+          "section": "tasks",
+          "focusVisible": true,
+          "focusedControlVisible": true,
+          "horizontalOverflowPx": 0,
+          "footerOverlapped": false
+        }
+      ],
+      "photoNoteSelectionContextAndKeyRetained": true,
+      "toggleSections": [
+        {
+          "page": "history",
+          "locale": "ru"
+        },
+        {
+          "page": "profile",
+          "locale": "kk"
+        },
+        {
+          "page": "tasks",
+          "locale": "ru"
+        }
+      ],
+      "formReopenedWithPreviewAndSendEnabled": true,
+      "finalTaskStatus": "submitted"
+    },
+    {
+      "case": "mock-kk-1280",
+      "mode": "mock",
+      "initialLocale": "kk",
+      "width": 1280,
+      "status": "PASS",
+      "pageErrorCount": 0,
+      "directLocaleAndQuerylessReload": "PASS",
+      "realUiLogin": "PASS",
+      "threeSectionKeyboardNavigation": [
+        {
+          "section": "history",
+          "focusVisible": true,
+          "focusedControlVisible": true,
+          "horizontalOverflowPx": 0,
+          "footerOverlapped": false
+        },
+        {
+          "section": "profile",
+          "focusVisible": true,
+          "focusedControlVisible": true,
+          "horizontalOverflowPx": 0,
+          "footerOverlapped": false
+        },
+        {
+          "section": "tasks",
+          "focusVisible": true,
+          "focusedControlVisible": true,
+          "horizontalOverflowPx": 0,
+          "footerOverlapped": false
+        }
+      ],
+      "photoNoteSelectionContextAndKeyRetained": true,
+      "toggleSections": [
+        {
+          "page": "history",
+          "locale": "ru"
+        },
+        {
+          "page": "profile",
+          "locale": "kk"
+        },
+        {
+          "page": "tasks",
+          "locale": "ru"
+        }
+      ],
+      "formReopenedWithPreviewAndSendEnabled": true,
+      "finalTaskStatus": "submitted"
+    },
+    {
+      "case": "http-intercept-ru-375",
+      "mode": "http-intercept",
+      "initialLocale": "ru",
+      "width": 375,
+      "status": "PASS",
+      "pageErrorCount": 0,
+      "directLocaleAndQuerylessReload": "PASS",
+      "realUiLogin": "PASS",
+      "threeSectionKeyboardNavigation": [
+        {
+          "section": "history",
+          "focusVisible": true,
+          "focusedControlVisible": true,
+          "horizontalOverflowPx": 0,
+          "footerOverlapped": false
+        },
+        {
+          "section": "profile",
+          "focusVisible": true,
+          "focusedControlVisible": true,
+          "horizontalOverflowPx": 0,
+          "footerOverlapped": false
+        },
+        {
+          "section": "tasks",
+          "focusVisible": true,
+          "focusedControlVisible": true,
+          "horizontalOverflowPx": 0,
+          "footerOverlapped": false
+        }
+      ],
+      "photoNoteSelectionContextAndKeyRetained": true,
+      "toggleSections": [
+        {
+          "page": "history",
+          "locale": "kk"
+        },
+        {
+          "page": "profile",
+          "locale": "ru"
+        },
+        {
+          "page": "tasks",
+          "locale": "kk"
+        }
+      ],
+      "formReopenedWithPreviewAndSendEnabled": true,
+      "finalTaskStatus": "submitted",
+      "syntheticHttpRetry": {
+        "responseLostAfterFixtureCommit": true,
+        "explicitRetryAttempts": 2,
+        "sameIdempotencyKey": true,
+        "keySha256": "6fad3eee98317c2eb49547fca4384ca9ff5992b03cfdb17819aa9bd19b1a31ab",
+        "identicalRequestBody": true,
+        "noAutomaticRetryDuring1200msObservation": true,
+        "reportCount": 1,
+        "uploadCount": 1,
+        "unexpectedEndpointCount": 0,
+        "headerChecksPassed": true,
+        "errorTranslatedInPlace": true,
+        "uncertainDraftFrozen": true,
+        "fileBytes": 57613,
+        "actualFileSha256": "718b71c18d0432a47a9f40bc44cca1f009f96afbd2fa2b173ecf4f4799a3ed0a",
+        "fileObservedWithoutChangingRequest": true,
+        "wireMultipartFileAndTaskFields": true,
+        "interceptedPostDataContainsBinary": false
+      }
+    },
+    {
+      "case": "http-intercept-ru-1280",
+      "mode": "http-intercept",
+      "initialLocale": "ru",
+      "width": 1280,
+      "status": "PASS",
+      "pageErrorCount": 0,
+      "directLocaleAndQuerylessReload": "PASS",
+      "realUiLogin": "PASS",
+      "threeSectionKeyboardNavigation": [
+        {
+          "section": "history",
+          "focusVisible": true,
+          "focusedControlVisible": true,
+          "horizontalOverflowPx": 0,
+          "footerOverlapped": false
+        },
+        {
+          "section": "profile",
+          "focusVisible": true,
+          "focusedControlVisible": true,
+          "horizontalOverflowPx": 0,
+          "footerOverlapped": false
+        },
+        {
+          "section": "tasks",
+          "focusVisible": true,
+          "focusedControlVisible": true,
+          "horizontalOverflowPx": 0,
+          "footerOverlapped": false
+        }
+      ],
+      "photoNoteSelectionContextAndKeyRetained": true,
+      "toggleSections": [
+        {
+          "page": "history",
+          "locale": "kk"
+        },
+        {
+          "page": "profile",
+          "locale": "ru"
+        },
+        {
+          "page": "tasks",
+          "locale": "kk"
+        }
+      ],
+      "formReopenedWithPreviewAndSendEnabled": true,
+      "finalTaskStatus": "submitted",
+      "syntheticHttpRetry": {
+        "responseLostAfterFixtureCommit": true,
+        "explicitRetryAttempts": 2,
+        "sameIdempotencyKey": true,
+        "keySha256": "86aa145dad32cc078337017927831ffb0ea4e47c7e722cd8171d4625f48e762d",
+        "identicalRequestBody": true,
+        "noAutomaticRetryDuring1200msObservation": true,
+        "reportCount": 1,
+        "uploadCount": 1,
+        "unexpectedEndpointCount": 0,
+        "headerChecksPassed": true,
+        "errorTranslatedInPlace": true,
+        "uncertainDraftFrozen": true,
+        "fileBytes": 57613,
+        "actualFileSha256": "718b71c18d0432a47a9f40bc44cca1f009f96afbd2fa2b173ecf4f4799a3ed0a",
+        "fileObservedWithoutChangingRequest": true,
+        "wireMultipartFileAndTaskFields": true,
+        "interceptedPostDataContainsBinary": false
+      }
+    },
+    {
+      "case": "http-intercept-kk-375",
+      "mode": "http-intercept",
+      "initialLocale": "kk",
+      "width": 375,
+      "status": "PASS",
+      "pageErrorCount": 0,
+      "directLocaleAndQuerylessReload": "PASS",
+      "realUiLogin": "PASS",
+      "threeSectionKeyboardNavigation": [
+        {
+          "section": "history",
+          "focusVisible": true,
+          "focusedControlVisible": true,
+          "horizontalOverflowPx": 0,
+          "footerOverlapped": false
+        },
+        {
+          "section": "profile",
+          "focusVisible": true,
+          "focusedControlVisible": true,
+          "horizontalOverflowPx": 0,
+          "footerOverlapped": false
+        },
+        {
+          "section": "tasks",
+          "focusVisible": true,
+          "focusedControlVisible": true,
+          "horizontalOverflowPx": 0,
+          "footerOverlapped": false
+        }
+      ],
+      "photoNoteSelectionContextAndKeyRetained": true,
+      "toggleSections": [
+        {
+          "page": "history",
+          "locale": "ru"
+        },
+        {
+          "page": "profile",
+          "locale": "kk"
+        },
+        {
+          "page": "tasks",
+          "locale": "ru"
+        }
+      ],
+      "formReopenedWithPreviewAndSendEnabled": true,
+      "finalTaskStatus": "submitted",
+      "syntheticHttpRetry": {
+        "responseLostAfterFixtureCommit": true,
+        "explicitRetryAttempts": 2,
+        "sameIdempotencyKey": true,
+        "keySha256": "5f6ae383f99cc194d0d93dbe2e9d887c6ebbe696efba1cceee5ae72d98f3cafe",
+        "identicalRequestBody": true,
+        "noAutomaticRetryDuring1200msObservation": true,
+        "reportCount": 1,
+        "uploadCount": 1,
+        "unexpectedEndpointCount": 0,
+        "headerChecksPassed": true,
+        "errorTranslatedInPlace": true,
+        "uncertainDraftFrozen": true,
+        "fileBytes": 57613,
+        "actualFileSha256": "718b71c18d0432a47a9f40bc44cca1f009f96afbd2fa2b173ecf4f4799a3ed0a",
+        "fileObservedWithoutChangingRequest": true,
+        "wireMultipartFileAndTaskFields": true,
+        "interceptedPostDataContainsBinary": false
+      }
+    },
+    {
+      "case": "http-intercept-kk-1280",
+      "mode": "http-intercept",
+      "initialLocale": "kk",
+      "width": 1280,
+      "status": "PASS",
+      "pageErrorCount": 0,
+      "directLocaleAndQuerylessReload": "PASS",
+      "realUiLogin": "PASS",
+      "threeSectionKeyboardNavigation": [
+        {
+          "section": "history",
+          "focusVisible": true,
+          "focusedControlVisible": true,
+          "horizontalOverflowPx": 0,
+          "footerOverlapped": false
+        },
+        {
+          "section": "profile",
+          "focusVisible": true,
+          "focusedControlVisible": true,
+          "horizontalOverflowPx": 0,
+          "footerOverlapped": false
+        },
+        {
+          "section": "tasks",
+          "focusVisible": true,
+          "focusedControlVisible": true,
+          "horizontalOverflowPx": 0,
+          "footerOverlapped": false
+        }
+      ],
+      "photoNoteSelectionContextAndKeyRetained": true,
+      "toggleSections": [
+        {
+          "page": "history",
+          "locale": "ru"
+        },
+        {
+          "page": "profile",
+          "locale": "kk"
+        },
+        {
+          "page": "tasks",
+          "locale": "ru"
+        }
+      ],
+      "formReopenedWithPreviewAndSendEnabled": true,
+      "finalTaskStatus": "submitted",
+      "syntheticHttpRetry": {
+        "responseLostAfterFixtureCommit": true,
+        "explicitRetryAttempts": 2,
+        "sameIdempotencyKey": true,
+        "keySha256": "fa297a6af2768b8cf9962193f715c2a47d2b82bacd4dfcb7906c8f450b61b81a",
+        "identicalRequestBody": true,
+        "noAutomaticRetryDuring1200msObservation": true,
+        "reportCount": 1,
+        "uploadCount": 1,
+        "unexpectedEndpointCount": 0,
+        "headerChecksPassed": true,
+        "errorTranslatedInPlace": true,
+        "uncertainDraftFrozen": true,
+        "fileBytes": 57613,
+        "actualFileSha256": "718b71c18d0432a47a9f40bc44cca1f009f96afbd2fa2b173ecf4f4799a3ed0a",
+        "fileObservedWithoutChangingRequest": true,
+        "wireMultipartFileAndTaskFields": true,
+        "interceptedPostDataContainsBinary": false
+      }
+    }
+  ],
+  "foremen": [
+    {
+      "case": "foreman-mock-375",
+      "mode": "mock",
+      "width": 375,
+      "status": "PASS",
+      "initialLocale": "kk",
+      "formKind": "demo foreman issue",
+      "photoNoteSelectionContextAndKeyRetained": true,
+      "toggleSections": [
+        {
+          "page": "history",
+          "locale": "ru"
+        },
+        {
+          "page": "profile",
+          "locale": "kk"
+        },
+        {
+          "page": "tasks",
+          "locale": "ru"
+        }
+      ],
+      "horizontalOverflowPx": 0,
+      "pageErrorCount": 0,
+      "reportSubmitted": false
+    },
+    {
+      "case": "foreman-mock-1280",
+      "mode": "mock",
+      "width": 1280,
+      "status": "PASS",
+      "initialLocale": "kk",
+      "formKind": "demo foreman issue",
+      "photoNoteSelectionContextAndKeyRetained": true,
+      "toggleSections": [
+        {
+          "page": "history",
+          "locale": "ru"
+        },
+        {
+          "page": "profile",
+          "locale": "kk"
+        },
+        {
+          "page": "tasks",
+          "locale": "ru"
+        }
+      ],
+      "horizontalOverflowPx": 0,
+      "pageErrorCount": 0,
+      "reportSubmitted": false
+    },
+    {
+      "case": "foreman-http-intercept-375",
+      "mode": "http-intercept",
+      "width": 375,
+      "status": "PASS",
+      "initialLocale": "kk",
+      "formKind": "synthetic HTTP foreman solo report",
+      "photoNoteSelectionContextAndKeyRetained": true,
+      "toggleSections": [
+        {
+          "page": "history",
+          "locale": "ru"
+        },
+        {
+          "page": "profile",
+          "locale": "kk"
+        },
+        {
+          "page": "tasks",
+          "locale": "ru"
+        }
+      ],
+      "horizontalOverflowPx": 0,
+      "pageErrorCount": 0,
+      "reportSubmitted": false
+    },
+    {
+      "case": "foreman-http-intercept-1280",
+      "mode": "http-intercept",
+      "width": 1280,
+      "status": "PASS",
+      "initialLocale": "kk",
+      "formKind": "synthetic HTTP foreman solo report",
+      "photoNoteSelectionContextAndKeyRetained": true,
+      "toggleSections": [
+        {
+          "page": "history",
+          "locale": "ru"
+        },
+        {
+          "page": "profile",
+          "locale": "kk"
+        },
+        {
+          "page": "tasks",
+          "locale": "ru"
+        }
+      ],
+      "horizontalOverflowPx": 0,
+      "pageErrorCount": 0,
+      "reportSubmitted": false
+    }
+  ],
+  "standalone": {
+    "sourceSha": "c970264919de2f7a62d0e1ea8a28cc70c95a3864",
+    "previewBase": "http://127.0.0.1:5198",
+    "cases": [
+      {
+        "width": 375,
+        "status": "PASS",
+        "initialLocale": "kk",
+        "querylessReload": "PASS",
+        "actualLocaleDropdownUsed": true,
+        "visibleLostResponseFaultCheckboxUsed": true,
+        "photoNoteSelectionContextAndKeyRetained": true,
+        "uncertainKeyRetained": true,
+        "keySha256": "090e0a931821601f0f4cdbf6a971d4cfb9ed3759ed71bf54c0c39940636fb4e8",
+        "toggleSections": [
+          {
+            "page": "history",
+            "locale": "ru"
+          },
+          {
+            "page": "profile",
+            "locale": "kk"
+          },
+          {
+            "page": "tasks",
+            "locale": "ru"
+          }
+        ],
+        "localizedUncertain": {
+          "ru": "Сервис временно недоступен. Повторите попытку после восстановления связи.",
+          "kk": "Қызмет уақытша қолжетімсіз. Қосылым қалпына келгеннен кейін қайталаңыз."
+        },
+        "uploadDelta": 1,
+        "reportDelta": 1,
+        "noAdditionalUploadOrReportOnExplicitRetry": true,
+        "horizontalOverflowPx": 0,
+        "pageErrorCount": 0
+      },
+      {
+        "width": 1280,
+        "status": "PASS",
+        "initialLocale": "kk",
+        "querylessReload": "PASS",
+        "actualLocaleDropdownUsed": true,
+        "visibleLostResponseFaultCheckboxUsed": true,
+        "photoNoteSelectionContextAndKeyRetained": true,
+        "uncertainKeyRetained": true,
+        "keySha256": "f40675aa635f531b3e0050827309f3233a3fed93225b5a83928376913ef7d9a2",
+        "toggleSections": [
+          {
+            "page": "history",
+            "locale": "ru"
+          },
+          {
+            "page": "profile",
+            "locale": "kk"
+          },
+          {
+            "page": "tasks",
+            "locale": "ru"
+          }
+        ],
+        "localizedUncertain": {
+          "ru": "Сервис временно недоступен. Повторите попытку после восстановления связи.",
+          "kk": "Қызмет уақытша қолжетімсіз. Қосылым қалпына келгеннен кейін қайталаңыз."
+        },
+        "uploadDelta": 1,
+        "reportDelta": 1,
+        "noAdditionalUploadOrReportOnExplicitRetry": true,
+        "horizontalOverflowPx": 0,
+        "pageErrorCount": 0
+      }
+    ]
+  },
+  "visualReview": {
+    "allScreenshotsReviewed": true,
+    "observed": "Readable RU/KK worker labels, dates, statuses, report form and localized errors; no page horizontal overflow, tested keyboard focus visible, no footer overlap in tested worker navigation.",
+    "cssFixRequired": false,
+    "limits": "Viewport screenshots, not complete screenshots of every scroll position. Dynamic task names/instructions and user notes retain their source language. Standalone helper controls may remain Russian. No native-speaker language certification."
+  },
+  "methodLimits": [
+    "Mock and browser-intercepted synthetic HTTP adapter exercised real UI actions; no live backend or real municipal work.",
+    "HTTP fixture commits once then aborts first report response; explicit retry returns the saved synthetic receipt.",
+    "Actual upload File bytes were hashed with a read-only fetch observer that calls the original fetch without changing the request. Chromium intercepted multipart postData omitted file binary; file/task field metadata was also checked.",
+    "Foreman four cases cover navigation, locale and draft retention; they do not submit reports.",
+    "Early harness diagnostics are retained locally: binary-in-postData assertion was replaced by direct read-only File observation; final status assertion waits for asynchronous selected-task refresh to settle. Product assertions were not relaxed.",
+    "All test harness scripts and failed/raw diagnostic results remain outside this safe evidence archive. No login screenshots, request bodies, raw operation keys, authentication data or absolute personal filesystem paths are packaged."
+  ],
+  "screenshots": [
+    {
+      "path": "screens/embedded/foreman-http-intercept-1280-preserved.png",
+      "bytes": 72841,
+      "sha256": "6c35bc7bd06d9aa8c1bfeaaa07ed8781b042d296a4ad7a1cc8194a96150980d2",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/embedded/foreman-http-intercept-375-preserved.png",
+      "bytes": 51620,
+      "sha256": "fdd32fff194b688a30b1b4108eb732053d28976590dfb2eb07e2109354053c83",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/embedded/foreman-mock-1280-preserved.png",
+      "bytes": 77494,
+      "sha256": "209bb227cd88bb2233d913425338ad262db3aeab8b0e632134b2a707714c5621",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/embedded/foreman-mock-375-preserved.png",
+      "bytes": 49144,
+      "sha256": "363341fc6f42d357414e3f9fee7548f908431aea7d6624aab68105413b65bdb8",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/embedded/http-intercept-kk-1280-draft-preserved.png",
+      "bytes": 80190,
+      "sha256": "d6d89151c98ad81cd844d35e05d37a267a772c37f297f8f2630ccb5effb0e191",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/embedded/http-intercept-kk-1280-initial.png",
+      "bytes": 82706,
+      "sha256": "da0325fc87937afd4abab66ff446f103f52e83e5bbbd7f088452f48b145c1ad9",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/embedded/http-intercept-kk-1280-submitted.png",
+      "bytes": 88014,
+      "sha256": "5fd07614efb28dbf17fae3f6689b705aac713fe0da2d529b62e6caafe6c9374d",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/embedded/http-intercept-kk-1280-uncertain.png",
+      "bytes": 89948,
+      "sha256": "f3989e3e8d5b11984f48129cbc0014912da9633a3ac2f517ff2ddb7de3f6a274",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/embedded/http-intercept-kk-375-draft-preserved.png",
+      "bytes": 50025,
+      "sha256": "5507c711b56cc5bfcb071850cfae31167ec71946d945ae126d06f78228b46fba",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/embedded/http-intercept-kk-375-initial.png",
+      "bytes": 57889,
+      "sha256": "d5dd49666d90515ddcc9e72adbae6016756f4db9362c378a31b4a9d643110241",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/embedded/http-intercept-kk-375-submitted.png",
+      "bytes": 44733,
+      "sha256": "7e27bcf1d3ebe5d8223a8a0405a76dc1019ce7df9c29a4cf69aa59fd6dc068f7",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/embedded/http-intercept-kk-375-uncertain.png",
+      "bytes": 46434,
+      "sha256": "2d74d6495d6df0e20577104da74b3bc983e9bcacfb04e19056d6dc42afe66415",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/embedded/http-intercept-ru-1280-draft-preserved.png",
+      "bytes": 76529,
+      "sha256": "faad395b9de7872bf2a5b10f886f1a4839aa49af640b410f400aa2ebcab91e1b",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/embedded/http-intercept-ru-1280-initial.png",
+      "bytes": 78189,
+      "sha256": "c4f0987c1463d29f37294ce7c3ac20c1f17c8b1ab6df62c7f539de0effcd42c0",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/embedded/http-intercept-ru-1280-submitted.png",
+      "bytes": 87975,
+      "sha256": "68b9021e4a9d614c2618597441e54b449843328de02aeb3f35976d11b3b25ffd",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/embedded/http-intercept-ru-1280-uncertain.png",
+      "bytes": 87560,
+      "sha256": "48a12e942234d2853eea5dd0ff83d9c81ecbb088d5ea2393e189a2f12d32fb7c",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/embedded/http-intercept-ru-375-draft-preserved.png",
+      "bytes": 48060,
+      "sha256": "8e30b7f95c16533b48bb79391a7ce06a0598ceb82eb6e52e29ea12408990f6a9",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/embedded/http-intercept-ru-375-initial.png",
+      "bytes": 54166,
+      "sha256": "6704ac54b78ab11169434d482d0291e06c103e77de5712040bd1e06e61acac2b",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/embedded/http-intercept-ru-375-submitted.png",
+      "bytes": 45445,
+      "sha256": "94e2d232f407efc08efdabfdf35f3b82f54ae4db602603f338f519314c84bdce",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/embedded/http-intercept-ru-375-uncertain.png",
+      "bytes": 46200,
+      "sha256": "75ee4b53fa131326a0392fd21d53cced92174380f971b57ce45b72f5dab2aee9",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/embedded/mock-kk-1280-draft-preserved.png",
+      "bytes": 84814,
+      "sha256": "c6959ceb91be49c3db887f16ee682e9371affc40bc7c8b47c86dc6ec65f9ce98",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/embedded/mock-kk-1280-initial.png",
+      "bytes": 98670,
+      "sha256": "ceadb3af52f7b7e7953f0c60f279d9cb3947eb4c4900765dc0d86f3e0caeb9ee",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/embedded/mock-kk-1280-submitted.png",
+      "bytes": 99707,
+      "sha256": "339586fda6072f3be07531e4fa92dcb3789e36e85f93f719e36caa31ea3fa6b6",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/embedded/mock-kk-375-draft-preserved.png",
+      "bytes": 49040,
+      "sha256": "65f8eaf7b6088eee19ef8b3d0a17116ae1d9f6ec21a25dd690a2dd829b1a1b2c",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/embedded/mock-kk-375-initial.png",
+      "bytes": 61724,
+      "sha256": "c019937eae2a45b1dadcd9a9aa34629307308583050b5e800455c73e09ec1d55",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/embedded/mock-kk-375-submitted.png",
+      "bytes": 52540,
+      "sha256": "553e6d9efeb7e004f8622e8e74b171a7c4714327226b1509bec36fc44792ab1f",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/embedded/mock-ru-1280-draft-preserved.png",
+      "bytes": 81092,
+      "sha256": "93de6726ab14a4fc08c7cec52a19b0f62c8c48934e1ff2cd306179ff4e18284e",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/embedded/mock-ru-1280-initial.png",
+      "bytes": 101785,
+      "sha256": "fa38e42cba0ea58b395d74a027733fcfd77bfcd528351357538625ff3a6e2015",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/embedded/mock-ru-1280-submitted.png",
+      "bytes": 97973,
+      "sha256": "ca823b8540dc465f819bdcb1abbe97697b4c1a6d3493ee565efd8bf581917b49",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/embedded/mock-ru-375-draft-preserved.png",
+      "bytes": 48478,
+      "sha256": "e88024a9f131a083e0cfc0c363f7b80855a44c88f656492d51066ee6b8e24935",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/embedded/mock-ru-375-initial.png",
+      "bytes": 57920,
+      "sha256": "92f9e6f6c57fcb6b585a2069d2f35c0a1e629a539c85f05bfdab1fe4f2401b88",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/embedded/mock-ru-375-submitted.png",
+      "bytes": 52408,
+      "sha256": "eb202d6ddbe6331c40bdbee3a81eda763841bcafff789edeaaa1a9da1c319d94",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/standalone/standalone-375-preserved.png",
+      "bytes": 35092,
+      "sha256": "536a26d7de939a98e9def7fc3f25409f7a6702b307c16d48c2add0aa93fe86e1",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/standalone/standalone-375-uncertain-kk.png",
+      "bytes": 37083,
+      "sha256": "7e9eefb6db11e8bca374b51340a3b58986a6cc44befe91d77d1cdcbe4d84e0b3",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/standalone/standalone-375-submitted.png",
+      "bytes": 36343,
+      "sha256": "54a9aaa3ce7af041337b76d902e4259f15c922f9cf97d66891af7945d705bae1",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/standalone/standalone-1280-preserved.png",
+      "bytes": 53588,
+      "sha256": "920b51b4fc24c85b05dc9604649cd6dc4b9944c203430c762f8e334bbdd4a634",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/standalone/standalone-1280-uncertain-kk.png",
+      "bytes": 66672,
+      "sha256": "8694acccea4fd9771be71c8b67aae5009cb4a6eaae53bca03985ea81a36538f2",
+      "visualReview": "reviewed"
+    },
+    {
+      "path": "screens/standalone/standalone-1280-submitted.png",
+      "bytes": 65660,
+      "sha256": "80b94c91594167d85d007e67a37daf9d9bad751cf9acf244fbf85c3236387038",
+      "visualReview": "reviewed"
+    }
+  ],
+  "sourceComparison": {
+    "sourceSha": "c970264919de2f7a62d0e1ea8a28cc70c95a3864",
+    "filesPassed": 26,
+    "filesTotal": 26,
+    "method": "git hash-object with repository path filters compared against exact source commit blobs; working byte SHA256 also recorded.",
+    "evidence": "source-comparison.json"
+  }
+}

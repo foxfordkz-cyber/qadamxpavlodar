@@ -2,6 +2,8 @@
 
 ## Текущее состояние: публикации и непубликовавшийся кандидат
 
+Новый кандидат **c970264919de2f7a62d0e1ea8a28cc70c95a3864** завершает локализацию интерфейса кабинета работника и бригадира: canonical `kk`, совместимый alias `kk-draft`, 243 ключа / 332 строковых значения. Язык меняется без сброса черновика, фото, выбранного задания и ключа операции; известные сообщения и даты отображаются на текущем языке. Worker **110/110**, web **201/201**, typecheck/build и четыре check:* — **PASS**. [Точные browser/build evidence и границы](cloud-worker-locale-2026-10-31.md). **Кандидат не опубликован**: API остаётся aee7242/ff01f45d с прежним публичным KK-дефектом, mock — fdc6e75/f816c350. Данные пользователя и API payload не переводятся. Физический телефон, единый полный цикл одного задания и provider-приёмка нового кандидата не заявляются.
+
 Действующий подробный журнал — [cloud-web-deployment.md](cloud-web-deployment.md). Ниже текущие публикации отделены от сохранённых исторических проверок.
 
 | Область | Проверенный результат |
@@ -11,7 +13,7 @@
 | API-архив | `green-pavlodar-api.zip`, 1 633 963 байта / 36 файлов; SHA256 `da8bc83dd448b114b78f100d933187f686099ddcdb01c012f8f61e19222ac1d9`. Чистая сборка aee7242, Node 24.22.1; compatibility date `2026-06-16`, flags `[]`, Fail closed. Позднейший HEAD документов не является новой опубликованной сборкой |
 | Backend | Фактический Render `https://green-pavlodar-api-demo.onrender.com`, runtime SHA `3b14927def04b35bf97782eae6b550da276c779f`; redeploy `dep-dbj223h42hec73bqnttg` начат в 22:10:38 UTC+5, Live через 1 мин 25 с. Без latest/seed, применён сохранённый точный Pages Origin |
 | API без credentials | 68/68 static-хешей; 4/4 RU/KK форм входа и protected worker route, четыре PNG просмотрены, 0 pageErrors. Первоначальный HTTP 6/7 сохранён; после Live affected Origin GET стал 401 `AUTH_REQUIRED`, readiness200 и OPTIONS204 — 2/2 PASS. Полный HTTP-набор заново не объявлен 7/7 |
-| Реальная приёмка production Pages | У Бекзата: HTTP workflow пяти ролей, cookies/CSRF, multipart/private binary, идемпотентные повторы и Outcomes PASS; viewer login/reload/отчёт/фото/Outcomes/logout также browser PASS. [Отчёт 22:17](https://github.com/foxfordkz-cyber/qadamxpavlodar/pull/35#issuecomment-6546637443). Позднее worker/coordinator/viewer UI после API setup подтверждён; public KK worker дефект остаётся. Кандидат a7e2b96 исправляет bridge локально, но ещё не опубликован |
+| Реальная приёмка production Pages | У Бекзата: HTTP workflow пяти ролей, cookies/CSRF, multipart/private binary, идемпотентные повторы и Outcomes PASS; viewer login/reload/отчёт/фото/Outcomes/logout также browser PASS. [Отчёт 22:17](https://github.com/foxfordkz-cyber/qadamxpavlodar/pull/35#issuecomment-6546637443). Позднее worker/coordinator/viewer UI после API setup подтверждён; public KK worker дефект остаётся. Новый кандидат c970264 завершает локализацию кабинета локально; [точные границы проверки](cloud-worker-locale-2026-10-31.md), ещё не опубликован |
 
 [API-сводка](cloudflare-evidence/2026-10-31-api-unauth-aee7242.json), [static evidence](cloudflare-evidence/2026-10-31-api-static-aee7242.json), [архив API-проверки](cloudflare-evidence/2026-10-31-api-unauth-aee7242.zip); [mock-публикация](cloudflare-evidence/2026-10-31-published-fdc6e75.json) и [public suite](cloudflare-evidence/2026-10-31-public-smoke-fdc6e75.json).
 
@@ -21,7 +23,7 @@
 
 Начало planning UI подтверждено отдельно Бекзатом в 22:42–22:49: существующий участок → смета 388 587 ₸ (2 года, оптимальный) → создание обследования → назначение бригаде. [Свидетельство](https://github.com/foxfordkz-cyber/qadamxpavlodar/pull/35#issuecomment-6546995249), [сводка](cloudflare-evidence/2026-10-31-api-planning-ui-operator.json). Состав работников ещё не назначен; это другое DEMO-задание, чем прошедшее фото/отчёт/приёмку. Единый полный цикл на одном задании не заявляется. CONTEXT_STALE и KK worker на опубликованной aee7242 остаются ограничениями.
 
-Актуальная защита/офлайн-пакет описаны в [едином сценарии](defense/scenario.md). Runtime резерва fdc6e75 проверен отдельно (17/17 offline, 0 pageErrors, 39/39 файлов), медиа a66d542 сохраняют исходную маркировку. Свежий RU/KK Word care=3 сверяется отдельным evidence. Физический телефон и общая устная репетиция остаются непроверенными пунктами. Новая основная932574e влита только в собственную ветку; публичные версии не менялись. [Свежий кандидат, проверки и блокер Direct Upload](cloud-web-deployment.md#кандидат-после-повторного-fetch--a7e2b96-ещё-не-deployment).
+Актуальная защита/офлайн-пакет описаны в [едином сценарии](defense/scenario.md). Runtime резерва fdc6e75 проверен отдельно (17/17 offline, 0 pageErrors, 39/39 файлов), медиа a66d542 сохраняют исходную маркировку. Свежий RU/KK Word care=3 сверяется отдельным evidence. Физический телефон и общая устная репетиция остаются непроверенными пунктами. Новая основная932574e влита только в собственную ветку; публичные версии не менялись. [Новый кандидат c970264, проверки и границы публикации](cloud-worker-locale-2026-10-31.md).
 
 ## Исторический журнал 98cf6c6 / 1916d19
 

@@ -1,0 +1,103 @@
+{
+  "schema": "green-pavlodar-public-unchanged-worker-locale-v1",
+  "startedUtc": "2026-10-31T18:12:30.044Z",
+  "finishedUtc": "2026-10-31T18:12:30.534Z",
+  "purpose": "Read-only check that production index, main JavaScript and WorkerPage bytes still match the previous published builds while the new locale implementation is tested locally.",
+  "method": "Unauthenticated HTTPS GET only; redirects not followed; no credentials or tokens used or stored.",
+  "scope": "Three selected assets per origin; not a full deployment or authenticated workflow audit. Matching source SHA is attribution from the saved build manifests, not a source SHA served by the website.",
+  "targets": [
+    {
+      "name": "api",
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "manifest": "docs/cloudflare-evidence/2026-10-31-api-build-aee7242.json",
+      "expectedSourceSha": "aee7242ee899f1f596a704adba6e1279c37af9df",
+      "checks": [
+        {
+          "path": "assets/index-DELWlLwL.js",
+          "url": "https://green-pavlodar-api.pages.dev/assets/index-DELWlLwL.js",
+          "checkedUtc": "2026-10-31T18:12:30.448Z",
+          "status": 200,
+          "expectedBytes": 984985,
+          "actualBytes": 984985,
+          "expectedSha256": "37666ddc1b4e617a9b1cc227f535618f202a923fdc178e0f687d85847a66ad0a",
+          "actualSha256": "37666ddc1b4e617a9b1cc227f535618f202a923fdc178e0f687d85847a66ad0a",
+          "hashMatch": true,
+          "pass": true
+        },
+        {
+          "path": "assets/WorkerPage-ST6dtp4_.js",
+          "url": "https://green-pavlodar-api.pages.dev/assets/WorkerPage-ST6dtp4_.js",
+          "checkedUtc": "2026-10-31T18:12:30.354Z",
+          "status": 200,
+          "expectedBytes": 56708,
+          "actualBytes": 56708,
+          "expectedSha256": "1c013a472a23704d496a1fd1b6b75e488c76b1a9f97d1acec0b98f27cf8d1f84",
+          "actualSha256": "1c013a472a23704d496a1fd1b6b75e488c76b1a9f97d1acec0b98f27cf8d1f84",
+          "hashMatch": true,
+          "pass": true
+        },
+        {
+          "path": "index.html",
+          "url": "https://green-pavlodar-api.pages.dev/",
+          "checkedUtc": "2026-10-31T18:12:30.328Z",
+          "status": 200,
+          "expectedBytes": 609,
+          "actualBytes": 609,
+          "expectedSha256": "ca4b5d0761a10ba88133ede27145498ddc3142780da08287df20c5684f480175",
+          "actualSha256": "ca4b5d0761a10ba88133ede27145498ddc3142780da08287df20c5684f480175",
+          "hashMatch": true,
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "name": "mock",
+      "origin": "https://green-pavlodar-mock.pages.dev",
+      "manifest": "docs/cloudflare-evidence/2026-10-31-publication-fdc6e75-candidate.json",
+      "expectedSourceSha": "fdc6e756be99dc5ba3a7a48ca1df17c4bfbef5ef",
+      "checks": [
+        {
+          "path": "assets/index-BfZskFvL.js",
+          "url": "https://green-pavlodar-mock.pages.dev/assets/index-BfZskFvL.js",
+          "checkedUtc": "2026-10-31T18:12:30.534Z",
+          "status": 200,
+          "expectedBytes": 975707,
+          "actualBytes": 975707,
+          "expectedSha256": "3a83047c872243cbcc23c982238236eb9fdb71d7d933b313329e1b5a8f9ce066",
+          "actualSha256": "3a83047c872243cbcc23c982238236eb9fdb71d7d933b313329e1b5a8f9ce066",
+          "hashMatch": true,
+          "pass": true
+        },
+        {
+          "path": "assets/WorkerPage-Bhn1O2YX.js",
+          "url": "https://green-pavlodar-mock.pages.dev/assets/WorkerPage-Bhn1O2YX.js",
+          "checkedUtc": "2026-10-31T18:12:30.321Z",
+          "status": 200,
+          "expectedBytes": 72603,
+          "actualBytes": 72603,
+          "expectedSha256": "69e82081a646bd6bd59ae3b5a3b1786f6504e5f4c1063b4eb8f3751536de127d",
+          "actualSha256": "69e82081a646bd6bd59ae3b5a3b1786f6504e5f4c1063b4eb8f3751536de127d",
+          "hashMatch": true,
+          "pass": true
+        },
+        {
+          "path": "index.html",
+          "url": "https://green-pavlodar-mock.pages.dev/",
+          "checkedUtc": "2026-10-31T18:12:30.318Z",
+          "status": 200,
+          "expectedBytes": 609,
+          "actualBytes": 609,
+          "expectedSha256": "57d028697841d274e96bb66155ca3a9316eeeb1807f98bcf41985febcd953f97",
+          "actualSha256": "57d028697841d274e96bb66155ca3a9316eeeb1807f98bcf41985febcd953f97",
+          "hashMatch": true,
+          "pass": true
+        }
+      ],
+      "pass": true
+    }
+  ],
+  "pass": true,
+  "gitFilesChanged": false,
+  "deploymentPerformed": false
+}
