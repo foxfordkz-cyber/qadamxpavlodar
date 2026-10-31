@@ -1,0 +1,76 @@
+{
+  "kind": "independent-public-https-readiness-only",
+  "startedAt": "2026-10-31T16:29:47.433Z",
+  "testSHA": "f0c1f43eb424408ef0db7fad6e263bb17e34f995",
+  "target": "https://green-pavlodar-api-demo.onrender.com",
+  "deploymentId": null,
+  "applicationSHA": null,
+  "ownerReportedApplicationSHA": "3b14927def04b35bf97782eae6b550da276c779f",
+  "ownerReportedDeploymentId": "dep-dbj0vnk9v7es738qurh0",
+  "handoffRef": "a72131df86272804f95d8331d0f627e62272b3ea",
+  "handoffDocument": "docs/cloud-deployment-readiness.md",
+  "checks": [
+    {
+      "method": "GET",
+      "path": "/health",
+      "startedAt": "2026-10-31T16:29:47.433Z",
+      "finishedAt": "2026-10-31T16:29:49.545Z",
+      "httpStatus": 200,
+      "response": {
+        "status": "ok",
+        "mode": "DEMO",
+        "storage": "postgresql",
+        "scope": "auth-reference-planning-workflow-outcomes"
+      },
+      "status": "passed"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/ready",
+      "startedAt": "2026-10-31T16:29:49.545Z",
+      "finishedAt": "2026-10-31T16:29:49.943Z",
+      "httpStatus": 200,
+      "response": {
+        "status": "ok",
+        "mode": "DEMO",
+        "database": "ok",
+        "schemaVersion": 5,
+        "capabilities": [
+          "auth",
+          "evidence",
+          "resources",
+          "sites",
+          "context",
+          "analysis",
+          "rates",
+          "snapshots",
+          "crews",
+          "workers",
+          "designs",
+          "tasks",
+          "reports",
+          "outcomes",
+          "photos"
+        ],
+        "photos": "private-storage-configured"
+      },
+      "status": "passed"
+    }
+  ],
+  "scope": "Unauthenticated public GET /health and /api/v1/ready only. No records, credentials, writes, restart, reseed, or storage reads.",
+  "limitations": [
+    "Health/readiness endpoints do not attest deployed SHA.",
+    "These responses do not establish role behavior, photo persistence, browser same-origin workflow, or full API acceptance.",
+    "Cloud application differs from accepted coordinator fdc6e75.",
+    "Independent authenticated cloud QA requires approved isolated target and process-environment credentials; full browser acceptance requires working same-origin API frontend/proxy."
+  ],
+  "finishedAt": "2026-10-31T16:29:49.943Z",
+  "counts": {
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0,
+    "fixme": 0,
+    "flaky": 0
+  },
+  "status": "READINESS_ONLY_PASS"
+}

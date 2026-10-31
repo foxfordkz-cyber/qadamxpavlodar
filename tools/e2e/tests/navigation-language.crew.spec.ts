@@ -8,6 +8,6 @@ for (const role of ['Работник', 'Бригадир']) {
     await openPage(page);
     await mockRole(page, role);
     await switchLanguage(page, 'Қаз');
-    await crewKeyboardNavigation(page, role === 'Бригадир');
+    await crewKeyboardNavigation(page, role === 'Бригадир', 'kk');
   });
 }

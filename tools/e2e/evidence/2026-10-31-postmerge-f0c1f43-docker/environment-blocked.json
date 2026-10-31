@@ -1,0 +1,38 @@
+{
+  "kind": "independent-isolated-docker-environment-check",
+  "observedAt": "2026-10-31T16:29:47.415Z",
+  "applicationBase": "fdc6e756be99dc5ba3a7a48ca1df17c4bfbef5ef",
+  "testSHA": "f0c1f43eb424408ef0db7fad6e263bb17e34f995",
+  "appsTree": "f19500893c20ee19c170c393f2a8414b95e19255",
+  "dirty": false,
+  "status": "BLOCKED_ENVIRONMENT",
+  "probe": "docker version --format {{json .Server.Version}}",
+  "probeExitCode": 1,
+  "reason": "Docker CLI cannot connect: the dockerDesktopLinuxEngine Windows named pipe does not exist.",
+  "counts": {
+    "passed": 0,
+    "failed": 0,
+    "skipped": 0,
+    "fixme": 0,
+    "flaky": 0,
+    "notRun": 16
+  },
+  "testExecutionStarted": false,
+  "images": null,
+  "project": null,
+  "volume": null,
+  "baseURL": null,
+  "safety": {
+    "daemonStartedOrRestarted": false,
+    "imageBuildAttempted": false,
+    "containersStarted": false,
+    "existing8080Untouched": true,
+    "integrationVolumeUntouched": true,
+    "testWrites": false
+  },
+  "limitations": [
+    "All 16 Docker workflow/persistence scenarios remain NOT RUN for this SHA.",
+    "Historical Docker acceptance on 98cf6c6 is not a result for this build.",
+    "No attempt was made to start or restart the global Docker daemon."
+  ]
+}

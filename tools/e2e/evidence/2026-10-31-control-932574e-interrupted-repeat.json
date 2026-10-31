@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "runId": "754d6d48-9fbb-4874-bbb7-cd251d7cab14",
+  "testSHA": "cdc3ec257726ef937b0bbf953253a755f2e225a9",
+  "applicationBase": "932574e630621a6bc9aeacc46703e6ade5e7bdfc",
+  "startedAt": "2026-10-31T17:57:28.300Z",
+  "lastLogAt": "2026-10-31T17:57:50.839Z",
+  "terminationVerifiedAt": "2026-10-31T18:00:03.341Z",
+  "status": "interrupted-by-user-steering",
+  "reason": "User requested no new full run on control build; queued repeat had started before message was processed and was interrupted immediately.",
+  "completedFullRun": false,
+  "completedCounts": null,
+  "runnerProcessesRemain": false,
+  "rawMetaState": "running (process interrupted before reporter finalized)",
+  "notIncludedAsPassed": true
+}

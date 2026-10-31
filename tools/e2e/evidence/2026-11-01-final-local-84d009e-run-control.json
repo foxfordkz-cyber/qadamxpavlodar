@@ -1,0 +1,41 @@
+{
+  "testSHA": "c7f15755c80292509aaeeb9f9e4638f62c8b6810",
+  "appSHA": "84d009e3b72c4fe637ef30607e29701054b6c621",
+  "appsTree": "2fd878cfbec10d93942afeb5add57a39a230304f",
+  "fullRun": true,
+  "results": [
+    {
+      "name": "mock",
+      "args": [
+        "scripts/isolated.mjs",
+        "mock"
+      ],
+      "startedAt": "2026-10-31T18:54:26.644Z",
+      "endedAt": "2026-10-31T19:09:13.592Z",
+      "exitCode": 0,
+      "completionSource": "Finished runner metadata; first wrapper stopped only during subsequent snapshot copy"
+    },
+    {
+      "name": "api",
+      "args": [
+        "scripts/isolated.mjs",
+        "api",
+        "--outcomes"
+      ],
+      "startedAt": "2026-10-31T19:10:09.933Z",
+      "endedAt": "2026-10-31T19:13:30.129Z",
+      "exitCode": 0
+    }
+  ],
+  "orchestration": {
+    "firstWrapperExit": 1,
+    "stage": "snapshot after completed mock",
+    "reason": "ENOENT for optional screens directory; current capture metadata points to test-results/screen-review",
+    "mockRunId": "edac9af4-ca6c-470e-ad80-e9949e8cf7fc",
+    "mockSuiteExit": 0,
+    "correction": "Snapshot exact actual capture path and continue API only",
+    "applicationOrTestEdits": false,
+    "mockRerun": false,
+    "observedAt": "2026-10-31T19:10:09.931Z"
+  }
+}

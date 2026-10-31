@@ -1,0 +1,11 @@
+{
+  "firstWrapperExit": 1,
+  "stage": "snapshot after completed mock",
+  "reason": "ENOENT for optional screens directory; current capture metadata points to test-results/screen-review",
+  "mockRunId": "edac9af4-ca6c-470e-ad80-e9949e8cf7fc",
+  "mockSuiteExit": 0,
+  "correction": "Snapshot exact actual capture path and continue API only",
+  "applicationOrTestEdits": false,
+  "mockRerun": false,
+  "observedAt": "2026-10-31T19:10:09.931Z"
+}

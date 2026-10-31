@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root/survival42_visual_review",
+  "reviewedAt": "2026-10-31T18:21:24.742Z",
+  "testSHA": "5db953cd770c4fe0ef31f835a7f19a8e044c97b8",
+  "runId": "ecaa4d53-908c-4fe9-a23b-dd3fc59cdc27",
+  "dirty": false,
+  "selection": "subset",
+  "source": "mock",
+  "issue": "E2E-11",
+  "status": "safe-to-include-as-diagnostic-evidence",
+  "scope": "Visual and privacy review of exactly two failing mock regression screenshots. Not approved presentation frames, no baseline update and no product fix.",
+  "captures": [
+    {
+      "mode": "desktop",
+      "relativePath": "test-results/mock/worker-locale-regression.m-cba5c-oad-with-mock-role-re-entry-desktop/test-failed-1.png",
+      "width": 1280,
+      "height": 800,
+      "bytes": 70060,
+      "sha256": "d9542916d46571ea2d0360e3b3a714cf94635ac14d6999f3fcbc8d7e0773d13c",
+      "viewed": true,
+      "classification": "diagnostic-only-not-slideshow-baseline",
+      "privacy": "Only mock fixture identity (explicit demo on desktop), synthetic QA DEMO image and synthetic note; no password, credential or real photo visible.",
+      "observation": "Kazakh shell with Қаз selected and Тексеру режимі/Шығу labels; worker report remains Russian: Отчёт о работе, Добавьте фотографию, Заменить фото. QA DEMO note and image preserved."
+    },
+    {
+      "mode": "mobile",
+      "relativePath": "test-results/mock/worker-locale-regression.m-cba5c-oad-with-mock-role-re-entry-mobile/test-failed-1.png",
+      "width": 375,
+      "height": 812,
+      "bytes": 39556,
+      "sha256": "1634c52e2f3ba04e74035db7db9107080ceafef92778dca16e11a87be5a7f42f",
+      "viewed": true,
+      "classification": "diagnostic-only-not-slideshow-baseline",
+      "privacy": "Only mock fixture identity (explicit demo on desktop), synthetic QA DEMO image and synthetic note; no password, credential or real photo visible.",
+      "observation": "Worker report and bottom navigation are Russian; synthetic QA DEMO photo preserved. Shell language selector is outside this viewport, so this PNG alone does not establish selected KK locale; combine with test trace/result."
+    }
+  ],
+  "findings": [
+    "Desktop directly demonstrates Kazakh shell versus Russian worker form. Mobile documents the Russian form/navigation, with locale selection evidenced separately by the automated scenario."
+  ]
+}

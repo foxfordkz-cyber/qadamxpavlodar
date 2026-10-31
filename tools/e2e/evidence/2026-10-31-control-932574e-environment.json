@@ -1,0 +1,18 @@
+{
+  "recordedAt": "2026-10-31T17:45:15.739Z",
+  "testSHA": "cdc3ec257726ef937b0bbf953253a755f2e225a9",
+  "applicationBase": "932574e630621a6bc9aeacc46703e6ade5e7bdfc",
+  "appsTree": "72b065f072e006dc35600da693036ccedefed265",
+  "platform": "win32",
+  "arch": "x64",
+  "osRelease": "10.0.26200",
+  "totalMemoryBytes": 16450961408,
+  "freeMemoryBytes": 1081720832,
+  "runtimeUsed": "Node 24.22.2 absolute isolated runner",
+  "browserSuitesScheduledSequentially": true,
+  "protectedResources": [
+    "main Docker 8080",
+    "gp-integration_gp-data",
+    "working application DB"
+  ]
+}

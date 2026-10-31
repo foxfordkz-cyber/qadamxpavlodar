@@ -1,0 +1,81 @@
+{
+  "startedAt": "2026-10-31T17:44:57.360Z",
+  "testSHA": "cdc3ec257726ef937b0bbf953253a755f2e225a9",
+  "handoffRef": "05bc92492f72cc909ee6ae94d18d5b9bf1a3d54b",
+  "scope": "Independent unauthenticated HTTPS GETs only. No cloud session, secrets, mutations or browser interaction. No current provider SHA inferred.",
+  "results": [
+    {
+      "name": "mock-index",
+      "url": "https://green-pavlodar-mock.pages.dev/",
+      "startedAt": "2026-10-31T17:44:57.903Z",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 609,
+      "sha256": "57d028697841d274e96bb66155ca3a9316eeeb1807f98bcf41985febcd953f97",
+      "assets": [
+        "/assets/index-BfZskFvL.js",
+        "/assets/index-B2HVvz9V.css"
+      ],
+      "endedAt": "2026-10-31T17:44:58.601Z"
+    },
+    {
+      "name": "api-index",
+      "url": "https://green-pavlodar-api.pages.dev/",
+      "startedAt": "2026-10-31T17:44:58.601Z",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 609,
+      "sha256": "ca4b5d0761a10ba88133ede27145498ddc3142780da08287df20c5684f480175",
+      "assets": [
+        "/assets/index-DELWlLwL.js",
+        "/assets/index-B2HVvz9V.css"
+      ],
+      "endedAt": "2026-10-31T17:44:59.266Z"
+    },
+    {
+      "name": "backend-health",
+      "url": "https://green-pavlodar-api-demo.onrender.com/health",
+      "startedAt": "2026-10-31T17:44:59.266Z",
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "bytes": 104,
+      "sha256": "d4b03b3d2ea8474522d1cc544216deaf56c9862397db07106365f5434ceb9beb",
+      "response": {
+        "status": "ok",
+        "mode": "DEMO",
+        "storage": "postgresql"
+      },
+      "endedAt": "2026-10-31T17:44:59.878Z"
+    },
+    {
+      "name": "backend-ready",
+      "url": "https://green-pavlodar-api-demo.onrender.com/api/v1/ready",
+      "startedAt": "2026-10-31T17:44:59.878Z",
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "bytes": 263,
+      "sha256": "ccd372dd369a68bcb02b35321df3f4a247cbb44752a1f30a7305cd7599f8071e",
+      "response": {
+        "status": "ok",
+        "mode": "DEMO",
+        "database": "ok",
+        "schemaVersion": 5,
+        "photos": "private-storage-configured"
+      },
+      "endedAt": "2026-10-31T17:45:00.103Z"
+    },
+    {
+      "name": "proxy-auth-anonymous",
+      "url": "https://green-pavlodar-api.pages.dev/api/v1/auth/me",
+      "startedAt": "2026-10-31T17:45:00.103Z",
+      "status": 401,
+      "contentType": "application/json; charset=utf-8",
+      "bytes": 127,
+      "sha256": "b829b8cb004d264f787a69d332c8bd0b0a362f13a06566536840e8fcbd32bb30",
+      "response": {},
+      "errorCode": "AUTH_REQUIRED",
+      "endedAt": "2026-10-31T17:45:00.425Z"
+    }
+  ],
+  "endedAt": "2026-10-31T17:45:00.425Z"
+}

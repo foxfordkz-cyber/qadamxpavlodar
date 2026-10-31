@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "releaseSha": "84d009e3b72c4fe637ef30607e29701054b6c621",
+  "publicationComplete": true,
+  "publicationCompletedConfirmedAt": "2026-10-31T19:05:09Z",
+  "freezeEffectiveAt": "2026-10-31T19:04:00Z",
+  "ownerHandoffEvidence": "https://github.com/foxfordkz-cyber/qadamxpavlodar/pull/35#issuecomment-6547845219",
+  "publications": {
+    "mock": {
+      "origin": "https://green-pavlodar-mock.pages.dev",
+      "frontendSha": "84d009e3b72c4fe637ef30607e29701054b6c621",
+      "deploymentId": "d0e985d1-bbd0-4f8c-b1c1-31d20d164ef7",
+      "immutableOrigin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+      "manifestPath": null,
+      "manifestSha256": null,
+      "manifestStatus": "pending publisher documentation commit"
+    },
+    "api": {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "frontendSha": "c970264919de2f7a62d0e1ea8a28cc70c95a3864",
+      "deploymentId": "a26bd214-1c78-4a83-9536-74a35c85b49f",
+      "immutableOrigin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "manifestPath": "api-manifest.json",
+      "manifestSha256": "d8b042398be87fc8c7283a82499dda317ee2d6e77f8d4979f55c226d93b67f60",
+      "manifestSource": {
+        "commit": "a05c3affae8f539bd407571d831fa645f6f7f01d",
+        "path": "docs/cloudflare-evidence/2026-10-31-api-candidate-c970264.json"
+      }
+    }
+  },
+  "backend": {
+    "origin": "https://green-pavlodar-api-demo.onrender.com",
+    "applicationSha": "3b14927def04b35bf97782eae6b550da276c779f",
+    "deploymentId": "dep-dbj223h42hec73bqnttg"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "kind": "prepared-readonly-cloud-existing-records",
+  "status": "NOT_RUN",
+  "sourceRef": "05bc92492f72cc909ee6ae94d18d5b9bf1a3d54b",
+  "sourceDocument": "docs/cloud-final-release.md",
+  "project": {
+    "name": "green-pavlodar-demo",
+    "ref": "dpkffzawhtbtlldckjhy",
+    "sharedWithTeam": true
+  },
+  "dataset": "release-738f96b2",
+  "frontend": {
+    "origin": "https://green-pavlodar-api.pages.dev",
+    "ownerReportedSHA": "aee7242ee899f1f596a704adba6e1279c37af9df",
+    "ownerReportedDeploymentId": "ff01f45d-69ed-45a9-af1c-ad1d26b8983a"
+  },
+  "backend": {
+    "origin": "https://green-pavlodar-api-demo.onrender.com",
+    "ownerReportedSHA": "3b14927def04b35bf97782eae6b550da276c779f",
+    "ownerReportedDeploymentId": "dep-dbj223h42hec73bqnttg"
+  },
+  "blockers": [
+    "Private process-environment credential handoff absent in this QA worktree.",
+    "Owner baseline manifest apps/server/data/cloud-release-acceptance.json absent; original DTO/photo hashes cannot yet be compared."
+  ],
+  "allowedAfterCredentialHandoff": {
+    "authSessionOnly": [
+      "POST /api/v1/auth/login with a dedicated viewer session; password read only from process environment.",
+      "POST /api/v1/auth/logout in finally; cookie and CSRF stay only in memory."
+    ],
+    "readOnlyGet": [
+      "/api/v1/tasks/2f64e988-97f9-4970-9dcf-1ca016f66cb2",
+      "/api/v1/tasks/2f64e988-97f9-4970-9dcf-1ca016f66cb2/history",
+      "/api/v1/reports/368df690-6894-4b67-9aab-2651a9c4fad9",
+      "/api/v1/tasks/1abe0f0e-88ff-4c66-a7ce-fef3b0347f19/history",
+      "/api/v1/reports/32bf4fed-c476-4cf6-81f2-aec7813939bb",
+      "/api/v1/outcomes/cohorts/release-738f96b2-cohort",
+      "/api/v1/outcomes/cohorts/release-738f96b2-cohort/inspections",
+      "/api/v1/outcomes/cohorts/release-738f96b2-cohort/summary?inspectionId=release-738f96b2-inspection",
+      "/api/v1/uploads/12ff65e8-d13d-49ca-bb9f-437baf3377bf"
+    ],
+    "expectedSummary": {
+      "alive": 1,
+      "unknown": 3,
+      "wholeCohortSurvivalPct": null
+    },
+    "comparison": "Compare canonical DTO hashes and private photo byte SHA256 against the unchanged owner manifest. Save status/hashes and synthetic identifiers only, not complete DTOs, images, session response, cookies or CSRF."
+  },
+  "excluded": [
+    "No bundled verify execution: it includes POST replays and POST/PATCH denial checks.",
+    "No new task/report/photo/forecast/inspection, seed, schema operation or rate/site edit.",
+    "No restart/redeploy: Bekzat performs it only in the coordinated window.",
+    "No authenticated request or browser has been run for this plan."
+  ],
+  "note": "Prepared steps are not executed tests or independent acceptance of owner-reported deployment identity."
+}

@@ -1,0 +1,1642 @@
+{
+  "kind": "post-publication-public-mock-worker-locale-8",
+  "startedAt": "2026-10-31T19:25:18.113Z",
+  "binding": {
+    "mode": "mock",
+    "publication": {
+      "origin": "https://green-pavlodar-mock.pages.dev",
+      "frontendSha": "84d009e3b72c4fe637ef30607e29701054b6c621",
+      "deploymentId": "d0e985d1-bbd0-4f8c-b1c1-31d20d164ef7",
+      "immutableOrigin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+      "manifestSha256": "8a8f8773a10ffab44e24115e49b79e3c9d6103a21ead1ca409505802bc7335ca",
+      "manifestProvenance": "independent-qa-build",
+      "manifestVerification": "hash-and-schema-verified",
+      "manifestVerified": true,
+      "manifestSchema": "green-pavlodar-independent-qa-mock-build-v1",
+      "manifestTotalEntries": 34,
+      "files": [
+        {
+          "path": "assets/contract-v2-G6MTd3pU.js",
+          "bytes": 70154,
+          "sha256": "6328948954bf614f545fdb03495ba0605895af1b41d5818fa4cd0c765bc6c308"
+        },
+        {
+          "path": "assets/demo-gateway-zj6qeURy.js",
+          "bytes": 27491,
+          "sha256": "dcc124ae961b894c67d0467671e7c64941ad25182fd7e6160cddc4a09ada3f1b"
+        },
+        {
+          "path": "assets/DevPanel-C5lUGM5B.js",
+          "bytes": 2442,
+          "sha256": "5c51ab2b2e7f66d37f6f0d4fff88abcd21ed6d37a4092fde98b361c3cca2e74d"
+        },
+        {
+          "path": "assets/HeroMap-DeRZQb3K.js",
+          "bytes": 2982,
+          "sha256": "ad21f9e27db35b44e5205f7d9bc297b19787b7e52a6a2866e4d69c07fef9b192"
+        },
+        {
+          "path": "assets/index-D-QkwvwB.css",
+          "bytes": 84650,
+          "sha256": "d76f3e7862bdac8850d58ea16283745530f32b2356ff8a86612bb8790d599f12"
+        },
+        {
+          "path": "assets/index-DlzuSGyH.js",
+          "bytes": 987379,
+          "sha256": "a99221c7907d6ac577a6e0e45214ae2e378b485902c0c5c23f36ef1870584fed"
+        },
+        {
+          "path": "assets/journal-DUiVZ3Jx.css",
+          "bytes": 28323,
+          "sha256": "1f628101378a4d324955e84cff516f62990004c0970dbfe2b1c673398f08048e"
+        },
+        {
+          "path": "assets/loadMemo-CD6TAO6h.js",
+          "bytes": 637,
+          "sha256": "0e9eb0e4fcad2c9bef4319b2db9600ebbfe6330dd6bac92ad957794832bbc1bc"
+        },
+        {
+          "path": "assets/lora-cyrillic-ext-wght-normal-YcVxMP-u.woff2",
+          "bytes": 23636,
+          "sha256": "0e523e4bc3c6308f002a3208ea2990cb4f64282d4fbb67c12f5726d13b66eef6"
+        },
+        {
+          "path": "assets/lora-cyrillic-wght-normal-UWPuZLjM.woff2",
+          "bytes": 21232,
+          "sha256": "c57d9ca3bd42e6bc093badc7744dd2059a78f66a3a4dc6ca40574480c870f553"
+        },
+        {
+          "path": "assets/lora-latin-ext-wght-normal-C2Wlntb9.woff2",
+          "bytes": 20088,
+          "sha256": "2a2d9c22c9863086a23f5013fede1428585321812b25f2662542c39d02967c5e"
+        },
+        {
+          "path": "assets/lora-latin-wght-normal-BiLcIKcI.woff2",
+          "bytes": 37788,
+          "sha256": "ddb8c66035104e233fc024669183aad3738b6daa16deee2ebb1241bd0f98ace1"
+        },
+        {
+          "path": "assets/lora-math-wght-normal-sOy7rEfW.woff2",
+          "bytes": 29240,
+          "sha256": "a8c4cb778ab6202d22bdea2ccc8d7e7caf802cfe0a7ce37df7b212f82341468f"
+        },
+        {
+          "path": "assets/lora-symbols-wght-normal-DQ5VrUkH.woff2",
+          "bytes": 17248,
+          "sha256": "2df52199eac56e2ec7a735e609bb151bdab79422c3e73948f4b6580c66bb5a50"
+        },
+        {
+          "path": "assets/lora-vietnamese-wght-normal-CfJ7gtf3.woff2",
+          "bytes": 8992,
+          "sha256": "98c22de85f6e83bcd6ae1a443e12e256fbc8de7142bec4f76b059f8ff9c2797e"
+        },
+        {
+          "path": "assets/mapFlags-KArXQfJZ.js",
+          "bytes": 203,
+          "sha256": "7be91119586dd5e482676ee9daf7276bd60ca59617953d84a2df1b5be897244b"
+        },
+        {
+          "path": "assets/maplibre-gl-qdodsIIj.js",
+          "bytes": 1033029,
+          "sha256": "f79f4edfa86b9c76b92fdac87e45cfe00cf38ac384909017b39bc3de37c7b306"
+        },
+        {
+          "path": "assets/maplibre-gl-RZO-t2LB.css",
+          "bytes": 83127,
+          "sha256": "3c3faf7116e0ea3f4dd664bc9d6207bebf71dda2f9d3108b65527615011f2b2b"
+        },
+        {
+          "path": "assets/maplibre-gl-worker-DYHVkJJJ.js",
+          "bytes": 508793,
+          "sha256": "2d7087f4c4bf47b51da6498b27f32c287a4c01dbf9aa0f90446a50b13a9677f6"
+        },
+        {
+          "path": "assets/memo-B3_IU9qq.js",
+          "bytes": 17325,
+          "sha256": "6168956f2f48cdc87a9c04900379dbb04486542e0f110c0329d9478b245e861b"
+        },
+        {
+          "path": "assets/memoData-mJ3ORfy0.js",
+          "bytes": 276,
+          "sha256": "28d821cacfd97c3e4f4c6f25c8e326de85347b17c05fbc88ebbd7a2c07724afd"
+        },
+        {
+          "path": "assets/onest-cyrillic-ext-wght-normal-DOFToQv1.woff2",
+          "bytes": 10540,
+          "sha256": "268f03691b3d06e57abcf20f9277e314ea8784298983aab5b40c1b91965027e1"
+        },
+        {
+          "path": "assets/onest-cyrillic-wght-normal-DayYxulF.woff2",
+          "bytes": 15860,
+          "sha256": "68e5e01d6265bd68967746d4f5a9d18d0e6cbb5d15583c7082d6384ab1229b27"
+        },
+        {
+          "path": "assets/onest-latin-ext-wght-normal-QAhDxQuo.woff2",
+          "bytes": 28452,
+          "sha256": "14e7d3079b75860e2ab50efc6c318c398fdb46ede9b56e625f12ae70a3c5d9a4"
+        },
+        {
+          "path": "assets/onest-latin-wght-normal-Dun_Rd-l.woff2",
+          "bytes": 33760,
+          "sha256": "052df74533250c2e0ca0c4bdd32de594e107d99c1648e63820ef9c6142067828"
+        },
+        {
+          "path": "assets/onest-math-wght-normal-Bl4ZGkZl.woff2",
+          "bytes": 25480,
+          "sha256": "c74952a8c0c8c558c4f879f83773cf529d11350609f7073f5b2c5999dec46041"
+        },
+        {
+          "path": "assets/onest-symbols-wght-normal-DxQzqQfC.woff2",
+          "bytes": 18168,
+          "sha256": "2ec2d45d2ec0770e2c18cba2dba5126cf2dcff181d23ad192e9fffeb4af4b0b6"
+        },
+        {
+          "path": "assets/onest-vietnamese-wght-normal-BBxOatbv.woff2",
+          "bytes": 12400,
+          "sha256": "d852d4d094a3a46d701d16245deb7ca83b16b5bd69e20aa0aba089392ad69474"
+        },
+        {
+          "path": "assets/ProjectMap3D-BvuZNorq.js",
+          "bytes": 3558,
+          "sha256": "c834a090b70728b99440013d1172d6c45f7c920de9c7a8385aaaeadd06d5a5bc"
+        },
+        {
+          "path": "assets/scene3d-BMEqvPGi.js",
+          "bytes": 567196,
+          "sha256": "34b5dd170d2108d5993ef3f7f4abcd183e220fe849f3d1320618727e8a22379d"
+        },
+        {
+          "path": "assets/server-B_gwgAlS.js",
+          "bytes": 1976966,
+          "sha256": "bd9b2dae7abd51856ae341cd5801331a02437da9efbc5990dcb80351136c65bb"
+        },
+        {
+          "path": "assets/SiteMap-Bw8jEOV-.js",
+          "bytes": 16642,
+          "sha256": "0d5f189777152afef9651c84a6ddf5b12f2c0961daf619c3a9d6430fc1c6145f"
+        },
+        {
+          "path": "assets/WorkerPage-B32M9Okd.js",
+          "bytes": 60729,
+          "sha256": "4d01a332944b9825df79b0b6b3e9bd5da6a2b6ec44e9786ec7fca13e34c1236c"
+        },
+        {
+          "path": "index.html",
+          "bytes": 609,
+          "sha256": "c841e6ffb00e38eb133ebd30c8af7fa28870f466811ac770f3cf62c7de425768"
+        }
+      ],
+      "excludedFromHttp": [],
+      "buildArtifactRuntimeStatus": null
+    },
+    "handoffSha256": "ce1603ad89d402f159d8c5199fdc1b47531020e6b9dc7873b47ccd3267232780",
+    "otherPublication": {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "frontendSha": "c970264919de2f7a62d0e1ea8a28cc70c95a3864",
+      "deploymentId": "a26bd214-1c78-4a83-9536-74a35c85b49f",
+      "immutableOrigin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "manifestProvenance": "publisher",
+      "manifestVerification": "not-verified-in-this-mode",
+      "manifestSha256Reported": "d8b042398be87fc8c7283a82499dda317ee2d6e77f8d4979f55c226d93b67f60",
+      "manifestVerified": false,
+      "reason": "This run validates only its own publication manifest; the other frontend is not accepted by these results."
+    },
+    "manifestDigests": {
+      "mock": "8a8f8773a10ffab44e24115e49b79e3c9d6103a21ead1ca409505802bc7335ca"
+    },
+    "backendReported": {
+      "origin": "https://green-pavlodar-api-demo.onrender.com",
+      "applicationSha": "3b14927def04b35bf97782eae6b550da276c779f",
+      "deploymentId": "dep-dbj223h42hec73bqnttg",
+      "verification": "Owner-reported identity only; anonymous browser checks do not independently verify deployed backend source."
+    },
+    "releaseSha": "84d009e3b72c4fe637ef30607e29701054b6c621",
+    "qaSha": "c7f15755c80292509aaeeb9f9e4638f62c8b6810",
+    "appsTree": "2fd878cfbec10d93942afeb5add57a39a230304f",
+    "publicationCompletedConfirmedAt": "2026-10-31T19:05:09Z",
+    "sourceIdentityEvidence": {
+      "acceptedApplicationSha": "84d009e3b72c4fe637ef30607e29701054b6c621",
+      "apiFrontendSha": "c970264919de2f7a62d0e1ea8a28cc70c95a3864",
+      "qaSha": "c7f15755c80292509aaeeb9f9e4638f62c8b6810",
+      "paths": [
+        {
+          "path": "apps/web",
+          "acceptedApplicationTree": "1690174760f23f4ba0d297771073b838360b32a6",
+          "apiFrontendTree": "1690174760f23f4ba0d297771073b838360b32a6",
+          "qaTree": "1690174760f23f4ba0d297771073b838360b32a6",
+          "identical": true
+        },
+        {
+          "path": "apps/web/src/features/worker",
+          "acceptedApplicationTree": "3d26ea7b4e61667e5a1efb58f8f639b5b8966d47",
+          "apiFrontendTree": "3d26ea7b4e61667e5a1efb58f8f639b5b8966d47",
+          "qaTree": "3d26ea7b4e61667e5a1efb58f8f639b5b8966d47",
+          "identical": true
+        },
+        {
+          "path": "tools/worker-demo",
+          "acceptedApplicationTree": "22569488f8e728ebb2971a1ddb3d48e58ac77f0f",
+          "apiFrontendTree": "22569488f8e728ebb2971a1ddb3d48e58ac77f0f",
+          "qaTree": "22569488f8e728ebb2971a1ddb3d48e58ac77f0f",
+          "identical": true
+        },
+        {
+          "path": "cloudflare",
+          "acceptedApplicationTree": "f899444993055bce5d130717ffb6af90a78d6bc2",
+          "apiFrontendTree": "f899444993055bce5d130717ffb6af90a78d6bc2",
+          "qaTree": "f899444993055bce5d130717ffb6af90a78d6bc2",
+          "identical": true
+        }
+      ],
+      "scope": "Independent local Git tree equality for these build inputs only; source commit identities remain distinct."
+    }
+  },
+  "provenance": "Independent clean pinned QA mock build compared byte-for-byte through SHA256 to every declared static file on production and immutable deployment before/after browser checks. Manifest is OUR reference build, not publisher-provided. Provider deployment IDs remain owner-reported; this does not verify backend source or storage.",
+  "suiteSha256": "efcb4f0dd55dc805709ab12a6596ccf52e5af50ad8c19df0748e407bde4d1afb",
+  "configSha256": "3e8b81d3a5f100ec2d9eb485f123074af2f9b9dfe82c3fed7fbe2d25b677a2d5",
+  "counts": {
+    "passed": 8,
+    "failed": 0,
+    "skipped": 0,
+    "fixme": 0,
+    "flaky": 0,
+    "notRun": 0
+  },
+  "status": "passed",
+  "before": {
+    "observedAt": "2026-10-31T19:25:24.080Z",
+    "files": [
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/contract-v2-G6MTd3pU.js",
+        "status": 200,
+        "bytes": 70154,
+        "sha256": "6328948954bf614f545fdb03495ba0605895af1b41d5818fa4cd0c765bc6c308",
+        "expectedBytes": 70154,
+        "expectedSha256": "6328948954bf614f545fdb03495ba0605895af1b41d5818fa4cd0c765bc6c308",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/demo-gateway-zj6qeURy.js",
+        "status": 200,
+        "bytes": 27491,
+        "sha256": "dcc124ae961b894c67d0467671e7c64941ad25182fd7e6160cddc4a09ada3f1b",
+        "expectedBytes": 27491,
+        "expectedSha256": "dcc124ae961b894c67d0467671e7c64941ad25182fd7e6160cddc4a09ada3f1b",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/DevPanel-C5lUGM5B.js",
+        "status": 200,
+        "bytes": 2442,
+        "sha256": "5c51ab2b2e7f66d37f6f0d4fff88abcd21ed6d37a4092fde98b361c3cca2e74d",
+        "expectedBytes": 2442,
+        "expectedSha256": "5c51ab2b2e7f66d37f6f0d4fff88abcd21ed6d37a4092fde98b361c3cca2e74d",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/HeroMap-DeRZQb3K.js",
+        "status": 200,
+        "bytes": 2982,
+        "sha256": "ad21f9e27db35b44e5205f7d9bc297b19787b7e52a6a2866e4d69c07fef9b192",
+        "expectedBytes": 2982,
+        "expectedSha256": "ad21f9e27db35b44e5205f7d9bc297b19787b7e52a6a2866e4d69c07fef9b192",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/index-D-QkwvwB.css",
+        "status": 200,
+        "bytes": 84650,
+        "sha256": "d76f3e7862bdac8850d58ea16283745530f32b2356ff8a86612bb8790d599f12",
+        "expectedBytes": 84650,
+        "expectedSha256": "d76f3e7862bdac8850d58ea16283745530f32b2356ff8a86612bb8790d599f12",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/index-DlzuSGyH.js",
+        "status": 200,
+        "bytes": 987379,
+        "sha256": "a99221c7907d6ac577a6e0e45214ae2e378b485902c0c5c23f36ef1870584fed",
+        "expectedBytes": 987379,
+        "expectedSha256": "a99221c7907d6ac577a6e0e45214ae2e378b485902c0c5c23f36ef1870584fed",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/journal-DUiVZ3Jx.css",
+        "status": 200,
+        "bytes": 28323,
+        "sha256": "1f628101378a4d324955e84cff516f62990004c0970dbfe2b1c673398f08048e",
+        "expectedBytes": 28323,
+        "expectedSha256": "1f628101378a4d324955e84cff516f62990004c0970dbfe2b1c673398f08048e",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/loadMemo-CD6TAO6h.js",
+        "status": 200,
+        "bytes": 637,
+        "sha256": "0e9eb0e4fcad2c9bef4319b2db9600ebbfe6330dd6bac92ad957794832bbc1bc",
+        "expectedBytes": 637,
+        "expectedSha256": "0e9eb0e4fcad2c9bef4319b2db9600ebbfe6330dd6bac92ad957794832bbc1bc",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/lora-cyrillic-ext-wght-normal-YcVxMP-u.woff2",
+        "status": 200,
+        "bytes": 23636,
+        "sha256": "0e523e4bc3c6308f002a3208ea2990cb4f64282d4fbb67c12f5726d13b66eef6",
+        "expectedBytes": 23636,
+        "expectedSha256": "0e523e4bc3c6308f002a3208ea2990cb4f64282d4fbb67c12f5726d13b66eef6",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/lora-cyrillic-wght-normal-UWPuZLjM.woff2",
+        "status": 200,
+        "bytes": 21232,
+        "sha256": "c57d9ca3bd42e6bc093badc7744dd2059a78f66a3a4dc6ca40574480c870f553",
+        "expectedBytes": 21232,
+        "expectedSha256": "c57d9ca3bd42e6bc093badc7744dd2059a78f66a3a4dc6ca40574480c870f553",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/lora-latin-ext-wght-normal-C2Wlntb9.woff2",
+        "status": 200,
+        "bytes": 20088,
+        "sha256": "2a2d9c22c9863086a23f5013fede1428585321812b25f2662542c39d02967c5e",
+        "expectedBytes": 20088,
+        "expectedSha256": "2a2d9c22c9863086a23f5013fede1428585321812b25f2662542c39d02967c5e",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/lora-latin-wght-normal-BiLcIKcI.woff2",
+        "status": 200,
+        "bytes": 37788,
+        "sha256": "ddb8c66035104e233fc024669183aad3738b6daa16deee2ebb1241bd0f98ace1",
+        "expectedBytes": 37788,
+        "expectedSha256": "ddb8c66035104e233fc024669183aad3738b6daa16deee2ebb1241bd0f98ace1",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/lora-math-wght-normal-sOy7rEfW.woff2",
+        "status": 200,
+        "bytes": 29240,
+        "sha256": "a8c4cb778ab6202d22bdea2ccc8d7e7caf802cfe0a7ce37df7b212f82341468f",
+        "expectedBytes": 29240,
+        "expectedSha256": "a8c4cb778ab6202d22bdea2ccc8d7e7caf802cfe0a7ce37df7b212f82341468f",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/lora-symbols-wght-normal-DQ5VrUkH.woff2",
+        "status": 200,
+        "bytes": 17248,
+        "sha256": "2df52199eac56e2ec7a735e609bb151bdab79422c3e73948f4b6580c66bb5a50",
+        "expectedBytes": 17248,
+        "expectedSha256": "2df52199eac56e2ec7a735e609bb151bdab79422c3e73948f4b6580c66bb5a50",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/lora-vietnamese-wght-normal-CfJ7gtf3.woff2",
+        "status": 200,
+        "bytes": 8992,
+        "sha256": "98c22de85f6e83bcd6ae1a443e12e256fbc8de7142bec4f76b059f8ff9c2797e",
+        "expectedBytes": 8992,
+        "expectedSha256": "98c22de85f6e83bcd6ae1a443e12e256fbc8de7142bec4f76b059f8ff9c2797e",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/mapFlags-KArXQfJZ.js",
+        "status": 200,
+        "bytes": 203,
+        "sha256": "7be91119586dd5e482676ee9daf7276bd60ca59617953d84a2df1b5be897244b",
+        "expectedBytes": 203,
+        "expectedSha256": "7be91119586dd5e482676ee9daf7276bd60ca59617953d84a2df1b5be897244b",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/maplibre-gl-qdodsIIj.js",
+        "status": 200,
+        "bytes": 1033029,
+        "sha256": "f79f4edfa86b9c76b92fdac87e45cfe00cf38ac384909017b39bc3de37c7b306",
+        "expectedBytes": 1033029,
+        "expectedSha256": "f79f4edfa86b9c76b92fdac87e45cfe00cf38ac384909017b39bc3de37c7b306",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/maplibre-gl-RZO-t2LB.css",
+        "status": 200,
+        "bytes": 83127,
+        "sha256": "3c3faf7116e0ea3f4dd664bc9d6207bebf71dda2f9d3108b65527615011f2b2b",
+        "expectedBytes": 83127,
+        "expectedSha256": "3c3faf7116e0ea3f4dd664bc9d6207bebf71dda2f9d3108b65527615011f2b2b",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/maplibre-gl-worker-DYHVkJJJ.js",
+        "status": 200,
+        "bytes": 508793,
+        "sha256": "2d7087f4c4bf47b51da6498b27f32c287a4c01dbf9aa0f90446a50b13a9677f6",
+        "expectedBytes": 508793,
+        "expectedSha256": "2d7087f4c4bf47b51da6498b27f32c287a4c01dbf9aa0f90446a50b13a9677f6",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/memo-B3_IU9qq.js",
+        "status": 200,
+        "bytes": 17325,
+        "sha256": "6168956f2f48cdc87a9c04900379dbb04486542e0f110c0329d9478b245e861b",
+        "expectedBytes": 17325,
+        "expectedSha256": "6168956f2f48cdc87a9c04900379dbb04486542e0f110c0329d9478b245e861b",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/memoData-mJ3ORfy0.js",
+        "status": 200,
+        "bytes": 276,
+        "sha256": "28d821cacfd97c3e4f4c6f25c8e326de85347b17c05fbc88ebbd7a2c07724afd",
+        "expectedBytes": 276,
+        "expectedSha256": "28d821cacfd97c3e4f4c6f25c8e326de85347b17c05fbc88ebbd7a2c07724afd",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/onest-cyrillic-ext-wght-normal-DOFToQv1.woff2",
+        "status": 200,
+        "bytes": 10540,
+        "sha256": "268f03691b3d06e57abcf20f9277e314ea8784298983aab5b40c1b91965027e1",
+        "expectedBytes": 10540,
+        "expectedSha256": "268f03691b3d06e57abcf20f9277e314ea8784298983aab5b40c1b91965027e1",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/onest-cyrillic-wght-normal-DayYxulF.woff2",
+        "status": 200,
+        "bytes": 15860,
+        "sha256": "68e5e01d6265bd68967746d4f5a9d18d0e6cbb5d15583c7082d6384ab1229b27",
+        "expectedBytes": 15860,
+        "expectedSha256": "68e5e01d6265bd68967746d4f5a9d18d0e6cbb5d15583c7082d6384ab1229b27",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/onest-latin-ext-wght-normal-QAhDxQuo.woff2",
+        "status": 200,
+        "bytes": 28452,
+        "sha256": "14e7d3079b75860e2ab50efc6c318c398fdb46ede9b56e625f12ae70a3c5d9a4",
+        "expectedBytes": 28452,
+        "expectedSha256": "14e7d3079b75860e2ab50efc6c318c398fdb46ede9b56e625f12ae70a3c5d9a4",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/onest-latin-wght-normal-Dun_Rd-l.woff2",
+        "status": 200,
+        "bytes": 33760,
+        "sha256": "052df74533250c2e0ca0c4bdd32de594e107d99c1648e63820ef9c6142067828",
+        "expectedBytes": 33760,
+        "expectedSha256": "052df74533250c2e0ca0c4bdd32de594e107d99c1648e63820ef9c6142067828",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/onest-math-wght-normal-Bl4ZGkZl.woff2",
+        "status": 200,
+        "bytes": 25480,
+        "sha256": "c74952a8c0c8c558c4f879f83773cf529d11350609f7073f5b2c5999dec46041",
+        "expectedBytes": 25480,
+        "expectedSha256": "c74952a8c0c8c558c4f879f83773cf529d11350609f7073f5b2c5999dec46041",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/onest-symbols-wght-normal-DxQzqQfC.woff2",
+        "status": 200,
+        "bytes": 18168,
+        "sha256": "2ec2d45d2ec0770e2c18cba2dba5126cf2dcff181d23ad192e9fffeb4af4b0b6",
+        "expectedBytes": 18168,
+        "expectedSha256": "2ec2d45d2ec0770e2c18cba2dba5126cf2dcff181d23ad192e9fffeb4af4b0b6",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/onest-vietnamese-wght-normal-BBxOatbv.woff2",
+        "status": 200,
+        "bytes": 12400,
+        "sha256": "d852d4d094a3a46d701d16245deb7ca83b16b5bd69e20aa0aba089392ad69474",
+        "expectedBytes": 12400,
+        "expectedSha256": "d852d4d094a3a46d701d16245deb7ca83b16b5bd69e20aa0aba089392ad69474",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/ProjectMap3D-BvuZNorq.js",
+        "status": 200,
+        "bytes": 3558,
+        "sha256": "c834a090b70728b99440013d1172d6c45f7c920de9c7a8385aaaeadd06d5a5bc",
+        "expectedBytes": 3558,
+        "expectedSha256": "c834a090b70728b99440013d1172d6c45f7c920de9c7a8385aaaeadd06d5a5bc",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/scene3d-BMEqvPGi.js",
+        "status": 200,
+        "bytes": 567196,
+        "sha256": "34b5dd170d2108d5993ef3f7f4abcd183e220fe849f3d1320618727e8a22379d",
+        "expectedBytes": 567196,
+        "expectedSha256": "34b5dd170d2108d5993ef3f7f4abcd183e220fe849f3d1320618727e8a22379d",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/server-B_gwgAlS.js",
+        "status": 200,
+        "bytes": 1976966,
+        "sha256": "bd9b2dae7abd51856ae341cd5801331a02437da9efbc5990dcb80351136c65bb",
+        "expectedBytes": 1976966,
+        "expectedSha256": "bd9b2dae7abd51856ae341cd5801331a02437da9efbc5990dcb80351136c65bb",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/SiteMap-Bw8jEOV-.js",
+        "status": 200,
+        "bytes": 16642,
+        "sha256": "0d5f189777152afef9651c84a6ddf5b12f2c0961daf619c3a9d6430fc1c6145f",
+        "expectedBytes": 16642,
+        "expectedSha256": "0d5f189777152afef9651c84a6ddf5b12f2c0961daf619c3a9d6430fc1c6145f",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/WorkerPage-B32M9Okd.js",
+        "status": 200,
+        "bytes": 60729,
+        "sha256": "4d01a332944b9825df79b0b6b3e9bd5da6a2b6ec44e9786ec7fca13e34c1236c",
+        "expectedBytes": 60729,
+        "expectedSha256": "4d01a332944b9825df79b0b6b3e9bd5da6a2b6ec44e9786ec7fca13e34c1236c",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "index.html",
+        "status": 200,
+        "bytes": 609,
+        "sha256": "c841e6ffb00e38eb133ebd30c8af7fa28870f466811ac770f3cf62c7de425768",
+        "expectedBytes": 609,
+        "expectedSha256": "c841e6ffb00e38eb133ebd30c8af7fa28870f466811ac770f3cf62c7de425768",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/contract-v2-G6MTd3pU.js",
+        "status": 200,
+        "bytes": 70154,
+        "sha256": "6328948954bf614f545fdb03495ba0605895af1b41d5818fa4cd0c765bc6c308",
+        "expectedBytes": 70154,
+        "expectedSha256": "6328948954bf614f545fdb03495ba0605895af1b41d5818fa4cd0c765bc6c308",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/demo-gateway-zj6qeURy.js",
+        "status": 200,
+        "bytes": 27491,
+        "sha256": "dcc124ae961b894c67d0467671e7c64941ad25182fd7e6160cddc4a09ada3f1b",
+        "expectedBytes": 27491,
+        "expectedSha256": "dcc124ae961b894c67d0467671e7c64941ad25182fd7e6160cddc4a09ada3f1b",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/DevPanel-C5lUGM5B.js",
+        "status": 200,
+        "bytes": 2442,
+        "sha256": "5c51ab2b2e7f66d37f6f0d4fff88abcd21ed6d37a4092fde98b361c3cca2e74d",
+        "expectedBytes": 2442,
+        "expectedSha256": "5c51ab2b2e7f66d37f6f0d4fff88abcd21ed6d37a4092fde98b361c3cca2e74d",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/HeroMap-DeRZQb3K.js",
+        "status": 200,
+        "bytes": 2982,
+        "sha256": "ad21f9e27db35b44e5205f7d9bc297b19787b7e52a6a2866e4d69c07fef9b192",
+        "expectedBytes": 2982,
+        "expectedSha256": "ad21f9e27db35b44e5205f7d9bc297b19787b7e52a6a2866e4d69c07fef9b192",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/index-D-QkwvwB.css",
+        "status": 200,
+        "bytes": 84650,
+        "sha256": "d76f3e7862bdac8850d58ea16283745530f32b2356ff8a86612bb8790d599f12",
+        "expectedBytes": 84650,
+        "expectedSha256": "d76f3e7862bdac8850d58ea16283745530f32b2356ff8a86612bb8790d599f12",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/index-DlzuSGyH.js",
+        "status": 200,
+        "bytes": 987379,
+        "sha256": "a99221c7907d6ac577a6e0e45214ae2e378b485902c0c5c23f36ef1870584fed",
+        "expectedBytes": 987379,
+        "expectedSha256": "a99221c7907d6ac577a6e0e45214ae2e378b485902c0c5c23f36ef1870584fed",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/journal-DUiVZ3Jx.css",
+        "status": 200,
+        "bytes": 28323,
+        "sha256": "1f628101378a4d324955e84cff516f62990004c0970dbfe2b1c673398f08048e",
+        "expectedBytes": 28323,
+        "expectedSha256": "1f628101378a4d324955e84cff516f62990004c0970dbfe2b1c673398f08048e",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/loadMemo-CD6TAO6h.js",
+        "status": 200,
+        "bytes": 637,
+        "sha256": "0e9eb0e4fcad2c9bef4319b2db9600ebbfe6330dd6bac92ad957794832bbc1bc",
+        "expectedBytes": 637,
+        "expectedSha256": "0e9eb0e4fcad2c9bef4319b2db9600ebbfe6330dd6bac92ad957794832bbc1bc",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/lora-cyrillic-ext-wght-normal-YcVxMP-u.woff2",
+        "status": 200,
+        "bytes": 23636,
+        "sha256": "0e523e4bc3c6308f002a3208ea2990cb4f64282d4fbb67c12f5726d13b66eef6",
+        "expectedBytes": 23636,
+        "expectedSha256": "0e523e4bc3c6308f002a3208ea2990cb4f64282d4fbb67c12f5726d13b66eef6",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/lora-cyrillic-wght-normal-UWPuZLjM.woff2",
+        "status": 200,
+        "bytes": 21232,
+        "sha256": "c57d9ca3bd42e6bc093badc7744dd2059a78f66a3a4dc6ca40574480c870f553",
+        "expectedBytes": 21232,
+        "expectedSha256": "c57d9ca3bd42e6bc093badc7744dd2059a78f66a3a4dc6ca40574480c870f553",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/lora-latin-ext-wght-normal-C2Wlntb9.woff2",
+        "status": 200,
+        "bytes": 20088,
+        "sha256": "2a2d9c22c9863086a23f5013fede1428585321812b25f2662542c39d02967c5e",
+        "expectedBytes": 20088,
+        "expectedSha256": "2a2d9c22c9863086a23f5013fede1428585321812b25f2662542c39d02967c5e",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/lora-latin-wght-normal-BiLcIKcI.woff2",
+        "status": 200,
+        "bytes": 37788,
+        "sha256": "ddb8c66035104e233fc024669183aad3738b6daa16deee2ebb1241bd0f98ace1",
+        "expectedBytes": 37788,
+        "expectedSha256": "ddb8c66035104e233fc024669183aad3738b6daa16deee2ebb1241bd0f98ace1",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/lora-math-wght-normal-sOy7rEfW.woff2",
+        "status": 200,
+        "bytes": 29240,
+        "sha256": "a8c4cb778ab6202d22bdea2ccc8d7e7caf802cfe0a7ce37df7b212f82341468f",
+        "expectedBytes": 29240,
+        "expectedSha256": "a8c4cb778ab6202d22bdea2ccc8d7e7caf802cfe0a7ce37df7b212f82341468f",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/lora-symbols-wght-normal-DQ5VrUkH.woff2",
+        "status": 200,
+        "bytes": 17248,
+        "sha256": "2df52199eac56e2ec7a735e609bb151bdab79422c3e73948f4b6580c66bb5a50",
+        "expectedBytes": 17248,
+        "expectedSha256": "2df52199eac56e2ec7a735e609bb151bdab79422c3e73948f4b6580c66bb5a50",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/lora-vietnamese-wght-normal-CfJ7gtf3.woff2",
+        "status": 200,
+        "bytes": 8992,
+        "sha256": "98c22de85f6e83bcd6ae1a443e12e256fbc8de7142bec4f76b059f8ff9c2797e",
+        "expectedBytes": 8992,
+        "expectedSha256": "98c22de85f6e83bcd6ae1a443e12e256fbc8de7142bec4f76b059f8ff9c2797e",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/mapFlags-KArXQfJZ.js",
+        "status": 200,
+        "bytes": 203,
+        "sha256": "7be91119586dd5e482676ee9daf7276bd60ca59617953d84a2df1b5be897244b",
+        "expectedBytes": 203,
+        "expectedSha256": "7be91119586dd5e482676ee9daf7276bd60ca59617953d84a2df1b5be897244b",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/maplibre-gl-qdodsIIj.js",
+        "status": 200,
+        "bytes": 1033029,
+        "sha256": "f79f4edfa86b9c76b92fdac87e45cfe00cf38ac384909017b39bc3de37c7b306",
+        "expectedBytes": 1033029,
+        "expectedSha256": "f79f4edfa86b9c76b92fdac87e45cfe00cf38ac384909017b39bc3de37c7b306",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/maplibre-gl-RZO-t2LB.css",
+        "status": 200,
+        "bytes": 83127,
+        "sha256": "3c3faf7116e0ea3f4dd664bc9d6207bebf71dda2f9d3108b65527615011f2b2b",
+        "expectedBytes": 83127,
+        "expectedSha256": "3c3faf7116e0ea3f4dd664bc9d6207bebf71dda2f9d3108b65527615011f2b2b",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/maplibre-gl-worker-DYHVkJJJ.js",
+        "status": 200,
+        "bytes": 508793,
+        "sha256": "2d7087f4c4bf47b51da6498b27f32c287a4c01dbf9aa0f90446a50b13a9677f6",
+        "expectedBytes": 508793,
+        "expectedSha256": "2d7087f4c4bf47b51da6498b27f32c287a4c01dbf9aa0f90446a50b13a9677f6",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/memo-B3_IU9qq.js",
+        "status": 200,
+        "bytes": 17325,
+        "sha256": "6168956f2f48cdc87a9c04900379dbb04486542e0f110c0329d9478b245e861b",
+        "expectedBytes": 17325,
+        "expectedSha256": "6168956f2f48cdc87a9c04900379dbb04486542e0f110c0329d9478b245e861b",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/memoData-mJ3ORfy0.js",
+        "status": 200,
+        "bytes": 276,
+        "sha256": "28d821cacfd97c3e4f4c6f25c8e326de85347b17c05fbc88ebbd7a2c07724afd",
+        "expectedBytes": 276,
+        "expectedSha256": "28d821cacfd97c3e4f4c6f25c8e326de85347b17c05fbc88ebbd7a2c07724afd",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/onest-cyrillic-ext-wght-normal-DOFToQv1.woff2",
+        "status": 200,
+        "bytes": 10540,
+        "sha256": "268f03691b3d06e57abcf20f9277e314ea8784298983aab5b40c1b91965027e1",
+        "expectedBytes": 10540,
+        "expectedSha256": "268f03691b3d06e57abcf20f9277e314ea8784298983aab5b40c1b91965027e1",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/onest-cyrillic-wght-normal-DayYxulF.woff2",
+        "status": 200,
+        "bytes": 15860,
+        "sha256": "68e5e01d6265bd68967746d4f5a9d18d0e6cbb5d15583c7082d6384ab1229b27",
+        "expectedBytes": 15860,
+        "expectedSha256": "68e5e01d6265bd68967746d4f5a9d18d0e6cbb5d15583c7082d6384ab1229b27",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/onest-latin-ext-wght-normal-QAhDxQuo.woff2",
+        "status": 200,
+        "bytes": 28452,
+        "sha256": "14e7d3079b75860e2ab50efc6c318c398fdb46ede9b56e625f12ae70a3c5d9a4",
+        "expectedBytes": 28452,
+        "expectedSha256": "14e7d3079b75860e2ab50efc6c318c398fdb46ede9b56e625f12ae70a3c5d9a4",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/onest-latin-wght-normal-Dun_Rd-l.woff2",
+        "status": 200,
+        "bytes": 33760,
+        "sha256": "052df74533250c2e0ca0c4bdd32de594e107d99c1648e63820ef9c6142067828",
+        "expectedBytes": 33760,
+        "expectedSha256": "052df74533250c2e0ca0c4bdd32de594e107d99c1648e63820ef9c6142067828",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/onest-math-wght-normal-Bl4ZGkZl.woff2",
+        "status": 200,
+        "bytes": 25480,
+        "sha256": "c74952a8c0c8c558c4f879f83773cf529d11350609f7073f5b2c5999dec46041",
+        "expectedBytes": 25480,
+        "expectedSha256": "c74952a8c0c8c558c4f879f83773cf529d11350609f7073f5b2c5999dec46041",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/onest-symbols-wght-normal-DxQzqQfC.woff2",
+        "status": 200,
+        "bytes": 18168,
+        "sha256": "2ec2d45d2ec0770e2c18cba2dba5126cf2dcff181d23ad192e9fffeb4af4b0b6",
+        "expectedBytes": 18168,
+        "expectedSha256": "2ec2d45d2ec0770e2c18cba2dba5126cf2dcff181d23ad192e9fffeb4af4b0b6",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/onest-vietnamese-wght-normal-BBxOatbv.woff2",
+        "status": 200,
+        "bytes": 12400,
+        "sha256": "d852d4d094a3a46d701d16245deb7ca83b16b5bd69e20aa0aba089392ad69474",
+        "expectedBytes": 12400,
+        "expectedSha256": "d852d4d094a3a46d701d16245deb7ca83b16b5bd69e20aa0aba089392ad69474",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/ProjectMap3D-BvuZNorq.js",
+        "status": 200,
+        "bytes": 3558,
+        "sha256": "c834a090b70728b99440013d1172d6c45f7c920de9c7a8385aaaeadd06d5a5bc",
+        "expectedBytes": 3558,
+        "expectedSha256": "c834a090b70728b99440013d1172d6c45f7c920de9c7a8385aaaeadd06d5a5bc",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/scene3d-BMEqvPGi.js",
+        "status": 200,
+        "bytes": 567196,
+        "sha256": "34b5dd170d2108d5993ef3f7f4abcd183e220fe849f3d1320618727e8a22379d",
+        "expectedBytes": 567196,
+        "expectedSha256": "34b5dd170d2108d5993ef3f7f4abcd183e220fe849f3d1320618727e8a22379d",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/server-B_gwgAlS.js",
+        "status": 200,
+        "bytes": 1976966,
+        "sha256": "bd9b2dae7abd51856ae341cd5801331a02437da9efbc5990dcb80351136c65bb",
+        "expectedBytes": 1976966,
+        "expectedSha256": "bd9b2dae7abd51856ae341cd5801331a02437da9efbc5990dcb80351136c65bb",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/SiteMap-Bw8jEOV-.js",
+        "status": 200,
+        "bytes": 16642,
+        "sha256": "0d5f189777152afef9651c84a6ddf5b12f2c0961daf619c3a9d6430fc1c6145f",
+        "expectedBytes": 16642,
+        "expectedSha256": "0d5f189777152afef9651c84a6ddf5b12f2c0961daf619c3a9d6430fc1c6145f",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/WorkerPage-B32M9Okd.js",
+        "status": 200,
+        "bytes": 60729,
+        "sha256": "4d01a332944b9825df79b0b6b3e9bd5da6a2b6ec44e9786ec7fca13e34c1236c",
+        "expectedBytes": 60729,
+        "expectedSha256": "4d01a332944b9825df79b0b6b3e9bd5da6a2b6ec44e9786ec7fca13e34c1236c",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "index.html",
+        "status": 200,
+        "bytes": 609,
+        "sha256": "c841e6ffb00e38eb133ebd30c8af7fa28870f466811ac770f3cf62c7de425768",
+        "expectedBytes": 609,
+        "expectedSha256": "c841e6ffb00e38eb133ebd30c8af7fa28870f466811ac770f3cf62c7de425768",
+        "passed": true
+      }
+    ],
+    "matchesHandoff": true
+  },
+  "exitCode": 0,
+  "browserGlobalErrors": 0,
+  "after": {
+    "observedAt": "2026-10-31T19:26:03.957Z",
+    "files": [
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/contract-v2-G6MTd3pU.js",
+        "status": 200,
+        "bytes": 70154,
+        "sha256": "6328948954bf614f545fdb03495ba0605895af1b41d5818fa4cd0c765bc6c308",
+        "expectedBytes": 70154,
+        "expectedSha256": "6328948954bf614f545fdb03495ba0605895af1b41d5818fa4cd0c765bc6c308",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/demo-gateway-zj6qeURy.js",
+        "status": 200,
+        "bytes": 27491,
+        "sha256": "dcc124ae961b894c67d0467671e7c64941ad25182fd7e6160cddc4a09ada3f1b",
+        "expectedBytes": 27491,
+        "expectedSha256": "dcc124ae961b894c67d0467671e7c64941ad25182fd7e6160cddc4a09ada3f1b",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/DevPanel-C5lUGM5B.js",
+        "status": 200,
+        "bytes": 2442,
+        "sha256": "5c51ab2b2e7f66d37f6f0d4fff88abcd21ed6d37a4092fde98b361c3cca2e74d",
+        "expectedBytes": 2442,
+        "expectedSha256": "5c51ab2b2e7f66d37f6f0d4fff88abcd21ed6d37a4092fde98b361c3cca2e74d",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/HeroMap-DeRZQb3K.js",
+        "status": 200,
+        "bytes": 2982,
+        "sha256": "ad21f9e27db35b44e5205f7d9bc297b19787b7e52a6a2866e4d69c07fef9b192",
+        "expectedBytes": 2982,
+        "expectedSha256": "ad21f9e27db35b44e5205f7d9bc297b19787b7e52a6a2866e4d69c07fef9b192",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/index-D-QkwvwB.css",
+        "status": 200,
+        "bytes": 84650,
+        "sha256": "d76f3e7862bdac8850d58ea16283745530f32b2356ff8a86612bb8790d599f12",
+        "expectedBytes": 84650,
+        "expectedSha256": "d76f3e7862bdac8850d58ea16283745530f32b2356ff8a86612bb8790d599f12",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/index-DlzuSGyH.js",
+        "status": 200,
+        "bytes": 987379,
+        "sha256": "a99221c7907d6ac577a6e0e45214ae2e378b485902c0c5c23f36ef1870584fed",
+        "expectedBytes": 987379,
+        "expectedSha256": "a99221c7907d6ac577a6e0e45214ae2e378b485902c0c5c23f36ef1870584fed",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/journal-DUiVZ3Jx.css",
+        "status": 200,
+        "bytes": 28323,
+        "sha256": "1f628101378a4d324955e84cff516f62990004c0970dbfe2b1c673398f08048e",
+        "expectedBytes": 28323,
+        "expectedSha256": "1f628101378a4d324955e84cff516f62990004c0970dbfe2b1c673398f08048e",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/loadMemo-CD6TAO6h.js",
+        "status": 200,
+        "bytes": 637,
+        "sha256": "0e9eb0e4fcad2c9bef4319b2db9600ebbfe6330dd6bac92ad957794832bbc1bc",
+        "expectedBytes": 637,
+        "expectedSha256": "0e9eb0e4fcad2c9bef4319b2db9600ebbfe6330dd6bac92ad957794832bbc1bc",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/lora-cyrillic-ext-wght-normal-YcVxMP-u.woff2",
+        "status": 200,
+        "bytes": 23636,
+        "sha256": "0e523e4bc3c6308f002a3208ea2990cb4f64282d4fbb67c12f5726d13b66eef6",
+        "expectedBytes": 23636,
+        "expectedSha256": "0e523e4bc3c6308f002a3208ea2990cb4f64282d4fbb67c12f5726d13b66eef6",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/lora-cyrillic-wght-normal-UWPuZLjM.woff2",
+        "status": 200,
+        "bytes": 21232,
+        "sha256": "c57d9ca3bd42e6bc093badc7744dd2059a78f66a3a4dc6ca40574480c870f553",
+        "expectedBytes": 21232,
+        "expectedSha256": "c57d9ca3bd42e6bc093badc7744dd2059a78f66a3a4dc6ca40574480c870f553",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/lora-latin-ext-wght-normal-C2Wlntb9.woff2",
+        "status": 200,
+        "bytes": 20088,
+        "sha256": "2a2d9c22c9863086a23f5013fede1428585321812b25f2662542c39d02967c5e",
+        "expectedBytes": 20088,
+        "expectedSha256": "2a2d9c22c9863086a23f5013fede1428585321812b25f2662542c39d02967c5e",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/lora-latin-wght-normal-BiLcIKcI.woff2",
+        "status": 200,
+        "bytes": 37788,
+        "sha256": "ddb8c66035104e233fc024669183aad3738b6daa16deee2ebb1241bd0f98ace1",
+        "expectedBytes": 37788,
+        "expectedSha256": "ddb8c66035104e233fc024669183aad3738b6daa16deee2ebb1241bd0f98ace1",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/lora-math-wght-normal-sOy7rEfW.woff2",
+        "status": 200,
+        "bytes": 29240,
+        "sha256": "a8c4cb778ab6202d22bdea2ccc8d7e7caf802cfe0a7ce37df7b212f82341468f",
+        "expectedBytes": 29240,
+        "expectedSha256": "a8c4cb778ab6202d22bdea2ccc8d7e7caf802cfe0a7ce37df7b212f82341468f",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/lora-symbols-wght-normal-DQ5VrUkH.woff2",
+        "status": 200,
+        "bytes": 17248,
+        "sha256": "2df52199eac56e2ec7a735e609bb151bdab79422c3e73948f4b6580c66bb5a50",
+        "expectedBytes": 17248,
+        "expectedSha256": "2df52199eac56e2ec7a735e609bb151bdab79422c3e73948f4b6580c66bb5a50",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/lora-vietnamese-wght-normal-CfJ7gtf3.woff2",
+        "status": 200,
+        "bytes": 8992,
+        "sha256": "98c22de85f6e83bcd6ae1a443e12e256fbc8de7142bec4f76b059f8ff9c2797e",
+        "expectedBytes": 8992,
+        "expectedSha256": "98c22de85f6e83bcd6ae1a443e12e256fbc8de7142bec4f76b059f8ff9c2797e",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/mapFlags-KArXQfJZ.js",
+        "status": 200,
+        "bytes": 203,
+        "sha256": "7be91119586dd5e482676ee9daf7276bd60ca59617953d84a2df1b5be897244b",
+        "expectedBytes": 203,
+        "expectedSha256": "7be91119586dd5e482676ee9daf7276bd60ca59617953d84a2df1b5be897244b",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/maplibre-gl-qdodsIIj.js",
+        "status": 200,
+        "bytes": 1033029,
+        "sha256": "f79f4edfa86b9c76b92fdac87e45cfe00cf38ac384909017b39bc3de37c7b306",
+        "expectedBytes": 1033029,
+        "expectedSha256": "f79f4edfa86b9c76b92fdac87e45cfe00cf38ac384909017b39bc3de37c7b306",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/maplibre-gl-RZO-t2LB.css",
+        "status": 200,
+        "bytes": 83127,
+        "sha256": "3c3faf7116e0ea3f4dd664bc9d6207bebf71dda2f9d3108b65527615011f2b2b",
+        "expectedBytes": 83127,
+        "expectedSha256": "3c3faf7116e0ea3f4dd664bc9d6207bebf71dda2f9d3108b65527615011f2b2b",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/maplibre-gl-worker-DYHVkJJJ.js",
+        "status": 200,
+        "bytes": 508793,
+        "sha256": "2d7087f4c4bf47b51da6498b27f32c287a4c01dbf9aa0f90446a50b13a9677f6",
+        "expectedBytes": 508793,
+        "expectedSha256": "2d7087f4c4bf47b51da6498b27f32c287a4c01dbf9aa0f90446a50b13a9677f6",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/memo-B3_IU9qq.js",
+        "status": 200,
+        "bytes": 17325,
+        "sha256": "6168956f2f48cdc87a9c04900379dbb04486542e0f110c0329d9478b245e861b",
+        "expectedBytes": 17325,
+        "expectedSha256": "6168956f2f48cdc87a9c04900379dbb04486542e0f110c0329d9478b245e861b",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/memoData-mJ3ORfy0.js",
+        "status": 200,
+        "bytes": 276,
+        "sha256": "28d821cacfd97c3e4f4c6f25c8e326de85347b17c05fbc88ebbd7a2c07724afd",
+        "expectedBytes": 276,
+        "expectedSha256": "28d821cacfd97c3e4f4c6f25c8e326de85347b17c05fbc88ebbd7a2c07724afd",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/onest-cyrillic-ext-wght-normal-DOFToQv1.woff2",
+        "status": 200,
+        "bytes": 10540,
+        "sha256": "268f03691b3d06e57abcf20f9277e314ea8784298983aab5b40c1b91965027e1",
+        "expectedBytes": 10540,
+        "expectedSha256": "268f03691b3d06e57abcf20f9277e314ea8784298983aab5b40c1b91965027e1",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/onest-cyrillic-wght-normal-DayYxulF.woff2",
+        "status": 200,
+        "bytes": 15860,
+        "sha256": "68e5e01d6265bd68967746d4f5a9d18d0e6cbb5d15583c7082d6384ab1229b27",
+        "expectedBytes": 15860,
+        "expectedSha256": "68e5e01d6265bd68967746d4f5a9d18d0e6cbb5d15583c7082d6384ab1229b27",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/onest-latin-ext-wght-normal-QAhDxQuo.woff2",
+        "status": 200,
+        "bytes": 28452,
+        "sha256": "14e7d3079b75860e2ab50efc6c318c398fdb46ede9b56e625f12ae70a3c5d9a4",
+        "expectedBytes": 28452,
+        "expectedSha256": "14e7d3079b75860e2ab50efc6c318c398fdb46ede9b56e625f12ae70a3c5d9a4",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/onest-latin-wght-normal-Dun_Rd-l.woff2",
+        "status": 200,
+        "bytes": 33760,
+        "sha256": "052df74533250c2e0ca0c4bdd32de594e107d99c1648e63820ef9c6142067828",
+        "expectedBytes": 33760,
+        "expectedSha256": "052df74533250c2e0ca0c4bdd32de594e107d99c1648e63820ef9c6142067828",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/onest-math-wght-normal-Bl4ZGkZl.woff2",
+        "status": 200,
+        "bytes": 25480,
+        "sha256": "c74952a8c0c8c558c4f879f83773cf529d11350609f7073f5b2c5999dec46041",
+        "expectedBytes": 25480,
+        "expectedSha256": "c74952a8c0c8c558c4f879f83773cf529d11350609f7073f5b2c5999dec46041",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/onest-symbols-wght-normal-DxQzqQfC.woff2",
+        "status": 200,
+        "bytes": 18168,
+        "sha256": "2ec2d45d2ec0770e2c18cba2dba5126cf2dcff181d23ad192e9fffeb4af4b0b6",
+        "expectedBytes": 18168,
+        "expectedSha256": "2ec2d45d2ec0770e2c18cba2dba5126cf2dcff181d23ad192e9fffeb4af4b0b6",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/onest-vietnamese-wght-normal-BBxOatbv.woff2",
+        "status": 200,
+        "bytes": 12400,
+        "sha256": "d852d4d094a3a46d701d16245deb7ca83b16b5bd69e20aa0aba089392ad69474",
+        "expectedBytes": 12400,
+        "expectedSha256": "d852d4d094a3a46d701d16245deb7ca83b16b5bd69e20aa0aba089392ad69474",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/ProjectMap3D-BvuZNorq.js",
+        "status": 200,
+        "bytes": 3558,
+        "sha256": "c834a090b70728b99440013d1172d6c45f7c920de9c7a8385aaaeadd06d5a5bc",
+        "expectedBytes": 3558,
+        "expectedSha256": "c834a090b70728b99440013d1172d6c45f7c920de9c7a8385aaaeadd06d5a5bc",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/scene3d-BMEqvPGi.js",
+        "status": 200,
+        "bytes": 567196,
+        "sha256": "34b5dd170d2108d5993ef3f7f4abcd183e220fe849f3d1320618727e8a22379d",
+        "expectedBytes": 567196,
+        "expectedSha256": "34b5dd170d2108d5993ef3f7f4abcd183e220fe849f3d1320618727e8a22379d",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/server-B_gwgAlS.js",
+        "status": 200,
+        "bytes": 1976966,
+        "sha256": "bd9b2dae7abd51856ae341cd5801331a02437da9efbc5990dcb80351136c65bb",
+        "expectedBytes": 1976966,
+        "expectedSha256": "bd9b2dae7abd51856ae341cd5801331a02437da9efbc5990dcb80351136c65bb",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/SiteMap-Bw8jEOV-.js",
+        "status": 200,
+        "bytes": 16642,
+        "sha256": "0d5f189777152afef9651c84a6ddf5b12f2c0961daf619c3a9d6430fc1c6145f",
+        "expectedBytes": 16642,
+        "expectedSha256": "0d5f189777152afef9651c84a6ddf5b12f2c0961daf619c3a9d6430fc1c6145f",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "assets/WorkerPage-B32M9Okd.js",
+        "status": 200,
+        "bytes": 60729,
+        "sha256": "4d01a332944b9825df79b0b6b3e9bd5da6a2b6ec44e9786ec7fca13e34c1236c",
+        "expectedBytes": 60729,
+        "expectedSha256": "4d01a332944b9825df79b0b6b3e9bd5da6a2b6ec44e9786ec7fca13e34c1236c",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-mock.pages.dev",
+        "path": "index.html",
+        "status": 200,
+        "bytes": 609,
+        "sha256": "c841e6ffb00e38eb133ebd30c8af7fa28870f466811ac770f3cf62c7de425768",
+        "expectedBytes": 609,
+        "expectedSha256": "c841e6ffb00e38eb133ebd30c8af7fa28870f466811ac770f3cf62c7de425768",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/contract-v2-G6MTd3pU.js",
+        "status": 200,
+        "bytes": 70154,
+        "sha256": "6328948954bf614f545fdb03495ba0605895af1b41d5818fa4cd0c765bc6c308",
+        "expectedBytes": 70154,
+        "expectedSha256": "6328948954bf614f545fdb03495ba0605895af1b41d5818fa4cd0c765bc6c308",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/demo-gateway-zj6qeURy.js",
+        "status": 200,
+        "bytes": 27491,
+        "sha256": "dcc124ae961b894c67d0467671e7c64941ad25182fd7e6160cddc4a09ada3f1b",
+        "expectedBytes": 27491,
+        "expectedSha256": "dcc124ae961b894c67d0467671e7c64941ad25182fd7e6160cddc4a09ada3f1b",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/DevPanel-C5lUGM5B.js",
+        "status": 200,
+        "bytes": 2442,
+        "sha256": "5c51ab2b2e7f66d37f6f0d4fff88abcd21ed6d37a4092fde98b361c3cca2e74d",
+        "expectedBytes": 2442,
+        "expectedSha256": "5c51ab2b2e7f66d37f6f0d4fff88abcd21ed6d37a4092fde98b361c3cca2e74d",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/HeroMap-DeRZQb3K.js",
+        "status": 200,
+        "bytes": 2982,
+        "sha256": "ad21f9e27db35b44e5205f7d9bc297b19787b7e52a6a2866e4d69c07fef9b192",
+        "expectedBytes": 2982,
+        "expectedSha256": "ad21f9e27db35b44e5205f7d9bc297b19787b7e52a6a2866e4d69c07fef9b192",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/index-D-QkwvwB.css",
+        "status": 200,
+        "bytes": 84650,
+        "sha256": "d76f3e7862bdac8850d58ea16283745530f32b2356ff8a86612bb8790d599f12",
+        "expectedBytes": 84650,
+        "expectedSha256": "d76f3e7862bdac8850d58ea16283745530f32b2356ff8a86612bb8790d599f12",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/index-DlzuSGyH.js",
+        "status": 200,
+        "bytes": 987379,
+        "sha256": "a99221c7907d6ac577a6e0e45214ae2e378b485902c0c5c23f36ef1870584fed",
+        "expectedBytes": 987379,
+        "expectedSha256": "a99221c7907d6ac577a6e0e45214ae2e378b485902c0c5c23f36ef1870584fed",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/journal-DUiVZ3Jx.css",
+        "status": 200,
+        "bytes": 28323,
+        "sha256": "1f628101378a4d324955e84cff516f62990004c0970dbfe2b1c673398f08048e",
+        "expectedBytes": 28323,
+        "expectedSha256": "1f628101378a4d324955e84cff516f62990004c0970dbfe2b1c673398f08048e",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/loadMemo-CD6TAO6h.js",
+        "status": 200,
+        "bytes": 637,
+        "sha256": "0e9eb0e4fcad2c9bef4319b2db9600ebbfe6330dd6bac92ad957794832bbc1bc",
+        "expectedBytes": 637,
+        "expectedSha256": "0e9eb0e4fcad2c9bef4319b2db9600ebbfe6330dd6bac92ad957794832bbc1bc",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/lora-cyrillic-ext-wght-normal-YcVxMP-u.woff2",
+        "status": 200,
+        "bytes": 23636,
+        "sha256": "0e523e4bc3c6308f002a3208ea2990cb4f64282d4fbb67c12f5726d13b66eef6",
+        "expectedBytes": 23636,
+        "expectedSha256": "0e523e4bc3c6308f002a3208ea2990cb4f64282d4fbb67c12f5726d13b66eef6",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/lora-cyrillic-wght-normal-UWPuZLjM.woff2",
+        "status": 200,
+        "bytes": 21232,
+        "sha256": "c57d9ca3bd42e6bc093badc7744dd2059a78f66a3a4dc6ca40574480c870f553",
+        "expectedBytes": 21232,
+        "expectedSha256": "c57d9ca3bd42e6bc093badc7744dd2059a78f66a3a4dc6ca40574480c870f553",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/lora-latin-ext-wght-normal-C2Wlntb9.woff2",
+        "status": 200,
+        "bytes": 20088,
+        "sha256": "2a2d9c22c9863086a23f5013fede1428585321812b25f2662542c39d02967c5e",
+        "expectedBytes": 20088,
+        "expectedSha256": "2a2d9c22c9863086a23f5013fede1428585321812b25f2662542c39d02967c5e",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/lora-latin-wght-normal-BiLcIKcI.woff2",
+        "status": 200,
+        "bytes": 37788,
+        "sha256": "ddb8c66035104e233fc024669183aad3738b6daa16deee2ebb1241bd0f98ace1",
+        "expectedBytes": 37788,
+        "expectedSha256": "ddb8c66035104e233fc024669183aad3738b6daa16deee2ebb1241bd0f98ace1",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/lora-math-wght-normal-sOy7rEfW.woff2",
+        "status": 200,
+        "bytes": 29240,
+        "sha256": "a8c4cb778ab6202d22bdea2ccc8d7e7caf802cfe0a7ce37df7b212f82341468f",
+        "expectedBytes": 29240,
+        "expectedSha256": "a8c4cb778ab6202d22bdea2ccc8d7e7caf802cfe0a7ce37df7b212f82341468f",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/lora-symbols-wght-normal-DQ5VrUkH.woff2",
+        "status": 200,
+        "bytes": 17248,
+        "sha256": "2df52199eac56e2ec7a735e609bb151bdab79422c3e73948f4b6580c66bb5a50",
+        "expectedBytes": 17248,
+        "expectedSha256": "2df52199eac56e2ec7a735e609bb151bdab79422c3e73948f4b6580c66bb5a50",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/lora-vietnamese-wght-normal-CfJ7gtf3.woff2",
+        "status": 200,
+        "bytes": 8992,
+        "sha256": "98c22de85f6e83bcd6ae1a443e12e256fbc8de7142bec4f76b059f8ff9c2797e",
+        "expectedBytes": 8992,
+        "expectedSha256": "98c22de85f6e83bcd6ae1a443e12e256fbc8de7142bec4f76b059f8ff9c2797e",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/mapFlags-KArXQfJZ.js",
+        "status": 200,
+        "bytes": 203,
+        "sha256": "7be91119586dd5e482676ee9daf7276bd60ca59617953d84a2df1b5be897244b",
+        "expectedBytes": 203,
+        "expectedSha256": "7be91119586dd5e482676ee9daf7276bd60ca59617953d84a2df1b5be897244b",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/maplibre-gl-qdodsIIj.js",
+        "status": 200,
+        "bytes": 1033029,
+        "sha256": "f79f4edfa86b9c76b92fdac87e45cfe00cf38ac384909017b39bc3de37c7b306",
+        "expectedBytes": 1033029,
+        "expectedSha256": "f79f4edfa86b9c76b92fdac87e45cfe00cf38ac384909017b39bc3de37c7b306",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/maplibre-gl-RZO-t2LB.css",
+        "status": 200,
+        "bytes": 83127,
+        "sha256": "3c3faf7116e0ea3f4dd664bc9d6207bebf71dda2f9d3108b65527615011f2b2b",
+        "expectedBytes": 83127,
+        "expectedSha256": "3c3faf7116e0ea3f4dd664bc9d6207bebf71dda2f9d3108b65527615011f2b2b",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/maplibre-gl-worker-DYHVkJJJ.js",
+        "status": 200,
+        "bytes": 508793,
+        "sha256": "2d7087f4c4bf47b51da6498b27f32c287a4c01dbf9aa0f90446a50b13a9677f6",
+        "expectedBytes": 508793,
+        "expectedSha256": "2d7087f4c4bf47b51da6498b27f32c287a4c01dbf9aa0f90446a50b13a9677f6",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/memo-B3_IU9qq.js",
+        "status": 200,
+        "bytes": 17325,
+        "sha256": "6168956f2f48cdc87a9c04900379dbb04486542e0f110c0329d9478b245e861b",
+        "expectedBytes": 17325,
+        "expectedSha256": "6168956f2f48cdc87a9c04900379dbb04486542e0f110c0329d9478b245e861b",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/memoData-mJ3ORfy0.js",
+        "status": 200,
+        "bytes": 276,
+        "sha256": "28d821cacfd97c3e4f4c6f25c8e326de85347b17c05fbc88ebbd7a2c07724afd",
+        "expectedBytes": 276,
+        "expectedSha256": "28d821cacfd97c3e4f4c6f25c8e326de85347b17c05fbc88ebbd7a2c07724afd",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/onest-cyrillic-ext-wght-normal-DOFToQv1.woff2",
+        "status": 200,
+        "bytes": 10540,
+        "sha256": "268f03691b3d06e57abcf20f9277e314ea8784298983aab5b40c1b91965027e1",
+        "expectedBytes": 10540,
+        "expectedSha256": "268f03691b3d06e57abcf20f9277e314ea8784298983aab5b40c1b91965027e1",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/onest-cyrillic-wght-normal-DayYxulF.woff2",
+        "status": 200,
+        "bytes": 15860,
+        "sha256": "68e5e01d6265bd68967746d4f5a9d18d0e6cbb5d15583c7082d6384ab1229b27",
+        "expectedBytes": 15860,
+        "expectedSha256": "68e5e01d6265bd68967746d4f5a9d18d0e6cbb5d15583c7082d6384ab1229b27",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/onest-latin-ext-wght-normal-QAhDxQuo.woff2",
+        "status": 200,
+        "bytes": 28452,
+        "sha256": "14e7d3079b75860e2ab50efc6c318c398fdb46ede9b56e625f12ae70a3c5d9a4",
+        "expectedBytes": 28452,
+        "expectedSha256": "14e7d3079b75860e2ab50efc6c318c398fdb46ede9b56e625f12ae70a3c5d9a4",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/onest-latin-wght-normal-Dun_Rd-l.woff2",
+        "status": 200,
+        "bytes": 33760,
+        "sha256": "052df74533250c2e0ca0c4bdd32de594e107d99c1648e63820ef9c6142067828",
+        "expectedBytes": 33760,
+        "expectedSha256": "052df74533250c2e0ca0c4bdd32de594e107d99c1648e63820ef9c6142067828",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/onest-math-wght-normal-Bl4ZGkZl.woff2",
+        "status": 200,
+        "bytes": 25480,
+        "sha256": "c74952a8c0c8c558c4f879f83773cf529d11350609f7073f5b2c5999dec46041",
+        "expectedBytes": 25480,
+        "expectedSha256": "c74952a8c0c8c558c4f879f83773cf529d11350609f7073f5b2c5999dec46041",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/onest-symbols-wght-normal-DxQzqQfC.woff2",
+        "status": 200,
+        "bytes": 18168,
+        "sha256": "2ec2d45d2ec0770e2c18cba2dba5126cf2dcff181d23ad192e9fffeb4af4b0b6",
+        "expectedBytes": 18168,
+        "expectedSha256": "2ec2d45d2ec0770e2c18cba2dba5126cf2dcff181d23ad192e9fffeb4af4b0b6",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/onest-vietnamese-wght-normal-BBxOatbv.woff2",
+        "status": 200,
+        "bytes": 12400,
+        "sha256": "d852d4d094a3a46d701d16245deb7ca83b16b5bd69e20aa0aba089392ad69474",
+        "expectedBytes": 12400,
+        "expectedSha256": "d852d4d094a3a46d701d16245deb7ca83b16b5bd69e20aa0aba089392ad69474",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/ProjectMap3D-BvuZNorq.js",
+        "status": 200,
+        "bytes": 3558,
+        "sha256": "c834a090b70728b99440013d1172d6c45f7c920de9c7a8385aaaeadd06d5a5bc",
+        "expectedBytes": 3558,
+        "expectedSha256": "c834a090b70728b99440013d1172d6c45f7c920de9c7a8385aaaeadd06d5a5bc",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/scene3d-BMEqvPGi.js",
+        "status": 200,
+        "bytes": 567196,
+        "sha256": "34b5dd170d2108d5993ef3f7f4abcd183e220fe849f3d1320618727e8a22379d",
+        "expectedBytes": 567196,
+        "expectedSha256": "34b5dd170d2108d5993ef3f7f4abcd183e220fe849f3d1320618727e8a22379d",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/server-B_gwgAlS.js",
+        "status": 200,
+        "bytes": 1976966,
+        "sha256": "bd9b2dae7abd51856ae341cd5801331a02437da9efbc5990dcb80351136c65bb",
+        "expectedBytes": 1976966,
+        "expectedSha256": "bd9b2dae7abd51856ae341cd5801331a02437da9efbc5990dcb80351136c65bb",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/SiteMap-Bw8jEOV-.js",
+        "status": 200,
+        "bytes": 16642,
+        "sha256": "0d5f189777152afef9651c84a6ddf5b12f2c0961daf619c3a9d6430fc1c6145f",
+        "expectedBytes": 16642,
+        "expectedSha256": "0d5f189777152afef9651c84a6ddf5b12f2c0961daf619c3a9d6430fc1c6145f",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "assets/WorkerPage-B32M9Okd.js",
+        "status": 200,
+        "bytes": 60729,
+        "sha256": "4d01a332944b9825df79b0b6b3e9bd5da6a2b6ec44e9786ec7fca13e34c1236c",
+        "expectedBytes": 60729,
+        "expectedSha256": "4d01a332944b9825df79b0b6b3e9bd5da6a2b6ec44e9786ec7fca13e34c1236c",
+        "passed": true
+      },
+      {
+        "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+        "path": "index.html",
+        "status": 200,
+        "bytes": 609,
+        "sha256": "c841e6ffb00e38eb133ebd30c8af7fa28870f466811ac770f3cf62c7de425768",
+        "expectedBytes": 609,
+        "expectedSha256": "c841e6ffb00e38eb133ebd30c8af7fa28870f466811ac770f3cf62c7de425768",
+        "passed": true
+      }
+    ],
+    "matchesHandoff": true
+  },
+  "staticStable": true,
+  "endedAt": "2026-10-31T19:26:04.310Z"
+}

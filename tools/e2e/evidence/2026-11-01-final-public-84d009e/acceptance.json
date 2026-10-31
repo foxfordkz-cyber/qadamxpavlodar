@@ -1,0 +1,255 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-31T19:30:01.404Z",
+  "applicationBase": "84d009e3b72c4fe637ef30607e29701054b6c621",
+  "appsTree": "2fd878cfbec10d93942afeb5add57a39a230304f",
+  "testSHA": "c7f15755c80292509aaeeb9f9e4638f62c8b6810",
+  "status": "PUBLIC_MOCK_SUBSETS_AND_ANONYMOUS_API_ENTRY_VERIFIED",
+  "fullCloudReady": false,
+  "publications": {
+    "mock": {
+      "frontendSha": "84d009e3b72c4fe637ef30607e29701054b6c621",
+      "origin": "https://green-pavlodar-mock.pages.dev",
+      "deploymentId": "d0e985d1-bbd0-4f8c-b1c1-31d20d164ef7",
+      "contentBinding": "Own clean mock build: all34 public static files matched production and immutable deployment before/after both browser subsets",
+      "manifestSha256": "8a8f8773a10ffab44e24115e49b79e3c9d6103a21ead1ca409505802bc7335ca"
+    },
+    "api": {
+      "frontendSha": "c970264919de2f7a62d0e1ea8a28cc70c95a3864",
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "deploymentId": "a26bd214-1c78-4a83-9536-74a35c85b49f",
+      "contentBinding": "Exact publisher Git-blob manifest: all34 public static files matched production and immutable deployment before/after anonymous browser checks",
+      "manifestSha256": "d8b042398be87fc8c7283a82499dda317ee2d6e77f8d4979f55c226d93b67f60"
+    }
+  },
+  "backend": {
+    "sourceShaOwnerReported": "3b14927def04b35bf97782eae6b550da276c779f",
+    "deploymentIdOwnerReported": "dep-dbj223h42hec73bqnttg",
+    "independentlyVerifiedSource": false
+  },
+  "deploymentIdsAreOwnerReported": true,
+  "sourceTreeIdentity": [
+    {
+      "path": "apps/web",
+      "acceptedApplicationTree": "1690174760f23f4ba0d297771073b838360b32a6",
+      "apiFrontendTree": "1690174760f23f4ba0d297771073b838360b32a6",
+      "qaTree": "1690174760f23f4ba0d297771073b838360b32a6",
+      "identical": true
+    },
+    {
+      "path": "apps/web/src/features/worker",
+      "acceptedApplicationTree": "3d26ea7b4e61667e5a1efb58f8f639b5b8966d47",
+      "apiFrontendTree": "3d26ea7b4e61667e5a1efb58f8f639b5b8966d47",
+      "qaTree": "3d26ea7b4e61667e5a1efb58f8f639b5b8966d47",
+      "identical": true
+    },
+    {
+      "path": "tools/worker-demo",
+      "acceptedApplicationTree": "22569488f8e728ebb2971a1ddb3d48e58ac77f0f",
+      "apiFrontendTree": "22569488f8e728ebb2971a1ddb3d48e58ac77f0f",
+      "qaTree": "22569488f8e728ebb2971a1ddb3d48e58ac77f0f",
+      "identical": true
+    },
+    {
+      "path": "cloudflare",
+      "acceptedApplicationTree": "f899444993055bce5d130717ffb6af90a78d6bc2",
+      "apiFrontendTree": "f899444993055bce5d130717ffb6af90a78d6bc2",
+      "qaTree": "f899444993055bce5d130717ffb6af90a78d6bc2",
+      "identical": true
+    }
+  ],
+  "runs": [
+    {
+      "scope": "Anonymous API entry only; RU/KK and 1280/375; JSON401 and empty login form",
+      "testSHA": "c7f15755c80292509aaeeb9f9e4638f62c8b6810",
+      "frontendSha": "c970264919de2f7a62d0e1ea8a28cc70c95a3864",
+      "deploymentId": "a26bd214-1c78-4a83-9536-74a35c85b49f",
+      "deploymentIdentitySource": "Owner handoff",
+      "counts": {
+        "passed": 4,
+        "failed": 0,
+        "skipped": 0,
+        "fixme": 0,
+        "flaky": 0,
+        "notRun": 0
+      },
+      "startedAt": "2026-10-31T19:20:33.926Z",
+      "endedAt": "2026-10-31T19:21:17.022Z",
+      "staticBefore": {
+        "observedAt": "2026-10-31T19:20:46.814Z",
+        "verified": 68,
+        "mismatched": 0,
+        "staticFilesPerOrigin": 34,
+        "origins": [
+          "https://green-pavlodar-api.pages.dev",
+          "https://a26bd214.green-pavlodar-api.pages.dev"
+        ]
+      },
+      "staticAfter": {
+        "observedAt": "2026-10-31T19:21:17.021Z",
+        "verified": 68,
+        "mismatched": 0,
+        "staticFilesPerOrigin": 34,
+        "origins": [
+          "https://green-pavlodar-api.pages.dev",
+          "https://a26bd214.green-pavlodar-api.pages.dev"
+        ]
+      },
+      "authenticated": false
+    },
+    {
+      "scope": "Published mock 16-browser subset",
+      "testSHA": "c7f15755c80292509aaeeb9f9e4638f62c8b6810",
+      "frontendSha": "84d009e3b72c4fe637ef30607e29701054b6c621",
+      "deploymentId": "d0e985d1-bbd0-4f8c-b1c1-31d20d164ef7",
+      "deploymentIdentitySource": "Owner handoff",
+      "manifestProvenance": "Independent clean QA build",
+      "counts": {
+        "passed": 16,
+        "failed": 0,
+        "skipped": 0,
+        "fixme": 0,
+        "flaky": 0,
+        "notRun": 0
+      },
+      "startedAt": "2026-10-31T19:24:02.251Z",
+      "endedAt": "2026-10-31T19:25:05.934Z",
+      "staticBefore": {
+        "observedAt": "2026-10-31T19:24:10.656Z",
+        "verified": 68,
+        "mismatched": 0,
+        "staticFilesPerOrigin": 34,
+        "origins": [
+          "https://green-pavlodar-mock.pages.dev",
+          "https://d0e985d1.green-pavlodar-mock.pages.dev"
+        ]
+      },
+      "staticAfter": {
+        "observedAt": "2026-10-31T19:25:05.080Z",
+        "verified": 68,
+        "mismatched": 0,
+        "staticFilesPerOrigin": 34,
+        "origins": [
+          "https://green-pavlodar-mock.pages.dev",
+          "https://d0e985d1.green-pavlodar-mock.pages.dev"
+        ]
+      },
+      "suiteSha256": "eb17fcbc0791657d941b399bbfb94e0cfe326f4944369ea2f4ee0ae2aab2ee29",
+      "configSha256": "22f78cbec08df6f71e9ac082f2f2a2d0f41557152ce860f70e8bec96e2f81476",
+      "screenshotCount": 20
+    },
+    {
+      "scope": "Published mock worker-locale eight-case subset; synthetic local data, not cloud worker",
+      "testSHA": "c7f15755c80292509aaeeb9f9e4638f62c8b6810",
+      "frontendSha": "84d009e3b72c4fe637ef30607e29701054b6c621",
+      "deploymentId": "d0e985d1-bbd0-4f8c-b1c1-31d20d164ef7",
+      "deploymentIdentitySource": "Owner handoff",
+      "manifestProvenance": "Independent clean QA build",
+      "counts": {
+        "passed": 8,
+        "failed": 0,
+        "skipped": 0,
+        "fixme": 0,
+        "flaky": 0,
+        "notRun": 0
+      },
+      "startedAt": "2026-10-31T19:25:18.113Z",
+      "endedAt": "2026-10-31T19:26:04.310Z",
+      "staticBefore": {
+        "observedAt": "2026-10-31T19:25:24.080Z",
+        "verified": 68,
+        "mismatched": 0,
+        "staticFilesPerOrigin": 34,
+        "origins": [
+          "https://green-pavlodar-mock.pages.dev",
+          "https://d0e985d1.green-pavlodar-mock.pages.dev"
+        ]
+      },
+      "staticAfter": {
+        "observedAt": "2026-10-31T19:26:03.957Z",
+        "verified": 68,
+        "mismatched": 0,
+        "staticFilesPerOrigin": 34,
+        "origins": [
+          "https://green-pavlodar-mock.pages.dev",
+          "https://d0e985d1.green-pavlodar-mock.pages.dev"
+        ]
+      },
+      "suiteSha256": "efcb4f0dd55dc805709ab12a6596ccf52e5af50ad8c19df0748e407bde4d1afb",
+      "configSha256": "3e8b81d3a5f100ec2d9eb485f123074af2f9b9dfe82c3fed7fbe2d25b677a2d5",
+      "screenshotCount": 0
+    }
+  ],
+  "screenshots": {
+    "anonymousEmptyLogin": 4,
+    "successfulSyntheticPublicMock": 20,
+    "workerSubset": 0,
+    "localPresentationSet": "Separate immutable30; not combined or relabelled"
+  },
+  "visualFindings": [
+    {
+      "scope": "mock",
+      "id": "V-01",
+      "severity": "minor",
+      "area": "375px ordinary-mode status strip",
+      "role": "specialist (mock demo)",
+      "urls": [
+        "https://green-pavlodar-mock.pages.dev/?source=mock&lang=ru#/lab",
+        "https://green-pavlodar-mock.pages.dev/?source=mock&lang=kk#/lab"
+      ],
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "steps": [
+        "Open the laboratory in ordinary mode at 375×812.",
+        "Leave the page at the top and inspect the status strip immediately below the header.",
+        "Repeat with lang=kk."
+      ],
+      "expected": "The data-source label can be read; its wording identifies browser/mock data.",
+      "actual": "The right edge clips the RU label «Тестовый источник в браузере» and KK label «Браузердегі сынақ деректері»; the final words are not fully visible in the default viewport.",
+      "documentOverflow": "Both corresponding lab tests passed document.scrollWidth <= document.clientWidth; this observation is clipping inside the strip, not demonstrated page overflow.",
+      "impact": "Budget/water/goal controls remain visible; calculations are not implicated. Recoverability by strip scrolling/title was not independently inspected.",
+      "evidence": [
+        {
+          "file": "screens/09-public-ru-375-public-completed-lab.png",
+          "sha256": "677f32f3d717e04aa5aeaf3f2e77c957c52c0877ab2f2bf7c4fc2f89051a1b90"
+        },
+        {
+          "file": "screens/10-public-kk-375-public-completed-lab.png",
+          "sha256": "be5a0a2e4adb54d01e2d39b2523754e74d59a701ffb318c569def51128bd3470"
+        }
+      ]
+    },
+    {
+      "scope": "mock",
+      "severity": "artifact-framing",
+      "area": "public laboratory and mobile Outcomes screenshots",
+      "observation": "Screenshots are taken near page top; lab result cards and mobile Outcomes numerical values are below the viewport.",
+      "impact": "Usable as completed workflow/control evidence alongside assertions, but not as presentation images proving fully visible calculated plans. Keep formal 30-frame result-focused archive separate."
+    }
+  ],
+  "publicScreenshotUse": "Separate workflow evidence, not replacements for the formal local30. Public lab result cards and mobile Outcomes values may be outside the captured viewport. V-01 status-label clipping remains recorded as a minor finding.",
+  "localArchive": {
+    "sha256": "f87089999c6bcf6c384f7d7344a169e199a23e1a5071d9b309ef5f85bcd4102b",
+    "unchanged": true,
+    "copiedIntoPublicEvidence": false
+  },
+  "exclusions": [
+    "Authenticated cloud worker/coordinator/viewer scenario",
+    "Private photo/report/inspection/forecast/history persistence",
+    "Cloud restart or reseed",
+    "Backend source identity",
+    "API deployment-control _worker.js and _routes.json bytes through public HTTP",
+    "Full cloud API suite",
+    "Native Microsoft Word",
+    "Docker on84d009e"
+  ],
+  "manifestBuildStatusNote": "The publisher manifest was created before deployment and retains its historical runtimeStatus. Static HTTP confirmation here does not certify deployment-control code or backend runtime.",
+  "cloudAcceptanceStatus": {
+    "status": "BLOCKED_ACCESS",
+    "checkedAt": "2026-10-31T19:27:19.6634024Z",
+    "reason": "All four process access variables and the expected baseline manifest are absent on this QA machine",
+    "scope": "Authenticated cloud scenario and persistence; anonymous/public mock checks do not satisfy it"
+  }
+}

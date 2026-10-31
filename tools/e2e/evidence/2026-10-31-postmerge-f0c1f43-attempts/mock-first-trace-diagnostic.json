@@ -1,0 +1,4927 @@
+{
+  "tracePath": "file:///C:/Users/user/Downloads/qadamxpavlodar-codex-coordinator/qadamxpavlodar-release-qa/tools/e2e/test-results/mock/assistant-clearance.mock-E-db6d9-pointer-and-keyboard-access-desktop/trace.zip",
+  "summary": [
+    {
+      "source": "test.trace",
+      "eventTypes": [
+        "context-options",
+        "before",
+        "after",
+        "error"
+      ],
+      "errors": [
+        {
+          "type": "error",
+          "message": "\u001b[31mTest timeout of 45000ms exceeded.\u001b[39m",
+          "stack": []
+        }
+      ],
+      "calls": [
+        {
+          "callId": "hpia@1611",
+          "startTime": 34109.664,
+          "endTime": 34114.993,
+          "durationMs": 5.3290000000051805,
+          "title": "Create context",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1610",
+          "startTime": 34109.081,
+          "endTime": 34121.669,
+          "durationMs": 12.588000000003376,
+          "title": "Fixture \"context\"",
+          "class": "Test",
+          "method": "fixture"
+        },
+        {
+          "callId": "hpia@1619",
+          "startTime": 34122.612,
+          "endTime": 34123.449,
+          "durationMs": 0.8369999999995343,
+          "title": "Route requests",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1621",
+          "startTime": 34123.852,
+          "endTime": 34124.386,
+          "durationMs": 0.5339999999996508,
+          "title": "Route requests",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1618",
+          "startTime": 34121.753,
+          "endTime": 34124.466,
+          "durationMs": 2.713000000003376,
+          "title": "Fixture \"context\"",
+          "class": "Test",
+          "method": "fixture"
+        },
+        {
+          "callId": "hpia@1624",
+          "startTime": 34125.591,
+          "endTime": 34811.223,
+          "durationMs": 685.6319999999978,
+          "title": "Create page",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1623",
+          "startTime": 34124.857,
+          "endTime": 34811.292,
+          "durationMs": 686.4349999999977,
+          "title": "Fixture \"page\"",
+          "class": "Test",
+          "method": "fixture"
+        },
+        {
+          "callId": "hpia@1583",
+          "startTime": 34101.005,
+          "endTime": 34811.332,
+          "durationMs": 710.3270000000048,
+          "title": "Before Hooks",
+          "class": "Test",
+          "method": "hook"
+        },
+        {
+          "callId": "hpia@1626",
+          "startTime": 34813.245,
+          "endTime": 35785.675,
+          "durationMs": 972.4300000000003,
+          "title": "Navigate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1628",
+          "startTime": 35787.322,
+          "endTime": 40297.831,
+          "durationMs": 4510.508999999998,
+          "title": "Expect \"toBeVisible\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1630",
+          "startTime": 40298.904,
+          "endTime": 42195.213,
+          "durationMs": 1896.309000000001,
+          "title": "Expect \"not toBeEmpty\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1632",
+          "startTime": 42197.546,
+          "endTime": 42248.399,
+          "durationMs": 50.85299999999552,
+          "title": "Expect \"toHaveCount\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1634",
+          "startTime": 42249.638,
+          "endTime": 42302.317,
+          "durationMs": 52.679000000003725,
+          "title": "Expect \"toHaveCount\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1636",
+          "startTime": 42303.784,
+          "endTime": 42382.301,
+          "durationMs": 78.51699999999983,
+          "title": "Expect \"not toContainText\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1638",
+          "startTime": 42383.962,
+          "endTime": 42444.694,
+          "durationMs": 60.73200000000361,
+          "title": "Is visible",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1640",
+          "startTime": 42445.549,
+          "endTime": 42510.55,
+          "durationMs": 65.00100000000384,
+          "title": "Expect \"toBeVisible\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1642",
+          "startTime": 42511.401,
+          "endTime": 42575.87,
+          "durationMs": 64.4690000000046,
+          "title": "Expect \"toHaveCount\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1644",
+          "startTime": 42576.787,
+          "endTime": 43219.863,
+          "durationMs": 643.0760000000009,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1646",
+          "startTime": 43221.255,
+          "endTime": 43278.372,
+          "durationMs": 57.117000000005646,
+          "title": "Query count",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1648",
+          "startTime": 43279.161,
+          "endTime": 43279.254,
+          "durationMs": 0.0930000000007567,
+          "title": "kk-ordinary-initial-weights: required content exists",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1649",
+          "startTime": 43280.468,
+          "endTime": 43366.393,
+          "durationMs": 85.92499999999563,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1651",
+          "startTime": 43367.289,
+          "endTime": 43368.949,
+          "durationMs": 1.6600000000034925,
+          "title": "Attach \"assistant-clearance-kk-ordinary-initial-weights\"",
+          "class": "Test",
+          "method": "test.attach"
+        },
+        {
+          "callId": "hpia@1652",
+          "startTime": 43370.147,
+          "endTime": 43370.391,
+          "durationMs": 0.2440000000060536,
+          "title": "kk-ordinary-initial-weights: assistant is retained",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1653",
+          "startTime": 43371.388,
+          "endTime": 43371.537,
+          "durationMs": 0.14899999999761349,
+          "title": "kk-ordinary-initial-weights: assistant must not intercept the content",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1654",
+          "startTime": 43372.909,
+          "endTime": 43472.659,
+          "durationMs": 99.75,
+          "title": "Scroll into view",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1658",
+          "startTime": 43473.764,
+          "endTime": 43547.323,
+          "durationMs": 73.55899999999383,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1662",
+          "startTime": 43548.71,
+          "endTime": 43609.264,
+          "durationMs": 60.554000000003725,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1664",
+          "startTime": 43610.862,
+          "endTime": 43685.861,
+          "durationMs": 74.99899999999616,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1668",
+          "startTime": 43687.281,
+          "endTime": 43687.374,
+          "durationMs": 0.0930000000007567,
+          "title": "ordinary slider 1: [{\"fraction\":0.08,\"accessible\":true,\"hit\":\"INPUT\"},{\"fraction\":0.5,\"accessible\":true,\"hit\":\"INPUT\"},{\"fraction\":0.92,\"accessible\":true,\"hit\":\"INPUT\"}]",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1669",
+          "startTime": 43688.446,
+          "endTime": 43740.49,
+          "durationMs": 52.04399999999441,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1671",
+          "startTime": 43742.189,
+          "endTime": 43808.898,
+          "durationMs": 66.70900000000256,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1675",
+          "startTime": 43809.984,
+          "endTime": 43810.065,
+          "durationMs": 0.08100000000558794,
+          "title": "ordinary displayed value 1: [{\"fraction\":0.08,\"accessible\":true,\"hit\":\"STRONG\"},{\"fraction\":0.5,\"accessible\":true,\"hit\":\"STRONG\"},{\"fraction\":0.92,\"accessible\":true,\"hit\":\"STRONG\"}]",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1676",
+          "startTime": 43811.52,
+          "endTime": 43871.18,
+          "durationMs": 59.66000000000349,
+          "title": "Query count",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1678",
+          "startTime": 43872.337,
+          "endTime": 43872.438,
+          "durationMs": 0.10100000000238651,
+          "title": "kk-ordinary-weight-1: required content exists",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1679",
+          "startTime": 43873.981,
+          "endTime": 43944.702,
+          "durationMs": 70.72099999999773,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1681",
+          "startTime": 43945.416,
+          "endTime": 43946.404,
+          "durationMs": 0.9880000000048312,
+          "title": "Attach \"assistant-clearance-kk-ordinary-weight-1\"",
+          "class": "Test",
+          "method": "test.attach"
+        },
+        {
+          "callId": "hpia@1682",
+          "startTime": 43947.209,
+          "endTime": 43947.278,
+          "durationMs": 0.06899999999586726,
+          "title": "kk-ordinary-weight-1: assistant is retained",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1683",
+          "startTime": 43947.962,
+          "endTime": 43948.027,
+          "durationMs": 0.0650000000023283,
+          "title": "kk-ordinary-weight-1: inspect actual visible content",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1684",
+          "startTime": 43949.08,
+          "endTime": 43949.241,
+          "durationMs": 0.1610000000000582,
+          "title": "kk-ordinary-weight-1: assistant must not intercept the content",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1685",
+          "startTime": 43950.516,
+          "endTime": 44077.775,
+          "durationMs": 127.2589999999982,
+          "title": "Click",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1687",
+          "startTime": 44079.33,
+          "endTime": 44129.316,
+          "durationMs": 49.98599999999715,
+          "title": "Get input value",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1689",
+          "startTime": 44130.774,
+          "endTime": 44609.5,
+          "durationMs": 478.7260000000024,
+          "title": "Press \"ArrowRight\"",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1692",
+          "startTime": 44612.861,
+          "endTime": 44728.534,
+          "durationMs": 115.6730000000025,
+          "title": "Get input value",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1694",
+          "startTime": 44729.235,
+          "endTime": 44729.337,
+          "durationMs": 0.10199999999895226,
+          "title": "Expect \"toBe\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1691",
+          "startTime": 44610.73,
+          "endTime": 44729.753,
+          "durationMs": 119.02299999999377,
+          "title": "Expect \"poll toBe\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1695",
+          "startTime": 44730.57,
+          "endTime": 45128.419,
+          "durationMs": 397.849000000002,
+          "title": "Expect \"toHaveText\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1697",
+          "startTime": 45129.611,
+          "endTime": 45271.738,
+          "durationMs": 142.1270000000004,
+          "title": "Scroll into view",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1701",
+          "startTime": 45273.134,
+          "endTime": 45343.056,
+          "durationMs": 69.92199999999866,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1705",
+          "startTime": 45344.203,
+          "endTime": 45428.937,
+          "durationMs": 84.73399999999674,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1707",
+          "startTime": 45430.188,
+          "endTime": 46062.374,
+          "durationMs": 632.1860000000015,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1711",
+          "startTime": 46063.44,
+          "endTime": 46063.525,
+          "durationMs": 0.08499999999912689,
+          "title": "ordinary slider 2: [{\"fraction\":0.08,\"accessible\":true,\"hit\":\"INPUT\"},{\"fraction\":0.5,\"accessible\":true,\"hit\":\"INPUT\"},{\"fraction\":0.92,\"accessible\":true,\"hit\":\"INPUT\"}]",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1712",
+          "startTime": 46064.565,
+          "endTime": 46187.107,
+          "durationMs": 122.54200000000128,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1714",
+          "startTime": 46188.569,
+          "endTime": 46319.951,
+          "durationMs": 131.3819999999978,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1718",
+          "startTime": 46320.992,
+          "endTime": 46321.08,
+          "durationMs": 0.08800000000337604,
+          "title": "ordinary displayed value 2: [{\"fraction\":0.08,\"accessible\":true,\"hit\":\"STRONG\"},{\"fraction\":0.5,\"accessible\":true,\"hit\":\"STRONG\"},{\"fraction\":0.92,\"accessible\":true,\"hit\":\"STRONG\"}]",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1719",
+          "startTime": 46322.347,
+          "endTime": 46371.889,
+          "durationMs": 49.54200000000128,
+          "title": "Query count",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1721",
+          "startTime": 46372.82,
+          "endTime": 46372.891,
+          "durationMs": 0.07100000000355067,
+          "title": "kk-ordinary-weight-2: required content exists",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1722",
+          "startTime": 46374.171,
+          "endTime": 46433.383,
+          "durationMs": 59.211999999999534,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1724",
+          "startTime": 46434.313,
+          "endTime": 46435.368,
+          "durationMs": 1.055000000000291,
+          "title": "Attach \"assistant-clearance-kk-ordinary-weight-2\"",
+          "class": "Test",
+          "method": "test.attach"
+        },
+        {
+          "callId": "hpia@1725",
+          "startTime": 46436.376,
+          "endTime": 46436.452,
+          "durationMs": 0.07600000000093132,
+          "title": "kk-ordinary-weight-2: assistant is retained",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1726",
+          "startTime": 46437.315,
+          "endTime": 46437.386,
+          "durationMs": 0.07099999999627471,
+          "title": "kk-ordinary-weight-2: inspect actual visible content",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1727",
+          "startTime": 46438.394,
+          "endTime": 46438.527,
+          "durationMs": 0.13300000000162981,
+          "title": "kk-ordinary-weight-2: assistant must not intercept the content",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1728",
+          "startTime": 46440.142,
+          "endTime": 46950.828,
+          "durationMs": 510.6860000000015,
+          "title": "Click",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1730",
+          "startTime": 46951.996,
+          "endTime": 47026.839,
+          "durationMs": 74.84300000000076,
+          "title": "Get input value",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1732",
+          "startTime": 47028.203,
+          "endTime": 47535.089,
+          "durationMs": 506.8859999999986,
+          "title": "Press \"ArrowRight\"",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1735",
+          "startTime": 47537.125,
+          "endTime": 47631.979,
+          "durationMs": 94.85399999999936,
+          "title": "Get input value",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1737",
+          "startTime": 47632.661,
+          "endTime": 47632.735,
+          "durationMs": 0.07400000000052387,
+          "title": "Expect \"toBe\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1734",
+          "startTime": 47535.879,
+          "endTime": 47632.83,
+          "durationMs": 96.95100000000093,
+          "title": "Expect \"poll toBe\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1738",
+          "startTime": 47633.872,
+          "endTime": 48206.721,
+          "durationMs": 572.8489999999947,
+          "title": "Expect \"toHaveText\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1740",
+          "startTime": 48208.008,
+          "endTime": 48864.846,
+          "durationMs": 656.8379999999961,
+          "title": "Scroll into view",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1744",
+          "startTime": 48865.756,
+          "endTime": 49757.275,
+          "durationMs": 891.5190000000002,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1748",
+          "startTime": 49758.461,
+          "endTime": 49830.763,
+          "durationMs": 72.30199999999604,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1750",
+          "startTime": 49832.151,
+          "endTime": 49908.958,
+          "durationMs": 76.8070000000007,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1754",
+          "startTime": 49910.003,
+          "endTime": 49910.086,
+          "durationMs": 0.08300000000599539,
+          "title": "ordinary slider 3: [{\"fraction\":0.08,\"accessible\":true,\"hit\":\"INPUT\"},{\"fraction\":0.5,\"accessible\":true,\"hit\":\"INPUT\"},{\"fraction\":0.92,\"accessible\":true,\"hit\":\"INPUT\"}]",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1755",
+          "startTime": 49911.066,
+          "endTime": 49964.524,
+          "durationMs": 53.45799999999872,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1757",
+          "startTime": 49966.081,
+          "endTime": 50050.694,
+          "durationMs": 84.61300000000483,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1761",
+          "startTime": 50051.718,
+          "endTime": 50051.806,
+          "durationMs": 0.08799999999610009,
+          "title": "ordinary displayed value 3: [{\"fraction\":0.08,\"accessible\":true,\"hit\":\"STRONG\"},{\"fraction\":0.5,\"accessible\":true,\"hit\":\"STRONG\"},{\"fraction\":0.92,\"accessible\":true,\"hit\":\"STRONG\"}]",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1762",
+          "startTime": 50052.932,
+          "endTime": 50107.818,
+          "durationMs": 54.8859999999986,
+          "title": "Query count",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1764",
+          "startTime": 50108.557,
+          "endTime": 50108.615,
+          "durationMs": 0.05799999999726424,
+          "title": "kk-ordinary-weight-3: required content exists",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1765",
+          "startTime": 50109.777,
+          "endTime": 50163.522,
+          "durationMs": 53.74499999999534,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1767",
+          "startTime": 50164.236,
+          "endTime": 50165.187,
+          "durationMs": 0.9510000000009313,
+          "title": "Attach \"assistant-clearance-kk-ordinary-weight-3\"",
+          "class": "Test",
+          "method": "test.attach"
+        },
+        {
+          "callId": "hpia@1768",
+          "startTime": 50165.9,
+          "endTime": 50165.979,
+          "durationMs": 0.07899999999790452,
+          "title": "kk-ordinary-weight-3: assistant is retained",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1769",
+          "startTime": 50166.748,
+          "endTime": 50166.81,
+          "durationMs": 0.06199999999807915,
+          "title": "kk-ordinary-weight-3: inspect actual visible content",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1770",
+          "startTime": 50167.643,
+          "endTime": 50167.781,
+          "durationMs": 0.13800000000628643,
+          "title": "kk-ordinary-weight-3: assistant must not intercept the content",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1771",
+          "startTime": 50169.016,
+          "endTime": 50776.871,
+          "durationMs": 607.8549999999959,
+          "title": "Click",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1773",
+          "startTime": 50778.019,
+          "endTime": 50878.536,
+          "durationMs": 100.51699999999983,
+          "title": "Get input value",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1775",
+          "startTime": 50879.795,
+          "endTime": 52975.078,
+          "durationMs": 2095.283000000003,
+          "title": "Press \"ArrowRight\"",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1778",
+          "startTime": 52977.099,
+          "endTime": 53022.743,
+          "durationMs": 45.64400000000023,
+          "title": "Get input value",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1780",
+          "startTime": 53023.403,
+          "endTime": 53023.482,
+          "durationMs": 0.07900000000518048,
+          "title": "Expect \"toBe\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1777",
+          "startTime": 52975.899,
+          "endTime": 53023.561,
+          "durationMs": 47.6620000000039,
+          "title": "Expect \"poll toBe\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1781",
+          "startTime": 53024.449,
+          "endTime": 53071.622,
+          "durationMs": 47.1730000000025,
+          "title": "Expect \"toHaveText\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1783",
+          "startTime": 53073.052,
+          "endTime": 53140.694,
+          "durationMs": 67.64199999999983,
+          "title": "Scroll into view",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1787",
+          "startTime": 53142.065,
+          "endTime": 53555.166,
+          "durationMs": 413.1009999999951,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1791",
+          "startTime": 53556.408,
+          "endTime": 54802.79,
+          "durationMs": 1246.3819999999978,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1793",
+          "startTime": 54803.865,
+          "endTime": 54867.295,
+          "durationMs": 63.43000000000029,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1797",
+          "startTime": 54868.284,
+          "endTime": 54868.367,
+          "durationMs": 0.08299999999871943,
+          "title": "ordinary slider 4: [{\"fraction\":0.08,\"accessible\":true,\"hit\":\"INPUT\"},{\"fraction\":0.5,\"accessible\":true,\"hit\":\"INPUT\"},{\"fraction\":0.92,\"accessible\":true,\"hit\":\"INPUT\"}]",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1798",
+          "startTime": 54869.317,
+          "endTime": 54936.434,
+          "durationMs": 67.11699999999837,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1800",
+          "startTime": 54937.695,
+          "endTime": 55001.99,
+          "durationMs": 64.29499999999825,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1804",
+          "startTime": 55002.837,
+          "endTime": 55002.921,
+          "durationMs": 0.08400000000256114,
+          "title": "ordinary displayed value 4: [{\"fraction\":0.08,\"accessible\":true,\"hit\":\"STRONG\"},{\"fraction\":0.5,\"accessible\":true,\"hit\":\"STRONG\"},{\"fraction\":0.92,\"accessible\":true,\"hit\":\"STRONG\"}]",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1805",
+          "startTime": 55004.068,
+          "endTime": 55053.717,
+          "durationMs": 49.64899999999761,
+          "title": "Query count",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1807",
+          "startTime": 55054.599,
+          "endTime": 55054.669,
+          "durationMs": 0.06999999999970896,
+          "title": "kk-ordinary-weight-4: required content exists",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1808",
+          "startTime": 55055.841,
+          "endTime": 55113.548,
+          "durationMs": 57.707000000002154,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1810",
+          "startTime": 55114.312,
+          "endTime": 55115.333,
+          "durationMs": 1.0210000000006403,
+          "title": "Attach \"assistant-clearance-kk-ordinary-weight-4\"",
+          "class": "Test",
+          "method": "test.attach"
+        },
+        {
+          "callId": "hpia@1811",
+          "startTime": 55116.144,
+          "endTime": 55116.221,
+          "durationMs": 0.07699999999749707,
+          "title": "kk-ordinary-weight-4: assistant is retained",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1812",
+          "startTime": 55117.038,
+          "endTime": 55117.104,
+          "durationMs": 0.06599999999889405,
+          "title": "kk-ordinary-weight-4: inspect actual visible content",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1813",
+          "startTime": 55118.206,
+          "endTime": 55118.534,
+          "durationMs": 0.3280000000013388,
+          "title": "kk-ordinary-weight-4: assistant must not intercept the content",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1814",
+          "startTime": 55120.592,
+          "endTime": 55721.916,
+          "durationMs": 601.3240000000005,
+          "title": "Click",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1816",
+          "startTime": 55723.376,
+          "endTime": 57081.628,
+          "durationMs": 1358.2520000000004,
+          "title": "Get input value",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1818",
+          "startTime": 57082.999,
+          "endTime": 57628.534,
+          "durationMs": 545.5349999999962,
+          "title": "Press \"ArrowRight\"",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1821",
+          "startTime": 57630.624,
+          "endTime": 57689.551,
+          "durationMs": 58.92699999999604,
+          "title": "Get input value",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1823",
+          "startTime": 57690.212,
+          "endTime": 57690.298,
+          "durationMs": 0.08600000000296859,
+          "title": "Expect \"toBe\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1820",
+          "startTime": 57629.377,
+          "endTime": 57690.386,
+          "durationMs": 61.008999999998196,
+          "title": "Expect \"poll toBe\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1824",
+          "startTime": 57691.299,
+          "endTime": 57737.01,
+          "durationMs": 45.71100000000297,
+          "title": "Expect \"toHaveText\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1826",
+          "startTime": 57737.96,
+          "endTime": 57974.68,
+          "durationMs": 236.72000000000116,
+          "title": "Scroll into view",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1830",
+          "startTime": 57975.722,
+          "endTime": 58432.063,
+          "durationMs": 456.34100000000035,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1834",
+          "startTime": 58433.197,
+          "endTime": 58512.277,
+          "durationMs": 79.08000000000175,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1836",
+          "startTime": 58513.491,
+          "endTime": 58571.999,
+          "durationMs": 58.50800000000163,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1840",
+          "startTime": 58573.065,
+          "endTime": 58573.144,
+          "durationMs": 0.07899999999790452,
+          "title": "ordinary slider 5: [{\"fraction\":0.08,\"accessible\":true,\"hit\":\"INPUT\"},{\"fraction\":0.5,\"accessible\":true,\"hit\":\"INPUT\"},{\"fraction\":0.92,\"accessible\":true,\"hit\":\"INPUT\"}]",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1841",
+          "startTime": 58574.038,
+          "endTime": 58621.514,
+          "durationMs": 47.47600000000239,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1843",
+          "startTime": 58622.827,
+          "endTime": 58686.958,
+          "durationMs": 64.13100000000122,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1847",
+          "startTime": 58688.742,
+          "endTime": 58689.021,
+          "durationMs": 0.2790000000022701,
+          "title": "ordinary displayed value 5: [{\"fraction\":0.08,\"accessible\":true,\"hit\":\"STRONG\"},{\"fraction\":0.5,\"accessible\":true,\"hit\":\"STRONG\"},{\"fraction\":0.92,\"accessible\":true,\"hit\":\"STRONG\"}]",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1848",
+          "startTime": 58692.501,
+          "endTime": 58746.906,
+          "durationMs": 54.40500000000611,
+          "title": "Query count",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1850",
+          "startTime": 58747.674,
+          "endTime": 58747.793,
+          "durationMs": 0.11899999999877764,
+          "title": "kk-ordinary-weight-5: required content exists",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1851",
+          "startTime": 58748.985,
+          "endTime": 58799.385,
+          "durationMs": 50.400000000001455,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1853",
+          "startTime": 58800.691,
+          "endTime": 58801.494,
+          "durationMs": 0.8029999999998836,
+          "title": "Attach \"assistant-clearance-kk-ordinary-weight-5\"",
+          "class": "Test",
+          "method": "test.attach"
+        },
+        {
+          "callId": "hpia@1854",
+          "startTime": 58802.182,
+          "endTime": 58802.256,
+          "durationMs": 0.07400000000052387,
+          "title": "kk-ordinary-weight-5: assistant is retained",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1855",
+          "startTime": 58803.178,
+          "endTime": 58803.229,
+          "durationMs": 0.05099999999947613,
+          "title": "kk-ordinary-weight-5: inspect actual visible content",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1856",
+          "startTime": 58803.931,
+          "endTime": 58804.035,
+          "durationMs": 0.10400000000663567,
+          "title": "kk-ordinary-weight-5: assistant must not intercept the content",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1857",
+          "startTime": 58805.039,
+          "endTime": 59360.193,
+          "durationMs": 555.1540000000023,
+          "title": "Click",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1859",
+          "startTime": 59361.347,
+          "endTime": 59425.477,
+          "durationMs": 64.12999999999738,
+          "title": "Get input value",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1861",
+          "startTime": 59426.582,
+          "endTime": 59963.018,
+          "durationMs": 536.4359999999942,
+          "title": "Press \"ArrowRight\"",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1864",
+          "startTime": 59965.522,
+          "endTime": 60054.092,
+          "durationMs": 88.56999999999971,
+          "title": "Get input value",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1866",
+          "startTime": 60054.835,
+          "endTime": 60054.919,
+          "durationMs": 0.08400000000256114,
+          "title": "Expect \"toBe\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1863",
+          "startTime": 59964.126,
+          "endTime": 60055.001,
+          "durationMs": 90.875,
+          "title": "Expect \"poll toBe\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1867",
+          "startTime": 60055.901,
+          "endTime": 60764.056,
+          "durationMs": 708.1549999999988,
+          "title": "Expect \"toHaveText\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1869",
+          "startTime": 60765.676,
+          "endTime": 61154.824,
+          "durationMs": 389.14800000000105,
+          "title": "Scroll into view",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1873",
+          "startTime": 61156.095,
+          "endTime": 61553.483,
+          "durationMs": 397.387999999999,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1877",
+          "startTime": 61554.445,
+          "endTime": 61628.177,
+          "durationMs": 73.73200000000361,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1879",
+          "startTime": 61629.41,
+          "endTime": 61725.347,
+          "durationMs": 95.93699999999808,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1883",
+          "startTime": 61726.405,
+          "endTime": 61726.661,
+          "durationMs": 0.25600000000122236,
+          "title": "ordinary slider 6: [{\"fraction\":0.08,\"accessible\":true,\"hit\":\"INPUT\"},{\"fraction\":0.5,\"accessible\":true,\"hit\":\"INPUT\"},{\"fraction\":0.92,\"accessible\":true,\"hit\":\"INPUT\"}]",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1884",
+          "startTime": 61732.712,
+          "endTime": 61795.717,
+          "durationMs": 63.00499999999738,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1886",
+          "startTime": 61797.284,
+          "endTime": 61882.797,
+          "durationMs": 85.51299999999901,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1890",
+          "startTime": 61883.613,
+          "endTime": 61883.688,
+          "durationMs": 0.07500000000436557,
+          "title": "ordinary displayed value 6: [{\"fraction\":0.08,\"accessible\":true,\"hit\":\"STRONG\"},{\"fraction\":0.5,\"accessible\":true,\"hit\":\"STRONG\"},{\"fraction\":0.92,\"accessible\":true,\"hit\":\"STRONG\"}]",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1891",
+          "startTime": 61884.7,
+          "endTime": 61943.091,
+          "durationMs": 58.39100000000326,
+          "title": "Query count",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1893",
+          "startTime": 61943.921,
+          "endTime": 61943.992,
+          "durationMs": 0.07099999999627471,
+          "title": "kk-ordinary-weight-6: required content exists",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1894",
+          "startTime": 61945.336,
+          "endTime": 62047.626,
+          "durationMs": 102.2899999999936,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1896",
+          "startTime": 62048.562,
+          "endTime": 62049.676,
+          "durationMs": 1.114000000001397,
+          "title": "Attach \"assistant-clearance-kk-ordinary-weight-6\"",
+          "class": "Test",
+          "method": "test.attach"
+        },
+        {
+          "callId": "hpia@1897",
+          "startTime": 62050.475,
+          "endTime": 62050.557,
+          "durationMs": 0.08200000000215368,
+          "title": "kk-ordinary-weight-6: assistant is retained",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1898",
+          "startTime": 62051.327,
+          "endTime": 62051.408,
+          "durationMs": 0.08100000000558794,
+          "title": "kk-ordinary-weight-6: inspect actual visible content",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1899",
+          "startTime": 62052.211,
+          "endTime": 62052.336,
+          "durationMs": 0.125,
+          "title": "kk-ordinary-weight-6: assistant must not intercept the content",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1900",
+          "startTime": 62053.463,
+          "endTime": 62462.899,
+          "durationMs": 409.43599999999424,
+          "title": "Click",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1902",
+          "startTime": 62464.015,
+          "endTime": 62508.791,
+          "durationMs": 44.77599999999802,
+          "title": "Get input value",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1904",
+          "startTime": 62510.116,
+          "endTime": 62945.118,
+          "durationMs": 435.0020000000004,
+          "title": "Press \"ArrowRight\"",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1907",
+          "startTime": 62947.021,
+          "endTime": 63000.13,
+          "durationMs": 53.10899999999674,
+          "title": "Get input value",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1909",
+          "startTime": 63000.903,
+          "endTime": 63001.003,
+          "durationMs": 0.09999999999854481,
+          "title": "Expect \"toBe\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1906",
+          "startTime": 62946.034,
+          "endTime": 63001.096,
+          "durationMs": 55.06199999999808,
+          "title": "Expect \"poll toBe\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1910",
+          "startTime": 63002.558,
+          "endTime": 63077.768,
+          "durationMs": 75.20999999999913,
+          "title": "Expect \"toHaveText\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1912",
+          "startTime": 63078.98,
+          "endTime": 63487.544,
+          "durationMs": 408.5639999999985,
+          "title": "Scroll into view",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1916",
+          "startTime": 63488.546,
+          "endTime": 63542.821,
+          "durationMs": 54.275000000001455,
+          "title": "Expect \"toBeVisible\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1918",
+          "startTime": 63547.373,
+          "endTime": 63713.154,
+          "durationMs": 165.78100000000268,
+          "title": "Click",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1920",
+          "startTime": 63714.192,
+          "endTime": 64098.188,
+          "durationMs": 383.9959999999992,
+          "title": "Expect \"toBeVisible\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1922",
+          "startTime": 64099.227,
+          "endTime": 64146.992,
+          "durationMs": 47.76499999999942,
+          "title": "Press \"Escape\"",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1924",
+          "startTime": 64148.012,
+          "endTime": 64215.502,
+          "durationMs": 67.48999999999796,
+          "title": "Expect \"toHaveCount\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1926",
+          "startTime": 64216.544,
+          "endTime": 64274.559,
+          "durationMs": 58.01499999999942,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1930",
+          "startTime": 64275.399,
+          "endTime": 64792.718,
+          "durationMs": 517.3190000000031,
+          "title": "Press \"Alt+KeyP\"",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1932",
+          "startTime": 64793.788,
+          "endTime": 64850.553,
+          "durationMs": 56.76499999999942,
+          "title": "Expect \"toHaveClass\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1934",
+          "startTime": 64852.491,
+          "endTime": 64915.354,
+          "durationMs": 62.862999999997555,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1936",
+          "startTime": 64919.285,
+          "endTime": 65003.388,
+          "durationMs": 84.10299999999552,
+          "title": "Query count",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1938",
+          "startTime": 65005.893,
+          "endTime": 65006.202,
+          "durationMs": 0.30900000000110595,
+          "title": "kk-presentation-initial-weights: required content exists",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1939",
+          "startTime": 65007.827,
+          "endTime": 65115.586,
+          "durationMs": 107.75900000000547,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1941",
+          "startTime": 65116.717,
+          "endTime": 65117.771,
+          "durationMs": 1.0540000000037253,
+          "title": "Attach \"assistant-clearance-kk-presentation-initial-weights\"",
+          "class": "Test",
+          "method": "test.attach"
+        },
+        {
+          "callId": "hpia@1942",
+          "startTime": 65118.815,
+          "endTime": 65118.905,
+          "durationMs": 0.08999999999650754,
+          "title": "kk-presentation-initial-weights: assistant is retained",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1943",
+          "startTime": 65120.187,
+          "endTime": 65120.333,
+          "durationMs": 0.14600000000064028,
+          "title": "kk-presentation-initial-weights: assistant must not intercept the content",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1944",
+          "startTime": 65121.452,
+          "endTime": 65225.674,
+          "durationMs": 104.22200000000157,
+          "title": "Scroll into view",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1948",
+          "startTime": 65226.835,
+          "endTime": 65304.852,
+          "durationMs": 78.01699999999983,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1952",
+          "startTime": 65306.227,
+          "endTime": 65365.069,
+          "durationMs": 58.84200000000419,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1954",
+          "startTime": 65366.618,
+          "endTime": 65424.479,
+          "durationMs": 57.86099999999715,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1958",
+          "startTime": 65425.272,
+          "endTime": 65425.355,
+          "durationMs": 0.08300000000599539,
+          "title": "presentation slider 1: [{\"fraction\":0.08,\"accessible\":true,\"hit\":\"INPUT\"},{\"fraction\":0.5,\"accessible\":true,\"hit\":\"INPUT\"},{\"fraction\":0.92,\"accessible\":true,\"hit\":\"INPUT\"}]",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1959",
+          "startTime": 65426.184,
+          "endTime": 65469.747,
+          "durationMs": 43.56300000000192,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1961",
+          "startTime": 65470.915,
+          "endTime": 65543.109,
+          "durationMs": 72.19399999999587,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1965",
+          "startTime": 65544.061,
+          "endTime": 65544.159,
+          "durationMs": 0.09799999999813735,
+          "title": "presentation displayed value 1: [{\"fraction\":0.08,\"accessible\":true,\"hit\":\"STRONG\"},{\"fraction\":0.5,\"accessible\":true,\"hit\":\"STRONG\"},{\"fraction\":0.92,\"accessible\":true,\"hit\":\"STRONG\"}]",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1966",
+          "startTime": 65545.776,
+          "endTime": 65599.482,
+          "durationMs": 53.70600000000559,
+          "title": "Query count",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1968",
+          "startTime": 65600.481,
+          "endTime": 65600.565,
+          "durationMs": 0.08400000000256114,
+          "title": "kk-presentation-weight-1: required content exists",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1969",
+          "startTime": 65601.799,
+          "endTime": 65647.825,
+          "durationMs": 46.02599999999802,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1971",
+          "startTime": 65648.648,
+          "endTime": 65649.574,
+          "durationMs": 0.9259999999922002,
+          "title": "Attach \"assistant-clearance-kk-presentation-weight-1\"",
+          "class": "Test",
+          "method": "test.attach"
+        },
+        {
+          "callId": "hpia@1972",
+          "startTime": 65650.419,
+          "endTime": 65650.486,
+          "durationMs": 0.06700000001001172,
+          "title": "kk-presentation-weight-1: assistant is retained",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1973",
+          "startTime": 65651.189,
+          "endTime": 65651.254,
+          "durationMs": 0.0650000000023283,
+          "title": "kk-presentation-weight-1: inspect actual visible content",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1974",
+          "startTime": 65652.042,
+          "endTime": 65652.821,
+          "durationMs": 0.7789999999949941,
+          "title": "kk-presentation-weight-1: assistant must not intercept the content",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1975",
+          "startTime": 65654.099,
+          "endTime": 66215.057,
+          "durationMs": 560.9579999999987,
+          "title": "Click",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1977",
+          "startTime": 66216.266,
+          "endTime": 66290.87,
+          "durationMs": 74.60399999999208,
+          "title": "Get input value",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1979",
+          "startTime": 66292.121,
+          "endTime": 66865.161,
+          "durationMs": 573.0399999999936,
+          "title": "Press \"ArrowRight\"",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1982",
+          "startTime": 66867.695,
+          "endTime": 67049.184,
+          "durationMs": 181.48899999998685,
+          "title": "Get input value",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1984",
+          "startTime": 67049.892,
+          "endTime": 67049.982,
+          "durationMs": 0.08999999999650754,
+          "title": "Expect \"toBe\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1981",
+          "startTime": 66866.367,
+          "endTime": 67050.104,
+          "durationMs": 183.73700000000827,
+          "title": "Expect \"poll toBe\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1985",
+          "startTime": 67051.287,
+          "endTime": 67888.114,
+          "durationMs": 836.8270000000048,
+          "title": "Expect \"toHaveText\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1987",
+          "startTime": 67889.289,
+          "endTime": 67992.94,
+          "durationMs": 103.65099999999802,
+          "title": "Scroll into view",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1991",
+          "startTime": 67994.628,
+          "endTime": 68072.323,
+          "durationMs": 77.69500000000698,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@1995",
+          "startTime": 68073.595,
+          "endTime": 68164.562,
+          "durationMs": 90.96700000000419,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@1997",
+          "startTime": 68165.753,
+          "endTime": 68632.273,
+          "durationMs": 466.5200000000041,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2001",
+          "startTime": 68633.261,
+          "endTime": 68633.351,
+          "durationMs": 0.08999999999650754,
+          "title": "presentation slider 2: [{\"fraction\":0.08,\"accessible\":true,\"hit\":\"INPUT\"},{\"fraction\":0.5,\"accessible\":true,\"hit\":\"INPUT\"},{\"fraction\":0.92,\"accessible\":true,\"hit\":\"INPUT\"}]",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2002",
+          "startTime": 68634.409,
+          "endTime": 68694.907,
+          "durationMs": 60.49800000000687,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2004",
+          "startTime": 68696.125,
+          "endTime": 68809.077,
+          "durationMs": 112.95200000000477,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2008",
+          "startTime": 68810.017,
+          "endTime": 68810.11,
+          "durationMs": 0.09299999999348074,
+          "title": "presentation displayed value 2: [{\"fraction\":0.08,\"accessible\":true,\"hit\":\"STRONG\"},{\"fraction\":0.5,\"accessible\":true,\"hit\":\"STRONG\"},{\"fraction\":0.92,\"accessible\":true,\"hit\":\"STRONG\"}]",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2009",
+          "startTime": 68811.733,
+          "endTime": 68882.936,
+          "durationMs": 71.20300000000861,
+          "title": "Query count",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2011",
+          "startTime": 68883.808,
+          "endTime": 68883.95,
+          "durationMs": 0.14199999999254942,
+          "title": "kk-presentation-weight-2: required content exists",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2012",
+          "startTime": 68885.141,
+          "endTime": 68992.771,
+          "durationMs": 107.6299999999901,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2014",
+          "startTime": 68993.594,
+          "endTime": 68994.591,
+          "durationMs": 0.9970000000030268,
+          "title": "Attach \"assistant-clearance-kk-presentation-weight-2\"",
+          "class": "Test",
+          "method": "test.attach"
+        },
+        {
+          "callId": "hpia@2015",
+          "startTime": 68995.395,
+          "endTime": 68995.467,
+          "durationMs": 0.07200000000011642,
+          "title": "kk-presentation-weight-2: assistant is retained",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2016",
+          "startTime": 68996.149,
+          "endTime": 68996.212,
+          "durationMs": 0.0629999999946449,
+          "title": "kk-presentation-weight-2: inspect actual visible content",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2017",
+          "startTime": 68996.942,
+          "endTime": 68997.071,
+          "durationMs": 0.1290000000008149,
+          "title": "kk-presentation-weight-2: assistant must not intercept the content",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2018",
+          "startTime": 68998.129,
+          "endTime": 69551.402,
+          "durationMs": 553.273000000001,
+          "title": "Click",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2020",
+          "startTime": 69552.494,
+          "endTime": 69614.602,
+          "durationMs": 62.1079999999929,
+          "title": "Get input value",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2022",
+          "startTime": 69615.743,
+          "endTime": 70112.401,
+          "durationMs": 496.6579999999958,
+          "title": "Press \"ArrowRight\"",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2025",
+          "startTime": 70114.735,
+          "endTime": 70194.183,
+          "durationMs": 79.44800000000396,
+          "title": "Get input value",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2027",
+          "startTime": 70195.046,
+          "endTime": 70195.157,
+          "durationMs": 0.11100000000442378,
+          "title": "Expect \"toBe\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2024",
+          "startTime": 70113.331,
+          "endTime": 70195.329,
+          "durationMs": 81.99799999999232,
+          "title": "Expect \"poll toBe\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2028",
+          "startTime": 70196.381,
+          "endTime": 70266.182,
+          "durationMs": 69.80100000000675,
+          "title": "Expect \"toHaveText\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2030",
+          "startTime": 70267.826,
+          "endTime": 70588.191,
+          "durationMs": 320.36500000000524,
+          "title": "Scroll into view",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2034",
+          "startTime": 70589.379,
+          "endTime": 70644.627,
+          "durationMs": 55.24799999999232,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2038",
+          "startTime": 70645.708,
+          "endTime": 70698.081,
+          "durationMs": 52.37300000000687,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2040",
+          "startTime": 70699.333,
+          "endTime": 70769.45,
+          "durationMs": 70.11699999999837,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2044",
+          "startTime": 70770.37,
+          "endTime": 70770.447,
+          "durationMs": 0.07700000000477303,
+          "title": "presentation slider 3: [{\"fraction\":0.08,\"accessible\":true,\"hit\":\"INPUT\"},{\"fraction\":0.5,\"accessible\":true,\"hit\":\"INPUT\"},{\"fraction\":0.92,\"accessible\":true,\"hit\":\"INPUT\"}]",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2045",
+          "startTime": 70771.375,
+          "endTime": 70827.967,
+          "durationMs": 56.59200000000419,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2047",
+          "startTime": 70829.447,
+          "endTime": 70906.582,
+          "durationMs": 77.13499999999476,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2051",
+          "startTime": 70907.331,
+          "endTime": 70907.402,
+          "durationMs": 0.07099999999627471,
+          "title": "presentation displayed value 3: [{\"fraction\":0.08,\"accessible\":true,\"hit\":\"STRONG\"},{\"fraction\":0.5,\"accessible\":true,\"hit\":\"STRONG\"},{\"fraction\":0.92,\"accessible\":true,\"hit\":\"STRONG\"}]",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2052",
+          "startTime": 70908.469,
+          "endTime": 70954.43,
+          "durationMs": 45.96099999999569,
+          "title": "Query count",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2054",
+          "startTime": 70955.292,
+          "endTime": 70955.366,
+          "durationMs": 0.07399999999324791,
+          "title": "kk-presentation-weight-3: required content exists",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2055",
+          "startTime": 70956.563,
+          "endTime": 71005.778,
+          "durationMs": 49.21500000001106,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2057",
+          "startTime": 71006.477,
+          "endTime": 71007.361,
+          "durationMs": 0.8840000000054715,
+          "title": "Attach \"assistant-clearance-kk-presentation-weight-3\"",
+          "class": "Test",
+          "method": "test.attach"
+        },
+        {
+          "callId": "hpia@2058",
+          "startTime": 71008.107,
+          "endTime": 71008.177,
+          "durationMs": 0.069999999992433,
+          "title": "kk-presentation-weight-3: assistant is retained",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2059",
+          "startTime": 71008.802,
+          "endTime": 71008.864,
+          "durationMs": 0.062000000005355105,
+          "title": "kk-presentation-weight-3: inspect actual visible content",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2060",
+          "startTime": 71009.62,
+          "endTime": 71009.745,
+          "durationMs": 0.125,
+          "title": "kk-presentation-weight-3: assistant must not intercept the content",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2061",
+          "startTime": 71010.716,
+          "endTime": 71451.628,
+          "durationMs": 440.9119999999966,
+          "title": "Click",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2063",
+          "startTime": 71452.88,
+          "endTime": 71512.074,
+          "durationMs": 59.19399999998859,
+          "title": "Get input value",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2065",
+          "startTime": 71513.329,
+          "endTime": 71895.636,
+          "durationMs": 382.3070000000007,
+          "title": "Press \"ArrowRight\"",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2068",
+          "startTime": 71897.8,
+          "endTime": 71951.02,
+          "durationMs": 53.220000000001164,
+          "title": "Get input value",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2070",
+          "startTime": 71951.752,
+          "endTime": 71951.838,
+          "durationMs": 0.08600000001024455,
+          "title": "Expect \"toBe\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2067",
+          "startTime": 71896.52,
+          "endTime": 71951.962,
+          "durationMs": 55.44199999999546,
+          "title": "Expect \"poll toBe\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2071",
+          "startTime": 71952.864,
+          "endTime": 72002.739,
+          "durationMs": 49.875,
+          "title": "Expect \"toHaveText\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2073",
+          "startTime": 72003.978,
+          "endTime": 72120.47,
+          "durationMs": 116.49199999999837,
+          "title": "Scroll into view",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2077",
+          "startTime": 72121.786,
+          "endTime": 72175.37,
+          "durationMs": 53.58400000000256,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2081",
+          "startTime": 72176.367,
+          "endTime": 72240.01,
+          "durationMs": 63.64299999999639,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2083",
+          "startTime": 72241.251,
+          "endTime": 72317.447,
+          "durationMs": 76.19599999999627,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2087",
+          "startTime": 72318.28,
+          "endTime": 72318.349,
+          "durationMs": 0.06900000000314321,
+          "title": "presentation slider 4: [{\"fraction\":0.08,\"accessible\":true,\"hit\":\"INPUT\"},{\"fraction\":0.5,\"accessible\":true,\"hit\":\"INPUT\"},{\"fraction\":0.92,\"accessible\":true,\"hit\":\"INPUT\"}]",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2088",
+          "startTime": 72319.963,
+          "endTime": 72410.639,
+          "durationMs": 90.6759999999922,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2090",
+          "startTime": 72411.746,
+          "endTime": 72479.321,
+          "durationMs": 67.57499999999709,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2094",
+          "startTime": 72481.058,
+          "endTime": 72481.117,
+          "durationMs": 0.05899999999382999,
+          "title": "presentation displayed value 4: [{\"fraction\":0.08,\"accessible\":true,\"hit\":\"STRONG\"},{\"fraction\":0.5,\"accessible\":true,\"hit\":\"STRONG\"},{\"fraction\":0.92,\"accessible\":true,\"hit\":\"STRONG\"}]",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2095",
+          "startTime": 72482.127,
+          "endTime": 72534.236,
+          "durationMs": 52.10900000001129,
+          "title": "Query count",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2097",
+          "startTime": 72535.086,
+          "endTime": 72535.157,
+          "durationMs": 0.07100000001082662,
+          "title": "kk-presentation-weight-4: required content exists",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2098",
+          "startTime": 72536.33,
+          "endTime": 72592.087,
+          "durationMs": 55.75699999999779,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2100",
+          "startTime": 72592.846,
+          "endTime": 72593.966,
+          "durationMs": 1.1199999999953434,
+          "title": "Attach \"assistant-clearance-kk-presentation-weight-4\"",
+          "class": "Test",
+          "method": "test.attach"
+        },
+        {
+          "callId": "hpia@2101",
+          "startTime": 72595.271,
+          "endTime": 72595.503,
+          "durationMs": 0.23200000000360887,
+          "title": "kk-presentation-weight-4: assistant is retained",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2102",
+          "startTime": 72599.273,
+          "endTime": 72599.497,
+          "durationMs": 0.22400000000197906,
+          "title": "kk-presentation-weight-4: inspect actual visible content",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2103",
+          "startTime": 72602.176,
+          "endTime": 72602.348,
+          "durationMs": 0.17199999999138527,
+          "title": "kk-presentation-weight-4: assistant must not intercept the content",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2104",
+          "startTime": 72603.611,
+          "endTime": 72974.122,
+          "durationMs": 370.5109999999986,
+          "title": "Click",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2106",
+          "startTime": 72975.319,
+          "endTime": 73043.379,
+          "durationMs": 68.05999999999767,
+          "title": "Get input value",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2108",
+          "startTime": 73044.742,
+          "endTime": 73408.572,
+          "durationMs": 363.83000000000175,
+          "title": "Press \"ArrowRight\"",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2111",
+          "startTime": 73411.196,
+          "endTime": 73482.864,
+          "durationMs": 71.66800000000512,
+          "title": "Get input value",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2113",
+          "startTime": 73483.558,
+          "endTime": 73483.631,
+          "durationMs": 0.0729999999894062,
+          "title": "Expect \"toBe\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2110",
+          "startTime": 73409.894,
+          "endTime": 73483.745,
+          "durationMs": 73.85099999999511,
+          "title": "Expect \"poll toBe\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2114",
+          "startTime": 73484.709,
+          "endTime": 73530.578,
+          "durationMs": 45.8689999999915,
+          "title": "Expect \"toHaveText\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2116",
+          "startTime": 73531.853,
+          "endTime": 73643.327,
+          "durationMs": 111.47400000000198,
+          "title": "Scroll into view",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2120",
+          "startTime": 73644.47,
+          "endTime": 73699.008,
+          "durationMs": 54.538000000000466,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2124",
+          "startTime": 73700.102,
+          "endTime": 73759.831,
+          "durationMs": 59.729000000006636,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2126",
+          "startTime": 73761.313,
+          "endTime": 73825.06,
+          "durationMs": 63.74700000000303,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2130",
+          "startTime": 73825.949,
+          "endTime": 73826.036,
+          "durationMs": 0.08699999999953434,
+          "title": "presentation slider 5: [{\"fraction\":0.08,\"accessible\":true,\"hit\":\"INPUT\"},{\"fraction\":0.5,\"accessible\":true,\"hit\":\"INPUT\"},{\"fraction\":0.92,\"accessible\":true,\"hit\":\"INPUT\"}]",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2131",
+          "startTime": 73827.092,
+          "endTime": 73914.972,
+          "durationMs": 87.8799999999901,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2133",
+          "startTime": 73916.289,
+          "endTime": 73989.307,
+          "durationMs": 73.01799999999639,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2137",
+          "startTime": 73990.16,
+          "endTime": 73990.23,
+          "durationMs": 0.069999999992433,
+          "title": "presentation displayed value 5: [{\"fraction\":0.08,\"accessible\":true,\"hit\":\"STRONG\"},{\"fraction\":0.5,\"accessible\":true,\"hit\":\"STRONG\"},{\"fraction\":0.92,\"accessible\":true,\"hit\":\"STRONG\"}]",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2138",
+          "startTime": 73991.336,
+          "endTime": 74045.24,
+          "durationMs": 53.904000000009546,
+          "title": "Query count",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2140",
+          "startTime": 74046.181,
+          "endTime": 74046.245,
+          "durationMs": 0.0639999999984866,
+          "title": "kk-presentation-weight-5: required content exists",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2141",
+          "startTime": 74047.255,
+          "endTime": 74107.779,
+          "durationMs": 60.52399999999034,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2143",
+          "startTime": 74108.626,
+          "endTime": 74109.477,
+          "durationMs": 0.8509999999951106,
+          "title": "Attach \"assistant-clearance-kk-presentation-weight-5\"",
+          "class": "Test",
+          "method": "test.attach"
+        },
+        {
+          "callId": "hpia@2144",
+          "startTime": 74110.268,
+          "endTime": 74110.343,
+          "durationMs": 0.07499999999708962,
+          "title": "kk-presentation-weight-5: assistant is retained",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2145",
+          "startTime": 74111.075,
+          "endTime": 74111.157,
+          "durationMs": 0.08200000000942964,
+          "title": "kk-presentation-weight-5: inspect actual visible content",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2146",
+          "startTime": 74111.912,
+          "endTime": 74112.051,
+          "durationMs": 0.13900000001012813,
+          "title": "kk-presentation-weight-5: assistant must not intercept the content",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2147",
+          "startTime": 74113.31,
+          "endTime": 74502.947,
+          "durationMs": 389.63700000000244,
+          "title": "Click",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2149",
+          "startTime": 74505.091,
+          "endTime": 74570.565,
+          "durationMs": 65.47400000000198,
+          "title": "Get input value",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2151",
+          "startTime": 74572.059,
+          "endTime": 74956.075,
+          "durationMs": 384.01600000000326,
+          "title": "Press \"ArrowRight\"",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2154",
+          "startTime": 74958.077,
+          "endTime": 75017.576,
+          "durationMs": 59.49899999999616,
+          "title": "Get input value",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2156",
+          "startTime": 75018.548,
+          "endTime": 75018.715,
+          "durationMs": 0.16700000000128057,
+          "title": "Expect \"toBe\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2153",
+          "startTime": 74956.91,
+          "endTime": 75018.816,
+          "durationMs": 61.90600000000268,
+          "title": "Expect \"poll toBe\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2157",
+          "startTime": 75019.854,
+          "endTime": 75076.754,
+          "durationMs": 56.89999999999418,
+          "title": "Expect \"toHaveText\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2159",
+          "startTime": 75078.02,
+          "endTime": 75221.999,
+          "durationMs": 143.97899999999208,
+          "title": "Scroll into view",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2163",
+          "startTime": 75223.18,
+          "endTime": 75293.776,
+          "durationMs": 70.596000000005,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2167",
+          "startTime": 75294.725,
+          "endTime": 75450.257,
+          "durationMs": 155.53199999999197,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2169",
+          "startTime": 75452.119,
+          "endTime": 75588.851,
+          "durationMs": 136.73199999998906,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2173",
+          "startTime": 75589.657,
+          "endTime": 75589.715,
+          "durationMs": 0.05799999998998828,
+          "title": "presentation slider 6: [{\"fraction\":0.08,\"accessible\":true,\"hit\":\"INPUT\"},{\"fraction\":0.5,\"accessible\":true,\"hit\":\"INPUT\"},{\"fraction\":0.92,\"accessible\":true,\"hit\":\"INPUT\"}]",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2174",
+          "startTime": 75590.473,
+          "endTime": 75685.657,
+          "durationMs": 95.18400000000838,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2176",
+          "startTime": 75686.877,
+          "endTime": 75778.211,
+          "durationMs": 91.33400000000256,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2180",
+          "startTime": 75782.25,
+          "endTime": 75782.498,
+          "durationMs": 0.2480000000068685,
+          "title": "presentation displayed value 6: [{\"fraction\":0.08,\"accessible\":true,\"hit\":\"STRONG\"},{\"fraction\":0.5,\"accessible\":true,\"hit\":\"STRONG\"},{\"fraction\":0.92,\"accessible\":true,\"hit\":\"STRONG\"}]",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2181",
+          "startTime": 75786.711,
+          "endTime": 75850.673,
+          "durationMs": 63.961999999999534,
+          "title": "Query count",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2183",
+          "startTime": 75852.233,
+          "endTime": 75852.344,
+          "durationMs": 0.11100000000442378,
+          "title": "kk-presentation-weight-6: required content exists",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2184",
+          "startTime": 75853.517,
+          "endTime": 75960.699,
+          "durationMs": 107.18199999998615,
+          "title": "Evaluate",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2186",
+          "startTime": 75961.453,
+          "endTime": 75962.398,
+          "durationMs": 0.9450000000069849,
+          "title": "Attach \"assistant-clearance-kk-presentation-weight-6\"",
+          "class": "Test",
+          "method": "test.attach"
+        },
+        {
+          "callId": "hpia@2187",
+          "startTime": 75963.108,
+          "endTime": 75963.165,
+          "durationMs": 0.05700000000069849,
+          "title": "kk-presentation-weight-6: assistant is retained",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2188",
+          "startTime": 75963.861,
+          "endTime": 75963.912,
+          "durationMs": 0.05099999999220017,
+          "title": "kk-presentation-weight-6: inspect actual visible content",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2189",
+          "startTime": 75964.518,
+          "endTime": 75964.616,
+          "durationMs": 0.09799999999813735,
+          "title": "kk-presentation-weight-6: assistant must not intercept the content",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2190",
+          "startTime": 75965.553,
+          "endTime": 76511.567,
+          "durationMs": 546.0139999999956,
+          "title": "Click",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2192",
+          "startTime": 76513.029,
+          "endTime": 77090.768,
+          "durationMs": 577.7390000000014,
+          "title": "Get input value",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2194",
+          "startTime": 77092.411,
+          "endTime": 77884.586,
+          "durationMs": 792.1750000000029,
+          "title": "Press \"ArrowRight\"",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2197",
+          "startTime": 77886.421,
+          "endTime": 78066.878,
+          "durationMs": 180.45699999999488,
+          "title": "Get input value",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2199",
+          "startTime": 78067.628,
+          "endTime": 78067.724,
+          "durationMs": 0.09600000000500586,
+          "title": "Expect \"toBe\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2196",
+          "startTime": 77885.397,
+          "endTime": 78067.797,
+          "durationMs": 182.40000000000873,
+          "title": "Expect \"poll toBe\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2200",
+          "startTime": 78068.873,
+          "endTime": 78165.829,
+          "durationMs": 96.95599999999104,
+          "title": "Expect \"toHaveText\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2202",
+          "startTime": 78166.853,
+          "endTime": 78723.355,
+          "durationMs": 556.5019999999931,
+          "title": "Scroll into view",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2206",
+          "startTime": 78724.311,
+          "endTime": 78858.003,
+          "durationMs": 133.69199999999546,
+          "title": "Expect \"toBeVisible\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2208",
+          "startTime": 78859.173,
+          "endTime": 79170.183,
+          "durationMs": 311.0100000000093,
+          "title": "Click",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2214",
+          "startTime": 79312.44,
+          "endTime": 79312.574,
+          "durationMs": 0.1339999999909196,
+          "title": "Fixture \"page\"",
+          "class": "Test",
+          "method": "fixture"
+        },
+        {
+          "callId": "hpia@2215",
+          "startTime": 79312.64,
+          "endTime": 79312.767,
+          "durationMs": 0.1270000000076834,
+          "title": "Fixture \"context\"",
+          "class": "Test",
+          "method": "fixture"
+        },
+        {
+          "callId": "hpia@2212",
+          "startTime": 79171.104,
+          "endTime": 79364.764,
+          "durationMs": 193.65999999998894,
+          "title": "Expect \"toBeVisible\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2219",
+          "startTime": 79365.657,
+          "endTime": 79464.983,
+          "durationMs": 99.32599999998638,
+          "title": "Press \"Escape\"",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2221",
+          "startTime": 79465.955,
+          "endTime": 79529.548,
+          "durationMs": 63.59299999999348,
+          "title": "Expect \"toHaveCount\"",
+          "class": "Test",
+          "method": "expect"
+        },
+        {
+          "callId": "hpia@2226",
+          "startTime": 82112.675,
+          "endTime": 82121.855,
+          "durationMs": 9.179999999993015,
+          "title": "Close context",
+          "class": "Test",
+          "method": "pw:api"
+        },
+        {
+          "callId": "hpia@2216",
+          "startTime": 79313.184,
+          "endTime": 82121.963,
+          "durationMs": 2808.7790000000095,
+          "title": "Fixture \"context\"",
+          "class": "Test",
+          "method": "fixture"
+        },
+        {
+          "callId": "hpia@2230",
+          "startTime": 82123.37,
+          "endTime": 82123.394,
+          "durationMs": 0.024000000004889444,
+          "title": "Fixture \"navigationTimeout\"",
+          "class": "Test",
+          "method": "fixture"
+        },
+        {
+          "callId": "hpia@2231",
+          "startTime": 82123.408,
+          "endTime": 82123.427,
+          "durationMs": 0.01900000000023283,
+          "title": "Fixture \"actionTimeout\"",
+          "class": "Test",
+          "method": "fixture"
+        },
+        {
+          "callId": "hpia@2233",
+          "startTime": 82128.955,
+          "endTime": 82128.995,
+          "durationMs": 0.03999999999359716,
+          "title": "Attach \"error-context\"",
+          "class": "Test",
+          "method": "test.attach"
+        },
+        {
+          "callId": "hpia@2236",
+          "startTime": 82130.084,
+          "endTime": 82130.116,
+          "durationMs": 0.03199999999196734,
+          "title": "Fixture \"baseURL\"",
+          "class": "Test",
+          "method": "fixture"
+        },
+        {
+          "callId": "hpia@2238",
+          "startTime": 82130.455,
+          "endTime": 82130.476,
+          "durationMs": 0.020999999993364327,
+          "title": "Fixture \"timezoneId\"",
+          "class": "Test",
+          "method": "fixture"
+        },
+        {
+          "callId": "hpia@2239",
+          "startTime": 82130.489,
+          "endTime": 82130.505,
+          "durationMs": 0.01600000000325963,
+          "title": "Fixture \"viewport\"",
+          "class": "Test",
+          "method": "fixture"
+        },
+        {
+          "callId": "hpia@2246",
+          "startTime": 82132.493,
+          "endTime": 82132.516,
+          "durationMs": 0.023000000001047738,
+          "title": "Fixture \"locale\"",
+          "class": "Test",
+          "method": "fixture"
+        },
+        {
+          "callId": "hpia@2210",
+          "startTime": 79118.941,
+          "endTime": 82137.808,
+          "durationMs": 3018.8669999999984,
+          "title": "After Hooks",
+          "class": "Test",
+          "method": "hook"
+        },
+        {
+          "callId": "hpia@2266",
+          "startTime": 82139.86,
+          "endTime": 82139.882,
+          "durationMs": 0.021999999997206032,
+          "title": "Fixture \"video\"",
+          "class": "Test",
+          "method": "fixture"
+        },
+        {
+          "callId": "hpia@2267",
+          "startTime": 82140.269,
+          "endTime": 85098.524,
+          "durationMs": 2958.2550000000047,
+          "title": "Fixture \"browser\"",
+          "class": "Test",
+          "method": "fixture"
+        },
+        {
+          "callId": "hpia@2271",
+          "startTime": 85113.94,
+          "endTime": 85114.061,
+          "durationMs": 0.12099999999918509,
+          "title": "Fixture \"browserName\"",
+          "class": "Test",
+          "method": "fixture"
+        },
+        {
+          "callId": "hpia@2272",
+          "startTime": 85114.113,
+          "endTime": 85114.137,
+          "durationMs": 0.024000000004889444,
+          "title": "Fixture \"screenshot\"",
+          "class": "Test",
+          "method": "fixture"
+        },
+        {
+          "callId": "hpia@2276",
+          "startTime": 85117.008,
+          "endTime": 85117.038,
+          "durationMs": 0.029999999998835847,
+          "title": "Fixture \"launchOptions\"",
+          "class": "Test",
+          "method": "fixture"
+        },
+        {
+          "callId": "hpia@2262",
+          "startTime": 82138.414,
+          "endTime": 85120.929,
+          "durationMs": 2982.5149999999994,
+          "title": "Worker Cleanup",
+          "class": "Test",
+          "method": "hook"
+        }
+      ],
+      "unfinished": [],
+      "logs": []
+    },
+    {
+      "source": "1-trace.trace",
+      "eventTypes": [
+        "context-options",
+        "before",
+        "after",
+        "event",
+        "frame-snapshot",
+        "log",
+        "screencast-frame",
+        "console",
+        "input"
+      ],
+      "errors": [],
+      "calls": [
+        {
+          "callId": "hpia@1619",
+          "startTime": 34123.048,
+          "endTime": 34123.225,
+          "durationMs": 0.17699999999604188,
+          "title": "Route requests",
+          "class": "BrowserContext",
+          "method": "setNetworkInterceptionPatterns"
+        },
+        {
+          "callId": "hpia@1621",
+          "startTime": 34124.126,
+          "endTime": 34124.24,
+          "durationMs": 0.11400000000139698,
+          "title": "Route requests",
+          "class": "BrowserContext",
+          "method": "setNetworkInterceptionPatterns"
+        },
+        {
+          "callId": "hpia@1624",
+          "startTime": 34126.018,
+          "endTime": 34810.352,
+          "durationMs": 684.3340000000026,
+          "class": "BrowserContext",
+          "method": "newPage"
+        },
+        {
+          "callId": "hpia@1626",
+          "startTime": 34813.902,
+          "endTime": 35617.783,
+          "durationMs": 803.8810000000012,
+          "class": "Frame",
+          "method": "goto"
+        },
+        {
+          "callId": "hpia@1628",
+          "startTime": 35789.005,
+          "endTime": 40255.021,
+          "durationMs": 4466.016000000003,
+          "title": "Expect \"toBeVisible\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": "nav.gp-nav a >> nth=0"
+        },
+        {
+          "callId": "hpia@1630",
+          "startTime": 40300.395,
+          "endTime": 42094.811,
+          "durationMs": 1794.4160000000047,
+          "title": "Expect \"not toBeEmpty\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": "#main"
+        },
+        {
+          "callId": "hpia@1632",
+          "startTime": 42199.547,
+          "endTime": 42229.717,
+          "durationMs": 30.169999999998254,
+          "title": "Expect \"toHaveCount\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": "#main .gp-state .gp-spinner"
+        },
+        {
+          "callId": "hpia@1634",
+          "startTime": 42251.081,
+          "endTime": 42275.881,
+          "durationMs": 24.80000000000291,
+          "title": "Expect \"toHaveCount\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": "#main [aria-busy=true]:visible, #main .gp-spinner:visible"
+        },
+        {
+          "callId": "hpia@1636",
+          "startTime": 42305.495,
+          "endTime": 42360.661,
+          "durationMs": 55.16599999999744,
+          "title": "Expect \"not toContainText\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": "#main"
+        },
+        {
+          "callId": "hpia@1638",
+          "startTime": 42384.504,
+          "endTime": 42415.445,
+          "durationMs": 30.940999999998894,
+          "class": "Frame",
+          "method": "isVisible",
+          "selector": ".gp-firstrun"
+        },
+        {
+          "callId": "hpia@1640",
+          "startTime": 42447.02,
+          "endTime": 42486.105,
+          "durationMs": 39.0850000000064,
+          "title": "Expect \"toBeVisible\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-rank-list li >> nth=0"
+        },
+        {
+          "callId": "hpia@1642",
+          "startTime": 42512.617,
+          "endTime": 42552.434,
+          "durationMs": 39.817000000002736,
+          "title": "Expect \"toHaveCount\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight"
+        },
+        {
+          "callId": "hpia@1644",
+          "startTime": 42577.3,
+          "endTime": 43029.558,
+          "durationMs": 452.25799999999435,
+          "class": "Frame",
+          "method": "evaluateExpression"
+        },
+        {
+          "callId": "hpia@1646",
+          "startTime": 43221.673,
+          "endTime": 43249.293,
+          "durationMs": 27.619999999995343,
+          "class": "Frame",
+          "method": "queryCount",
+          "selector": ".gp-ranking__weights .gp-weight >> input, strong"
+        },
+        {
+          "callId": "hpia@1649",
+          "startTime": 43281.126,
+          "endTime": 43349.934,
+          "durationMs": 68.80800000000454,
+          "class": "Frame",
+          "method": "evalOnSelectorAll",
+          "selector": ".gp-ranking__weights .gp-weight >> input, strong"
+        },
+        {
+          "callId": "hpia@1654",
+          "startTime": 43373.432,
+          "endTime": 43421.53,
+          "durationMs": 48.09799999999814,
+          "title": "Scroll into view",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=0"
+        },
+        {
+          "callId": "hpia@1658",
+          "startTime": 43474.445,
+          "endTime": 43520.441,
+          "durationMs": 45.995999999999185,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=0"
+        },
+        {
+          "callId": "hpia@1662",
+          "startTime": 43550.04,
+          "endTime": 43587.36,
+          "durationMs": 37.31999999999971,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=0 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1664",
+          "startTime": 43611.35,
+          "endTime": 43652.043,
+          "durationMs": 40.6929999999993,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=0 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1669",
+          "startTime": 43690.19,
+          "endTime": 43716.795,
+          "durationMs": 26.604999999995925,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=0 >> strong"
+        },
+        {
+          "callId": "hpia@1671",
+          "startTime": 43742.72,
+          "endTime": 43775.994,
+          "durationMs": 33.27399999999761,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=0 >> strong"
+        },
+        {
+          "callId": "hpia@1676",
+          "startTime": 43812.18,
+          "endTime": 43837.419,
+          "durationMs": 25.239000000001397,
+          "class": "Frame",
+          "method": "queryCount",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=0 >> input,strong"
+        },
+        {
+          "callId": "hpia@1679",
+          "startTime": 43874.716,
+          "endTime": 43923.135,
+          "durationMs": 48.41900000000169,
+          "class": "Frame",
+          "method": "evalOnSelectorAll",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=0 >> input,strong"
+        },
+        {
+          "callId": "hpia@1685",
+          "startTime": 43951.124,
+          "endTime": 44055.485,
+          "durationMs": 104.36099999999715,
+          "class": "Frame",
+          "method": "click",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=0 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1687",
+          "startTime": 44079.892,
+          "endTime": 44110.446,
+          "durationMs": 30.554000000003725,
+          "class": "Frame",
+          "method": "inputValue",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=0 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1689",
+          "startTime": 44131.227,
+          "endTime": 44519.175,
+          "durationMs": 387.94800000000396,
+          "class": "Frame",
+          "method": "press",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=0 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1692",
+          "startTime": 44613.3,
+          "endTime": 44693.551,
+          "durationMs": 80.25099999999657,
+          "class": "Frame",
+          "method": "inputValue",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=0 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1695",
+          "startTime": 44732.065,
+          "endTime": 45084.066,
+          "durationMs": 352.00099999999657,
+          "title": "Expect \"toHaveText\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=0 >> strong"
+        },
+        {
+          "callId": "hpia@1697",
+          "startTime": 45130.25,
+          "endTime": 45228.603,
+          "durationMs": 98.3530000000028,
+          "title": "Scroll into view",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=1"
+        },
+        {
+          "callId": "hpia@1701",
+          "startTime": 45273.687,
+          "endTime": 45316.913,
+          "durationMs": 43.22600000000239,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=1"
+        },
+        {
+          "callId": "hpia@1705",
+          "startTime": 45345.897,
+          "endTime": 45387.494,
+          "durationMs": 41.59700000000157,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=1 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1707",
+          "startTime": 45430.677,
+          "endTime": 45926.355,
+          "durationMs": 495.6779999999999,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=1 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1712",
+          "startTime": 46065.997,
+          "endTime": 46141.633,
+          "durationMs": 75.6359999999986,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=1 >> strong"
+        },
+        {
+          "callId": "hpia@1714",
+          "startTime": 46188.923,
+          "endTime": 46293.412,
+          "durationMs": 104.48899999999412,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=1 >> strong"
+        },
+        {
+          "callId": "hpia@1719",
+          "startTime": 46322.952,
+          "endTime": 46349.771,
+          "durationMs": 26.819000000003143,
+          "class": "Frame",
+          "method": "queryCount",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=1 >> input,strong"
+        },
+        {
+          "callId": "hpia@1722",
+          "startTime": 46374.689,
+          "endTime": 46410.885,
+          "durationMs": 36.19600000000355,
+          "class": "Frame",
+          "method": "evalOnSelectorAll",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=1 >> input,strong"
+        },
+        {
+          "callId": "hpia@1728",
+          "startTime": 46440.794,
+          "endTime": 46859.464,
+          "durationMs": 418.66999999999825,
+          "class": "Frame",
+          "method": "click",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=1 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1730",
+          "startTime": 46952.967,
+          "endTime": 46999.036,
+          "durationMs": 46.06900000000314,
+          "class": "Frame",
+          "method": "inputValue",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=1 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1732",
+          "startTime": 47028.746,
+          "endTime": 47457.129,
+          "durationMs": 428.38300000000163,
+          "class": "Frame",
+          "method": "press",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=1 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1735",
+          "startTime": 47537.481,
+          "endTime": 47593.818,
+          "durationMs": 56.336999999999534,
+          "class": "Frame",
+          "method": "inputValue",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=1 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1738",
+          "startTime": 47635.223,
+          "endTime": 47771.108,
+          "durationMs": 135.88500000000204,
+          "title": "Expect \"toHaveText\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=1 >> strong"
+        },
+        {
+          "callId": "hpia@1740",
+          "startTime": 48208.571,
+          "endTime": 48724.841,
+          "durationMs": 516.2699999999968,
+          "title": "Scroll into view",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=2"
+        },
+        {
+          "callId": "hpia@1744",
+          "startTime": 48866.019,
+          "endTime": 49724.359,
+          "durationMs": 858.3399999999965,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=2"
+        },
+        {
+          "callId": "hpia@1748",
+          "startTime": 49771.223,
+          "endTime": 49801.87,
+          "durationMs": 30.647000000004482,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=2 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1750",
+          "startTime": 49832.704,
+          "endTime": 49878.17,
+          "durationMs": 45.46600000000035,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=2 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1755",
+          "startTime": 49912.498,
+          "endTime": 49942.612,
+          "durationMs": 30.114000000001397,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=2 >> strong"
+        },
+        {
+          "callId": "hpia@1757",
+          "startTime": 49967.441,
+          "endTime": 50004.541,
+          "durationMs": 37.099999999998545,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=2 >> strong"
+        },
+        {
+          "callId": "hpia@1762",
+          "startTime": 50053.413,
+          "endTime": 50087.091,
+          "durationMs": 33.677999999999884,
+          "class": "Frame",
+          "method": "queryCount",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=2 >> input,strong"
+        },
+        {
+          "callId": "hpia@1765",
+          "startTime": 50110.324,
+          "endTime": 50138.817,
+          "durationMs": 28.493000000002212,
+          "class": "Frame",
+          "method": "evalOnSelectorAll",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=2 >> input,strong"
+        },
+        {
+          "callId": "hpia@1771",
+          "startTime": 50169.618,
+          "endTime": 50606.044,
+          "durationMs": 436.4259999999995,
+          "class": "Frame",
+          "method": "click",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=2 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1773",
+          "startTime": 50778.938,
+          "endTime": 50812.166,
+          "durationMs": 33.22799999999552,
+          "class": "Frame",
+          "method": "inputValue",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=2 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1775",
+          "startTime": 50880.188,
+          "endTime": 52897.704,
+          "durationMs": 2017.515999999996,
+          "class": "Frame",
+          "method": "press",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=2 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1778",
+          "startTime": 52977.661,
+          "endTime": 53001.645,
+          "durationMs": 23.98399999999674,
+          "class": "Frame",
+          "method": "inputValue",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=2 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1781",
+          "startTime": 53025.781,
+          "endTime": 53052.427,
+          "durationMs": 26.64600000000064,
+          "title": "Expect \"toHaveText\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=2 >> strong"
+        },
+        {
+          "callId": "hpia@1783",
+          "startTime": 53073.557,
+          "endTime": 53105.903,
+          "durationMs": 32.34599999999773,
+          "title": "Scroll into view",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=3"
+        },
+        {
+          "callId": "hpia@1787",
+          "startTime": 53142.491,
+          "endTime": 53528.198,
+          "durationMs": 385.7069999999949,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=3"
+        },
+        {
+          "callId": "hpia@1791",
+          "startTime": 53558.286,
+          "endTime": 54616.03,
+          "durationMs": 1057.7439999999988,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=3 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1793",
+          "startTime": 54804.433,
+          "endTime": 54842.194,
+          "durationMs": 37.76100000000588,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=3 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1798",
+          "startTime": 54870.662,
+          "endTime": 54904.554,
+          "durationMs": 33.891999999999825,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=3 >> strong"
+        },
+        {
+          "callId": "hpia@1800",
+          "startTime": 54938.187,
+          "endTime": 54975.511,
+          "durationMs": 37.324000000000524,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=3 >> strong"
+        },
+        {
+          "callId": "hpia@1805",
+          "startTime": 55004.587,
+          "endTime": 55030.53,
+          "durationMs": 25.9429999999993,
+          "class": "Frame",
+          "method": "queryCount",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=3 >> input,strong"
+        },
+        {
+          "callId": "hpia@1808",
+          "startTime": 55056.448,
+          "endTime": 55089.242,
+          "durationMs": 32.79400000000169,
+          "class": "Frame",
+          "method": "evalOnSelectorAll",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=3 >> input,strong"
+        },
+        {
+          "callId": "hpia@1814",
+          "startTime": 55121.371,
+          "endTime": 55529.323,
+          "durationMs": 407.9519999999975,
+          "class": "Frame",
+          "method": "click",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=3 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1816",
+          "startTime": 55723.795,
+          "endTime": 56582.532,
+          "durationMs": 858.737000000001,
+          "class": "Frame",
+          "method": "inputValue",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=3 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1818",
+          "startTime": 57083.496,
+          "endTime": 57567.014,
+          "durationMs": 483.51800000000367,
+          "class": "Frame",
+          "method": "press",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=3 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1821",
+          "startTime": 57631.179,
+          "endTime": 57669.005,
+          "durationMs": 37.82600000000093,
+          "class": "Frame",
+          "method": "inputValue",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=3 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1824",
+          "startTime": 57693.591,
+          "endTime": 57718.427,
+          "durationMs": 24.83600000000297,
+          "title": "Expect \"toHaveText\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=3 >> strong"
+        },
+        {
+          "callId": "hpia@1826",
+          "startTime": 57738.323,
+          "endTime": 57765.337,
+          "durationMs": 27.014000000002852,
+          "title": "Scroll into view",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=4"
+        },
+        {
+          "callId": "hpia@1830",
+          "startTime": 57976.052,
+          "endTime": 58368.542,
+          "durationMs": 392.48999999999796,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=4"
+        },
+        {
+          "callId": "hpia@1834",
+          "startTime": 58434.485,
+          "endTime": 58485.813,
+          "durationMs": 51.32800000000134,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=4 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1836",
+          "startTime": 58513.985,
+          "endTime": 58545.662,
+          "durationMs": 31.676999999996042,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=4 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1841",
+          "startTime": 58575.687,
+          "endTime": 58602.4,
+          "durationMs": 26.713000000003376,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=4 >> strong"
+        },
+        {
+          "callId": "hpia@1843",
+          "startTime": 58623.367,
+          "endTime": 58657.809,
+          "durationMs": 34.442000000002736,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=4 >> strong"
+        },
+        {
+          "callId": "hpia@1848",
+          "startTime": 58693.061,
+          "endTime": 58725.495,
+          "durationMs": 32.434000000001106,
+          "class": "Frame",
+          "method": "queryCount",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=4 >> input,strong"
+        },
+        {
+          "callId": "hpia@1851",
+          "startTime": 58749.468,
+          "endTime": 58778.919,
+          "durationMs": 29.45100000000093,
+          "class": "Frame",
+          "method": "evalOnSelectorAll",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=4 >> input,strong"
+        },
+        {
+          "callId": "hpia@1857",
+          "startTime": 58805.513,
+          "endTime": 59285.619,
+          "durationMs": 480.10599999999977,
+          "class": "Frame",
+          "method": "click",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=4 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1859",
+          "startTime": 59361.878,
+          "endTime": 59393.675,
+          "durationMs": 31.797000000005937,
+          "class": "Frame",
+          "method": "inputValue",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=4 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1861",
+          "startTime": 59426.959,
+          "endTime": 59891.394,
+          "durationMs": 464.4349999999977,
+          "class": "Frame",
+          "method": "press",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=4 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1864",
+          "startTime": 59966.046,
+          "endTime": 60020.878,
+          "durationMs": 54.83199999999488,
+          "class": "Frame",
+          "method": "inputValue",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=4 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1867",
+          "startTime": 60057.167,
+          "endTime": 60590.315,
+          "durationMs": 533.148000000001,
+          "title": "Expect \"toHaveText\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=4 >> strong"
+        },
+        {
+          "callId": "hpia@1869",
+          "startTime": 60766.749,
+          "endTime": 61090.827,
+          "durationMs": 324.07799999999406,
+          "title": "Scroll into view",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=5"
+        },
+        {
+          "callId": "hpia@1873",
+          "startTime": 61156.601,
+          "endTime": 61489.685,
+          "durationMs": 333.0839999999953,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=5"
+        },
+        {
+          "callId": "hpia@1877",
+          "startTime": 61555.59,
+          "endTime": 61602.825,
+          "durationMs": 47.23500000000058,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=5 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1879",
+          "startTime": 61629.885,
+          "endTime": 61680.378,
+          "durationMs": 50.492999999994936,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=5 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1884",
+          "startTime": 61734.583,
+          "endTime": 61769.556,
+          "durationMs": 34.97299999999814,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=5 >> strong"
+        },
+        {
+          "callId": "hpia@1886",
+          "startTime": 61797.787,
+          "endTime": 61852.053,
+          "durationMs": 54.26600000000326,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=5 >> strong"
+        },
+        {
+          "callId": "hpia@1891",
+          "startTime": 61885.157,
+          "endTime": 61917.38,
+          "durationMs": 32.22299999999814,
+          "class": "Frame",
+          "method": "queryCount",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=5 >> input,strong"
+        },
+        {
+          "callId": "hpia@1894",
+          "startTime": 61946.085,
+          "endTime": 62024.899,
+          "durationMs": 78.81399999999849,
+          "class": "Frame",
+          "method": "evalOnSelectorAll",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=5 >> input,strong"
+        },
+        {
+          "callId": "hpia@1900",
+          "startTime": 62054.013,
+          "endTime": 62395.43,
+          "durationMs": 341.4170000000013,
+          "class": "Frame",
+          "method": "click",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=5 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1902",
+          "startTime": 62464.428,
+          "endTime": 62490.421,
+          "durationMs": 25.993000000002212,
+          "class": "Frame",
+          "method": "inputValue",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=5 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1904",
+          "startTime": 62510.613,
+          "endTime": 62890.908,
+          "durationMs": 380.29500000000553,
+          "class": "Frame",
+          "method": "press",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=5 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1907",
+          "startTime": 62947.453,
+          "endTime": 62978.62,
+          "durationMs": 31.16700000000128,
+          "class": "Frame",
+          "method": "inputValue",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=5 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1910",
+          "startTime": 63004.18,
+          "endTime": 63036.932,
+          "durationMs": 32.75200000000041,
+          "title": "Expect \"toHaveText\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=5 >> strong"
+        },
+        {
+          "callId": "hpia@1912",
+          "startTime": 63079.555,
+          "endTime": 63418.688,
+          "durationMs": 339.13300000000163,
+          "title": "Scroll into view",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-assist-fab"
+        },
+        {
+          "callId": "hpia@1916",
+          "startTime": 63489.973,
+          "endTime": 63517.715,
+          "durationMs": 27.74199999999837,
+          "title": "Expect \"toBeVisible\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-assist-fab"
+        },
+        {
+          "callId": "hpia@1918",
+          "startTime": 63547.997,
+          "endTime": 63667.825,
+          "durationMs": 119.82799999999406,
+          "class": "Frame",
+          "method": "click",
+          "selector": ".gp-assist-fab"
+        },
+        {
+          "callId": "hpia@1920",
+          "startTime": 63716.607,
+          "endTime": 64018.973,
+          "durationMs": 302.36599999999453,
+          "title": "Expect \"toBeVisible\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": "#gp-assistant-panel"
+        },
+        {
+          "callId": "hpia@1922",
+          "startTime": 64099.691,
+          "endTime": 64127.142,
+          "durationMs": 27.45100000000093,
+          "class": "Page",
+          "method": "keyboardPress"
+        },
+        {
+          "callId": "hpia@1924",
+          "startTime": 64149.531,
+          "endTime": 64192.851,
+          "durationMs": 43.31999999999971,
+          "title": "Expect \"toHaveCount\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": "#gp-assistant-panel"
+        },
+        {
+          "callId": "hpia@1926",
+          "startTime": 64216.919,
+          "endTime": 64249.13,
+          "durationMs": 32.21099999999569,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": "html"
+        },
+        {
+          "callId": "hpia@1930",
+          "startTime": 64275.742,
+          "endTime": 64675.391,
+          "durationMs": 399.6490000000049,
+          "class": "Page",
+          "method": "keyboardPress"
+        },
+        {
+          "callId": "hpia@1932",
+          "startTime": 64795.584,
+          "endTime": 64823.409,
+          "durationMs": 27.82499999999709,
+          "title": "Expect \"toHaveClass\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": "html"
+        },
+        {
+          "callId": "hpia@1934",
+          "startTime": 64853.259,
+          "endTime": 64879.851,
+          "durationMs": 26.59200000000419,
+          "class": "Frame",
+          "method": "evaluateExpression"
+        },
+        {
+          "callId": "hpia@1936",
+          "startTime": 64920.104,
+          "endTime": 64969.254,
+          "durationMs": 49.150000000001455,
+          "class": "Frame",
+          "method": "queryCount",
+          "selector": ".gp-ranking__weights .gp-weight >> input, strong"
+        },
+        {
+          "callId": "hpia@1939",
+          "startTime": 65009.51,
+          "endTime": 65089.476,
+          "durationMs": 79.96600000000035,
+          "class": "Frame",
+          "method": "evalOnSelectorAll",
+          "selector": ".gp-ranking__weights .gp-weight >> input, strong"
+        },
+        {
+          "callId": "hpia@1944",
+          "startTime": 65122.102,
+          "endTime": 65164.732,
+          "durationMs": 42.63000000000466,
+          "title": "Scroll into view",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=0"
+        },
+        {
+          "callId": "hpia@1948",
+          "startTime": 65227.223,
+          "endTime": 65274.18,
+          "durationMs": 46.957000000002154,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=0"
+        },
+        {
+          "callId": "hpia@1952",
+          "startTime": 65308.146,
+          "endTime": 65337.841,
+          "durationMs": 29.69499999999971,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=0 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1954",
+          "startTime": 65367.188,
+          "endTime": 65402.137,
+          "durationMs": 34.949000000000524,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=0 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1959",
+          "startTime": 65427.467,
+          "endTime": 65448.864,
+          "durationMs": 21.397000000004482,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=0 >> strong"
+        },
+        {
+          "callId": "hpia@1961",
+          "startTime": 65471.372,
+          "endTime": 65505.244,
+          "durationMs": 33.87199999999575,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=0 >> strong"
+        },
+        {
+          "callId": "hpia@1966",
+          "startTime": 65546.317,
+          "endTime": 65574.278,
+          "durationMs": 27.961000000010245,
+          "class": "Frame",
+          "method": "queryCount",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=0 >> input,strong"
+        },
+        {
+          "callId": "hpia@1969",
+          "startTime": 65602.331,
+          "endTime": 65628.76,
+          "durationMs": 26.428999999989173,
+          "class": "Frame",
+          "method": "evalOnSelectorAll",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=0 >> input,strong"
+        },
+        {
+          "callId": "hpia@1975",
+          "startTime": 65654.528,
+          "endTime": 66129.714,
+          "durationMs": 475.1860000000015,
+          "class": "Frame",
+          "method": "click",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=0 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1977",
+          "startTime": 66216.823,
+          "endTime": 66252.219,
+          "durationMs": 35.395999999993364,
+          "class": "Frame",
+          "method": "inputValue",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=0 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1979",
+          "startTime": 66292.551,
+          "endTime": 66760.367,
+          "durationMs": 467.8159999999916,
+          "class": "Frame",
+          "method": "press",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=0 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1982",
+          "startTime": 66868.341,
+          "endTime": 66930.813,
+          "durationMs": 62.471999999994296,
+          "class": "Frame",
+          "method": "inputValue",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=0 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1985",
+          "startTime": 67052.835,
+          "endTime": 67820.121,
+          "durationMs": 767.2859999999928,
+          "title": "Expect \"toHaveText\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=0 >> strong"
+        },
+        {
+          "callId": "hpia@1987",
+          "startTime": 67889.765,
+          "endTime": 67922.787,
+          "durationMs": 33.021999999997206,
+          "title": "Scroll into view",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=1"
+        },
+        {
+          "callId": "hpia@1991",
+          "startTime": 67995.891,
+          "endTime": 68038.922,
+          "durationMs": 43.03100000000268,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=1"
+        },
+        {
+          "callId": "hpia@1995",
+          "startTime": 68075.245,
+          "endTime": 68137.484,
+          "durationMs": 62.2390000000014,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=1 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@1997",
+          "startTime": 68166.078,
+          "endTime": 68555.259,
+          "durationMs": 389.1810000000114,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=1 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@2002",
+          "startTime": 68635.989,
+          "endTime": 68669.546,
+          "durationMs": 33.5570000000007,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=1 >> strong"
+        },
+        {
+          "callId": "hpia@2004",
+          "startTime": 68696.6,
+          "endTime": 68777.766,
+          "durationMs": 81.16599999999744,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=1 >> strong"
+        },
+        {
+          "callId": "hpia@2009",
+          "startTime": 68812.103,
+          "endTime": 68857.203,
+          "durationMs": 45.09999999999127,
+          "class": "Frame",
+          "method": "queryCount",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=1 >> input,strong"
+        },
+        {
+          "callId": "hpia@2012",
+          "startTime": 68885.697,
+          "endTime": 68946.183,
+          "durationMs": 60.486000000004424,
+          "class": "Frame",
+          "method": "evalOnSelectorAll",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=1 >> input,strong"
+        },
+        {
+          "callId": "hpia@2018",
+          "startTime": 68998.672,
+          "endTime": 69499.566,
+          "durationMs": 500.89400000000023,
+          "class": "Frame",
+          "method": "click",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=1 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@2020",
+          "startTime": 69553.358,
+          "endTime": 69579.735,
+          "durationMs": 26.377000000007683,
+          "class": "Frame",
+          "method": "inputValue",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=1 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@2022",
+          "startTime": 69616.098,
+          "endTime": 70047.92,
+          "durationMs": 431.8220000000001,
+          "class": "Frame",
+          "method": "press",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=1 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@2025",
+          "startTime": 70115.254,
+          "endTime": 70148.045,
+          "durationMs": 32.79099999999744,
+          "class": "Frame",
+          "method": "inputValue",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=1 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@2028",
+          "startTime": 70197.821,
+          "endTime": 70233.1,
+          "durationMs": 35.279000000009546,
+          "title": "Expect \"toHaveText\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=1 >> strong"
+        },
+        {
+          "callId": "hpia@2030",
+          "startTime": 70268.499,
+          "endTime": 70544.354,
+          "durationMs": 275.8550000000105,
+          "title": "Scroll into view",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=2"
+        },
+        {
+          "callId": "hpia@2034",
+          "startTime": 70589.802,
+          "endTime": 70622.091,
+          "durationMs": 32.28900000000431,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=2"
+        },
+        {
+          "callId": "hpia@2038",
+          "startTime": 70647.018,
+          "endTime": 70675.302,
+          "durationMs": 28.28399999999965,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=2 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@2040",
+          "startTime": 70700,
+          "endTime": 70733.127,
+          "durationMs": 33.12699999999313,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=2 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@2045",
+          "startTime": 70772.82,
+          "endTime": 70799.424,
+          "durationMs": 26.603999999992084,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=2 >> strong"
+        },
+        {
+          "callId": "hpia@2047",
+          "startTime": 70829.978,
+          "endTime": 70881.895,
+          "durationMs": 51.91700000000128,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=2 >> strong"
+        },
+        {
+          "callId": "hpia@2052",
+          "startTime": 70908.926,
+          "endTime": 70932.806,
+          "durationMs": 23.879999999990105,
+          "class": "Frame",
+          "method": "queryCount",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=2 >> input,strong"
+        },
+        {
+          "callId": "hpia@2055",
+          "startTime": 70957.053,
+          "endTime": 70985.784,
+          "durationMs": 28.730999999999767,
+          "class": "Frame",
+          "method": "evalOnSelectorAll",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=2 >> input,strong"
+        },
+        {
+          "callId": "hpia@2061",
+          "startTime": 71011.334,
+          "endTime": 71392.945,
+          "durationMs": 381.6110000000044,
+          "class": "Frame",
+          "method": "click",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=2 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@2063",
+          "startTime": 71453.212,
+          "endTime": 71491.528,
+          "durationMs": 38.31600000000617,
+          "class": "Frame",
+          "method": "inputValue",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=2 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@2065",
+          "startTime": 71513.734,
+          "endTime": 71837.197,
+          "durationMs": 323.4630000000034,
+          "class": "Frame",
+          "method": "press",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=2 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@2068",
+          "startTime": 71898.329,
+          "endTime": 71929.795,
+          "durationMs": 31.46600000000035,
+          "class": "Frame",
+          "method": "inputValue",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=2 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@2071",
+          "startTime": 71954.344,
+          "endTime": 71979.858,
+          "durationMs": 25.513999999995576,
+          "title": "Expect \"toHaveText\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=2 >> strong"
+        },
+        {
+          "callId": "hpia@2073",
+          "startTime": 72004.427,
+          "endTime": 72038.079,
+          "durationMs": 33.65200000000186,
+          "title": "Scroll into view",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=3"
+        },
+        {
+          "callId": "hpia@2077",
+          "startTime": 72122.245,
+          "endTime": 72151.977,
+          "durationMs": 29.73200000000361,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=3"
+        },
+        {
+          "callId": "hpia@2081",
+          "startTime": 72177.72,
+          "endTime": 72218.489,
+          "durationMs": 40.76900000000023,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=3 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@2083",
+          "startTime": 72241.887,
+          "endTime": 72277.876,
+          "durationMs": 35.9890000000014,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=3 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@2088",
+          "startTime": 72321.579,
+          "endTime": 72377.991,
+          "durationMs": 56.411999999996624,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=3 >> strong"
+        },
+        {
+          "callId": "hpia@2090",
+          "startTime": 72412.134,
+          "endTime": 72451.11,
+          "durationMs": 38.97599999999511,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=3 >> strong"
+        },
+        {
+          "callId": "hpia@2095",
+          "startTime": 72482.45,
+          "endTime": 72513.778,
+          "durationMs": 31.328000000008615,
+          "class": "Frame",
+          "method": "queryCount",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=3 >> input,strong"
+        },
+        {
+          "callId": "hpia@2098",
+          "startTime": 72536.839,
+          "endTime": 72571.558,
+          "durationMs": 34.71899999999732,
+          "class": "Frame",
+          "method": "evalOnSelectorAll",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=3 >> input,strong"
+        },
+        {
+          "callId": "hpia@2104",
+          "startTime": 72604.428,
+          "endTime": 72919.929,
+          "durationMs": 315.50100000000384,
+          "class": "Frame",
+          "method": "click",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=3 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@2106",
+          "startTime": 72975.771,
+          "endTime": 73018.244,
+          "durationMs": 42.47300000001269,
+          "class": "Frame",
+          "method": "inputValue",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=3 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@2108",
+          "startTime": 73045.204,
+          "endTime": 73338.809,
+          "durationMs": 293.6049999999959,
+          "class": "Frame",
+          "method": "press",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=3 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@2111",
+          "startTime": 73411.534,
+          "endTime": 73462.132,
+          "durationMs": 50.59799999999814,
+          "class": "Frame",
+          "method": "inputValue",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=3 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@2114",
+          "startTime": 73486.256,
+          "endTime": 73511.047,
+          "durationMs": 24.79100000001199,
+          "title": "Expect \"toHaveText\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=3 >> strong"
+        },
+        {
+          "callId": "hpia@2116",
+          "startTime": 73532.359,
+          "endTime": 73562.419,
+          "durationMs": 30.05999999999767,
+          "title": "Scroll into view",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=4"
+        },
+        {
+          "callId": "hpia@2120",
+          "startTime": 73644.891,
+          "endTime": 73673.755,
+          "durationMs": 28.864000000001397,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=4"
+        },
+        {
+          "callId": "hpia@2124",
+          "startTime": 73701.722,
+          "endTime": 73736.592,
+          "durationMs": 34.870000000009895,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=4 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@2126",
+          "startTime": 73761.951,
+          "endTime": 73797.524,
+          "durationMs": 35.57300000000396,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=4 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@2131",
+          "startTime": 73828.694,
+          "endTime": 73888.894,
+          "durationMs": 60.19999999999709,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=4 >> strong"
+        },
+        {
+          "callId": "hpia@2133",
+          "startTime": 73916.686,
+          "endTime": 73962.591,
+          "durationMs": 45.904999999998836,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=4 >> strong"
+        },
+        {
+          "callId": "hpia@2138",
+          "startTime": 73991.849,
+          "endTime": 74018.72,
+          "durationMs": 26.870999999999185,
+          "class": "Frame",
+          "method": "queryCount",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=4 >> input,strong"
+        },
+        {
+          "callId": "hpia@2141",
+          "startTime": 74047.877,
+          "endTime": 74082.76,
+          "durationMs": 34.88300000000163,
+          "class": "Frame",
+          "method": "evalOnSelectorAll",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=4 >> input,strong"
+        },
+        {
+          "callId": "hpia@2147",
+          "startTime": 74113.942,
+          "endTime": 74446.627,
+          "durationMs": 332.6849999999977,
+          "class": "Frame",
+          "method": "click",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=4 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@2149",
+          "startTime": 74505.814,
+          "endTime": 74547.168,
+          "durationMs": 41.354000000006636,
+          "class": "Frame",
+          "method": "inputValue",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=4 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@2151",
+          "startTime": 74572.639,
+          "endTime": 74890.694,
+          "durationMs": 318.05500000000757,
+          "class": "Frame",
+          "method": "press",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=4 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@2154",
+          "startTime": 74959.022,
+          "endTime": 74992.145,
+          "durationMs": 33.12300000000687,
+          "class": "Frame",
+          "method": "inputValue",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=4 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@2157",
+          "startTime": 75021.479,
+          "endTime": 75054.135,
+          "durationMs": 32.655999999988126,
+          "title": "Expect \"toHaveText\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=4 >> strong"
+        },
+        {
+          "callId": "hpia@2159",
+          "startTime": 75079.094,
+          "endTime": 75125.188,
+          "durationMs": 46.09399999999732,
+          "title": "Scroll into view",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=5"
+        },
+        {
+          "callId": "hpia@2163",
+          "startTime": 75223.649,
+          "endTime": 75259.633,
+          "durationMs": 35.98399999999674,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=5"
+        },
+        {
+          "callId": "hpia@2167",
+          "startTime": 75295.986,
+          "endTime": 75355.602,
+          "durationMs": 59.61599999999453,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=5 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@2169",
+          "startTime": 75452.51,
+          "endTime": 75526.397,
+          "durationMs": 73.88700000000244,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=5 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@2174",
+          "startTime": 75591.501,
+          "endTime": 75625.866,
+          "durationMs": 34.36499999999069,
+          "title": "Expect \"toBeInViewport\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=5 >> strong"
+        },
+        {
+          "callId": "hpia@2176",
+          "startTime": 75687.189,
+          "endTime": 75737.337,
+          "durationMs": 50.14800000000105,
+          "title": "Evaluate",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=5 >> strong"
+        },
+        {
+          "callId": "hpia@2181",
+          "startTime": 75787.255,
+          "endTime": 75825.631,
+          "durationMs": 38.37599999998929,
+          "class": "Frame",
+          "method": "queryCount",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=5 >> input,strong"
+        },
+        {
+          "callId": "hpia@2184",
+          "startTime": 75853.957,
+          "endTime": 75909.216,
+          "durationMs": 55.25900000000547,
+          "class": "Frame",
+          "method": "evalOnSelectorAll",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=5 >> input,strong"
+        },
+        {
+          "callId": "hpia@2190",
+          "startTime": 75965.966,
+          "endTime": 76417.747,
+          "durationMs": 451.7810000000027,
+          "class": "Frame",
+          "method": "click",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=5 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@2192",
+          "startTime": 76513.714,
+          "endTime": 76970.199,
+          "durationMs": 456.48499999998603,
+          "class": "Frame",
+          "method": "inputValue",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=5 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@2194",
+          "startTime": 77092.934,
+          "endTime": 77520.136,
+          "durationMs": 427.2020000000048,
+          "class": "Frame",
+          "method": "press",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=5 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@2197",
+          "startTime": 77886.848,
+          "endTime": 77979.205,
+          "durationMs": 92.35700000000361,
+          "class": "Frame",
+          "method": "inputValue",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=5 >> input[type=range]"
+        },
+        {
+          "callId": "hpia@2200",
+          "startTime": 78070.141,
+          "endTime": 78127.823,
+          "durationMs": 57.6820000000007,
+          "title": "Expect \"toHaveText\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-ranking__weights .gp-weight >> nth=5 >> strong"
+        },
+        {
+          "callId": "hpia@2202",
+          "startTime": 78167.167,
+          "endTime": 78238.577,
+          "durationMs": 71.41000000000349,
+          "title": "Scroll into view",
+          "class": "Frame",
+          "method": "waitForSelector",
+          "selector": ".gp-assist-fab"
+        },
+        {
+          "callId": "hpia@2206",
+          "startTime": 78725.351,
+          "endTime": 78836.944,
+          "durationMs": 111.59300000000803,
+          "title": "Expect \"toBeVisible\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": ".gp-assist-fab"
+        },
+        {
+          "callId": "hpia@2208",
+          "startTime": 78859.564,
+          "endTime": 79135.05,
+          "durationMs": 275.4860000000044,
+          "class": "Frame",
+          "method": "click",
+          "selector": ".gp-assist-fab"
+        },
+        {
+          "callId": "hpia@2212",
+          "startTime": 79172.652,
+          "endTime": 79306.695,
+          "durationMs": 134.04300000000512,
+          "title": "Expect \"toBeVisible\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": "#gp-assistant-panel"
+        },
+        {
+          "callId": "hpia@2219",
+          "startTime": 79382.102,
+          "endTime": 79441.097,
+          "durationMs": 58.99499999999534,
+          "class": "Page",
+          "method": "keyboardPress"
+        },
+        {
+          "callId": "hpia@2221",
+          "startTime": 79467.072,
+          "endTime": 79503.267,
+          "durationMs": 36.195000000006985,
+          "title": "Expect \"toHaveCount\"",
+          "class": "Frame",
+          "method": "expect",
+          "selector": "#gp-assistant-panel"
+        }
+      ],
+      "unfinished": [],
+      "logs": [
+        {
+          "callId": "hpia@2194",
+          "time": 77141.916,
+          "message": "  locator resolved to <input min=\"0\" max=\"0.5\" step=\"0.05\" type=\"range\" value=\"0.25\" id=\"pw-benefit\"/>"
+        },
+        {
+          "callId": "hpia@2194",
+          "time": 77145.66,
+          "message": "elementHandle.press(\"ArrowRight\")"
+        },
+        {
+          "callId": "hpia@2197",
+          "time": 77921.507,
+          "message": "waiting for locator('.gp-ranking__weights .gp-weight').nth(5).locator('input[type=range]')"
+        },
+        {
+          "callId": "hpia@2197",
+          "time": 77979.093,
+          "message": "  locator resolved to <input min=\"0\" max=\"0.5\" step=\"0.05\" value=\"0.3\" type=\"range\" id=\"pw-benefit\"/>"
+        },
+        {
+          "callId": "hpia@2200",
+          "time": 78099.277,
+          "message": "Expect \"toHaveText\" locator('.gp-ranking__weights .gp-weight').nth(5).locator('strong') with timeout 12000ms"
+        },
+        {
+          "callId": "hpia@2200",
+          "time": 78099.295,
+          "message": "waiting for locator('.gp-ranking__weights .gp-weight').nth(5).locator('strong')"
+        },
+        {
+          "callId": "hpia@2202",
+          "time": 78202.867,
+          "message": "waiting for locator('.gp-assist-fab')"
+        },
+        {
+          "callId": "hpia@2202",
+          "time": 78228.246,
+          "message": "  locator resolved to visible <button class=\"gp-assist-fab\" aria-expanded=\"false\" aria-label=\"Көмекшіні ашу\">…</button>"
+        },
+        {
+          "callId": "hpia@2206",
+          "time": 78831.772,
+          "message": "Expect \"toBeVisible\" locator('.gp-assist-fab') with timeout 12000ms"
+        },
+        {
+          "callId": "hpia@2206",
+          "time": 78831.793,
+          "message": "waiting for locator('.gp-assist-fab')"
+        },
+        {
+          "callId": "hpia@2208",
+          "time": 78937.923,
+          "message": "waiting for locator('.gp-assist-fab')"
+        },
+        {
+          "callId": "hpia@2208",
+          "time": 78951.946,
+          "message": "  locator resolved to <button class=\"gp-assist-fab\" aria-expanded=\"false\" aria-label=\"Көмекшіні ашу\">…</button>"
+        },
+        {
+          "callId": "hpia@2208",
+          "time": 78954.144,
+          "message": "attempting click action"
+        },
+        {
+          "callId": "hpia@2208",
+          "time": 78954.208,
+          "message": "  waiting for element to be visible, enabled and stable"
+        },
+        {
+          "callId": "hpia@2208",
+          "time": 78976.572,
+          "message": "  element is visible, enabled and stable"
+        },
+        {
+          "callId": "hpia@2208",
+          "time": 78976.595,
+          "message": "  scrolling into view if needed"
+        },
+        {
+          "callId": "hpia@2208",
+          "time": 78993.733,
+          "message": "  done scrolling"
+        },
+        {
+          "callId": "hpia@2208",
+          "time": 79068.687,
+          "message": "  performing click action"
+        },
+        {
+          "callId": "hpia@2208",
+          "time": 79098.767,
+          "message": "  click action done"
+        },
+        {
+          "callId": "hpia@2208",
+          "time": 79098.799,
+          "message": "  waiting for scheduled navigations to finish"
+        },
+        {
+          "callId": "hpia@2208",
+          "time": 79134.904,
+          "message": "  navigations have finished"
+        },
+        {
+          "callId": "hpia@2212",
+          "time": 79301.206,
+          "message": "Expect \"toBeVisible\" locator('#gp-assistant-panel') with timeout 12000ms"
+        },
+        {
+          "callId": "hpia@2212",
+          "time": 79301.222,
+          "message": "waiting for locator('#gp-assistant-panel')"
+        },
+        {
+          "callId": "hpia@2221",
+          "time": 79498.34,
+          "message": "Expect \"toHaveCount\" locator('#gp-assistant-panel') with timeout 12000ms"
+        },
+        {
+          "callId": "hpia@2221",
+          "time": 79498.374,
+          "message": "waiting for locator('#gp-assistant-panel')"
+        }
+      ]
+    },
+    {
+      "source": "0-trace.trace",
+      "eventTypes": [
+        "context-options"
+      ],
+      "errors": [],
+      "calls": [],
+      "unfinished": [],
+      "logs": []
+    }
+  ]
+}
