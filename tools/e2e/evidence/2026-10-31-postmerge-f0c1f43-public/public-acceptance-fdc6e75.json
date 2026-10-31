@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-31T17:12:27.328Z",
+  "target": "https://green-pavlodar-mock.pages.dev/",
+  "testSHA": "f0c1f43eb424408ef0db7fad6e263bb17e34f995",
+  "applicationSHA": "fdc6e756be99dc5ba3a7a48ca1df17c4bfbef5ef",
+  "appsTree": "f19500893c20ee19c170c393f2a8414b95e19255",
+  "deploymentId": null,
+  "provenanceMethod": "Independent clean local static mock build from the pinned QA commit, whose app source matches fdc6e75. All 34 production files matched local bytes/hashes immediately before and after the browser run. Provider deployment ID is not known.",
+  "counts": {
+    "passed": 16,
+    "failed": 0,
+    "skipped": 0,
+    "fixme": 0,
+    "flaky": 0
+  },
+  "startedAt": "2026-10-31T17:10:22.166Z",
+  "endedAt": "2026-10-31T17:11:23.660Z",
+  "environment": {
+    "node": "24.22.2",
+    "playwright": "1.64.1",
+    "platform": "win32",
+    "workers": 2,
+    "retries": 0
+  },
+  "testAndConfigUnchangedAcrossAttempts": true,
+  "retries": 0,
+  "scope": "16 public HTTPS mock scenarios only; not full local mock, API, cloud storage, physical device or Microsoft Word acceptance.",
+  "earlierAttempts": [
+    {
+      "path": "browser-attempt-01/results.json",
+      "counts": {
+        "passed": 15,
+        "failed": 1,
+        "skipped": 0,
+        "fixme": 0,
+        "flaky": 0
+      },
+      "note": "One KK 375 journey remained on loading screen beyond the original 12s assertion. Concurrent browser load was observed, but root cause was not proved."
+    },
+    {
+      "path": "browser-attempt-02/results.json",
+      "counts": {
+        "passed": 16,
+        "failed": 0,
+        "skipped": 0,
+        "fixme": 0,
+        "flaky": 0
+      },
+      "note": "Sequential run passed, but production index differed from the old publisher handoff. That run remains historical without a contemporaneous proven content binding."
+    }
+  ],
+  "evidence": [
+    {
+      "path": "browser-attempt-03/results.json",
+      "sha256": "c98f0fd4fb3d747758b774aee4d2d4f57262fa871de1e55b1e5a6562871d34ad"
+    },
+    {
+      "path": "browser-attempt-03/assistant-hit-tests.json",
+      "sha256": "14985f4dda9f2b068a293168d453e938ee12808643567c202009b26e9789f2e8"
+    },
+    {
+      "path": "local-fdc6e75-build-manifest.json",
+      "sha256": "a8bdf11b5d4945c72c7506cf30939cdd955bd6fbaf99dad735d637358b50d84c"
+    },
+    {
+      "path": "production-own-build-before-attempt03.json",
+      "sha256": "9297732de78e386f07802f6e7a2b1ad6e0ed45945eb685433de8fd56409e1ffb"
+    },
+    {
+      "path": "production-own-build-after-attempt03.json",
+      "sha256": "54c580db6a72df0de9cfb2ea9e8df3e0be4e733b6d38ee1d8f4aa8d4b3dfc89a"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "preparedAt": "2026-10-31T16:44:26.834Z",
+  "testSHA": "f0c1f43eb424408ef0db7fad6e263bb17e34f995",
+  "applicationBase": "fdc6e756be99dc5ba3a7a48ca1df17c4bfbef5ef",
+  "businessScenarios": 16,
+  "executed": false,
+  "composeConfigValidated": true,
+  "screenshotReadiness": "Dismiss first-run; existing mapReady load/fallback condition; target zone row fully in viewport; fonts loaded.",
+  "files": {
+    "acceptance.mjs": "f47c729d17e7ff59112dc9e8dbe3adf5064a05c587b1e32455449e1c463b427d",
+    "build.mjs": "c758cd59045f5335cc9ae34b2439593af1b565bbc2d3db738b251326cb70c477",
+    "compose.override.yml": "3e589b09754d824820cc2546b5b95d894354bad3967539fca08b669e8b060da7"
+  }
+}

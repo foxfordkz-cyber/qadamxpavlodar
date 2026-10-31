@@ -1,0 +1,44 @@
+{
+  "results": [
+    {
+      "name": "production",
+      "url": "https://green-pavlodar-mock.pages.dev/",
+      "checkedAt": "2026-10-31T17:04:15.525Z",
+      "status": 200,
+      "bytes": 609,
+      "sha256": "57d028697841d274e96bb66155ca3a9316eeeb1807f98bcf41985febcd953f97",
+      "assets": [
+        "/assets/index-BfZskFvL.js",
+        "/assets/index-B2HVvz9V.css"
+      ],
+      "headers": {
+        "date": "Sat, 31 Oct 2026 17:04:17 GMT",
+        "etag": null,
+        "cf-ray": "a5343cefeb47e4c6-AKX",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "age": null
+      }
+    },
+    {
+      "name": "immutable",
+      "url": "https://1079de0b.green-pavlodar-mock.pages.dev/",
+      "checkedAt": "2026-10-31T17:04:15.830Z",
+      "status": 200,
+      "bytes": 609,
+      "sha256": "d1c0621bf7756ebffc476b4bfa04968b547701329d74932b53d2b475cba0f335",
+      "assets": [
+        "/assets/index-Lsf9z6iL.js",
+        "/assets/index-B2HVvz9V.css"
+      ],
+      "headers": {
+        "date": "Sat, 31 Oct 2026 17:04:18 GMT",
+        "etag": null,
+        "cf-ray": "a5343cf1de4a8989-AKX",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "age": null
+      }
+    }
+  ],
+  "applicationSHA": null,
+  "note": "Production index changed relative to the published98cf6c6manifest; immutable index is checked separately. No sourceSHA inferred from assets."
+}

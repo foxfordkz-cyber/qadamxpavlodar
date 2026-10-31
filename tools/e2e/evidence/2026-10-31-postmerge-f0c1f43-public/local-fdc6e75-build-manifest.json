@@ -1,0 +1,208 @@
+{
+  "startedAt": "2026-10-31T17:08:02.470Z",
+  "endedAt": "2026-10-31T17:08:08.514Z",
+  "testSHA": "f0c1f43eb424408ef0db7fad6e263bb17e34f995",
+  "applicationBase": "fdc6e756be99dc5ba3a7a48ca1df17c4bfbef5ef",
+  "appsTree": "f19500893c20ee19c170c393f2a8414b95e19255",
+  "dirty": false,
+  "node": "24.22.2",
+  "vite": "7.3.7",
+  "envFileNamesOnly": [
+    ".env.example"
+  ],
+  "activeWebEnvFiles": [],
+  "environment": {
+    "VITE_DATA_SOURCE": "mock",
+    "NODE_ENV": "production",
+    "inheritedViteVariablesRemoved": true
+  },
+  "command": [
+    "node",
+    "apps/web/node_modules/vite/bin/vite.js",
+    "build",
+    "--configLoader",
+    "runner",
+    "--outDir",
+    "tools/e2e/test-results/postmerge-public/local-fdc6e75-dist",
+    "--emptyOutDir"
+  ],
+  "outputDirectory": "tools/e2e/test-results/postmerge-public/local-fdc6e75-dist",
+  "outputWasNewAndTaskOwned": true,
+  "exitCode": 0,
+  "signal": null,
+  "errorName": null,
+  "packageLockSha256": "476b3f07724841766b3627d936477111dea6d331e2b577d4d704f2b5e6e0720f",
+  "files": [
+    {
+      "path": "assets/contract-v2-ClrjjIFG.js",
+      "bytes": 13616,
+      "sha256": "be6cc8680f115db9efc354e9126470fdf02af601f71080af588ab08dd3051bbf"
+    },
+    {
+      "path": "assets/demo-gateway-v3pyWNVW.js",
+      "bytes": 27519,
+      "sha256": "d5a5a25f3079bcd5f852d0722445be440852e775f8dea8921b96234aa9444fc8"
+    },
+    {
+      "path": "assets/DevPanel-DCcgBunw.js",
+      "bytes": 2442,
+      "sha256": "307b04eaab85e9089ad1a4b8c183ae36704c5099234a4bc76d5b02a7e09cd579"
+    },
+    {
+      "path": "assets/HeroMap-DPy9jbHk.js",
+      "bytes": 2982,
+      "sha256": "68beef237eb64ecc76d1eb2b553d7ced732ea84db92277b1d409f533b67cf0df"
+    },
+    {
+      "path": "assets/index-B2HVvz9V.css",
+      "bytes": 83538,
+      "sha256": "db6b09c91df317ad939fbdee1546505806d7be6df14137371ee9722a6899fd42"
+    },
+    {
+      "path": "assets/index-BfZskFvL.js",
+      "bytes": 975707,
+      "sha256": "3a83047c872243cbcc23c982238236eb9fdb71d7d933b313329e1b5a8f9ce066"
+    },
+    {
+      "path": "assets/journal-DUiVZ3Jx.css",
+      "bytes": 28323,
+      "sha256": "1f628101378a4d324955e84cff516f62990004c0970dbfe2b1c673398f08048e"
+    },
+    {
+      "path": "assets/loadMemo-CD6TAO6h.js",
+      "bytes": 637,
+      "sha256": "0e9eb0e4fcad2c9bef4319b2db9600ebbfe6330dd6bac92ad957794832bbc1bc"
+    },
+    {
+      "path": "assets/lora-cyrillic-ext-wght-normal-YcVxMP-u.woff2",
+      "bytes": 23636,
+      "sha256": "0e523e4bc3c6308f002a3208ea2990cb4f64282d4fbb67c12f5726d13b66eef6"
+    },
+    {
+      "path": "assets/lora-cyrillic-wght-normal-UWPuZLjM.woff2",
+      "bytes": 21232,
+      "sha256": "c57d9ca3bd42e6bc093badc7744dd2059a78f66a3a4dc6ca40574480c870f553"
+    },
+    {
+      "path": "assets/lora-latin-ext-wght-normal-C2Wlntb9.woff2",
+      "bytes": 20088,
+      "sha256": "2a2d9c22c9863086a23f5013fede1428585321812b25f2662542c39d02967c5e"
+    },
+    {
+      "path": "assets/lora-latin-wght-normal-BiLcIKcI.woff2",
+      "bytes": 37788,
+      "sha256": "ddb8c66035104e233fc024669183aad3738b6daa16deee2ebb1241bd0f98ace1"
+    },
+    {
+      "path": "assets/lora-math-wght-normal-sOy7rEfW.woff2",
+      "bytes": 29240,
+      "sha256": "a8c4cb778ab6202d22bdea2ccc8d7e7caf802cfe0a7ce37df7b212f82341468f"
+    },
+    {
+      "path": "assets/lora-symbols-wght-normal-DQ5VrUkH.woff2",
+      "bytes": 17248,
+      "sha256": "2df52199eac56e2ec7a735e609bb151bdab79422c3e73948f4b6580c66bb5a50"
+    },
+    {
+      "path": "assets/lora-vietnamese-wght-normal-CfJ7gtf3.woff2",
+      "bytes": 8992,
+      "sha256": "98c22de85f6e83bcd6ae1a443e12e256fbc8de7142bec4f76b059f8ff9c2797e"
+    },
+    {
+      "path": "assets/mapFlags-KArXQfJZ.js",
+      "bytes": 203,
+      "sha256": "7be91119586dd5e482676ee9daf7276bd60ca59617953d84a2df1b5be897244b"
+    },
+    {
+      "path": "assets/maplibre-gl-qdodsIIj.js",
+      "bytes": 1033029,
+      "sha256": "f79f4edfa86b9c76b92fdac87e45cfe00cf38ac384909017b39bc3de37c7b306"
+    },
+    {
+      "path": "assets/maplibre-gl-RZO-t2LB.css",
+      "bytes": 83127,
+      "sha256": "3c3faf7116e0ea3f4dd664bc9d6207bebf71dda2f9d3108b65527615011f2b2b"
+    },
+    {
+      "path": "assets/maplibre-gl-worker-DYHVkJJJ.js",
+      "bytes": 508793,
+      "sha256": "2d7087f4c4bf47b51da6498b27f32c287a4c01dbf9aa0f90446a50b13a9677f6"
+    },
+    {
+      "path": "assets/memo-X8Gf816r.js",
+      "bytes": 17325,
+      "sha256": "504d36b09c04a1ac63077dc4a23dd9cad3a3592f1afb279b649e39083b43093c"
+    },
+    {
+      "path": "assets/memoData-mJ3ORfy0.js",
+      "bytes": 276,
+      "sha256": "28d821cacfd97c3e4f4c6f25c8e326de85347b17c05fbc88ebbd7a2c07724afd"
+    },
+    {
+      "path": "assets/onest-cyrillic-ext-wght-normal-DOFToQv1.woff2",
+      "bytes": 10540,
+      "sha256": "268f03691b3d06e57abcf20f9277e314ea8784298983aab5b40c1b91965027e1"
+    },
+    {
+      "path": "assets/onest-cyrillic-wght-normal-DayYxulF.woff2",
+      "bytes": 15860,
+      "sha256": "68e5e01d6265bd68967746d4f5a9d18d0e6cbb5d15583c7082d6384ab1229b27"
+    },
+    {
+      "path": "assets/onest-latin-ext-wght-normal-QAhDxQuo.woff2",
+      "bytes": 28452,
+      "sha256": "14e7d3079b75860e2ab50efc6c318c398fdb46ede9b56e625f12ae70a3c5d9a4"
+    },
+    {
+      "path": "assets/onest-latin-wght-normal-Dun_Rd-l.woff2",
+      "bytes": 33760,
+      "sha256": "052df74533250c2e0ca0c4bdd32de594e107d99c1648e63820ef9c6142067828"
+    },
+    {
+      "path": "assets/onest-math-wght-normal-Bl4ZGkZl.woff2",
+      "bytes": 25480,
+      "sha256": "c74952a8c0c8c558c4f879f83773cf529d11350609f7073f5b2c5999dec46041"
+    },
+    {
+      "path": "assets/onest-symbols-wght-normal-DxQzqQfC.woff2",
+      "bytes": 18168,
+      "sha256": "2ec2d45d2ec0770e2c18cba2dba5126cf2dcff181d23ad192e9fffeb4af4b0b6"
+    },
+    {
+      "path": "assets/onest-vietnamese-wght-normal-BBxOatbv.woff2",
+      "bytes": 12400,
+      "sha256": "d852d4d094a3a46d701d16245deb7ca83b16b5bd69e20aa0aba089392ad69474"
+    },
+    {
+      "path": "assets/ProjectMap3D-BJygyhze.js",
+      "bytes": 3558,
+      "sha256": "cf62d4fc20df3981d4bc1b8082fcb6fba0c2fa5a7acd29da44bf3aea6196f5ea"
+    },
+    {
+      "path": "assets/scene3d-BdQPJGYF.js",
+      "bytes": 567194,
+      "sha256": "6983d21689dfd6a57b29c7bcbb48b4e5d191d58599c114f64a0a45d1c7d30964"
+    },
+    {
+      "path": "assets/server-CB-vrvN6.js",
+      "bytes": 1976966,
+      "sha256": "e821df82bf3be8c5985db89b76c861920ca60f64d7f5b18748e3e23c5e05d662"
+    },
+    {
+      "path": "assets/SiteMap-BQ_oStkH.js",
+      "bytes": 16642,
+      "sha256": "c8e1d73e2054775c1ed80beb699b95a08fbd6c358ef84b6ce870a5181a4ed25e"
+    },
+    {
+      "path": "assets/WorkerPage-Bhn1O2YX.js",
+      "bytes": 72603,
+      "sha256": "69e82081a646bd6bd59ae3b5a3b1786f6504e5f4c1063b4eb8f3751536de127d"
+    },
+    {
+      "path": "index.html",
+      "bytes": 609,
+      "sha256": "57d028697841d274e96bb66155ca3a9316eeeb1807f98bcf41985febcd953f97"
+    }
+  ],
+  "scope": "Independent static mock build only. No npm install, TypeScript build or app source edits. Vite runner config loader avoids writing bundled config outside the task output."
+}

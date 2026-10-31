@@ -1,0 +1,486 @@
+[
+  {
+    "title": "public mock E2E-09: weight controls and values remain accessible in normal/presentation modes",
+    "project": "public-ru-1280",
+    "status": "passed",
+    "evidence": [
+      {
+        "mode": "normal",
+        "result": [
+          {
+            "label": "0.25",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.15",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.20",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.15",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.10",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.15",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "Бюджет, млн тенге",
+            "collisions": []
+          }
+        ]
+      },
+      {
+        "mode": "presentation",
+        "result": [
+          {
+            "label": "0.25",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.15",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.20",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.15",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.10",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.15",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "Бюджет, млн тенге",
+            "collisions": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "public mock E2E-09: weight controls and values remain accessible in normal/presentation modes",
+    "project": "public-kk-1280",
+    "status": "passed",
+    "evidence": [
+      {
+        "mode": "normal",
+        "result": [
+          {
+            "label": "0.25",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.15",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.20",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.15",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.10",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.15",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "Бюджет, млн теңге",
+            "collisions": []
+          }
+        ]
+      },
+      {
+        "mode": "presentation",
+        "result": [
+          {
+            "label": "0.25",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.15",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.20",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.15",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.10",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.15",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "Бюджет, млн теңге",
+            "collisions": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "public mock E2E-09: weight controls and values remain accessible in normal/presentation modes",
+    "project": "public-ru-375",
+    "status": "passed",
+    "evidence": [
+      {
+        "mode": "normal",
+        "result": [
+          {
+            "label": "0.25",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.15",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.20",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.15",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.10",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.15",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "Бюджет, млн тенге",
+            "collisions": []
+          }
+        ]
+      },
+      {
+        "mode": "presentation",
+        "result": [
+          {
+            "label": "0.25",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.15",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.20",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.15",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.10",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.15",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "Бюджет, млн тенге",
+            "collisions": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "public mock E2E-09: weight controls and values remain accessible in normal/presentation modes",
+    "project": "public-kk-375",
+    "status": "passed",
+    "evidence": [
+      {
+        "mode": "normal",
+        "result": [
+          {
+            "label": "0.25",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.15",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.20",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.15",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.10",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.15",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "Бюджет, млн теңге",
+            "collisions": []
+          }
+        ]
+      },
+      {
+        "mode": "presentation",
+        "result": [
+          {
+            "label": "0.25",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.15",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.20",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.15",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.10",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "0.15",
+            "collisions": []
+          },
+          {
+            "label": "range",
+            "collisions": []
+          },
+          {
+            "label": "Бюджет, млн теңге",
+            "collisions": []
+          }
+        ]
+      }
+    ]
+  }
+]

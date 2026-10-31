@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-10-31T17:19:31.623Z",
+  "reviewedBy": "postmerge_docker_run via actual view_image inspection",
+  "applicationBase": "fdc6e756be99dc5ba3a7a48ca1df17c4bfbef5ef",
+  "testedSHA": "f0c1f43eb424408ef0db7fad6e263bb17e34f995",
+  "project": "gp-aidana-postmerge-1793466996871",
+  "resultSha256": "a6b6a91ed88035d069c43ab53b8cc2f25c17b3ff10ef97270805f7ecf6f7803f",
+  "scope": "Five fresh Docker workflow evidence images, separate from the 30 main presentation captures.",
+  "reviewedCount": 5,
+  "usableAsScenarioEvidence": 5,
+  "containsSecretsOrRealPersonalData": false,
+  "screenshots": [
+    {
+      "name": "worker-submitted-375.png",
+      "sha256": "7c1b858ed60a6c70e4dd2c963f218026a171f645e58d713f3fcb5842d8b0b9a8",
+      "reviewed": true,
+      "usableAsScenarioEvidence": true,
+      "partOfMainPresentationArchive": false,
+      "note": "Submitted report is visibly pending review; synthetic note and one attached photo are shown. This frame confirms submission, not photo decoding."
+    },
+    {
+      "name": "viewer-preserved-photo-1280.png",
+      "sha256": "ffdce7b0b078b08a083da3519e12648bcd8a4deb9c99aad6b7dcdfaca6bd322e",
+      "reviewed": true,
+      "usableAsScenarioEvidence": true,
+      "partOfMainPresentationArchive": false,
+      "note": "Viewer has the server data indicator; accepted report and decoded QA DEMO photo are visible after recreation. Only synthetic identities and record IDs are shown."
+    },
+    {
+      "name": "renamed-zone-1280.png",
+      "sha256": "73198d78a4b2a8a82bafafca22fabe59af0f07fe62de173ecab5609fa26ca774",
+      "reviewed": true,
+      "usableAsScenarioEvidence": true,
+      "partOfMainPresentationArchive": false,
+      "note": "Map has finished loading, first-run hint is closed, and the exact Газон, улица Толстого zone row is fully visible with completed-inspection state."
+    },
+    {
+      "name": "worker-preserved-1280.png",
+      "sha256": "a830ce9748d5e0d28c0e71343a5ab7530b1da98dcc95200db95acfd372919f61",
+      "reviewed": true,
+      "usableAsScenarioEvidence": true,
+      "partOfMainPresentationArchive": false,
+      "note": "Shift/Journal/Profile navigation is visible and Shift is active. Empty Saturday 31.10 is expected: the synthetic task was scheduled for Wednesday 28.10; this frame is navigation evidence, not the persistence proof."
+    },
+    {
+      "name": "worker-preserved-375.png",
+      "sha256": "e653e9e929ce73a9b4a8e94316ed349e95f9c834a6930159a67a40693b2e4624",
+      "reviewed": true,
+      "usableAsScenarioEvidence": true,
+      "partOfMainPresentationArchive": false,
+      "note": "Mobile bottom navigation is visible without covering content; Shift is active. Empty Saturday 31.10 is expected for the fixture scheduled 28.10; database/read hashes independently prove persistence."
+    }
+  ]
+}

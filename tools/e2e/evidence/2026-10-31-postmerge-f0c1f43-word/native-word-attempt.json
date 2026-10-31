@@ -1,0 +1,30 @@
+{
+  "kind": "native-word-attempt",
+  "recordedAt": "2026-10-31T17:14:47.026Z",
+  "applicationBase": "fdc6e756be99dc5ba3a7a48ca1df17c4bfbef5ef",
+  "testSHA": "f0c1f43eb424408ef0db7fad6e263bb17e34f995",
+  "wordExecutable": "C:/Program Files/Microsoft Office/Root/Office16/WINWORD.EXE",
+  "wordVersion": "16.0.20527.20112",
+  "applicationLaunched": true,
+  "documentsOpened": false,
+  "nativeMicrosoftWordVisualCheck": false,
+  "status": "BLOCKED_ENVIRONMENT",
+  "reason": "Windows Computer Use returned coordinate input geometry is unavailable twice after refreshing the exact Word window; keyboard Open shortcuts produced no observed file dialog. No source document was edited. No native Word success is claimed.",
+  "screenshotsSaved": 0,
+  "personalUiTextSaved": false,
+  "documents": [
+    {
+      "file": "memo-ru-f0c1f43.docx",
+      "sha256": "839990e5d9f74f9cbc36f00b509a6277a333f717f1250f5b31890b57378f538c",
+      "bytes": 9372,
+      "readOnly": true
+    },
+    {
+      "file": "memo-kk-f0c1f43.docx",
+      "sha256": "3a39bb2c10eb19de014424d319a12956382741ddf82acbcf1fbcdca1ce173dc4",
+      "bytes": 9485,
+      "readOnly": true
+    }
+  ],
+  "nextAction": "Open the two exact prepared files in Microsoft Word on the presentation computer and inspect all pages; record document hashes and result."
+}

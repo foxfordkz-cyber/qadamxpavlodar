@@ -1,0 +1,23 @@
+{
+  "checkedAt": "2026-10-31T17:19:31.630Z",
+  "applicationBase": "fdc6e756be99dc5ba3a7a48ca1df17c4bfbef5ef",
+  "testSHA": "f0c1f43eb424408ef0db7fad6e263bb17e34f995",
+  "dockerEngine": "29.2.0",
+  "node": "24.22.2",
+  "nginx": "1.27.5",
+  "images": {
+    "web": "sha256:1001bd53feb7dc9e4907950ee2c60ffb1623fa0e454d6154405f40f165d84c20",
+    "server": "sha256:94de19c53605ff4f2cb8092bb8e9680b8a944528702c073e5e118e66f51542b1"
+  },
+  "cleanup": {
+    "project": "gp-aidana-postmerge-1793466996871",
+    "runningQaContainers": 0,
+    "qaVolumePreserved": "gp-aidana-postmerge-1793466996871_gp-data",
+    "main8080Touched": false
+  },
+  "verification": "docker ps filtered by exact Compose project returned no running containers; exact QA volume was listed. Versions read from fresh own image tags using --network none --read-only --entrypoint and no host/QA data mounts.",
+  "resultSha256": "a6b6a91ed88035d069c43ab53b8cc2f25c17b3ff10ef97270805f7ecf6f7803f",
+  "runnerSha256": "f47c729d17e7ff59112dc9e8dbe3adf5064a05c587b1e32455449e1c463b427d",
+  "buildScriptSha256": "c758cd59045f5335cc9ae34b2439593af1b565bbc2d3db738b251326cb70c477",
+  "overlaySha256": "3e589b09754d824820cc2546b5b95d894354bad3967539fca08b669e8b060da7"
+}

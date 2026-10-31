@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "testSHA": "f0c1f43eb424408ef0db7fad6e263bb17e34f995",
+  "applicationBase": "fdc6e756be99dc5ba3a7a48ca1df17c4bfbef5ef",
+  "node": "24.22.2",
+  "checks": [
+    {
+      "name": "check:tools",
+      "passed": 24,
+      "failed": 0,
+      "skipped": 0,
+      "fixme": 0,
+      "flaky": 0,
+      "finishedAt": "2026-10-31T17:04:26.352Z",
+      "logSha256": "7e615c80e7806f73912640cde18efd8059362d4ee619fa78830a79efb192eaf2"
+    },
+    {
+      "name": "check:report before pack",
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "fixme": 0,
+      "flaky": 0,
+      "finishedAt": "2026-10-31T17:04:48.583Z",
+      "logSha256": "02abb5871a0a439aecb43b4aaab51177b602fb386b3c3b4139858867fca7edad"
+    },
+    {
+      "name": "check:report after pack",
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "fixme": 0,
+      "flaky": 0,
+      "finishedAt": "2026-10-31T17:05:04.262Z",
+      "logSha256": "55bbf1b643a74e99cf7436ce786e3719c564ddda6bc3a1e1412333925712676a"
+    }
+  ],
+  "summaryExit": 0,
+  "packExit": 0,
+  "gateExit": 0
+}

@@ -1,0 +1,461 @@
+{
+  "kind": "independent-isolated-docker",
+  "startedAt": "2026-10-31T17:16:36.871Z",
+  "applicationBase": "fdc6e756be99dc5ba3a7a48ca1df17c4bfbef5ef",
+  "testSHA": "f0c1f43eb424408ef0db7fad6e263bb17e34f995",
+  "appsTree": "f19500893c20ee19c170c393f2a8414b95e19255",
+  "project": "gp-aidana-postmerge-1793466996871",
+  "port": 18084,
+  "baseURL": "http://localhost:18084",
+  "volume": "gp-aidana-postmerge-1793466996871_gp-data",
+  "checks": [
+    {
+      "name": "isolated deployment identity and health",
+      "status": "passed",
+      "durationMs": 14974,
+      "details": {
+        "health": 200,
+        "newVolume": "gp-aidana-postmerge-1793466996871_gp-data",
+        "existing8080Untouched": true
+      }
+    },
+    {
+      "name": "image source provenance",
+      "status": "passed",
+      "durationMs": 596,
+      "details": {
+        "apps/web/src/shared/analytics/decisionLab.ts": "88b621750bce300b2bb8891a30496ad5e980e5ae1c01630770a2abdfe5f6362d",
+        "apps/server/src/outcomes/service.ts": "6b7bc8f82b78fca439ec9c4340413f8b8bfcd9814449750a5a3a49b551291f3f",
+        "apps/server/src/v2/report-routes.ts": "81f5b45d998b292053f84e9d9008a76beb8e2074d8d972efb6a5b51d988f66c8",
+        "apps/server/src/tz/seed-cli.ts": "e29c81a9febe6e4e22468c496070f8fe2fb97f10bf7af75b9a54b4301d19bafc",
+        "apps/web/src/shared/i18n/ru.ts": "f99a50a5879dbf8fbfe675392c06d0b26ca39c8aa64f1d756184d1a7f7ed9e90",
+        "apps/web/src/shared/i18n/kk.ts": "1cb5d671a344a51dccef0bcb0835733638759150120c564f85f02090ff62d49a"
+      }
+    },
+    {
+      "name": "opt-in synthetic Outcomes seed",
+      "status": "passed",
+      "durationMs": 2113,
+      "details": {
+        "created": true,
+        "trees": 32
+      }
+    },
+    {
+      "name": "five real roles authenticate through nginx",
+      "status": "passed",
+      "durationMs": 661,
+      "details": {
+        "roles": [
+          "admin",
+          "coordinator",
+          "viewer",
+          "worker",
+          "foreman"
+        ],
+        "httpOnly": true,
+        "sameSite": "Strict",
+        "passwordPersistedToFiles": false
+      }
+    },
+    {
+      "name": "snapshot and cohort from 32 canonical synthetic registry trees",
+      "status": "passed",
+      "durationMs": 1180,
+      "details": {
+        "siteId": "site-osm-1569993037",
+        "siteName": "Газон, улица Толстого",
+        "cohortId": "aidana-docker-cohort",
+        "forecastId": "aidana-docker-forecast",
+        "plants": 32,
+        "provenance": "demo"
+      }
+    },
+    {
+      "name": "task assignment and worker start through real API",
+      "status": "passed",
+      "durationMs": 53,
+      "details": {
+        "taskId": "a4796930-1e80-4a2d-a23f-c6ac224e01fc",
+        "status": "in_progress"
+      }
+    },
+    {
+      "name": "worker browser uploads synthetic photo and submits report through nginx",
+      "status": "passed",
+      "durationMs": 1949,
+      "details": {
+        "reportId": "e3a69d04-933d-4685-bdcd-14e4c19fb4e8",
+        "photoId": "aa5b53de-bb1a-4aeb-acd1-369e1af0d220",
+        "status": "pending",
+        "browserWidth": 375
+      }
+    },
+    {
+      "name": "coordinator acceptance, replay and linked inspection",
+      "status": "passed",
+      "durationMs": 927,
+      "details": {
+        "reportId": "e3a69d04-933d-4685-bdcd-14e4c19fb4e8",
+        "inspectionId": "aidana-docker-inspection",
+        "reportLinked": true,
+        "acceptanceReplay": true,
+        "inspectionReplay": true,
+        "summary": {
+          "cohortId": "aidana-docker-cohort",
+          "inspectionId": "aidana-docker-inspection",
+          "total": 32,
+          "inspected": 1,
+          "assessed": 1,
+          "alive": 1,
+          "dead": 0,
+          "unknown": 31,
+          "notInspected": 31,
+          "inspectionCoveragePct": 3.125,
+          "assessmentCoveragePct": 3.125,
+          "survivalAmongAssessedPct": 100,
+          "wholeCohortSurvivalPct": null,
+          "dataClass": "demo",
+          "isDemo": true
+        }
+      }
+    },
+    {
+      "name": "viewer reads existing data and cannot mutate",
+      "status": "passed",
+      "durationMs": 1448,
+      "details": {
+        "readPaths": 8,
+        "rejectedWrites": 3,
+        "photoBytes": 540,
+        "photoSha256": "e7f8de793ab16b1c2e487358f524f940880d125b635989d765c7a3ac543281df",
+        "businessStateUnchanged": true
+      }
+    },
+    {
+      "name": "saved forecast remains immutable after current price change",
+      "status": "passed",
+      "durationMs": 88,
+      "details": {
+        "forecastSha256": "32aac19f8167b41fd5edd1c8f1b07c80d45d206985fc854b1d551ecfa0fee265",
+        "unchanged": true
+      }
+    },
+    {
+      "name": "restart retains data, photo, history, forecast and session",
+      "status": "passed",
+      "durationMs": 7156,
+      "details": {
+        "tablesPreserved": 16,
+        "readEndpointsPreserved": 7,
+        "photoSha256": "e7f8de793ab16b1c2e487358f524f940880d125b635989d765c7a3ac543281df",
+        "viewerSessionRetained": true,
+        "integrity": "ok",
+        "foreignKeyFailures": 0
+      }
+    },
+    {
+      "name": "repeated seed is idempotent with accepted report and inspection",
+      "status": "passed",
+      "durationMs": 5806,
+      "details": {
+        "tablesPreserved": 16,
+        "readEndpointsPreserved": 7,
+        "photoSha256": "e7f8de793ab16b1c2e487358f524f940880d125b635989d765c7a3ac543281df",
+        "viewerSessionRetained": true,
+        "integrity": "ok",
+        "foreignKeyFailures": 0
+      }
+    },
+    {
+      "name": "container recreation retains the same isolated volume",
+      "status": "passed",
+      "durationMs": 8302,
+      "details": {
+        "tablesPreserved": 16,
+        "readEndpointsPreserved": 7,
+        "photoSha256": "e7f8de793ab16b1c2e487358f524f940880d125b635989d765c7a3ac543281df",
+        "viewerSessionRetained": true,
+        "integrity": "ok",
+        "foreignKeyFailures": 0
+      }
+    },
+    {
+      "name": "browser reads preserved photo and real renamed zone through nginx",
+      "status": "passed",
+      "durationMs": 4020,
+      "details": {
+        "reportId": "e3a69d04-933d-4685-bdcd-14e4c19fb4e8",
+        "photoDecodedAfterReload": true,
+        "zoneName": "Газон, улица Толстого",
+        "viewerMutationControlsAbsent": true,
+        "zoneScreenshotReady": true
+      }
+    },
+    {
+      "name": "worker navigation remains usable on desktop and phone after recreation",
+      "status": "passed",
+      "durationMs": 2657,
+      "details": {
+        "widths": [
+          1280,
+          375
+        ],
+        "sections": [
+          "shift",
+          "journal",
+          "profile"
+        ]
+      }
+    },
+    {
+      "name": "logout revokes session and fresh login still works",
+      "status": "passed",
+      "durationMs": 192,
+      "details": {
+        "logout": 200,
+        "oldSession": 401,
+        "relogin": 200
+      }
+    }
+  ],
+  "commands": [
+    {
+      "command": "docker ps names/ports only",
+      "exitCode": 0,
+      "at": "2026-10-31T17:16:37.436Z"
+    },
+    {
+      "command": "docker volume ls names only",
+      "exitCode": 0,
+      "at": "2026-10-31T17:16:37.592Z"
+    },
+    {
+      "command": "compose -p gp-aidana-postmerge-1793466996871 up -d --no-build",
+      "exitCode": 0,
+      "at": "2026-10-31T17:16:50.289Z"
+    },
+    {
+      "command": "docker image inspect [Id only]",
+      "exitCode": 0,
+      "at": "2026-10-31T17:16:51.097Z"
+    },
+    {
+      "command": "compose ps QA web id only",
+      "exitCode": 0,
+      "at": "2026-10-31T17:16:51.436Z"
+    },
+    {
+      "command": "docker inspect QA web image ID only",
+      "exitCode": 0,
+      "at": "2026-10-31T17:16:51.580Z"
+    },
+    {
+      "command": "compose ps QA server id only",
+      "exitCode": 0,
+      "at": "2026-10-31T17:16:51.889Z"
+    },
+    {
+      "command": "docker inspect QA server image ID only",
+      "exitCode": 0,
+      "at": "2026-10-31T17:16:52.037Z"
+    },
+    {
+      "command": "docker version server only",
+      "exitCode": 0,
+      "at": "2026-10-31T17:16:52.259Z"
+    },
+    {
+      "command": "compose exec server node [QA fixture/read-only hash program]",
+      "exitCode": 0,
+      "at": "2026-10-31T17:16:52.859Z"
+    },
+    {
+      "command": "compose exec server seed:outcomes",
+      "exitCode": 0,
+      "at": "2026-10-31T17:16:54.975Z"
+    },
+    {
+      "command": "compose exec server node [QA fixture/read-only hash program]",
+      "exitCode": 0,
+      "at": "2026-10-31T17:16:56.747Z"
+    },
+    {
+      "command": "compose exec server node [QA fixture/read-only hash program]",
+      "exitCode": 0,
+      "at": "2026-10-31T17:17:00.326Z"
+    },
+    {
+      "command": "compose exec server node [QA fixture/read-only hash program]",
+      "exitCode": 0,
+      "at": "2026-10-31T17:17:01.102Z"
+    },
+    {
+      "command": "compose exec server node [QA fixture/read-only hash program]",
+      "exitCode": 0,
+      "at": "2026-10-31T17:17:01.775Z"
+    },
+    {
+      "command": "compose exec server node [QA fixture/read-only hash program]",
+      "exitCode": 0,
+      "at": "2026-10-31T17:17:02.773Z"
+    },
+    {
+      "command": "compose -p gp-aidana-postmerge-1793466996871 restart server",
+      "exitCode": 0,
+      "at": "2026-10-31T17:17:03.692Z"
+    },
+    {
+      "command": "compose exec server node [QA fixture/read-only hash program]",
+      "exitCode": 0,
+      "at": "2026-10-31T17:17:09.522Z"
+    },
+    {
+      "command": "compose exec server seed:tz repeat",
+      "exitCode": 0,
+      "at": "2026-10-31T17:17:13.234Z"
+    },
+    {
+      "command": "compose exec server seed:outcomes repeat",
+      "exitCode": 0,
+      "at": "2026-10-31T17:17:14.929Z"
+    },
+    {
+      "command": "compose exec server node [QA fixture/read-only hash program]",
+      "exitCode": 0,
+      "at": "2026-10-31T17:17:15.566Z"
+    },
+    {
+      "command": "compose -p gp-aidana-postmerge-1793466996871 up --force-recreate server",
+      "exitCode": 0,
+      "at": "2026-10-31T17:17:17.067Z"
+    },
+    {
+      "command": "compose exec server node [QA fixture/read-only hash program]",
+      "exitCode": 0,
+      "at": "2026-10-31T17:17:23.880Z"
+    },
+    {
+      "command": "compose -p gp-aidana-postmerge-1793466996871 stop [only QA containers; volume preserved]",
+      "exitCode": 0,
+      "at": "2026-10-31T17:17:33.728Z"
+    }
+  ],
+  "limitations": [
+    "Local Docker HTTP through nginx; not public HTTPS or cloud storage.",
+    "All records and images are explicitly synthetic/demo.",
+    "No native Microsoft Word opening is claimed."
+  ],
+  "dirty": false,
+  "images": [
+    "sha256:1001bd53feb7dc9e4907950ee2c60ffb1623fa0e454d6154405f40f165d84c20",
+    "sha256:94de19c53605ff4f2cb8092bb8e9680b8a944528702c073e5e118e66f51542b1"
+  ],
+  "containerImages": {
+    "web": {
+      "containerId": "e2070ffeafe36394da24c4e8295684638c00464f28b0fddb21ccc93e0096043c",
+      "imageId": "sha256:1001bd53feb7dc9e4907950ee2c60ffb1623fa0e454d6154405f40f165d84c20"
+    },
+    "server": {
+      "containerId": "d9665ffd6cc9a188debd021b69a1226b050578f3ce9810aa1f322714000af82c",
+      "imageId": "sha256:94de19c53605ff4f2cb8092bb8e9680b8a944528702c073e5e118e66f51542b1"
+    }
+  },
+  "dockerEngine": "29.2.0",
+  "forecastHash": "32aac19f8167b41fd5edd1c8f1b07c80d45d206985fc854b1d551ecfa0fee265",
+  "status": "PASS",
+  "summary": {
+    "alive": 1,
+    "dead": 0,
+    "unknown": 31,
+    "wholeCohortSurvivalPct": null
+  },
+  "persistenceBaseline": {
+    "tables": {
+      "v2_tasks": {
+        "count": 1,
+        "sha256": "12fd150881ce1530470ece52ea75dda6f73119730b6012a1c97ace05c1f6828f"
+      },
+      "v2_reports": {
+        "count": 1,
+        "sha256": "70ed0131135a8ec89a8d7d3685c9a2ca4a2f1f10385ae9313173a19222ed6243"
+      },
+      "v2_uploads": {
+        "count": 1,
+        "sha256": "24fc26d60ae4078812b10e7081a78996667833f2163336f89232828a72c3bdd7"
+      },
+      "v2_report_drafts": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "v2_history": {
+        "count": 17,
+        "sha256": "9577f9b4057c1996149a4b6cc8e3e8b53088548afe4ac218bffa027300195373"
+      },
+      "v2_documents": {
+        "count": 404,
+        "sha256": "82224ee7171b70898cf18e0e1cc0395f0fe72ec554ed6a129abf6355a5bef33b"
+      },
+      "v2_crews": {
+        "count": 2,
+        "sha256": "d9286b64c353804e22af751ca4685a85aa29959fe31ba664c320ddb985f79fda"
+      },
+      "v2_memberships": {
+        "count": 4,
+        "sha256": "c58ab16e0480cf9caebcaaaeeddf2821dafa9e4823a8ec1c35cea4e015d88712"
+      },
+      "v2_users": {
+        "count": 10,
+        "sha256": "4924c010a86cd6a4f151b4f2eb09ce0aecf4629449b448cdc3506ef845b331f2"
+      },
+      "v2_profiles": {
+        "count": 6,
+        "sha256": "15be82fc10040489c83a03acdac2f923efe418c2076d3d9139b2e17bb637ef2a"
+      },
+      "v2_idempotency": {
+        "count": 12,
+        "sha256": "303c4f09fb02b852afea051d026256112483a8fd01633b2133b07b6af20f59fa"
+      },
+      "outcome_snapshots": {
+        "count": 2,
+        "sha256": "c5788cdbcd94d8233952d64b125816193ac626035dd50696a9e9b6db6feec4d9"
+      },
+      "outcome_cohorts": {
+        "count": 2,
+        "sha256": "ff30fe3017b380943a1cebbde6be2e3760c183d24e374e84fea3ac332758cb43"
+      },
+      "outcome_members": {
+        "count": 64,
+        "sha256": "454baccbb5aa0640b95c73f7e1aab9398328ec3099fcaa390d8810c6535a4838"
+      },
+      "outcome_inspections": {
+        "count": 2,
+        "sha256": "6ec5f30296d4ef9b207cefe47da2049ec1e822c5e02a46977fe3ce78f95c6c27"
+      },
+      "outcome_sources": {
+        "count": 4,
+        "sha256": "46bfb1a5b9f696b66c0f4ca216cab5a5effeb8031ebfa8dd2ae7836136d2caf1"
+      }
+    },
+    "integrity": "ok",
+    "foreignKeyFailures": 0
+  },
+  "ids": {
+    "task": "a4796930-1e80-4a2d-a23f-c6ac224e01fc",
+    "report": "e3a69d04-933d-4685-bdcd-14e4c19fb4e8",
+    "photo": "aa5b53de-bb1a-4aeb-acd1-369e1af0d220",
+    "cohort": "aidana-docker-cohort",
+    "inspection": "aidana-docker-inspection",
+    "forecast": "aidana-docker-forecast"
+  },
+  "stopped": true,
+  "finishedAt": "2026-10-31T17:17:33.729Z",
+  "counts": {
+    "passed": 16,
+    "failed": 0,
+    "skipped": 0,
+    "fixme": 0,
+    "flaky": 0
+  },
+  "secretScan": "passed"
+}
