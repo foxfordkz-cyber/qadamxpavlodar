@@ -1,0 +1,61 @@
+{
+  "capturedAt": "2026-10-31T19:34:01.642Z",
+  "origin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+  "sourceSha": "84d009e3b72c4fe637ef30607e29701054b6c621",
+  "deploymentId": "d0e985d1-bbd0-4f8c-b1c1-31d20d164ef7",
+  "scope": "Real browser screenshots of public immutable mock; synthetic data, no cloud login or backend writes; no DOM/CSS alteration.",
+  "screenshots": [
+    {
+      "file": "17-survival.jpg",
+      "description": "Existing Tolstogo site: synthetic survival estimate, intervals and provenance.",
+      "url": "https://d0e985d1.green-pavlodar-mock.pages.dev/?source=mock&lang=ru#/map?site=site-osm-1569993037",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "sha256": "1c65201429f06ccff27923fbcda6a690ef82ed93b25a0f4edcaa3a82c7a759c1"
+    },
+    {
+      "file": "18-work-plan.jpg",
+      "description": "Coordinator work plan and existing demonstration assignments.",
+      "url": "https://d0e985d1.green-pavlodar-mock.pages.dev/?source=mock&lang=ru#/tasks",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "sha256": "6cf34217ed97b7b0f0d4ba4a10a4b78c702c815af95a222b4202868af151b66b"
+    },
+    {
+      "file": "19-report-review.jpg",
+      "description": "Coordinator report detail from existing mock records; not new cloud acceptance.",
+      "url": "https://d0e985d1.green-pavlodar-mock.pages.dev/?source=mock&lang=ru#/reports?report=r-202",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "sha256": "7631d3d73da656d2936176b5ff36546e85a121dd59cc6c3fa386f72233f03a9b"
+    },
+    {
+      "file": "20-worker-report-kk.jpg",
+      "description": "Kazakh worker issue-report draft, mobile. Unsaved synthetic demonstration; no photo or report sent.",
+      "url": "https://d0e985d1.green-pavlodar-mock.pages.dev/?source=mock&lang=kk#/worker",
+      "viewport": {
+        "width": 390,
+        "height": 950
+      },
+      "sha256": "9d3cd1b537045fdd9b337a3fe8c1596702145217122e69fbf043eab61f50b089"
+    },
+    {
+      "file": "21-import.jpg",
+      "description": "Import interface and supported formats; no import or server mutation performed.",
+      "url": "https://d0e985d1.green-pavlodar-mock.pages.dev/?source=mock&lang=ru#/import",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "sha256": "c983743e5b78a9a0319e0bf507c0a99494c2941dc7605d7cd68b1f63eaf03094"
+    }
+  ],
+  "pageErrors": [],
+  "backendRequests": []
+}
