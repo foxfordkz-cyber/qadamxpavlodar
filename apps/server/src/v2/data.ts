@@ -29,8 +29,14 @@ export function validateReferences(s:Store,body:Record<string,any>) {
   if(body.carePolicyId)getDoc(s,'care_policy',body.carePolicyId);
   if(body.ownerCrewId&&!s.get('SELECT id FROM v2_crews WHERE id=?',body.ownerCrewId))fail('INVALID_REFERENCE','Owner crew not found',400);
 }
+export function newDocument(kind:Kind,body:Record<string,any>):Doc {
+  return {...body,id:randomUUID(),version:1,createdAt:now(),updatedAt:now(),...(kind==='plant'?{lastVerifiedCareAt:null}:{})};
+}
+export function updatedDocument(before:Doc,patch:Record<string,any>):Doc {
+  return {...before,...patch,version:before.version+1,updatedAt:now()};
+}
 export function createData(s:Store,a:User,kind:Kind,body:Record<string,any>) {
-  validateReferences(s,body);const result=insertDoc(s,kind,{...body,id:randomUUID(),version:1,createdAt:now(),updatedAt:now(),...(kind==='plant'?{lastVerifiedCareAt:null}:{})});audit(s,a,kind,result.id,'create',null,result);return result;
+  validateReferences(s,body);const result=insertDoc(s,kind,newDocument(kind,body));audit(s,a,kind,result.id,'create',null,result);return result;
 }
 export function patchData(s:Store,a:User,kind:Kind,objectId:string,body:Record<string,any>) {
   const before=getDoc(s,kind,objectId);matchVersion(before,body.expectedVersion);const{expectedVersion,...patch}=body;validateReferences(s,patch);
@@ -42,7 +48,7 @@ export function patchData(s:Store,a:User,kind:Kind,objectId:string,body:Record<s
     patch.missingData=(before.missingData??[]).filter((m:any)=>m?.field!=='factors.waterAvailability');
     if(value===null)patch.missingData.push({field:'factors.waterAvailability',reason:'Специалист отметил значение как неизвестное.'});
   }
-  const after:Doc={...before,...patch,version:before.version+1,updatedAt:now()};
+  const after=updatedDocument(before,patch);
   if(kind==='catalog')catalogInput.parse(Object.fromEntries(Object.entries(after).filter(([k])=>!['id','version','createdAt','updatedAt','reviewedBy'].includes(k))));
   if(kind==='site'&&after.isIntersection&&after.checks.trafficVisibility.status==='not_applicable')fail('TRAFFIC_CHECK_REQUIRED','Intersection visibility cannot be not_applicable',400);
   updateDoc(s,kind,after,before.version);audit(s,a,kind,objectId,'update',before,after);return after;

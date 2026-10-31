@@ -1,23 +1,20 @@
+import { param, openApi, type Api, type Operation } from './api-contract.js';
+export { param, openApi, type Api, type Operation, type Method } from './api-contract.js';
+import { sessionRoutes } from './session-routes.js';
 import { municipalRoutes } from '../municipal/routes.js';
-import { Router, type Request, type Response, type RequestHandler } from 'express';
+import { Router } from 'express';
 import { z } from 'zod';
 import { Store } from '../db.js';
-import { id,allow,fail,mutate,parseRow,type User } from './core.js';
-import { authenticate,actor,login,logout,loginInput,hashPassword } from './auth.js';
+import { allow,fail,mutate,parseRow,type User } from './core.js';
+import { actor,hashPassword } from './auth.js';
 import * as people from './people.js';
 import { domainRoutes } from './domain-routes.js';
 import { reportRoutes } from './report-routes.js';
 import { intelligenceRoutes,type V2Adapters } from './intelligence.js';
 import { visualizationRoutes } from './visualizations.js';
-import { responseData,responseModels } from './responses.js';
 import { adminHtml,adminJs } from './admin-ui.js';
 import { tzRoutes,type TzOptions } from '../tz/routes.js';
 
-export type Method='get'|'post'|'patch'|'put';
-export type Operation={method:Method;path:string;summary:string;input?:z.ZodType;query?:z.ZodType;response?:z.ZodType;readOnly?:boolean;public?:boolean;multipart?:boolean;binary?:boolean;idempotent?:boolean;status?:number};
-export type Api={router:Router;operations:Operation[];route:(op:Operation,...handlers:RequestHandler[])=>void;
-  write:(op:Operation,authorize:(a:User,req:Request)=>void,change:(a:User,body:any,req:Request)=>unknown)=>void};
-export const param=(req:Request)=>id.parse(req.params.id);
 export function defineApi(s:Store):Api {
   const router=Router(),operations:Operation[]=[];
   const route:Api['route']=(op,...handlers)=>{if(operations.some(x=>x.method===op.method&&x.path===op.path))throw Error(`Duplicate API operation: ${op.method} ${op.path}`);operations.push(op);router[op.method](op.path,...handlers);};
@@ -28,33 +25,15 @@ export function defineApi(s:Store):Api {
   });
   return{router,operations,route,write};
 }
-export function openApi(operations:Operation[]) {
-  const paths:Record<string,any>={};
-  for(const op of operations){
-    const path=op.path.replace(/:([a-zA-Z]+)/g,'{$1}');
-    const parameters:any[]=[...(op.path.includes(':id')?[{in:'path',name:'id',required:true,schema:{type:'string'}}]:[])];
-    if(op.query){const query=z.toJSONSchema(op.query,{io:'input',unrepresentable:'any'});for(const[name,schema]of Object.entries(query.properties??{}))parameters.push({in:'query',name,required:query.required?.includes(name)??false,schema});}
-    if(op.idempotent)parameters.push({in:'header',name:'Idempotency-Key',required:true,schema:{type:'string',minLength:1,maxLength:128}});
-    (paths[path]??={})[op.method]={summary:op.summary,tags:['Contract V2 / local DEMO'],security:op.public?[]:[{SessionCookie:[],...(op.method==='get'?{}:{CsrfToken:[]})}],parameters,
-      ...(op.input?{requestBody:{required:true,content:{[op.multipart?'multipart/form-data':'application/json']:{schema:z.toJSONSchema(op.input,{io:'input',unrepresentable:'any'})}}}}:{}),
-      responses:{[op.status??200]:{description:'Success',content:op.binary?{[op.path.endsWith('/export')?'application/pdf':'image/webp']:{schema:{type:'string',format:'binary'}},...(op.path.endsWith('/export')?{'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':{schema:{type:'string',format:'binary'}}}:{})}:{'application/json':{schema:{type:'object',required:['data'],properties:{data:z.toJSONSchema((op.response??responseData(op)),{io:'input',unrepresentable:'any'}),meta:{type:'object'}},additionalProperties:false}}}},
-        ...Object.fromEntries([400,401,403,404,409,413,415,422,429,500,503].map(status=>[status,{description:'Structured error',content:{'application/json':{schema:{$ref:'#/components/schemas/Error'}}}}]))}};
-  }
-  return{openapi:'3.1.0',info:{title:'Green Pavlodar — V2 + municipal API',version:'2.1.0-local',description:'V2 workflow and municipal import/analysis/export routes. Municipal calculations use labelled expert estimates; LLM adapter is optional; unconfigured or failed providers are explicitly labelled as rules fallback. Server session required; X-Demo-User is ignored. Cookie is HttpOnly/SameSite=Strict; local HTTP only. Send X-CSRF-Token from login/me on writes. Mutation replay rechecks current rights.'},servers:[{url:'/api/v1'}],paths,
-    components:{securitySchemes:{SessionCookie:{type:'apiKey',in:'cookie',name:'gp_v2_session'},CsrfToken:{type:'apiKey',in:'header',name:'X-CSRF-Token'}},schemas:{...Object.fromEntries(Object.entries(responseModels).map(([name,schema])=>[name,z.toJSONSchema(schema,{io:'input',unrepresentable:'any'})])),Error:{type:'object',required:['error'],properties:{error:{type:'object',required:['code','message','requestId'],properties:{code:{type:'string'},message:{type:'string'},requestId:{type:'string'},details:{}}}}}}}};
-}
 export function authRoutes(s:Store,api:Api) {
-  const{router,route}=api;
+  const{router}=api;
   router.use((_req,res,next)=>{res.set('X-API-Contract','V2');next();});
   router.get('/admin',(_req,res)=>res.set('Content-Security-Policy',"default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self'; frame-ancestors 'none'").type('html').send(adminHtml));
   router.get('/admin.js',(_req,res)=>res.type('js').send(adminJs));
   router.get('/openapi.json',(_req,res)=>res.json(openApi(api.operations)));
   router.get('/docs',(_req,res)=>res.type('html').send('<!doctype html><html><head><meta charset="utf-8"><title>Green Pavlodar V2</title><link rel="stylesheet" href="/api-docs/assets/swagger-ui.css"></head><body><div id="swagger-ui"></div><script src="/api-docs/assets/swagger-ui-bundle.js"></script><script src="/api/v1/docs/init.js"></script></body></html>'));
   router.get('/docs/init.js',(_req,res)=>res.type('js').send('window.ui=SwaggerUIBundle({url:"/api/v1/openapi.json",dom_id:"#swagger-ui",validatorUrl:null,withCredentials:true,persistAuthorization:false});'));
-  route({method:'post',path:'/auth/login',input:loginInput,public:true,summary:'Login with password; rotate persistent server session'},async(req,res)=>res.json({data:await login(s,req,res)}));
-  router.use(authenticate(s));
-  route({method:'get',path:'/auth/me',summary:'Current server identity and CSRF token'},(_req,res)=>res.json({data:{user:actor(res),csrfToken:res.locals.csrf}}));
-  route({method:'post',path:'/auth/logout',input:z.object({}).strict(),summary:'Revoke the current session'},(req,res)=>{z.object({}).strict().parse(req.body);res.json({data:logout(s,res)});});
+  sessionRoutes(s,api);
 }
 export function peopleRoutes(s:Store,api:Api) {
   const{route,write}=api;

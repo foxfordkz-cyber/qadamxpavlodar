@@ -1,3 +1,4 @@
+import { referenceDataRoutes, SqliteReferenceRepository } from './reference-data.js';
 import { z } from 'zod';
 import { Store } from '../db.js';
 import { type Api,param } from './router.js';
@@ -32,8 +33,6 @@ export function domainRoutes(s:Store,api:Api){
   route({method:'get',path:'/sites/:id/context',summary:'Stored context with provenance; no live mapping claim'},(req,res)=>{requireVisible(actor(res),'site',param(req));const site=getDoc(s,'site',param(req));res.json({data:getDoc(s,'context',site.contextId)});});
   for(const[kind,path,input,patch,authorize]of [
     ['catalog','/plant-catalog',d.catalogInput,d.catalogPatch,managers],
-    ['resource','/resources',d.resourceInput,d.resourcePatch,admin],
-    ['evidence','/evidence',d.evidenceInput,null,managers],
     ['care_policy','/care-policies',d.carePolicyInput,null,managers]
   ] as const){
     route({method:'get',path,query:d.listQuery,summary:`Read ${kind} with sources; worker catalog is scoped to assigned approved revisions`},(req,res)=>{
@@ -52,6 +51,7 @@ export function domainRoutes(s:Store,api:Api){
     write({method:'post',path,input,status:201,summary:`Create ${kind}`},authorize,(a,b)=>d.createData(s,a,kind,b));
     if(patch)write({method:'patch',path:path+'/:id',input:patch,summary:`Update ${kind} with expectedVersion`},authorize,(a,b,req)=>d.patchData(s,a,kind,param(req),b));
   }
+  referenceDataRoutes(api,new SqliteReferenceRepository(s));
   function designAccess(a:User,designId:string){
     if(a.role==='admin'||a.role==='coordinator'||a.role==='specialist'||a.role==='viewer')return;
     if(!tasks.allTasks(s).some(t=>t.approvedDesignId===designId&&tasks.canTask(s,a,t)))fail('NOT_FOUND','Design not found',404);

@@ -1,0 +1,28 @@
+# Optional owner-applied blueprint. Creating this file does not deploy a service.
+# The service is an explicitly limited PostgreSQL slice, not the full worker UI backend.
+services:
+  - type: web
+    name: green-pavlodar-api-demo
+    runtime: node
+    plan: free
+    branch: codex/cloud-api-persistence
+    rootDir: apps/server
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm run start:cloud
+    healthCheckPath: /api/v1/ready
+    autoDeployTrigger: 'off'
+    envVars:
+      - key: NODE_VERSION
+        value: 24.21.0
+      - key: NODE_ENV
+        value: production
+      - key: CLOUD_TRUST_PROXY_HOPS
+        value: '1'
+      - key: DATABASE_URL
+        sync: false
+      - key: ALLOWED_HOSTS
+        sync: false
+      - key: FRONTEND_ORIGINS
+        sync: false
+      - key: CLOUD_ALLOWED_HOSTS
+        sync: false
