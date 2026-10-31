@@ -4,9 +4,8 @@ import { openPage } from '../support/helpers';
 import { switchLanguage, expectNoOverflow } from '../support/session';
 import { workerReady } from '../support/worker';
 
-// The embedded cabinet currently supports a partial kk-draft dictionary. Check
-// translated service labels explicitly; do not reject its documented RU fallback,
-// source names, task descriptions or synthetic people's names as translation bugs.
+// Check stable service labels from the worker dictionary explicitly. Source
+// names, task descriptions and synthetic people's names are not translation bugs.
 const demoDay = '2026-10-28';
 const taskId = 'GP-104';
 const photoName = 'qa-demo-worker-locale.png';

@@ -1,0 +1,185 @@
+{
+  "schemaVersion": 1,
+  "applicationBase": "84d009e3b72c4fe637ef30607e29701054b6c621",
+  "appsTree": "2fd878cfbec10d93942afeb5add57a39a230304f",
+  "testSHA": "4644378264efd3a751462050f55b11f07f7c5ff0",
+  "scope": "Only E2E-11: eight mock locale/draft cases and four real local API direct-session/reload cases; not full or cloud acceptance",
+  "fullRun": false,
+  "testsChangedAfterMerge": false,
+  "runs": [
+    {
+      "profile": "mock",
+      "available": true,
+      "current": true,
+      "meta": {
+        "runId": "f037fed1-6b07-438e-a7b6-5fa57f36c19a",
+        "state": "finished",
+        "startedAt": "2026-10-31T18:34:45.059Z",
+        "endedAt": "2026-10-31T18:35:27.153Z",
+        "exitCode": 0,
+        "revision": "4644378264efd3a751462050f55b11f07f7c5ff0",
+        "dirty": false,
+        "selection": "subset",
+        "capturesScreens": false,
+        "command": "node scripts/run.mjs mock",
+        "environment": {
+          "node": "24.22.2",
+          "playwright": "1.64.1",
+          "platform": "win32",
+          "arch": "x64",
+          "workers": 2,
+          "retries": 0
+        },
+        "target": "http://localhost:5176"
+      },
+      "tests": [
+        {
+          "title": "E2E-11: Работник, Kazakh document and reload translate controls after explicit mock role re-entry",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 6838
+        },
+        {
+          "title": "E2E-11: Бригадир, Kazakh document and reload translate controls after explicit mock role re-entry",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 10532
+        },
+        {
+          "title": "E2E-11: switching RU/KK persists without a language URL override after mock role re-entry",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 11364
+        },
+        {
+          "title": "E2E-11: note and synthetic photo survive language repaint and reload with mock role re-entry",
+          "project": "desktop",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 9608
+        },
+        {
+          "title": "E2E-11: Работник, Kazakh document and reload translate controls after explicit mock role re-entry",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 6331
+        },
+        {
+          "title": "E2E-11: Бригадир, Kazakh document and reload translate controls after explicit mock role re-entry",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 7667
+        },
+        {
+          "title": "E2E-11: switching RU/KK persists without a language URL override after mock role re-entry",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 9134
+        },
+        {
+          "title": "E2E-11: note and synthetic photo survive language repaint and reload with mock role re-entry",
+          "project": "mobile",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 8859
+        }
+      ],
+      "counts": {
+        "passed": 8,
+        "failed": 0,
+        "fixme": 0,
+        "skipped": 0,
+        "flaky": 0,
+        "notRun": 0
+      },
+      "runnerFailed": false,
+      "durationMs": 41049.179000000004
+    },
+    {
+      "profile": "api",
+      "available": true,
+      "current": true,
+      "meta": {
+        "runId": "6c6d7b8c-ce4e-430f-a490-20f1aa77bb52",
+        "state": "finished",
+        "startedAt": "2026-10-31T18:35:36.341Z",
+        "endedAt": "2026-10-31T18:35:50.151Z",
+        "exitCode": 0,
+        "browserExitCode": 0,
+        "privacyScan": "passed",
+        "revision": "4644378264efd3a751462050f55b11f07f7c5ff0",
+        "dirty": false,
+        "selection": "subset",
+        "capturesScreens": false,
+        "command": "node scripts/run.mjs api",
+        "environment": {
+          "node": "24.22.2",
+          "playwright": "1.64.1",
+          "platform": "win32",
+          "arch": "x64",
+          "workers": 1,
+          "retries": 0
+        },
+        "target": "http://localhost:5177"
+      },
+      "tests": [
+        {
+          "title": "E2E-11 API: worker1, 375px, authenticated direct KK entry and reload",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 1793,
+          "diagnostics": []
+        },
+        {
+          "title": "E2E-11 API: foreman1, 375px, authenticated direct KK entry and reload",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 1634,
+          "diagnostics": []
+        },
+        {
+          "title": "E2E-11 API: worker1, 1280px, authenticated direct KK entry and reload",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 1587,
+          "diagnostics": []
+        },
+        {
+          "title": "E2E-11 API: foreman1, 1280px, authenticated direct KK entry and reload",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2133,
+          "diagnostics": []
+        }
+      ],
+      "counts": {
+        "passed": 4,
+        "failed": 0,
+        "fixme": 0,
+        "skipped": 0,
+        "flaky": 0,
+        "notRun": 0
+      },
+      "runnerFailed": false,
+      "durationMs": 7147
+    }
+  ]
+}
