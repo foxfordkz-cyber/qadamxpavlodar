@@ -1,7 +1,10 @@
-# Deployment readiness (2026-10-30)
+# Deployment readiness (updated 2026-10-31)
 
-Base synchronized by normal merges with coordinator cf07b97, then b53c180 (UI/fonts/site names).
-Public hosting: **BLOCKED_PENDING_HOSTING**. PR #22 stays Draft until Docker runtime acceptance.
+Current integration base: `a66d542c63c527d608400c84b34d49f982855369` on `codex/coordinator`.
+PR #31, viewer fix #33 and Kazakh review #34 are already merged. Outcomes is included in this
+source tree; an older healthy `gp-integration` image is not evidence for this release.
+The 2026-10-30 verification sections below are historical results, not tests of a newer SHA.
+Public hosting: **BLOCKED_PENDING_HOSTING**. Container and HTTPS acceptance remain captain-owned.
 Required from captain: approved Linux host, domain, SSH access via secure channel,
 budget and permission to publish a specific accepted coordinator SHA. No paid resources provisioned.
 
@@ -25,7 +28,7 @@ curl --fail http://127.0.0.1:8080/health
 curl --fail http://127.0.0.1:8080/
 ```
 
-Use these changed configuration files only after captain accepts this PR. Image provenance must
+Use only the clean release SHA accepted by the captain. Image provenance must
 be recorded against that exact clean commit; retain image IDs/tags for rollback. Lockfiles drive npm ci.
 Web Dockerfile includes tools/worker-demo/demo; server includes shared analytics and OSM/Pavlodar fixtures.
 
@@ -81,7 +84,7 @@ plain `config`/`docker inspect` may expose injected secrets and must not be shar
    never recreate all accounts to obtain a working demo login.
 
 The commands above are instructions for the captain's Engine-enabled machine, not a claim that
-Docker runtime was verified on this workstation. Keep PR #22 Draft until that acceptance.
+Docker runtime was verified on this workstation. Record runtime acceptance independently of PR status.
 
 Compose process variables override the env_file for the explicit network keys below.
 ALLOWED_HOSTS=approved.example.org; FRONTEND_ORIGINS=https://approved.example.org (replace with approved domain).
@@ -114,15 +117,18 @@ The named gp-data volume stores SQLite WAL files, sessions and uploads. Keep Com
 green-pavlodar stable between release directories. Never use down -v or volume prune.
 Stop writes before consistent database-plus-files backup; copying only a live .sqlite misses WAL.
 
-After PR #23 is accepted into the same release image, opt-in Outcomes demonstration data is seeded by:
+Outcomes is present in the current integrated source. Its demonstration data remains opt-in:
 
 ```sh
 docker compose -p green-pavlodar exec -T server npm run seed:outcomes
 ```
 
-Run after the normal server startup seed. PR #22 alone does not contain this npm script; it belongs
-to PR #23. Repeat is idempotent and does not overwrite the saved forecast or user records. UI `#/outcomes`
-also needs accepted PR #24. See `docs/outcomes-data-handoff.md` in the integrated release.
+Run after the normal server startup seed, only in an explicitly designated synthetic test database.
+Repeat is idempotent and does not overwrite the saved forecast or user records. The current image must
+contain `src/outcomes/routes.ts`, `src/outcomes/seed-cli.ts` and the `seed:outcomes` package script.
+See `docs/outcomes-data-handoff.md`. Do not seed or migrate the existing 8080 stand as a diagnostic:
+it contains user changes to 114 zones, versions and history. Keep `C:\gp-backups` private; backups
+contain sessions and must never enter GitHub, cloud storage or shared evidence artifacts.
 
 To check persistence, record a cohort/report ID and its version through authenticated API, run
 `docker compose -p green-pavlodar restart server`, wait for healthy status, then read the same record
@@ -227,8 +233,8 @@ node --import ./scripts/local-network-guard.mjs --import tsx src/server.ts
 Direct node commands intentionally do not read any existing .env. Keep the terminal/environment
 for restart: Ctrl+C and rerun only the server command, preserving STORAGE_ROOT. Do not repeat the
 new-folder line when demonstrating persistence. A second seed in this same environment is safe.
-For outcomes, use its own worktree or an approved integrated checkout and additionally run its documented
-opt-in outcomes seed before starting the server; that module is not part of deployment PR #22.
+For Outcomes, use this accepted integrated checkout and additionally run its documented opt-in seed
+only against the same newly created test storage. It is not part of the automatic TZ startup seed.
 
 Terminal 2, from the same checkout root:
 
@@ -285,10 +291,11 @@ All validation sources/fixtures were compared byte-for-byte with this worktree; 
 
 ## Captain Docker acceptance: two isolated cases (final handoff)
 
-**Runtime has not been accepted here. PR #22 remains Draft.** Damir/Claude runs these
-commands on an Engine-enabled machine. Both cases use the same clean accepted SHA, including
-this PR's latest commit. Before common acceptance also integrate PR #29 (captain only).
-The examples below use a POSIX shell, Git, Docker Engine, Compose and curl. Check the Engine
+**Runtime has not been accepted here.** Damir/Claude runs these commands on an Engine-enabled
+machine. Both cases use the same clean accepted coordinator SHA containing #31, #33 and #34.
+Do not restart, recreate, seed, or remove the existing `gp-integration` project or its volume for
+these checks. The new project names below create separate test storage and use separate ports.
+The examples below use a POSIX shell, Git, Docker Engine, Compose, sha256sum and curl. Check the Engine
 and Compose separately; an installed client or successful `config` is not runtime PASS.
 
 ```sh
@@ -331,6 +338,27 @@ badge. An unknown generated server password stays hidden; do not try to recover 
 This case cannot validate authenticated API uploads: use a labelled synthetic file probe below,
 then perform an actual photo upload in Case B. Free the chosen ports by selecting other free ports
 and matching FRONTEND_ORIGINS, never by stopping another participant's processes.
+
+After each case starts, verify its image before accepting health. Set `CASE_PROJECT` to that case's
+new project name (`CASE_A` or `CASE_B`), from its clean checkout. Compare the running image's relevant
+files with the accepted checkout, rather than trusting an image tag or healthy status:
+
+```sh
+CASE_PROJECT="$CASE_A" # In Case B, use "$CASE_B" instead.
+test "$(git rev-parse HEAD)" = "$ACCEPTED_SHA" || exit 1
+test -z "$(git status --porcelain --untracked-files=no)" || exit 1
+docker compose -p "$CASE_PROJECT" images --format json
+for f in package.json src/app.ts src/outcomes/routes.ts src/outcomes/seed-cli.ts src/outcomes/service.ts src/v2/tasks.ts src/v2/people.ts; do
+  source_hash=$(sha256sum "apps/server/$f" | cut -d ' ' -f 1)
+  image_hash=$(docker compose -p "$CASE_PROJECT" exec -T server sha256sum "$f" | cut -d ' ' -f 1)
+  test -n "$image_hash" && test "$source_hash" = "$image_hash" || exit 1
+done
+```
+
+These hashes contain no credentials. A missing Outcomes module or any mismatch fails acceptance:
+rebuild this isolated project from the accepted SHA; do not patch files inside the old running image.
+HTTP acceptance below remains necessary even when all hashes match. `/health` proves SQLite liveness,
+not module coverage, viewer authorization or persistent business data.
 
 Create one synthetic persistence probe only in this newly named project:
 
@@ -404,6 +432,9 @@ Open `http://127.0.0.1:18081/?source=api#/`. Log in as coordinator, then admin a
 private browser sessions, entering the password only in the password field. Confirm each role
 with `GET /api/v1/auth/me` HTTP 200. Privately inspect the session cookie: HttpOnly, SameSite=Strict.
 This loopback HTTP case does not prove HTTPS Secure; the approved TLS endpoint needs separate acceptance.
+Also verify worker1/foreman1 and their existing task/crew restrictions. Run the image comparison above
+with `CASE_PROJECT="$CASE_B"`. After authenticated viewer login, `GET /api/v1/outcomes/cohorts` must
+return 200 with a data array (possibly empty); 404 or a missing module is not a ready release.
 
 For CSRF, use DevTools Network on a disposable session: sign out once using the UI, then log in again.
 Use the existing logout request's **Edit and Resend** feature, removing only X-CSRF-Token and using
@@ -414,16 +445,25 @@ local deployment regression below as supporting evidence and mark the container 
 until the captain exercises it in a capable browser; do not infer container PASS from local tests.
 
 For real uploads, use a demo worker's existing report-photo control in `#/worker` on an assigned task
-(when the new TZ seed has no task, coordinator/admin first assigns a disposable demo task through the
+(when the new TZ seed has no task, coordinator first assigns a disposable demo task through the
 normal UI and foreman assigns the worker). Upload a non-personal test image. Record only the report/task
 ID, version, photo ID/URL and file length, never credentials. Reopen the report/photo and record HTTP 200.
 Keep an authenticated coordinator session and one modified zone/report ID plus its version for comparison.
+Include an accepted report, a linked inspection, its immutable forecast and audit history in the
+separate synthetic acceptance database. Use existing HTTP APIs/regressions from
+[viewer-read-fix.md](viewer-read-fix.md); the manual-confirmation badge is not a creation form.
+Viewer must read the populated task/report/photo/crew/worker endpoints and receive 403 for writes.
+Unknown states remain null/unknown, never zero or assumed alive. An opt-in seed cohort is demo data,
+not proof that a worker report was accepted; verify the report-to-inspection link explicitly.
 
 ```sh
 docker compose -p "$CASE_B" restart server
 docker compose -p "$CASE_B" up -d --wait
 curl --fail --silent --show-error http://127.0.0.1:18081/health
 docker compose -p "$CASE_B" exec -T server npm run seed:tz
+# Only this disposable demonstration database, after its normal TZ seed:
+docker compose -p "$CASE_B" exec -T server npm run seed:outcomes
+docker compose -p "$CASE_B" exec -T server npm run seed:outcomes
 ```
 
 Expected: same session still returns `/auth/me` 200; the same record ID/version and report/photo remain;
@@ -431,6 +471,10 @@ the uploaded image can be retrieved again; all three original private logins sti
 seed records or password reset. Also run Case A's read-only integrity/FK commands against Case B's project
 (without the probe-table assertion). The persistent volume names are `${CASE_A}_gp-data` and
 `${CASE_B}_gp-data`; the two databases and upload directories are separate.
+Record the same accepted-report/inspection/snapshot IDs, versions, history and summary before and after;
+repeat Outcomes seed must not rewrite them. Restore a stopped-writer SQLite/uploads backup into a
+third new disposable volume and check it separately. Never use the 8080 user's data or `C:\gp-backups`
+for these synthetic tests. Container restart/restore remain NOT RUN until the captain supplies evidence.
 
 ### Captain evidence and exit criterion
 
@@ -441,12 +485,13 @@ The exact existing local supporting command is:
 
 ```sh
 cd apps/server
-node --import ./scripts/local-network-guard.mjs --import ./tests/setup-env.mjs --import tsx --test tests/deployment.test.ts
+node --import ./scripts/local-network-guard.mjs --import ./tests/setup-env.mjs --import tsx --test tests/deployment.test.ts tests/viewer-read.test.ts
 ```
 
 It uses independent temporary databases and is not container acceptance. Backup/restore and update
 procedures above remain mandatory for a real operator upgrade. No acceptance command resets passwords,
 deletes volumes, disables CSRF or deploys publicly. Case A/B runtime checklists stay **BLOCKED / captain**
-until actual evidence exists. Only then may the captain request PR #22 Ready.
+until actual evidence exists. Public HTTPS additionally needs real Secure/HttpOnly/SameSite cookie,
+CSRF and logout checks at the approved URL. A loopback pass does not establish HTTPS readiness.
 
-**PR #22 подготовлен к Docker acceptance капитаном.**
+Fresh local results and the exact tested SHA: [release-api-acceptance-2026-10-31.md](release-api-acceptance-2026-10-31.md).
