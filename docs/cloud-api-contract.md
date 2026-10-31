@@ -22,7 +22,7 @@ Local preparation and fresh test evidence: [cloud-deployment-readiness.md](cloud
 | Private Storage | green-pavlodar-photos; private, WebP only, max 5242880 bytes; actual upload/read/hash/replay PASS; provider anonymous public/authenticated paths denied |
 | Health/readiness / HTTPS role workflow | Actual HTTPS 200; schemaVersion 5, database ok, private-storage-configured; workflow/roles/CSRF PASS |
 | Restart/redeploy/same-SHA persistence | Actual restart, same-SHA redeploy and reseed/verify PASS; 31 tables / 956 rows unchanged by reseed; original passwords preserved |
-| Cloudflare fixed same-origin proxy | Production https://green-pavlodar-api.pages.dev: real HTTP role/photo/report/acceptance/replay PASS; viewer browser login/reload/Outcomes/private image/logout PASS; full independent UI/device acceptance still separate |
+| Cloudflare fixed same-origin proxy | Production https://green-pavlodar-api.pages.dev: real HTTP role/photo/report/acceptance/replay PASS; browser worker upload/report → coordinator acceptance → viewer/Outcomes PASS; viewer RU/KK × 375/1280 reads PASS; worker KK localization FAIL, full independent UI/device acceptance separate |
 | Source versions | PR #39 stays Draft; operator tooling HEAD is not automatically a new approved deployed SHA |
 
 Proxy configuration for Тәңірберді: fixed upstream origin above, upstream Host
@@ -39,6 +39,10 @@ Origin returned 403. Preserve Cookie, separate Set-Cookie headers, multipart bou
 status/error body, CSRF and Idempotency-Key; no caching/redirects or caller-selected upstream.
 Secure HttpOnly SameSite=Strict host-only sessions require the same-origin proxy for browser use.
 No Supabase keys or database credentials belong in the frontend or Cloudflare build.
+
+[Browser evidence and remaining UI-KK-WORKER defect](cloud-browser-acceptance.md) distinguish
+the successful role flow from incomplete worker localization. This defect requires the frontend/
+cabinet owner; no server DTO/security change is required by the observed behavior.
 
 The new check:cloud-deployment CLI is read-only and never applies migrations or seed.
 The cloud-https-acceptance runner is explicitly synthetic, makes real HTTP mutations only after
