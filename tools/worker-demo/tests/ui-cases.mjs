@@ -275,6 +275,96 @@ test('worker navigation: an in-flight mutation blocks page and focus changes', a
   assert.deepEqual(focused, []);
 });
 
+test('worker language: RU/KK round trip keeps the open photo draft and pending save without reconfiguring', async () => {
+  const { component } = navigationUi(), env = setup(), saving = deferred();
+  component.locale = 'ru';
+  component.workflow = env.workflow;
+  component.gateway = new Proxy({}, { get: () => { throw Error('Changing language must not contact the API'); } });
+  component.configure = () => assert.fail('Changing language must not reset the cabinet');
+  component.draft = await env.workflow.draft('t');
+  Object.assign(component.draft, { note: 'Не потерять заметку', photo: picture() });
+  component.selected = { ...component.selected, reportMode: 'single', approvedDesignId: null, design: null };
+  const draft = component.draft, photo = draft.photo, key = draft.idempotencyKey;
+  component.writeChain = saving.promise.then(() => env.workflow.save(draft));
+  const preserved = Object.fromEntries(['page', 'date', 'section', 'selected', 'tasks', 'mobileDetail', 'draft',
+    'previewURL', 'assignmentDraft', 'message', 'writeChain', 'queue', 'contextVersion', 'photoSelectionVersion',
+    'workflow', 'gateway', 'busy'].map(field => [field, component[field]]));
+  const renders = [];
+  component.render = () => renders.push(component.form());
+  component.setLocale('kk-draft');
+  assert.equal(component.t.start, 'Тапсырманы бастау');
+  assert.match(renders[0], /Фото таңдау/);
+  assert.match(renders[0], /Тексеруге жіберу/);
+  assert.match(renders[0], /Не потерять заметку/);
+  assert.equal(component.t.reportTitle, ru.reportTitle, 'untranslated labels retain the documented Russian fallback');
+  component.setLocale('kk-draft');
+  assert.equal(renders.length, 1, 'same-language notification must not replace the form again');
+  component.setLocale('ru');
+  assert.match(renders[1], /Отправить на проверку/);
+  for (const [field, value] of Object.entries(preserved)) assert.equal(component[field], value, `language replaced ${field}`);
+  assert.equal(draft.photo, photo); assert.equal(draft.idempotencyKey, key);
+  assert.equal(await env.drafts.get(draft.storageKey), undefined);
+  saving.resolve(); await component.writeChain;
+  const saved = await env.drafts.get(draft.storageKey);
+  assert.equal(saved.note, draft.note); assert.equal(saved.idempotencyKey, key);
+  assert.deepEqual(await saved.photo.arrayBuffer(), await photo.arrayBuffer());
+});
+
+test('worker language: switching during send keeps the frozen action and busy guard until its result', async () => {
+  const component = ui(), entered = deferred(), release = deferred();
+  const frozen = { idempotencyKey: 'same-operation', note: 'Original payload' }, photo = picture();
+  const draft = { kind: 'report', note: 'Original payload', photo, idempotencyKey: 'same-operation', frozen };
+  Object.assign(component, { locale: 'ru', draft, previewURL: 'blob:photo', writeChain: Promise.resolve() });
+  let sends = 0;
+  component.workflow = { send: async value => {
+    assert.equal(value, draft); sends++; entered.resolve(); await release.promise;
+    throw Object.assign(new Error('timeout'), { code: 'WORKER_REQUEST_TIMEOUT' });
+  }, pending: async () => [draft] };
+  const workflow = component.workflow, version = component.contextVersion;
+  const sending = component.action('send'); await entered.promise;
+  component.setLocale('kk-draft');
+  assert.equal(component.busy, true);
+  assert.equal(component.draft, draft); assert.equal(component.draft.frozen, frozen);
+  assert.equal(component.draft.photo, photo); assert.equal(component.previewURL, 'blob:photo');
+  assert.equal(component.workflow, workflow); assert.equal(component.contextVersion, version);
+  await component.action('send');
+  assert.equal(sends, 1, 'language update must not unlock a duplicate mutation');
+  release.resolve(); await sending;
+  assert.equal(component.busy, false); assert.equal(component.draft, draft);
+  assert.deepEqual(component.queue, [draft]);
+  assert.equal(component.message.text, dictionary('kk-draft').requestTimeout);
+  assert.equal(draft.idempotencyKey, 'same-operation'); assert.equal(draft.frozen, frozen);
+});
+
+test('worker language: unconfirmed AI edits survive repaint and still require explicit acceptance', async () => {
+  const component = ui();
+  Object.assign(component, { locale: 'ru', user: { id: 'f', role: 'foreman' },
+    draft: { note: 'Original note', analysis: null },
+    suggestion: { category: 'other', facts: ['Original fact'], provenance: { originalText: 'Original note' } } });
+  const suggestion = component.suggestion, original = structuredClone(suggestion);
+  let fields = { '#ai-category': { value: 'damage' }, '#ai-facts': { value: '' } };
+  component.root.querySelector = selector => fields[selector] ?? null;
+  component.render = () => { fields = { '#ai-category': { value: 'other' }, '#ai-facts': { value: 'Original fact' } }; };
+  let saves = 0;
+  component.saveDraft = async () => { saves++; };
+  component.setLocale('kk-draft');
+  assert.equal(fields['#ai-category'].value, 'damage');
+  assert.equal(fields['#ai-facts'].value, '', 'an intentional empty edit must not revert to AI text');
+  assert.equal(component.t.myTasks, component.t.crewTasks);
+  assert.equal(component.t.workerSpace, component.t.foremanSpace);
+  assert.equal(component.draft.analysis, null); assert.equal(saves, 0);
+  fields['#ai-facts'].value = 'Edited fact\nSecond fact';
+  component.setLocale('ru');
+  assert.equal(component.suggestion, suggestion); assert.deepEqual(suggestion, original);
+  assert.equal(fields['#ai-facts'].value, 'Edited fact\nSecond fact');
+  await component.action('accept-ai');
+  assert.equal(component.draft.analysis.category, 'damage');
+  assert.deepEqual(component.draft.analysis.facts, ['Edited fact', 'Second fact']);
+  assert.equal(component.draft.analysis.decision, 'edited');
+  assert.deepEqual(component.draft.analysis.provenance.suggestion, { category: 'other', facts: ['Original fact'] });
+  assert.equal(saves, 1);
+});
+
 test('real API UI: assignment retries preserve body/key and switching task creates a separate action', async () => {
   const component = ui(), calls = [];
   component.gateway = { assignWorkers: async (id, body) => { calls.push({ id, body: structuredClone(body) }); throw new Error('network'); } };

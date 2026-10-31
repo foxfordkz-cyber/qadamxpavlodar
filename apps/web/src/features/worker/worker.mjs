@@ -33,6 +33,20 @@ export class GreenWorker extends HTMLElement {
     this.gateway = gateway; this.tasks = []; this.selected = null; this.draft = null; this.suggestion = null; this.message = null; this.queue = []; this.section = 'current'; this.page = 'tasks'; this.busy = false; this.aiBusy = false; this.geoBusy = false; this.mobileDetail = false;
     this.setPreview(null); this.render(); if (user) await this.refresh(false);
   }
+  setLocale(locale) {
+    const next = locale === 'kk-draft' ? 'kk-draft' : 'ru';
+    if (this.locale === next) return;
+    // These unconfirmed edits live in the form until accept-ai. Keep them separate
+    // from the original suggestion so changing language never accepts or rewrites it.
+    const edits = ['#ai-category', '#ai-facts'].map(selector => [selector, this.root.querySelector(selector)?.value]);
+    this.locale = next; this.t = { ...dictionary(next) };
+    if (this.user?.role === 'foreman') { this.t.myTasks = this.t.crewTasks; this.t.workerSpace = this.t.foremanSpace; }
+    this.render();
+    for (const [selector, value] of edits) {
+      const field = this.root.querySelector(selector);
+      if (field && value !== undefined) field.value = value;
+    }
+  }
   errorText(error) { return error?.code === 'WORKER_REQUEST_TIMEOUT' ? this.t.requestTimeout : error?.code === 'WORKER_REQUEST_ABORTED' ? this.t.requestCancelled : error?.message || String(error); }
   showError(error) { this.message = { text: this.errorText(error), tone: 'error' }; this.render(); }
   notify(text, tone = '') { this.message = { text, tone }; this.render(); }
