@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
 import { PostgresDatabase } from './database.js';
+import { migration2 } from './planning-migration.js';
 
 // Deliberately private schema, not public/PostgREST. No application data is imported from SQLite.
 export const migration1 = `
@@ -43,18 +44,23 @@ CREATE TABLE gp_cloud.idempotency (
 );
 REVOKE ALL ON ALL TABLES IN SCHEMA gp_cloud FROM PUBLIC;
 `;
+export const migrations = [migration1, migration2] as const;
+export const schemaVersion = migrations.length;
 export async function migrate(db: PostgresDatabase) {
-  const checksum = createHash('sha256').update(migration1).digest('hex');
+  if ((await db.pool.query('SHOW server_encoding')).rows[0].server_encoding !== 'UTF8')
+    throw Error('Cloud database must use UTF8; existing database was not modified');
+  const checksums = migrations.map(sql => createHash('sha256').update(sql).digest('hex'));
   await db.transaction(async client => {
     await client.query('SELECT pg_advisory_xact_lock(733112621)');
     await client.query('CREATE SCHEMA IF NOT EXISTS gp_cloud');
     await client.query('REVOKE ALL ON SCHEMA gp_cloud FROM PUBLIC');
     await client.query('CREATE TABLE IF NOT EXISTS gp_cloud.schema_migrations(version integer PRIMARY KEY, checksum text NOT NULL)');
     const rows = (await client.query('SELECT * FROM gp_cloud.schema_migrations ORDER BY version')).rows;
-    if (rows.some(r => r.version !== 1 || r.checksum !== checksum)) throw Error('Unknown or changed cloud migration; no data was reset');
-    if (rows.length === 0) {
-      await client.query(migration1);
-      await client.query('INSERT INTO gp_cloud.schema_migrations VALUES (1,$1)', [checksum]);
+    if (rows.some((r,i) => r.version !== i+1 || r.checksum !== checksums[i]))
+      throw Error('Unknown or changed cloud migration; no data was reset');
+    for (let i=rows.length;i<migrations.length;i++) {
+      await client.query(migrations[i]!);
+      await client.query('INSERT INTO gp_cloud.schema_migrations VALUES ($1,$2)', [i+1,checksums[i]]);
     }
   });
 }

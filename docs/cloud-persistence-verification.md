@@ -1,5 +1,8 @@
 # Cloud persistence verification — 31 October 2026
 
+> Historical first-slice results below apply to the recorded SHAs, not the current Stage A source.
+> Current planning API/parity/restart acceptance: [cloud-stage-a-acceptance.md](cloud-stage-a-acceptance.md).
+
 Repository: `foxfordkz-cyber/qadamxpavlodar`.
 Verified integration source: **`13519968547fb005e25f6470db40ad60433f12b7`**, branch
 `codex/cloud-api-persistence`, based on coordinator **`98cf6c68d5370331d6f95aa9e749f82d504e5670`** by ordinary merge.

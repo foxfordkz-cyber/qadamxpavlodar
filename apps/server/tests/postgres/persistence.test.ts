@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { randomBytes } from 'node:crypto';
-import { mkdtempSync } from 'node:fs';
+import { mkdtempSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { createServer } from 'node:net';
@@ -25,7 +25,7 @@ test('real PostgreSQL: HTTP persistence slice (isolated native server, no SQLite
   const databaseDir=mkdtempSync(join(tmpdir(),'gp-cloud-pg-'));
   const pgPort=await freePort(),port=await freePort(),dbPassword=randomBytes(24).toString('hex'),demoPassword=randomBytes(24).toString('hex');
   const cluster=new EmbeddedPostgres({databaseDir,port:pgPort,user:'postgres',password:dbPassword,authMethod:'scram-sha-256',persistent:true,
-    createPostgresUser:false,autoRehydrateSymlinks:true,postgresFlags:['-h','127.0.0.1'],onLog:()=>{},onError:()=>{}});
+    createPostgresUser:false,autoRehydrateSymlinks:true,initdbFlags:['--encoding=UTF8','--locale=C'],postgresFlags:['-h','127.0.0.1'],onLog:()=>{},onError:()=>{}});
   const connectionString=`postgresql://postgres:${dbPassword}@127.0.0.1:${pgPort}/postgres`;
   let db=new PostgresDatabase({connectionString,ssl:false});let child:ChildProcess|undefined;let started=false;
   const origin=`http://127.0.0.1:${port}`;
@@ -38,7 +38,7 @@ test('real PostgreSQL: HTTP persistence slice (isolated native server, no SQLite
     return {res,json:await res.json() as any};
   }
   async function startBackend() {
-    child=spawn(process.execPath,['--import','./scripts/local-network-guard.mjs','dist/cloud/server.js'],{windowsHide:true,
+    child=spawn(process.execPath,['--import','./scripts/local-network-guard.mjs','--import','tsx','dist/cloud/server.js'],{windowsHide:true,
       env:{...process.env,DATABASE_URL:connectionString,CLOUD_LOCAL_TEST:'1',PORT:String(port),ALLOWED_HOSTS:'127.0.0.1',FRONTEND_ORIGINS:origin},stdio:['ignore','pipe','pipe']});
     // Deliberately do not forward process output/configuration into test failure logs.
     let diagnostic='';child.stdout?.resume();child.stderr?.on('data',(data:Buffer)=>{diagnostic=(diagnostic+data.toString()).slice(-6000);});
@@ -87,7 +87,7 @@ test('real PostgreSQL: HTTP persistence slice (isolated native server, no SQLite
       assert.equal((await request('/resources')).res.status,401);
       assert.equal((await request('/auth/me','GET',undefined,viewer)).json.data.user.role,'viewer');
       const spec=await request('/openapi.json');
-      assert.equal(Object.values(spec.json.paths).reduce((n:number,p:any)=>n+Object.keys(p).length,0),8);
+      assert.deepEqual(spec.json,JSON.parse(readFileSync('openapi-cloud.json','utf8')));
       assert.equal(spec.json.paths['/tasks'],undefined);
       const rejectedEncodings:Record<string,string>[]=[{'Content-Type':'application/json; charset=unsupported'},{'Content-Type':'application/json','Content-Encoding':'unsupported'}];
       for(const headers of rejectedEncodings) {

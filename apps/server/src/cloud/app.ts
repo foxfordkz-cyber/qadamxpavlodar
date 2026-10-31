@@ -8,6 +8,9 @@ import { openApi, type Api, type Operation } from '../v2/api-contract.js';
 import { PostgresAuthRepository } from './auth-repository.js';
 import { PostgresReferenceRepository } from './reference-repository.js';
 import { PostgresDatabase } from './database.js';
+import { planningRoutes } from './planning-routes.js';
+import { PostgresPlanningRepository } from './planning-repository.js';
+import { schemaVersion } from './migrations.js';
 import type { CloudConfig } from './config.js';
 
 export function createCloudApp(db: PostgresDatabase, config: CloudConfig) {
@@ -40,18 +43,19 @@ export function createCloudApp(db: PostgresDatabase, config: CloudConfig) {
     next();
   });
   app.use(express.json({limit:'32kb',strict:true}));
-  for (const path of ['/health','/api/v1/health']) app.get(path,(_req,res)=>res.json({status:'ok',mode:'DEMO',storage:'postgresql',scope:'auth-reference-data'}));
-  app.get('/api/v1/ready',async(_req,res)=>{await db.ready();res.json({status:'ok',database:'ok',mode:'DEMO',schemaVersion:1,capabilities:['auth','evidence','resources'],photos:'unsupported'});});
+  for (const path of ['/health','/api/v1/health']) app.get(path,(_req,res)=>res.json({status:'ok',mode:'DEMO',storage:'postgresql',scope:'auth-reference-planning'}));
+  app.get('/api/v1/ready',async(_req,res)=>{await db.ready();res.json({status:'ok',database:'ok',mode:'DEMO',schemaVersion,capabilities:['auth','evidence','resources','sites','context','analysis','rates','snapshots'],photos:'unsupported'});});
   const router=Router(),operations:Operation[]=[];
   const route:Api['route']=(op,...handlers)=>{operations.push(op);router[op.method](op.path,...handlers);};
   router.get('/openapi.json',(_req,res)=>{
     const spec=openApi(operations);
-    spec.info={...spec.info,title:'Green Pavlodar — PostgreSQL first slice',version:'2.1.0-cloud-slice',
-      description:'Only auth, evidence and resources are supported. Other domains return 503 CLOUD_ENDPOINT_UNSUPPORTED. Secure HttpOnly SameSite=Strict sessions; CSRF and idempotency required on writes. No SQLite or mock fallback.'};
+    spec.info={...spec.info,title:'Green Pavlodar — PostgreSQL planning API',version:'2.2.0-cloud-planning',
+      description:'Auth, reference data and planning calculations are supported. Task/report/photo/Outcomes workflow is not migrated. Other domains return 503 CLOUD_ENDPOINT_UNSUPPORTED. Secure HttpOnly SameSite=Strict sessions; CSRF and idempotency required on writes. No SQLite or mock fallback.'};
     res.json(spec);
   });
   sessionRoutes(new PostgresAuthRepository(db),{router,route},config.secureCookies);
   referenceDataRoutes({route},new PostgresReferenceRepository(db));
+  planningRoutes({route},new PostgresPlanningRepository(db));
   router.use((_req,_res,next)=>next(new ApiError(503,'CLOUD_ENDPOINT_UNSUPPORTED','This endpoint is not migrated; use the local SQLite release')));
   app.use('/api/v1',router);
   app.use((_req,_res,next)=>next(new ApiError(404,'NOT_FOUND','Route not found')));

@@ -1,16 +1,15 @@
-# Cloud API contract — first PostgreSQL slice
+# Cloud API contract — PostgreSQL planning and reference data
 
 Status, 31 October 2026: **local PostgreSQL verified; public deployment BLOCKED**.
 The owner confirmed that Render/Supabase access is not available. No public backend origin exists
 for this work, and no paid service was created. The existing Cloudflare publication is a mock.
 
-Verified integration source: `13519968547fb005e25f6470db40ad60433f12b7`.
-Original adapter implementation: `28a6db490fef80f7cccebba13be09ff781413b7c`; the ordinary integration merge did not change backend sources.
-A final cloud error-handler fix preserves HTTP 415 for unsupported JSON encodings.
-Integrated base: `98cf6c68d5370331d6f95aa9e749f82d504e5670`, `codex/coordinator`, included by ordinary merge.
+Stage A extends the existing PR #39; base remains `98cf6c68d5370331d6f95aa9e749f82d504e5670`.
 Branch: `codex/cloud-api-persistence`; target: `codex/coordinator`, **Draft**.
-The documentation-only follow-up does not change that tested application source.
-Results and historical failures: [cloud-persistence-verification.md](cloud-persistence-verification.md).
+Current scope, real frontend route matrix, verification and remaining work:
+[cloud-stage-a-acceptance.md](cloud-stage-a-acceptance.md).
+Earlier source/results/failures remain historical in
+[cloud-persistence-verification.md](cloud-persistence-verification.md).
 
 ## Supported operations
 
@@ -46,26 +45,63 @@ Public service endpoints:
 | --- | --- |
 | GET `/health`, `/api/v1/health` | Process liveness, PostgreSQL slice label; not a DB or full-release acceptance |
 | GET `/api/v1/ready` | DB connectivity and exact migration version; returns 503 on DB failure/unknown schema |
-| GET `/api/v1/openapi.json` | Live generator; exactly 8 implemented operations |
+| GET `/api/v1/openapi.json` | Live generator; 31 implemented operations; `openapi-cloud.json` is generated from this HTTP route |
 
-Readiness explicitly reports `capabilities: ["auth","evidence","resources"]` and
-`photos: "unsupported"`. It does not certify Supabase Storage or the worker workflow.
+Readiness reports migration version 2, `capabilities: ["auth","evidence","resources","sites","context","analysis","rates","snapshots"]`
+and `photos: "unsupported"`. This is DB/schema readiness, not full-release or seeded-data acceptance.
 
-## Unsupported cloud domains
+## Added planning operations
+
+All paths have `/api/v1`. Planning readers are admin/coordinator/viewer. Worker/foreman city-wide
+planning access is denied until assignment-scoped reads are migrated. No write privilege is added to viewer.
+
+| Method/path | DTO / behavior |
+| --- | --- |
+| GET `/sites`, `/plant-catalog` | Existing paginated V2 documents; preserve IDs/checks/nulls; limit 1–200, offset |
+| GET `/sites/:id` | `{data: V2Site}`; frontend `siteFromV2` performs the existing conversion |
+| GET `/sites/:id/context` | Persisted V2 context for downstream integrations |
+| GET `/zones/:id/context?radius=50` | Existing SiteContext, radius 30/50/100/200; stale geometry version returns 409 |
+| GET `/species`, `/rates` | Existing species array; `{rates,version}`; no fabricated price for null |
+| GET `/layers/sources`, `/reference/facts` | Persisted source metadata/facts and attribution |
+| GET `/layers/soils`, `/layers/greenery`, `/layers/city`, `/layers/zones` | Persisted GeoJSON; soil is explicitly synthetic until imported |
+| GET `/dashboard/metrics` | Site metrics from shared function; unmigrated workflow metrics are null with an unavailable reason |
+| POST `/zones/:id/analysis`, `/zones/:id/variants` | `{options}`; shared mathematical model; CSRF required, no write/idempotency key needed |
+| GET `/problems`; POST `/priorities`, `/decision-lab` | Existing shared calculations, persistent source inputs |
+| PATCH `/rates` | Admin only, expectedVersion + CSRF + idempotency; atomic history/version/replay |
+| POST `/zones/:id/snapshots` | Admin/coordinator only, CSRF + idempotency; 201 immutable analysis and exact input hash |
+| GET `/analysis-snapshots/:id` | Persisted analysis, input snapshot and provenance; no recalculation |
+| POST `/zones/:id/export` | `{options,format:"pdf"|"xlsx"}`; existing renderer, binary output; PDF needs Unicode font |
+
+Word is **not** a new server route. Existing `loadMemo` reads rates before/after, site, analysis,
+species and evidence through the real API and `buildMemoDocx` creates RU/KK OOXML. Cost and growth
+are fields of `ZoneAnalysis`; the time-machine renderer uses that response and persisted context.
+Do not invent `/recommendation`, `/cost`, `/growth` or `/word` endpoints.
+
+POST `/zones/<id>/analysis` body: `{"options":{"variant":"optimal","watering":"regular","careYears":2}}`.
+Response: `{data:{siteId,options,facts,scheme,cost,survival,survivalAvg,effect,inputSnapshot,provenance,...}}`.
+Use the returned numbers unchanged. `effect` contains years 5/10/20; unknown dust/population stays null.
+A missing mandatory coefficient returns 422 `MISSING_RATES`; missing measured area returns 422 `MISSING_AREA`.
+Unknown option species returns 400 `UNKNOWN_SPECIES`. The existing frontend compatibility transport
+maps server error codes to lowercase (for example `unknown_species`), preserving HTTP status.
+
+## Unsupported cloud domains and next stages
 
 Authenticated requests to other `/api/v1/*` routes return 503 `CLOUD_ENDPOINT_UNSUPPORTED`.
-Unauthenticated requests first receive 401; unsafe authenticated methods still require CSRF.
-There is no fallback to SQLite, memory or mock data.
+Unauthenticated requests receive 401 first; unsafe methods require CSRF even when unsupported.
+There is no SQLite/memory/mock response fallback. Fixtures are used only by the explicit seed.
 
-Not migrated: users CRUD/profiles, sites, plants, projects/design proposals and approvals,
-tasks/assignment/executors, reports/review, uploads/photo ownership, crews/workers, planting receipts,
-care events, Outcomes cohorts, forecast snapshots, inspections, analyses, imports/exports, assistant,
-weather, RAG and image generation. History and idempotency persist **for the supported reference
-mutations only**; the existing global history API is not enabled in cloud mode.
+Stage B: user/profile/crew/member CRUD; plants, designs/approval, tasks/assignment/execution,
+reports/review/planting receipts and assignment-scoped worker/foreman reads remain unimplemented.
+Stage C: `/uploads`, photo ownership/metadata/download and remote-object reconciliation remain unimplemented;
+the existing private storage primitive is not a live integration.
+Stage D: Outcomes cohorts, observations, accepted-report links and immutable Outcomes forecasts remain
+unimplemented. Planning analysis snapshots implemented in Stage A are **not** Outcomes records.
+Imports, drawn-zone/site editing, geocode, care schedule, assistant, weather, RAG and generated images
+are not enabled in PostgreSQL. In particular the map's tasks/plants/design overlays still return 503.
+History/idempotency cover reference mutations, rates and saved analyses only.
 
-The regular SQLite entry point keeps all these existing local modules. This branch is not a full
-replacement for the API used by the map or worker UI. Do not switch PR #35's complete frontend to
-this backend and describe it as a finished cloud release.
+The complete local SQLite release remains available. Do not switch the complete frontend/worker UI
+to this cloud branch as a finished release. Full workflow acceptance must follow B/C/D.
 
 ## Sessions, proxy and transport
 
@@ -176,11 +212,12 @@ Storage adapter names reserved for the next slice: `SUPABASE_URL`, `SUPABASE_STO
 3. Run `npm ci --include=dev`, `npm run build` from `apps/server`. In a secure local `.env.cloud`
    configured for that **new demo** database, set the one-off seed opt-in and a newly generated
    strong `DEMO_PASSWORD`, then run `npm run seed:cloud`. It migrates schema `gp_cloud` and inserts
-   only missing demo accounts (`admin`, `coordinator`, `foreman`, `worker`, `viewer`). Remove the
+   only missing demo accounts (`admin`, `coordinator`, `foreman`, `worker`, `viewer`) and planning fixtures (114 original OSM zones, 456 contexts, 50 species, 27 rates and sources). Remove the
    password/seed opt-in from the long-running service. Repeat seed never updates existing accounts.
 4. In Render New Web Service (or Blueprint with custom path `render.cloud.yaml`), select the correct
-   repository and an explicitly accepted commit of this branch. Root `apps/server`, Node 24.21.0,
-   build `npm ci --include=dev && npm run build`, start `npm run start:cloud`, plan **Free**, automatic
+   repository and an explicitly accepted commit of this branch. Repository root (leave Root Directory empty), Node 24.21.0,
+   build `npm ci --prefix apps/server --include=dev && npm run build --prefix apps/server`,
+   start `npm run start:cloud --prefix apps/server`, plan **Free**, automatic
    deployments **off**, healthcheck `/api/v1/ready`. Set exact Host/Origin/DB/network settings.
    Add a CA secret file if required. No SQLite path or uploads disk is used by this entry point.
 5. Startup applies versioned, checksummed migrations transactionally under a PostgreSQL advisory
@@ -227,3 +264,18 @@ PR #36 and #37 are now merged through the captain’s integration #38. Their ups
 (including the E2E-09 fix) entered this branch by ordinary merge. No frontend changes were authored
 in this PR. Captain-reported Docker/E2E acceptance on `20e642b` is recorded in docs/deployment.md;
 it is separate from this environment’s unavailable Engine and from the unperformed cloud acceptance.
+
+### Planning persistence and runtime requirements
+
+Migration 1 is unchanged. Migration 2 adds planning documents, version-bound contexts, immutable
+analysis snapshots and rate history. Both migrations are checksummed and transactional; future/gapped
+or changed versions fail without reset. The database must be UTF8; migration fails before schema writes
+otherwise. No existing database encoding is changed. New native test clusters explicitly use UTF8/C locale.
+The explicit seed inserts only missing IDs; repeating it preserves passwords, human changes, rate versions,
+sources, contexts, snapshots and idempotency receipts. It does not import an existing user's SQLite database.
+
+The compiled cloud server runs with `tsx`, exactly as required by the existing shared TypeScript analytics.
+Render must retain repository-level `apps/web` files: files outside Root Directory are unavailable at runtime
+([Render monorepo documentation](https://render.com/docs/monorepo-support)). The updated blueprint uses
+repository-root commands. It has **not** been deployed; `autoDeployTrigger: off` remains.
+Regenerate only via `npm run openapi:cloud` from `apps/server`.

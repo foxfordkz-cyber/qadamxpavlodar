@@ -6,9 +6,9 @@ services:
     runtime: node
     plan: free
     branch: codex/cloud-api-persistence
-    rootDir: apps/server
-    buildCommand: npm ci --include=dev && npm run build
-    startCommand: npm run start:cloud
+    # Shared analytics live in apps/web; Render must retain the repository root.
+    buildCommand: npm ci --prefix apps/server --include=dev && npm run build --prefix apps/server
+    startCommand: npm run start:cloud --prefix apps/server
     healthCheckPath: /api/v1/ready
     autoDeployTrigger: 'off'
     envVars:

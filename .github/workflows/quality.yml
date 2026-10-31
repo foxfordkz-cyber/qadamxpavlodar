@@ -119,5 +119,7 @@ jobs:
           cache-dependency-path: apps/server/package-lock.json
       - run: npm ci
       - run: npm run build
+      # The parity suite invokes the existing web Word/growth renderers without editing frontend source.
+      - run: npm ci --prefix ../web
       # Isolated native PostgreSQL binary; no Docker, system service, shared DB, or cloud secrets.
       - run: npm run test:postgres

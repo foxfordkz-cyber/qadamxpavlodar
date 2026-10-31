@@ -1,5 +1,6 @@
 import pg, { type PoolClient, type PoolConfig } from 'pg';
 import { ApiError } from '../errors.js';
+import { schemaVersion } from './migrations.js';
 
 export class PostgresDatabase {
   readonly pool: pg.Pool;
@@ -25,7 +26,7 @@ export class PostgresDatabase {
   }
   async ready() {
     const result=await this.pool.query('SELECT version FROM gp_cloud.schema_migrations ORDER BY version');
-    if(result.rowCount!==1||result.rows[0].version!==1)throw unavailable();
+    if(result.rowCount!==schemaVersion||result.rows.some((r,i)=>r.version!==i+1))throw unavailable();
   }
   async close() { await this.pool.end(); }
 }

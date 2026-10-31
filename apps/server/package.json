@@ -13,7 +13,7 @@
     "build": "tsc -p tsconfig.build.json",
     "start": "node --env-file-if-exists=.env --import ./scripts/local-network-guard.mjs --import tsx src/server.ts",
     "seed": "node --env-file-if-exists=.env --import tsx src/seed-cli.ts",
-    "test": "node --import ./scripts/local-network-guard.mjs --import ./tests/setup-env.mjs --import tsx --test tests/*.test.ts",
+    "test": "node --import ./scripts/local-network-guard.mjs --import ./tests/setup-env.mjs --import tsx --test --test-concurrency=2 tests/*.test.ts",
     "smoke": "node --import ./scripts/local-network-guard.mjs scripts/smoke.mjs",
     "demo:integration": "pwsh -NoProfile -File scripts/demo-integration.ps1",
     "seed:v2": "node --env-file-if-exists=.env --import ./scripts/local-network-guard.mjs --import tsx src/v2-seed-cli.ts",
@@ -25,9 +25,10 @@
     "seed:outcomes": "node --env-file-if-exists=.env --import ./scripts/local-network-guard.mjs --import tsx src/outcomes/seed-cli.ts",
     "llm:check": "node --env-file-if-exists=.env --import ./scripts/local-network-guard.mjs --import tsx src/tz/llm-check-cli.ts",
     "perf": "node --import ./scripts/local-network-guard.mjs scripts/perf.mjs",
-    "start:cloud": "node --env-file-if-exists=.env.cloud --import ./scripts/local-network-guard.mjs dist/cloud/server.js",
-    "seed:cloud": "node --env-file-if-exists=.env.cloud --import ./scripts/local-network-guard.mjs dist/cloud/seed-cli.js",
-    "test:postgres": "node --import ./scripts/local-network-guard.mjs --import tsx --test tests/postgres/*.test.ts"
+    "start:cloud": "node --env-file-if-exists=.env.cloud --import ./scripts/local-network-guard.mjs --import tsx dist/cloud/server.js",
+    "seed:cloud": "node --env-file-if-exists=.env.cloud --import ./scripts/local-network-guard.mjs --import tsx dist/cloud/seed-cli.js",
+    "test:postgres": "node --import ./scripts/local-network-guard.mjs --import tsx --test tests/postgres/*.test.ts",
+    "openapi:cloud": "node --import ./scripts/local-network-guard.mjs --import tsx scripts/generate-cloud-openapi.mjs"
   },
   "dependencies": {
     "@turf/turf": "^7.4.0",
