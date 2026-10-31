@@ -1,13 +1,16 @@
-# Cloud route coverage — Stage E, PR #39
+# Cloud route coverage — final release candidate, PR #39
 
-Reviewed from the actual source in this worktree (base `98cf6c6` plus PR #39), not from the
+Reviewed from the actual source in this worktree (PR #39 plus normal coordinator merge
+`599a738`, incorporating `fdc6e75`), not from the
 public mock: [DataProvider](../apps/web/src/shared/api/DataProvider.tsx),
 [createApi](../apps/web/src/shared/api/api.ts),
 [V2 compatibility transport](../apps/web/src/shared/api/v2compat.ts),
 [Outcomes client](../apps/web/src/shared/api/outcomesClient.ts),
 [worker gateway](../apps/web/src/features/worker/contract-v2.mjs),
 [report export](../apps/web/src/features/coordinator/tz/ReportPage.tsx).
-No frontend/map/worker/tools/e2e files were changed.
+No frontend/map/worker/tools/e2e changes were authored here; upstream QA/onboarding changes
+arrived through the requested merge. [Final candidate and exact gap table](cloud-final-release.md).
+Standalone geocode `999f23a` is preserved on a separate branch and is NOT in this release.
 
 API mode selects the V2 compatibility layer. Its logical `/projects`, `/brigades`, `/dashboard`
 names are not literal backend calls. Mock-only Outcomes URLs are also not cloud requirements.
@@ -24,7 +27,7 @@ verification of every listed method; full HTTP traces are retained with the suit
 
 | Actual endpoint or frontend mapping | SQLite | PostgreSQL | Real HTTP tested | Unsupported 503 | Remaining / impact |
 | --- | --- | --- | --- | --- | --- |
-| POST /auth/login; GET /auth/me; POST /auth/logout | Yes | Yes | A/B/C/D | No | Secure provider ingress still untested |
+| POST /auth/login; GET /auth/me; POST /auth/logout | Yes | Yes | A/B/C/D | No | Real Render HTTPS/cookies/CSRF tested on 3b14927; live Cloudflare proxy NOT RUN |
 | GET /sites; GET /sites/:id | Yes | Yes, canonical registry | A/B/D | No | Existing zones only |
 | PATCH /sites/:id | Yes | Yes, versions/source checks | B/D | No | Current web adapter sends checks/water; full geometry lifecycle still incomplete |
 | GET /zones/:id/context?radius=30/50/100/200 | Yes | Persisted context | A | No | 409 CONTEXT_STALE after site-version change; regeneration not implemented |
@@ -106,23 +109,29 @@ verification of every listed method; full HTTP traces are retained with the suit
 
 ## Capability matrix / exact remaining owners
 
-| Feature | Implemented | PostgreSQL local | Supabase tested | Render tested | Blocker / next owner |
-| --- | --- | --- | --- | --- | --- |
-| Home/dashboard | Yes | PASS | NOT RUN | NOT RUN | Captain: approved infrastructure |
-| Existing zones/context | Partial | PASS stored reads; explicit stale refusal | NOT RUN | NOT RUN | Backend/map owner: create/import/regenerate context |
-| Tasks/workers/crews/designs | Yes, agreed V2 | PASS | NOT RUN | NOT RUN | Captain + QA: accepted SHA/provider |
-| Reports/acceptance/history | Yes | PASS | NOT RUN | NOT RUN | Provider acceptance |
-| Photos | Yes, configured private adapter | PASS real test HTTP storage | NOT RUN | NOT RUN | Captain: private bucket/access; no public bucket |
-| Outcomes | Yes, agreed existing API | PASS linked HTTP + parity/restart | NOT RUN | NOT RUN | Provider acceptance; no new form |
-| Search/drawing/import | No | Explicit 503 | NOT RUN | NOT RUN | Separate backend/map backlog |
-| Care | Manual task workflow only | PASS tasks; calendar 503 | NOT RUN | NOT RUN | Separate calendar route backlog |
-| Assistant/worker interpretation | No cloud routes | Explicit 503 | NOT RUN | NOT RUN | Participant 1: LLM/RAG/weather/image integrations; backend persistence adapter |
-| Lab/estimate/growth/Word | Shared existing functions | PASS A/native inputs | NOT RUN | NOT RUN | No external model implied |
+Provider columns below refer to the real, dated **3b14927** acceptance, not automatically to
+any newer HEAD. Fresh candidate results/deployed SHA are recorded in PR #39 and the final handoff.
+Tests against local HTTP Storage are distinct from real Supabase checks.
 
-The complete task/photo/report/Outcomes scenario is implemented locally. Full cloud UI coverage
-is **not** complete: search, new-zone save, GIS import, calendar and assistant screens still have
-unimplemented routes. Тәңірберді must keep API/mock selection explicit and preserve 503/error states.
-Captain owns real provider deployment, combined-version acceptance and coordinator merge.
+| Feature | Implemented | PostgreSQL local | Real Render/Supabase evidence | Remaining / owner |
+| --- | --- | --- | --- | --- |
+| Home/dashboard | Yes | PASS shared metrics | NOT RUN for complete dashboard UI | Frontend/QA acceptance |
+| Existing zones/context | Partial | PASS stored reads; explicit stale refusal | Existing site read/analysis PASS; radius/context regeneration NOT RUN | Backend/map: version/context lifecycle |
+| Tasks/workers/crews/designs | Yes, V2 | PASS | Full HTTPS creation/assignment/read PASS | Captain: final candidate; QA UI |
+| Reports/acceptance/history | Yes | PASS | Acceptance/immutable history/replay/restart/redeploy PASS | Independent QA |
+| Photos | Yes | PASS with test HTTP Storage | Real private Supabase upload/authorized read/hash/replay/private denial/persistence PASS | No public objects; bucket configuration retained |
+| Outcomes | Yes | PASS linked HTTP/parity/restart | Forecast/cohort/accepted inspect/unknown summary/persistence PASS | Independent QA; no new inspection form |
+| Search/drawing/import | No in this candidate | Explicit 503 | Authenticated unsupported responses; no successful provider implementation | Stage E follow-up; geocode 999f23a excluded |
+| Care | Manual task workflow; calendar absent | PASS task workflow; calendar 503 | Real inspect task/report accepted; calendar 503 | Backend calendar follow-up |
+| Assistant/interpretation | No cloud routes | Explicit 503 | Assistant history 503; no paid model calls | Captain/LLM owner + persistence integration |
+| Recommendation/estimate | Shared calculation | PASS SQLite parity | Analysis + design + immutable forecast PASS | Shared formulas unchanged |
+| Lab/growth/Word/PDF | Existing shared functions/renderers | Local representative A tests | NOT RUN for all exported/rendered provider outputs | QA/provider renderer acceptance |
+
+The complete task/photo/report/Outcomes scenario passed real HTTPS acceptance at the recorded SHA.
+Full cloud UI coverage is **not** complete. Search, new-zone save, GIS import, calendar and assistant
+screens retain explicit errors. Do not convert missing data into successful empty results.
+Тәңірберді owns the fixed same-origin proxy and preserving the independent public mock;
+Айдана owns independent UI/another-device acceptance; the captain alone merges coordinator.
 
 No exact organizer-file compliance is claimed here; this matrix audits repository contracts and
 the user's Stage B–G task, not a re-labelled team transcription of an official specification.

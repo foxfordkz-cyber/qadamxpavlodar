@@ -2,7 +2,9 @@
 
 Status, 31 October 2026: **the A/B/C/D DEMO slice is deployed on real Render + Supabase**.
 Origin: https://green-pavlodar-api-demo.onrender.com.
-Deployed application SHA: `3b14927def04b35bf97782eae6b550da276c779f`.
+Recorded provider baseline SHA: `3b14927def04b35bf97782eae6b550da276c779f`.
+For the final candidate/deployment revision and restart rules see [release handoff](cloud-final-release.md)
+and the exact deployment record in [PR #39](https://github.com/foxfordkz-cyber/qadamxpavlodar/pull/39).
 Real HTTPS workflow, restart, same-SHA redeploy and different-password reseed persistence passed;
 see the dated [provider evidence](cloud-deployment-readiness.md).
 This is an isolated synthetic DEMO, not field observations or a completed full cloud UI release.
@@ -14,7 +16,7 @@ Local preparation and fresh test evidence: [cloud-deployment-readiness.md](cloud
 | Handoff field for Тәңірберді | Actual state |
 | --- | --- |
 | Render service / HTTPS origin | green-pavlodar-api-demo, Free Frankfurt; https://green-pavlodar-api-demo.onrender.com; service srv-dbj0jaetlv9c73btp520 |
-| Deployed SHA | 3b14927def04b35bf97782eae6b550da276c779f, verified in Render deployment record |
+| Recorded provider baseline SHA | 3b14927def04b35bf97782eae6b550da276c779f; final candidate/deployment revision is published separately in PR #39 |
 | Supabase project / PostgreSQL | green-pavlodar-demo, dpkffzawhtbtlldckjhy, Free Frankfurt; migrations 1–5 and insert-only DEMO seed PASS; SSL enforced |
 | Private Storage | green-pavlodar-photos; private, WebP only, max 5242880 bytes; actual upload/read/hash/replay PASS; provider anonymous public/authenticated paths denied |
 | Health/readiness / HTTPS role workflow | Actual HTTPS 200; schemaVersion 5, database ok, private-storage-configured; workflow/roles/CSRF PASS |
@@ -37,7 +39,9 @@ The cloud-https-acceptance runner is explicitly synthetic, makes real HTTP mutat
 owner opt-in, and retains a non-secret manifest for repeat verification. Neither tool controls
 Render restart/redeploy or proves the deployed SHA; record those independently from Dashboard.
 
-Stages A/B/C/D extend the existing PR #39; base remains `98cf6c68d5370331d6f95aa9e749f82d504e5670`.
+Stages A/B/C/D extend PR #39; the original implementation base was `98cf6c6`.
+Coordinator `fdc6e756be99dc5ba3a7a48ca1df17c4bfbef5ef` is now incorporated by normal merge
+`599a738f59e9b27b4da14f40eb1ecae6aed8047a`. The Stage E geocode branch is not included.
 Branch: `codex/cloud-api-persistence`; target: `codex/coordinator`, **Draft**.
 Current scope, real frontend route matrix, verification and remaining work:
 [cloud-stage-a-acceptance.md](cloud-stage-a-acceptance.md) (historical Stage A) and
@@ -198,8 +202,8 @@ insert a second plant. All rows are synthetic DEMO; acceptance is not evidence o
   `FRONTEND_ORIGINS`. Origins with paths or trailing slash are invalid configuration.
 - `CLOUD_TRUST_PROXY_HOPS=1` is for the single Render ingress immediately in front of Express.
   Render must overwrite forwarding headers. Do not use it for a directly exposed Node port.
-  Cloudflare must discard caller-supplied forwarding headers. Secure-cookie behavior was tested
-  with a local ingress simulation; real Render/Cloudflare HTTPS has not been tested.
+  Cloudflare must discard caller-supplied forwarding headers. Secure-cookie behavior passed local ingress simulation and real Render HTTPS acceptance.
+  Actual Cloudflare same-origin browser runtime remains NOT RUN; proxy unit tests are separate.
 - JSON limit is 32 KiB. Multipart `POST /uploads` accepts one `file` plus `taskId`, JPEG/PNG/WebP
   up to 5 MiB. Image bytes are checked, single-frame decoded images are limited to 4096×4096,
   EXIF/metadata are removed and bytes are normalized to WebP. At most two normalizations run
