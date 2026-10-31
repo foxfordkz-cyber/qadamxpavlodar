@@ -1,5 +1,28 @@
 # Shared API acceptance, 31.10.2026
 
+## Current integration status (supersedes historical PR status below)
+
+Verified coordinator: `55b8bde315ba6f295e33fad263aa802d16cc4b5b`.
+PR #32 is merged and includes #33/#34. Its independent API acceptance recorded
+**74 passed on 82b2246**; this is historical evidence, not a new run on this documentation SHA.
+The independent mock run recorded 240 passed / 4 failed / 2 skipped. All four failures
+were E2E-09 (mobile assistant overlapping weights/sliders); Damir/Claude owns the UI fix,
+and no confirmed fix is claimed here.
+
+This branch incorporated coordinator with an ordinary merge. No source-code changes are
+introduced by this documentation update. The results below retain their original tested SHA,
+including the first failed fake-LLM run. Docker Engine and real HTTPS remain **BLOCKED / NOT RUN**;
+Compose configuration or a healthy old container does not establish current runtime acceptance.
+Cloud persistence implementation belongs to the separate `codex/cloud-api-persistence` branch,
+not PR #36. PR #35 remains frontend-owned; #37 contains defence material.
+
+Damir: review and merge this documentation refresh when ready. Aidana: perform acceptance on
+the final integrated SHA, including viewer/report/photo persistence; do not rerun the old
+#32 head as if it contained the merged fixes. Public API acceptance still requires real hosting.
+
+## Historical local acceptance on a66d542
+
+
 Repository: `foxfordkz-cyber/qadamxpavlodar`. Application source tested:
 `a66d542c63c527d608400c84b34d49f982855369`, fresh `origin/codex/coordinator`.
 This follow-up changes documentation only; runtime code, tests, translations, contracts and `tools/e2e`
