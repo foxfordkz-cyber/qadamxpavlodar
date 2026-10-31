@@ -1,6 +1,26 @@
 # Shared API acceptance, 31.10.2026
 
-## Current integration status (supersedes historical PR status below)
+## Captain integration/runtime result
+
+Application SHA `20e642b3ea2283aeda931fd4342178a0059a9163`: web 192/192, server 101/101,
+worker 79/79, i18n 1927/1927, typechecks/builds and four web checks passed. Complete mock
+repeat: 244 passed / 0 failed / 2 desktop-only skips; API: 74 passed / 0 failed / 0 skipped,
+privacy scan passed. E2E-09 is fixed. The first full mock attempt had two network-interruption
+timeouts; the unchanged viewer repeat passed 8/8 before the complete repeat.
+
+Actual Docker A/B passed, including nginx photo upload and accepted report linked to an
+inspection. Sixteen tables, photo, forecast, history and sessions survived restart/reseed
+and container recreation. A tested private backup preceded the 8080 update; all 47 checked
+tables and 117 zones were preserved, integrity/FK passed. Both test projects used separate
+volumes and were stopped afterwards. The subsequent documentation merge leaves application,
+test and container sources unchanged. See [PR #38](https://github.com/foxfordkz-cyber/qadamxpavlodar/pull/38)
+for exact run IDs, image hashes, initial failures and final integration status.
+
+This is captain/integrator acceptance, not Aidana's independent final run. Cloudflare mock
+HTTPS passed on the separately published a66d542; full public API/persistent hosting and
+opening the new documents in native Microsoft Word are not claimed.
+
+## Bekzat handoff status on 55b8bde (before captain runtime acceptance)
 
 Verified coordinator: `55b8bde315ba6f295e33fad263aa802d16cc4b5b`.
 PR #32 is merged and includes #33/#34. Its independent API acceptance recorded

@@ -1,6 +1,24 @@
 # Deployment readiness (updated 2026-10-31)
 
-Current integration base: `55b8bde315ba6f295e33fad263aa802d16cc4b5b` on `codex/coordinator`.
+## Captain runtime acceptance (31 October)
+
+Application source `20e642b3ea2283aeda931fd4342178a0059a9163` passed actual Docker
+Case A/B, including photo upload through nginx, accepted report/inspection links,
+16-table persistence across restart/reseed/recreation, and live OpenAPI equality.
+E2E-09 is fixed: complete mock repeat 244 passed / 0 failed / 2 desktop-only skips;
+API 74 passed / 0 failed / 0 skipped. The first mock run had two network-interruption
+timeouts; both attempts are disclosed in [PR #38](https://github.com/foxfordkz-cyber/qadamxpavlodar/pull/38).
+The local 8080 deployment was backed up and updated: 47 checked tables and all 117 zones
+were preserved, integrity/FK passed. No data-volume reset was performed.
+The later documentation merge does not change application, fixtures, test or container sources.
+
+Public Cloudflare **mock only** was checked over HTTPS in RU/KK on its separate
+`a66d542` Direct Upload. Public API/HTTPS with persistent backend storage is still
+not deployed/accepted. Native Microsoft Word and independent final QA remain separate.
+
+## Earlier handoff status (before captain runtime acceptance)
+
+Integration base at handoff: `55b8bde315ba6f295e33fad263aa802d16cc4b5b` on `codex/coordinator`.
 PR #31, viewer fix #33, Kazakh review #34 and independent acceptance #32 are merged.
 Historical #32 API acceptance: 74 passed on 82b2246. E2E-09 remains an unconfirmed
 UI blocker owned by Damir/Claude. See release-api-acceptance-2026-10-31.md for provenance. Outcomes is included in this
