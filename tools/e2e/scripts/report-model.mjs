@@ -54,6 +54,7 @@ export function normalizeReport(data, profile, secrets = []) {
 
 export function runIsComplete(run) {
   return run.available && run.current && run.meta?.state === 'finished' && run.meta.exitCode === 0 &&
+    (!run.meta.privacyScan || run.meta.privacyScan === 'passed') &&
     run.meta.selection === 'full' && !run.runnerFailed && run.counts.passed > 0 &&
     statuses.filter(status => !['passed', 'skipped'].includes(status)).every(status => run.counts[status] === 0) &&
     run.tests.filter(test => test.status === 'skipped').every(test => run.profile === 'mock' && test.outOfScope);
@@ -78,6 +79,8 @@ export function collectRuns(root, secrets = []) {
         // Only publish the fields needed to identify a run, never arbitrary environment/argv.
         meta = { runId: captureRunId.test(raw.runId ?? '') ? raw.runId : null,
           state: raw.state, startedAt: raw.startedAt, endedAt: raw.endedAt, exitCode: raw.exitCode,
+          browserExitCode: Number.isInteger(raw.browserExitCode) ? raw.browserExitCode : undefined,
+          privacyScan: ['pending', 'passed', 'failed'].includes(raw.privacyScan) ? raw.privacyScan : undefined,
           revision: /^[a-f0-9]{40}$/.test(raw.revision) ? raw.revision : null, dirty: !!raw.dirty,
           selection: raw.selection, capturesScreens: raw.capturesScreens === true,
           command: typeof raw.command === 'string' && /^node scripts\/run\.mjs (mock|api|smoke|screens)$/.test(raw.command) ? raw.command : undefined,
@@ -131,6 +134,7 @@ export function collectHistory(root, revision) {
       // History is for run provenance, not another source of raw test/HTTP errors.
       return [{ profile: profiles.includes(record.profile) ? record.profile : 'unknown', runId: record.meta.runId, available: !!record.available,
         revision, startedAt: record.meta.startedAt, endedAt: record.meta.endedAt, exitCode: record.meta.exitCode,
+        browserExitCode: record.meta.browserExitCode, privacyScan: record.meta.privacyScan,
         selection: record.meta.selection, dirty: !!record.meta.dirty, target: record.meta.target,
         command: /^node scripts\/run\.mjs (mock|api|smoke|screens)$/.test(record.meta.command ?? '') ? record.meta.command : undefined,
         environment: publicEnvironment(record.meta.environment),

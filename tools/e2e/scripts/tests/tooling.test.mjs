@@ -12,6 +12,7 @@ import { errorDiagnostics } from '../api-diagnostics.mjs';
 import { unzipSync, zipSync } from 'fflate';
 import { renderHtml } from '../report-html.mjs';
 import { generateSummary, verifyPublishedSummary } from '../summary.mjs';
+import { savePrivacyVerdict } from '../privacy-verdict.mjs';
 
 const revision = 'a'.repeat(40);
 const json = tests => ({ stats: { duration: 100 }, suites: [{ specs: tests.map(({ title = 'scenario', status = 'expected', result = 'passed', annotations = [], projectName = 'desktop' }) =>
@@ -50,6 +51,30 @@ test('API cannot opt into credential-bearing traces or arbitrary reporters', () 
     assert.throws(() => selectRun('api', [option]));
   }
   assert.equal(selectRun('api', ['--known-bugs']).knownBugs, true);
+});
+
+test('an isolated privacy failure blocks acceptance without inventing failed browser cases', t => {
+  const root = folder(t);
+  const runId = '11111111-1111-4111-8111-111111111111';
+  mkdirSync(join(root, 'playwright-report/runs'), { recursive: true });
+  mkdirSync(join(root, 'playwright-report/api'), { recursive: true });
+  writeFileSync(join(root, 'playwright-report/runs/api.json'), JSON.stringify({ runId, revision, dirty: false,
+    state: 'finished', exitCode: 0, privacyScan: 'pending', selection: 'full', startedAt: new Date(Date.now() - 1000).toISOString() }));
+  writeFileSync(join(root, 'playwright-report/api/results.json'), JSON.stringify({ status: 'passed', tests: [{ title: 'safe case', status: 'passed' }] }));
+  assert.equal(runIsComplete(collectRuns(root).find(run => run.profile === 'api')), false);
+  savePrivacyVerdict(root, runId, true);
+  assert.equal(runIsComplete(collectRuns(root).find(run => run.profile === 'api')), true);
+  savePrivacyVerdict(root, runId, false);
+  const rejected = collectRuns(root).find(run => run.profile === 'api');
+  assert.equal(runIsComplete(rejected), false);
+  assert.equal(rejected.counts.passed, 1);
+  assert.equal(rejected.counts.failed, 0);
+  assert.equal(rejected.meta.exitCode, 1);
+  assert.equal(rejected.meta.browserExitCode, 0);
+  const history = JSON.parse(readFileSync(join(root, 'playwright-report/history', `${runId}.json`), 'utf8'));
+  assert.equal(history.meta.privacyScan, 'failed');
+  assert.equal(history.meta.exitCode, 1);
+  assert.throws(() => savePrivacyVerdict(root, 'different-run', true));
 });
 
 test('password precedence and absent .env never expose contents in errors', () => {

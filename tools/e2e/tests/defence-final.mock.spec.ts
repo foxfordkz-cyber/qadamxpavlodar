@@ -1,6 +1,6 @@
 import { test, expect } from '../support/test';
 import { zoneToDocument } from '../support/final-journey';
-import { openPage, dismissHint } from '../support/helpers';
+import { openPage, dismissHint, presentation } from '../support/helpers';
 
 for (const lang of ['ru','kk'] as const) test(`defence journey: ${lang}, site → recommendation/cost → growth → DOCX/XML`, async ({page}) => {
   await zoneToDocument(page, 'mock', lang);
@@ -14,6 +14,7 @@ for (const lang of ['ru','kk'] as const) test(`mobile assistant: ${lang}, cost a
     ['/', '.gp-hero .gp-plansum:not(.gp-plansum--place) dd, .gp-hero .gp-btn-row a'],
     ['/lab', '.gp-lab-card [data-metric=spent], .gp-lab-card .gp-lab-map, .gp-lab-controls > button.gp-btn'],
     ['/outcomes', '.gp-outcomes__main-metric dd, .gp-outcome-save button'],
+    ['/priorities', '.gp-ranking__weights input, .gp-ranking__weights button, .gp-weight strong, .gp-roadmap-sum strong'],
   ]) {
     await openPage(page, route, 'mock', lang); await dismissHint(page);
     const inspect = async (step: string) => {
@@ -25,7 +26,7 @@ for (const lang of ['ru','kk'] as const) test(`mobile assistant: ${lang}, cost a
           // Text rectangles exclude the deliberate empty padding beside prices.
           // Buttons retain their whole hit area; a round FAB is checked by real hit testing.
           const boxes: DOMRect[] = [];
-          if (el.matches('button,a')) boxes.push(el.getBoundingClientRect());
+          if (el.matches('button,a,input')) boxes.push(el.getBoundingClientRect());
           else {
             const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);
             let node: Node|null;
@@ -54,6 +55,11 @@ for (const lang of ['ru','kk'] as const) test(`mobile assistant: ${lang}, cost a
     for (let i=0;i<await important.count();i++) {
       await important.nth(i).scrollIntoViewIfNeeded();
       await inspect(`action/cost ${i+1} in view`);
+    }
+    if (route === '/priorities') {
+      await presentation(page);
+      await page.evaluate(async () => { await document.fonts.ready; window.scrollTo({ top: 0, behavior: 'instant' }); });
+      await inspect('presentation frame with weight values');
     }
   }
   await info.attach('assistant-intersections', {body:JSON.stringify(records,null,2),contentType:'application/json'});

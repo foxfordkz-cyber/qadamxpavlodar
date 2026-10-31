@@ -87,8 +87,26 @@ export async function screenshot(page: Page, name: string, info: TestInfo) {
   await page.evaluate(async () => { await document.fonts.ready; });
   // The laboratory/Outcomes controls sit above their results: the defence frame
   // must show a calculated plan rather than only inputs or a loading shell.
-  if (new URL(page.url()).hash.startsWith('#/lab')) await page.locator('.gp-lab-card').first().scrollIntoViewIfNeeded();
-  if (new URL(page.url()).hash.startsWith('#/outcomes')) await page.getByTestId('outcome-econom').scrollIntoViewIfNeeded();
+  const route = new URL(page.url()).hash;
+  const result = route.startsWith('#/lab') ? page.locator('.gp-lab-card').first()
+    : route.startsWith('#/outcomes') ? page.getByTestId('outcome-econom') : null;
+  if (result) {
+    // Centering a card taller than the viewport cuts off its plan name. Use the
+    // real page scroll, accounting for its sticky header; never hide page UI.
+    await result.evaluate(element => {
+      const header = document.querySelector<HTMLElement>('.gp-header');
+      const offset = header && ['sticky', 'fixed'].includes(getComputedStyle(header).position) ? header.offsetHeight : 0;
+      window.scrollTo({ top: Math.max(0, scrollY + element.getBoundingClientRect().top - offset - 12), behavior: 'instant' });
+    });
+    await expect(result.getByRole('heading').first()).toBeInViewport({ ratio: 1 });
+  }
+  if (name.startsWith('time-') && page.viewportSize()!.width === 375) {
+    const card = page.locator('.gp-sites__card');
+    await card.getByRole('button', { name: 'Развернуть карточку', exact: true }).click();
+    await expect.poll(async () => (await card.boundingBox())!.height / page.viewportSize()!.height).toBeGreaterThan(0.85);
+    await card.locator('.gp-tm').scrollIntoViewIfNeeded();
+    await expect(card.locator('.gp-tm__stats')).toBeInViewport({ ratio: 1 });
+  }
   // Lazy external photos may still be downloading after the page and fonts are ready.
   // Only images actually inside the captured viewport must finish; offscreen images
   // must not hold a screenshot hostage. A broken visible image is not a ready frame.

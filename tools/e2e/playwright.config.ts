@@ -18,6 +18,9 @@ export default defineConfig({
   retries: 0,
   forbidOnly: !!process.env.CI,
   outputDir: api ? 'test-results/api' : `test-results/${mockRun}`,
+  // Playwright may create error-context.md with locator ARIA snapshots even when
+  // trace/video/screenshots are off. Never retain API output directories.
+  preserveOutput: api ? 'never' : 'always',
   reporter: api ? [['./support/api-reporter.ts']] : [
     ['list'], ['html', { outputFolder: `playwright-report/${mockRun}`, open: 'never' }],
     ['json', { outputFile: `test-results/${mockRun}/results.json` }],

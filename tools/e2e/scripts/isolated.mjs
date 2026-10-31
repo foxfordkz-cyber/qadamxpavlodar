@@ -3,6 +3,8 @@ import { randomBytes } from 'node:crypto';
 import { mkdirSync, readdirSync, readFileSync, existsSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
+import { savePrivacyVerdict } from './privacy-verdict.mjs';
+import { generateSummary } from './summary.mjs';
 
 const [mode = 'api', ...args] = process.argv.slice(2);
 if (!['api', 'mock'].includes(mode)) throw new Error('Expected api or mock');
@@ -52,6 +54,7 @@ try {
   await ready(env.E2E_BASE_URL, web);
   const sha = spawnSync('git', ['rev-parse', 'HEAD'], { cwd: e2e, encoding:'utf8', windowsHide:true }).stdout.trim();
   writeFileSync(join(storage, 'environment.json'), JSON.stringify({sha, mode, outcomesSeed:outcomes, node:process.versions.node, baseURL:env.E2E_BASE_URL, startedAt:new Date().toISOString()}, null, 2));
+  const testsStartedAt = Date.now();
   const result = await start(['scripts/run.mjs', mode, ...args.filter(a => a !== '--outcomes')], e2e, true).done;
   let leaked = false;
   function scan(dir) { if (!existsSync(dir)) return; for (const entry of readdirSync(dir, {withFileTypes:true})) {
@@ -60,6 +63,10 @@ try {
   if (mode === 'api') {
     scan(join(e2e, 'test-results/api')); scan(join(e2e, 'playwright-report/api')); scan(join(e2e, 'playwright-report/summary'));
     console.log(leaked ? 'Secret scan failed; value omitted.' : 'Secret scan passed.');
+    const meta = JSON.parse(readFileSync(join(e2e, 'playwright-report/runs/api.json'), 'utf8'));
+    if (meta.revision !== sha || Date.parse(meta.startedAt) < testsStartedAt) throw new Error('Cannot associate privacy scan with this isolated API run');
+    savePrivacyVerdict(e2e, meta.runId, !leaked);
+    generateSummary({ secrets: [password] });
   }
   process.exitCode = leaked ? 1 : result.code ?? 1;
 } finally {

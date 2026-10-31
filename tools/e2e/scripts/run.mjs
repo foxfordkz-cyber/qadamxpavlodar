@@ -23,6 +23,7 @@ const metadata = { runId: randomUUID(), profile: run.profile, selection: run.sel
   command: `node scripts/run.mjs ${command}`, environment: { node: process.versions.node, platform: process.platform, arch: process.arch,
     playwright: require('@playwright/test/package.json').version },
   capturesScreens: run.profile === 'screens' || (run.profile === 'mock' && run.selection === 'full'),
+  privacyScan: run.mode === 'api' && env.E2E_ISOLATED === '1' ? 'pending' : undefined,
   startedAt: new Date().toISOString(), state: 'running', exitCode: null };
 env.E2E_RUN_ID = metadata.runId;
 env.E2E_RUN_REVISION = metadata.revision ?? '';
