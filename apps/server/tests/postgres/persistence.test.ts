@@ -89,7 +89,8 @@ test('real PostgreSQL: HTTP persistence slice (isolated native server, no SQLite
       const spec=await request('/openapi.json');
       assert.equal(Object.values(spec.json.paths).reduce((n:number,p:any)=>n+Object.keys(p).length,0),8);
       assert.equal(spec.json.paths['/tasks'],undefined);
-      for(const headers of [{'Content-Type':'application/json; charset=unsupported'},{'Content-Type':'application/json','Content-Encoding':'unsupported'}]) {
+      const rejectedEncodings:Record<string,string>[]=[{'Content-Type':'application/json; charset=unsupported'},{'Content-Type':'application/json','Content-Encoding':'unsupported'}];
+      for(const headers of rejectedEncodings) {
         const rejected=await fetch(origin+'/api/v1/auth/login',{method:'POST',headers,body:'{}'});
         assert.equal(rejected.status,415);assert.equal((await rejected.json() as any).error.code,'UNSUPPORTED_MEDIA_TYPE');
       }
