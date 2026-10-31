@@ -4,11 +4,12 @@ Status, 31 October 2026: **local PostgreSQL verified; public deployment BLOCKED*
 The owner confirmed that Render/Supabase access is not available. No public backend origin exists
 for this work, and no paid service was created. The existing Cloudflare publication is a mock.
 
-Stages A/B/C extend the existing PR #39; base remains `98cf6c68d5370331d6f95aa9e749f82d504e5670`.
+Stages A/B/C/D extend the existing PR #39; base remains `98cf6c68d5370331d6f95aa9e749f82d504e5670`.
 Branch: `codex/cloud-api-persistence`; target: `codex/coordinator`, **Draft**.
 Current scope, real frontend route matrix, verification and remaining work:
 [cloud-stage-a-acceptance.md](cloud-stage-a-acceptance.md) (historical Stage A) and
 [cloud-stage-b-acceptance.md](cloud-stage-b-acceptance.md) (workflow) and [cloud-stage-c-acceptance.md](cloud-stage-c-acceptance.md) (private photos).
+[Stage D/F evidence](cloud-stage-d-acceptance.md) and [current frontend route coverage/backlog](cloud-route-coverage.md) supersede the historical pending-stage lists.
 Earlier source/results/failures remain historical in
 [cloud-persistence-verification.md](cloud-persistence-verification.md).
 
@@ -46,9 +47,9 @@ Public service endpoints:
 | --- | --- |
 | GET `/health`, `/api/v1/health` | Process liveness, PostgreSQL slice label; not a DB or full-release acceptance |
 | GET `/api/v1/ready` | DB connectivity and exact migration version; returns 503 on DB failure/unknown schema |
-| GET `/api/v1/openapi.json` | Live generator; 78 implemented operations; `openapi-cloud.json` is generated from this HTTP route |
+| GET `/api/v1/openapi.json` | Live generator; 87 implemented operations; `openapi-cloud.json` is generated from this HTTP route |
 
-Readiness reports migration version 4, `capabilities: ["auth","evidence","resources","sites","context","analysis","rates","snapshots","crews","workers","designs","tasks","reports"]`
+Readiness reports migration version 5, `capabilities: ["auth","evidence","resources","sites","context","analysis","rates","snapshots","crews","workers","designs","tasks","reports","outcomes"]`
 and `photos: "not-configured"` without storage configuration. With storage it verifies the private
 bucket, adds the `photos` capability and returns `photos: "private-storage-configured"`; a storage
 failure or unsafe bucket returns 503. This is DB/schema readiness, not full-release or seeded-data acceptance.
@@ -63,7 +64,7 @@ reads use the existing assignment scope; city-wide calculation access remains de
 | GET `/sites`, `/plant-catalog` | Existing paginated V2 documents; preserve IDs/checks/nulls; limit 1–200, offset |
 | GET `/sites/:id` | `{data: V2Site}`; frontend `siteFromV2` performs the existing conversion |
 | GET `/sites/:id/context` | Persisted V2 context for downstream integrations |
-| GET `/zones/:id/context?radius=50` | Existing SiteContext, radius 30/50/100/200; stale geometry version returns 409 |
+| GET `/zones/:id/context?radius=50` | Existing SiteContext, radius 30/50/100/200; stale site version returns 409 |
 | GET `/species`, `/rates` | Existing species array; `{rates,version}`; no fabricated price for null |
 | GET `/layers/sources`, `/reference/facts` | Persisted source metadata/facts and attribution |
 | GET `/layers/soils`, `/layers/greenery`, `/layers/city`, `/layers/zones` | Persisted GeoJSON; soil is explicitly synthetic until imported |
@@ -101,8 +102,8 @@ Writes take one database advisory lock before actor rows; this conservatively pr
 serialized cross-task scheduling/resource checks. It is a scalability limitation, not a queue.
 
 Stage C `/uploads` is implemented and tested with a local private HTTP storage service and PostgreSQL.
-Real Supabase remains NOT RUN without approved credentials. Stage D (Outcomes) is pending in this
-checkpoint; Stage A calculations are not Outcomes records.
+Real Supabase remains NOT RUN without approved credentials. Stage D Outcomes is now implemented on the same canonical registry,
+with immutable forecasts/inspections and source links. Stage A calculations alone are not Outcomes records.
 GIS import/preview/commit, new drawn zones, geocode, care schedule, assistant, weather, RAG and
 generated images remain unsupported. Site PATCH/checks, plant map points and task/design reads
 are now available; the complete map editing/import scenario is still blocked.
@@ -169,6 +170,57 @@ insert a second plant. All rows are synthetic DEMO; acceptance is not evidence o
   up to 5 MiB. Image bytes are checked, single-frame decoded images are limited to 4096×4096,
   EXIF/metadata are removed and bytes are normalized to WebP. At most two normalizations run
   concurrently; PHOTO_BUSY is 429. Stored + pending photos are limited to 50 per task.
+
+## Outcomes API (Stage D)
+
+Paths retain the existing SQLite extension. All writes: admin/coordinator, CSRF, Idempotency-Key,
+current account checks inside the same transaction. Viewer only reads. Cohort reads for worker/foreman
+require an explicit assigned task for the site or for every member plant; foreign cohorts return 404.
+The site-wide read model is admin/coordinator/viewer only.
+
+| Method/path | Request | Response |
+| --- | --- | --- |
+| GET `/outcomes/sites/:id` | Existing site ID | `{data:{siteId,asOf,cohorts,inspections,registry,forecasts}}` |
+| POST `/outcomes/snapshots` | `{id,siteId,expectedVersion,expectedRatesVersion?,variant:"econom"\|"optimal"\|"max"}` | 201 `{data:{id,snapshot,createdAt}}` |
+| GET `/outcomes/cohorts` | Actor scope | `{data:[{data:Cohort,meta:{createdAt,createdBy}}]}` |
+| POST `/outcomes/cohorts` | `{id,siteId,plantIds,plantedOn:null\|"YYYY-MM-DD",snapshotId:null\|id,evidenceIds,expectedVersion:0}` | 201 `{data:Cohort}` |
+| GET `/outcomes/cohorts/:id` | Existing cohort | `{data:Cohort,meta:{createdAt,createdBy}}` |
+| GET `/outcomes/cohorts/:id/inspections` | Existing cohort | `{data:[{data:Inspection,meta:{createdAt,reviewerId}}]}` |
+| POST `/outcomes/cohorts/:id/inspections` | `{id,observedOn,observations,evidenceIds,expectedVersion}` | 201 `{data:Inspection}`; increments cohort version |
+| GET `/outcomes/cohorts/:id/summary?inspectionId=...` | Optional explicit inspection ID | `{data:{summary,comparison,asOf}}` |
+| GET `/outcomes/openapi.json` | Authenticated extension | Generated OpenAPI document, not a data envelope |
+
+Observation: `{plantId,state:"alive"|"dead"|"unknown",reportId:null|id,evidenceIds:[]}`.
+Cohort includes `id,siteId,plants:[{plantId,speciesId}],plantedOn,forecast,provenance,version`.
+Inspection includes `id,cohortId,observedOn,observations,provenance,version:1`.
+Forecast contains the whole immutable `schemaVersion,analysis,catalog,rates,provenance,outcome`.
+Provenance records source, capturedAt, dataClass/isDemo, evidence IDs and captured site/rates versions.
+
+A cohort is made from existing individually registered trees, never copies of registry rows.
+Each tree belongs to one original cohort. If snapshotId is supplied, its exact species composition
+and quantities must match the cohort. Supplied planting date must match confirmed registry dates;
+null stays null. Snapshot captures the original tree-only, 3-year calculation; arbitrary options
+cannot be injected as a historical forecast.
+
+Alive/dead requires a real accepted and reviewed report for an **inspect task targeting that tree**,
+on the same UTC+5 calendar day. The coordinator/admin explicitly attests the state in the inspection.
+A planting/watering report or its prose is not such an assertion. The pre-existing specially labelled
+SQLite demo-evidence exception remains in shared rules; the cloud seed does not manufacture it.
+Unknown can have no confirming source. All created acceptance fixtures remain DEMO.
+
+One immutable inspection per cohort/date; at most 100 observations; member IDs cannot repeat.
+No inspection or omitted observation produces unknown, not dead/zero. Without explicit inspectionId
+the summary deliberately describes missing inspection, rather than silently selecting latest.
+Read the current cohort version after an accepted append. Replays return the original data; a new
+request with a stale expectedVersion is 409. Common errors: PLANT_ALREADY_IN_COHORT,
+UNACCEPTED_REPORT, REPORT_TARGET_MISMATCH, REPORT_DATE_MISMATCH, UNCONFIRMED_OBSERVATION,
+DUPLICATE_INSPECTION, VERSION_CONFLICT. Existing analytics validation codes are preserved.
+
+Migration 5 has native FKs to canonical documents/users/reports, unique membership/date constraints,
+and append-only snapshot/inspection/member/source triggers. Approved report, source links, cohort
+version, audit and idempotency receipt participate in one PostgreSQL transaction. The existing
+global writer lock conservatively serializes these operations. Repeat seed does not overwrite them.
+
 
 ## Private photos (Stage C)
 
@@ -313,7 +365,7 @@ returns PHOTO_STORAGE_NOT_CONFIGURED on photo operations; no local-disk fallback
    lock. Unknown/modified migrations fail startup without resetting data. SIGTERM stops HTTP intake,
    drains requests and closes the pool, with a 15-second shutdown bound. Never seed on every boot.
 6. Record the **actual** Render origin and deployed SHA after a successful deployment. Repeat login,
-   evidence/resource create, replay, read and manual redeploy; read again, compare versions/history
+   evidence/resource create, task/worker assignment, private photo, report acceptance and Outcomes inspection; then replay, read and manual redeploy; read again, compare versions/history
    and repeat seed. Then stop local processes/tunnels and have Aidana read from another device.
    These public checks are pending, not implied by local PostgreSQL results.
 7. Configure a **private** bucket, WebP only, max 5 MiB; no public/anon policies. Set the four storage
@@ -343,7 +395,7 @@ Connection and private-download behavior: [PostgreSQL connections](https://supab
 
 | Owner | Next concrete action |
 | --- | --- |
-| Bekzat | Complete task/report/crew persistence and private-photo metadata transaction before claiming photo E2E; then migrate Outcomes immutable snapshots without changing calculations |
+| Bekzat | B/C/D local implementation and linked acceptance complete; support provider verification and separately scoped remaining-route work |
 | Damir / captain | Review Draft scope; merge only when accepted; approve/provision free hosting; own public Docker/HTTPS acceptance; the E2E-09 fix is now inherited from #38 |
 | Tәңірберді (#35) | Keep fixed same-origin proxy; preserve cookies/CSRF/idempotency/statuses and cold-start state; do not connect the full UI to this limited slice as a completed release |
 | Aidana | After provisioning and integration, independently repeat role/CSRF/replay/redeploy checks on the exact public SHA; photo E2E and full UI acceptance remain pending |

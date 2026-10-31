@@ -4,6 +4,7 @@ import { type Flow, type QueryEffect } from '../v2/flow.js';
 
 // Only these application-owned tables are addressable by shared domain operations.
 const tables:Record<string,string>=Object.fromEntries(['users','sessions','profiles','crews','memberships','documents','designs','design_revisions','tasks','assignments','reports','report_drafts','uploads','issues','planting_receipts','care_events','idempotency'].map(name=>['v2_'+name,'gp_cloud.'+name]));
+for(const name of ['snapshots','cohorts','members','inspections','sources'])tables['outcome_'+name]='gp_cloud.outcome_'+name;
 tables.v2_history='gp_cloud.workflow_history';tables.municipal_roles='gp_cloud.municipal_roles';
 export function postgresQuery(sql:string) {
   let n=0;
@@ -16,7 +17,7 @@ export function postgresQuery(sql:string) {
 function publicRow(row:Record<string,unknown>):Row {
   const result={...row};
   // Shared domain parsing expects serialized JSON, just as in the original SQLite schema.
-  for(const key of ['data','before_json','after_json','response_json'])
+  for(const key of ['data','before_json','after_json','response_json','report','task'])
     if(result[key]!==null&&typeof result[key]==='object')result[key]=JSON.stringify(result[key]);
   return result as Row;
 }

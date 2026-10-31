@@ -1,3 +1,4 @@
+import { outcomesRoutes } from './outcomes-routes.js';
 import express, { Router, type ErrorRequestHandler } from 'express';
 import { randomUUID } from 'node:crypto';
 import { ZodError } from 'zod';
@@ -51,14 +52,14 @@ export function createCloudApp(db: PostgresDatabase, config: CloudConfig) {
     next();
   });
   app.use(express.json({limit:'32kb',strict:true}));
-  for (const path of ['/health','/api/v1/health']) app.get(path,(_req,res)=>res.json({status:'ok',mode:'DEMO',storage:'postgresql',scope:'auth-reference-planning-workflow'}));
-  app.get('/api/v1/ready',async(_req,res)=>{await db.ready();if(storage)await storage.verifyPrivateBucket();res.json({status:'ok',database:'ok',mode:'DEMO',schemaVersion,capabilities:['auth','evidence','resources','sites','context','analysis','rates','snapshots','crews','workers','designs','tasks','reports',...(storage?['photos']:[])],photos:storage?'private-storage-configured':'not-configured'});});
+  for (const path of ['/health','/api/v1/health']) app.get(path,(_req,res)=>res.json({status:'ok',mode:'DEMO',storage:'postgresql',scope:'auth-reference-planning-workflow-outcomes'}));
+  app.get('/api/v1/ready',async(_req,res)=>{await db.ready();if(storage)await storage.verifyPrivateBucket();res.json({status:'ok',database:'ok',mode:'DEMO',schemaVersion,capabilities:['auth','evidence','resources','sites','context','analysis','rates','snapshots','crews','workers','designs','tasks','reports','outcomes',...(storage?['photos']:[])],photos:storage?'private-storage-configured':'not-configured'});});
   const router=Router(),operations:Operation[]=[];
   const route:Api['route']=(op,...handlers)=>{if(operations.some(x=>x.method===op.method&&x.path===op.path))throw Error('Duplicate cloud operation');operations.push(op);router[op.method](op.path,...handlers);};
   router.get('/openapi.json',(_req,res)=>{
     const spec=openApi(operations);
-    spec.info={...spec.info,title:'Green Pavlodar — PostgreSQL workflow and photos API',version:'2.4.0-cloud-photos',
-      description:'Auth, reference data, planning, crews, profiles, designs, tasks and reports are supported. Private photos require configured storage. Outcomes is not migrated. Other domains return 503 CLOUD_ENDPOINT_UNSUPPORTED. Secure HttpOnly SameSite=Strict sessions; CSRF and idempotency required on writes. No SQLite or mock fallback.'};
+    spec.info={...spec.info,title:'Green Pavlodar — PostgreSQL workflow, photos and Outcomes API',version:'2.5.0-cloud-outcomes',
+      description:'Auth, reference data, planning, crews, profiles, designs, tasks and reports are supported. Private photos require configured storage. Outcomes cohorts, immutable forecasts and inspections are supported. Other domains return 503 CLOUD_ENDPOINT_UNSUPPORTED. Secure HttpOnly SameSite=Strict sessions; CSRF and idempotency required on writes. No SQLite or mock fallback.'};
     res.json(spec);
   });
   sessionRoutes(new PostgresAuthRepository(db),{router,route},config.secureCookies);
@@ -66,6 +67,7 @@ export function createCloudApp(db: PostgresDatabase, config: CloudConfig) {
   planningRoutes({route},new PostgresPlanningRepository(db));
   workflowRoutes({route},new PostgresWorkflowRepository(db));
   photoRoutes({route},photos);
+  outcomesRoutes({route},new PostgresWorkflowRepository(db));
   router.use((_req,_res,next)=>next(new ApiError(503,'CLOUD_ENDPOINT_UNSUPPORTED','This endpoint is not migrated; use the local SQLite release')));
   app.use('/api/v1',router);
   app.use((_req,_res,next)=>next(new ApiError(404,'NOT_FOUND','Route not found')));

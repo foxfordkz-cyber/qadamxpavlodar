@@ -27,7 +27,7 @@ export function planningRoutes({route}:Pick<Api,'route'>,repo:PostgresPlanningRe
   });
   const labInput=z.object({budgetKzt:z.number().finite().positive(),waterLimitM3:z.number().finite().nonnegative().nullable().default(null),watering:z.enum(['regular','rare','none']),goal:z.enum(['balanced','schools','deficit','social']).default('balanced')}).strict();
   route({method:'post',path:'/decision-lab',input:labInput,readOnly:true,summary:'Existing shared Decision Lab using persistent inputs'},async(q,r)=>{planningReader(actor(r));const b=labInput.parse(q.body);r.json({data:await repo.read(input=>decisionLab(input.sites.map(s=>s.zone).filter(s=>s.areaM2!=null&&s.areaM2>0),repo.ref(input),b))});});
-  route({method:'get',path:'/dashboard/metrics',summary:'Shared metrics over persisted sites, assignments, reports and projects'},async(_q,r)=>{
+  route({method:'get',path:'/dashboard/metrics',response:z.array(z.object({}).passthrough()),summary:'Shared metrics over persisted sites, assignments, reports and projects'},async(_q,r)=>{
     planningReader(actor(r));const data=await repo.read(async(input,c)=>{
       const rows=async(table:string)=>(await c.query('SELECT data FROM gp_cloud.'+table)).rows.map(r=>r.data);
       const projects=[];for(const design of await rows('designs')){

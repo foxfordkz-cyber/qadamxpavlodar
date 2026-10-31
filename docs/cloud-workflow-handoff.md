@@ -1,8 +1,8 @@
 # Cloud workflow handoff — Тәңірберді / captain / QA
 
-Checkpoint: Stage C of Draft PR #39, branch `codex/cloud-api-persistence`.
+Checkpoint: Stage D/F of Draft PR #39, branch `codex/cloud-api-persistence`.
 The exact accepted commit is in the PR description; use that SHA, not a floating branch, for acceptance.
-Stage A was `3e25d3dd49498afdf879c92770f74c0cdba06b03`; Stage B is `e95d2c2db6ae84d0b5504105ceb4c50faa795509` (CI success). Public backend origin: **not provisioned**.
+Stage A was `3e25d3dd49498afdf879c92770f74c0cdba06b03`; Stage B is `e95d2c2db6ae84d0b5504105ceb4c50faa795509` (CI success). Stage C: `787f7b18cd9038785f061e0132857dc8e8eab88a` (CI success). Public backend origin: **not provisioned**.
 The reported public mock at https://green-pavlodar-mock.pages.dev/ is separate from this API.
 PR #35 reviewed at `1916d199b62ee6416502b4aac3244b5aa47d37d9`; its published static source is `98cf6c6`.
 The owner's reported 16/16 public mock checks were not rerun or counted as backend evidence.
@@ -10,7 +10,7 @@ The owner's reported 16/16 public mock checks were not rerun or counted as backe
 ## Exact API / DTO sources
 
 All URLs below use `/api/v1`. The live `/api/v1/openapi.json` and generated
-`apps/server/openapi-cloud.json` contain the exact input/output schemas (78 operations at Stage C).
+`apps/server/openapi-cloud.json` contain the exact input/output schemas (87 operations at Stage D).
 The method, permission and state matrix is in [cloud-api-contract.md](cloud-api-contract.md).
 
 - `POST /auth/login` input `{login,password}`; output `{data:{user,csrfToken}}` and the session cookie.
@@ -71,6 +71,45 @@ Migration 4 preserves durable upload intents for safe recovery. Only the operato
 aged unreferenced pending intents; see the contract. Retry after DB failure or response loss keeps the
 same object/metadata/report; the backend never silently switches to a local uploads directory.
 
+## Outcomes request / response examples
+
+The inspection screen currently has an informational “manual confirmation” label, not a new form.
+The API can be integrated independently; this task does not build or change that UI.
+
+```js
+// All calls use the same authenticated cookie and stable per-action Idempotency-Key.
+const forecastBody = {
+  id: 'outcome-demo-forecast', siteId: site.id,
+  expectedVersion: site.version, expectedRatesVersion: rates.version, variant: 'econom'
+}; // POST /api/v1/outcomes/snapshots → {data:{id,snapshot,createdAt}}
+const cohortBody = {
+  id: 'outcome-demo-cohort', siteId: site.id, plantIds: acceptedPlantIds,
+  plantedOn: null, snapshotId: savedForecast.id, evidenceIds: demoEvidenceIds,
+  expectedVersion: 0
+}; // POST /api/v1/outcomes/cohorts → {data:Cohort}
+// Composition MUST match savedForecast; plantIds are canonical accepted planting results.
+const inspectionBody = {
+  id: 'outcome-demo-inspection', observedOn: reportDayInUTCPlus5,
+  expectedVersion: cohort.version, evidenceIds: demoEvidenceIds,
+  observations: [
+    {plantId: firstPlantId, state: 'alive', reportId: acceptedInspectReport.id, evidenceIds: []},
+    {plantId: secondPlantId, state: 'unknown', reportId: null, evidenceIds: []}
+  ]
+}; // POST /api/v1/outcomes/cohorts/<id>/inspections → {data:Inspection}
+```
+
+The linked report must be accepted, for an inspect task on that exact tree, dated on observedOn.
+The accepted planting report alone is insufficient. A specialist explicitly confirms state; prose
+does not create facts. Test records are DEMO. Unknown/null remain unknown/null, with no invented zeros.
+After append, reload cohort.version. Snapshot/inspection bodies and member/source links are immutable.
+
+Viewer reads `/outcomes/sites/:id`, `/outcomes/cohorts`, `/outcomes/cohorts/:id`,
+`/outcomes/cohorts/:id/inspections`, `/outcomes/cohorts/:id/summary?inspectionId=...`.
+List cohorts uses `{data:[{data,meta}]}`; detail `{data,meta}`; summary `{data:{summary,comparison,asOf}}`.
+The whole site read model is `{data:{siteId,asOf,cohorts,inspections,registry,forecasts}}`.
+Do not send the mock-only `/outcomes/:id/forecasts` route to this API.
+
+
 ## Session and retry contract
 
 Use `credentials:'same-origin'`. Cookie: `gp_v2_session`, host-only (no Domain),
@@ -109,7 +148,7 @@ These tests do not prove real Cloudflare runtime, public TLS, cold-start or mobi
 ## Health, run and configuration
 
 `GET /health` or `/api/v1/health`: process liveness. `GET /api/v1/ready`: live PostgreSQL and exact
-migration count, capabilities and photo readiness. At Stage C: schemaVersion 4; photos not-configured or private-storage-configured (bucket verified).
+migration count, capabilities and photo readiness. At Stage D: schemaVersion 5; photos not-configured or private-storage-configured (bucket verified).
 Readiness does not prove complete API coverage or seed suitability. Other authenticated unsupported
 URLs return 503 `CLOUD_ENDPOINT_UNSUPPORTED`; missing session is checked first.
 
@@ -136,7 +175,15 @@ Configuration names only: `DATABASE_URL`, `CLOUD_ALLOWED_HOSTS`, `PG_CA_FILE`, `
 Explicit seed alone uses `CLOUD_DEMO_SEED`, `DEMO_PASSWORD`. Do not log any values or commit env files.
 Storage configuration names: SUPABASE_URL, SUPABASE_STORAGE_BUCKET, SUPABASE_SERVICE_ROLE_KEY, STORAGE_ALLOWED_HOSTS. Never use a public bucket.
 
-## Local evidence at Stage C
+## Local evidence at Stage D/F
+
+Expanded native HTTP chain **12/12**; SQLite Outcomes **10/10**. Typecheck/build and generated
+OpenAPI PASS (87 operations). Full PostgreSQL **60/60**, full backend/SQLite **105/105**, zero skipped,
+after the final generator correction; see [Stage D evidence](cloud-stage-d-acceptance.md).
+Actual current frontend API-mode adapters were invoked over HTTP; no browser UI/public cloud PASS
+is claimed. Render/Supabase/HTTPS/cold-start/redeploy remain NOT RUN.
+
+## Historical local evidence at Stage C
 
 Server typecheck/build and generated OpenAPI PASS (78 operations). Full backend/SQLite **105/105**;
 full native PostgreSQL HTTP **48/48**, zero skipped. Targeted private photos **11/11**.
@@ -152,7 +199,7 @@ in [cloud-stage-b-acceptance.md](cloud-stage-b-acceptance.md). No provider PASS 
 
 ## Owner actions and remaining limits
 
-- Backend: finish Stage D Outcomes and linked final acceptance. Stage C private photos have local HTTP evidence; actual provider acceptance still needs approved infrastructure.
+- Backend: B/C/D and linked local HTTP acceptance are implemented. Search, drawn-zone save, imports, care calendar, assistant and context regeneration remain a separate backlog; see cloud-route-coverage.md.
 - Тәңірберді: keep mock and API modes explicit; wait for accepted backend SHA and actual HTTPS origin;
   bind the fixed Pages proxy only after captain approval. Preserve request/key/draft/photo on ambiguity.
 - Captain: approve a new isolated demo provider project and free service; supply credentials securely;
@@ -162,3 +209,35 @@ in [cloud-stage-b-acceptance.md](cloud-stage-b-acceptance.md). No provider PASS 
   then native/provider restarts, seed, private reads, history, null/unknown Outcomes and another device.
 - Render, Supabase PostgreSQL/private Storage, real HTTPS, cold start, real redeploy persistence:
   **BLOCKED / NOT RUN (approved credentials and infrastructure unavailable)**.
+
+## Local operator and captain sequence
+
+From repository root: `npm ci --prefix apps/server --include=dev`, then
+`npm run typecheck --prefix apps/server` and `npm run build --prefix apps/server`.
+Keep the repository root: unchanged shared analytics TypeScript lives under apps/web and is loaded
+by the existing tsx bridge. No web build is needed for the cloud API entry point.
+
+From apps/server, populate ignored `.env.cloud` securely from cloud.env.example. For a NEW isolated
+loopback test DB only, CLOUD_LOCAL_TEST=1 allows loopback PostgreSQL/test storage; never use this
+flag in a provider deployment. Production requires verified PostgreSQL TLS and private HTTPS storage.
+`npm run start:cloud` applies checked migrations before listen. `npm run seed:cloud` also migrates,
+and requires explicit CLOUD_DEMO_SEED=1 plus a private DEMO_PASSWORD. It inserts missing users and
+reference records; repeat seed does not reset accounts or workflow. There is no destructive reset command.
+After the explicit seed, remove the seed opt-in/password from service configuration. Create profiles,
+crews and membership via admin API before assigning work; cloud seed does not fabricate those records.
+
+Captain: use render.cloud.yaml only after approved infrastructure/access. Confirm its exact source
+SHA, Node 24.21, repo-root build, auto-deploy off, fixed Host/Origin, one trusted ingress hop and all
+private-storage variables. Provision no paid service without authorization. Check migrated private
+schema and bucket policy, seed once if appropriate, then perform the documented actor/photo/Outcomes
+chain through the real Cloudflare HTTPS proxy. Restart/redeploy and verify IDs/bytes/history/passwords;
+repeat seed and confirm unchanged hashes/counts. Repeat from a second device. Local evidence is not
+a substitute for these provider checks.
+
+For storage repair: `npm run storage:reconcile` is dry-run; inspect counts first. `npm run
+storage:reconcile -- --apply` removes only aged pending unreferenced intents under the workflow lock.
+No bucket-wide deletion or user volume deletion is needed.
+
+Docker Compose CLI v5.0.1 is available; Engine named pipe dockerDesktopLinuxEngine is absent.
+Docker runtime remains BLOCKED, and no engine installation/system change was attempted. Native
+PostgreSQL/server/private-test-storage restart is separately tested. Docker runtime stays the captain's task.

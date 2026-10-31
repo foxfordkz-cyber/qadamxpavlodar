@@ -1,5 +1,5 @@
 # Optional owner-applied blueprint. Creating this file does not deploy a service.
-# The service is an explicitly limited PostgreSQL slice, not the full worker UI backend.
+# PostgreSQL workflow/photos/Outcomes; remaining API coverage is documented. No auto-deploy.
 services:
   - type: web
     name: green-pavlodar-api-demo
@@ -25,4 +25,12 @@ services:
       - key: FRONTEND_ORIGINS
         sync: false
       - key: CLOUD_ALLOWED_HOSTS
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_STORAGE_BUCKET
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: STORAGE_ALLOWED_HOSTS
         sync: false
