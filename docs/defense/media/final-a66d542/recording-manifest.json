@@ -1,0 +1,396 @@
+{
+  "sha": "a66d542c63c527d608400c84b34d49f982855369",
+  "source": "mock",
+  "format": "edited recordings of real browser actions; loading between scenes omitted",
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "clips": [
+    {
+      "name": "01-overview",
+      "file": "page@7aad5180204e73609e2e3cf0055a8278.webm",
+      "start": 1.363,
+      "end": 9.372,
+      "wallTotal": 10.336,
+      "targetDuration": 8,
+      "url": "http://127.0.0.1:5184/?source=mock&lang=ru#/",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "events": [
+        {
+          "at": 4.014,
+          "label": "Read overview"
+        }
+      ]
+    },
+    {
+      "name": "02-zone",
+      "file": "page@dda26f7f168a739e133024a935a1753d.webm",
+      "start": 5.368,
+      "end": 17.373,
+      "wallTotal": 17.933,
+      "targetDuration": 12,
+      "url": "http://127.0.0.1:5184/?source=mock&lang=ru#/map?site=site-osm-1569993037",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "events": [
+        {
+          "at": 4.033,
+          "label": "Read OSM context"
+        },
+        {
+          "at": 8.018,
+          "label": "Return to zone summary"
+        }
+      ]
+    },
+    {
+      "name": "03-draw-kk",
+      "file": "page@56758478cfba8463eded4a047a11bff1.webm",
+      "start": 1.863,
+      "end": 9.375,
+      "wallTotal": 9.851,
+      "targetDuration": 7.5,
+      "url": "http://127.0.0.1:5184/?source=mock&lang=kk#/map",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "events": [
+        {
+          "at": 1.263,
+          "label": "Enter draw command kk"
+        },
+        {
+          "at": 2.223,
+          "label": "Send command"
+        },
+        {
+          "at": 4.022,
+          "label": "Close assistant"
+        },
+        {
+          "at": 6.016,
+          "label": "Cancel drawing without saving a new zone"
+        }
+      ]
+    },
+    {
+      "name": "03-draw-ru",
+      "file": "page@e92e4456cf63311e299d668a7294c572.webm",
+      "start": 1.727,
+      "end": 9.236,
+      "wallTotal": 9.656,
+      "targetDuration": 7.5,
+      "url": "http://127.0.0.1:5184/?source=mock&lang=ru#/map",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "events": [
+        {
+          "at": 1.449,
+          "label": "Enter draw command ru"
+        },
+        {
+          "at": 2.227,
+          "label": "Send command"
+        },
+        {
+          "at": 4.026,
+          "label": "Close assistant"
+        },
+        {
+          "at": 6.012,
+          "label": "Cancel drawing without saving a new zone"
+        }
+      ]
+    },
+    {
+      "name": "04-plants",
+      "file": "page@2fac6799cc14ed9b0637eba64486c674.webm",
+      "start": 1.75,
+      "end": 26.756,
+      "wallTotal": 31.484,
+      "targetDuration": 25,
+      "url": "http://127.0.0.1:5184/?source=mock&lang=ru#/report?site=site-osm-1569993037&o=eyJjYXJlWWVhcnMiOjN9",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "events": [
+        {
+          "at": 12.008,
+          "label": "Plant composition in the actual report"
+        },
+        {
+          "at": 20.014,
+          "label": "Return to composition"
+        }
+      ]
+    },
+    {
+      "name": "05-estimate",
+      "file": "page@4a52b7b1ce38c1156bc3e0924ece49f2.webm",
+      "start": 2.937,
+      "end": 32.951,
+      "wallTotal": 33.406,
+      "targetDuration": 30,
+      "url": "http://127.0.0.1:5184/?source=mock&lang=ru#/map?site=site-osm-1569993037",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "events": [
+        {
+          "at": 7.06,
+          "label": "Read cost items"
+        },
+        {
+          "at": 17.057,
+          "label": "Read assumptions"
+        },
+        {
+          "at": 24.028,
+          "label": "Return to exact total"
+        }
+      ]
+    },
+    {
+      "name": "06-growth",
+      "file": "page@fe0a72f36a047c7483c6097ff155f904.webm",
+      "start": 4.79,
+      "end": 29.805,
+      "wallTotal": 31.656,
+      "targetDuration": 25,
+      "url": "http://127.0.0.1:5184/?source=mock&lang=ru#/map?site=site-osm-1569993037",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "events": [
+        {
+          "at": 4.189,
+          "label": "Growth at 5 years"
+        },
+        {
+          "at": 9.147,
+          "label": "Growth at 10 years"
+        },
+        {
+          "at": 15.13,
+          "label": "Growth at 20 years"
+        }
+      ]
+    },
+    {
+      "name": "07-word",
+      "file": "page@8d2e11d0c82f6ff9920cc88c5d8e134f.webm",
+      "start": 1.726,
+      "end": 31.731,
+      "wallTotal": 32.665,
+      "targetDuration": 30,
+      "url": "http://127.0.0.1:5184/?source=mock&lang=ru#/report?site=site-osm-1569993037&o=eyJjYXJlWWVhcnMiOjN9",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "events": [
+        {
+          "at": 5.223,
+          "label": "Download real ru Word memo"
+        },
+        {
+          "at": 17.12,
+          "label": "Download real kk Word memo"
+        }
+      ]
+    },
+    {
+      "name": "08-worker-1280",
+      "file": "page@e80a50d16bc1df296adac99ace8cc0ef.webm",
+      "start": 3.751,
+      "end": 18.764,
+      "wallTotal": 19.22,
+      "targetDuration": 15,
+      "url": "http://127.0.0.1:5184/?source=mock&lang=ru#/worker",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "events": [
+        {
+          "at": 3.072,
+          "label": "Open Журнал"
+        },
+        {
+          "at": 7.034,
+          "label": "Open Профиль"
+        },
+        {
+          "at": 11.016,
+          "label": "Return Смена"
+        }
+      ]
+    },
+    {
+      "name": "08-worker-375",
+      "file": "page@3e75a6df845e0b817f11b1d5ddadb49b.webm",
+      "start": 2.693,
+      "end": 17.707,
+      "wallTotal": 18.096,
+      "targetDuration": 15,
+      "url": "http://127.0.0.1:5184/?source=mock&lang=ru#/worker",
+      "viewport": {
+        "width": 375,
+        "height": 800
+      },
+      "events": [
+        {
+          "at": 3.038,
+          "label": "Open Журнал"
+        },
+        {
+          "at": 7.034,
+          "label": "Open Профиль"
+        },
+        {
+          "at": 11.031,
+          "label": "Return Смена"
+        }
+      ]
+    },
+    {
+      "name": "09-lab",
+      "file": "page@b42aa7db396899bb742b149acc8c2239.webm",
+      "start": 3.981,
+      "end": 33.985,
+      "wallTotal": 34.971,
+      "targetDuration": 30,
+      "url": "http://127.0.0.1:5184/?source=mock&lang=ru#/lab",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "events": [
+        {
+          "at": 4.038,
+          "label": "Apply water shortage minus50 percent"
+        },
+        {
+          "at": 7.036,
+          "label": "Read shortage result"
+        },
+        {
+          "at": 15.04,
+          "label": "Rebuild with500 cubic meters"
+        },
+        {
+          "at": 19.019,
+          "label": "Read rebuilt result"
+        }
+      ]
+    },
+    {
+      "name": "10-price-save",
+      "file": "page@b402182c1b5c1ed3425e6758e8fc65b6.webm",
+      "start": 1.885,
+      "end": 21.891,
+      "wallTotal": 22.726,
+      "targetDuration": 20,
+      "url": "http://127.0.0.1:5184/?source=mock&lang=ru#/outcomes?site=site-osm-1569993037",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "events": [
+        {
+          "at": 4.027,
+          "label": "Save current forecast"
+        },
+        {
+          "at": 8.054,
+          "label": "Reload after save"
+        },
+        {
+          "at": 13.053,
+          "label": "Select the newly saved forecast after reload"
+        }
+      ]
+    },
+    {
+      "name": "11-outcomes-full",
+      "file": "page@bb40b25f2764d3f2ced4f53c68182d2f.webm",
+      "start": 1.944,
+      "end": 26.957,
+      "wallTotal": 29.709,
+      "targetDuration": 25,
+      "url": "http://127.0.0.1:5184/?source=mock&lang=ru#/outcomes?site=site-osm-1569993037",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "events": [
+        {
+          "at": 9.016,
+          "label": "Read full observation counts"
+        },
+        {
+          "at": 17.032,
+          "label": "Read comparable annual prediction"
+        }
+      ]
+    },
+    {
+      "name": "12-outcomes-partial",
+      "file": "page@299c09135b95adb34bd0873ebbd0119d.webm",
+      "start": 1.985,
+      "end": 26.986,
+      "wallTotal": 29.024,
+      "targetDuration": 25,
+      "url": "http://127.0.0.1:5184/?source=mock&lang=ru#/outcomes?site=site-osm-1569993037",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "events": [
+        {
+          "at": 11.029,
+          "label": "Why the partial inspection cannot be compared"
+        },
+        {
+          "at": 18.029,
+          "label": "Return to unknown observations"
+        }
+      ]
+    },
+    {
+      "name": "13-finish",
+      "file": "page@6667eb357dc909c23d294e312d7bcea5.webm",
+      "start": 3.997,
+      "end": 29,
+      "wallTotal": 32.493,
+      "targetDuration": 25,
+      "url": "http://127.0.0.1:5184/?source=mock&lang=ru#/map?site=site-osm-1569993037",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "events": [
+        {
+          "at": 10.007,
+          "label": "Real contour and explicit mock summary"
+        }
+      ]
+    }
+  ],
+  "pageErrors": [],
+  "browser": "156.0.8078.4",
+  "completed": true,
+  "rawSources": "Local capture scratch files, not included in Git. Delivered MP4s contain actual recorded UI; these offsets document capture actions."
+}

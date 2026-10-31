@@ -1,0 +1,1318 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Users\\User\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe",
+      "C:\\Users\\User\\Documents\\Codex\\2026-10-31\\https-github-com-foxfordkz-cyber-qadamxpavlodar\\work\\defense-final\\tools\\e2e\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--grep",
+      "E2E-06|presentation: present=1|lab: three plans"
+    ],
+    "configFile": "C:\\Users\\User\\Documents\\Codex\\2026-10-31\\https-github-com-foxfordkz-cyber-qadamxpavlodar\\work\\defense-final\\tools\\e2e\\playwright.config.ts",
+    "rootDir": "C:/Users/User/Documents/Codex/2026-10-31/https-github-com-foxfordkz-cyber-qadamxpavlodar/work/defense-final/tools/e2e/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/User/Documents/Codex/2026-10-31/https-github-com-foxfordkz-cyber-qadamxpavlodar/work/defense-final/tools/e2e/test-results/mock",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "desktop",
+        "name": "desktop",
+        "testDir": "C:/Users/User/Documents/Codex/2026-10-31/https-github-com-foxfordkz-cyber-qadamxpavlodar/work/defense-final/tools/e2e/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.mock.spec.ts"
+        ],
+        "timeout": 45000
+      },
+      {
+        "outputDir": "C:/Users/User/Documents/Codex/2026-10-31/https-github-com-foxfordkz-cyber-qadamxpavlodar/work/defense-final/tools/e2e/test-results/mock",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "mobile",
+        "name": "mobile",
+        "testDir": "C:/Users/User/Documents/Codex/2026-10-31/https-github-com-foxfordkz-cyber-qadamxpavlodar/work/defense-final/tools/e2e/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.mock.spec.ts"
+        ],
+        "timeout": 45000
+      },
+      {
+        "outputDir": "C:/Users/User/Documents/Codex/2026-10-31/https-github-com-foxfordkz-cyber-qadamxpavlodar/work/defense-final/tools/e2e/test-results/mock",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "crew-375",
+        "name": "crew-375",
+        "testDir": "C:/Users/User/Documents/Codex/2026-10-31/https-github-com-foxfordkz-cyber-qadamxpavlodar/work/defense-final/tools/e2e/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.crew.spec.ts"
+        ],
+        "timeout": 45000
+      },
+      {
+        "outputDir": "C:/Users/User/Documents/Codex/2026-10-31/https-github-com-foxfordkz-cyber-qadamxpavlodar/work/defense-final/tools/e2e/test-results/mock",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "crew-800",
+        "name": "crew-800",
+        "testDir": "C:/Users/User/Documents/Codex/2026-10-31/https-github-com-foxfordkz-cyber-qadamxpavlodar/work/defense-final/tools/e2e/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.crew.spec.ts"
+        ],
+        "timeout": 45000
+      },
+      {
+        "outputDir": "C:/Users/User/Documents/Codex/2026-10-31/https-github-com-foxfordkz-cyber-qadamxpavlodar/work/defense-final/tools/e2e/test-results/mock",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "crew-801",
+        "name": "crew-801",
+        "testDir": "C:/Users/User/Documents/Codex/2026-10-31/https-github-com-foxfordkz-cyber-qadamxpavlodar/work/defense-final/tools/e2e/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.crew.spec.ts"
+        ],
+        "timeout": 45000
+      },
+      {
+        "outputDir": "C:/Users/User/Documents/Codex/2026-10-31/https-github-com-foxfordkz-cyber-qadamxpavlodar/work/defense-final/tools/e2e/test-results/mock",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "crew-1280",
+        "name": "crew-1280",
+        "testDir": "C:/Users/User/Documents/Codex/2026-10-31/https-github-com-foxfordkz-cyber-qadamxpavlodar/work/defense-final/tools/e2e/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.crew.spec.ts"
+        ],
+        "timeout": 45000
+      },
+      {
+        "outputDir": "C:/Users/User/Documents/Codex/2026-10-31/https-github-com-foxfordkz-cyber-qadamxpavlodar/work/defense-final/tools/e2e/test-results/mock",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "nav-1280",
+        "name": "nav-1280",
+        "testDir": "C:/Users/User/Documents/Codex/2026-10-31/https-github-com-foxfordkz-cyber-qadamxpavlodar/work/defense-final/tools/e2e/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.wide.spec.ts"
+        ],
+        "timeout": 45000
+      },
+      {
+        "outputDir": "C:/Users/User/Documents/Codex/2026-10-31/https-github-com-foxfordkz-cyber-qadamxpavlodar/work/defense-final/tools/e2e/test-results/mock",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "nav-1440",
+        "name": "nav-1440",
+        "testDir": "C:/Users/User/Documents/Codex/2026-10-31/https-github-com-foxfordkz-cyber-qadamxpavlodar/work/defense-final/tools/e2e/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.wide.spec.ts"
+        ],
+        "timeout": 45000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "C:\\Users\\User\\Documents\\Codex\\2026-10-31\\https-github-com-foxfordkz-cyber-qadamxpavlodar\\work\\defense-final\\tools\\e2e\\test-results\\mock",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "name": "desktop",
+        "testDir": "C:\\Users\\User\\Documents\\Codex\\2026-10-31\\https-github-com-foxfordkz-cyber-qadamxpavlodar\\work\\defense-final\\tools\\e2e\\tests",
+        "snapshotDir": "C:\\Users\\User\\Documents\\Codex\\2026-10-31\\https-github-com-foxfordkz-cyber-qadamxpavlodar\\work\\defense-final\\tools\\e2e\\tests",
+        "testIgnore": [],
+        "testMatch": "**/*.mock.spec.ts",
+        "timeout": 45000,
+        "use": {
+          "baseURL": "http://127.0.0.1:5184",
+          "browserName": "chromium",
+          "launchOptions": {
+            "args": [
+              "--enable-unsafe-swiftshader",
+              "--use-angle=swiftshader"
+            ]
+          },
+          "locale": "ru-RU",
+          "timezoneId": "Asia/Qyzylorda",
+          "actionTimeout": 12000,
+          "navigationTimeout": 30000,
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "video": "off",
+          "viewport": {
+            "width": 1280,
+            "height": 800
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "desktop"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "C:\\Users\\User\\Documents\\Codex\\2026-10-31\\https-github-com-foxfordkz-cyber-qadamxpavlodar\\work\\defense-final\\tools\\e2e\\test-results\\mock",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "name": "mobile",
+        "testDir": "C:\\Users\\User\\Documents\\Codex\\2026-10-31\\https-github-com-foxfordkz-cyber-qadamxpavlodar\\work\\defense-final\\tools\\e2e\\tests",
+        "snapshotDir": "C:\\Users\\User\\Documents\\Codex\\2026-10-31\\https-github-com-foxfordkz-cyber-qadamxpavlodar\\work\\defense-final\\tools\\e2e\\tests",
+        "testIgnore": [],
+        "testMatch": "**/*.mock.spec.ts",
+        "timeout": 45000,
+        "use": {
+          "baseURL": "http://127.0.0.1:5184",
+          "browserName": "chromium",
+          "launchOptions": {
+            "args": [
+              "--enable-unsafe-swiftshader",
+              "--use-angle=swiftshader"
+            ]
+          },
+          "locale": "ru-RU",
+          "timezoneId": "Asia/Qyzylorda",
+          "actionTimeout": 12000,
+          "navigationTimeout": 30000,
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "video": "off",
+          "viewport": {
+            "width": 375,
+            "height": 812
+          },
+          "isMobile": true,
+          "hasTouch": true
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "mobile"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "C:\\Users\\User\\Documents\\Codex\\2026-10-31\\https-github-com-foxfordkz-cyber-qadamxpavlodar\\work\\defense-final\\tools\\e2e\\test-results\\mock",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "name": "crew-375",
+        "testDir": "C:\\Users\\User\\Documents\\Codex\\2026-10-31\\https-github-com-foxfordkz-cyber-qadamxpavlodar\\work\\defense-final\\tools\\e2e\\tests",
+        "snapshotDir": "C:\\Users\\User\\Documents\\Codex\\2026-10-31\\https-github-com-foxfordkz-cyber-qadamxpavlodar\\work\\defense-final\\tools\\e2e\\tests",
+        "testIgnore": [],
+        "testMatch": "**/*.crew.spec.ts",
+        "timeout": 45000,
+        "use": {
+          "baseURL": "http://127.0.0.1:5184",
+          "browserName": "chromium",
+          "launchOptions": {
+            "args": [
+              "--enable-unsafe-swiftshader",
+              "--use-angle=swiftshader"
+            ]
+          },
+          "locale": "ru-RU",
+          "timezoneId": "Asia/Qyzylorda",
+          "actionTimeout": 12000,
+          "navigationTimeout": 30000,
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "video": "off",
+          "viewport": {
+            "width": 375,
+            "height": 812
+          },
+          "isMobile": true,
+          "hasTouch": true
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "crew-375"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "C:\\Users\\User\\Documents\\Codex\\2026-10-31\\https-github-com-foxfordkz-cyber-qadamxpavlodar\\work\\defense-final\\tools\\e2e\\test-results\\mock",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "name": "crew-800",
+        "testDir": "C:\\Users\\User\\Documents\\Codex\\2026-10-31\\https-github-com-foxfordkz-cyber-qadamxpavlodar\\work\\defense-final\\tools\\e2e\\tests",
+        "snapshotDir": "C:\\Users\\User\\Documents\\Codex\\2026-10-31\\https-github-com-foxfordkz-cyber-qadamxpavlodar\\work\\defense-final\\tools\\e2e\\tests",
+        "testIgnore": [],
+        "testMatch": "**/*.crew.spec.ts",
+        "timeout": 45000,
+        "use": {
+          "baseURL": "http://127.0.0.1:5184",
+          "browserName": "chromium",
+          "launchOptions": {
+            "args": [
+              "--enable-unsafe-swiftshader",
+              "--use-angle=swiftshader"
+            ]
+          },
+          "locale": "ru-RU",
+          "timezoneId": "Asia/Qyzylorda",
+          "actionTimeout": 12000,
+          "navigationTimeout": 30000,
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "video": "off",
+          "viewport": {
+            "width": 800,
+            "height": 812
+          },
+          "isMobile": false,
+          "hasTouch": true
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "crew-800"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "C:\\Users\\User\\Documents\\Codex\\2026-10-31\\https-github-com-foxfordkz-cyber-qadamxpavlodar\\work\\defense-final\\tools\\e2e\\test-results\\mock",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "name": "crew-801",
+        "testDir": "C:\\Users\\User\\Documents\\Codex\\2026-10-31\\https-github-com-foxfordkz-cyber-qadamxpavlodar\\work\\defense-final\\tools\\e2e\\tests",
+        "snapshotDir": "C:\\Users\\User\\Documents\\Codex\\2026-10-31\\https-github-com-foxfordkz-cyber-qadamxpavlodar\\work\\defense-final\\tools\\e2e\\tests",
+        "testIgnore": [],
+        "testMatch": "**/*.crew.spec.ts",
+        "timeout": 45000,
+        "use": {
+          "baseURL": "http://127.0.0.1:5184",
+          "browserName": "chromium",
+          "launchOptions": {
+            "args": [
+              "--enable-unsafe-swiftshader",
+              "--use-angle=swiftshader"
+            ]
+          },
+          "locale": "ru-RU",
+          "timezoneId": "Asia/Qyzylorda",
+          "actionTimeout": 12000,
+          "navigationTimeout": 30000,
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "video": "off",
+          "viewport": {
+            "width": 801,
+            "height": 812
+          },
+          "isMobile": false,
+          "hasTouch": false
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "crew-801"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "C:\\Users\\User\\Documents\\Codex\\2026-10-31\\https-github-com-foxfordkz-cyber-qadamxpavlodar\\work\\defense-final\\tools\\e2e\\test-results\\mock",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "name": "crew-1280",
+        "testDir": "C:\\Users\\User\\Documents\\Codex\\2026-10-31\\https-github-com-foxfordkz-cyber-qadamxpavlodar\\work\\defense-final\\tools\\e2e\\tests",
+        "snapshotDir": "C:\\Users\\User\\Documents\\Codex\\2026-10-31\\https-github-com-foxfordkz-cyber-qadamxpavlodar\\work\\defense-final\\tools\\e2e\\tests",
+        "testIgnore": [],
+        "testMatch": "**/*.crew.spec.ts",
+        "timeout": 45000,
+        "use": {
+          "baseURL": "http://127.0.0.1:5184",
+          "browserName": "chromium",
+          "launchOptions": {
+            "args": [
+              "--enable-unsafe-swiftshader",
+              "--use-angle=swiftshader"
+            ]
+          },
+          "locale": "ru-RU",
+          "timezoneId": "Asia/Qyzylorda",
+          "actionTimeout": 12000,
+          "navigationTimeout": 30000,
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "video": "off",
+          "viewport": {
+            "width": 1280,
+            "height": 800
+          },
+          "isMobile": false,
+          "hasTouch": false
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "crew-1280"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "C:\\Users\\User\\Documents\\Codex\\2026-10-31\\https-github-com-foxfordkz-cyber-qadamxpavlodar\\work\\defense-final\\tools\\e2e\\test-results\\mock",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "name": "nav-1280",
+        "testDir": "C:\\Users\\User\\Documents\\Codex\\2026-10-31\\https-github-com-foxfordkz-cyber-qadamxpavlodar\\work\\defense-final\\tools\\e2e\\tests",
+        "snapshotDir": "C:\\Users\\User\\Documents\\Codex\\2026-10-31\\https-github-com-foxfordkz-cyber-qadamxpavlodar\\work\\defense-final\\tools\\e2e\\tests",
+        "testIgnore": [],
+        "testMatch": "**/*.wide.spec.ts",
+        "timeout": 45000,
+        "use": {
+          "baseURL": "http://127.0.0.1:5184",
+          "browserName": "chromium",
+          "launchOptions": {
+            "args": [
+              "--enable-unsafe-swiftshader",
+              "--use-angle=swiftshader"
+            ]
+          },
+          "locale": "ru-RU",
+          "timezoneId": "Asia/Qyzylorda",
+          "actionTimeout": 12000,
+          "navigationTimeout": 30000,
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "video": "off",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "nav-1280"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "C:\\Users\\User\\Documents\\Codex\\2026-10-31\\https-github-com-foxfordkz-cyber-qadamxpavlodar\\work\\defense-final\\tools\\e2e\\test-results\\mock",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "name": "nav-1440",
+        "testDir": "C:\\Users\\User\\Documents\\Codex\\2026-10-31\\https-github-com-foxfordkz-cyber-qadamxpavlodar\\work\\defense-final\\tools\\e2e\\tests",
+        "snapshotDir": "C:\\Users\\User\\Documents\\Codex\\2026-10-31\\https-github-com-foxfordkz-cyber-qadamxpavlodar\\work\\defense-final\\tools\\e2e\\tests",
+        "testIgnore": [],
+        "testMatch": "**/*.wide.spec.ts",
+        "timeout": 45000,
+        "use": {
+          "baseURL": "http://127.0.0.1:5184",
+          "browserName": "chromium",
+          "launchOptions": {
+            "args": [
+              "--enable-unsafe-swiftshader",
+              "--use-angle=swiftshader"
+            ]
+          },
+          "locale": "ru-RU",
+          "timezoneId": "Asia/Qyzylorda",
+          "actionTimeout": 12000,
+          "navigationTimeout": 30000,
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "video": "off",
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "nav-1440"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "html",
+        {
+          "outputFolder": "playwright-report/mock",
+          "open": "never"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/mock/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 2,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "lab.mock.spec.ts",
+      "file": "lab.mock.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "lab: three plans render without browser errors or horizontal overflow",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2804,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-31T00:42:15.064Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "704ed5d9f9007998c673-0e3dcf08f6e757e1bca5",
+          "file": "lab.mock.spec.ts",
+          "line": 18,
+          "column": 1
+        },
+        {
+          "title": "lab: three plans render without browser errors or horizontal overflow",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3005,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-31T00:42:21.080Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "704ed5d9f9007998c673-21903b49c5dfaea5c55d",
+          "file": "lab.mock.spec.ts",
+          "line": 18,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "regressions.mock.spec.ts",
+      "file": "regressions.mock.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "presentation: present=1 enables the mode and the exit pill disables it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1619,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-31T00:42:15.050Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "179c14eaf50716f3b615-f824fd21fb77c634fae9",
+          "file": "regressions.mock.spec.ts",
+          "line": 144,
+          "column": 1
+        },
+        {
+          "title": "presentation: present=1 enables the mode and the exit pill disables it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1260,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-31T00:42:24.732Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "179c14eaf50716f3b615-cfba35cd09fdfd5aff84",
+          "file": "regressions.mock.spec.ts",
+          "line": 144,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "worker-navigation.mock.spec.ts",
+      "file": "worker-navigation.mock.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "E2E-06: embedded worker cabinet exposes Profile navigation at desktop and phone widths",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 4597,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-31T00:42:19.446Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "dd9333a0e8ffb651bf6b-5955f3d9b0232e116295",
+          "file": "worker-navigation.mock.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "E2E-06: embedded worker cabinet exposes Profile navigation at desktop and phone widths",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2451,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-31T00:42:24.221Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "dd9333a0e8ffb651bf6b-2b79beab2e57ff1da1f6",
+          "file": "worker-navigation.mock.spec.ts",
+          "line": 5,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "navigation-language.crew.spec.ts",
+      "file": "navigation-language.crew.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "E2E-06: Работник keyboard navigation with Kazakh shell",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "crew-375",
+              "projectName": "crew-375",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 4267,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-31T00:42:26.703Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a1314ff0b07f73b60710-2d549c882fb2ce9798e7",
+          "file": "navigation-language.crew.spec.ts",
+          "line": 7,
+          "column": 3
+        },
+        {
+          "title": "E2E-06: Бригадир keyboard navigation with Kazakh shell",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "crew-375",
+              "projectName": "crew-375",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5849,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-31T00:42:27.200Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a1314ff0b07f73b60710-0402f7d2cf2f20c4fc74",
+          "file": "navigation-language.crew.spec.ts",
+          "line": 7,
+          "column": 3
+        },
+        {
+          "title": "E2E-06: Работник keyboard navigation with Kazakh shell",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "crew-800",
+              "projectName": "crew-800",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 3609,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-31T00:42:37.106Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a1314ff0b07f73b60710-edccdcadd0db0a623a42",
+          "file": "navigation-language.crew.spec.ts",
+          "line": 7,
+          "column": 3
+        },
+        {
+          "title": "E2E-06: Бригадир keyboard navigation with Kazakh shell",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "crew-800",
+              "projectName": "crew-800",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4015,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-31T00:42:40.609Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a1314ff0b07f73b60710-86a5bbcd681b0f783f1e",
+          "file": "navigation-language.crew.spec.ts",
+          "line": 7,
+          "column": 3
+        },
+        {
+          "title": "E2E-06: Работник keyboard navigation with Kazakh shell",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "crew-801",
+              "projectName": "crew-801",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3090,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-31T00:42:47.009Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a1314ff0b07f73b60710-95c368f8c9fc3c206af1",
+          "file": "navigation-language.crew.spec.ts",
+          "line": 7,
+          "column": 3
+        },
+        {
+          "title": "E2E-06: Бригадир keyboard navigation with Kazakh shell",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "crew-801",
+              "projectName": "crew-801",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 4909,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-31T00:42:50.089Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a1314ff0b07f73b60710-333e1ebac1c1393c4f1f",
+          "file": "navigation-language.crew.spec.ts",
+          "line": 7,
+          "column": 3
+        },
+        {
+          "title": "E2E-06: Работник keyboard navigation with Kazakh shell",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "crew-1280",
+              "projectName": "crew-1280",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 4745,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-31T00:42:56.564Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a1314ff0b07f73b60710-0e32b009dcf8500ae56f",
+          "file": "navigation-language.crew.spec.ts",
+          "line": 7,
+          "column": 3
+        },
+        {
+          "title": "E2E-06: Бригадир keyboard navigation with Kazakh shell",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "crew-1280",
+              "projectName": "crew-1280",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4410,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-31T00:43:01.007Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a1314ff0b07f73b60710-3e3497f661b722dbce50",
+          "file": "navigation-language.crew.spec.ts",
+          "line": 7,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "navigation.crew.spec.ts",
+      "file": "navigation.crew.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "E2E-06: Работник can switch Shift, Journal and Profile without navigation covering content",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "crew-375",
+              "projectName": "crew-375",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 3846,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-31T00:42:32.104Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5848cb8b2cdecf166323-18a63947a73701b4006c",
+          "file": "navigation.crew.spec.ts",
+          "line": 7,
+          "column": 3
+        },
+        {
+          "title": "E2E-06: Бригадир can switch Shift, Journal and Profile without navigation covering content",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "crew-375",
+              "projectName": "crew-375",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4227,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-31T00:42:34.624Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5848cb8b2cdecf166323-a03524ddde9a6d90bbdb",
+          "file": "navigation.crew.spec.ts",
+          "line": 7,
+          "column": 3
+        },
+        {
+          "title": "E2E-06: Работник can switch Shift, Journal and Profile without navigation covering content",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "crew-800",
+              "projectName": "crew-800",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 3259,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-31T00:42:40.883Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5848cb8b2cdecf166323-18f0ade4ecb35597d0fe",
+          "file": "navigation.crew.spec.ts",
+          "line": 7,
+          "column": 3
+        },
+        {
+          "title": "E2E-06: Бригадир can switch Shift, Journal and Profile without navigation covering content",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "crew-800",
+              "projectName": "crew-800",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 4627,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-31T00:42:44.151Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5848cb8b2cdecf166323-578f7ba0b5e8caacde99",
+          "file": "navigation.crew.spec.ts",
+          "line": 7,
+          "column": 3
+        },
+        {
+          "title": "E2E-06: Работник can switch Shift, Journal and Profile without navigation covering content",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "crew-801",
+              "projectName": "crew-801",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3348,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-31T00:42:50.245Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5848cb8b2cdecf166323-377d8af728292e7df66d",
+          "file": "navigation.crew.spec.ts",
+          "line": 7,
+          "column": 3
+        },
+        {
+          "title": "E2E-06: Бригадир can switch Shift, Journal and Profile without navigation covering content",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "crew-801",
+              "projectName": "crew-801",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4675,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-31T00:42:53.604Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5848cb8b2cdecf166323-f6c4ddce66d29ba9d647",
+          "file": "navigation.crew.spec.ts",
+          "line": 7,
+          "column": 3
+        },
+        {
+          "title": "E2E-06: Работник can switch Shift, Journal and Profile without navigation covering content",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "crew-1280",
+              "projectName": "crew-1280",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 3737,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-31T00:43:01.429Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5848cb8b2cdecf166323-5ea00155ac374524799f",
+          "file": "navigation.crew.spec.ts",
+          "line": 7,
+          "column": 3
+        },
+        {
+          "title": "E2E-06: Бригадир can switch Shift, Journal and Profile without navigation covering content",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "crew-1280",
+              "projectName": "crew-1280",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 4374,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-31T00:43:05.178Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5848cb8b2cdecf166323-4e54a73882b4695277de",
+          "file": "navigation.crew.spec.ts",
+          "line": 7,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-31T00:42:14.308Z",
+    "duration": 55371.187,
+    "expected": 22,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,10 @@
+# Preserve exact bytes and the published artifact checksums on Windows.
+*.pdf binary
+*.pptx binary
+*.docx binary
+*.mp4 binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+# Raw DOM captures retain tabs and terminal whitespace as evidence.
+screenshots/*.txt -text -diff

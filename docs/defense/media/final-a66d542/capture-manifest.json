@@ -1,0 +1,1059 @@
+{
+  "sha": "a66d542c63c527d608400c84b34d49f982855369",
+  "source": "mock",
+  "base": "http://127.0.0.1:5184",
+  "created": "2026-10-31T00:43:52.031Z",
+  "status": "captured package version; independent acceptance not claimed",
+  "options": {
+    "variant": "optimal",
+    "careYears": 3,
+    "excluded": [],
+    "locked": [],
+    "replacements": {},
+    "watering": "regular",
+    "improveSoil": false,
+    "maxSpeciesShare": 0.3
+  },
+  "captures": [
+    {
+      "name": "zone-overview-1280",
+      "url": "http://127.0.0.1:5184/?source=mock&lang=ru#/map?site=site-osm-1569993037",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "steps": [
+        "Map Tolstogo",
+        "Select care3",
+        "Overview"
+      ],
+      "inputs": {
+        "site": "site-osm-1569993037",
+        "variant": "optimal",
+        "careYears": 3,
+        "excluded": [],
+        "locked": [],
+        "replacements": {},
+        "watering": "regular",
+        "improveSoil": false,
+        "maxSpeciesShare": 0.3
+      },
+      "selector": null,
+      "clip": null,
+      "sha256": "b1e976a1b148eae6f843267f9e5248cb3a94ab5203e4de47064b5dbda699be39",
+      "image": "screenshots/zone-overview-1280.png",
+      "screenText": "screenshots/zone-overview-1280.txt"
+    },
+    {
+      "name": "estimate-1280",
+      "url": "http://127.0.0.1:5184/?source=mock&lang=ru#/map?site=site-osm-1569993037",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "steps": [
+        "Смета",
+        "Уход3г"
+      ],
+      "inputs": {
+        "site": "site-osm-1569993037",
+        "variant": "optimal",
+        "careYears": 3,
+        "excluded": [],
+        "locked": [],
+        "replacements": {},
+        "watering": "regular",
+        "improveSoil": false,
+        "maxSpeciesShare": 0.3
+      },
+      "selector": null,
+      "clip": null,
+      "sha256": "7828fd923ed27f877b13d1306ec9a1226e15e8cfc60a6e595c70ba3c193e5625",
+      "image": "screenshots/estimate-1280.png",
+      "screenText": "screenshots/estimate-1280.txt"
+    },
+    {
+      "name": "growth20-1280",
+      "url": "http://127.0.0.1:5184/?source=mock&lang=ru#/map?site=site-osm-1569993037",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "steps": [
+        "Эффект",
+        "20лет"
+      ],
+      "inputs": {
+        "site": "site-osm-1569993037",
+        "variant": "optimal",
+        "careYears": 3,
+        "excluded": [],
+        "locked": [],
+        "replacements": {},
+        "watering": "regular",
+        "improveSoil": false,
+        "maxSpeciesShare": 0.3,
+        "growthYear": 20
+      },
+      "selector": null,
+      "clip": null,
+      "sha256": "43048d75a1f1ba2fb25886fc1283068a14a627426a7f6db153f9121de09587a0",
+      "image": "screenshots/growth20-1280.png",
+      "screenText": "screenshots/growth20-1280.txt"
+    },
+    {
+      "name": "growth20-controls",
+      "url": "http://127.0.0.1:5184/?source=mock&lang=ru#/map?site=site-osm-1569993037",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "steps": [
+        "Same state, controls"
+      ],
+      "inputs": {
+        "site": "site-osm-1569993037",
+        "variant": "optimal",
+        "careYears": 3,
+        "excluded": [],
+        "locked": [],
+        "replacements": {},
+        "watering": "regular",
+        "improveSoil": false,
+        "maxSpeciesShare": 0.3,
+        "growthYear": 20
+      },
+      "selector": ".gp-tm",
+      "clip": null,
+      "sha256": "6637c5fe7b0cfbab9092ad34eeef3d09c942d365c9dfd1e8503da3e8d7a9a90c",
+      "image": "screenshots/growth20-controls.png",
+      "screenText": "screenshots/growth20-controls.txt"
+    },
+    {
+      "name": "plants-focus",
+      "url": "http://127.0.0.1:5184/?source=mock&lang=ru#/report?site=site-osm-1569993037&o=eyJjYXJlWWVhcnMiOjN9",
+      "viewport": {
+        "width": 1440,
+        "height": 1400
+      },
+      "steps": [
+        "Actual report link preserves options",
+        "Plant composition"
+      ],
+      "inputs": {
+        "site": "site-osm-1569993037",
+        "variant": "optimal",
+        "careYears": 3,
+        "excluded": [],
+        "locked": [],
+        "replacements": {},
+        "watering": "regular",
+        "improveSoil": false,
+        "maxSpeciesShare": 0.3
+      },
+      "selector": null,
+      "clip": {
+        "x": 255,
+        "y": 119.5,
+        "width": 930,
+        "height": 399.5625
+      },
+      "sha256": "bfde9cd33eaf5bcb7a4910e34b72e20db52a40203e6799c6b48bb73315814bb8",
+      "image": "screenshots/plants-focus.png",
+      "screenText": "screenshots/plants-focus.txt"
+    },
+    {
+      "name": "report-estimate-focus",
+      "url": "http://127.0.0.1:5184/?source=mock&lang=ru#/report?site=site-osm-1569993037&o=eyJjYXJlWWVhcnMiOjN9",
+      "viewport": {
+        "width": 1440,
+        "height": 1400
+      },
+      "steps": [
+        "Same report",
+        "Cost section"
+      ],
+      "inputs": {
+        "site": "site-osm-1569993037",
+        "variant": "optimal",
+        "careYears": 3,
+        "excluded": [],
+        "locked": [],
+        "replacements": {},
+        "watering": "regular",
+        "improveSoil": false,
+        "maxSpeciesShare": 0.3
+      },
+      "selector": null,
+      "clip": {
+        "x": 255,
+        "y": 120.0625,
+        "width": 930,
+        "height": 228.1875
+      },
+      "sha256": "a75a03e01a9247c4aaf6a75f1c95576f72b09ec229db55c17039618d0b080686",
+      "image": "screenshots/report-estimate-focus.png",
+      "screenText": "screenshots/report-estimate-focus.txt"
+    },
+    {
+      "name": "memo-ru-panel",
+      "url": "http://127.0.0.1:5184/?source=mock&lang=ru#/report?site=site-osm-1569993037&o=eyJjYXJlWWVhcnMiOjN9",
+      "viewport": {
+        "width": 1440,
+        "height": 1400
+      },
+      "steps": [
+        "Memo Word",
+        "ru",
+        "Select Tolstogo"
+      ],
+      "inputs": {
+        "site": "site-osm-1569993037",
+        "variant": "optimal",
+        "careYears": 3,
+        "excluded": [],
+        "locked": [],
+        "replacements": {},
+        "watering": "regular",
+        "improveSoil": false,
+        "maxSpeciesShare": 0.3,
+        "documentLanguage": "ru"
+      },
+      "selector": "section[aria-label=\"Служебная записка (Word)\"]",
+      "clip": null,
+      "sha256": "7596695b39451ee7c01457644dfb63d647f718a5f3dbbfca45a2301e0c336794",
+      "image": "screenshots/memo-ru-panel.png",
+      "screenText": "screenshots/memo-ru-panel.txt"
+    },
+    {
+      "name": "memo-kk-panel",
+      "url": "http://127.0.0.1:5184/?source=mock&lang=ru#/report?site=site-osm-1569993037&o=eyJjYXJlWWVhcnMiOjN9",
+      "viewport": {
+        "width": 1440,
+        "height": 1400
+      },
+      "steps": [
+        "Memo Word",
+        "kk",
+        "Select Tolstogo"
+      ],
+      "inputs": {
+        "site": "site-osm-1569993037",
+        "variant": "optimal",
+        "careYears": 3,
+        "excluded": [],
+        "locked": [],
+        "replacements": {},
+        "watering": "regular",
+        "improveSoil": false,
+        "maxSpeciesShare": 0.3,
+        "documentLanguage": "kk"
+      },
+      "selector": "section[aria-label=\"Служебная записка (Word)\"]",
+      "clip": null,
+      "sha256": "0143ce1525f9ded33d7e86a0c0c85c851d8357aea5eaf7c6b29f2da349125146",
+      "image": "screenshots/memo-kk-panel.png",
+      "screenText": "screenshots/memo-kk-panel.txt"
+    },
+    {
+      "name": "lab-before",
+      "url": "http://127.0.0.1:5184/?source=mock&lang=ru#/lab",
+      "viewport": {
+        "width": 1440,
+        "height": 1400
+      },
+      "steps": [
+        "Laboratory, budget 50m, balanced, regular",
+        "Water1000; stress50%; rebuild as named"
+      ],
+      "inputs": {
+        "budgetM": 50,
+        "waterLimit": 1000,
+        "reductionPct": 0,
+        "watering": "regular",
+        "goal": "balanced",
+        "metrics": [
+          {
+            "plan": "survival",
+            "metrics": [
+              {
+                "name": "zones",
+                "value": "41"
+              },
+              {
+                "name": "trees",
+                "value": "301"
+              },
+              {
+                "name": "expected",
+                "value": "243"
+              },
+              {
+                "name": "spent",
+                "value": "45 306 446 ₸"
+              },
+              {
+                "name": "water",
+                "value": "993,1"
+              },
+              {
+                "name": "survival",
+                "value": "80,7%"
+              },
+              {
+                "name": "co2",
+                "value": "9,34"
+              },
+              {
+                "name": "deficit",
+                "value": "0"
+              }
+            ],
+            "zoneIds": [
+              "site-osm-1568405606",
+              "site-osm-1565718652",
+              "site-osm-355267627",
+              "site-osm-541690275",
+              "site-osm-1565718651",
+              "site-osm-1546881045",
+              "site-osm-1563058215",
+              "site-osm-355267626",
+              "site-osm-1563058191",
+              "site-osm-355267628",
+              "site-osm-542083011",
+              "site-osm-617200834",
+              "site-osm-1546881060",
+              "site-osm-542089655",
+              "site-osm-1563058216",
+              "site-osm-1546881096",
+              "site-osm-1546881035",
+              "site-osm-1375007555",
+              "site-osm-542089654",
+              "site-osm-1546881000",
+              "site-osm-1546881093",
+              "site-osm-1346008060",
+              "site-osm-542083010",
+              "site-osm-1546881022",
+              "site-osm-355268432",
+              "site-osm-1569993063",
+              "site-osm-1569303545",
+              "site-osm-541690277",
+              "site-osm-355268424",
+              "site-osm-542269631",
+              "site-osm-1546881040",
+              "site-osm-1529680598",
+              "site-osm-355268431",
+              "site-osm-1546881070",
+              "site-osm-355268433",
+              "site-osm-1546881046",
+              "site-osm-1480655987",
+              "site-osm-1375007556",
+              "site-osm-1546881092",
+              "site-osm-1569993020",
+              "site-osm-355268439"
+            ]
+          },
+          {
+            "plan": "water",
+            "metrics": [
+              {
+                "name": "zones",
+                "value": "36"
+              },
+              {
+                "name": "trees",
+                "value": "300"
+              },
+              {
+                "name": "expected",
+                "value": "242,6"
+              },
+              {
+                "name": "spent",
+                "value": "48 597 900 ₸"
+              },
+              {
+                "name": "water",
+                "value": "988,7"
+              },
+              {
+                "name": "survival",
+                "value": "80,9%"
+              },
+              {
+                "name": "co2",
+                "value": "9,38"
+              },
+              {
+                "name": "deficit",
+                "value": "0"
+              }
+            ],
+            "zoneIds": [
+              "site-osm-355267627",
+              "site-osm-1568405606",
+              "site-osm-617200834",
+              "site-osm-541690275",
+              "site-osm-1546881045",
+              "site-osm-1563058215",
+              "site-osm-1546881060",
+              "site-osm-542089655",
+              "site-osm-355267626",
+              "site-osm-542089654",
+              "site-osm-355267628",
+              "site-osm-1563058191",
+              "site-osm-542083011",
+              "site-osm-1546881022",
+              "site-osm-1546881000",
+              "site-osm-1546881096",
+              "site-osm-1546881035",
+              "site-osm-1563058216",
+              "site-osm-1375007555",
+              "site-osm-1546881023",
+              "site-osm-1346008060",
+              "site-osm-1546881093",
+              "site-osm-542083010",
+              "site-osm-355268432",
+              "site-osm-1546881092",
+              "site-osm-355268424",
+              "site-osm-541481614",
+              "site-osm-355268431",
+              "site-osm-1569303545",
+              "site-osm-542269631",
+              "site-osm-1569993063",
+              "site-osm-1480655995",
+              "site-osm-1569993044",
+              "site-osm-1529680598",
+              "site-osm-541690277",
+              "site-osm-355268439"
+            ]
+          },
+          {
+            "plan": "people",
+            "metrics": [
+              {
+                "name": "zones",
+                "value": "13"
+              },
+              {
+                "name": "trees",
+                "value": "263"
+              },
+              {
+                "name": "expected",
+                "value": "212,6"
+              },
+              {
+                "name": "spent",
+                "value": "44 593 829 ₸"
+              },
+              {
+                "name": "water",
+                "value": "998,2"
+              },
+              {
+                "name": "survival",
+                "value": "80,8%"
+              },
+              {
+                "name": "co2",
+                "value": "8,48"
+              },
+              {
+                "name": "deficit",
+                "value": "0"
+              }
+            ],
+            "zoneIds": [
+              "site-osm-1546881046",
+              "site-osm-1546881095",
+              "site-osm-1568677761",
+              "site-osm-1474911990",
+              "site-osm-1546881035",
+              "site-osm-1569993044",
+              "site-osm-1546881096",
+              "site-osm-1569303525",
+              "site-osm-1569303533",
+              "site-osm-1569303537",
+              "site-osm-1546881027",
+              "site-osm-1569993032",
+              "site-osm-541690275"
+            ]
+          }
+        ]
+      },
+      "selector": null,
+      "clip": {
+        "x": 40,
+        "y": 119.875,
+        "width": 442.65625,
+        "height": 852.5
+      },
+      "sha256": "ca13a37ebbf2e5b8492950170929c29e7ad93f6638217715e3790aa34d3bbe50",
+      "image": "screenshots/lab-before.png",
+      "screenText": "screenshots/lab-before.txt"
+    },
+    {
+      "name": "lab-stress",
+      "url": "http://127.0.0.1:5184/?source=mock&lang=ru#/lab",
+      "viewport": {
+        "width": 1440,
+        "height": 1400
+      },
+      "steps": [
+        "Laboratory, budget 50m, balanced, regular",
+        "Water1000; stress50%; rebuild as named"
+      ],
+      "inputs": {
+        "budgetM": 50,
+        "waterLimit": 1000,
+        "available": 500,
+        "reductionPct": 50,
+        "watering": "regular",
+        "goal": "balanced",
+        "metrics": [
+          {
+            "plan": "survival",
+            "metrics": [
+              {
+                "name": "zones",
+                "value": "41"
+              },
+              {
+                "name": "trees",
+                "value": "301"
+              },
+              {
+                "name": "expected",
+                "value": "243"
+              },
+              {
+                "name": "spent",
+                "value": "45 306 446 ₸"
+              },
+              {
+                "name": "water",
+                "value": "993,1"
+              },
+              {
+                "name": "survival",
+                "value": "80,7%"
+              },
+              {
+                "name": "co2",
+                "value": "9,34"
+              },
+              {
+                "name": "deficit",
+                "value": "493,1"
+              }
+            ],
+            "zoneIds": [
+              "site-osm-1568405606",
+              "site-osm-1565718652",
+              "site-osm-355267627",
+              "site-osm-541690275",
+              "site-osm-1565718651",
+              "site-osm-1546881045",
+              "site-osm-1563058215",
+              "site-osm-355267626",
+              "site-osm-1563058191",
+              "site-osm-355267628",
+              "site-osm-542083011",
+              "site-osm-617200834",
+              "site-osm-1546881060",
+              "site-osm-542089655",
+              "site-osm-1563058216",
+              "site-osm-1546881096",
+              "site-osm-1546881035",
+              "site-osm-1375007555",
+              "site-osm-542089654",
+              "site-osm-1546881000",
+              "site-osm-1546881093",
+              "site-osm-1346008060",
+              "site-osm-542083010",
+              "site-osm-1546881022",
+              "site-osm-355268432",
+              "site-osm-1569993063",
+              "site-osm-1569303545",
+              "site-osm-541690277",
+              "site-osm-355268424",
+              "site-osm-542269631",
+              "site-osm-1546881040",
+              "site-osm-1529680598",
+              "site-osm-355268431",
+              "site-osm-1546881070",
+              "site-osm-355268433",
+              "site-osm-1546881046",
+              "site-osm-1480655987",
+              "site-osm-1375007556",
+              "site-osm-1546881092",
+              "site-osm-1569993020",
+              "site-osm-355268439"
+            ]
+          },
+          {
+            "plan": "water",
+            "metrics": [
+              {
+                "name": "zones",
+                "value": "36"
+              },
+              {
+                "name": "trees",
+                "value": "300"
+              },
+              {
+                "name": "expected",
+                "value": "242,6"
+              },
+              {
+                "name": "spent",
+                "value": "48 597 900 ₸"
+              },
+              {
+                "name": "water",
+                "value": "988,7"
+              },
+              {
+                "name": "survival",
+                "value": "80,9%"
+              },
+              {
+                "name": "co2",
+                "value": "9,38"
+              },
+              {
+                "name": "deficit",
+                "value": "488,7"
+              }
+            ],
+            "zoneIds": [
+              "site-osm-355267627",
+              "site-osm-1568405606",
+              "site-osm-617200834",
+              "site-osm-541690275",
+              "site-osm-1546881045",
+              "site-osm-1563058215",
+              "site-osm-1546881060",
+              "site-osm-542089655",
+              "site-osm-355267626",
+              "site-osm-542089654",
+              "site-osm-355267628",
+              "site-osm-1563058191",
+              "site-osm-542083011",
+              "site-osm-1546881022",
+              "site-osm-1546881000",
+              "site-osm-1546881096",
+              "site-osm-1546881035",
+              "site-osm-1563058216",
+              "site-osm-1375007555",
+              "site-osm-1546881023",
+              "site-osm-1346008060",
+              "site-osm-1546881093",
+              "site-osm-542083010",
+              "site-osm-355268432",
+              "site-osm-1546881092",
+              "site-osm-355268424",
+              "site-osm-541481614",
+              "site-osm-355268431",
+              "site-osm-1569303545",
+              "site-osm-542269631",
+              "site-osm-1569993063",
+              "site-osm-1480655995",
+              "site-osm-1569993044",
+              "site-osm-1529680598",
+              "site-osm-541690277",
+              "site-osm-355268439"
+            ]
+          },
+          {
+            "plan": "people",
+            "metrics": [
+              {
+                "name": "zones",
+                "value": "13"
+              },
+              {
+                "name": "trees",
+                "value": "263"
+              },
+              {
+                "name": "expected",
+                "value": "212,6"
+              },
+              {
+                "name": "spent",
+                "value": "44 593 829 ₸"
+              },
+              {
+                "name": "water",
+                "value": "998,2"
+              },
+              {
+                "name": "survival",
+                "value": "80,8%"
+              },
+              {
+                "name": "co2",
+                "value": "8,48"
+              },
+              {
+                "name": "deficit",
+                "value": "498,2"
+              }
+            ],
+            "zoneIds": [
+              "site-osm-1546881046",
+              "site-osm-1546881095",
+              "site-osm-1568677761",
+              "site-osm-1474911990",
+              "site-osm-1546881035",
+              "site-osm-1569993044",
+              "site-osm-1546881096",
+              "site-osm-1569303525",
+              "site-osm-1569303533",
+              "site-osm-1569303537",
+              "site-osm-1546881027",
+              "site-osm-1569993032",
+              "site-osm-541690275"
+            ]
+          }
+        ]
+      },
+      "selector": null,
+      "clip": {
+        "x": 40,
+        "y": 119.875,
+        "width": 442.65625,
+        "height": 852.5
+      },
+      "sha256": "861934f716bb00542cb73ef9d2bdf6444a13d541e767fe989f47ad1aee94957f",
+      "image": "screenshots/lab-stress.png",
+      "screenText": "screenshots/lab-stress.txt"
+    },
+    {
+      "name": "lab-rebuilt",
+      "url": "http://127.0.0.1:5184/?source=mock&lang=ru#/lab",
+      "viewport": {
+        "width": 1440,
+        "height": 1400
+      },
+      "steps": [
+        "Laboratory, budget 50m, balanced, regular",
+        "Water1000; stress50%; rebuild as named"
+      ],
+      "inputs": {
+        "budgetM": 50,
+        "waterLimit": 500,
+        "reductionPct": 0,
+        "watering": "regular",
+        "goal": "balanced",
+        "metrics": [
+          {
+            "plan": "survival",
+            "metrics": [
+              {
+                "name": "zones",
+                "value": "31"
+              },
+              {
+                "name": "trees",
+                "value": "160"
+              },
+              {
+                "name": "expected",
+                "value": "129"
+              },
+              {
+                "name": "spent",
+                "value": "22 743 049 ₸"
+              },
+              {
+                "name": "water",
+                "value": "498,1"
+              },
+              {
+                "name": "survival",
+                "value": "80,6%"
+              },
+              {
+                "name": "co2",
+                "value": "4,79"
+              },
+              {
+                "name": "deficit",
+                "value": "0"
+              }
+            ],
+            "zoneIds": [
+              "site-osm-1568405606",
+              "site-osm-1565718652",
+              "site-osm-355267627",
+              "site-osm-541690275",
+              "site-osm-1565718651",
+              "site-osm-1546881045",
+              "site-osm-1563058215",
+              "site-osm-355267626",
+              "site-osm-1563058191",
+              "site-osm-355267628",
+              "site-osm-542083011",
+              "site-osm-617200834",
+              "site-osm-1546881060",
+              "site-osm-542089655",
+              "site-osm-1563058216",
+              "site-osm-1546881096",
+              "site-osm-1546881035",
+              "site-osm-1375007555",
+              "site-osm-542089654",
+              "site-osm-1546881000",
+              "site-osm-1546881093",
+              "site-osm-1346008060",
+              "site-osm-542083010",
+              "site-osm-1546881022",
+              "site-osm-355268432",
+              "site-osm-1569993063",
+              "site-osm-1569303545",
+              "site-osm-541690277",
+              "site-osm-355268424",
+              "site-osm-542269631",
+              "site-osm-355268431"
+            ]
+          },
+          {
+            "plan": "water",
+            "metrics": [
+              {
+                "name": "zones",
+                "value": "29"
+              },
+              {
+                "name": "trees",
+                "value": "160"
+              },
+              {
+                "name": "expected",
+                "value": "129"
+              },
+              {
+                "name": "spent",
+                "value": "23 238 873 ₸"
+              },
+              {
+                "name": "water",
+                "value": "499,9"
+              },
+              {
+                "name": "survival",
+                "value": "80,6%"
+              },
+              {
+                "name": "co2",
+                "value": "4,83"
+              },
+              {
+                "name": "deficit",
+                "value": "0"
+              }
+            ],
+            "zoneIds": [
+              "site-osm-355267627",
+              "site-osm-1568405606",
+              "site-osm-617200834",
+              "site-osm-541690275",
+              "site-osm-1546881045",
+              "site-osm-1563058215",
+              "site-osm-1546881060",
+              "site-osm-542089655",
+              "site-osm-355267626",
+              "site-osm-542089654",
+              "site-osm-355267628",
+              "site-osm-1563058191",
+              "site-osm-542083011",
+              "site-osm-1546881022",
+              "site-osm-1546881000",
+              "site-osm-1546881096",
+              "site-osm-1546881035",
+              "site-osm-1563058216",
+              "site-osm-1375007555",
+              "site-osm-1546881023",
+              "site-osm-1346008060",
+              "site-osm-1546881093",
+              "site-osm-542083010",
+              "site-osm-355268432",
+              "site-osm-1546881092",
+              "site-osm-355268424",
+              "site-osm-355268431",
+              "site-osm-1569303545",
+              "site-osm-542269631"
+            ]
+          },
+          {
+            "plan": "people",
+            "metrics": [
+              {
+                "name": "zones",
+                "value": "11"
+              },
+              {
+                "name": "trees",
+                "value": "143"
+              },
+              {
+                "name": "expected",
+                "value": "114,6"
+              },
+              {
+                "name": "spent",
+                "value": "25 436 660 ₸"
+              },
+              {
+                "name": "water",
+                "value": "495,9"
+              },
+              {
+                "name": "survival",
+                "value": "80,1%"
+              },
+              {
+                "name": "co2",
+                "value": "4,59"
+              },
+              {
+                "name": "deficit",
+                "value": "0"
+              }
+            ],
+            "zoneIds": [
+              "site-osm-1546881046",
+              "site-osm-1546881095",
+              "site-osm-1568677761",
+              "site-osm-1474911990",
+              "site-osm-1546881035",
+              "site-osm-1569993044",
+              "site-osm-1546881096",
+              "site-osm-1569303533",
+              "site-osm-1569303537",
+              "site-osm-1569993036",
+              "site-osm-1546881093"
+            ]
+          }
+        ]
+      },
+      "selector": null,
+      "clip": {
+        "x": 40,
+        "y": 119.875,
+        "width": 442.65625,
+        "height": 852.5
+      },
+      "sha256": "4aa017d44207acbf5ad05b7b818f009f453ebbf2d8d73ac16bf2b56d14762a0f",
+      "image": "screenshots/lab-rebuilt.png",
+      "screenText": "screenshots/lab-rebuilt.txt"
+    },
+    {
+      "name": "outcomes-full",
+      "url": "http://127.0.0.1:5184/?source=mock&lang=ru#/outcomes?site=site-osm-1569993037",
+      "viewport": {
+        "width": 1440,
+        "height": 1400
+      },
+      "steps": [
+        "Outcomes Tolstogo",
+        "Cohort Полный осмотр",
+        "Observation and comparison"
+      ],
+      "inputs": {
+        "site": "site-osm-1569993037",
+        "cohort": "full",
+        "demo": true
+      },
+      "selector": null,
+      "clip": {
+        "x": 140,
+        "y": 120.203125,
+        "width": 1160,
+        "height": 553.78125
+      },
+      "sha256": "d4f6cac48b2d7e574dc6bdfeece39b0fc2bfa37181106e3bb71df6a3e381369f",
+      "image": "screenshots/outcomes-full.png",
+      "screenText": "screenshots/outcomes-full.txt"
+    },
+    {
+      "name": "outcomes-partial",
+      "url": "http://127.0.0.1:5184/?source=mock&lang=ru#/outcomes?site=site-osm-1569993037",
+      "viewport": {
+        "width": 1440,
+        "height": 1400
+      },
+      "steps": [
+        "Outcomes Tolstogo",
+        "Cohort Частичный осмотр",
+        "Observation and comparison"
+      ],
+      "inputs": {
+        "site": "site-osm-1569993037",
+        "cohort": "partial",
+        "demo": true
+      },
+      "selector": null,
+      "clip": {
+        "x": 140,
+        "y": 143.203125,
+        "width": 1160,
+        "height": 505.359375
+      },
+      "sha256": "e82dca2b7f4524b51cb5578cb32c59be9d720d5c8ed155bcdba0769109ceb0ce",
+      "image": "screenshots/outcomes-partial.png",
+      "screenText": "screenshots/outcomes-partial.txt"
+    },
+    {
+      "name": "worker-1280",
+      "url": "http://127.0.0.1:5184/?source=mock&lang=ru#/worker",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "steps": [
+        "Mock role worker",
+        "Embedded cabinet"
+      ],
+      "inputs": {
+        "role": "worker",
+        "language": "ru",
+        "native": false
+      },
+      "selector": null,
+      "clip": null,
+      "sha256": "cb20d2b3113a7963503afc0ef152080ac864d8552e7b48bc28041f5b616cd689",
+      "image": "screenshots/worker-1280.png",
+      "screenText": "screenshots/worker-1280.txt"
+    },
+    {
+      "name": "worker-375",
+      "url": "http://127.0.0.1:5184/?source=mock&lang=ru#/worker",
+      "viewport": {
+        "width": 375,
+        "height": 900
+      },
+      "steps": [
+        "Mock role worker",
+        "Embedded cabinet"
+      ],
+      "inputs": {
+        "role": "worker",
+        "language": "ru",
+        "native": false
+      },
+      "selector": null,
+      "clip": null,
+      "sha256": "c9e173e20f3e4da354584e5b9167a5486337929627845f97e3735161cf502f03",
+      "image": "screenshots/worker-375.png",
+      "screenText": "screenshots/worker-375.txt"
+    }
+  ],
+  "browser": "156.0.8078.4",
+  "reportHref": "#/report?site=site-osm-1569993037&o=eyJjYXJlWWVhcnMiOjN9",
+  "reportUrl": "http://127.0.0.1:5184/?source=mock&lang=ru#/report?site=site-osm-1569993037&o=eyJjYXJlWWVhcnMiOjN9",
+  "pageErrors": []
+}

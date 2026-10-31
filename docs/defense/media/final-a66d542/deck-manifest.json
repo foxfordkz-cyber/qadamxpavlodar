@@ -1,0 +1,254 @@
+{
+  "schema": "green-pavlodar-defense-deck-v1",
+  "createdUtc": "2026-10-31T00:51:39.881832+00:00",
+  "codeSha": "a66d542c63c527d608400c84b34d49f982855369",
+  "source": "mock",
+  "preview": "http://127.0.0.1:5184",
+  "status": "Версия демонстрационного пакета закреплена; регламент организаторов и независимое согласование Айданой не заявляются.",
+  "durationSeconds": 300,
+  "slideCount": 9,
+  "inputs": {
+    "zone": {
+      "id": "site-osm-1569993037",
+      "name": "Газон, улица Толстого",
+      "osm": "https://www.openstreetmap.org/way/1569993037",
+      "purpose": "square",
+      "variant": "optimal",
+      "watering": "regular",
+      "careYears": 3,
+      "improveSoil": false,
+      "tiers": "all",
+      "maxSpeciesShare": 0.3
+    },
+    "laboratory": {
+      "budgetKzt": 50000000,
+      "goal": "balanced",
+      "watering": "regular",
+      "careYears": 3,
+      "strategy": "survival",
+      "waterLimitStartM3": 1000,
+      "stressReductionPct": 50,
+      "rebuildWaterLimitM3": 500
+    },
+    "outcomes": {
+      "zone": "site-osm-1569993037",
+      "costScope": "trees only",
+      "costHorizonYears": 3,
+      "observationForecastHorizonYears": 1,
+      "cohorts": [
+        "Полный осмотр",
+        "Частичный осмотр"
+      ],
+      "demoHistory": true
+    }
+  },
+  "verifiedDisplayNumbers": {
+    "areaM2": 3782,
+    "trees": 54,
+    "shrubs": 270,
+    "flowers": 1021,
+    "allPlants": 1345,
+    "estimateKzt": {
+      "material": 2093100,
+      "preparation": 4765320,
+      "plantingAndDelivery": 1072968,
+      "care3Years": 2565450,
+      "replacementReserve": 328790,
+      "total": 10825628
+    },
+    "growth20YearsCrownM2": 1976,
+    "laboratorySurvivalStrategy": {
+      "zones": [
+        41,
+        31
+      ],
+      "plantedTrees": [
+        301,
+        160
+      ],
+      "expectedTrees": [
+        243,
+        129
+      ],
+      "waterM3": [
+        993.1,
+        498.1
+      ],
+      "totalKzt": [
+        45306446,
+        22743049
+      ],
+      "waterDeficitAfterStressM3": 493.1,
+      "waterDeficitAfterRebuildM3": 0
+    },
+    "outcomesEconomy": {
+      "totalKzt": 3854660,
+      "expectedTrees": 25.2,
+      "expectedTreeCostUiKzt": 152962.7,
+      "expectedTreeCostSlideRoundedKzt": 152963
+    },
+    "fullDemoInspection": {
+      "date": "2026-10-15",
+      "cohortTotal": 32,
+      "alive": 27,
+      "dead": 5,
+      "survivalPct": 84.4,
+      "forecastPct": 83,
+      "forecastHorizonYears": 1,
+      "deltaPercentagePoints": 1.4
+    },
+    "partialDemoInspection": {
+      "cohortTotal": 32,
+      "inspected": 16,
+      "knownState": 15,
+      "alive": 13,
+      "dead": 2,
+      "unknownIncludingUninspected": 17,
+      "uninspected": 16,
+      "inspectionCoveragePct": 50,
+      "knownStateCoveragePct": 46.9,
+      "aliveAmongKnownPct": 86.7,
+      "wholeCohortSurvival": null,
+      "comparable": false
+    }
+  },
+  "rounding": "Смета на экране и слайде округлена до целых тенге. Цена 152 962,7 ₸ из UI округлена на слайде до 152 963 ₸. Прогноз ожидаемых деревьев — оценка, не подсчёт наблюдаемых деревьев.",
+  "claims": {
+    "syntheticModel": true,
+    "calibratedForPavlodar": false,
+    "demoObservationsAreFieldData": false,
+    "unknownEqualsDead": false,
+    "newInspectionFormClaimed": false,
+    "nativeMobileAppClaimed": false,
+    "fullWorkerKkTranslationClaimed": false,
+    "modelAccuracyEstablishedByDemoDelta": false,
+    "publicDeploymentVerified": false
+  },
+  "slides": [
+    {
+      "slide": 1,
+      "time": "0:00–0:10",
+      "speaker": "Дамир",
+      "scene": "Вступление",
+      "render": "slides/slide-01.png",
+      "screenshots": []
+    },
+    {
+      "slide": 2,
+      "time": "0:10–0:35",
+      "speaker": "Дамир",
+      "scene": "Обзор до 0:20; команды RU/KK 0:20–0:35",
+      "render": "slides/slide-02.png",
+      "screenshots": [
+        "screenshots/zone-overview-1280.png"
+      ]
+    },
+    {
+      "slide": 3,
+      "time": "0:35–1:00",
+      "speaker": "Дамир",
+      "scene": "Растения и ограничения",
+      "render": "slides/slide-03.png",
+      "screenshots": [
+        "screenshots/plants-focus.png"
+      ]
+    },
+    {
+      "slide": 4,
+      "time": "1:00–1:30",
+      "speaker": "Бекзат",
+      "scene": "Смета, уход 3 года",
+      "render": "slides/slide-04.png",
+      "screenshots": [
+        "screenshots/estimate-1280.png",
+        "screenshots/report-estimate-focus.png"
+      ]
+    },
+    {
+      "slide": 5,
+      "time": "1:30–1:55",
+      "speaker": "Дамир",
+      "scene": "Рост",
+      "render": "slides/slide-05.png",
+      "screenshots": [
+        "screenshots/growth20-1280.png",
+        "screenshots/growth20-controls.png"
+      ]
+    },
+    {
+      "slide": 6,
+      "time": "1:55–2:25",
+      "speaker": "Бекзат",
+      "scene": "Word RU/KK",
+      "render": "slides/slide-06.png",
+      "screenshots": [
+        "screenshots/memo-ru-panel.png",
+        "screenshots/memo-kk-panel.png"
+      ]
+    },
+    {
+      "slide": 7,
+      "time": "2:25–2:55",
+      "speaker": "Танирберди",
+      "scene": "Работник 1280/375 CSS px",
+      "render": "slides/slide-07.png",
+      "screenshots": [
+        "screenshots/worker-1280.png",
+        "screenshots/worker-375.png"
+      ]
+    },
+    {
+      "slide": 8,
+      "time": "2:55–3:25",
+      "speaker": "Айдана",
+      "scene": "Лимит воды и перестроение",
+      "render": "slides/slide-08.png",
+      "screenshots": [
+        "screenshots/lab-before.png",
+        "screenshots/lab-stress.png",
+        "screenshots/lab-rebuilt.png"
+      ]
+    },
+    {
+      "slide": 9,
+      "time": "3:25–5:00",
+      "speaker": "Айдана, затем Дамир",
+      "scene": "Outcomes до 4:35; итог до 4:50; резерв до 5:00",
+      "render": "slides/slide-09.png",
+      "screenshots": [
+        "screenshots/outcomes-full.png",
+        "screenshots/outcomes-partial.png"
+      ]
+    }
+  ],
+  "wordDocuments": [
+    "../../../../../../outputs/defense-final/documents/green-pavlodar-memo-ru-a66d542.docx",
+    "../../../../../../outputs/defense-final/documents/green-pavlodar-memo-kk-a66d542.docx"
+  ],
+  "validation": {
+    "presentationPackage": "pass",
+    "presentationLayout": "pass, zero findings",
+    "firstPartyPptxImport": "pass, 9 slides",
+    "visualReview": "all 9 slides inspected individually at 1600 × 900; all 9 Poppler PDF pages inspected individually",
+    "pdfPages": 9,
+    "nativePowerPointExecutionVerified": false,
+    "browserPageErrors": [],
+    "costTableArithmetic": {
+      "sum": 10825628,
+      "expected": 10825628,
+      "pass": true
+    }
+  },
+  "outputs": [
+    {
+      "file": "green-pavlodar-defense-a66d542.pptx",
+      "sha256": "553da5eaf2baadec8d2a3cf98a5c3fe5967fdf41ea2b8c3988ff1208347bb5f3",
+      "bytes": 1478168
+    },
+    {
+      "file": "green-pavlodar-defense-a66d542.pdf",
+      "sha256": "430bce03b3db793d70ac047f6bb2f08e4bd259d62b57ad6d62021fdeab3ce6d8",
+      "bytes": 1924696
+    }
+  ]
+}

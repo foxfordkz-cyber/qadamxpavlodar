@@ -1,0 +1,41 @@
+{
+  "sourceSha": "a66d542c63c527d608400c84b34d49f982855369",
+  "checkoutAtBuild": "5b35b42f3f40057aa7c20982300fb35bada8d055",
+  "source": "mock",
+  "owner": "Танирберди",
+  "organizerRegulationConfirmed": false,
+  "independentAcceptance": false,
+  "documents": [
+    "scenario.md",
+    "defense-answers.md",
+    "acceptance-checklist.md",
+    "video-storyboard.md"
+  ],
+  "videos": [
+    {
+      "file": "green-pavlodar-full-5m-a66d542.mp4",
+      "durationSeconds": 300.26,
+      "expectedSeconds": 300,
+      "bytes": 9444237,
+      "sha256": "8442952a4a5f708882c8b5115af9a5e664e0f592d95078521e505192190fec73",
+      "fullDecode": "PASS"
+    },
+    {
+      "file": "green-pavlodar-short-a66d542.mp4",
+      "durationSeconds": 160.26,
+      "expectedSeconds": 160,
+      "bytes": 5650255,
+      "sha256": "540c99cb3fca1a265a8391657a5e5381b87f8e6e53978ee74199828968b4e91e",
+      "fullDecode": "PASS"
+    }
+  ],
+  "slides": "deck-manifest.json",
+  "checks": "qa/final-verification-summary.md",
+  "offline": "offline/verification.json",
+  "notes": [
+    "Overview defaults to care2 /9.97million; analysis andWord explicitly care3 /10,825,628 rounded.",
+    "No field observations. Synthetic training, uncalibrated onPavlodar.",
+    "WorkerKK and WordKK partial translation documented.",
+    "No native app or new inspection form is claimed."
+  ]
+}
