@@ -1,24 +1,36 @@
 # Cloud API contract — PostgreSQL planning and workflow
 
-Status, 31 October 2026: **local PostgreSQL verified; public deployment BLOCKED**.
-The owner reconfirmed that Render/Supabase access is not available. The available browser redirects
-all three provider dashboards to sign-in. No Render origin or deployed SHA has been verified for
-this work, and no service/payment/account setting was changed. The existing Cloudflare publication
-is a mock, preserved as an independent reserve.
+Status, 31 October 2026: **the A/B/C/D DEMO slice is deployed on real Render + Supabase**.
+Origin: https://green-pavlodar-api-demo.onrender.com.
+Deployed application SHA: `3b14927def04b35bf97782eae6b550da276c779f`.
+Real HTTPS workflow, restart, same-SHA redeploy and different-password reseed persistence passed;
+see the dated [provider evidence](cloud-deployment-readiness.md).
+This is an isolated synthetic DEMO, not field observations or a completed full cloud UI release.
+The existing Cloudflare mock is preserved as an independent reserve; its proxy is not connected here.
 
 **Owner-ready deployment:** [exact Dashboard steps, env checklist and executable HTTPS/restart/reseed acceptance](cloud-provider-deployment.md).
 Local preparation and fresh test evidence: [cloud-deployment-readiness.md](cloud-deployment-readiness.md).
 
 | Handoff field for Тәңірберді | Actual state |
 | --- | --- |
-| Render service / HTTPS origin | Desired name green-pavlodar-api-demo; service existence unverified; URL NOT AVAILABLE |
-| Deployed SHA | NOT RUN; agreed application candidate 3b14927def04b35bf97782eae6b550da276c779f |
-| Supabase project / PostgreSQL | Desired separate green-pavlodar-demo; actual project/access BLOCKED |
-| Private Storage | Desired green-pavlodar-photos; actual bucket/provider acceptance NOT RUN |
-| Health/readiness / HTTPS role workflow | Locally verified; provider NOT RUN; ready must include configured photos and schemaVersion 5 |
-| Restart/redeploy/same-SHA persistence | Local native PG + private HTTP test storage verified; actual provider NOT RUN |
+| Render service / HTTPS origin | green-pavlodar-api-demo, Free Frankfurt; https://green-pavlodar-api-demo.onrender.com; service srv-dbj0jaetlv9c73btp520 |
+| Deployed SHA | 3b14927def04b35bf97782eae6b550da276c779f, verified in Render deployment record |
+| Supabase project / PostgreSQL | green-pavlodar-demo, dpkffzawhtbtlldckjhy, Free Frankfurt; migrations 1–5 and insert-only DEMO seed PASS; SSL enforced |
+| Private Storage | green-pavlodar-photos; private, WebP only, max 5242880 bytes; actual upload/read/hash/replay PASS; provider anonymous public/authenticated paths denied |
+| Health/readiness / HTTPS role workflow | Actual HTTPS 200; schemaVersion 5, database ok, private-storage-configured; workflow/roles/CSRF PASS |
+| Restart/redeploy/same-SHA persistence | Actual restart, same-SHA redeploy and reseed/verify PASS; 31 tables / 956 rows unchanged by reseed; original passwords preserved |
 | Cloudflare fixed same-origin proxy | Owner reports 13/13 Node tests; actual Pages API runtime NOT RUN; mock unchanged |
 | Source versions | PR #39 stays Draft; operator tooling HEAD is not automatically a new approved deployed SHA |
+
+Proxy configuration for Тәңірберді: fixed upstream origin above, upstream Host
+`green-pavlodar-api-demo.onrender.com`, preserve browser Origin. Current allowlisted browser origins:
+`https://green-pavlodar-mock.pages.dev` and the Render origin. If the API frontend uses another exact
+origin, add that approved origin before switching its proxy. The mock publication itself is unchanged.
+Allowed-origin OPTIONS was tested over real HTTPS (204, exact origin, credentials); an unapproved
+Origin returned 403. Preserve Cookie, separate Set-Cookie headers, multipart boundaries, binary bytes,
+status/error body, CSRF and Idempotency-Key; no caching/redirects or caller-selected upstream.
+Secure HttpOnly SameSite=Strict host-only sessions require the same-origin proxy for browser use.
+No Supabase keys or database credentials belong in the frontend or Cloudflare build.
 
 The new check:cloud-deployment CLI is read-only and never applies migrations or seed.
 The cloud-https-acceptance runner is explicitly synthetic, makes real HTTP mutations only after
@@ -122,8 +134,9 @@ run synchronously on SQLite and await real PostgreSQL statements on one transact
 Writes take one database advisory lock before actor rows; this conservatively preserves SQLite's
 serialized cross-task scheduling/resource checks. It is a scalability limitation, not a queue.
 
-Stage C `/uploads` is implemented and tested with a local private HTTP storage service and PostgreSQL.
-Real Supabase remains NOT RUN without approved credentials. Stage D Outcomes is now implemented on the same canonical registry,
+Stage C `/uploads` is implemented and verified both locally and on real Supabase private Storage.
+Actual authorized upload/read/replay, anonymous denial and restart/redeploy persistence passed.
+Stage D Outcomes is implemented on the same canonical registry,
 with immutable forecasts/inspections and source links. Stage A calculations alone are not Outcomes records.
 GIS import/preview/commit, new drawn zones, geocode, care schedule, assistant, weather, RAG and
 generated images remain unsupported. Site PATCH/checks, plant map points and task/design reads
@@ -284,7 +297,8 @@ Provider protocol sources: [private downloads](https://supabase.com/docs/guides/
 [private buckets](https://supabase.com/docs/guides/storage/buckets/fundamentals),
 [storage errors](https://supabase.com/docs/guides/storage/debugging/error-codes),
 [official removal request](https://github.com/supabase/storage-js/blob/main/src/packages/StorageFileApi.ts).
-These documents support the adapter protocol, not a claim of actual provider testing.
+These documents describe the adapter protocol; the separate provider acceptance record above
+documents the actual Supabase checks performed on 31 October 2026.
 
 ## Examples without embedded credentials
 
@@ -394,15 +408,17 @@ returns PHOTO_STORAGE_NOT_CONFIGURED on photo operations; no local-disk fallback
 6. Record the **actual** Render origin and deployed SHA after a successful deployment. Repeat login,
    evidence/resource create, task/worker assignment, private photo, report acceptance and Outcomes inspection; then replay, read and manual redeploy; read again, compare versions/history
    and repeat seed. Then stop local processes/tunnels and have Aidana read from another device.
-   These public checks are pending, not implied by local PostgreSQL results.
+   Backend provider checks above passed; independent another-device/frontend acceptance is pending.
 7. Configure a **private** bucket, WebP only, max 5 MiB; no public/anon policies. Set the four storage
    variables above. The adapter verifies private bucket restrictions before put/read/delete, rejects
    redirects/overwrite and checks downloaded byte length and SHA-256. The HTTP integration, metadata,
-   report binding and reconciliation are locally tested; real provider policy/TLS behavior is NOT RUN.
+   report binding and reconciliation are locally tested. Real provider policy/TLS, upload/read/hash,
+   replay and persistence were also verified; deliberate provider fault injection remains local-only.
    Use a new isolated demo namespace and keep the service-role key out of the frontend.
 
-The Render blueprint was validated against the official JSON schema locally; this is not a
-provider-side create/build/deploy check. No system service, Docker setting or user volume changed.
+The Render blueprint was validated against the official JSON schema locally. Separately, its Node
+build/start settings were applied through Render Dashboard and the accepted SHA deployed successfully.
+No system service, Docker setting or user volume changed.
 
 ## Free-tier constraints verified 31 October 2026
 
@@ -422,7 +438,7 @@ Connection and private-download behavior: [PostgreSQL connections](https://supab
 
 | Owner | Next concrete action |
 | --- | --- |
-| Bekzat | B/C/D local implementation and linked acceptance complete; support provider verification and separately scoped remaining-route work |
+| Bekzat | B/C/D and real Render/Supabase acceptance complete for the declared slice; support integration and separately scoped remaining-route work |
 | Damir / captain | Review Draft scope; merge only when accepted; approve/provision free hosting; own public Docker/HTTPS acceptance; the E2E-09 fix is now inherited from #38 |
 | Tәңірберді (#35) | Keep fixed same-origin proxy; preserve cookies/CSRF/idempotency/statuses and cold-start state; do not connect the full UI to this limited slice as a completed release |
 | Aidana | After provisioning and integration, independently repeat role/CSRF/replay/redeploy checks on the exact public SHA; photo E2E and full UI acceptance remain pending |
@@ -444,5 +460,5 @@ sources, contexts, snapshots and idempotency receipts. It does not import an exi
 The compiled cloud server runs with `tsx`, exactly as required by the existing shared TypeScript analytics.
 Render must retain repository-level `apps/web` files: files outside Root Directory are unavailable at runtime
 ([Render monorepo documentation](https://render.com/docs/monorepo-support)). The updated blueprint uses
-repository-root commands. It has **not** been deployed; `autoDeployTrigger: off` remains.
+repository-root commands. The same settings are deployed through Dashboard; Auto-Deploy remains Off.
 Regenerate only via `npm run openapi:cloud` from `apps/server`.

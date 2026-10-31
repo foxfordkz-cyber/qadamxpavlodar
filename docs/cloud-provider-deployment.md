@@ -1,9 +1,19 @@
-# Render + Supabase: запуск владельцем и воспроизводимая приёмка
+# Render + Supabase: фактический DEMO deployment и воспроизводимая приёмка
 
-31 октября 2026. **Настоящий deployment BLOCKED; provider HTTPS, restart и redeploy NOT RUN.**
-Доступный браузер показывает страницы входа Render, Supabase и Cloudflare. В окружении нет
-разрешённых credentials или локального cloud env; владелец подтвердил отсутствие доступов.
-Названия ниже — желаемые имена ресурсов, а не утверждение об их существовании.
+31 октября 2026. **Настоящий Render/Supabase DEMO backend развёрнут.**
+HTTPS: https://green-pavlodar-api-demo.onrender.com. Владелец предоставил авторизованные сессии;
+оператор настроил бесплатные ресурсы, private Storage, env, TLS, миграции и seed через Dashboard.
+Ввод/подтверждение нового DB password выполнил владелец; секреты сохранены только в
+игнорируемых локальных файлах и Render Environment. Они не входят в этот документ или PR.
+Полный HTTPS workflow, restart, redeploy того же SHA и повторный seed прошли.
+Доказательства и ранние исправленные ошибки — в [таблице проверок](cloud-deployment-readiness.md).
+
+Фактические ресурсы: Supabase `green-pavlodar-demo` (`dpkffzawhtbtlldckjhy`), Free,
+Frankfurt; private bucket `green-pavlodar-photos`, public OFF, 5242880 bytes, `image/webp`.
+Render `green-pavlodar-api-demo` (`srv-dbj0jaetlv9c73btp520`), Node Free, Frankfurt,
+Auto-Deploy Off. Это новые изолированные DEMO-ресурсы, не рабочая база команды.
+Ниже сохранён runbook для повторного запуска и передачи доступа; ресурсы уже существуют,
+поэтому не создавать их дубликаты.
 
 Согласованный application SHA: **3b14927def04b35bf97782eae6b550da276c779f**.
 Подготовка продолжается в существующей ветке `codex/cloud-api-persistence`, Draft PR #39.
@@ -39,7 +49,11 @@
   Не вычислять hostname по региону. Доступ по IPv4 не требует покупки IPv4 add-on.
 - `DATABASE_URL` — PostgreSQL URL с URL-encoded паролем, **без query/hash**, включая
   `sslmode`: приложение задаёт TLS отдельно и проверяет сертификат. Нельзя отключать проверку TLS.
-- При необходимости скачать CA через **Database settings → SSL Configuration**.
+- Включить **Database settings → SSL Configuration → Enforce SSL on incoming connections**.
+  В текущем DEMO включено; клиент проверяет CA/hostname, TLS подтверждён как до session pooler,
+  так и между pooler и PostgreSQL. Настройка вызывает краткий restart БД
+  ([Supabase SSL enforcement](https://supabase.com/docs/guides/platform/ssl-enforcement)).
+- Скачать CA через **Database settings → SSL Configuration**.
   Локально задать `PG_CA_FILE` с путём к PEM. В Render добавить **Environment → Secret Files**
   с именем `supabase-ca.pem`, задать `PG_CA_FILE=/etc/secrets/supabase-ca.pem`.
 - Не добавлять приватную схему `gp_cloud` в exposed schemas Data API; не выдавать
@@ -95,7 +109,11 @@ Free не предоставляет Shell/SSH/one-off jobs и persistent disk; 
 
 ## 4. Полный checklist переменных
 
-Все значения секретов вводит владелец в **Render service → Environment → Add Environment Variable**.
+Секреты сохраняются уполномоченным оператором в **Render service → Environment**.
+В текущем запуске env и CA переданы через авторизованный Dashboard и сверены чтением обратно
+без вывода значений. После редактирования скрытого поля нужно сохранить изменение и проверить
+именно сохранённое значение: первая попытка запуска использовала прежний DB password и завершилась
+до readiness. Конфигурация исправлена; runtime SHA не менялся.
 Никакие ключи Supabase/БД не добавляются в Cloudflare frontend/build.
 
 | Переменная | Где нужна / содержание |
@@ -257,15 +275,16 @@ Ready обязан вернуть schemaVersion 5, database ok, photos private-s
 
 ## 8. Приёмочный checklist
 
-- [ ] Владелец подтвердил отдельные demo project/service, квоты, доступ и целевой SHA.
-- [ ] Supabase private bucket, TLS и schema isolation прошли preflight.
-- [ ] Миграции 1–5 и insert-only seed успешны, секреты не в Git/логах/frontend.
-- [ ] Render действительно выдал HTTPS URL; recorded SHA совпадает с принятым.
-- [ ] Health/ready с photos; полный HTTPS runner create PASS.
-- [ ] Реальный Restart service + verify PASS.
-- [ ] Реальный redeploy того же SHA + verify PASS.
-- [ ] Повтор seed с сохранением старых паролей и данных + verify PASS.
+- [x] Владелец подтвердил отдельные demo project/service, Free, доступ и целевой SHA.
+- [x] Supabase private bucket, TLS и schema isolation прошли preflight.
+- [x] Миграции 1–5 и insert-only seed успешны; действующие секреты только в приватной конфигурации.
+- [x] Render действительно выдал HTTPS URL; recorded SHA совпадает с принятым.
+- [x] Health/ready с photos; полный HTTPS runner create PASS.
+- [x] Реальный Restart service + verify PASS.
+- [x] Реальный redeploy того же SHA + verify PASS.
+- [x] Повтор seed с сохранением старых паролей и данных + verify PASS.
 - [ ] Тәңірберді подключил отдельный same-origin API deployment, mock сохранён.
 - [ ] Айдана повторила ролевую/CSRF/photo/Outcomes-приёмку и проверку с другого устройства.
 
-На момент этого документа все provider пункты выше **NOT RUN**; это checklist, не результаты.
+Первые восемь пунктов выполнены на реальных Render/Supabase. Остались интеграция proxy/frontend
+и независимая приёмка Айданы; они не подменяются локальными или backend HTTP тестами.

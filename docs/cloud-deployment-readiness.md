@@ -1,26 +1,76 @@
-# Cloud deployment preparation — evidence, 31 October 2026
+# Real cloud DEMO deployment — evidence, 31 October 2026
 
-**Provider deployment BLOCKED; Render/Supabase HTTPS acceptance NOT RUN.**
+**Render + Supabase deployment and HTTPS acceptance PASS for the A/B/C/D DEMO slice.**
 Repository: foxfordkz-cyber/qadamxpavlodar; branch codex/cloud-api-persistence; existing Draft #39.
 Agreed application SHA: `3b14927def04b35bf97782eae6b550da276c779f`.
 This preparation adds operator commands/tests/docs, not a second implementation of A/B/C/D.
-Preparation commit and CI are recorded in PR #39; no deployed commit exists in this evidence.
+Application SHA above is deployed. Operator tools were run from `d167f17928b8d0aa56fd17f7d1da814744d7188d`.
+This follow-up changes documentation only; it does not replace the agreed runtime SHA.
 
 ## Infrastructure observed
 
 | Item | Actual observation |
 | --- | --- |
-| Render Dashboard | Redirect to login; approved service cannot be inspected |
-| Supabase Dashboard | Redirect to sign-in; project, DB and bucket inaccessible |
-| Cloudflare Dashboard | Redirect to login; no account settings or publication changed |
-| Server credentials | Required provider env variables and project-local env files absent; owner reconfirmed no access |
-| Render service name | green-pavlodar-api-demo is planned, not verified as created |
-| Supabase project / bucket | green-pavlodar-demo / green-pavlodar-photos are planned |
-| Public backend URL / deployed SHA | NOT AVAILABLE / NOT RUN |
+| Render Dashboard | Authorized; new Node Free service in Frankfurt, Auto-Deploy Off |
+| Supabase Dashboard | Authorized; new isolated Free DEMO project in Frankfurt |
+| Cloudflare Dashboard | Accessible account had no Pages projects; team proxy/public mock not modified |
+| Server credentials | Private ignored env files and Render Environment; values read back and compared without publishing |
+| Render service | green-pavlodar-api-demo / srv-dbj0jaetlv9c73btp520 |
+| Supabase project / bucket | green-pavlodar-demo / dpkffzawhtbtlldckjhy / green-pavlodar-photos |
+| Public backend URL / deployed SHA | https://green-pavlodar-api-demo.onrender.com / 3b14927def04b35bf97782eae6b550da276c779f |
 | Public mock | Existing https://green-pavlodar-mock.pages.dev/ returned HTTP 200; not changed |
 | Docker Compose | v5.0.1; config --quiet PASS |
 | Docker Engine | BLOCKED: dockerDesktopLinuxEngine named pipe absent |
 | Container build/start | NOT RUN; no installation, service settings or volumes changed |
+
+## Actual provider acceptance
+
+All times below are 31 October 2026, UTC+5 (Asia/Qyzylorda). The runner used the real HTTPS
+origin above, the real PostgreSQL session pooler and real Supabase Storage, with no mock/fallback.
+
+| Check | Actual result |
+| --- | --- |
+| Config / before-migrations / ready preflight | PASS; UTF8, exact checksum versions 1–5, private schema isolation, private bucket restrictions |
+| PostgreSQL TLS | Client-to-pooler encrypted and certificate verified; after SSL enforcement, pg_stat_ssl also confirms pooler-to-Postgres SSL |
+| Initial seed | PASS; five demo roles, 456 persisted radius contexts; no user database or SQLite import |
+| Private bucket | PASS; public false, exactly 5242880 bytes, only image/webp; zero public policies |
+| First live Render build/start | PASS; dep-dbj0sn6c6qcc73b5lkl0, live 20:52:08, agreed SHA, Node 24.21.0 |
+| GET /health and /api/v1/ready | Actual HTTPS 200; database ok, schemaVersion 5, photos private-storage-configured, outcomes capability |
+| Full HTTPS create | PASS at 20:53:11; 81 HTTP requests including expected denials, not 81 separate unit tests |
+| Render restart | Dashboard event “Service restarted by you”, 20:53; verify PASS at 20:56:21 |
+| Same-SHA redeploy | dep-dbj0vnk9v7es738qurh0, live 20:58:35; verify PASS at 21:00:32 |
+| Repeat seed with a different private seed password | PASS; all 956 rows across 31 persistent tables unchanged, including users; sessions/login_attempts excluded as ephemeral |
+| Original-password login and final verification after reseed | PASS at 21:01:34; same existing credentials still work |
+| Persistence across all three verify runs | Seven immutable DTO/history reads, five idempotency receipts, accepted reports, cohort/inspection/forecast and identical WebP bytes/SHA-256 |
+| Authorization | Viewer reads tasks/reports/photos/crews/workers; create/update/assign/accept denied 403; worker/foreman scopes, CSRF denial, anonymous photo 401 |
+| Direct anonymous Supabase object reads | Both public and authenticated object routes denied HTTP 400; application-authorized read succeeds |
+| Published OpenAPI | Deep equality with openapi-cloud.json; 87 operations |
+| Proxy-compatible Origin/CORS | Allowed exact mock origin OPTIONS 204 with credentials; unapproved Origin 403 |
+| Unsupported routes | Authenticated geocode, care-schedule and assistant/history still return 503 CLOUD_ENDPOINT_UNSUPPORTED; this is verified missing functionality |
+
+The main runner completed four successful phases (create + three verify), **201 HTTP requests**
+total including logout and expected negative cases. Eight additional provider checks cover OpenAPI,
+Origin/CORS, explicit unsupported responses and private provider reads. These are separate from
+the local 105/62 test-suite counts below. Synthetic tasks/photos/reports/inspections stay DEMO;
+unknown observations remain unknown, and whole-cohort survival remains null when not known.
+
+Render used repository-root Node build/start commands from render.cloud.yaml, entered in Dashboard;
+this was not a Blueprint import or a Docker deployment. Environment contains no DEMO_PASSWORD,
+CLOUD_DEMO_SEED or CLOUD_LOCAL_TEST. CA is /etc/secrets/supabase-ca.pem. Neither code nor published
+migration checksums changed. No paid plan, disk, IPv4 add-on or production database was used.
+
+### Resolved setup failures
+
+- Initial credential synchronization failed; a masked browser password value was rejected locally.
+  The owner reset the unused DEMO DB credential and copied the generated value through Supabase's
+  native Copy action. The final connection passed actual authentication and verified TLS.
+- Initial automatic deployment dep-dbj0jb6tlv9c73btp6rg (tooling HEAD) was canceled before secrets.
+- dep-dbj0qbjbc2fs73bhgpk0 built successfully but startup failed with a stale DATABASE_URL.
+  Correcting the saved masked env field and verifying its value via Copy resolved it. No auth,
+  TLS, migration, CSRF or timeout rule was weakened; both successful deployments use the original SHA.
+- A supplementary unauthenticated backlog probe expected 503 but correctly received 401. The probe
+  was corrected to authenticate and use the documented care-schedule route; actual authenticated
+  requests returned 503. No server or contract expectation was changed to conceal a failure.
 
 ## Changes
 
@@ -41,7 +91,7 @@ The runtime handlers, published migrations, auth rules, storage adapter, OpenAPI
 Render Blueprint are unchanged. New tools are optional CLI entrypoints. Existing Dockerfile
 starts SQLite; the cloud target uses the Node Blueprint and external PostgreSQL/private Storage.
 
-## Fresh verification
+## Prior local verification on d167f17 (not provider tests)
 
 Node 24.21.0, npm 11.19.0. Runs use isolated synthetic databases; provider access is not involved.
 
@@ -83,20 +133,25 @@ Local raw logs and migration/Blueprint/secret-review evidence are outside Git at
 directories named in test diagnostics. Do not upload databases, env files or authenticated captures.
 The final checked-in record and PR distinguish earlier failures, latest local results and CI.
 
-## Provider acceptance not performed
+## Remaining limits and handoff
 
-All actual Render HTTPS login/workflow/role checks, Supabase PostgreSQL migrations/seed and
-private bucket upload/read, cold start, real Render restart, same-SHA redeploy, post-redeploy
-persistence and second-device/Pages API acceptance: **BLOCKED / NOT RUN**.
-Local PostgreSQL and HTTP storage are real test processes, not Supabase or Render.
-No paid service, account, bucket, database or public endpoint was created in this run.
+Real Cloudflare same-origin proxy/frontend runtime and another-device acceptance: **NOT RUN**.
+The published mock remains independent. A forced 15-minute idle/cold-start cycle was not measured;
+Render warns that waking Free instances can take 50 seconds or more. Do not add automatic write retries
+or claim an SLA. Free-tier limits and provider-managed backups remain release-planning constraints.
+
+Render npm install and a separate local npm audit report **8 moderate, 0 high, 0 critical** advisories
+in the existing ExcelJS/archive/glob/minimatch dependency chain (also rimraf). No npm audit fix/force,
+dependency change or silent runtime SHA replacement was performed. Captain should schedule a separate
+tested dependency update; this evidence is not a claim that the dependency tree has zero advisories.
 
 Search/geocode, newly drawn zones, GIS import, care calendar, assistant/history and participant 1's
 LLM/RAG/weather/images remain unsupported in cloud. See [route matrix](cloud-route-coverage.md).
 The full cloud UI is not release-complete.
 
-Owner: authenticate, select/provision approved free demo resources, enter secrets in Dashboards/private
-env, run preflight/seed, deploy exact accepted SHA, record the real origin/deploy ID and execute
-create → Dashboard restart → verify → same-SHA redeploy → verify → repeat seed → verify.
-Тәңірберді: after provider PASS, configure the fixed same-origin proxy separately; preserve mock.
+Owner: retain provider account access and private DEMO credentials; no further manual deployment
+configuration is required for this tested backend slice. Do not publish the ignored env files.
+Тәңірберді: use the actual origin and [proxy requirements](cloud-api-contract.md) to configure the
+separate fixed same-origin API deployment; preserve mock. Add an approved new exact frontend Origin
+if it differs from the current allowlist. No Supabase/database secrets go to Cloudflare.
 Айдана: independent API/roles/another-device acceptance. Captain alone owns coordinator merge.
