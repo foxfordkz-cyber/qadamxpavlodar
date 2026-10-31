@@ -45,7 +45,7 @@
   "cycles": 1,
   "publicKnownFailure": "UI-KK-WORKER: shell KK while cabinet RU, including reload; locally fixed candidate is not yet deployed",
   "notProven": [
-    "UI site -> estimate -> task creation and assignment",
+    "One continuous UI scenario from site estimate through acceptance on the same task; separate planning UI confirmed by 2026-10-31-api-planning-ui-operator.json",
     "four complete role cycles",
     "physical phone",
     "actual ambiguous-response/outage recovery"
