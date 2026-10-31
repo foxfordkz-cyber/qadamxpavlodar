@@ -4,8 +4,10 @@ Status, 31 October 2026: **local PostgreSQL verified; public deployment BLOCKED*
 The owner confirmed that Render/Supabase access is not available. No public backend origin exists
 for this work, and no paid service was created. The existing Cloudflare publication is a mock.
 
-Verified application source: `28a6db490fef80f7cccebba13be09ff781413b7c`.
-Base: `55b8bde315ba6f295e33fad263aa802d16cc4b5b`, `codex/coordinator`.
+Verified integration source: `13519968547fb005e25f6470db40ad60433f12b7`.
+Original adapter implementation: `28a6db490fef80f7cccebba13be09ff781413b7c`; the ordinary integration merge did not change backend sources.
+A final cloud error-handler fix preserves HTTP 415 for unsupported JSON encodings.
+Integrated base: `98cf6c68d5370331d6f95aa9e749f82d504e5670`, `codex/coordinator`, included by ordinary merge.
 Branch: `codex/cloud-api-persistence`; target: `codex/coordinator`, **Draft**.
 The documentation-only follow-up does not change that tested application source.
 Results and historical failures: [cloud-persistence-verification.md](cloud-persistence-verification.md).
@@ -217,8 +219,11 @@ Connection and private-download behavior: [PostgreSQL connections](https://supab
 | Owner | Next concrete action |
 | --- | --- |
 | Bekzat | Complete task/report/crew persistence and private-photo metadata transaction before claiming photo E2E; then migrate Outcomes immutable snapshots without changing calculations |
-| Damir / captain | Review Draft scope; merge only when accepted; approve/provision free hosting; own final Docker/HTTPS runtime and E2E-09 UI fix |
+| Damir / captain | Review Draft scope; merge only when accepted; approve/provision free hosting; own public Docker/HTTPS acceptance; the E2E-09 fix is now inherited from #38 |
 | Tәңірберді (#35) | Keep fixed same-origin proxy; preserve cookies/CSRF/idempotency/statuses and cold-start state; do not connect the full UI to this limited slice as a completed release |
 | Aidana | After provisioning and integration, independently repeat role/CSRF/replay/redeploy checks on the exact public SHA; photo E2E and full UI acceptance remain pending |
 
-PR #36 is a separate documentation refresh. PR #37 and the frontend branch were not modified.
+PR #36 and #37 are now merged through the captain�s integration #38. Their upstream changes
+(including the E2E-09 fix) entered this branch by ordinary merge. No frontend changes were authored
+in this PR. Captain-reported Docker/E2E acceptance on `20e642b` is recorded in docs/deployment.md;
+it is separate from this environment�s unavailable Engine and from the unperformed cloud acceptance.

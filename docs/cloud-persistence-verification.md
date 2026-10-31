@@ -1,11 +1,14 @@
 # Cloud persistence verification — 31 October 2026
 
 Repository: `foxfordkz-cyber/qadamxpavlodar`.
-Verified source: **`28a6db490fef80f7cccebba13be09ff781413b7c`**, branch
-`codex/cloud-api-persistence`, based on coordinator **`55b8bde315ba6f295e33fad263aa802d16cc4b5b`**.
-The tests ran on the exact application files committed in that source SHA. The subsequent
-documentation commit changes only these reports. No earlier a66d542/55b8bde test result is used as
-a test of the new cloud implementation.
+Verified integration source: **`13519968547fb005e25f6470db40ad60433f12b7`**, branch
+`codex/cloud-api-persistence`, based on coordinator **`98cf6c68d5370331d6f95aa9e749f82d504e5670`** by ordinary merge.
+Original cloud source was `28a6db490fef80f7cccebba13be09ff781413b7c` on 55b8bde.
+The new base includes captain-owned UI/defence/deployment work; server sources were unchanged by
+that merge (`c18dc6d`). A subsequent cloud error-handler fix preserves HTTP 415 for unsupported
+JSON charset/content encoding; both are now tested through HTTP. Checks were repeated after it.
+The subsequent documentation
+commit changes only these reports; historical run results retain their original source provenance.
 
 Owner response: **no Render/Supabase access; prepare and test locally**. No public origin was
 invented, no cloud resource was provisioned and no deploy was attempted. Main/coordinator and
@@ -23,23 +26,29 @@ version/TLS/pooler has not been exercised.
 | --- | --- |
 | `npm run typecheck` | PASS |
 | `npm run build` | PASS; compiled cloud entry point used by the HTTP test |
-| `npm test` | **104/104**, 0 failed/skipped/cancelled; 158.735 s |
-| `npm run test:postgres` after build | **14/14**, 0 failed/skipped/cancelled; 60.082 s |
-| Viewer/deployment regressions | **7/7** dedicated run; also passed within the final full suite |
+| `npm test` | **104/104**, 0 failed/skipped/cancelled; 147.904 s |
+| `npm run test:postgres` after build | **14/14**, 0 failed/skipped/cancelled; 36.095 s |
+| Viewer/deployment regressions | **7/7** dedicated run on c18dc6d; passed again within the final 104 |
 | Network/private-storage unit checks | **3/3**, included in the final 104; Storage transport is simulated |
 | Existing V2 OpenAPI snapshot vs live generator | PASS inside the full suite; no hand-edited snapshot |
 | Render blueprint vs official JSON schema | PASS locally; no provider-side deployment |
 | `git diff --check`, staged runtime/secret-pattern scan | PASS; `.env` and `.env.cloud` ignored |
 | Changes to `apps/web` and `tools` vs coordinator | None |
 | Docker Engine: desktop-linux and default | **BLOCKED**, both named pipes unavailable |
-| Docker Compose | 5.0.1 available; Cases A/B config validation PASS in an isolated staging directory |
+| Docker Compose | 5.0.1 available; Cases A/B config PASS on c18dc6d in isolated staging; container files unchanged |
 | Docker image build/start/restart, public HTTPS | **NOT RUN / BLOCKED** |
 | Render deploy/redeploy, another-device independence | **NOT RUN / BLOCKED** |
 
 The 104-test suite contains the previous 101 tests plus three guard/storage unit tests; it does
 not represent 104 cloud HTTP scenarios. PostgreSQL's 14 test-runner entries include the suite
 parent, twelve sequential scenario subtests and the configuration test. Public cloud acceptance
-is a separate uncompleted gate.
+is a separate uncompleted gate. Original pre-merge results on `28a6db4`: full suite 104/104
+(158.735 s) and PostgreSQL 14/14 (60.082 s); these are not substituted for the post-merge runs.
+
+GitHub CI on `13519968547fb005e25f6470db40ad60433f12b7`: **4/4 jobs PASS** � server,
+PostgreSQL, web (types/build/tests/checks/coverage) and worker.
+[Exact source CI run](https://github.com/foxfordkz-cyber/qadamxpavlodar/actions/runs/41181884049).
+The final report-only commit has identical application/test/workflow files.
 
 ## What the real PostgreSQL test proves
 
@@ -107,6 +116,10 @@ remain implementation work, not just missing credentials.
   to 14/14, all passing.
 - First complete SQLite suite after extraction passed **103/103**. After adding the network regression,
   the final full run passed **104/104**. No test timeout, assertion or test concurrency was loosened.
+- The final encoding regression initially failed TypeScript checking because the two request-header
+  objects inferred an optional undefined field. Explicit `Record<string,string>[]` typing fixed the
+  test; HTTP 415 expectations and runtime behavior were not relaxed. The failed typecheck is retained
+  in local evidence.
 - Earlier a66d542 fake-LLM first-run failure remains in PR #36's historical acceptance report; it was
   not removed or converted to a current cloud integration success. No live LLM/RAG/weather/image
   provider was tested here.
@@ -117,7 +130,9 @@ remain implementation work, not just missing credentials.
   task/report/crew workflow, private photo metadata, planting registry and immutable Outcomes.
   The eight supported operations alone cannot serve the whole current frontend.
 - **Captain/Damir:** provision approved free accounts; review the Draft; execute real Render/HTTPS
-  and Docker runtime acceptance. Do not delete user volumes. E2E-09 remains his UI work.
+  and cloud runtime acceptance. Do not delete user volumes. #38 has now merged his E2E-09 fix;
+  his reported Docker and complete mock/API acceptance on `20e642b` is recorded in deployment.md.
+  This report does not claim an additional local Docker/browser run by Bekzat.
 - **Tәңірберді:** bind a fixed same-origin proxy only after the actual origin/SHA/capability handoff;
   preserve cookie/CSRF/multipart/error semantics, and do not silently fallback to mock.
 - **Aidana:** accept the final integrated public SHA independently, including restart/redeploy and
@@ -125,8 +140,8 @@ remain implementation work, not just missing credentials.
 - `npm audit` reports **8 moderate**, 0 high/critical, in the existing ExcelJS/archive dependency
   chain (archiver, archiver-utils, exceljs, glob, minimatch, readdir-glob, rimraf, zip-stream).
   No automatic force upgrade was applied. pg/embedded-postgres were not listed as vulnerable packages.
-- No browser UI/translation changes were made. Existing web/worker CI will run on the Draft; prior
-  web test totals are not presented as fresh local checks of this source SHA.
+- No browser UI/translation changes were made. Web/worker CI runs on the Draft; prior web test totals are not presented as fresh local
+  checks of this source SHA. See the linked final CI run for current web/worker validation.
 
 Local raw evidence is outside Git under `work/cloud-persistence-evidence-20261031/`: final and
 historical test logs, sanitized Docker/Render checks, GitHub metadata and npm audit JSON. No `.env`,
