@@ -1,0 +1,142 @@
+{
+  "status": "failed",
+  "counts": {
+    "passed": 15,
+    "failed": 1,
+    "timedOut": 0,
+    "skipped": 0
+  },
+  "tests": [
+    {
+      "title": "E2E-06 API: worker1, 375px, ru, direct route/reload and keyboard",
+      "status": "passed",
+      "fixme": false,
+      "durationMs": 1992,
+      "note": "",
+      "errors": []
+    },
+    {
+      "title": "E2E-06 API: foreman1, 375px, ru, direct route/reload and keyboard",
+      "status": "passed",
+      "fixme": false,
+      "durationMs": 2265,
+      "note": "",
+      "errors": []
+    },
+    {
+      "title": "E2E-06 API: worker1, 375px, kk, direct route/reload and keyboard",
+      "status": "passed",
+      "fixme": false,
+      "durationMs": 1911,
+      "note": "",
+      "errors": []
+    },
+    {
+      "title": "E2E-06 API: foreman1, 375px, kk, direct route/reload and keyboard",
+      "status": "passed",
+      "fixme": false,
+      "durationMs": 2083,
+      "note": "",
+      "errors": []
+    },
+    {
+      "title": "E2E-06 API: worker1, 800px, ru, direct route/reload and keyboard",
+      "status": "passed",
+      "fixme": false,
+      "durationMs": 1750,
+      "note": "",
+      "errors": []
+    },
+    {
+      "title": "E2E-06 API: foreman1, 800px, ru, direct route/reload and keyboard",
+      "status": "passed",
+      "fixme": false,
+      "durationMs": 1716,
+      "note": "",
+      "errors": []
+    },
+    {
+      "title": "E2E-06 API: worker1, 800px, kk, direct route/reload and keyboard",
+      "status": "failed",
+      "fixme": false,
+      "durationMs": 1671,
+      "note": "Browser assertion failed. Reproduce the named scenario; sensitive action details are omitted.",
+      "errors": [
+        "SyntaxError: Unexpected end of JSON input",
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('green-worker')\nExpected: visible\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" locator('green-worker') with timeout 12000ms\u001b[22m\n\u001b[2m  - waiting for locator('green-worker')\u001b[22m\n\u001b[2m  - Test ended.\u001b[22m\n"
+      ]
+    },
+    {
+      "title": "E2E-06 API: foreman1, 800px, kk, direct route/reload and keyboard",
+      "status": "passed",
+      "fixme": false,
+      "durationMs": 2364,
+      "note": "",
+      "errors": []
+    },
+    {
+      "title": "E2E-06 API: worker1, 801px, ru, direct route/reload and keyboard",
+      "status": "passed",
+      "fixme": false,
+      "durationMs": 2078,
+      "note": "",
+      "errors": []
+    },
+    {
+      "title": "E2E-06 API: foreman1, 801px, ru, direct route/reload and keyboard",
+      "status": "passed",
+      "fixme": false,
+      "durationMs": 2038,
+      "note": "",
+      "errors": []
+    },
+    {
+      "title": "E2E-06 API: foreman1, 801px, kk, direct route/reload and keyboard",
+      "status": "passed",
+      "fixme": false,
+      "durationMs": 1839,
+      "note": "",
+      "errors": []
+    },
+    {
+      "title": "E2E-06 API: worker1, 801px, kk, direct route/reload and keyboard",
+      "status": "passed",
+      "fixme": false,
+      "durationMs": 1901,
+      "note": "",
+      "errors": []
+    },
+    {
+      "title": "E2E-06 API: worker1, 1280px, ru, direct route/reload and keyboard",
+      "status": "passed",
+      "fixme": false,
+      "durationMs": 1707,
+      "note": "",
+      "errors": []
+    },
+    {
+      "title": "E2E-06 API: foreman1, 1280px, ru, direct route/reload and keyboard",
+      "status": "passed",
+      "fixme": false,
+      "durationMs": 1736,
+      "note": "",
+      "errors": []
+    },
+    {
+      "title": "E2E-06 API: worker1, 1280px, kk, direct route/reload and keyboard",
+      "status": "passed",
+      "fixme": false,
+      "durationMs": 1893,
+      "note": "",
+      "errors": []
+    },
+    {
+      "title": "E2E-06 API: foreman1, 1280px, kk, direct route/reload and keyboard",
+      "status": "passed",
+      "fixme": false,
+      "durationMs": 1935,
+      "note": "",
+      "errors": []
+    }
+  ]
+}

@@ -1,0 +1,249 @@
+{
+  "dateLocal": "2026-10-31",
+  "productCodeRevision": "a66d542c63c527d608400c84b34d49f982855369",
+  "checkoutRevisionAtBuild": "5b35b42f3f40057aa7c20982300fb35bada8d055",
+  "appsWebTreeEqualToProductRevision": "f90cdfd5a076b212573957c2ea682313ecc3b47c",
+  "sourceCodeChangedByVerifier": false,
+  "e2eCodeChanged": false,
+  "dirtyWorktreeExplanation": "docs/defense being edited concurrently; apps/web tree unchanged and equal to a66d542",
+  "environment": {
+    "os": "Windows",
+    "node": "24.22.1",
+    "npm": "11.6.2",
+    "playwright": "1.64.1",
+    "chromiumHeadless": "156.0.8078.4",
+    "workers": 2,
+    "retries": 0,
+    "frontend": "production build via Vite preview http://127.0.0.1:5184",
+    "api": "development backend http://127.0.0.1:3100 with separately seeded disposable SQLite per run; stopped after checks"
+  },
+  "checks": {
+    "webTypecheck": {
+      "status": "passed",
+      "command": "npm run typecheck",
+      "log": "web-typecheck.log"
+    },
+    "webBuild": {
+      "status": "passed",
+      "command": "npm run build",
+      "warning": "Vite chunk size warning >500kB",
+      "log": "web-build.log"
+    },
+    "workerTests": {
+      "passed": 79,
+      "failed": 0,
+      "skipped": 0,
+      "command": "npm test in tools/worker-demo",
+      "log": "worker-test.log"
+    },
+    "webTestsFirstParallelRun": {
+      "passed": 177,
+      "failed": 1,
+      "skipped": 0,
+      "command": "npm test in apps/web",
+      "log": "web-test.log",
+      "failure": "decisionLab.test.mjs process failed without specific assertion/stack; 15 constituent tests were not reported"
+    },
+    "webDecisionLabFocusedRepeat": {
+      "passed": 15,
+      "failed": 0,
+      "command": "node --enable-source-maps --test --test-reporter=tap dist-tests/decisionLab.test.mjs",
+      "log": "web-decision-lab-repeat.log"
+    },
+    "webTestsFullRepeat": {
+      "passed": 192,
+      "failed": 0,
+      "skipped": 0,
+      "command": "npm test in apps/web",
+      "log": "web-test-repeat.log"
+    },
+    "webCheckI18n": {
+      "status": "passed",
+      "keysKk": 1927,
+      "missing": 0,
+      "extra": 0,
+      "placeholderErrors": 0,
+      "log": "web-check-i18n.log"
+    },
+    "webCheckZones": {
+      "status": "passed",
+      "checks": 7,
+      "log": "web-check-zones.log"
+    },
+    "webCheckSurvival": {
+      "status": "passed",
+      "syntheticOnly": true,
+      "n": 12000,
+      "holdout": 2400,
+      "rocAuc": 0.732373,
+      "brier": 0.177188,
+      "log": "web-check-survival.log"
+    },
+    "webCheckCare": {
+      "status": "passed",
+      "log": "web-check-care.log"
+    },
+    "mockProductionFocused": {
+      "passed": 22,
+      "failed": 0,
+      "skipped": 0,
+      "command": "E2E_BASE_URL=http://127.0.0.1:5184 node scripts/run.mjs mock --grep 'E2E-06|presentation: present=1|lab: three plans'",
+      "result": "e2e-production-focused-results.json"
+    },
+    "apiProductionE2E06First": {
+      "passed": 15,
+      "failed": 1,
+      "timedOut": 0,
+      "skipped": 0,
+      "result": "e2e-api-first-results.json"
+    },
+    "apiProductionE2E06RepeatFreshDB": {
+      "passed": 16,
+      "failed": 0,
+      "timedOut": 0,
+      "skipped": 0,
+      "result": "e2e-api-repeat-results.json"
+    },
+    "apiCommand": "E2E_BASE_URL=http://127.0.0.1:5184 node scripts/run.mjs api --grep E2E-06",
+    "responsiveOutcomesLab": {
+      "passed": 20,
+      "failed": 0,
+      "widths": [
+        375,
+        800,
+        801,
+        1280,
+        1440
+      ],
+      "languages": [
+        "ru",
+        "kk"
+      ],
+      "routes": [
+        "outcomes",
+        "lab"
+      ],
+      "checks": [
+        "save forecast clicked and confirmed",
+        "water stress and rebuild clicked",
+        "primary action center reachable and not overlapped by presentation pill or assistant FAB",
+        "no whole-page horizontal overflow",
+        "presentation exit works",
+        "no pageerror"
+      ],
+      "result": "responsive-results.json"
+    }
+  },
+  "apiInstability": {
+    "case": "E2E-06 API: worker1, 800px, kk, direct route/reload and keyboard",
+    "firstError": "SyntaxError: Unexpected end of JSON input; then green-worker not found",
+    "repeat": "all 16 cases passed on a fresh isolated DB, without code changes",
+    "cause": "not established; not dismissed as an environment failure",
+    "fullyStableAcceptanceClaimed": false
+  },
+  "webTestInstability": {
+    "firstRun": "177 passed and one failed decisionLab.test.mjs process during parallel checks",
+    "focusedRepeat": "15/15 passed",
+    "fullRepeat": "192/192 passed",
+    "codeChanged": false,
+    "cause": "not established; first log preserved; no assertion-level failure details emitted"
+  },
+  "previousBroaderAudit": {
+    "revision": "c08efea51900e11cdea63944bddb79a078712db5",
+    "notRerunBecause": "Full browser and server suites not rerun: only product diff to a66d542 is presentation/lab button CSS. Web and worker tests plus all web check scripts were rerun at a66d542.",
+    "webTests": {
+      "passed": 192,
+      "failed": 0
+    },
+    "serverTests": {
+      "passed": 101,
+      "failed": 0
+    },
+    "typechecksBuildAndAllWebCheckScripts": "passed",
+    "fullMockDevelopment": {
+      "passed": 204,
+      "failed": 0,
+      "skipped": 2
+    },
+    "fullOfficialApiDevelopment": {
+      "passed": 42,
+      "failed": 4,
+      "skipped": 0,
+      "secretScan": "passed"
+    },
+    "apiFailureExplanation": "tools/e2e/tests/lab.api.spec.ts:16 expects stale KK radio label Суармай, while apps/web/src/shared/i18n/kk.ts:94 defines Суарылмайды; still unchanged in a66d542",
+    "apiFailedCases": [
+      "API lab: coordinator, kk/1280, real plans and frozen stress/rebuild",
+      "API lab: coordinator, kk/375, real plans and frozen stress/rebuild",
+      "API lab: viewer, kk/1280, real plans and frozen stress/rebuild",
+      "API lab: viewer, kk/375, real plans and frozen stress/rebuild"
+    ],
+    "productionCompatibilityClarification": "The role switch / Режим проверки is available in production mock. Only __gpMock fault-injection controls are DEV-only. Full mock dev results must not be called production results."
+  },
+  "remainingUiFindings": [
+    "Outcomes polish still missing: fractional tenge, 42.49 expected trees, repeated demo tags and technical evidence ID remain; summary still below details",
+    "Lab suggested water field displays 769.6920000000001",
+    "Fixed assistant FAB can overlay ordinary content text while scrolling; targeted primary actions passed reachability checks",
+    "KK cost tables use local horizontal scrolling at 375px; no page-level horizontal overflow"
+  ],
+  "documents": {
+    "status": "rendered and visually reviewed, with localization limitations",
+    "method": "documents skill canonical render_docx.py -> locally extracted official LibreOffice 26.8.2 -> PDF and Poppler page PNGs",
+    "nativeMicrosoftWordVisualCheck": false,
+    "reasonNativeNotChecked": "User actively using desktop; further window interaction stopped. No DOCX was opened or edited in Word.",
+    "systemInstallationPerformed": false,
+    "officialDownloadPage": "https://www.libreoffice.org/download/",
+    "officialPackage": "https://download.documentfoundation.org/libreoffice/stable/26.8.2/win/x86_64/LibreOffice_26.8.2_Win_x86-64.msi",
+    "officialChecksumSource": "https://download.documentfoundation.org/libreoffice/stable/26.8.2/win/x86_64/LibreOffice_26.8.2_Win_x86-64.msi.mirrorlist",
+    "packageSha256Verified": "ff4b911403b67ee9e6249f820f9782c44bb32c94fdaa45b0da53a8e419e5307a",
+    "documents": [
+      {
+        "language": "ru",
+        "originalFile": "green-pavlodar-memo-ru-a66d542.docx",
+        "sha256": "152fd771d1c64be402bc4252995683390702d7c2850d8744bdcdf179bd00c11b",
+        "originalUnchanged": true,
+        "pages": 6,
+        "allPagesVisuallyInspected": true,
+        "layoutStatus": "PASS: no clipped text, overlaps or broken tables; repeated table headings and Kazakh glyphs readable",
+        "pdfFile": "green-pavlodar-memo-ru-a66d542-libreoffice.pdf",
+        "pdfSha256": "129f7a5725e07cef108db0ad4274055712032688931f45c1c2dbd20db0dcda87",
+        "totalKzt": 10825627.5,
+        "uiRoundedTotalKzt": 10825628
+      },
+      {
+        "language": "kk",
+        "originalFile": "green-pavlodar-memo-kk-a66d542.docx",
+        "sha256": "88cef7b0cd4fe5592b58034c851e3280be11953c444ad7f917226f2a7c725ec9",
+        "originalUnchanged": true,
+        "pages": 6,
+        "allPagesVisuallyInspected": true,
+        "layoutStatus": "PASS: no clipped text, overlaps or broken tables; repeated table headings and Kazakh glyphs readable",
+        "pdfFile": "green-pavlodar-memo-kk-a66d542-libreoffice.pdf",
+        "pdfSha256": "92b1800e2758f740349cf7f08acece85ee5fac0a396a12cf5cb61b93fdaed1fe",
+        "totalKzt": 10825627.5,
+        "uiRoundedTotalKzt": 10825628
+      }
+    ],
+    "structuralCheck": "Both DOCX ZIP integrity pass, 262 paragraphs, 5 tables, table numeric values equal RU/KK, no replacement characters",
+    "localizationLimitations": {
+      "kkRussianPlantNames": [
+        "Вяз приземистый (карагач)",
+        "Тополь Болле (пирамидальный)",
+        "Ель колючая",
+        "Роза морщинистая",
+        "Очиток видный",
+        "Бархатцы (однолетник)",
+        "Лилейник",
+        "Эхинацея пурпурная"
+      ],
+      "kkRussianSourceAndCoefficientDescriptions": "Pages 4–6 retain Russian source descriptions, evidence notes and coefficient rationales; labels and primary report headings are Kazakh",
+      "zoneDisplayName": "Газон, улица Толстого retained as source name in both documents"
+    },
+    "summaryMarkdown": "Оба UI-export DOCX сохранены без изменений; SHA-256 сверены до/после. ZIP, 262 абзаца и 5 таблиц в каждом — PASS, числовые таблицы RU/KK совпадают. Сумма в DOCX **10 825 627,5 ₸**, на экране **10 825 628 ₸** после округления.\n\nШтатный `render_docx.py` с локально извлечённым официальным LibreOffice 26.8.2 создал PDF/PNG. Просмотрены все **6 страниц RU + 6 страниц KK**: обрезания, наложения и сломанные таблицы не обнаружены; казахские буквы читаются. Системная установка не выполнялась. **Это не native-проверка Microsoft Word**: взаимодействие с пользовательским рабочим столом прекращено из-за активного ввода.\n\nВ KK остаются русские fallback-названия 8 растений (вяз, тополь Болле, ель, роза, очиток, бархатцы, лилейник, эхинацея), название зоны и русские описания источников/обоснования коэффициентов на страницах 4–6. Полную локализацию не заявляем. Оригинальные пустые поля реквизитов/подписи оставлены для заполнения, персональные данные не добавлены.\n\nPDF-копии для автономного показа: `../documents/green-pavlodar-memo-ru-a66d542-libreoffice.pdf` и `../documents/green-pavlodar-memo-kk-a66d542-libreoffice.pdf`; страницы проверки — `docx-pages/ru` и `docx-pages/kk`. Источник инструмента: [LibreOffice](https://www.libreoffice.org/download/), контрольная сумма сверена с [официальным mirrorlist](https://download.documentfoundation.org/libreoffice/stable/26.8.2/win/x86_64/LibreOffice_26.8.2_Win_x86-64.msi.mirrorlist)."
+  },
+  "publicDeploymentVerified": false,
+  "physicalPhoneVerified": false,
+  "independentHumanAcceptanceClaimed": false,
+  "apiServersStopped": true,
+  "previewKept": "http://127.0.0.1:5184"
+}

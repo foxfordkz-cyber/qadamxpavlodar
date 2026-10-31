@@ -1,0 +1,598 @@
+{
+  "codeRevision": "a66d542c63c527d608400c84b34d49f982855369",
+  "checkoutRevision": "5b35b42f3f40057aa7c20982300fb35bada8d055",
+  "browser": "156.0.8078.4",
+  "source": "production preview + mock",
+  "results": [
+    {
+      "width": 375,
+      "lang": "ru",
+      "route": "outcomes",
+      "checks": [
+        {
+          "target": "save-forecast",
+          "rect": {
+            "x": 25,
+            "y": 431.46875,
+            "width": 166.53125,
+            "height": 38
+          },
+          "intersections": [],
+          "centerReachable": true,
+          "pageOverflow": false
+        }
+      ],
+      "pageErrors": [],
+      "savedStatus": "Прогноз сохранён. Он не изменится при обновлении текущих ставок.",
+      "header": {
+        "top": 13,
+        "bottom": 43,
+        "left": 333,
+        "right": 363,
+        "position": "absolute"
+      },
+      "pass": true
+    },
+    {
+      "width": 375,
+      "lang": "ru",
+      "route": "lab",
+      "checks": [
+        {
+          "target": "rebuild-plan",
+          "rect": {
+            "x": 29,
+            "y": 795.75,
+            "width": 273,
+            "height": 56.59375
+          },
+          "intersections": [],
+          "centerReachable": true,
+          "pageOverflow": false,
+          "label": "Перестроить под новый лимит воды"
+        }
+      ],
+      "pageErrors": [],
+      "rebuildCompleted": true,
+      "header": {
+        "top": 13,
+        "bottom": 43,
+        "left": 333,
+        "right": 363,
+        "position": "absolute"
+      },
+      "pass": true
+    },
+    {
+      "width": 375,
+      "lang": "kk",
+      "route": "outcomes",
+      "checks": [
+        {
+          "target": "save-forecast",
+          "rect": {
+            "x": 25,
+            "y": 431.4375,
+            "width": 157.5,
+            "height": 38
+          },
+          "intersections": [],
+          "centerReachable": true,
+          "pageOverflow": false
+        }
+      ],
+      "pageErrors": [],
+      "savedStatus": "Болжам сақталды. Ағымдағы тарифтер жаңарғанда ол өзгермейді.",
+      "header": {
+        "top": 13,
+        "bottom": 43,
+        "left": 333,
+        "right": 363,
+        "position": "absolute"
+      },
+      "pass": true
+    },
+    {
+      "width": 375,
+      "lang": "kk",
+      "route": "lab",
+      "checks": [
+        {
+          "target": "rebuild-plan",
+          "rect": {
+            "x": 29,
+            "y": 820.234375,
+            "width": 247.421875,
+            "height": 38
+          },
+          "intersections": [],
+          "centerReachable": true,
+          "pageOverflow": false,
+          "label": "Жаңа су шегіне сай қайта құру"
+        }
+      ],
+      "pageErrors": [],
+      "rebuildCompleted": true,
+      "header": {
+        "top": 13,
+        "bottom": 43,
+        "left": 333,
+        "right": 363,
+        "position": "absolute"
+      },
+      "pass": true
+    },
+    {
+      "width": 800,
+      "lang": "ru",
+      "route": "outcomes",
+      "checks": [
+        {
+          "target": "save-forecast",
+          "rect": {
+            "x": 37,
+            "y": 430.59375,
+            "width": 166.53125,
+            "height": 38
+          },
+          "intersections": [],
+          "centerReachable": true,
+          "pageOverflow": false
+        }
+      ],
+      "pageErrors": [],
+      "savedStatus": "Прогноз сохранён. Он не изменится при обновлении текущих ставок.",
+      "header": {
+        "top": 12,
+        "bottom": 42,
+        "left": 240,
+        "right": 270,
+        "position": "fixed"
+      },
+      "pass": true
+    },
+    {
+      "width": 800,
+      "lang": "ru",
+      "route": "lab",
+      "checks": [
+        {
+          "target": "rebuild-plan",
+          "rect": {
+            "x": 43,
+            "y": 431.421875,
+            "width": 283.453125,
+            "height": 38
+          },
+          "intersections": [],
+          "centerReachable": true,
+          "pageOverflow": false,
+          "label": "Перестроить под новый лимит воды"
+        }
+      ],
+      "pageErrors": [],
+      "rebuildCompleted": true,
+      "header": {
+        "top": 12,
+        "bottom": 42,
+        "left": 240,
+        "right": 270,
+        "position": "fixed"
+      },
+      "pass": true
+    },
+    {
+      "width": 800,
+      "lang": "kk",
+      "route": "outcomes",
+      "checks": [
+        {
+          "target": "save-forecast",
+          "rect": {
+            "x": 37,
+            "y": 430.59375,
+            "width": 157.5,
+            "height": 38
+          },
+          "intersections": [],
+          "centerReachable": true,
+          "pageOverflow": false
+        }
+      ],
+      "pageErrors": [],
+      "savedStatus": "Болжам сақталды. Ағымдағы тарифтер жаңарғанда ол өзгермейді.",
+      "header": {
+        "top": 12,
+        "bottom": 42,
+        "left": 240,
+        "right": 270,
+        "position": "fixed"
+      },
+      "pass": true
+    },
+    {
+      "width": 800,
+      "lang": "kk",
+      "route": "lab",
+      "checks": [
+        {
+          "target": "rebuild-plan",
+          "rect": {
+            "x": 43,
+            "y": 431.265625,
+            "width": 247.421875,
+            "height": 38
+          },
+          "intersections": [],
+          "centerReachable": true,
+          "pageOverflow": false,
+          "label": "Жаңа су шегіне сай қайта құру"
+        }
+      ],
+      "pageErrors": [],
+      "rebuildCompleted": true,
+      "header": {
+        "top": 12,
+        "bottom": 42,
+        "left": 240,
+        "right": 270,
+        "position": "fixed"
+      },
+      "pass": true
+    },
+    {
+      "width": 801,
+      "lang": "ru",
+      "route": "outcomes",
+      "checks": [
+        {
+          "target": "save-forecast",
+          "rect": {
+            "x": 37,
+            "y": 431.4375,
+            "width": 166.53125,
+            "height": 38
+          },
+          "intersections": [],
+          "centerReachable": true,
+          "pageOverflow": false
+        }
+      ],
+      "pageErrors": [],
+      "savedStatus": "Прогноз сохранён. Он не изменится при обновлении текущих ставок.",
+      "header": {
+        "top": 12,
+        "bottom": 42,
+        "left": 240,
+        "right": 270,
+        "position": "fixed"
+      },
+      "pass": true
+    },
+    {
+      "width": 801,
+      "lang": "ru",
+      "route": "lab",
+      "checks": [
+        {
+          "target": "rebuild-plan",
+          "rect": {
+            "x": 43,
+            "y": 431.453125,
+            "width": 283.453125,
+            "height": 38
+          },
+          "intersections": [],
+          "centerReachable": true,
+          "pageOverflow": false,
+          "label": "Перестроить под новый лимит воды"
+        }
+      ],
+      "pageErrors": [],
+      "rebuildCompleted": true,
+      "header": {
+        "top": 12,
+        "bottom": 42,
+        "left": 240,
+        "right": 270,
+        "position": "fixed"
+      },
+      "pass": true
+    },
+    {
+      "width": 801,
+      "lang": "kk",
+      "route": "outcomes",
+      "checks": [
+        {
+          "target": "save-forecast",
+          "rect": {
+            "x": 37,
+            "y": 430.96875,
+            "width": 157.5,
+            "height": 38
+          },
+          "intersections": [],
+          "centerReachable": true,
+          "pageOverflow": false
+        }
+      ],
+      "pageErrors": [],
+      "savedStatus": "Болжам сақталды. Ағымдағы тарифтер жаңарғанда ол өзгермейді.",
+      "header": {
+        "top": 12,
+        "bottom": 42,
+        "left": 240,
+        "right": 270,
+        "position": "fixed"
+      },
+      "pass": true
+    },
+    {
+      "width": 801,
+      "lang": "kk",
+      "route": "lab",
+      "checks": [
+        {
+          "target": "rebuild-plan",
+          "rect": {
+            "x": 43,
+            "y": 431.296875,
+            "width": 247.421875,
+            "height": 38
+          },
+          "intersections": [],
+          "centerReachable": true,
+          "pageOverflow": false,
+          "label": "Жаңа су шегіне сай қайта құру"
+        }
+      ],
+      "pageErrors": [],
+      "rebuildCompleted": true,
+      "header": {
+        "top": 12,
+        "bottom": 42,
+        "left": 240,
+        "right": 270,
+        "position": "fixed"
+      },
+      "pass": true
+    },
+    {
+      "width": 1280,
+      "lang": "ru",
+      "route": "outcomes",
+      "checks": [
+        {
+          "target": "save-forecast",
+          "rect": {
+            "x": 77,
+            "y": 430.6875,
+            "width": 166.53125,
+            "height": 38
+          },
+          "intersections": [],
+          "centerReachable": true,
+          "pageOverflow": false
+        }
+      ],
+      "pageErrors": [],
+      "savedStatus": "Прогноз сохранён. Он не изменится при обновлении текущих ставок.",
+      "header": {
+        "top": 12,
+        "bottom": 42.84375,
+        "left": 240,
+        "right": 437.828125,
+        "position": "fixed"
+      },
+      "pass": true
+    },
+    {
+      "width": 1280,
+      "lang": "ru",
+      "route": "lab",
+      "checks": [
+        {
+          "target": "rebuild-plan",
+          "rect": {
+            "x": 43,
+            "y": 787.53125,
+            "width": 283.453125,
+            "height": 38
+          },
+          "intersections": [],
+          "centerReachable": true,
+          "pageOverflow": false,
+          "label": "Перестроить под новый лимит воды"
+        }
+      ],
+      "pageErrors": [],
+      "rebuildCompleted": true,
+      "header": {
+        "top": 12,
+        "bottom": 42.84375,
+        "left": 240,
+        "right": 437.828125,
+        "position": "fixed"
+      },
+      "pass": true
+    },
+    {
+      "width": 1280,
+      "lang": "kk",
+      "route": "outcomes",
+      "checks": [
+        {
+          "target": "save-forecast",
+          "rect": {
+            "x": 77,
+            "y": 431.09375,
+            "width": 157.5,
+            "height": 38
+          },
+          "intersections": [],
+          "centerReachable": true,
+          "pageOverflow": false
+        }
+      ],
+      "pageErrors": [],
+      "savedStatus": "Болжам сақталды. Ағымдағы тарифтер жаңарғанда ол өзгермейді.",
+      "header": {
+        "top": 12,
+        "bottom": 42.84375,
+        "left": 240,
+        "right": 448.671875,
+        "position": "fixed"
+      },
+      "pass": true
+    },
+    {
+      "width": 1280,
+      "lang": "kk",
+      "route": "lab",
+      "checks": [
+        {
+          "target": "rebuild-plan",
+          "rect": {
+            "x": 43,
+            "y": 839.9375,
+            "width": 247.421875,
+            "height": 38
+          },
+          "intersections": [],
+          "centerReachable": true,
+          "pageOverflow": false,
+          "label": "Жаңа су шегіне сай қайта құру"
+        }
+      ],
+      "pageErrors": [],
+      "rebuildCompleted": true,
+      "header": {
+        "top": 12,
+        "bottom": 42.84375,
+        "left": 240,
+        "right": 448.671875,
+        "position": "fixed"
+      },
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "lang": "ru",
+      "route": "outcomes",
+      "checks": [
+        {
+          "target": "save-forecast",
+          "rect": {
+            "x": 157,
+            "y": 430.6875,
+            "width": 166.53125,
+            "height": 38
+          },
+          "intersections": [],
+          "centerReachable": true,
+          "pageOverflow": false
+        }
+      ],
+      "pageErrors": [],
+      "savedStatus": "Прогноз сохранён. Он не изменится при обновлении текущих ставок.",
+      "header": {
+        "top": 12,
+        "bottom": 42.84375,
+        "left": 240,
+        "right": 437.828125,
+        "position": "fixed"
+      },
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "lang": "ru",
+      "route": "lab",
+      "checks": [
+        {
+          "target": "rebuild-plan",
+          "rect": {
+            "x": 63,
+            "y": 787.53125,
+            "width": 283.453125,
+            "height": 38
+          },
+          "intersections": [],
+          "centerReachable": true,
+          "pageOverflow": false,
+          "label": "Перестроить под новый лимит воды"
+        }
+      ],
+      "pageErrors": [],
+      "rebuildCompleted": true,
+      "header": {
+        "top": 12,
+        "bottom": 42.84375,
+        "left": 240,
+        "right": 437.828125,
+        "position": "fixed"
+      },
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "lang": "kk",
+      "route": "outcomes",
+      "checks": [
+        {
+          "target": "save-forecast",
+          "rect": {
+            "x": 157,
+            "y": 430.53125,
+            "width": 157.5,
+            "height": 38
+          },
+          "intersections": [],
+          "centerReachable": true,
+          "pageOverflow": false
+        }
+      ],
+      "pageErrors": [],
+      "savedStatus": "Болжам сақталды. Ағымдағы тарифтер жаңарғанда ол өзгермейді.",
+      "header": {
+        "top": 12,
+        "bottom": 42.84375,
+        "left": 240,
+        "right": 448.671875,
+        "position": "fixed"
+      },
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "lang": "kk",
+      "route": "lab",
+      "checks": [
+        {
+          "target": "rebuild-plan",
+          "rect": {
+            "x": 63,
+            "y": 806.375,
+            "width": 247.421875,
+            "height": 38
+          },
+          "intersections": [],
+          "centerReachable": true,
+          "pageOverflow": false,
+          "label": "Жаңа су шегіне сай қайта құру"
+        }
+      ],
+      "pageErrors": [],
+      "rebuildCompleted": true,
+      "header": {
+        "top": 12,
+        "bottom": 42.84375,
+        "left": 240,
+        "right": 448.671875,
+        "position": "fixed"
+      },
+      "pass": true
+    }
+  ]
+}
