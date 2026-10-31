@@ -4,11 +4,11 @@ Status, 31 October 2026: **local PostgreSQL verified; public deployment BLOCKED*
 The owner confirmed that Render/Supabase access is not available. No public backend origin exists
 for this work, and no paid service was created. The existing Cloudflare publication is a mock.
 
-Stages A/B extend the existing PR #39; base remains `98cf6c68d5370331d6f95aa9e749f82d504e5670`.
+Stages A/B/C extend the existing PR #39; base remains `98cf6c68d5370331d6f95aa9e749f82d504e5670`.
 Branch: `codex/cloud-api-persistence`; target: `codex/coordinator`, **Draft**.
 Current scope, real frontend route matrix, verification and remaining work:
 [cloud-stage-a-acceptance.md](cloud-stage-a-acceptance.md) (historical Stage A) and
-[cloud-stage-b-acceptance.md](cloud-stage-b-acceptance.md) (workflow).
+[cloud-stage-b-acceptance.md](cloud-stage-b-acceptance.md) (workflow) and [cloud-stage-c-acceptance.md](cloud-stage-c-acceptance.md) (private photos).
 Earlier source/results/failures remain historical in
 [cloud-persistence-verification.md](cloud-persistence-verification.md).
 
@@ -46,10 +46,12 @@ Public service endpoints:
 | --- | --- |
 | GET `/health`, `/api/v1/health` | Process liveness, PostgreSQL slice label; not a DB or full-release acceptance |
 | GET `/api/v1/ready` | DB connectivity and exact migration version; returns 503 on DB failure/unknown schema |
-| GET `/api/v1/openapi.json` | Live generator; 76 implemented operations; `openapi-cloud.json` is generated from this HTTP route |
+| GET `/api/v1/openapi.json` | Live generator; 78 implemented operations; `openapi-cloud.json` is generated from this HTTP route |
 
-Readiness reports migration version 3, `capabilities: ["auth","evidence","resources","sites","context","analysis","rates","snapshots","crews","workers","designs","tasks","reports"]`
-and `photos: "unsupported"`. This is DB/schema readiness, not full-release or seeded-data acceptance.
+Readiness reports migration version 4, `capabilities: ["auth","evidence","resources","sites","context","analysis","rates","snapshots","crews","workers","designs","tasks","reports"]`
+and `photos: "not-configured"` without storage configuration. With storage it verifies the private
+bucket, adds the `photos` capability and returns `photos: "private-storage-configured"`; a storage
+failure or unsafe bucket returns 503. This is DB/schema readiness, not full-release or seeded-data acceptance.
 
 ## Added planning operations
 
@@ -98,8 +100,9 @@ run synchronously on SQLite and await real PostgreSQL statements on one transact
 Writes take one database advisory lock before actor rows; this conservatively preserves SQLite's
 serialized cross-task scheduling/resource checks. It is a scalability limitation, not a queue.
 
-Stage C (`/uploads`) and Stage D (Outcomes) are pending in this checkpoint. The private-storage
-primitive is not yet an HTTP integration; Stage A calculations are not Outcomes records.
+Stage C `/uploads` is implemented and tested with a local private HTTP storage service and PostgreSQL.
+Real Supabase remains NOT RUN without approved credentials. Stage D (Outcomes) is pending in this
+checkpoint; Stage A calculations are not Outcomes records.
 GIS import/preview/commit, new drawn zones, geocode, care schedule, assistant, weather, RAG and
 generated images remain unsupported. Site PATCH/checks, plant map points and task/design reads
 are now available; the complete map editing/import scenario is still blocked.
@@ -162,9 +165,53 @@ insert a second plant. All rows are synthetic DEMO; acceptance is not evidence o
   Render must overwrite forwarding headers. Do not use it for a directly exposed Node port.
   Cloudflare must discard caller-supplied forwarding headers. Secure-cookie behavior was tested
   with a local ingress simulation; real Render/Cloudflare HTTPS has not been tested.
-- JSON limit is 32 KiB. Multipart `/uploads` is **not supported in this cloud slice**. Existing local
-  uploads accept one `file` plus `taskId`, JPEG/PNG/WebP up to 5 MiB; decoded images are limited to
-  4096×4096 and normalized to WebP. Do not advertise these local limits as cloud upload acceptance.
+- JSON limit is 32 KiB. Multipart `POST /uploads` accepts one `file` plus `taskId`, JPEG/PNG/WebP
+  up to 5 MiB. Image bytes are checked, single-frame decoded images are limited to 4096×4096,
+  EXIF/metadata are removed and bytes are normalized to WebP. At most two normalizations run
+  concurrently; PHOTO_BUSY is 429. Stored + pending photos are limited to 50 per task.
+
+## Private photos (Stage C)
+
+`POST /uploads`: assigned worker or own foreman, while task is in_progress. Multipart fields are
+`taskId` and `file`; do not set Content-Type manually in browser fetch (FormData supplies its boundary).
+Send Cookie, X-CSRF-Token and the original Idempotency-Key on a deliberate retry.
+201 response is `{data:{id,taskId,ownerId,reportId:null,sha256,byteSize,mediaType:"image/webp",createdAt,contentUrl}}`.
+Only the application URL `/api/v1/uploads/<id>` is exposed. Object names and server keys are not DTO fields.
+
+`GET /uploads/:id`: authenticated binary WebP in task read scope. Viewer/admin/coordinator can read;
+foreman is crew-scoped; worker is assignment-scoped and cannot read another participant's unsubmitted
+photo. The response is inline `report.webp`, no-store. Anonymous/private-provider URLs do not grant access.
+
+Put photo IDs in report `photoIds` or explicitly contribute them to the group draft. Report submission
+binds metadata atomically. A photo cannot bind to another report/task; another participant must first
+contribute their photo. Accepting a report preserves the existing photo links.
+
+A durable upload intent is committed **before** remote I/O. Raw request hash, stable server UUID/name,
+normalized SHA/size and state survive a process crash. Remote PUT uses no overwrite. If a previous PUT
+succeeded but DB metadata failed, the same-key retry authenticates a read and verifies the exact object
+before finalizing metadata/receipt. A committed response loss replays the original DTO with no new object.
+Remote failure returns 503, never success or a local substitute. Committed missing/corrupt bytes also
+return 503; restoring provider data requires an explicit operator action, not fabricated replacement.
+
+Reconciliation is explicit maintenance, not a startup cleanup:
+
+```sh
+npm run storage:reconcile           # dry-run, no object deletion
+npm run storage:reconcile -- --apply
+```
+
+Only server-created pending intents untouched for 24 hours, with no metadata reference, are eligible
+(maximum 100 per run). Cleanup and upload finalization share the write lock, preventing deletion of a
+concurrently committed object. Failed cleanup retains its intent for retry. Committed photos/report
+links and unrelated bucket objects are not candidates. A cleaned intent can be retried with its same
+original key/body. Remote calls currently hold the conservative global writer lock; large/slow storage
+workloads can cause bounded lock-timeout 503s and need later throughput tuning.
+
+Provider protocol sources: [private downloads](https://supabase.com/docs/guides/storage/serving/downloads),
+[private buckets](https://supabase.com/docs/guides/storage/buckets/fundamentals),
+[storage errors](https://supabase.com/docs/guides/storage/debugging/error-codes),
+[official removal request](https://github.com/supabase/storage-js/blob/main/src/packages/StorageFileApi.ts).
+These documents support the adapter protocol, not a claim of actual provider testing.
 
 ## Examples without embedded credentials
 
@@ -238,8 +285,11 @@ Git-ignored `.env.cloud` for an isolated local configuration. Production must om
 Optional `PG_CA_FILE` supplies a trusted CA PEM; TLS always verifies certificates outside loopback
 test mode. SSL-related URL query parameters are rejected to prevent overriding verification.
 `CLOUD_DEMO_SEED` and `DEMO_PASSWORD` are needed only for the explicit seed command.
-Storage adapter names reserved for the next slice: `SUPABASE_URL`, `SUPABASE_STORAGE_BUCKET`,
-`SUPABASE_SERVICE_ROLE_KEY` (server only); these do not enable `/uploads` today.
+Private photo configuration names: `SUPABASE_URL`, `SUPABASE_STORAGE_BUCKET`,
+`SUPABASE_SERVICE_ROLE_KEY` (server only), `STORAGE_ALLOWED_HOSTS` (exact DNS names). The first three
+are required together and the origin must be allowlisted. Production requires HTTPS; explicit
+CLOUD_LOCAL_TEST permits the separate loopback HTTP integration fixture. Missing configuration
+returns PHOTO_STORAGE_NOT_CONFIGURED on photo operations; no local-disk fallback exists.
 
 1. Captain approves a **new isolated demo** Supabase project and a free Render service; do not reuse
    user/team databases. Create no paid disk/database/plan. Keep credentials in provider secrets or
@@ -266,12 +316,11 @@ Storage adapter names reserved for the next slice: `SUPABASE_URL`, `SUPABASE_STO
    evidence/resource create, replay, read and manual redeploy; read again, compare versions/history
    and repeat seed. Then stop local processes/tunnels and have Aidana read from another device.
    These public checks are pending, not implied by local PostgreSQL results.
-7. Storage preparation for the next slice: create a **private** bucket, WebP only, max 5 MiB; no public
-   or anon policies. The adapter verifies these restrictions before upload/read, disallows redirects
-   and overwrite, bounds downloads and checks SHA-256. It is an internal primitive only: task/report
-   authorization, metadata transactions, orphan reconciliation and the full photo HTTP workflow
-   must be implemented and accepted before connecting it to API routes. Keep its service-role key
-   out of the current service until needed.
+7. Configure a **private** bucket, WebP only, max 5 MiB; no public/anon policies. Set the four storage
+   variables above. The adapter verifies private bucket restrictions before put/read/delete, rejects
+   redirects/overwrite and checks downloaded byte length and SHA-256. The HTTP integration, metadata,
+   report binding and reconciliation are locally tested; real provider policy/TLS behavior is NOT RUN.
+   Use a new isolated demo namespace and keep the service-role key out of the frontend.
 
 The Render blueprint was validated against the official JSON schema locally; this is not a
 provider-side create/build/deploy check. No system service, Docker setting or user volume changed.

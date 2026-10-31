@@ -46,9 +46,9 @@ test('Stage A: real PostgreSQL + HTTP frontend path, exact SQLite parity and bot
     child=spawn(process.execPath,['--import','./scripts/local-network-guard.mjs','--import','tsx','dist/cloud/server.js'],{windowsHide:true,stdio:['ignore','ignore','pipe'],
       env:{...process.env,DATABASE_URL:connectionString,CLOUD_LOCAL_TEST:'1',PORT:String(port),ALLOWED_HOSTS:'127.0.0.1',FRONTEND_ORIGINS:`http://127.0.0.1:${port}`}});
     child.stderr?.resume();
-    for(let i=0;i<300;i++){
+    for(let i=0;i<600;i++){
       if(child.exitCode!==null)throw Error('Compiled cloud server exited before readiness (no credentials logged)');
-      try{if((await nativeFetch(base+'/ready')).status===200)return;}catch{}
+      try{const ready=await nativeFetch(base+'/ready',{signal:AbortSignal.timeout(2000)});await ready.arrayBuffer();if(ready.status===200)return;}catch{}
       await new Promise(r=>setTimeout(r,100));
     }throw Error('Cloud readiness timeout');
   }

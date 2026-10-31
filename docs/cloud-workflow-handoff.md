@@ -1,8 +1,8 @@
 # Cloud workflow handoff — Тәңірберді / captain / QA
 
-Checkpoint: Stage B of Draft PR #39, branch `codex/cloud-api-persistence`.
+Checkpoint: Stage C of Draft PR #39, branch `codex/cloud-api-persistence`.
 The exact accepted commit is in the PR description; use that SHA, not a floating branch, for acceptance.
-Stage A was `3e25d3dd49498afdf879c92770f74c0cdba06b03`. Public backend origin: **not provisioned**.
+Stage A was `3e25d3dd49498afdf879c92770f74c0cdba06b03`; Stage B is `e95d2c2db6ae84d0b5504105ceb4c50faa795509` (CI success). Public backend origin: **not provisioned**.
 The reported public mock at https://green-pavlodar-mock.pages.dev/ is separate from this API.
 PR #35 reviewed at `1916d199b62ee6416502b4aac3244b5aa47d37d9`; its published static source is `98cf6c6`.
 The owner's reported 16/16 public mock checks were not rerun or counted as backend evidence.
@@ -10,7 +10,7 @@ The owner's reported 16/16 public mock checks were not rerun or counted as backe
 ## Exact API / DTO sources
 
 All URLs below use `/api/v1`. The live `/api/v1/openapi.json` and generated
-`apps/server/openapi-cloud.json` contain the exact input/output schemas (76 operations at Stage B).
+`apps/server/openapi-cloud.json` contain the exact input/output schemas (78 operations at Stage C).
 The method, permission and state matrix is in [cloud-api-contract.md](cloud-api-contract.md).
 
 - `POST /auth/login` input `{login,password}`; output `{data:{user,csrfToken}}` and the session cookie.
@@ -29,7 +29,7 @@ The method, permission and state matrix is in [cloud-api-contract.md](cloud-api-
   Worker profiles must fit the shift/capacity/skills; active membership and overlapping work are checked.
 - `POST /tasks/:id/start` (assigned executor/own foreman): `{expectedVersion}`.
 - `POST /tasks/:id/reports`: `{expectedVersion,note,actualWorkerIds,photoIds,actualPlantingItems}`.
-  Omit photo IDs at the Stage B checkpoint: cloud upload is not implemented yet. Success 201 is
+  Upload photos first through the private route below. Success 201 is
   `{data:{report,task}}`; use both returned versions for review.
 - Groups use `POST /tasks/:id/report-draft/contributions` with
   `{expectedVersion,expectedDraftVersion,note,photoIds}`; own foreman saves the summary with
@@ -42,6 +42,34 @@ The method, permission and state matrix is in [cloud-api-contract.md](cloud-api-
 - Viewer reads `GET /tasks`, `/tasks/:id`, `/tasks/:id/history`, `/reports`, `/reports/:id`,
   `/workers`, `/crews` and permitted object context. Viewer cannot create, edit, assign, start,
   contribute, submit, review, or approve.
+
+## Photo request / response
+
+`POST /uploads` uses `FormData` with exactly `taskId` and one `file`. Worker/own foreman needs an
+in_progress task. Keep the file and the original key on an ambiguous response; do not manually set
+multipart Content-Type. JPEG/PNG/WebP, max 5 MiB, single frame, max 4096×4096; server strips metadata
+and returns WebP. Up to 50 stored/pending photos per task; two simultaneous normalizations, otherwise 429.
+
+```js
+const form = new FormData();
+form.set('taskId', task.id);
+form.set('file', selectedFile);
+const response = await fetch('/api/v1/uploads', {
+  method: 'POST', credentials: 'same-origin',
+  headers: { 'X-CSRF-Token': csrfToken, 'Idempotency-Key': retainedUploadKey },
+  body: form
+});
+```
+
+201 DTO: `{data:{id,taskId,ownerId,reportId:null,sha256,byteSize,mediaType:"image/webp",createdAt,contentUrl}}`.
+Use `contentUrl` (same-origin `/api/v1/uploads/<id>`) for authenticated binary reads, and `id` in report
+photoIds. Do not construct a public Supabase URL. Group participants explicitly contribute their own
+photos before a foreman can submit them. Viewer reads but cannot upload. Storage outage/corrupt/missing
+bytes return 503. PHOTO_STORAGE_NOT_CONFIGURED means operator configuration is still absent.
+
+Migration 4 preserves durable upload intents for safe recovery. Only the operator CLI can reconcile
+aged unreferenced pending intents; see the contract. Retry after DB failure or response loss keeps the
+same object/metadata/report; the backend never silently switches to a local uploads directory.
 
 ## Session and retry contract
 
@@ -81,7 +109,7 @@ These tests do not prove real Cloudflare runtime, public TLS, cold-start or mobi
 ## Health, run and configuration
 
 `GET /health` or `/api/v1/health`: process liveness. `GET /api/v1/ready`: live PostgreSQL and exact
-migration count, capabilities and photo readiness. At Stage B: schemaVersion 3, photos unsupported.
+migration count, capabilities and photo readiness. At Stage C: schemaVersion 4; photos not-configured or private-storage-configured (bucket verified).
 Readiness does not prove complete API coverage or seed suitability. Other authenticated unsupported
 URLs return 503 `CLOUD_ENDPOINT_UNSUPPORTED`; missing session is checked first.
 
@@ -106,9 +134,15 @@ and planning records. Admin creates crews and profiles through the above APIs.
 Configuration names only: `DATABASE_URL`, `CLOUD_ALLOWED_HOSTS`, `PG_CA_FILE`, `ALLOWED_HOSTS`,
 `FRONTEND_ORIGINS`, `PORT`, `CLOUD_TRUST_PROXY_HOPS`. Loopback tests alone use `CLOUD_LOCAL_TEST`.
 Explicit seed alone uses `CLOUD_DEMO_SEED`, `DEMO_PASSWORD`. Do not log any values or commit env files.
-Storage configuration is reserved until Stage C; do not enable a public bucket.
+Storage configuration names: SUPABASE_URL, SUPABASE_STORAGE_BUCKET, SUPABASE_SERVICE_ROLE_KEY, STORAGE_ALLOWED_HOSTS. Never use a public bucket.
 
-## Local evidence at Stage B
+## Local evidence at Stage C
+
+Server typecheck/build and generated OpenAPI PASS (78 operations). Full backend/SQLite **105/105**;
+full native PostgreSQL HTTP **48/48**, zero skipped. Targeted private photos **11/11**.
+See [Stage C evidence](cloud-stage-c-acceptance.md). Public provider checks remain NOT RUN.
+
+## Historical local evidence at Stage B
 
 Server typecheck/build PASS; full backend/SQLite 104/104; native PostgreSQL HTTP 37/37.
 The latter includes shared DTO parity, actor scope, group draft versions, lost-response replay,
@@ -118,8 +152,7 @@ in [cloud-stage-b-acceptance.md](cloud-stage-b-acceptance.md). No provider PASS 
 
 ## Owner actions and remaining limits
 
-- Backend: finish Stage C private photos and Stage D Outcomes, linked restart/reseed acceptance,
-  then update this handoff and the actual generated OpenAPI. Stage B is not the full worker scenario.
+- Backend: finish Stage D Outcomes and linked final acceptance. Stage C private photos have local HTTP evidence; actual provider acceptance still needs approved infrastructure.
 - Тәңірберді: keep mock and API modes explicit; wait for accepted backend SHA and actual HTTPS origin;
   bind the fixed Pages proxy only after captain approval. Preserve request/key/draft/photo on ambiguity.
 - Captain: approve a new isolated demo provider project and free service; supply credentials securely;

@@ -17,8 +17,8 @@ test('cloud network allowlist delegates exact configured names only; wildcard, I
     assert.deepEqual(delegated,['db.example.com','project.supabase.co']);
   `;
   execFileSync(process.execPath,['--input-type=module','-e',source],{windowsHide:true,stdio:'pipe',
-    env:{...process.env,CLOUD_ALLOWED_HOSTS:'db.example.com,project.supabase.co',LLM_ALLOWED_HOSTS:''}});
+    env:{...process.env,CLOUD_ALLOWED_HOSTS:'db.example.com',STORAGE_ALLOWED_HOSTS:'project.supabase.co',LLM_ALLOWED_HOSTS:''}});
   for(const invalid of ['*.supabase.co','127.0.0.2','https://project.supabase.co']){
-    assert.throws(()=>execFileSync(process.execPath,['--import','./scripts/local-network-guard.mjs','-e',''],{windowsHide:true,stdio:'pipe',env:{...process.env,CLOUD_ALLOWED_HOSTS:invalid}}));
+    for(const variable of ['CLOUD_ALLOWED_HOSTS','STORAGE_ALLOWED_HOSTS'])assert.throws(()=>execFileSync(process.execPath,['--import','./scripts/local-network-guard.mjs','-e',''],{windowsHide:true,stdio:'pipe',env:{...process.env,[variable]:invalid,CLOUD_LOCAL_TEST:'0'}}));
   }
 });

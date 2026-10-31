@@ -27,6 +27,7 @@
     "perf": "node --import ./scripts/local-network-guard.mjs scripts/perf.mjs",
     "start:cloud": "node --env-file-if-exists=.env.cloud --import ./scripts/local-network-guard.mjs --import tsx dist/cloud/server.js",
     "seed:cloud": "node --env-file-if-exists=.env.cloud --import ./scripts/local-network-guard.mjs --import tsx dist/cloud/seed-cli.js",
+    "storage:reconcile": "node --env-file-if-exists=.env.cloud --import ./scripts/local-network-guard.mjs --import tsx dist/cloud/photo-reconcile-cli.js",
     "test:postgres": "node --import ./scripts/local-network-guard.mjs --import tsx --test --test-concurrency=1 tests/postgres/*.test.ts",
     "openapi:cloud": "node --import ./scripts/local-network-guard.mjs --import tsx scripts/generate-cloud-openapi.mjs"
   },

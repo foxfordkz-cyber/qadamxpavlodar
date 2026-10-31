@@ -3,17 +3,18 @@ import { ApiError } from '../errors.js';
 import { MAX_PHOTO_BYTES } from '../photos.js';
 
 export type StoredPhoto = { name: string; sha256: string; byteSize: number };
-export type StorageConfig = { origin: string; bucket: string; serviceKey: string; allowedHosts: string[] };
+export type StorageConfig = { origin: string; bucket: string; serviceKey: string; allowedHosts: string[]; localTest?:boolean };
 const unavailable=()=>new ApiError(503,'PHOTO_UNAVAILABLE','Private storage unavailable or integrity check failed');
 const digest=(bytes:Buffer)=>createHash('sha256').update(bytes).digest('hex');
 
 // Internal storage primitive only. Task/report authorization must happen before invoking this adapter.
-// Not registered on /uploads until the PostgreSQL task/report unit of work has been migrated.
+// Cloud routes recheck task scope before using this service-only adapter; no public URLs are returned.
 export class SupabasePrivateStorage {
   private readonly origin:string;
   constructor(private readonly config:StorageConfig,private readonly transport:typeof fetch=fetch) {
     const url=new URL(config.origin);
-    if(url.protocol!=='https:'||url.origin!==config.origin||url.username||url.password||!config.allowedHosts.includes(url.hostname))
+    const loopbackTest=config.localTest===true&&['127.0.0.1','localhost','[::1]'].includes(url.hostname)&&url.protocol==='http:';
+    if((url.protocol!=='https:'&&!loopbackTest)||url.origin!==config.origin||url.username||url.password||!config.allowedHosts.includes(url.hostname))
       throw Error('Storage requires a fixed, allowlisted HTTPS origin');
     if(!/^[a-z0-9][a-z0-9-]{1,62}$/.test(config.bucket)||!config.serviceKey)throw Error('Storage bucket and server credential are required');
     this.origin=url.origin;
@@ -46,6 +47,11 @@ export class SupabasePrivateStorage {
     if(res.status===409)throw new ApiError(409,'STORAGE_OBJECT_EXISTS','Object already exists; reconcile the original upload before retrying');
     if(!res.ok)throw unavailable();
     return {name,sha256:digest(normalizedWebp),byteSize:normalizedWebp.length};
+  }
+  async remove(name:string):Promise<void> {
+    this.name(name);await this.verifyPrivateBucket();
+    const res=await this.call('object/'+this.config.bucket,{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({prefixes:[name]})});
+    if(!res.ok)throw unavailable();
   }
   async read(photo:StoredPhoto):Promise<Buffer> {
     this.name(photo.name);

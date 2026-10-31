@@ -36,3 +36,11 @@ test('storage rejects untrusted origin, redirects/network failure, and unsupport
   await assert.rejects(storage.verifyPrivateBucket(),{code:'PHOTO_UNAVAILABLE'});
   await assert.rejects(storage.put('demo/'+randomUUID()+'.webp',Buffer.from('not an image')),{code:'INVALID_PHOTO_TYPE'});
 });
+
+
+test('private storage loopback exception is explicit; remote HTTP stays forbidden even in tests',()=>{
+ const config={origin:'http://127.0.0.1:18081',bucket:'gp-demo',serviceKey:randomBytes(32).toString('hex'),allowedHosts:['127.0.0.1']};
+ assert.throws(()=>new SupabasePrivateStorage(config));
+ assert.doesNotThrow(()=>new SupabasePrivateStorage({...config,localTest:true}));
+ assert.throws(()=>new SupabasePrivateStorage({...config,origin:'http://remote.example',allowedHosts:['remote.example'],localTest:true}));
+});
