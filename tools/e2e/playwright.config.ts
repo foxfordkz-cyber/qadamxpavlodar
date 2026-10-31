@@ -12,10 +12,15 @@ export default defineConfig({
   timeout: 45_000,
   expect: { timeout: 12_000 },
   fullyParallel: true,
-  workers: 2,
+  // API cases share a disposable registry and one test edits/restores rates.
+  // Serialize API files so another test cannot observe that temporary edit.
+  workers: api ? 1 : 2,
   retries: 0,
   forbidOnly: !!process.env.CI,
   outputDir: api ? 'test-results/api' : `test-results/${mockRun}`,
+  // Playwright may create error-context.md with locator ARIA snapshots even when
+  // trace/video/screenshots are off. Never retain API output directories.
+  preserveOutput: api ? 'never' : 'always',
   reporter: api ? [['./support/api-reporter.ts']] : [
     ['list'], ['html', { outputFolder: `playwright-report/${mockRun}`, open: 'never' }],
     ['json', { outputFile: `test-results/${mockRun}/results.json` }],

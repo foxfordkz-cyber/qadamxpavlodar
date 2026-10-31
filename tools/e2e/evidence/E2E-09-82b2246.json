@@ -1,0 +1,250 @@
+{
+  "testedSHA": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+  "applicationBase": "a66d542c63c527d608400c84b34d49f982855369",
+  "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+  "expected": "No text/control area obscured by assistant FAB",
+  "cases": [
+    {
+      "title": "mobile assistant: ru, cost and primary actions stay uncovered at 375px",
+      "project": "desktop",
+      "role": "specialist",
+      "source": "mock",
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "intersections": [
+        {
+          "route": "/priorities",
+          "step": "presentation frame with weight values",
+          "collisions": [
+            {
+              "step": "presentation frame with weight values",
+              "label": "0.15",
+              "intersectionPx": 454.88525390625,
+              "content": {
+                "left": 320.96875,
+                "right": 348,
+                "top": 688.828125,
+                "bottom": 706.828125
+              },
+              "assistant": {
+                "left": 311,
+                "right": 363,
+                "top": 690,
+                "bottom": 742
+              }
+            },
+            {
+              "step": "presentation frame with weight values",
+              "label": "",
+              "intersectionPx": 624,
+              "content": {
+                "left": 29,
+                "right": 350,
+                "top": 712.125,
+                "bottom": 728.125
+              },
+              "assistant": {
+                "left": 311,
+                "right": 363,
+                "top": 690,
+                "bottom": 742
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "mobile assistant: kk, cost and primary actions stay uncovered at 375px",
+      "project": "desktop",
+      "role": "specialist",
+      "source": "mock",
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "intersections": [
+        {
+          "route": "/priorities",
+          "step": "presentation frame with weight values",
+          "collisions": [
+            {
+              "step": "presentation frame with weight values",
+              "label": "",
+              "intersectionPx": 78,
+              "content": {
+                "left": 29,
+                "right": 350,
+                "top": 676,
+                "bottom": 692
+              },
+              "assistant": {
+                "left": 311,
+                "right": 363,
+                "top": 690,
+                "bottom": 742
+              }
+            },
+            {
+              "step": "presentation frame with weight values",
+              "label": "0.10",
+              "intersectionPx": 497.8125,
+              "content": {
+                "left": 320.34375,
+                "right": 348,
+                "top": 705,
+                "bottom": 723
+              },
+              "assistant": {
+                "left": 311,
+                "right": 363,
+                "top": 690,
+                "bottom": 742
+              }
+            },
+            {
+              "step": "presentation frame with weight values",
+              "label": "",
+              "intersectionPx": 534.421875,
+              "content": {
+                "left": 29,
+                "right": 350,
+                "top": 728.296875,
+                "bottom": 744.296875
+              },
+              "assistant": {
+                "left": 311,
+                "right": 363,
+                "top": 690,
+                "bottom": 742
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "mobile assistant: ru, cost and primary actions stay uncovered at 375px",
+      "project": "mobile",
+      "role": "specialist",
+      "source": "mock",
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "intersections": [
+        {
+          "route": "/priorities",
+          "step": "presentation frame with weight values",
+          "collisions": [
+            {
+              "step": "presentation frame with weight values",
+              "label": "0.15",
+              "intersectionPx": 454.88525390625,
+              "content": {
+                "left": 320.96875,
+                "right": 348,
+                "top": 688.828125,
+                "bottom": 706.828125
+              },
+              "assistant": {
+                "left": 311,
+                "right": 363,
+                "top": 690,
+                "bottom": 742
+              }
+            },
+            {
+              "step": "presentation frame with weight values",
+              "label": "",
+              "intersectionPx": 624,
+              "content": {
+                "left": 29,
+                "right": 350,
+                "top": 712.125,
+                "bottom": 728.125
+              },
+              "assistant": {
+                "left": 311,
+                "right": 363,
+                "top": 690,
+                "bottom": 742
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "mobile assistant: kk, cost and primary actions stay uncovered at 375px",
+      "project": "mobile",
+      "role": "specialist",
+      "source": "mock",
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "intersections": [
+        {
+          "route": "/priorities",
+          "step": "presentation frame with weight values",
+          "collisions": [
+            {
+              "step": "presentation frame with weight values",
+              "label": "",
+              "intersectionPx": 78,
+              "content": {
+                "left": 29,
+                "right": 350,
+                "top": 676,
+                "bottom": 692
+              },
+              "assistant": {
+                "left": 311,
+                "right": 363,
+                "top": 690,
+                "bottom": 742
+              }
+            },
+            {
+              "step": "presentation frame with weight values",
+              "label": "0.10",
+              "intersectionPx": 497.8125,
+              "content": {
+                "left": 320.34375,
+                "right": 348,
+                "top": 705,
+                "bottom": 723
+              },
+              "assistant": {
+                "left": 311,
+                "right": 363,
+                "top": 690,
+                "bottom": 742
+              }
+            },
+            {
+              "step": "presentation frame with weight values",
+              "label": "",
+              "intersectionPx": 534.421875,
+              "content": {
+                "left": 29,
+                "right": 350,
+                "top": 728.296875,
+                "bottom": 744.296875
+              },
+              "assistant": {
+                "left": 311,
+                "right": 363,
+                "top": 690,
+                "bottom": 742
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

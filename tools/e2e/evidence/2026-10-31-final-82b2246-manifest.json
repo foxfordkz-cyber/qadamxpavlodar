@@ -1,0 +1,97 @@
+{
+  "testedSHA": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+  "applicationBase": "a66d542c63c527d608400c84b34d49f982855369",
+  "appsTree": "3f236d076e702c9fe07fc361738f98738d3bc748",
+  "archive": "2026-10-31-final-82b2246.zip",
+  "archiveSha256": "311522b3dd304bc5a05fd17396e5fd808af1dcb069cdb1b891a9eaf8743c77cb",
+  "archiveBytes": 4997659,
+  "checks": {
+    "checkTools": {
+      "passed": 24,
+      "failed": 0,
+      "skipped": 0,
+      "fixme": 0,
+      "flaky": 0
+    },
+    "checkReportBefore": {
+      "passed": 3,
+      "failed": 0
+    },
+    "checkReportAfter": {
+      "passed": 3,
+      "failed": 0
+    },
+    "summaryExit": 0,
+    "packExit": 0,
+    "gateExit": 1
+  },
+  "visualReview": {
+    "reviewed": 30,
+    "usableForSlides": 18,
+    "approvedAsCompleteSet": false
+  },
+  "mock": {
+    "meta": {
+      "runId": "3db2b5eb-7503-4d6e-8419-3b93c6a3a958",
+      "state": "finished",
+      "startedAt": "2026-10-31T01:51:28.855Z",
+      "endedAt": "2026-10-31T02:01:53.513Z",
+      "exitCode": 1,
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "dirty": false,
+      "selection": "full",
+      "capturesScreens": true,
+      "command": "node scripts/run.mjs mock",
+      "environment": {
+        "node": "24.22.2",
+        "playwright": "1.64.1",
+        "platform": "win32",
+        "arch": "x64",
+        "workers": 2,
+        "retries": 0
+      },
+      "target": "http://localhost:5176"
+    },
+    "counts": {
+      "passed": 240,
+      "failed": 4,
+      "fixme": 0,
+      "skipped": 2,
+      "flaky": 0,
+      "notRun": 0
+    }
+  },
+  "api": {
+    "meta": {
+      "runId": "5c058ae9-b698-42be-b8dc-20cda2b18561",
+      "state": "finished",
+      "startedAt": "2026-10-31T01:51:47.934Z",
+      "endedAt": "2026-10-31T01:56:57.005Z",
+      "exitCode": 0,
+      "browserExitCode": 0,
+      "privacyScan": "passed",
+      "revision": "82b2246932b732515b4a306503e9e8a3d9d4dd30",
+      "dirty": false,
+      "selection": "full",
+      "capturesScreens": false,
+      "command": "node scripts/run.mjs api",
+      "environment": {
+        "node": "24.22.2",
+        "playwright": "1.64.1",
+        "platform": "win32",
+        "arch": "x64",
+        "workers": 1,
+        "retries": 0
+      },
+      "target": "http://localhost:5177"
+    },
+    "counts": {
+      "passed": 74,
+      "failed": 0,
+      "fixme": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "notRun": 0
+    }
+  }
+}
