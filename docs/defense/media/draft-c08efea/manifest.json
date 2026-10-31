@@ -1,0 +1,413 @@
+{
+  "status": "rehearsal draft; not accepted final build; screenshots pending Aidana approval",
+  "sha": "c08efea51900e11cdea63944bddb79a078712db5",
+  "source": "mock",
+  "date_local": "2026-10-31",
+  "timezone": "Asia/Qyzylorda",
+  "duration_seconds": 300,
+  "slide_count": 9,
+  "final_video_recorded": false,
+  "inputs": {
+    "zone": {
+      "id": "site-osm-1569993037",
+      "label": "Газон, улица Толстого",
+      "area_m2": 3782,
+      "purpose": "square",
+      "variant": "optimal",
+      "careYears": 2,
+      "tiers": "all",
+      "maxSpeciesShare": 0.3,
+      "soil": "synthetic; pH 8.6; strong salinity",
+      "irrigation": "regular",
+      "soilImprovement": false,
+      "estimate_KZT": 9970478
+    },
+    "growth": {
+      "year": 20,
+      "crown_m2": 1976,
+      "placement": "schematic"
+    },
+    "lab": {
+      "budget_KZT": 50000000,
+      "goal": "balanced",
+      "irrigation": "regular",
+      "careYears": 3,
+      "available_water_m3_before": 1600,
+      "available_water_m3_stress": 800,
+      "strategy": "Больше сохранившихся деревьев",
+      "before": {
+        "zones": 43,
+        "trees": 330,
+        "water_m3": 1094.2
+      },
+      "stress": {
+        "water_deficit_m3": 294.2,
+        "composition": "unchanged"
+      },
+      "rebuilt": {
+        "zones": 39,
+        "trees": 244,
+        "water_m3": 794.8,
+        "water_deficit_m3": 0,
+        "estimate_KZT": 36150274
+      }
+    },
+    "outcomes": {
+      "cost_horizon_years": 3,
+      "tiers": "trees-only",
+      "observation_date": "2026-10-15",
+      "comparison_horizon_years": 1,
+      "full": {
+        "total": 32,
+        "alive": 27,
+        "dead": 5,
+        "survival_percent": 84.4,
+        "prediction_percent": 83,
+        "difference_pp": 1.4
+      },
+      "partial": {
+        "total": 32,
+        "inspected": 16,
+        "known_state": 15,
+        "alive": 13,
+        "dead": 2,
+        "unknown": 17,
+        "not_inspected": 16,
+        "whole_batch_survival": null,
+        "comparison_available": false
+      }
+    },
+    "worker": {
+      "widths": [
+        1280,
+        390
+      ],
+      "selected_shift_date": "2026-10-28",
+      "mode": "embedded mock",
+      "language": "Russian inside; general shell can switch; full KK not claimed",
+      "native_app_released": false
+    }
+  },
+  "limitations": [
+    "Model trained on synthetic data, not calibrated to Pavlodar.",
+    "Demonstration planting history is fictional; +1.4 pp does not prove accuracy.",
+    "Unknown and uninspected plants are not treated as dead.",
+    "Map contours are OSM; soil and demonstration checks are not field evidence.",
+    "Offline local PDF/video and mock do not guarantee external basemap availability.",
+    "Full E2E acceptance not asserted by this media package."
+  ],
+  "alignment_required": {
+    "scenario_snapshot": {
+      "zone_careYears": 3,
+      "zone_estimate_KZT": 10825628,
+      "lab_water_m3": [
+        1000,
+        500
+      ],
+      "worker_order": "before lab"
+    },
+    "media_draft": {
+      "zone_careYears": 2,
+      "zone_estimate_KZT": 9970478,
+      "lab_water_m3": [
+        1600,
+        800
+      ],
+      "worker_order": "last"
+    },
+    "action": "Synchronize scenario, inputs and order before final recording. Do not transfer amounts between parameter sets."
+  },
+  "final_recording_gates": [
+    "User confirms regulation and common final SHA.",
+    "Scenario owner and media owner use one parameter set and order.",
+    "Aidana approves screenshots on that SHA.",
+    "Bekzat confirms the public URL.",
+    "Re-run the exact sequence and review exported RU/KK documents visually.",
+    "Complete timed rehearsal and decide live demonstration versus backup playback."
+  ],
+  "capture_reproduction": [
+    "node capture-ui.cjs",
+    "node capture-details.cjs",
+    "node capture-focus.cjs",
+    "node capture-qc.cjs",
+    "node capture-growth.cjs"
+  ],
+  "slide_sources": [
+    {
+      "slide": 2,
+      "source": "./01-tolstogo-overview-1280.png",
+      "filename": "01-tolstogo-overview-1280.png",
+      "crop": {
+        "left": 0,
+        "top": 0.13,
+        "right": 0.36,
+        "bottom": 0.02
+      }
+    },
+    {
+      "slide": 3,
+      "source": "./report-plants-focus.png",
+      "filename": "report-plants-focus.png",
+      "crop": null
+    },
+    {
+      "slide": 4,
+      "source": "./03-estimate-1280.png",
+      "filename": "03-estimate-1280.png",
+      "crop": {
+        "left": 0.647,
+        "top": 0.414,
+        "right": 0.02,
+        "bottom": 0.14
+      }
+    },
+    {
+      "slide": 5,
+      "source": "./growth20-viewport.png",
+      "filename": "growth20-viewport.png",
+      "crop": {
+        "left": 0.005,
+        "top": 0.13,
+        "right": 0.322,
+        "bottom": 0.02
+      }
+    },
+    {
+      "slide": 6,
+      "source": "./memo-ru-panel.png",
+      "filename": "memo-ru-panel.png",
+      "crop": {
+        "left": 0,
+        "top": 0.22,
+        "right": 0.65,
+        "bottom": 0
+      }
+    },
+    {
+      "slide": 6,
+      "source": "./memo-kk-panel.png",
+      "filename": "memo-kk-panel.png",
+      "crop": {
+        "left": 0,
+        "top": 0.22,
+        "right": 0.65,
+        "bottom": 0
+      }
+    },
+    {
+      "slide": 7,
+      "source": "./lab50-rebuilt-focus.png",
+      "filename": "lab50-rebuilt-focus.png",
+      "crop": {
+        "left": 0,
+        "top": 0.22,
+        "right": 0,
+        "bottom": 0.42
+      }
+    },
+    {
+      "slide": 8,
+      "source": "./outcomes-partial-focus.png",
+      "filename": "outcomes-partial-focus.png",
+      "crop": null
+    },
+    {
+      "slide": 9,
+      "source": "./worker-1280.png",
+      "filename": "worker-1280.png",
+      "crop": {
+        "left": 0,
+        "top": 0.09,
+        "right": 0,
+        "bottom": 0.08
+      }
+    },
+    {
+      "slide": 9,
+      "source": "./worker-390.png",
+      "filename": "worker-390.png",
+      "crop": null
+    }
+  ],
+  "assets": [
+    {
+      "file": "01-tolstogo-overview-1280.png",
+      "slides": [
+        2
+      ],
+      "sha256": "61fe7a00d34196b18693ce1840410c6fffefcefd8f3c1aa84ffa9b2d99bedb61",
+      "bytes": 266350,
+      "source_file": "./01-tolstogo-overview-1280.png",
+      "transformation": "Original PNG copied byte-for-byte. The deck may crop the original as recorded in slide_sources.",
+      "dom_text": "01-tolstogo-overview-1280.txt"
+    },
+    {
+      "file": "report-plants-focus.png",
+      "slides": [
+        3
+      ],
+      "sha256": "f3236536a81b5df65e7b988ed84da4ab4635f8cf61cc8611dffc031c41b85c1b",
+      "bytes": 65223,
+      "source_file": "./report-plants-focus.png",
+      "transformation": "Original PNG copied byte-for-byte. The deck may crop the original as recorded in slide_sources.",
+      "dom_text": "report-plants-focus.txt"
+    },
+    {
+      "file": "03-estimate-1280.png",
+      "slides": [
+        4
+      ],
+      "sha256": "ec8d9f8350759c9e549b6a1a4ab2273e41ea8c37a336e6b80366e6e89ea4ff2e",
+      "bytes": 327442,
+      "source_file": "./03-estimate-1280.png",
+      "transformation": "Original PNG copied byte-for-byte. The deck may crop the original as recorded in slide_sources.",
+      "dom_text": "03-estimate-1280.txt"
+    },
+    {
+      "file": "growth20-viewport.png",
+      "slides": [
+        5
+      ],
+      "sha256": "37f638940d98a00a92d7d1d79ef8a631cdbdc1c21c8b7c976d40f2ddb947f0ce",
+      "bytes": 435435,
+      "source_file": "./growth20-viewport.png",
+      "transformation": "Original PNG copied byte-for-byte. The deck may crop the original as recorded in slide_sources.",
+      "dom_text": "growth20-viewport.txt"
+    },
+    {
+      "file": "memo-ru-panel.png",
+      "slides": [
+        6
+      ],
+      "sha256": "7b5c3f4d589aa5a77c7566d906f149231d30bdba22d2570c091254db57c9f39d",
+      "bytes": 35902,
+      "source_file": "./memo-ru-panel.png",
+      "transformation": "Original PNG copied byte-for-byte. The deck may crop the original as recorded in slide_sources.",
+      "dom_text": "memo-ru-panel.txt"
+    },
+    {
+      "file": "memo-kk-panel.png",
+      "slides": [
+        6
+      ],
+      "sha256": "b4f08aa3c856c76a1d39a32761a2dc50467b79222691afd5973de253276d96d0",
+      "bytes": 35868,
+      "source_file": "./memo-kk-panel.png",
+      "transformation": "Original PNG copied byte-for-byte. The deck may crop the original as recorded in slide_sources.",
+      "dom_text": "memo-kk-panel.txt"
+    },
+    {
+      "file": "lab50-rebuilt-focus.png",
+      "slides": [
+        7
+      ],
+      "sha256": "a692c8975be4d4110ee9bc5161c7e13b399682ead87a040d58bf35b0f778b82b",
+      "bytes": 62970,
+      "source_file": "./lab50-rebuilt-focus.png",
+      "transformation": "Original PNG copied byte-for-byte. The deck may crop the original as recorded in slide_sources.",
+      "dom_text": "lab50-rebuilt-focus.txt"
+    },
+    {
+      "file": "outcomes-partial-focus.png",
+      "slides": [
+        8
+      ],
+      "sha256": "3ba98869b00ba0a0c55831804f6e331ea1c15e79007737c6becd02b45651029d",
+      "bytes": 66250,
+      "source_file": "./outcomes-partial-focus.png",
+      "transformation": "Original PNG copied byte-for-byte. The deck may crop the original as recorded in slide_sources.",
+      "dom_text": "outcomes-partial-focus.txt"
+    },
+    {
+      "file": "worker-1280.png",
+      "slides": [
+        9
+      ],
+      "sha256": "ee7753a6391f5ff56473650b955adaddd13ec4b7519cd734c9aa4b56a27bbcc9",
+      "bytes": 102502,
+      "source_file": "./worker-1280.png",
+      "transformation": "Original PNG copied byte-for-byte. The deck may crop the original as recorded in slide_sources.",
+      "dom_text": "worker-1280.txt"
+    },
+    {
+      "file": "worker-390.png",
+      "slides": [
+        9
+      ],
+      "sha256": "7dc69d85aa23c98f15a9f51b954999d78353246a4f2563523052ee07a634aafc",
+      "bytes": 65351,
+      "source_file": "./worker-390.png",
+      "transformation": "Original PNG copied byte-for-byte. The deck may crop the original as recorded in slide_sources.",
+      "dom_text": "worker-390.txt"
+    },
+    {
+      "file": "outcomes-full-focus.png",
+      "slides": [],
+      "sha256": "2d93b9432babce6148d1d70bbcc884c7870aa535d1e8366cf60bbeaecb66ae22",
+      "bytes": 71008,
+      "source_file": "./outcomes-full-focus.png",
+      "transformation": "Original PNG copied byte-for-byte. The deck may crop the original as recorded in slide_sources.",
+      "dom_text": "outcomes-full-focus.txt"
+    },
+    {
+      "file": "lab50-before-focus.png",
+      "slides": [],
+      "sha256": "39b0f24b4f1080f339e3cae6ff71a66d0f1bf86db303f1531bf5c387475982fb",
+      "bytes": 63149,
+      "source_file": "./lab50-before-focus.png",
+      "transformation": "Original PNG copied byte-for-byte. The deck may crop the original as recorded in slide_sources.",
+      "dom_text": "lab50-before-focus.txt"
+    },
+    {
+      "file": "lab50-stress-focus.png",
+      "slides": [],
+      "sha256": "9f8cde8936fb37541b38ff095bb75cc93b1ab7bcf20876963113350a09d0f05f",
+      "bytes": 63515,
+      "source_file": "./lab50-stress-focus.png",
+      "transformation": "Original PNG copied byte-for-byte. The deck may crop the original as recorded in slide_sources.",
+      "dom_text": "lab50-stress-focus.txt"
+    },
+    {
+      "file": "report-estimate-focus.png",
+      "slides": [],
+      "sha256": "d9937affcba36709dd4bef7f784a9f51087494b5af6c45363fb434ed51cca813",
+      "bytes": 39922,
+      "source_file": "./report-estimate-focus.png",
+      "transformation": "Original PNG copied byte-for-byte. The deck may crop the original as recorded in slide_sources.",
+      "dom_text": "report-estimate-focus.txt"
+    },
+    {
+      "file": "growth20-controls.png",
+      "slides": [],
+      "sha256": "9a75eeea6d1f64cfe1d6c22b1bfcd81bd12fa832ed075adb1d6fa55c09a1630b",
+      "bytes": 40971,
+      "source_file": "./growth20-controls.png",
+      "transformation": "Original PNG copied byte-for-byte. The deck may crop the original as recorded in slide_sources.",
+      "dom_text": "growth20-controls.txt"
+    }
+  ],
+  "asset_directory": ".",
+  "repo_relative_asset_directory": "docs/defense/media/draft-c08efea",
+  "artifacts": [
+    {
+      "file": "green-pavlodar-rehearsal-c08efea.pptx",
+      "kind": "editable_rehearsal_slides",
+      "bytes": 1492773,
+      "sha256": "716ce9531aaabf4e18687fa0697e189f63fca757d7faf27c28a5a71c1c786a9c"
+    },
+    {
+      "file": "green-pavlodar-rehearsal-c08efea.pdf",
+      "kind": "raster_rehearsal_pdf",
+      "bytes": 1814782,
+      "sha256": "f515aa2a6d7de828c17bcc5a092d5bf92511f1c5aa55b652d646202c4b96724e"
+    }
+  ],
+  "publication": {
+    "scope": "draft media and storyboard only",
+    "authorized_by_user": "explicit commit and push request on 2026-10-31",
+    "acceptance_status": "not accepted as final defense package",
+    "draft_build_sha": "c08efea51900e11cdea63944bddb79a078712db5"
+  },
+  "raw_capture_manifest_note": "Original capture record retained in the author workspace; selected original PNG files and DOM text are versioned here.",
+  "dom_text_processing": "Trailing line whitespace removed and line endings normalized to LF; wording and values unchanged."
+}

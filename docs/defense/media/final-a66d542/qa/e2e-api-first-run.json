@@ -1,0 +1,12 @@
+{
+  "profile": "api",
+  "selection": "subset",
+  "target": "http://127.0.0.1:5184",
+  "revision": "5b35b42f3f40057aa7c20982300fb35bada8d055",
+  "dirty": true,
+  "capturesScreens": false,
+  "startedAt": "2026-10-31T00:43:06.014Z",
+  "state": "finished",
+  "exitCode": 1,
+  "endedAt": "2026-10-31T00:43:26.249Z"
+}

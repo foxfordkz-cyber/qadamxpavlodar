@@ -173,7 +173,7 @@
   .gp-mapsearch { max-width: 230px; }
 }
 
-/* На телефоне помощник — круглая кнопка: подпись закрывала стоимость и другие строки панели */
+/* Компактная подпись помощника на телефоне. Сам переключатель занимает место в шапке. */
 @media (max-width: 760px) {
   .gp-assist-fab { width: 52px; height: 52px; padding: 0; right: 12px; display: grid; place-items: center; font-size: 20px; }
   .gp-assist-fab__label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -191,4 +191,12 @@
   .gp-present-pill { position: absolute; left: auto; right: 12px; top: 13px; }
   /* Длинная подпись кнопки расчёта не должна уходить под помощника. */
   .gp-lab-controls > button.gp-btn { max-width: calc(100% - 44px); }
+}
+
+/* E2E-09: переключатель находится в потоке шапки, поэтому не накрывает данные при прокрутке. */
+.gp-header__assistant { display: flex; flex: none; }
+.gp-header__assistant .gp-assist-fab { position: relative; inset: auto; z-index: auto; display: inline-flex; align-items: center; justify-content: center; gap: 6px; width: auto; height: 34px; padding: 4px 12px; border-radius: 8px; box-shadow: none; font-size: 13px; letter-spacing: 0; }
+@media (max-width: 760px) {
+  .gp-header__right { flex-wrap: wrap; }
+  .gp-header__assistant .gp-assist-fab { width: 34px; padding: 0; font-size: 18px; }
 }

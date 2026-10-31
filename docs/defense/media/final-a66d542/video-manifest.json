@@ -1,0 +1,198 @@
+{
+  "sourceSha": "a66d542c63c527d608400c84b34d49f982855369",
+  "source": "mock",
+  "browser": "156.0.8078.4",
+  "format": "Edited real browser actions; preparation between scenes, lab rebuild waiting and forecast reload waiting removed. End frames held for narration; short version accelerated.",
+  "voice": "Microsoft Irina Desktop, synthetic Russian narration; disclosed in every frame footer",
+  "resolution": "1280x960; browser area1280x800; mobile viewport375x800 centered",
+  "pageErrors": [],
+  "deliverables": [
+    {
+      "file": "green-pavlodar-full-5m-a66d542.mp4",
+      "durationSeconds": 300.26,
+      "expectedSeconds": 300,
+      "bytes": 9444237,
+      "sha256": "8442952a4a5f708882c8b5115af9a5e664e0f592d95078521e505192190fec73",
+      "fullDecode": "PASS"
+    },
+    {
+      "file": "green-pavlodar-short-a66d542.mp4",
+      "durationSeconds": 160.26,
+      "expectedSeconds": 160,
+      "bytes": 5650255,
+      "sha256": "540c99cb3fca1a265a8391657a5e5381b87f8e6e53978ee74199828968b4e91e",
+      "fullDecode": "PASS"
+    }
+  ],
+  "groups": [
+    {
+      "mode": "full",
+      "id": "overview",
+      "duration": 20,
+      "voiceSeconds": 20.91174603174603,
+      "voiceTempo": 1.0696545284780579
+    },
+    {
+      "mode": "short",
+      "id": "overview",
+      "duration": 10,
+      "voiceSeconds": 9.186757369614513,
+      "voiceTempo": 1
+    },
+    {
+      "mode": "full",
+      "id": "draw",
+      "duration": 15,
+      "voiceSeconds": 14.138730158730159,
+      "voiceTempo": 1
+    },
+    {
+      "mode": "short",
+      "id": "draw",
+      "duration": 8,
+      "voiceSeconds": 7.720408163265306,
+      "voiceTempo": 1.0225706176510339
+    },
+    {
+      "mode": "full",
+      "id": "plants",
+      "duration": 25,
+      "voiceSeconds": 26.554784580498865,
+      "voiceTempo": 1.081661286374699
+    },
+    {
+      "mode": "short",
+      "id": "plants",
+      "duration": 12,
+      "voiceSeconds": 11.482902494331066,
+      "voiceTempo": 1
+    },
+    {
+      "mode": "full",
+      "id": "cost",
+      "duration": 30,
+      "voiceSeconds": 27.01560090702948,
+      "voiceTempo": 1
+    },
+    {
+      "mode": "short",
+      "id": "cost",
+      "duration": 16,
+      "voiceSeconds": 13.223174603174604,
+      "voiceTempo": 1
+    },
+    {
+      "mode": "full",
+      "id": "growth",
+      "duration": 25,
+      "voiceSeconds": 23.52299319727891,
+      "voiceTempo": 1
+    },
+    {
+      "mode": "short",
+      "id": "growth",
+      "duration": 12,
+      "voiceSeconds": 11.447891156462585,
+      "voiceTempo": 1
+    },
+    {
+      "mode": "full",
+      "id": "word",
+      "duration": 30,
+      "voiceSeconds": 21.356689342403627,
+      "voiceTempo": 1
+    },
+    {
+      "mode": "short",
+      "id": "word",
+      "duration": 16,
+      "voiceSeconds": 11.322086167800453,
+      "voiceTempo": 1
+    },
+    {
+      "mode": "full",
+      "id": "worker",
+      "duration": 30,
+      "voiceSeconds": 25.139183673469386,
+      "voiceTempo": 1
+    },
+    {
+      "mode": "short",
+      "id": "worker",
+      "duration": 14,
+      "voiceSeconds": 9.677324263038548,
+      "voiceTempo": 1
+    },
+    {
+      "mode": "full",
+      "id": "lab",
+      "duration": 30,
+      "voiceSeconds": 28.320680272108845,
+      "voiceTempo": 1
+    },
+    {
+      "mode": "short",
+      "id": "lab",
+      "duration": 16,
+      "voiceSeconds": 10.263219954648527,
+      "voiceTempo": 1
+    },
+    {
+      "mode": "full",
+      "id": "price",
+      "duration": 20,
+      "voiceSeconds": 20.765532879818593,
+      "voiceTempo": 1.0621755948756313
+    },
+    {
+      "mode": "short",
+      "id": "price",
+      "duration": 12,
+      "voiceSeconds": 10.645578231292516,
+      "voiceTempo": 1
+    },
+    {
+      "mode": "full",
+      "id": "full",
+      "duration": 25,
+      "voiceSeconds": 25.913650793650795,
+      "voiceTempo": 1.055545857175185
+    },
+    {
+      "mode": "short",
+      "id": "full",
+      "duration": 16,
+      "voiceSeconds": 11.113469387755101,
+      "voiceTempo": 1
+    },
+    {
+      "mode": "full",
+      "id": "partial",
+      "duration": 25,
+      "voiceSeconds": 21.743764172335602,
+      "voiceTempo": 1
+    },
+    {
+      "mode": "short",
+      "id": "partial",
+      "duration": 16,
+      "voiceSeconds": 11.940861678004536,
+      "voiceTempo": 1
+    },
+    {
+      "mode": "full",
+      "id": "finish",
+      "duration": 25,
+      "voiceSeconds": 21.65142857142857,
+      "voiceTempo": 1
+    },
+    {
+      "mode": "short",
+      "id": "finish",
+      "duration": 12,
+      "voiceSeconds": 10.720907029478457,
+      "voiceTempo": 1
+    }
+  ],
+  "visualReview": "PASS: all 72 start/middle/end samples plus targeted detail checks; see qa/video-review.json. Browser playback and seeks tested; not a claim of uninterrupted real-time human viewing."
+}

@@ -49,6 +49,7 @@ export function Shell({ children }: { children: ReactNode }) {
   const [logoutError, setLogoutError] = useState<unknown>(null);
   const { run: runLogout, busy: loggingOut } = useGuarded();
   const [dev, setDev] = useState(false);
+  const [assistantLauncher, setAssistantLauncher] = useState<HTMLDivElement | null>(null);
   const [today, setToday] = useState(() => new Date().toISOString());
   useEffect(() => {
     const id = setInterval(() => setToday(new Date().toISOString()), 60000);
@@ -132,6 +133,7 @@ export function Shell({ children }: { children: ReactNode }) {
           {user && <span className="gp-small">{user.displayName}</span>}
           {mode === 'mock' && <Button onClick={() => setDev(true)}>⚙ {t('shell.devPanel')}</Button>}
           <LanguageSwitcher />
+          {user && !crew && <div className="gp-header__assistant" ref={setAssistantLauncher} />}
           {user && <Button onClick={logout} busy={loggingOut}>{t('shell.logout')}</Button>}
         </div>
       </header>
@@ -157,7 +159,7 @@ export function Shell({ children }: { children: ReactNode }) {
           <Suspense fallback={null}><WorkerPage me={me.data} onLogout={logout} /></Suspense>
         ) : (
           <StateView loading={me.loading} error={me.error} hasData={!!me.data} onRetry={me.reload}>
-            {me.data && <MeContext.Provider value={me.data}>{children}<AssistantPanel /></MeContext.Provider>}
+            {me.data && <MeContext.Provider value={me.data}>{children}<AssistantPanel launcherTarget={assistantLauncher} /></MeContext.Provider>}
           </StateView>
         )}
       </main>

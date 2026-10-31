@@ -1,0 +1,5 @@
+
+> @green-pavlodar/web@0.1.0 check:care
+> esbuild scripts/check-care.ts --bundle --define:import.meta.env.DEV=false --platform=node --format=esm --outfile=dist-scripts/check-care.mjs --log-level=warning && node dist-scripts/check-care.mjs
+
+Care OK: calendar horizon, holes, plant-only care, missing data, mock parity, validation, roles and replay
