@@ -1,0 +1,693 @@
+{
+  "sourceSha": "a66d542c63c527d608400c84b34d49f982855369",
+  "startedUtc": "2026-10-31T00:57:37.046Z",
+  "url": "http://127.0.0.1:5194",
+  "cleanContexts": true,
+  "allowedNetworkOrigins": [
+    "http://127.0.0.1:5194"
+  ],
+  "externalRequests": [
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/72/%D0%92%D0%B8%D0%B4_%D0%BD%D0%B0_%D0%B3%D0%BE%D1%80%D0%BE%D0%B4_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80.jpg/1280px-%D0%92%D0%B8%D0%B4_%D0%BD%D0%B0_%D0%B3%D0%BE%D1%80%D0%BE%D0%B4_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b0/%D0%A1%D0%BA%D0%B2%D0%B5%D1%80_%D0%B2_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80%D0%B5.jpg/1280px-%D0%A1%D0%BA%D0%B2%D0%B5%D1%80_%D0%B2_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80%D0%B5.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/62/%D0%9E%D1%81%D0%B5%D0%BD%D0%BD%D0%B8%D0%B9_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80.jpg/1280px-%D0%9E%D1%81%D0%B5%D0%BD%D0%BD%D0%B8%D0%B9_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/71/Satpaev_Street_in_Pavlodar.jpg/1280px-Satpaev_Street_in_Pavlodar.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6c/%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B0_%D0%9A%D0%B0%D0%B7%D0%B0%D1%85%D1%81%D1%82%D0%B0%D0%BD%2C_%D0%B3._%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80._%D1%83%D0%BB._%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D0%B0.JPG/1280px-%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B0_%D0%9A%D0%B0%D0%B7%D0%B0%D1%85%D1%81%D1%82%D0%B0%D0%BD%2C_%D0%B3._%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80._%D1%83%D0%BB._%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D0%B0.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4a/%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B0_%D0%9A%D0%B0%D0%B7%D0%B0%D1%85%D1%81%D1%82%D0%B0%D0%BD%2C_%D0%B3._%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80._%D0%A6%D0%B5%D0%BD%D1%82%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F_%D0%BD%D0%B0%D0%B1%D0%B5%D1%80%D0%B5%D0%B6%D0%BD%D0%B0%D1%8F.JPG/1280px-%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B0_%D0%9A%D0%B0%D0%B7%D0%B0%D1%85%D1%81%D1%82%D0%B0%D0%BD%2C_%D0%B3._%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80._%D0%A6%D0%B5%D0%BD%D1%82%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F_%D0%BD%D0%B0%D0%B1%D0%B5%D1%80%D0%B5%D0%B6%D0%BD%D0%B0%D1%8F.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/11/Irtysh_river_view._Pavlodar%2C_May_2009._01.JPG/1280px-Irtysh_river_view._Pavlodar%2C_May_2009._01.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/Trees_in_the_floodplain_of_the_Irtysh.jpg/1280px-Trees_in_the_floodplain_of_the_Irtysh.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/53/File-Sunflower_at_the_street_of_Pavlodar%2C_Kazakhstan.jpg/1280px-File-Sunflower_at_the_street_of_Pavlodar%2C_Kazakhstan.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Satpaeva_street%2C_Pavlodar.JPG/1280px-Satpaeva_street%2C_Pavlodar.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/80/School_%E2%84%96_36%2C_Pavlodar.jpg/1280px-School_%E2%84%96_36%2C_Pavlodar.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Concert_Hall_Shanyrak_in_Pavlodar.jpg/1280px-Concert_Hall_Shanyrak_in_Pavlodar.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9b/Pavlodar_Regional_Art_Museum_2026.jpg/1280px-Pavlodar_Regional_Art_Museum_2026.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6f/Winter_2012_pavlodar_embankment.jpg/1280px-Winter_2012_pavlodar_embankment.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/02/Pavlodar-Fiume_Irtysh.JPG/1280px-Pavlodar-Fiume_Irtysh.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/82/Nauryz_in_Pavlodar%2C_statue_of_Abay_Kunanbayev.jpg/1280px-Nauryz_in_Pavlodar%2C_statue_of_Abay_Kunanbayev.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://tiles.openfreemap.org/styles/liberty",
+      "resourceType": "fetch",
+      "blocked": true
+    },
+    {
+      "url": "https://tiles.openfreemap.org/styles/positron",
+      "resourceType": "fetch",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/72/%D0%92%D0%B8%D0%B4_%D0%BD%D0%B0_%D0%B3%D0%BE%D1%80%D0%BE%D0%B4_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80.jpg/1280px-%D0%92%D0%B8%D0%B4_%D0%BD%D0%B0_%D0%B3%D0%BE%D1%80%D0%BE%D0%B4_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b0/%D0%A1%D0%BA%D0%B2%D0%B5%D1%80_%D0%B2_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80%D0%B5.jpg/1280px-%D0%A1%D0%BA%D0%B2%D0%B5%D1%80_%D0%B2_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80%D0%B5.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/62/%D0%9E%D1%81%D0%B5%D0%BD%D0%BD%D0%B8%D0%B9_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80.jpg/1280px-%D0%9E%D1%81%D0%B5%D0%BD%D0%BD%D0%B8%D0%B9_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/71/Satpaev_Street_in_Pavlodar.jpg/1280px-Satpaev_Street_in_Pavlodar.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6c/%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B0_%D0%9A%D0%B0%D0%B7%D0%B0%D1%85%D1%81%D1%82%D0%B0%D0%BD%2C_%D0%B3._%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80._%D1%83%D0%BB._%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D0%B0.JPG/1280px-%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B0_%D0%9A%D0%B0%D0%B7%D0%B0%D1%85%D1%81%D1%82%D0%B0%D0%BD%2C_%D0%B3._%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80._%D1%83%D0%BB._%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D0%B0.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4a/%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B0_%D0%9A%D0%B0%D0%B7%D0%B0%D1%85%D1%81%D1%82%D0%B0%D0%BD%2C_%D0%B3._%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80._%D0%A6%D0%B5%D0%BD%D1%82%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F_%D0%BD%D0%B0%D0%B1%D0%B5%D1%80%D0%B5%D0%B6%D0%BD%D0%B0%D1%8F.JPG/1280px-%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B0_%D0%9A%D0%B0%D0%B7%D0%B0%D1%85%D1%81%D1%82%D0%B0%D0%BD%2C_%D0%B3._%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80._%D0%A6%D0%B5%D0%BD%D1%82%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F_%D0%BD%D0%B0%D0%B1%D0%B5%D1%80%D0%B5%D0%B6%D0%BD%D0%B0%D1%8F.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/11/Irtysh_river_view._Pavlodar%2C_May_2009._01.JPG/1280px-Irtysh_river_view._Pavlodar%2C_May_2009._01.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/Trees_in_the_floodplain_of_the_Irtysh.jpg/1280px-Trees_in_the_floodplain_of_the_Irtysh.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/53/File-Sunflower_at_the_street_of_Pavlodar%2C_Kazakhstan.jpg/1280px-File-Sunflower_at_the_street_of_Pavlodar%2C_Kazakhstan.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Satpaeva_street%2C_Pavlodar.JPG/1280px-Satpaeva_street%2C_Pavlodar.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/80/School_%E2%84%96_36%2C_Pavlodar.jpg/1280px-School_%E2%84%96_36%2C_Pavlodar.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Concert_Hall_Shanyrak_in_Pavlodar.jpg/1280px-Concert_Hall_Shanyrak_in_Pavlodar.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9b/Pavlodar_Regional_Art_Museum_2026.jpg/1280px-Pavlodar_Regional_Art_Museum_2026.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6f/Winter_2012_pavlodar_embankment.jpg/1280px-Winter_2012_pavlodar_embankment.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/02/Pavlodar-Fiume_Irtysh.JPG/1280px-Pavlodar-Fiume_Irtysh.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/82/Nauryz_in_Pavlodar%2C_statue_of_Abay_Kunanbayev.jpg/1280px-Nauryz_in_Pavlodar%2C_statue_of_Abay_Kunanbayev.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://tiles.openfreemap.org/styles/liberty",
+      "resourceType": "fetch",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/72/%D0%92%D0%B8%D0%B4_%D0%BD%D0%B0_%D0%B3%D0%BE%D1%80%D0%BE%D0%B4_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80.jpg/1280px-%D0%92%D0%B8%D0%B4_%D0%BD%D0%B0_%D0%B3%D0%BE%D1%80%D0%BE%D0%B4_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b0/%D0%A1%D0%BA%D0%B2%D0%B5%D1%80_%D0%B2_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80%D0%B5.jpg/1280px-%D0%A1%D0%BA%D0%B2%D0%B5%D1%80_%D0%B2_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80%D0%B5.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/62/%D0%9E%D1%81%D0%B5%D0%BD%D0%BD%D0%B8%D0%B9_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80.jpg/1280px-%D0%9E%D1%81%D0%B5%D0%BD%D0%BD%D0%B8%D0%B9_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/71/Satpaev_Street_in_Pavlodar.jpg/1280px-Satpaev_Street_in_Pavlodar.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6c/%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B0_%D0%9A%D0%B0%D0%B7%D0%B0%D1%85%D1%81%D1%82%D0%B0%D0%BD%2C_%D0%B3._%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80._%D1%83%D0%BB._%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D0%B0.JPG/1280px-%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B0_%D0%9A%D0%B0%D0%B7%D0%B0%D1%85%D1%81%D1%82%D0%B0%D0%BD%2C_%D0%B3._%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80._%D1%83%D0%BB._%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D0%B0.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4a/%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B0_%D0%9A%D0%B0%D0%B7%D0%B0%D1%85%D1%81%D1%82%D0%B0%D0%BD%2C_%D0%B3._%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80._%D0%A6%D0%B5%D0%BD%D1%82%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F_%D0%BD%D0%B0%D0%B1%D0%B5%D1%80%D0%B5%D0%B6%D0%BD%D0%B0%D1%8F.JPG/1280px-%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B0_%D0%9A%D0%B0%D0%B7%D0%B0%D1%85%D1%81%D1%82%D0%B0%D0%BD%2C_%D0%B3._%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80._%D0%A6%D0%B5%D0%BD%D1%82%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F_%D0%BD%D0%B0%D0%B1%D0%B5%D1%80%D0%B5%D0%B6%D0%BD%D0%B0%D1%8F.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/11/Irtysh_river_view._Pavlodar%2C_May_2009._01.JPG/1280px-Irtysh_river_view._Pavlodar%2C_May_2009._01.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/Trees_in_the_floodplain_of_the_Irtysh.jpg/1280px-Trees_in_the_floodplain_of_the_Irtysh.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/53/File-Sunflower_at_the_street_of_Pavlodar%2C_Kazakhstan.jpg/1280px-File-Sunflower_at_the_street_of_Pavlodar%2C_Kazakhstan.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Satpaeva_street%2C_Pavlodar.JPG/1280px-Satpaeva_street%2C_Pavlodar.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/80/School_%E2%84%96_36%2C_Pavlodar.jpg/1280px-School_%E2%84%96_36%2C_Pavlodar.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Concert_Hall_Shanyrak_in_Pavlodar.jpg/1280px-Concert_Hall_Shanyrak_in_Pavlodar.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9b/Pavlodar_Regional_Art_Museum_2026.jpg/1280px-Pavlodar_Regional_Art_Museum_2026.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6f/Winter_2012_pavlodar_embankment.jpg/1280px-Winter_2012_pavlodar_embankment.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/02/Pavlodar-Fiume_Irtysh.JPG/1280px-Pavlodar-Fiume_Irtysh.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/82/Nauryz_in_Pavlodar%2C_statue_of_Abay_Kunanbayev.jpg/1280px-Nauryz_in_Pavlodar%2C_statue_of_Abay_Kunanbayev.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://tiles.openfreemap.org/styles/liberty",
+      "resourceType": "fetch",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/72/%D0%92%D0%B8%D0%B4_%D0%BD%D0%B0_%D0%B3%D0%BE%D1%80%D0%BE%D0%B4_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80.jpg/1280px-%D0%92%D0%B8%D0%B4_%D0%BD%D0%B0_%D0%B3%D0%BE%D1%80%D0%BE%D0%B4_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b0/%D0%A1%D0%BA%D0%B2%D0%B5%D1%80_%D0%B2_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80%D0%B5.jpg/1280px-%D0%A1%D0%BA%D0%B2%D0%B5%D1%80_%D0%B2_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80%D0%B5.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/62/%D0%9E%D1%81%D0%B5%D0%BD%D0%BD%D0%B8%D0%B9_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80.jpg/1280px-%D0%9E%D1%81%D0%B5%D0%BD%D0%BD%D0%B8%D0%B9_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/71/Satpaev_Street_in_Pavlodar.jpg/1280px-Satpaev_Street_in_Pavlodar.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6c/%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B0_%D0%9A%D0%B0%D0%B7%D0%B0%D1%85%D1%81%D1%82%D0%B0%D0%BD%2C_%D0%B3._%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80._%D1%83%D0%BB._%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D0%B0.JPG/1280px-%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B0_%D0%9A%D0%B0%D0%B7%D0%B0%D1%85%D1%81%D1%82%D0%B0%D0%BD%2C_%D0%B3._%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80._%D1%83%D0%BB._%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D0%B0.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4a/%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B0_%D0%9A%D0%B0%D0%B7%D0%B0%D1%85%D1%81%D1%82%D0%B0%D0%BD%2C_%D0%B3._%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80._%D0%A6%D0%B5%D0%BD%D1%82%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F_%D0%BD%D0%B0%D0%B1%D0%B5%D1%80%D0%B5%D0%B6%D0%BD%D0%B0%D1%8F.JPG/1280px-%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B0_%D0%9A%D0%B0%D0%B7%D0%B0%D1%85%D1%81%D1%82%D0%B0%D0%BD%2C_%D0%B3._%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80._%D0%A6%D0%B5%D0%BD%D1%82%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F_%D0%BD%D0%B0%D0%B1%D0%B5%D1%80%D0%B5%D0%B6%D0%BD%D0%B0%D1%8F.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/11/Irtysh_river_view._Pavlodar%2C_May_2009._01.JPG/1280px-Irtysh_river_view._Pavlodar%2C_May_2009._01.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/Trees_in_the_floodplain_of_the_Irtysh.jpg/1280px-Trees_in_the_floodplain_of_the_Irtysh.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/53/File-Sunflower_at_the_street_of_Pavlodar%2C_Kazakhstan.jpg/1280px-File-Sunflower_at_the_street_of_Pavlodar%2C_Kazakhstan.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Satpaeva_street%2C_Pavlodar.JPG/1280px-Satpaeva_street%2C_Pavlodar.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/80/School_%E2%84%96_36%2C_Pavlodar.jpg/1280px-School_%E2%84%96_36%2C_Pavlodar.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Concert_Hall_Shanyrak_in_Pavlodar.jpg/1280px-Concert_Hall_Shanyrak_in_Pavlodar.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9b/Pavlodar_Regional_Art_Museum_2026.jpg/1280px-Pavlodar_Regional_Art_Museum_2026.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6f/Winter_2012_pavlodar_embankment.jpg/1280px-Winter_2012_pavlodar_embankment.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/02/Pavlodar-Fiume_Irtysh.JPG/1280px-Pavlodar-Fiume_Irtysh.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/82/Nauryz_in_Pavlodar%2C_statue_of_Abay_Kunanbayev.jpg/1280px-Nauryz_in_Pavlodar%2C_statue_of_Abay_Kunanbayev.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://tiles.openfreemap.org/styles/liberty",
+      "resourceType": "fetch",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/72/%D0%92%D0%B8%D0%B4_%D0%BD%D0%B0_%D0%B3%D0%BE%D1%80%D0%BE%D0%B4_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80.jpg/1280px-%D0%92%D0%B8%D0%B4_%D0%BD%D0%B0_%D0%B3%D0%BE%D1%80%D0%BE%D0%B4_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b0/%D0%A1%D0%BA%D0%B2%D0%B5%D1%80_%D0%B2_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80%D0%B5.jpg/1280px-%D0%A1%D0%BA%D0%B2%D0%B5%D1%80_%D0%B2_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80%D0%B5.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/62/%D0%9E%D1%81%D0%B5%D0%BD%D0%BD%D0%B8%D0%B9_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80.jpg/1280px-%D0%9E%D1%81%D0%B5%D0%BD%D0%BD%D0%B8%D0%B9_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/71/Satpaev_Street_in_Pavlodar.jpg/1280px-Satpaev_Street_in_Pavlodar.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6c/%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B0_%D0%9A%D0%B0%D0%B7%D0%B0%D1%85%D1%81%D1%82%D0%B0%D0%BD%2C_%D0%B3._%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80._%D1%83%D0%BB._%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D0%B0.JPG/1280px-%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B0_%D0%9A%D0%B0%D0%B7%D0%B0%D1%85%D1%81%D1%82%D0%B0%D0%BD%2C_%D0%B3._%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80._%D1%83%D0%BB._%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D0%B0.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4a/%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B0_%D0%9A%D0%B0%D0%B7%D0%B0%D1%85%D1%81%D1%82%D0%B0%D0%BD%2C_%D0%B3._%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80._%D0%A6%D0%B5%D0%BD%D1%82%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F_%D0%BD%D0%B0%D0%B1%D0%B5%D1%80%D0%B5%D0%B6%D0%BD%D0%B0%D1%8F.JPG/1280px-%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B0_%D0%9A%D0%B0%D0%B7%D0%B0%D1%85%D1%81%D1%82%D0%B0%D0%BD%2C_%D0%B3._%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B4%D0%B0%D1%80._%D0%A6%D0%B5%D0%BD%D1%82%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F_%D0%BD%D0%B0%D0%B1%D0%B5%D1%80%D0%B5%D0%B6%D0%BD%D0%B0%D1%8F.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/11/Irtysh_river_view._Pavlodar%2C_May_2009._01.JPG/1280px-Irtysh_river_view._Pavlodar%2C_May_2009._01.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/Trees_in_the_floodplain_of_the_Irtysh.jpg/1280px-Trees_in_the_floodplain_of_the_Irtysh.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/53/File-Sunflower_at_the_street_of_Pavlodar%2C_Kazakhstan.jpg/1280px-File-Sunflower_at_the_street_of_Pavlodar%2C_Kazakhstan.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Satpaeva_street%2C_Pavlodar.JPG/1280px-Satpaeva_street%2C_Pavlodar.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/80/School_%E2%84%96_36%2C_Pavlodar.jpg/1280px-School_%E2%84%96_36%2C_Pavlodar.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Concert_Hall_Shanyrak_in_Pavlodar.jpg/1280px-Concert_Hall_Shanyrak_in_Pavlodar.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9b/Pavlodar_Regional_Art_Museum_2026.jpg/1280px-Pavlodar_Regional_Art_Museum_2026.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6f/Winter_2012_pavlodar_embankment.jpg/1280px-Winter_2012_pavlodar_embankment.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/02/Pavlodar-Fiume_Irtysh.JPG/1280px-Pavlodar-Fiume_Irtysh.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/82/Nauryz_in_Pavlodar%2C_statue_of_Abay_Kunanbayev.jpg/1280px-Nauryz_in_Pavlodar%2C_statue_of_Abay_Kunanbayev.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "resourceType": "image",
+      "blocked": true
+    },
+    {
+      "url": "https://tiles.openfreemap.org/styles/liberty",
+      "resourceType": "fetch",
+      "blocked": true
+    }
+  ],
+  "localApiResponses": [],
+  "checks": [
+    {
+      "name": "static server isolation and MIME",
+      "pass": true,
+      "cases": [
+        {
+          "path": "/assets/contract-v2-ClrjjIFG.js",
+          "status": 200,
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "path": "/assets/index-BPmzBglH.css",
+          "status": 200,
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "path": "/assets/lora-cyrillic-ext-wght-normal-YcVxMP-u.woff2",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "path": "/../server.mjs",
+          "status": 400
+        },
+        {
+          "path": "/%2e%2e/server.mjs",
+          "status": 400
+        },
+        {
+          "path": "/..%5cserver.mjs",
+          "status": 400
+        },
+        {
+          "path": "/C:%5cWindows",
+          "status": 400
+        },
+        {
+          "path": "/runtime/node.exe",
+          "status": 404
+        },
+        {
+          "path": "/server.mjs",
+          "status": 404
+        },
+        {
+          "path": "/package-manifest.json",
+          "status": 404
+        },
+        {
+          "path": "/api/municipal/outcomes",
+          "method": "GET",
+          "status": 503
+        },
+        {
+          "path": "/api/municipal/outcomes",
+          "method": "POST",
+          "status": 503
+        },
+        {
+          "host": "example.com",
+          "status": 403
+        }
+      ]
+    },
+    {
+      "name": "home in clean context without external network",
+      "pass": true,
+      "screenshot": "../../../../../../../outputs/defense-final/offline/verification/01-home.png"
+    },
+    {
+      "name": "Tolstogo schema and cost care3 without tiles",
+      "pass": true,
+      "site": "site-osm-1569993037",
+      "careYears": 3,
+      "totalKzt": 10825628,
+      "schema": true,
+      "screenshot": "../../../../../../../outputs/defense-final/offline/verification/02-tolstogo-schema-care3.png"
+    },
+    {
+      "name": "laboratory 1000 to 500 and rebuild without API",
+      "pass": true,
+      "budgetKzt": 50000000,
+      "waterLimit": [
+        1000,
+        500
+      ],
+      "zones": [
+        41,
+        31
+      ],
+      "waterM3": [
+        993.1,
+        498.1
+      ],
+      "deficitM3": [
+        493.1,
+        0
+      ],
+      "screenshot": "../../../../../../../outputs/defense-final/offline/verification/03-lab-rebuilt.png"
+    },
+    {
+      "name": "outcomes full and partial observation without API",
+      "pass": true,
+      "full": {
+        "actualPct": 84.4,
+        "forecastPct": 83,
+        "deltaPp": 1.4
+      },
+      "partial": {
+        "comparisonAvailable": false
+      },
+      "demo": true,
+      "screenshot": "../../../../../../../outputs/defense-final/offline/verification/04-outcomes-partial.png"
+    },
+    {
+      "name": "offline Работник 1280px Журнал",
+      "pass": true,
+      "role": "Работник",
+      "width": 1280,
+      "section": "Журнал",
+      "keyboard": "Enter",
+      "visibleFocus": true,
+      "screenshot": "../../../../../../../outputs/defense-final/offline/verification/worker-1280-worker-journal.png"
+    },
+    {
+      "name": "offline Работник 1280px Профиль",
+      "pass": true,
+      "role": "Работник",
+      "width": 1280,
+      "section": "Профиль",
+      "keyboard": "Space",
+      "visibleFocus": true,
+      "screenshot": "../../../../../../../outputs/defense-final/offline/verification/worker-1280-worker-profile.png"
+    },
+    {
+      "name": "offline Работник 1280px Смена",
+      "pass": true,
+      "role": "Работник",
+      "width": 1280,
+      "section": "Смена",
+      "keyboard": "Enter",
+      "visibleFocus": true,
+      "screenshot": "../../../../../../../outputs/defense-final/offline/verification/worker-1280-worker-shift.png"
+    },
+    {
+      "name": "offline Бригадир 1280px Журнал",
+      "pass": true,
+      "role": "Бригадир",
+      "width": 1280,
+      "section": "Журнал",
+      "keyboard": "Enter",
+      "visibleFocus": true,
+      "screenshot": "../../../../../../../outputs/defense-final/offline/verification/worker-1280-foreman-journal.png"
+    },
+    {
+      "name": "offline Бригадир 1280px Профиль",
+      "pass": true,
+      "role": "Бригадир",
+      "width": 1280,
+      "section": "Профиль",
+      "keyboard": "Space",
+      "visibleFocus": true,
+      "screenshot": "../../../../../../../outputs/defense-final/offline/verification/worker-1280-foreman-profile.png"
+    },
+    {
+      "name": "offline Бригадир 1280px Смена",
+      "pass": true,
+      "role": "Бригадир",
+      "width": 1280,
+      "section": "Смена",
+      "keyboard": "Enter",
+      "visibleFocus": true,
+      "screenshot": "../../../../../../../outputs/defense-final/offline/verification/worker-1280-foreman-shift.png"
+    },
+    {
+      "name": "offline Работник 375px Журнал",
+      "pass": true,
+      "role": "Работник",
+      "width": 375,
+      "section": "Журнал",
+      "keyboard": "Enter",
+      "visibleFocus": true,
+      "screenshot": "../../../../../../../outputs/defense-final/offline/verification/worker-375-worker-journal.png"
+    },
+    {
+      "name": "offline Работник 375px Профиль",
+      "pass": true,
+      "role": "Работник",
+      "width": 375,
+      "section": "Профиль",
+      "keyboard": "Space",
+      "visibleFocus": true,
+      "screenshot": "../../../../../../../outputs/defense-final/offline/verification/worker-375-worker-profile.png"
+    },
+    {
+      "name": "offline Работник 375px Смена",
+      "pass": true,
+      "role": "Работник",
+      "width": 375,
+      "section": "Смена",
+      "keyboard": "Enter",
+      "visibleFocus": true,
+      "screenshot": "../../../../../../../outputs/defense-final/offline/verification/worker-375-worker-shift.png"
+    },
+    {
+      "name": "offline Бригадир 375px Журнал",
+      "pass": true,
+      "role": "Бригадир",
+      "width": 375,
+      "section": "Журнал",
+      "keyboard": "Enter",
+      "visibleFocus": true,
+      "screenshot": "../../../../../../../outputs/defense-final/offline/verification/worker-375-foreman-journal.png"
+    },
+    {
+      "name": "offline Бригадир 375px Профиль",
+      "pass": true,
+      "role": "Бригадир",
+      "width": 375,
+      "section": "Профиль",
+      "keyboard": "Space",
+      "visibleFocus": true,
+      "screenshot": "../../../../../../../outputs/defense-final/offline/verification/worker-375-foreman-profile.png"
+    },
+    {
+      "name": "offline Бригадир 375px Смена",
+      "pass": true,
+      "role": "Бригадир",
+      "width": 375,
+      "section": "Смена",
+      "keyboard": "Enter",
+      "visibleFocus": true,
+      "screenshot": "../../../../../../../outputs/defense-final/offline/verification/worker-375-foreman-shift.png"
+    }
+  ],
+  "pageErrors": [],
+  "limitations": [
+    "External map tiles, photos and network search unavailable; schema fallback is used.",
+    "Mock browser data is not a real API operation.",
+    "Worker interface inside the cabinet remains Russian; native mobile app not claimed."
+  ],
+  "browser": "156.0.8078.4",
+  "finishedUtc": "2026-10-31T00:57:57.347Z",
+  "passed": true,
+  "launcher": {
+    "command": "start-mock.cmd",
+    "portableRuntimeStarted": true,
+    "browserLaunchRequested": true,
+    "nativeBrowserUrlVerified": false,
+    "nativeCheckLimitation": "Computer Use could not confidently determine the Edge URL and stopped. Automated Chromium playback was verified independently."
+  }
+}

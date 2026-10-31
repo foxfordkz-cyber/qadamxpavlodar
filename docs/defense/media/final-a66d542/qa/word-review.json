@@ -1,0 +1,55 @@
+{
+  "status": "rendered and visually reviewed, with localization limitations",
+  "method": "documents skill canonical render_docx.py -> locally extracted official LibreOffice 26.8.2 -> PDF and Poppler page PNGs",
+  "nativeMicrosoftWordVisualCheck": false,
+  "reasonNativeNotChecked": "User actively using desktop; further window interaction stopped. No DOCX was opened or edited in Word.",
+  "systemInstallationPerformed": false,
+  "officialDownloadPage": "https://www.libreoffice.org/download/",
+  "officialPackage": "https://download.documentfoundation.org/libreoffice/stable/26.8.2/win/x86_64/LibreOffice_26.8.2_Win_x86-64.msi",
+  "officialChecksumSource": "https://download.documentfoundation.org/libreoffice/stable/26.8.2/win/x86_64/LibreOffice_26.8.2_Win_x86-64.msi.mirrorlist",
+  "packageSha256Verified": "ff4b911403b67ee9e6249f820f9782c44bb32c94fdaa45b0da53a8e419e5307a",
+  "documents": [
+    {
+      "language": "ru",
+      "originalFile": "green-pavlodar-memo-ru-a66d542.docx",
+      "sha256": "152fd771d1c64be402bc4252995683390702d7c2850d8744bdcdf179bd00c11b",
+      "originalUnchanged": true,
+      "pages": 6,
+      "allPagesVisuallyInspected": true,
+      "layoutStatus": "PASS: no clipped text, overlaps or broken tables; repeated table headings and Kazakh glyphs readable",
+      "pdfFile": "green-pavlodar-memo-ru-a66d542-libreoffice.pdf",
+      "pdfSha256": "129f7a5725e07cef108db0ad4274055712032688931f45c1c2dbd20db0dcda87",
+      "totalKzt": 10825627.5,
+      "uiRoundedTotalKzt": 10825628
+    },
+    {
+      "language": "kk",
+      "originalFile": "green-pavlodar-memo-kk-a66d542.docx",
+      "sha256": "88cef7b0cd4fe5592b58034c851e3280be11953c444ad7f917226f2a7c725ec9",
+      "originalUnchanged": true,
+      "pages": 6,
+      "allPagesVisuallyInspected": true,
+      "layoutStatus": "PASS: no clipped text, overlaps or broken tables; repeated table headings and Kazakh glyphs readable",
+      "pdfFile": "green-pavlodar-memo-kk-a66d542-libreoffice.pdf",
+      "pdfSha256": "92b1800e2758f740349cf7f08acece85ee5fac0a396a12cf5cb61b93fdaed1fe",
+      "totalKzt": 10825627.5,
+      "uiRoundedTotalKzt": 10825628
+    }
+  ],
+  "structuralCheck": "Both DOCX ZIP integrity pass, 262 paragraphs, 5 tables, table numeric values equal RU/KK, no replacement characters",
+  "localizationLimitations": {
+    "kkRussianPlantNames": [
+      "Вяз приземистый (карагач)",
+      "Тополь Болле (пирамидальный)",
+      "Ель колючая",
+      "Роза морщинистая",
+      "Очиток видный",
+      "Бархатцы (однолетник)",
+      "Лилейник",
+      "Эхинацея пурпурная"
+    ],
+    "kkRussianSourceAndCoefficientDescriptions": "Pages 4–6 retain Russian source descriptions, evidence notes and coefficient rationales; labels and primary report headings are Kazakh",
+    "zoneDisplayName": "Газон, улица Толстого retained as source name in both documents"
+  },
+  "summaryMarkdown": "Оба UI-export DOCX сохранены без изменений; SHA-256 сверены до/после. ZIP, 262 абзаца и 5 таблиц в каждом — PASS, числовые таблицы RU/KK совпадают. Сумма в DOCX **10 825 627,5 ₸**, на экране **10 825 628 ₸** после округления.\n\nШтатный `render_docx.py` с локально извлечённым официальным LibreOffice 26.8.2 создал PDF/PNG. Просмотрены все **6 страниц RU + 6 страниц KK**: обрезания, наложения и сломанные таблицы не обнаружены; казахские буквы читаются. Системная установка не выполнялась. **Это не native-проверка Microsoft Word**: взаимодействие с пользовательским рабочим столом прекращено из-за активного ввода.\n\nВ KK остаются русские fallback-названия 8 растений (вяз, тополь Болле, ель, роза, очиток, бархатцы, лилейник, эхинацея), название зоны и русские описания источников/обоснования коэффициентов на страницах 4–6. Полную локализацию не заявляем. Оригинальные пустые поля реквизитов/подписи оставлены для заполнения, персональные данные не добавлены.\n\nPDF-копии для автономного показа: `../documents/green-pavlodar-memo-ru-a66d542-libreoffice.pdf` и `../documents/green-pavlodar-memo-kk-a66d542-libreoffice.pdf`; страницы проверки — `docx-pages/ru` и `docx-pages/kk`. Источник инструмента: [LibreOffice](https://www.libreoffice.org/download/), контрольная сумма сверена с [официальным mirrorlist](https://download.documentfoundation.org/libreoffice/stable/26.8.2/win/x86_64/LibreOffice_26.8.2_Win_x86-64.msi.mirrorlist)."
+}
