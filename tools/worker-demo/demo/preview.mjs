@@ -1,11 +1,27 @@
 import '../../../apps/web/src/features/worker/worker.mjs';
 import { ROLE_LABELS } from '../../../apps/web/src/features/worker/contract-v2.mjs';
 import { BrowserDrafts } from '../../../apps/web/src/features/worker/drafts.mjs';
+import { normalizeWorkerLocale } from '../../../apps/web/src/features/worker/worker-display.mjs';
 import { createDemoSource, accounts, DEMO_DATE, DEMO_SCOPE } from './source.mjs';
 const source = createDemoSource({ storage: localStorage });
 const drafts = new BrowserDrafts();
 const worker = document.querySelector('green-worker');
 const $ = selector => document.querySelector(selector);
+// The standalone test harness shares the shell's preference; locale repaint must
+// not reconnect a session or discard a report that is being edited.
+const languageQuery = new URLSearchParams(location.search).get('lang');
+let storedLanguage;
+try { storedLanguage = localStorage.getItem('gp.language'); } catch { /* Optional storage. */ }
+$('#locale').value = normalizeWorkerLocale(languageQuery || storedLanguage);
+function changeLanguage() {
+  const language = $('#locale').value;
+  try { localStorage.setItem('gp.language', language); } catch { /* Optional storage. */ }
+  const url = new URL(location.href);
+  if (url.searchParams.has('lang')) { url.searchParams.set('lang', language); history.replaceState(history.state, '', url); }
+  document.documentElement.lang = language;
+  worker.setLocale(language);
+}
+changeLanguage();
 $('#account').replaceChildren(...accounts.map(account=>new Option(`${account.displayName} · ${ROLE_LABELS[account.role]}`,account.id)));
 let userId = sessionStorage.getItem(`${DEMO_SCOPE}:user`) || 'demo-foreman-1';
 if (!accounts.some(account => account.id === userId)) userId = accounts[0].id;
@@ -27,7 +43,7 @@ function updateTools() {
 async function guarded(fn) { try { await fn(); $('#tool-message').textContent = ''; } catch (error) { $('#tool-message').textContent = error.message; } updateTools(); }
 $('#account').addEventListener('change', () => guarded(connect));
 $('#login').addEventListener('click', () => guarded(connect));
-$('#locale').addEventListener('change', () => guarded(connect));
+$('#locale').addEventListener('change', changeLanguage);
 document.querySelectorAll('[data-fault]').forEach(input => input.addEventListener('change', () => { source.controls[input.dataset.fault] = input.checked; updateTools(); }));
 window.addEventListener('offline', () => { source.controls.offline = true; updateTools(); });
 window.addEventListener('online', () => { source.controls.offline = false; updateTools(); });

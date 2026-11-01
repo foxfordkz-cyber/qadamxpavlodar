@@ -11,7 +11,11 @@ const STORAGE_KEY = 'gp.language';
 function initialLanguage(): Lang {
   if (typeof window === 'undefined') return 'ru';
   const query = new URLSearchParams(window.location.search).get('lang');
-  if (query === 'ru' || query === 'kk') return query === 'kk' && kkEnabled ? 'kk' : 'ru';
+  if (query === 'ru' || query === 'kk') {
+    const selected = query === 'kk' && kkEnabled ? 'kk' : 'ru';
+    try { localStorage.setItem(STORAGE_KEY, selected); } catch { /* Storage is optional. */ }
+    return selected;
+  }
   try { return kkEnabled && localStorage.getItem(STORAGE_KEY) === 'kk' ? 'kk' : 'ru'; } catch { return 'ru'; }
 }
 let lang: Lang = initialLanguage();

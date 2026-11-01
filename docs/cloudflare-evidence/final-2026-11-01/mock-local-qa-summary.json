@@ -1,0 +1,85 @@
+{
+  "scope": "LOCAL PREDEPLOYMENT MOCK QA ONLY. Not Cloudflare runtime, publication or independent QA evidence.",
+  "sourceSha": "84d009e3b72c4fe637ef30607e29701054b6c621",
+  "dataSource": "mock",
+  "sourceDirty": false,
+  "sourceBuildManifestSha256": "42e03c5ebdc55275e7f6b94b19155ef92dd8e01dfa9b2463b6fa60485fa48c56",
+  "applicationArchive": "green-pavlodar-mock-84d009e.zip",
+  "applicationArchiveSha256": "c7e466ea13355bdd5b0a6506cb7412de0ca44dc54c6272059f5bb85d49b4903d",
+  "applicationArchiveBytes": 1589722,
+  "applicationArchiveIncluded": false,
+  "deploymentId": null,
+  "publicDeploymentVerified": false,
+  "matrix": {
+    "languages": [
+      "ru",
+      "kk"
+    ],
+    "widths": [
+      375,
+      1280
+    ]
+  },
+  "checks": [
+    {
+      "name": "Main mock without source query/login/backend",
+      "passed": 4,
+      "total": 4,
+      "evidence": "results/main-mock.json"
+    },
+    {
+      "name": "Worker direct language, reload, navigation keyboard/focus, draft/photo/key preservation, mock submit",
+      "passed": 4,
+      "total": 4,
+      "evidence": "results/worker-mock.json"
+    },
+    {
+      "name": "Foreman direct language, reload, navigation, issue draft/photo/key preservation (no submission)",
+      "passed": 4,
+      "total": 4,
+      "evidence": "results/foreman-mock.json"
+    },
+    {
+      "name": "Tolstogo plants, care 3 years estimate, report, Word UI download and OOXML/screen parity",
+      "passed": 4,
+      "total": 4,
+      "evidence": "results/zone-word.json"
+    }
+  ],
+  "typecheck": "PASS",
+  "build": "PASS",
+  "screenshotsIncluded": 28,
+  "screenshotsActuallyReviewed": 12,
+  "documentsIncluded": 4,
+  "nativeWordOpened": false,
+  "numbers": {
+    "areaM2": 3782,
+    "plantRows": 12,
+    "plants": 1345,
+    "costRows": 5,
+    "screenTotalKzt": 10825628,
+    "wordExactTotalKzt": 10825627.5
+  },
+  "limitations": [
+    "Local mock only; authentication, storage, roles and mutations here are browser fixtures, not real server acceptance.",
+    "No new network retry/recovery check performed in this local mock run. It cannot prove real Cloudflare cookies, CSRF, idempotency or photo transport.",
+    "Main and zone/Word journeys deliberately block external network; schematic map works while unavailable base-map warning is visible.",
+    "At 375 px the top source badge text is partly clipped in the fixed status strip. Existing accepted layout, page overflow 0, no blocked action. Example screens/zone-report-kk-375.png. Severity: minor non-blocking visual issue.",
+    "12 of 28 screenshots visually reviewed, as enumerated in visual-review.json; remaining screenshots are retained evidence, not claimed reviewed.",
+    "Foreman filenames indicate initial language; final preserved-form screenshots are RU after the scripted toggles.",
+    "Four DOCX files downloaded and checked structurally/numerically; not opened in Microsoft Word, native layout unverified.",
+    "Mock fixtures contain synthetic task/person names, uploaded image and notes; object names are source data and retained unchanged."
+  ],
+  "safety": {
+    "cloudCredentialsUsed": false,
+    "screenshotsExcludeLogin": true,
+    "containsSyntheticIdentifiers": true,
+    "privatePathsIncluded": false,
+    "preliminaryRunsIncluded": false,
+    "sourceScriptsIncluded": false
+  },
+  "evidenceArchive": "mock-84d009e-local-qa.zip",
+  "evidenceArchiveBytes": 2495355,
+  "evidenceArchiveSha256": "3f1734b962e7c8b6700e75dbcd036c0de7580fa12a67bd43c1b626ceaebdd3a9",
+  "evidenceFileCount": 40
+}

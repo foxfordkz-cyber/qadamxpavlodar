@@ -1,0 +1,558 @@
+{
+  "schema": "green-pavlodar-public-smoke-summary-v1",
+  "sourceSha": "fdc6e756be99dc5ba3a7a48ca1df17c4bfbef5ef",
+  "deploymentId": "f816c350-5722-4b56-a180-4124da01c5ba",
+  "target": "https://green-pavlodar-mock.pages.dev/",
+  "immutableOrigin": "https://f816c350.green-pavlodar-mock.pages.dev/",
+  "archiveSha256": "c89772c72d44590acf79f980be27a452bad696439bad2cacc8b5d948179ff804",
+  "testSha": "fdc6e756be99dc5ba3a7a48ca1df17c4bfbef5ef",
+  "testTree": "165535cdd1d6afadab0b21bb28823feb3421c336",
+  "originalQaSha": "3995322943d1973942698e6fe4287b82423ded18",
+  "originalQaTreeMatches": true,
+  "executionIdentity": "Tanirberdi Codex team rerun of the unchanged QA40 public suite; not a new independent sign-off by Aidana.",
+  "command": "node tools/e2e/scripts/public-mock.mjs",
+  "startedAt": "2026-10-31T16:42:45.492Z",
+  "endedAt": "2026-10-31T16:44:17.900Z",
+  "cleanQaWorktreeBeforeAndAfter": true,
+  "toolsE2eModified": false,
+  "testCodeAggregateSha256": "ea8393b5afb56883e12f4a6a17ccd279d8269847005f92b5e020c970d0624899",
+  "testCodeFileCount": 90,
+  "counts": {
+    "passed": 16,
+    "failed": 0,
+    "skipped": 0,
+    "fixme": 0,
+    "flaky": 0
+  },
+  "exitCode": 0,
+  "environment": {
+    "node": "24.14.1",
+    "playwright": "1.64.1",
+    "platform": "win32",
+    "workers": 2,
+    "retries": 0
+  },
+  "scope": "Public HTTPS mock, RU/KK at 1280x800 and 375x812. Navigation/lab, site/recommendations/estimate/growth/DOCX XML, Outcomes labels, E2E09 hit tests in normal and presentation modes.",
+  "regressionStatus": {
+    "E2E09": "Remains passing after the accepted 98cf6c6 fix: all four projects in normal and presentation modes.",
+    "E2E10": "New onboarding direction wording verified on deployed fdc6e75 in RU/KK at375/1280; actual normal click opens assistant in header.",
+    "allE2E09HitTestCollisions": 0
+  },
+  "deploymentProof": {
+    "relativeRepositoryPath": "docs/cloudflare-evidence/2026-10-31-published-fdc6e75.json",
+    "sha256": "0aa3949875d52e5c097d15f8c43d39f4286c9e76d0004f6c4dc2513ef79b1e9f",
+    "filesPerOrigin": 34,
+    "successfulMatchingResponses": 68
+  },
+  "artifactsBase": "outputs/tanirberdi-cloud-final-2026-10-31/public-fdc6e75/",
+  "runManifest": {
+    "path": "run-manifest.json",
+    "sha256": "a2de543f09412a82d2f30154bf247aaf0b5c54f4ad8343791b0e48c806de512b"
+  },
+  "originalReports": [
+    {
+      "path": "raw-results.json",
+      "sha256": "dc928afe67adea5d38ffeb3ef3384644c3c12c138cb356c63b9a0a6f83288369",
+      "bytes": 2710094
+    },
+    {
+      "path": "results.json",
+      "sha256": "08dcb7be7706898eda54781171587894c062837ca3507166028518704f7aaefd",
+      "bytes": 6128
+    },
+    {
+      "path": "public-suite.log",
+      "sha256": "d97db7b7d82392bb78d9a50c86e9dd7a41408d237215437c142995c0b520c5d2",
+      "bytes": 3396
+    },
+    {
+      "path": "deployment-byte-verification.json",
+      "sha256": "0aa3949875d52e5c097d15f8c43d39f4286c9e76d0004f6c4dc2513ef79b1e9f",
+      "bytes": 28425
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "screenshots/public-ru-1280-public-completed-lab.png",
+      "sha256": "6e6afb3532371bde47ec0798239990b7bc1564b1eb9c1b1b4d6f3d0855c4f009",
+      "bytes": 117650,
+      "project": "public-ru-1280",
+      "testTitle": "public mock: complete menu and three calculated laboratory plans",
+      "width": 1280,
+      "height": 800,
+      "source": "Original passing Playwright attachment; decoded without image editing.",
+      "visuallyInspected": true
+    },
+    {
+      "path": "screenshots/public-ru-1280-public-completed-report.png",
+      "sha256": "f7fef941efd1f923fe391cce367b2c775d734699a8c1b469e367abf88be5cf3a",
+      "bytes": 106159,
+      "project": "public-ru-1280",
+      "testTitle": "public mock: site → recommendation/estimate → growth → RU/KK DOCX XML",
+      "width": 1280,
+      "height": 800,
+      "source": "Original passing Playwright attachment; decoded without image editing.",
+      "visuallyInspected": true
+    },
+    {
+      "path": "screenshots/public-ru-1280-public-completed-outcomes.png",
+      "sha256": "d341ff8b504f8fd1f9b6fd3ca91243935a5d282605a9306d077f63b45ea7e739",
+      "bytes": 123552,
+      "project": "public-ru-1280",
+      "testTitle": "public mock: Outcomes variants and inspection retain demonstration labels",
+      "width": 1280,
+      "height": 800,
+      "source": "Original passing Playwright attachment; decoded without image editing.",
+      "visuallyInspected": true
+    },
+    {
+      "path": "screenshots/public-ru-1280-public-priorities-normal.png",
+      "sha256": "0af302ce482a86e0fded66333b8cf46318c2bacbefc298e5c9054f0425f22f4f",
+      "bytes": 163404,
+      "project": "public-ru-1280",
+      "testTitle": "public mock E2E-09: weight controls and values remain accessible in normal/presentation modes",
+      "width": 1280,
+      "height": 800,
+      "source": "Original passing Playwright attachment; decoded without image editing.",
+      "visuallyInspected": true
+    },
+    {
+      "path": "screenshots/public-ru-1280-public-priorities-presentation.png",
+      "sha256": "887ad457af67e422813690294bfc790fca42f4846c8dd9576d5639f2c87decc7",
+      "bytes": 165185,
+      "project": "public-ru-1280",
+      "testTitle": "public mock E2E-09: weight controls and values remain accessible in normal/presentation modes",
+      "width": 1280,
+      "height": 800,
+      "source": "Original passing Playwright attachment; decoded without image editing.",
+      "visuallyInspected": true
+    },
+    {
+      "path": "screenshots/public-kk-1280-public-completed-lab.png",
+      "sha256": "f11fac945bad431e156a5250517882a7c54c62474cde53dae4a19a3a28983605",
+      "bytes": 114517,
+      "project": "public-kk-1280",
+      "testTitle": "public mock: complete menu and three calculated laboratory plans",
+      "width": 1280,
+      "height": 800,
+      "source": "Original passing Playwright attachment; decoded without image editing.",
+      "visuallyInspected": true
+    },
+    {
+      "path": "screenshots/public-kk-1280-public-completed-report.png",
+      "sha256": "f98eed3491a73ea1db3ffa746921710ecbad6c1d71ba85de7df6f0f4aeab5063",
+      "bytes": 105960,
+      "project": "public-kk-1280",
+      "testTitle": "public mock: site → recommendation/estimate → growth → RU/KK DOCX XML",
+      "width": 1280,
+      "height": 800,
+      "source": "Original passing Playwright attachment; decoded without image editing.",
+      "visuallyInspected": true
+    },
+    {
+      "path": "screenshots/public-kk-1280-public-completed-outcomes.png",
+      "sha256": "1ccc97da7c27a6a250a367e5e78c7b3981d9c544df9264edef7f7be7ea14994c",
+      "bytes": 121257,
+      "project": "public-kk-1280",
+      "testTitle": "public mock: Outcomes variants and inspection retain demonstration labels",
+      "width": 1280,
+      "height": 800,
+      "source": "Original passing Playwright attachment; decoded without image editing.",
+      "visuallyInspected": true
+    },
+    {
+      "path": "screenshots/public-kk-1280-public-priorities-normal.png",
+      "sha256": "bba5a9ecb41ab3213c0e3a053365a9d1f2fadaeac8acc81c1c732f67e14d1db3",
+      "bytes": 155206,
+      "project": "public-kk-1280",
+      "testTitle": "public mock E2E-09: weight controls and values remain accessible in normal/presentation modes",
+      "width": 1280,
+      "height": 800,
+      "source": "Original passing Playwright attachment; decoded without image editing.",
+      "visuallyInspected": true
+    },
+    {
+      "path": "screenshots/public-kk-1280-public-priorities-presentation.png",
+      "sha256": "2704e5b0b499cac0931309f1b94dedcc8c881d5966e3f7bc67041bac2adccf53",
+      "bytes": 167754,
+      "project": "public-kk-1280",
+      "testTitle": "public mock E2E-09: weight controls and values remain accessible in normal/presentation modes",
+      "width": 1280,
+      "height": 800,
+      "source": "Original passing Playwright attachment; decoded without image editing.",
+      "visuallyInspected": true
+    },
+    {
+      "path": "screenshots/public-ru-375-public-completed-lab.png",
+      "sha256": "23bd1e0cb3119ed04d7c80e451de770f306b01c21a6c6c8cebdddbf160c2dbcf",
+      "bytes": 66375,
+      "project": "public-ru-375",
+      "testTitle": "public mock: complete menu and three calculated laboratory plans",
+      "width": 375,
+      "height": 812,
+      "source": "Original passing Playwright attachment; decoded without image editing.",
+      "visuallyInspected": true
+    },
+    {
+      "path": "screenshots/public-ru-375-public-completed-report.png",
+      "sha256": "bdf1769d569a7e91b8ac1d83e3a9268f2fa606eb00892b199a6e6cf5cc988490",
+      "bytes": 64977,
+      "project": "public-ru-375",
+      "testTitle": "public mock: site → recommendation/estimate → growth → RU/KK DOCX XML",
+      "width": 375,
+      "height": 812,
+      "source": "Original passing Playwright attachment; decoded without image editing.",
+      "visuallyInspected": true
+    },
+    {
+      "path": "screenshots/public-ru-375-public-completed-outcomes.png",
+      "sha256": "e7e73158c17484219cb8361e2840f940d80bc712934f32a9517a06f859563194",
+      "bytes": 64754,
+      "project": "public-ru-375",
+      "testTitle": "public mock: Outcomes variants and inspection retain demonstration labels",
+      "width": 375,
+      "height": 812,
+      "source": "Original passing Playwright attachment; decoded without image editing.",
+      "visuallyInspected": true
+    },
+    {
+      "path": "screenshots/public-ru-375-public-priorities-normal.png",
+      "sha256": "c5c54f3597e2eec6a3700ed84105d0ca0c5d18527f4a7a7fca0cc0378a0d35a5",
+      "bytes": 67011,
+      "project": "public-ru-375",
+      "testTitle": "public mock E2E-09: weight controls and values remain accessible in normal/presentation modes",
+      "width": 375,
+      "height": 812,
+      "source": "Original passing Playwright attachment; decoded without image editing.",
+      "visuallyInspected": true
+    },
+    {
+      "path": "screenshots/public-ru-375-public-priorities-presentation.png",
+      "sha256": "02664b4c53995b2b720396d726143900bf3a5031c07f7fae034e7b1fd206da38",
+      "bytes": 64675,
+      "project": "public-ru-375",
+      "testTitle": "public mock E2E-09: weight controls and values remain accessible in normal/presentation modes",
+      "width": 375,
+      "height": 812,
+      "source": "Original passing Playwright attachment; decoded without image editing.",
+      "visuallyInspected": true
+    },
+    {
+      "path": "screenshots/public-kk-375-public-completed-lab.png",
+      "sha256": "f4f961795cf6e01300fa69a4c114b2a86651f478f89f399f5d56a23fccb5fef8",
+      "bytes": 68186,
+      "project": "public-kk-375",
+      "testTitle": "public mock: complete menu and three calculated laboratory plans",
+      "width": 375,
+      "height": 812,
+      "source": "Original passing Playwright attachment; decoded without image editing.",
+      "visuallyInspected": true
+    },
+    {
+      "path": "screenshots/public-kk-375-public-completed-report.png",
+      "sha256": "26160e2d64121a3e825958ee3cde84ae3e0571afd8baedb702e00a4df7509c8d",
+      "bytes": 67001,
+      "project": "public-kk-375",
+      "testTitle": "public mock: site → recommendation/estimate → growth → RU/KK DOCX XML",
+      "width": 375,
+      "height": 812,
+      "source": "Original passing Playwright attachment; decoded without image editing.",
+      "visuallyInspected": true
+    },
+    {
+      "path": "screenshots/public-kk-375-public-completed-outcomes.png",
+      "sha256": "ea03b1eda3593a35ba84ab40d1df3af21647cd6b0fc72a75e0d23efbbd848f0b",
+      "bytes": 67095,
+      "project": "public-kk-375",
+      "testTitle": "public mock: Outcomes variants and inspection retain demonstration labels",
+      "width": 375,
+      "height": 812,
+      "source": "Original passing Playwright attachment; decoded without image editing.",
+      "visuallyInspected": true
+    },
+    {
+      "path": "screenshots/public-kk-375-public-priorities-normal.png",
+      "sha256": "b4d25f3db75219ec830289fe21a8477bc04200ab894eb8a8b90cec7f4a100bb6",
+      "bytes": 66697,
+      "project": "public-kk-375",
+      "testTitle": "public mock E2E-09: weight controls and values remain accessible in normal/presentation modes",
+      "width": 375,
+      "height": 812,
+      "source": "Original passing Playwright attachment; decoded without image editing.",
+      "visuallyInspected": true
+    },
+    {
+      "path": "screenshots/public-kk-375-public-priorities-presentation.png",
+      "sha256": "b6f2e48d3f5d28c863bfc468f856aefbaf3ae555674169c6a9ccebc03da2379a",
+      "bytes": 62669,
+      "project": "public-kk-375",
+      "testTitle": "public mock E2E-09: weight controls and values remain accessible in normal/presentation modes",
+      "width": 375,
+      "height": 812,
+      "source": "Original passing Playwright attachment; decoded without image editing.",
+      "visuallyInspected": true
+    },
+    {
+      "path": "e2e10/onboarding-ru-1280.png",
+      "sha256": "8af4b8a0a994f02833cbafbe140e9e51fc5686d38a3b1fb801cb8a9c6dbde03f",
+      "bytes": 170345,
+      "project": "additional-e2e10-ru-1280",
+      "width": 1280,
+      "height": 800,
+      "source": "Additional real browser capture; no image editing.",
+      "visuallyInspected": true
+    },
+    {
+      "path": "e2e10/onboarding-kk-1280.png",
+      "sha256": "4df2314dd7b3a73b563b3aa0b2c31ae78d04d94b65b41aeadb32b28850ff2fec",
+      "bytes": 181095,
+      "project": "additional-e2e10-kk-1280",
+      "width": 1280,
+      "height": 800,
+      "source": "Additional real browser capture; no image editing.",
+      "visuallyInspected": true
+    },
+    {
+      "path": "e2e10/onboarding-ru-375.png",
+      "sha256": "9bca74f6fc2c94961f4f732340897c1b7bec17f85a37e46ca9034029e18f39f6",
+      "bytes": 78002,
+      "project": "additional-e2e10-ru-375",
+      "width": 375,
+      "height": 812,
+      "source": "Additional real browser capture; no image editing.",
+      "visuallyInspected": true
+    },
+    {
+      "path": "e2e10/onboarding-kk-375.png",
+      "sha256": "b1a4086fc71e6239b49d7f07fa0108fecc0f90933e946d66bd4295f334c29f03",
+      "bytes": 75876,
+      "project": "additional-e2e10-kk-375",
+      "width": 375,
+      "height": 812,
+      "source": "Additional real browser capture; no image editing.",
+      "visuallyInspected": true
+    }
+  ],
+  "hitTests": [
+    {
+      "path": "hit-tests/public-ru-1280.json",
+      "sha256": "9cf08852964c6e053e92cf278f8cc10de673c6f55e5fcfb62a01012eecda7dd7",
+      "project": "public-ru-1280",
+      "modes": [
+        {
+          "mode": "normal",
+          "checkedElements": 13,
+          "collisions": 0
+        },
+        {
+          "mode": "presentation",
+          "checkedElements": 13,
+          "collisions": 0
+        }
+      ]
+    },
+    {
+      "path": "hit-tests/public-kk-1280.json",
+      "sha256": "3cfe8645c9ca5047fc6254e84d071fe148d1ba5a82f1b4923b25bb3bddc519c9",
+      "project": "public-kk-1280",
+      "modes": [
+        {
+          "mode": "normal",
+          "checkedElements": 13,
+          "collisions": 0
+        },
+        {
+          "mode": "presentation",
+          "checkedElements": 13,
+          "collisions": 0
+        }
+      ]
+    },
+    {
+      "path": "hit-tests/public-ru-375.json",
+      "sha256": "9cf08852964c6e053e92cf278f8cc10de673c6f55e5fcfb62a01012eecda7dd7",
+      "project": "public-ru-375",
+      "modes": [
+        {
+          "mode": "normal",
+          "checkedElements": 13,
+          "collisions": 0
+        },
+        {
+          "mode": "presentation",
+          "checkedElements": 13,
+          "collisions": 0
+        }
+      ]
+    },
+    {
+      "path": "hit-tests/public-kk-375.json",
+      "sha256": "3cfe8645c9ca5047fc6254e84d071fe148d1ba5a82f1b4923b25bb3bddc519c9",
+      "project": "public-kk-375",
+      "modes": [
+        {
+          "mode": "normal",
+          "checkedElements": 13,
+          "collisions": 0
+        },
+        {
+          "mode": "presentation",
+          "checkedElements": 13,
+          "collisions": 0
+        }
+      ]
+    }
+  ],
+  "additionalOnboarding": {
+    "counts": {
+      "passed": 4,
+      "failed": 0
+    },
+    "startedAt": "2026-10-31T16:42:46.805Z",
+    "endedAt": "2026-10-31T16:43:37.931Z",
+    "scope": "Additional DOM and normal-click checks of E2E10 onboarding wording at RU/KK 1280x800 and 375x812. Separate from the unchanged original 16-test public suite.",
+    "results": {
+      "path": "e2e10/results.json",
+      "sha256": "ecd4baaa7578ff809c95daf47fbfd7419ba21a4446b73d07b336b1dae4f13924"
+    },
+    "checkScript": {
+      "path": "../check-public-e2e10.mjs",
+      "sha256": "ce5854ac2fc3201620763f41d5bea560b275b7944dc8525eb50d8f671649ce5b"
+    },
+    "cases": [
+      {
+        "lang": "ru",
+        "width": 1280,
+        "status": "PASS",
+        "onboardingText": "Спросите ассистента (✦ в верхней панели), например «Что озеленить на 50 млн?» — зоны появятся на карте с номерами очереди.",
+        "launcher": {
+          "inHeader": true,
+          "actualHit": true,
+          "bounds": {
+            "x": 1078.453125,
+            "y": 8,
+            "width": 108,
+            "height": 34
+          },
+          "pageOverflow": 0
+        },
+        "screenshot": {
+          "path": "e2e10/onboarding-ru-1280.png",
+          "sha256": "8af4b8a0a994f02833cbafbe140e9e51fc5686d38a3b1fb801cb8a9c6dbde03f",
+          "bytes": 170345
+        },
+        "normalClickOpensAssistant": true,
+        "escapeClosesAssistant": true
+      },
+      {
+        "lang": "kk",
+        "width": 1280,
+        "status": "PASS",
+        "onboardingText": "Көмекшіден сұраңыз (✦ жоғарғы панельде), мысалы: «50 млн-ға нені көгалдандыруға болады?» — аймақтар картада кезек нөмірлерімен пайда болады.",
+        "launcher": {
+          "inHeader": true,
+          "actualHit": true,
+          "bounds": {
+            "x": 1095.25,
+            "y": 8,
+            "width": 95.84375,
+            "height": 34
+          },
+          "pageOverflow": 0
+        },
+        "screenshot": {
+          "path": "e2e10/onboarding-kk-1280.png",
+          "sha256": "4df2314dd7b3a73b563b3aa0b2c31ae78d04d94b65b41aeadb32b28850ff2fec",
+          "bytes": 181095
+        },
+        "normalClickOpensAssistant": true,
+        "escapeClosesAssistant": true
+      },
+      {
+        "lang": "ru",
+        "width": 375,
+        "status": "PASS",
+        "onboardingText": "Спросите ассистента (✦ в верхней панели), например «Что озеленить на 50 млн?» — зоны появятся на карте с номерами очереди.",
+        "launcher": {
+          "inHeader": true,
+          "actualHit": true,
+          "bounds": {
+            "x": 248.5625,
+            "y": 85.28125,
+            "width": 34,
+            "height": 34
+          },
+          "pageOverflow": 0
+        },
+        "screenshot": {
+          "path": "e2e10/onboarding-ru-375.png",
+          "sha256": "9bca74f6fc2c94961f4f732340897c1b7bec17f85a37e46ca9034029e18f39f6",
+          "bytes": 78002
+        },
+        "normalClickOpensAssistant": true,
+        "escapeClosesAssistant": true
+      },
+      {
+        "lang": "kk",
+        "width": 375,
+        "status": "PASS",
+        "onboardingText": "Көмекшіден сұраңыз (✦ жоғарғы панельде), мысалы: «50 млн-ға нені көгалдандыруға болады?» — аймақтар картада кезек нөмірлерімен пайда болады.",
+        "launcher": {
+          "inHeader": true,
+          "actualHit": true,
+          "bounds": {
+            "x": 242.15625,
+            "y": 85.28125,
+            "width": 34,
+            "height": 34
+          },
+          "pageOverflow": 0
+        },
+        "screenshot": {
+          "path": "e2e10/onboarding-kk-375.png",
+          "sha256": "b1a4086fc71e6239b49d7f07fa0108fecc0f90933e946d66bd4295f334c29f03",
+          "bytes": 75876
+        },
+        "normalClickOpensAssistant": true,
+        "escapeClosesAssistant": true
+      }
+    ],
+    "visualReview": {
+      "status": "PASS_WITH_SCOPE_LIMITS",
+      "inspected": 4,
+      "total": 4,
+      "method": "All four original screenshots individually opened and visually inspected.",
+      "findings": [],
+      "limitations": [
+        "The map background had not fully loaded in these onboarding captures; map availability is outside this text/header regression check."
+      ]
+    }
+  },
+  "visualReview": {
+    "status": "PASS_WITH_SCOPE_LIMITS",
+    "inspected": 24,
+    "total": 24,
+    "method": "All 20 original public-suite PNGs and all four onboarding PNGs individually opened and visually inspected at their original 1280x800 or 375x812 resolution.",
+    "checked": [
+      "RU/KK lab forms",
+      "RU/KK document-download confirmations",
+      "RU/KK Outcomes demonstration labels",
+      "RU/KK priorities in normal/presentation modes with header assistant",
+      "RU/KK onboarding: top-panel wording and visible header control"
+    ],
+    "findings": [],
+    "limitations": [
+      "Viewport captures are not full-page reviews. Lower content requires scrolling.",
+      "Mobile navigation intentionally uses a horizontally scrollable tab strip; status strip clips to its viewport. The suite checks navigation reachability and document overflow.",
+      "The original public document journey retains its default two-year care input; the final presentation uses a separately checked three-year example.",
+      "Onboarding screenshots do not establish basemap availability."
+    ]
+  },
+  "boundaries": [
+    "No public API, persistence, worker server workflow or Cloudflare proxy-runtime acceptance is inferred from this mock run.",
+    "The original runner hardcodes the old publisherReportedSHA a66d542 and null applicationSHA/deploymentId. Its two reports are retained unchanged; current provenance is supplied only by this sidecar and the actual Direct Upload/HTTP byte proof.",
+    "The application source was established from the clean build manifest, exact archive upload and 34/34 byte-matching files on each origin, not inferred from a missing deployed-SHA endpoint.",
+    "DOCX assertions inspect the downloaded OOXML; this run does not open Microsoft Word.",
+    "Screenshots are the original passing test captures; visual review status is recorded separately."
+  ]
+}

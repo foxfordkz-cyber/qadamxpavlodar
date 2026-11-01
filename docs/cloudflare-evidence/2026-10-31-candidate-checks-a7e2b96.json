@@ -1,0 +1,56 @@
+{
+  "candidateSha": "a7e2b968437ad82834f4164f3cf09aafe4b64383",
+  "mergedCoordinator": "932574e",
+  "mergeCommit": "acdb335de61e32f8d77362726b84bc681cf768d7",
+  "typecheck": "PASS",
+  "build": "PASS",
+  "webTests": {
+    "passed": 201,
+    "failed": 0
+  },
+  "workerTests": {
+    "passed": 93,
+    "failed": 0
+  },
+  "proxyNodeTests": {
+    "passed": 15,
+    "failed": 0
+  },
+  "checks": [
+    "i18n",
+    "zones",
+    "care",
+    "survival"
+  ],
+  "kkDictionaryKeys": 1952,
+  "localWorkerd": {
+    "passed": 7,
+    "providerRequests": 0,
+    "compatibilityDate": "2026-06-16",
+    "flags": [],
+    "diagnostic": "WSARecv #64 during Windows connection close; assertions and exit code 0"
+  },
+  "localUi": {
+    "draftCasesPassed": 4,
+    "reloadCasesPassed": 4,
+    "roles": [
+      "worker",
+      "foreman"
+    ],
+    "widths": [
+      375,
+      1280
+    ],
+    "evidence": "2026-10-31-worker-kk-candidate-a7e2b96.json"
+  },
+  "ci": "https://github.com/foxfordkz-cyber/qadamxpavlodar/actions/runs/41225579568",
+  "ciJobsPassed": 3,
+  "published": false,
+  "deploymentBlocker": "Local browser use is disabled in Work settings; no new Direct Upload performed",
+  "publicApiStill": "aee7242 / ff01f45d",
+  "limitations": [
+    "Existing partial kk-draft translations only; not a complete Kazakh translation",
+    "Local synthetic outbound tests are not Cloudflare runtime acceptance",
+    "No credentials present on this machine; public authenticated evidence is attributed to backend operator"
+  ]
+}

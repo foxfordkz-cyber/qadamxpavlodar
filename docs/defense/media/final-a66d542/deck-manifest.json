@@ -222,8 +222,8 @@
     }
   ],
   "wordDocuments": [
-    "../../../../../../outputs/defense-final/documents/green-pavlodar-memo-ru-a66d542.docx",
-    "../../../../../../outputs/defense-final/documents/green-pavlodar-memo-kk-a66d542.docx"
+    "documents/green-pavlodar-memo-ru-a66d542.docx",
+    "documents/green-pavlodar-memo-kk-a66d542.docx"
   ],
   "validation": {
     "presentationPackage": "pass",

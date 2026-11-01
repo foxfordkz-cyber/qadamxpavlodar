@@ -2,6 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState, t
 import { createApi, type Api } from './api';
 import { ApiError, createHttpTransport, type Transport } from './transport';
 import { createV2CompatTransport } from './v2compat';
+import { isUnavailableStatus } from './connection';
 
 // Тестовый источник (с данными OSM) грузится отдельным чанком только в режиме mock.
 function createLazyMockTransport(): Transport {
@@ -62,7 +63,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
           return r as never;
         } catch (e) {
           if (e instanceof ApiError) {
-            reportService('api', e.status === 0 ? 'down' : 'ok');
+            reportService('api', isUnavailableStatus(e.status) ? 'down' : 'ok');
             if (path.includes('plant-selection') || path === '/assistant') reportService('ai', e.status === 503 ? 'down' : 'ok');
           }
           throw e;

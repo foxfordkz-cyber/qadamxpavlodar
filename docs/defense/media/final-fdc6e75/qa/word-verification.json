@@ -1,0 +1,88 @@
+{
+  "sourceSha": "fdc6e756be99dc5ba3a7a48ca1df17c4bfbef5ef",
+  "base": "https://f816c350.green-pavlodar-mock.pages.dev/",
+  "source": "mock",
+  "site": "site-osm-1569993037",
+  "reportExplicitOptions": {
+    "careYears": 3
+  },
+  "resolvedOptions": {
+    "variant": "optimal",
+    "careYears": 3,
+    "excluded": [],
+    "locked": [],
+    "replacements": {},
+    "watering": "regular",
+    "improveSoil": false,
+    "maxSpeciesShare": 0.3
+  },
+  "defaultOptionsSource": "Pinned fdc6e75 apps/web/src/shared/analytics/plan.ts:23; actual report uses DEFAULT_OPTIONS plus URL careYears3.",
+  "files": [
+    {
+      "language": "ru",
+      "file": "../documents/green-pavlodar-memo-ru-fdc6e75.docx",
+      "originalFileName": "green-pavlodar-memo-ru-2026-10-31.docx",
+      "bytes": 9376,
+      "sha256": "d54df2a7f53466cf35f8094f2c561514630607168ca336f6b3713e73bfbe97df",
+      "url": "https://f816c350.green-pavlodar-mock.pages.dev/?source=mock&lang=ru#/report?site=site-osm-1569993037&o=eyJjYXJlWWVhcnMiOjN9",
+      "docLanguage": "ru-RU",
+      "tables": 5,
+      "speciesRows": 12,
+      "plantCount": 1345,
+      "areaM2": 3782.0,
+      "costItemsExactKzt": [
+        2093100.0,
+        4765320.0,
+        1072968.0,
+        2565450.0,
+        328789.5
+      ],
+      "grandTotalExactKzt": 10825627.5,
+      "screenRoundedTotalKzt": 10825628.0,
+      "roundingExplained": true,
+      "structure": "PASS",
+      "screenSchemeAndCost": "PASS",
+      "survivalPercentages": "PASS"
+    },
+    {
+      "language": "kk",
+      "file": "../documents/green-pavlodar-memo-kk-fdc6e75.docx",
+      "originalFileName": "green-pavlodar-memo-kk-2026-10-31.docx",
+      "bytes": 9486,
+      "sha256": "4b33f69bb4c073d011b853acdd30c25400d085262ab57bcafa33d90d0ac5fb0c",
+      "url": "https://f816c350.green-pavlodar-mock.pages.dev/?source=mock&lang=ru#/report?site=site-osm-1569993037&o=eyJjYXJlWWVhcnMiOjN9",
+      "docLanguage": "kk-KZ",
+      "tables": 5,
+      "speciesRows": 12,
+      "plantCount": 1345,
+      "areaM2": 3782.0,
+      "costItemsExactKzt": [
+        2093100.0,
+        4765320.0,
+        1072968.0,
+        2565450.0,
+        328789.5
+      ],
+      "grandTotalExactKzt": 10825627.5,
+      "screenRoundedTotalKzt": 10825628.0,
+      "roundingExplained": true,
+      "structure": "PASS",
+      "screenSchemeAndCost": "PASS",
+      "survivalPercentages": "PASS"
+    }
+  ],
+  "checks": [
+    "Report URL explicitly sets careYears3; pinned fdc6e75 DEFAULT_OPTIONS supplies optimal/regular/no soil improvement/maxSpeciesShare30%, matching exported text and UI.",
+    "Each DOCX ZIP/OOXML/language/no macros/no external relationship PASS.",
+    "All12 species latin+quantities match actual UI report.",
+    "All5 cost items and total match screen after documented Math.round; exact item sum matches exact total.",
+    "Every species1/2/3-year survival percentage matches UI.",
+    "RU/KK numeric cost/effect values are identical."
+  ],
+  "passed": true,
+  "visualQa": "Original UI exports: Word2016 opened2/2, nativePDF6+6pages reviewed, known Unicode-subscript glyph issue. Separate print-safe derivative: Word2016 opened2/2, nativePDF6+6pages all reviewed PASS. Original DOCX preserved unchanged.",
+  "kazakhRemainingFallbackSpeciesNames": 8,
+  "nativeWordEvidence": "native-word-original-review.json",
+  "printSafeTransformation": "print-safe-transformation.json",
+  "printSafeNativeWordEvidence": "native-word-print-safe-review.json"
+}

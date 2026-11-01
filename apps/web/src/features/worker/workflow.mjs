@@ -120,7 +120,7 @@ export class WorkerWorkflow {
     for (const draft of await this.pending()) {
       if (!draft.frozen || ['conflict','rejected'].includes(draft.delivery)) continue; // Never silently send unfinished or explicitly rejected drafts.
       try { outcomes.push({ taskId: draft.taskId, saved: true, receipt: await this.send(draft) }); }
-      catch (error) { outcomes.push({ taskId: draft.taskId, saved: false, error: error.message }); }
+      catch (error) { outcomes.push({ taskId: draft.taskId, saved: false, error: error.message, errorCode: error.code }); }
     }
     return outcomes;
   }

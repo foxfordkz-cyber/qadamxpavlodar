@@ -1,0 +1,98 @@
+{
+  "sourceSha": "fdc6e756be99dc5ba3a7a48ca1df17c4bfbef5ef",
+  "exportKind": "print-safe",
+  "nativeApplication": "Microsoft Word 2016",
+  "pdfMethod": "Microsoft Print to PDF through native Word UI",
+  "rasterizer": "Bundled Poppler pdftoppm,120dpi PNG",
+  "reviewedBy": "Codex visual page inspection, all pages; parent performed native Word open/print",
+  "files": [
+    {
+      "language": "ru",
+      "pdf": "../documents/green-pavlodar-memo-ru-fdc6e75-print-safe-word2016.pdf",
+      "sha256": "c9c08f4911f6bf9265f3c411386642575747e06a413b6e24126e4b9ec897fda9",
+      "bytes": 275979,
+      "pageCount": 6,
+      "allPagesViewed": true,
+      "keyNumbersInPdf": "PASS",
+      "tablesAndParagraphs": "No clipping or overlaps found.",
+      "rasterPages": [
+        {
+          "file": "page-1.png",
+          "sha256": "4fc69e365a4b434e54cf362eeaa02729917a3e11359084e23626758cdda7db46"
+        },
+        {
+          "file": "page-2.png",
+          "sha256": "850e25195b36ffa56ce072a5889414ae8cb236094100ce238a39e49bcdf5c513"
+        },
+        {
+          "file": "page-3.png",
+          "sha256": "1d533697971cfaed145a5847792744e1affd5a0c5c009bc1f8d922a4875f2c81"
+        },
+        {
+          "file": "page-4.png",
+          "sha256": "cde1607ebd2d8e3846b9f435a5f00b7e3761fade5b9f4e6e0b4e186b5a2f5a35"
+        },
+        {
+          "file": "page-5.png",
+          "sha256": "b326621fcb6dc20c79973190a2ac185146212cc3e09e0802abc9e9047c1602f5"
+        },
+        {
+          "file": "page-6.png",
+          "sha256": "d06d5d9ffdd09d6b92a71614fb318e0041309343c58a5dbc569d262436b180f1"
+        }
+      ],
+      "glyphStatus": "PASS: CO2/O2 rendered with proper subscript through Word runs.",
+      "rasterPagesIdenticalToOriginal": [
+        1,
+        2,
+        4,
+        6
+      ]
+    },
+    {
+      "language": "kk",
+      "pdf": "../documents/green-pavlodar-memo-kk-fdc6e75-print-safe-word2016.pdf",
+      "sha256": "bd651ebcd674dfed1b77500d1177c3af78017d24a8f4b3e2e945c12a34b79a5e",
+      "bytes": 279578,
+      "pageCount": 6,
+      "allPagesViewed": true,
+      "keyNumbersInPdf": "PASS",
+      "tablesAndParagraphs": "No clipping or overlaps found.",
+      "rasterPages": [
+        {
+          "file": "page-1.png",
+          "sha256": "e0de6b11911a202a787a535b41d3809aacc30d1a060427041c016a1d98ba0a4a"
+        },
+        {
+          "file": "page-2.png",
+          "sha256": "e8d3b93f3d2d7ac7ed3c28e9a7424c87819f68364bb074ad150eb3eae2724177"
+        },
+        {
+          "file": "page-3.png",
+          "sha256": "5e3a60182176b08829fe7cd9bfa82f7a40b7eb331d99bbc294eda0cf6c07c2a6"
+        },
+        {
+          "file": "page-4.png",
+          "sha256": "0f93b2f862ba5662179086f63eae6696f87b6b0ac673336d0b7fe32323dda1ee"
+        },
+        {
+          "file": "page-5.png",
+          "sha256": "4bda53d7580ed5e6f37c6d44e1921fe3d96022ef8111b52f5aa76bb44fe7557b"
+        },
+        {
+          "file": "page-6.png",
+          "sha256": "269b77d41d62ea18c385e5f00ccf1455fc289d8b31747729e3a0d8a817344f0f"
+        }
+      ],
+      "glyphStatus": "PASS: CO2/O2 rendered with proper subscript through Word runs.",
+      "rasterPagesIdenticalToOriginal": [
+        1,
+        2,
+        4,
+        6
+      ]
+    }
+  ],
+  "completedUtc": "2026-10-31T17:12:50.278905+00:00",
+  "status": "PASS"
+}

@@ -1,0 +1,61 @@
+{
+  "schema": "green-pavlodar-external-acceptance-summary-v1",
+  "attribution": "Reported by backend operator bekzatwr; not a second independent run by frontend owner.",
+  "source": "https://github.com/foxfordkz-cyber/qadamxpavlodar/pull/35#issuecomment-6546637443",
+  "documentationSha": "05bc92492f72cc909ee6ae94d18d5b9bf1a3d54b",
+  "reportedLocalTime": "2026-10-31 22:17 UTC+5",
+  "frontendSha": "aee7242ee899f1f596a704adba6e1279c37af9df",
+  "backendSha": "3b14927def04b35bf97782eae6b550da276c779f",
+  "productionUrl": "https://green-pavlodar-api.pages.dev/",
+  "renderDeployment": "dep-dbj223h42hec73bqnttg",
+  "persistenceBeforeNewWrites": {
+    "tables": 31,
+    "rows": 956,
+    "baselineMatched": true
+  },
+  "existingSyntheticDataset": {
+    "dtoHistoryReads": 7,
+    "idempotentReplays": 5,
+    "privatePhotoHash": "PASS",
+    "rolesCsrf": "PASS",
+    "outcomes": {
+      "alive": 1,
+      "unknown": 3,
+      "wholeCohortPercentage": null
+    }
+  },
+  "newSyntheticInspection": {
+    "assertionsPassed": 10,
+    "httpRequests": 35,
+    "checks": [
+      "five-role secure host-only login",
+      "assignment/start",
+      "stale version 409",
+      "other worker 404",
+      "multipart upload and repeat",
+      "report and repeat",
+      "coordinator acceptance and repeat",
+      "viewer write 403",
+      "private binary WebP",
+      "anonymous 401"
+    ],
+    "newPlants": 0,
+    "sharedSiteContextMutation": false
+  },
+  "browserSmoke": [
+    "viewer login",
+    "session survives reload",
+    "Outcomes forecast/cohort load",
+    "accepted report load",
+    "same-origin private 16x16 WebP load",
+    "logout"
+  ],
+  "notProven": [
+    "complete worker-to-coordinator UI cycle",
+    "authenticated RU/KK 375/1280 matrix",
+    "independent Aidana acceptance",
+    "physical mobile device"
+  ],
+  "dataLabel": "Synthetic DEMO, not field evidence",
+  "credentialsIncluded": false
+}

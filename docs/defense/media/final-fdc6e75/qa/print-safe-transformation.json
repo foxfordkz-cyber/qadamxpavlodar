@@ -1,0 +1,34 @@
+{
+  "kind": "print-safe derivative, not original UI export",
+  "transformation": "Unicode U+2082 replaced with ASCII 2 in a dedicated Word run with w:vertAlign=subscript. No other text or calculation changes.",
+  "files": [
+    {
+      "language": "ru",
+      "original": "../documents/green-pavlodar-memo-ru-fdc6e75.docx",
+      "originalSha256": "d54df2a7f53466cf35f8094f2c561514630607168ca336f6b3713e73bfbe97df",
+      "printSafe": "../documents/green-pavlodar-memo-ru-fdc6e75-print-safe.docx",
+      "printSafeSha256": "03d8abbbb4e15849b3a92818771a99c72bb2c2502adab56f169f3b3bbc582e1e",
+      "bytes": 9329,
+      "replacements": 8,
+      "allOtherZipPartsIdentical": true,
+      "normalizedFullTextIdentical": true,
+      "numericTokensUnchanged": true,
+      "nativeWordPdfReview": "PASS: Word2016 open/PrintToPDF; all6pages visually reviewed; glyph fixed."
+    },
+    {
+      "language": "kk",
+      "original": "../documents/green-pavlodar-memo-kk-fdc6e75.docx",
+      "originalSha256": "4b33f69bb4c073d011b853acdd30c25400d085262ab57bcafa33d90d0ac5fb0c",
+      "printSafe": "../documents/green-pavlodar-memo-kk-fdc6e75-print-safe.docx",
+      "printSafeSha256": "1252fd376031823e87bae2408e9134ec2731728dd58daa3f340321e706153701",
+      "bytes": 9458,
+      "replacements": 8,
+      "allOtherZipPartsIdentical": true,
+      "normalizedFullTextIdentical": true,
+      "numericTokensUnchanged": true,
+      "nativeWordPdfReview": "PASS: Word2016 open/PrintToPDF; all6pages visually reviewed; glyph fixed."
+    }
+  ],
+  "nativeWordEvidence": "native-word-print-safe-review.json",
+  "originalDocumentsUnchangedAfterWordOpen": true
+}

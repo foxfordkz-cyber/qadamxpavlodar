@@ -94,7 +94,8 @@ export function useGuarded() {
 export function ErrorNote({ error, notSaved }: { error: unknown; notSaved?: boolean }) {
   if (!error) return null;
   const e = error as ApiError;
-  const msg = e instanceof ApiError ? (e.status === 0 ? t('state.network') : e.status === 403 ? t('state.forbidden') : e.status === 401 ? t('state.unauthenticated') : e.message) : String((error as Error).message ?? error);
+  const msg = e.code === 'WORKER_REQUEST_TIMEOUT' ? t('connection.requestTimeout') : e.code === 'WORKER_REQUEST_ABORTED' ? t('connection.requestCancelled') :
+    e instanceof ApiError ? (e.status === 0 ? t('state.network') : e.status === 403 ? t('state.forbidden') : e.status === 401 ? t('state.unauthenticated') : e.message) : String((error as Error).message ?? error);
   return (
     <div className="gp-alert gp-alert--bad" role="alert">
       <strong>{notSaved ? t('state.notSaved') + ' ' : ''}</strong>

@@ -1,0 +1,233 @@
+{
+  "schema": "green-pavlodar-pages-api-build-v1",
+  "frontendSourceSha": "a7e2b968437ad82834f4164f3cf09aafe4b64383",
+  "sourceDirty": false,
+  "publicOrigin": "https://green-pavlodar-api.pages.dev",
+  "upstreamOrigin": "https://green-pavlodar-api-demo.onrender.com",
+  "backendDeployedSha": "3b14927def04b35bf97782eae6b550da276c779f",
+  "contractSha": "a72131df86272804f95d8331d0f627e62272b3ea",
+  "node": "v24.22.1",
+  "dataSource": "api",
+  "routes": {
+    "version": 1,
+    "include": [
+      "/api",
+      "/api/*"
+    ],
+    "exclude": []
+  },
+  "runtimeCompatibility": {
+    "date": "2026-06-16",
+    "flags": []
+  },
+  "archive": "green-pavlodar-api.zip",
+  "archiveBytes": 1634900,
+  "archiveSha256": "02bd9aa868b8a2564a03afa153d2b565a78a9b4c81c8ce1f9bbdc022b0c2b399",
+  "inputHashes": [
+    {
+      "path": "cloudflare/api-proxy.mjs",
+      "sha256": "1f88c7f1c02f3d453a5005907387b36ef1371eb07f374912db4c596967945acc"
+    },
+    {
+      "path": "cloudflare/pages-worker.mjs",
+      "sha256": "683c7beedfab51937cb85e54e493bebd96787a3ec069f7e66cd6fa0eebe18251"
+    },
+    {
+      "path": "cloudflare/build-api.mjs",
+      "sha256": "391dd4cb6cd139eda510a3763e57f2ca9ec1a59f6e10e54b60e4cdfcdceaaf7a"
+    },
+    {
+      "path": "apps/web/package-lock.json",
+      "sha256": "476b3f07724841766b3627d936477111dea6d331e2b577d4d704f2b5e6e0720f"
+    }
+  ],
+  "entries": [
+    {
+      "path": "_routes.json",
+      "bytes": 81,
+      "sha256": "513f89787b83f3e2df460f9a9bcfe265c2356fdb9c2a123eaa6a6218506a06f7"
+    },
+    {
+      "path": "_worker.js",
+      "bytes": 5008,
+      "sha256": "7ef0668f901910dc2ffba7618c6636f163cae1a3e19d6988cf82cd811b3e4423"
+    },
+    {
+      "path": "assets/contract-v2-DzCBM-n0.js",
+      "bytes": 30956,
+      "sha256": "d6ae3ad8911bf2f4d993fdf6d35981e4393d1764e182476145f203c11e3b5dbe"
+    },
+    {
+      "path": "assets/demo-gateway-CzmYBsds.js",
+      "bytes": 27491,
+      "sha256": "d92fb0e704c8f64bf4768900e113e95519f759b65d6d7c4a958ab33f76e5c29c"
+    },
+    {
+      "path": "assets/DevPanel-BXH-hr1d.js",
+      "bytes": 2442,
+      "sha256": "58353f29dc5db240504223ffe8284460016c583416f72a5dd7eff36fd75b73ca"
+    },
+    {
+      "path": "assets/HeroMap-DVBMZxKG.js",
+      "bytes": 2982,
+      "sha256": "2d6604622a354d1540a62dec86aaf24165f86211b940c3fc2bd2e2f59ba06d0c"
+    },
+    {
+      "path": "assets/index-D-QkwvwB.css",
+      "bytes": 84650,
+      "sha256": "d76f3e7862bdac8850d58ea16283745530f32b2356ff8a86612bb8790d599f12"
+    },
+    {
+      "path": "assets/index-Dj0VawCp.js",
+      "bytes": 987329,
+      "sha256": "893eb384280e60efa8529ae28972ad9704814dc6aecd801d6310f7024b3cbaec"
+    },
+    {
+      "path": "assets/journal-DUiVZ3Jx.css",
+      "bytes": 28323,
+      "sha256": "1f628101378a4d324955e84cff516f62990004c0970dbfe2b1c673398f08048e"
+    },
+    {
+      "path": "assets/loadMemo-CD6TAO6h.js",
+      "bytes": 637,
+      "sha256": "0e9eb0e4fcad2c9bef4319b2db9600ebbfe6330dd6bac92ad957794832bbc1bc"
+    },
+    {
+      "path": "assets/lora-cyrillic-ext-wght-normal-YcVxMP-u.woff2",
+      "bytes": 23636,
+      "sha256": "0e523e4bc3c6308f002a3208ea2990cb4f64282d4fbb67c12f5726d13b66eef6"
+    },
+    {
+      "path": "assets/lora-cyrillic-wght-normal-UWPuZLjM.woff2",
+      "bytes": 21232,
+      "sha256": "c57d9ca3bd42e6bc093badc7744dd2059a78f66a3a4dc6ca40574480c870f553"
+    },
+    {
+      "path": "assets/lora-latin-ext-wght-normal-C2Wlntb9.woff2",
+      "bytes": 20088,
+      "sha256": "2a2d9c22c9863086a23f5013fede1428585321812b25f2662542c39d02967c5e"
+    },
+    {
+      "path": "assets/lora-latin-wght-normal-BiLcIKcI.woff2",
+      "bytes": 37788,
+      "sha256": "ddb8c66035104e233fc024669183aad3738b6daa16deee2ebb1241bd0f98ace1"
+    },
+    {
+      "path": "assets/lora-math-wght-normal-sOy7rEfW.woff2",
+      "bytes": 29240,
+      "sha256": "a8c4cb778ab6202d22bdea2ccc8d7e7caf802cfe0a7ce37df7b212f82341468f"
+    },
+    {
+      "path": "assets/lora-symbols-wght-normal-DQ5VrUkH.woff2",
+      "bytes": 17248,
+      "sha256": "2df52199eac56e2ec7a735e609bb151bdab79422c3e73948f4b6580c66bb5a50"
+    },
+    {
+      "path": "assets/lora-vietnamese-wght-normal-CfJ7gtf3.woff2",
+      "bytes": 8992,
+      "sha256": "98c22de85f6e83bcd6ae1a443e12e256fbc8de7142bec4f76b059f8ff9c2797e"
+    },
+    {
+      "path": "assets/mapFlags-KArXQfJZ.js",
+      "bytes": 203,
+      "sha256": "7be91119586dd5e482676ee9daf7276bd60ca59617953d84a2df1b5be897244b"
+    },
+    {
+      "path": "assets/maplibre-gl-qdodsIIj.js",
+      "bytes": 1033029,
+      "sha256": "f79f4edfa86b9c76b92fdac87e45cfe00cf38ac384909017b39bc3de37c7b306"
+    },
+    {
+      "path": "assets/maplibre-gl-RZO-t2LB.css",
+      "bytes": 83127,
+      "sha256": "3c3faf7116e0ea3f4dd664bc9d6207bebf71dda2f9d3108b65527615011f2b2b"
+    },
+    {
+      "path": "assets/maplibre-gl-worker-DYHVkJJJ.js",
+      "bytes": 508793,
+      "sha256": "2d7087f4c4bf47b51da6498b27f32c287a4c01dbf9aa0f90446a50b13a9677f6"
+    },
+    {
+      "path": "assets/memo-yP40NZKh.js",
+      "bytes": 17325,
+      "sha256": "2a2d018f1730ed45077b76ea031d8d477fbb8d59e73baedd029f5f7c5fe53cc8"
+    },
+    {
+      "path": "assets/memoData-mJ3ORfy0.js",
+      "bytes": 276,
+      "sha256": "28d821cacfd97c3e4f4c6f25c8e326de85347b17c05fbc88ebbd7a2c07724afd"
+    },
+    {
+      "path": "assets/onest-cyrillic-ext-wght-normal-DOFToQv1.woff2",
+      "bytes": 10540,
+      "sha256": "268f03691b3d06e57abcf20f9277e314ea8784298983aab5b40c1b91965027e1"
+    },
+    {
+      "path": "assets/onest-cyrillic-wght-normal-DayYxulF.woff2",
+      "bytes": 15860,
+      "sha256": "68e5e01d6265bd68967746d4f5a9d18d0e6cbb5d15583c7082d6384ab1229b27"
+    },
+    {
+      "path": "assets/onest-latin-ext-wght-normal-QAhDxQuo.woff2",
+      "bytes": 28452,
+      "sha256": "14e7d3079b75860e2ab50efc6c318c398fdb46ede9b56e625f12ae70a3c5d9a4"
+    },
+    {
+      "path": "assets/onest-latin-wght-normal-Dun_Rd-l.woff2",
+      "bytes": 33760,
+      "sha256": "052df74533250c2e0ca0c4bdd32de594e107d99c1648e63820ef9c6142067828"
+    },
+    {
+      "path": "assets/onest-math-wght-normal-Bl4ZGkZl.woff2",
+      "bytes": 25480,
+      "sha256": "c74952a8c0c8c558c4f879f83773cf529d11350609f7073f5b2c5999dec46041"
+    },
+    {
+      "path": "assets/onest-symbols-wght-normal-DxQzqQfC.woff2",
+      "bytes": 18168,
+      "sha256": "2ec2d45d2ec0770e2c18cba2dba5126cf2dcff181d23ad192e9fffeb4af4b0b6"
+    },
+    {
+      "path": "assets/onest-vietnamese-wght-normal-BBxOatbv.woff2",
+      "bytes": 12400,
+      "sha256": "d852d4d094a3a46d701d16245deb7ca83b16b5bd69e20aa0aba089392ad69474"
+    },
+    {
+      "path": "assets/ProjectMap3D-EiGsSEfo.js",
+      "bytes": 3558,
+      "sha256": "3d30bbd9552169d18501f346241b4256bb32f9c2b208b1589aac7cd0842ed11f"
+    },
+    {
+      "path": "assets/scene3d-C6ZIzTtu.js",
+      "bytes": 567196,
+      "sha256": "53a74d50a3229ca04dd24d03aa90f7be5ef498cf976c67e7dc842fe71023d23a"
+    },
+    {
+      "path": "assets/server-BjL3Z0If.js",
+      "bytes": 1976966,
+      "sha256": "fb876cdfde120714a7891d30c941a775a356fce76e27905d166eadbbadf34d80"
+    },
+    {
+      "path": "assets/SiteMap-Ag4HjEZ7.js",
+      "bytes": 16642,
+      "sha256": "25492fcb01a8dbb7c2fba30979a1deeabc20175b14e82a63c51215fd5d16868e"
+    },
+    {
+      "path": "assets/WorkerPage-BhX4GIsV.js",
+      "bytes": 57215,
+      "sha256": "869198b630f70071b2cc8ded25d0302248d9169e87e0f5a21ae0ce3754eb032f"
+    },
+    {
+      "path": "index.html",
+      "bytes": 609,
+      "sha256": "ac1238419f013e158a240e4f73b1457ec8cdb6c102c52387efa0e3d5ba7d54b3"
+    }
+  ],
+  "runtimeStatus": "not-deployed",
+  "prerequisites": [
+    "Exact publicOrigin must be allowlisted by backend before login.",
+    "Set runtimeCompatibility date and listed flags (none when empty) in Pages Settings > Runtime; ZIP does not configure them.",
+    "Set Pages Functions fail-open/closed mode to fail closed.",
+    "Upload only to the separate API Pages project."
+  ]
+}

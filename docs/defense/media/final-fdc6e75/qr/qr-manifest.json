@@ -1,0 +1,29 @@
+{
+  "sourceSha": "fdc6e756be99dc5ba3a7a48ca1df17c4bfbef5ef",
+  "deploymentId": "f816c350-5722-4b56-a180-4124da01c5ba",
+  "createdUtc": "2026-10-31T16:46:50.014977+00:00",
+  "physicalPhoneScan": false,
+  "fullApiQr": false,
+  "files": [
+    {
+      "label": "Учебный mock — постоянный адрес",
+      "url": "https://green-pavlodar-mock.pages.dev/",
+      "png": "mock-demo-qr.png",
+      "svg": "mock-demo-qr.svg",
+      "programmaticDecode": "PASS",
+      "decodedText": "https://green-pavlodar-mock.pages.dev/",
+      "sha256Png": "940e89c33eafb82207c8550f9882c0900f1abd48748f30222a3472ef410aff12",
+      "sha256Svg": "40d51b9d0073bf1cbc2ed75d748c15772453cd33c94777b5ce7546fc82da2de4"
+    },
+    {
+      "label": "Учебный mock — зафиксированный deployment f816c350",
+      "url": "https://f816c350.green-pavlodar-mock.pages.dev/",
+      "png": "mock-f816c350-qr.png",
+      "svg": "mock-f816c350-qr.svg",
+      "programmaticDecode": "PASS",
+      "decodedText": "https://f816c350.green-pavlodar-mock.pages.dev/",
+      "sha256Png": "4bbe10843b901bf881534e9db07779eb51c3ba31a99c509079e66da6ba65d6b0",
+      "sha256Svg": "fce4e1c47dd7b2c8016042b1d102819e7039949b9de0037dcde27629f8772b4b"
+    }
+  ]
+}

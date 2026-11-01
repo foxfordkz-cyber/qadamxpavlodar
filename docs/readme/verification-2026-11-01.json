@@ -1,0 +1,58 @@
+{
+  "schema": "green-pavlodar-readme-verification-v1",
+  "recordedAt": "2026-10-31T19:35:13.295Z",
+  "scope": "Read-only review of captain local test reports, source code and publication evidence; not an independent E2E rerun or authenticated cloud acceptance.",
+  "applicationShaReportedByOperator": "84d009e3b72c4fe637ef30607e29701054b6c621",
+  "testShaReportedByOperator": "c7f15755c80292509aaeeb9f9e4638f62c8b6810",
+  "shaBinding": "The application/test pair is recorded in the captain README at 2781b2b. Raw report files themselves do not contain those Git SHAs. Counts and raw-byte hashes below were independently read, not inferred from that README.",
+  "sourceReadme": "https://github.com/foxfordkz-cyber/qadamxpavlodar/blob/2781b2bc84c8d110f79526f0a7192f328b613681/README.md",
+  "reports": {
+    "mock": {
+      "reportFormat": "Playwright JSON",
+      "rawSha256": "a033e00d41a67ae1d29bcb08ff844abc552877d6db386f15303a09788dcfe68b",
+      "rawBytes": 2640627,
+      "observedFileModifiedAt": "2026-10-31T19:14:33.745Z",
+      "startTime": "2026-10-31T19:04:03.929Z",
+      "durationMs": 629421.9299999999,
+      "counts": {
+        "passed": 292,
+        "failed": 0,
+        "skipped": 2,
+        "flaky": 0
+      },
+      "topLevelErrors": 0,
+      "rawReportPublished": false
+    },
+    "localApi": {
+      "reportFormat": "Project privacy-preserving API reporter",
+      "rawSha256": "6ab20dc5bbc725db902346cfb54cc78774d82fe1334c9b6c4691f387c6d87d09",
+      "rawBytes": 19085,
+      "observedFileModifiedAt": "2026-10-31T19:17:49.766Z",
+      "status": "passed",
+      "counts": {
+        "passed": 78,
+        "failed": 0,
+        "timedOut": 0,
+        "interrupted": 0,
+        "skipped": 0,
+        "flaky": 0,
+        "fixme": 0
+      },
+      "rawReportPublished": false
+    }
+  },
+  "publication": {
+    "evidenceSha": "bc6dae5d7a949d03261fdc6ac7b34b0404378b8a",
+    "source": "https://github.com/foxfordkz-cyber/qadamxpavlodar/pull/44",
+    "apiFrontendSha": "c970264919de2f7a62d0e1ea8a28cc70c95a3864",
+    "apiDeploymentId": "a26bd214-1c78-4a83-9536-74a35c85b49f",
+    "mockSha": "84d009e3b72c4fe637ef30607e29701054b6c621",
+    "mockDeploymentId": "d0e985d1-bbd0-4f8c-b1c1-31d20d164ef7",
+    "backendShaReportedByOwner": "3b14927def04b35bf97782eae6b550da276c779f",
+    "limitations": [
+      "Static file/anonymous health checks do not prove authenticated cloud workflow.",
+      "Word operator evidence covers opening and first screens, not full page layout.",
+      "Assistant routes are absent from the published PostgreSQL backend; no live Gemini/Groq cloud call is claimed."
+    ]
+  }
+}

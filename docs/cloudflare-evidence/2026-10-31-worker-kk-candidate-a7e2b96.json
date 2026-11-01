@@ -1,0 +1,147 @@
+{
+  "candidateCommit": "a7e2b968437ad82834f4164f3cf09aafe4b64383",
+  "testedBaseCommit": "acdb335de61e32f8d77362726b84bc681cf768d7",
+  "testedWorkingChanges": [
+    "apps/web/src/features/worker/WorkerCabinet.tsx",
+    "apps/web/src/features/worker/worker.mjs"
+  ],
+  "attribution": "Tests ran against local production build of acdb335 plus the working patch, before a7e2b96 commit. Compared source files now match candidate Git blobs after line-ending normalization. Not a test of public deployment.",
+  "baseUrl": "http://127.0.0.1:5197/",
+  "mode": "mock",
+  "draftRoundtrip": {
+    "passed": 4,
+    "total": 4,
+    "records": [
+      {
+        "role": "worker",
+        "width": 375,
+        "formKind": "worker report",
+        "selectedTask": "GP-104",
+        "contextVersionUnchanged": true,
+        "noteAndPhotoAndSelectedTaskPreserved": true,
+        "submitEnabled": true,
+        "pageErrors": [],
+        "horizontalOverflow": false,
+        "submitted": false
+      },
+      {
+        "role": "worker",
+        "width": 1280,
+        "formKind": "worker report",
+        "selectedTask": "GP-104",
+        "contextVersionUnchanged": true,
+        "noteAndPhotoAndSelectedTaskPreserved": true,
+        "submitEnabled": true,
+        "pageErrors": [],
+        "horizontalOverflow": false,
+        "submitted": false
+      },
+      {
+        "role": "foreman",
+        "width": 375,
+        "formKind": "foreman issue with demo photo",
+        "selectedTask": "GP-104",
+        "contextVersionUnchanged": true,
+        "noteAndPhotoAndSelectedTaskPreserved": true,
+        "submitEnabled": true,
+        "pageErrors": [],
+        "horizontalOverflow": false,
+        "submitted": false
+      },
+      {
+        "role": "foreman",
+        "width": 1280,
+        "formKind": "foreman issue with demo photo",
+        "selectedTask": "GP-104",
+        "contextVersionUnchanged": true,
+        "noteAndPhotoAndSelectedTaskPreserved": true,
+        "submitEnabled": true,
+        "pageErrors": [],
+        "horizontalOverflow": false,
+        "submitted": false
+      }
+    ]
+  },
+  "reloadInitialKk": {
+    "passed": 4,
+    "total": 4,
+    "records": [
+      {
+        "role": "worker",
+        "width": 375,
+        "status": "passed",
+        "locale": "kk-draft",
+        "roleAfterUi": "worker"
+      },
+      {
+        "role": "worker",
+        "width": 1280,
+        "status": "passed",
+        "locale": "kk-draft",
+        "roleAfterUi": "worker"
+      },
+      {
+        "role": "foreman",
+        "width": 375,
+        "status": "passed",
+        "locale": "kk-draft",
+        "roleAfterUi": "foreman"
+      },
+      {
+        "role": "foreman",
+        "width": 1280,
+        "status": "passed",
+        "locale": "kk-draft",
+        "roleAfterUi": "foreman"
+      }
+    ],
+    "scope": "Reload ?lang=kk then choose role via visible mock dev panel. Mock role resets to coordinator on reload by existing design."
+  },
+  "labels": [
+    "Бүгінге",
+    "Жаңарту",
+    "Тізімге",
+    "Фото түсіру",
+    "Тексеруге жіберу (worker report)"
+  ],
+  "languageNoteVisibleInKk": true,
+  "fullKazakhTranslationClaimed": false,
+  "knownLimitations": [
+    "Existing kk-draft dictionary remains partial; numerous Russian fallback labels are visible.",
+    "No server submission; synthetic photo fixture only.",
+    "No authenticated cloud API test; no production or account mutations.",
+    "Full-page screenshots include sticky headers/navigation at the capture scroll position; these are not continuous viewport recordings.",
+    "KK date stamp on this Chromium runtime showed M10/WED fallback; full locale formatting is not claimed."
+  ],
+  "screenshotVisualReview": {
+    "viewed": 16,
+    "total": 16,
+    "notes": "All screenshots inspected; expected language-note and existing KK labels present; note/photo kept across toggle. No test failures."
+  },
+  "sourceFiles": [
+    {
+      "path": "apps/web/src/features/worker/WorkerCabinet.tsx",
+      "candidateGitBlob": "7c2ce3cec416038b69ab0621885e83053b923088",
+      "candidateBlobSha256": "fad9b717d01f2bf39fdc9b30a36d1f60462ee263b8b2e17d0a41010123b641f8",
+      "workingBytesSha256": "2af8577346df19880b71b1acecd59337bf43af036d9dc7863a4f6e3bce357cf5",
+      "matchesCandidateIgnoringGitLineEndings": true
+    },
+    {
+      "path": "apps/web/src/features/worker/worker.mjs",
+      "candidateGitBlob": "7e0bc16bd0b9aa016c8826acb192bc415e713e81",
+      "candidateBlobSha256": "b69e651ad884a5c682bf2e836440286ffb327f408312ac59c3737f787d05c77e",
+      "workingBytesSha256": "51638959ff6e97208cb8ee702f57d0b0a48873dcd8348b8287ded29eaf08338b",
+      "matchesCandidateIgnoringGitLineEndings": true
+    },
+    {
+      "path": "tools/worker-demo/tests/ui-cases.mjs",
+      "candidateGitBlob": "c978a1fcac052657f905cb1fc4bb83ca275cd9f5",
+      "candidateBlobSha256": "0426eb2e3ad0c4600ffa4fe566226e3bccacf2e50040eeb12a4dc11cd6d7d8e3",
+      "workingBytesSha256": "74f70a2d0d5207abefc6914f6043877ef4c425d57eca49ac03eb18189a802521",
+      "matchesCandidateIgnoringGitLineEndings": true
+    }
+  ],
+  "toolsE2eTree": "165535cdd1d6afadab0b21bb28823feb3421c336",
+  "toolsE2eEdited": false,
+  "completedUtc": "2026-10-31T17:40:27.434877+00:00"
+}
