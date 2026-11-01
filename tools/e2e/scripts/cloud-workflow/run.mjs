@@ -85,13 +85,20 @@ async function login(role,route){
 async function logout(){
   if(!currentContext)return;
   if(authenticated){
+    await record({step:state.currentRole+'-logout-ui',status:'RUNNING'});
     const button=currentPage.locator('.gp-header__right').getByRole('button',{name:/^(Выйти|Шығу)$/});
     await expect(button).toBeVisible();
     const responsePromise=currentPage.waitForResponse(r=>new URL(r.url()).pathname==='/api/v1/auth/logout'&&r.request().method()==='POST');
-    await button.click();const r=await responsePromise;expect(r.status()).toBe(200);
-    await expect(currentPage.locator('.gp-login')).toBeVisible();
-    await expect(currentPage.locator('green-worker')).toHaveCount(0);
-    await expect(currentPage.locator('.gp-nav')).toHaveCount(0);
+    await button.click();const r=await responsePromise;expect(r.status()).toBe(200);authenticated=false;
+    async function signedOut(){
+      await expect(currentPage.locator('.gp-login')).toBeVisible();
+      await expect(currentPage.locator('green-worker')).toHaveCount(0);
+      await expect(currentPage.locator('nav.gp-nav a, nav.gp-nav button')).toHaveCount(0);
+      await expect(currentPage.locator('.gp-header__right > span')).toHaveCount(0);
+      await expect(currentPage.locator('.gp-status-row > .gp-kv').first().locator('dd')).toHaveText('—');
+      await expect(currentPage.getByRole('button',{name:/^(Выйти|Шығу)$/})).toHaveCount(0);
+    }
+    await signedOut();await currentPage.reload({waitUntil:'domcontentloaded'});await signedOut();
     await currentPage.locator('input[type=password]').fill('');
     await currentPage.locator('input[autocomplete=username]').fill('');
     await record({step:state.currentRole+'-logout-ui',status:'PASS',identityAndNavigationRemoved:true});
@@ -114,6 +121,8 @@ async function screenshot(page,name,selector){
   report.screenshots.push({file:name+'.png',sha256:hash(readFileSync(dest)),reviewed:false,syntheticOnly:true});save();
 }
 async function main(){
+  const resume=process.argv.slice(2).length===1&&process.argv[2]==='--resume-review';
+  if(process.argv.length>2&&!resume)throw Error('UNSUPPORTED_WORKFLOW_MODE');
   const env=process.env;
   if(env.CLOUD_ACCEPTANCE_DEMO!=='1'||env.CLOUD_ACCEPTANCE_ORIGIN!==ORIGIN||env.CLOUD_ACCEPTANCE_BROWSER_ORIGIN!==ORIGIN||!env.CLOUD_ACCEPTANCE_PASSWORD||env.CLOUD_ACCEPTANCE_PASSWORD.length<12){console.log(JSON.stringify({result:'BLOCKED_ACCESS'}));process.exitCode=2;return;}
   const qaHead=execFileSync('git',['rev-parse','HEAD'],{cwd:fileURLToPath(root),env:safeEnv(),encoding:'utf8',windowsHide:true,stdio:['ignore','pipe','ignore']}).trim();
@@ -121,18 +130,19 @@ async function main(){
   if(tracked)throw Error('QA_CHECKOUT_DIRTY');
   const startedAt=new Date().toISOString(),id='run-'+startedAt.replaceAll(':','-').replaceAll('.','-')+'-'+randomUUID().slice(0,6);
   out=new URL(id+'/',outputBase);mkdirSync(out,{recursive:true});
-  writeFileSync(new URL('mutation-window.lock',outputBase),JSON.stringify({id,taskId:TASK,startedAt}),{flag:'wx'});
+  writeFileSync(new URL(resume?'review-window.lock':'mutation-window.lock',outputBase),JSON.stringify({id,taskId:TASK,startedAt}),{flag:'wx'});
   const methods=['run.mjs','worker-flow.mjs','review-viewer-flow.mjs','network-guard.mjs'].map(name=>({name,sha256:hash(readFileSync(new URL(name,import.meta.url)))}));
   report={schema:1,id,startedAt,qaHead,methods,status:'RUNNING',stage:'initial',events:[],photos:[],screenshots:[],browserErrors:[],fingerprints:[],
     identity:{frontendSha:'c970264919de2f7a62d0e1ea8a28cc70c95a3864',frontendDeployment:'a26bd214-1c78-4a83-9536-74a35c85b49f',backendOwnerConfirmedSha:'3b14927def04b35bf97782eae6b550da276c779f',backendDeployment:'dep-dbj223h42hec73bqnttg'},
     authorization:'PR39 issuecomment-6554168897; one synthetic inspect UI workflow, no restart or append inspection',apiPreparation:{owner:'Bekzat',action:'assign-workers',taskId:TASK,status:'assigned',version:3,notBrowserStep:true},
-    scope:{browserWorkflow:true,newInspectionApi:false,restart:false,trace:false,HAR:false,retries:0},timeouts:{expect:12000,action:30000,navigation:30000}};
+    scope:{browserWorkflow:true,newInspectionApi:false,restart:false,trace:false,HAR:false,retries:0,workerSubmissionPerformedThisRun:!resume},timeouts:{expect:12000,action:30000,navigation:30000}};
   state={currentRole:null,taskId:TASK,siteId:SITE,workerId:WORKER,note:NOTE,comment:COMMENT,password:env.CLOUD_ACCEPTANCE_PASSWORD,initialTaskVerified:false,taskVersion:3,newPhoto:null,newReport:null,safe:{network:[],blockedRequests:[],mutations:[]}};
   delete process.env.CLOUD_ACCEPTANCE_PASSWORD;delete process.env.E2E_PASSWORD;delete process.env.DEBUG;delete process.env.PWDEBUG;
   save();
   try{
     await fingerprint('before');
     browser=await chromium.launch({headless:true,env:safeEnv(),args:['--enable-unsafe-swiftshader','--use-angle=swiftshader']});
+    if(!resume){
     const canvasPage=await browser.newPage();
     const b64=await canvasPage.evaluate(()=>{const c=document.createElement('canvas');c.width=480;c.height=320;const x=c.getContext('2d');x.fillStyle='#dcefe3';x.fillRect(0,0,480,320);x.fillStyle='#286746';x.beginPath();x.arc(240,115,55,0,Math.PI*2);x.fill();x.fillStyle='#825d40';x.fillRect(231,155,18,60);x.fillStyle='#143d29';x.font='bold 22px sans-serif';x.fillText('QA SYNTHETIC DEMO',105,250);x.font='16px sans-serif';x.fillText('2026-11-01: not a real field photo',115,280);return c.toDataURL('image/webp',0.9).split(',')[1];});
     await canvasPage.close();const photoPath=fileURLToPath(new URL('synthetic-inspection.webp',out));writeFileSync(photoPath,Buffer.from(b64,'base64'));
@@ -144,7 +154,29 @@ async function main(){
     await currentGuard.flush();expect(state.newReport?.id).toBeTruthy();expect(state.newPhoto?.id).toBeTruthy();expect(state.taskVersion).toBe(5);
     report.newReport={...state.newReport};report.newPhoto={...state.newPhoto};save();
     await screenshot(worker,'worker-submitted-kk-375','green-worker');await logout();
+    }else{
+      const previousPath=new URL('run-2026-11-01T06-22-53-822Z-af6e67/result.json',outputBase);
+      const previousBytes=readFileSync(previousPath),previous=JSON.parse(previousBytes);
+      expect(previous.qaHead).toBe('636664e581c8c74e1029319b0fb0573759ea8241');
+      expect(previous.newReport.id).toBe('6fabe731-ea10-410e-82e3-99f3ee1a911a');
+      expect(previous.newPhoto.id).toBe('bcc645e2-ffef-40af-b05b-8abebf6600b5');
+      expect(previous.newReport.reviewStatus).toBe('pending');expect(previous.finalTaskVersion).toBe(5);
+      expect(previous.events.some(e=>e.step==='worker-report-submitted-ui'&&e.status==='PASS')).toBe(true);
+      state.newReport=previous.newReport;state.newPhoto=previous.newPhoto;state.taskVersion=5;state.taskStatus='submitted';
+      report.continuation={sourceRun:previous.id,sourceQaHead:previous.qaHead,sourceRecordSha256:hash(previousBytes),reason:'Corrected QA logout assertion: empty nav container is allowed; no repeated start/upload/report creation.'};
+      save();
+    }
     const coordinator=await login('coordinator','/reports?report='+state.newReport.id);
+    if(resume){
+      const currentTask=await getJson(coordinator,'/tasks/'+TASK),currentReport=await getJson(coordinator,'/reports/'+state.newReport.id);
+      expect(currentTask.id).toBe(TASK);expect(currentTask.objectType).toBe('candidate_site');expect(currentTask.minWorkers).toBe(1);expect(currentTask.isDemo).toBe(true);
+      expect(currentTask.latestReportId).toBe(state.newReport.id);expect(currentReport.id).toBe(state.newReport.id);
+      expect(currentReport.actualWorkerIds).toEqual([WORKER]);expect(currentReport.actualPlantingItems).toEqual([]);
+      expect(currentTask.objectId).toBe(SITE);expect(currentTask.action).toBe('inspect');expect(currentTask.version).toBe(5);expect(currentTask.status).toBe('submitted');
+      expect(currentTask.assignedWorkerIds).toEqual([WORKER]);expect(currentReport.taskId).toBe(TASK);expect(currentReport.authorId).toBe(WORKER);
+      expect(currentReport.reviewStatus).toBe('pending');expect(currentReport.version).toBe(1);expect(currentReport.note).toBe(NOTE);expect(currentReport.photoIds).toEqual([state.newPhoto.id]);
+      state.initialTaskVerified=true;await record({step:'resume-existing-pending-report-http-read',status:'PASS',taskId:TASK,reportId:state.newReport.id,taskVersion:5,reportVersion:1,noNewWorkerMutation:true});
+    }
     const before=await getJson(coordinator,'/outcomes/sites/'+SITE);report.outcomesBefore=outcomeHashes(before);
     await coordinatorAccept({page:coordinator,expect,reportId:state.newReport.id,taskId:TASK,note:NOTE,record});
     await currentGuard.flush();expect(state.taskVersion).toBe(6);expect(state.newReport.reviewStatus).toBe('accepted');expect(state.newReport.version).toBe(2);
@@ -159,6 +191,7 @@ async function main(){
     const finalReport=await getJson(viewer,'/reports/'+state.newReport.id);expect(finalReport.reviewStatus).toBe('accepted');expect(finalReport.version).toBe(2);
     report.finalRecords={taskId:TASK,taskVersion:6,taskStatus:'verified',reportId:state.newReport.id,reportVersion:2,reviewStatus:'accepted',reportSha256:digest(finalReport),taskSha256:digest(finalTask)};
     await screenshot(viewer,'viewer-outcomes-kk-375','.gp-outcomes-page');await logout();
+    if(resume){await login('worker','/worker');await expect(currentPage.locator('green-worker')).toBeVisible();await logout();await record({step:'worker-corrected-logout-regression',status:'PASS',businessWrites:false});}
     await fingerprint('after');expect(state.safe.blockedRequests).toHaveLength(0);expect(report.browserErrors).toHaveLength(0);
     report.status='PASS';report.stage='completed-ui-segment';
   }catch(error){

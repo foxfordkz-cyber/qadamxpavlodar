@@ -11,3 +11,9 @@ Run only after owner agreement and with deployed frontend/backend frozen. The on
 Linked inspection creation, explicit403/idempotency segments and same-SHA restart/redeploy require separate agreement. This phase reads existing Outcomes and must not claim a new linked inspection or restart persistence. Preserve original failures and review screenshots before publication.
 
 Offline guard checks: `node --test scripts/cloud-workflow/network-guard.offline-test.mjs` from tools/e2e. These tests never call the cloud.
+
+## Exact continuation after the first attempt
+
+Run636664e created report `6fabe731-ea10-410e-82e3-99f3ee1a911a` and photo `bcc645e2-ffef-40af-b05b-8abebf6600b5`, then stopped on an incorrect QA expectation that the empty navigation container disappears after logout. The application returned logout200 and auth/me401; the failed result is preserved. The corrected check matches the established signed-out contract: no identity, role, navigation links/buttons, cabinet or logout control, and an available login form.
+
+`Start-Cloud-Review.cmd` invokes `--resume-review`: it pins that failed source record, validates the exact existing pending/version1 report and submitted/version5 task through GET, then performs coordinator acceptance and viewer checks. It never repeats worker start/upload/create. A separate lock prevents duplicate review attempts. Worker login/logout is checked again only as a read-only session regression.
