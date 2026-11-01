@@ -1,0 +1,227 @@
+{
+  "format": 1,
+  "prefix": "release-738f96b2",
+  "origin": "https://green-pavlodar-api-demo.onrender.com",
+  "browserOrigin": "https://green-pavlodar-api-demo.onrender.com",
+  "complete": true,
+  "reads": [
+    {
+      "path": "/tasks/2f64e988-97f9-4970-9dcf-1ca016f66cb2",
+      "hash": "140d4fda17c78fb576ce312cb0a9783e1078cf76ab897a7591aeac6035dcc1d5"
+    },
+    {
+      "path": "/tasks/2f64e988-97f9-4970-9dcf-1ca016f66cb2/history",
+      "hash": "18ea748f008ed511db08b4dcb42df44c9aca24b24c71b1792f58f60fa1d8ab5b"
+    },
+    {
+      "path": "/reports/368df690-6894-4b67-9aab-2651a9c4fad9",
+      "hash": "b6b77b768d8b11ac8ba6ea9d2b9332e5ccbbd28be7bf16f401020ef305d4012d"
+    },
+    {
+      "path": "/tasks/1abe0f0e-88ff-4c66-a7ce-fef3b0347f19/history",
+      "hash": "3fe04b1cf2ee8af9a752ab1ede09ebe38b555022cf946596e55a8463f035bbda"
+    },
+    {
+      "path": "/reports/32bf4fed-c476-4cf6-81f2-aec7813939bb",
+      "hash": "a748d3ebaca2c099b916de172690800add0efd32a2a25098ae3375a7ae631da1"
+    },
+    {
+      "path": "/outcomes/cohorts/release-738f96b2-cohort",
+      "hash": "c9c534f1ad1e9e4d6dbc1ba7c9a279e5ce8afe41f4c04d267c519566f0340919"
+    },
+    {
+      "path": "/outcomes/cohorts/release-738f96b2-cohort/inspections",
+      "hash": "ffe7664050a2abbe6e98aa68f31001c2ceb20fd8fc40ac312da2a983a078cf65"
+    }
+  ],
+  "replays": [
+    {
+      "path": "/outcomes/snapshots",
+      "body": {
+        "id": "release-738f96b2-forecast",
+        "siteId": "site-osm-1568405606",
+        "expectedVersion": 2,
+        "expectedRatesVersion": 1,
+        "variant": "econom"
+      },
+      "status": 201,
+      "key": "release-738f96b2-0",
+      "hash": "5cec5b23e6babf5c3d83de3bdbad8e19c58ecc7b61bf372b4d33e4eebc7da75f"
+    },
+    {
+      "path": "/reports/368df690-6894-4b67-9aab-2651a9c4fad9/review",
+      "body": {
+        "expectedVersion": 5,
+        "expectedReportVersion": 1,
+        "decision": "accepted",
+        "comment": "Synthetic DEMO acceptance"
+      },
+      "status": 200,
+      "key": "release-738f96b2-1",
+      "hash": "576001c96040d9060ef851a0aa49b907fcbbcffa9406865b24a85853af987c8d"
+    },
+    {
+      "path": "/outcomes/cohorts",
+      "body": {
+        "id": "release-738f96b2-cohort",
+        "siteId": "site-osm-1568405606",
+        "plantIds": [
+          "f0bc1152-1013-40ab-aba3-4ecff4764824",
+          "746d404f-6729-4190-a365-d9002b1053f4",
+          "2c94dd99-d26a-451b-864c-ba65cbf019fc",
+          "9fcd9a03-467a-4c04-9af4-a1c82dcd7258"
+        ],
+        "plantedOn": null,
+        "snapshotId": "release-738f96b2-forecast",
+        "evidenceIds": [
+          "7414e1fa-ad32-4d5e-be4c-e606244f09cc"
+        ],
+        "expectedVersion": 0
+      },
+      "status": 201,
+      "key": "release-738f96b2-2",
+      "hash": "106f9f6343ada69dab6b6d7d1b1f42badc2c04ec61c536c9f10b29af64cf6f6c"
+    },
+    {
+      "path": "/reports/32bf4fed-c476-4cf6-81f2-aec7813939bb/review",
+      "body": {
+        "expectedVersion": 5,
+        "expectedReportVersion": 1,
+        "decision": "accepted",
+        "comment": "Synthetic DEMO acceptance"
+      },
+      "status": 200,
+      "key": "release-738f96b2-3",
+      "hash": "2bcced018ad648798f0253114acc6384f7c9efcc76c9c19051c9dd2ca7081a01"
+    },
+    {
+      "path": "/outcomes/cohorts/release-738f96b2-cohort/inspections",
+      "body": {
+        "id": "release-738f96b2-inspection",
+        "observedOn": "2026-10-31",
+        "expectedVersion": 1,
+        "evidenceIds": [
+          "7414e1fa-ad32-4d5e-be4c-e606244f09cc"
+        ],
+        "observations": [
+          {
+            "plantId": "f0bc1152-1013-40ab-aba3-4ecff4764824",
+            "state": "alive",
+            "reportId": "32bf4fed-c476-4cf6-81f2-aec7813939bb",
+            "evidenceIds": []
+          },
+          {
+            "plantId": "746d404f-6729-4190-a365-d9002b1053f4",
+            "state": "unknown",
+            "reportId": null,
+            "evidenceIds": []
+          }
+        ]
+      },
+      "status": 201,
+      "key": "release-738f96b2-4",
+      "hash": "23401710cb7482afc9248bcf20a1b7bed0b2c12e95783754a32f728168536232"
+    }
+  ],
+  "checks": [],
+  "trace": [],
+  "photo": {
+    "id": "12ff65e8-d13d-49ca-bb9f-437baf3377bf",
+    "taskId": "2f64e988-97f9-4970-9dcf-1ca016f66cb2",
+    "ownerId": "a1d3d1e8-d046-4511-bb48-ee5be5fc3905",
+    "reportId": null,
+    "sha256": "34f776e54fa39753b596e1f6c164d49051412894374950a021b52ceec141522e",
+    "byteSize": 64,
+    "mediaType": "image/webp",
+    "createdAt": "2026-10-31T15:53:01.947Z",
+    "contentUrl": "/api/v1/uploads/12ff65e8-d13d-49ca-bb9f-437baf3377bf"
+  },
+  "summary": {
+    "path": "/outcomes/cohorts/release-738f96b2-cohort/summary?inspectionId=release-738f96b2-inspection",
+    "alive": 1,
+    "unknown": 3
+  },
+  "scoped": {
+    "worker": "release-738f96b2-worker",
+    "foreman": "release-738f96b2-foreman",
+    "other": "release-738f96b2-other",
+    "taskId": "2f64e988-97f9-4970-9dcf-1ca016f66cb2"
+  },
+  "denials": [
+    {
+      "path": "/tasks",
+      "body": {
+        "objectType": "plant",
+        "objectId": "a7128064-818c-4671-8ecd-952b2131078e",
+        "action": "inspect",
+        "description": "Synthetic DEMO denied write",
+        "estimatedMinutes": 30,
+        "evidenceIds": [
+          "7414e1fa-ad32-4d5e-be4c-e606244f09cc"
+        ]
+      }
+    },
+    {
+      "path": "/tasks/2f64e988-97f9-4970-9dcf-1ca016f66cb2/assign",
+      "body": {
+        "expectedVersion": 6,
+        "crewId": "13a40778-776f-46a6-93f9-c7f361bc1737",
+        "scheduledStart": "2026-11-01T01:00:00.000Z",
+        "scheduledEnd": "2026-11-01T01:30:00.000Z",
+        "resourceIds": []
+      }
+    },
+    {
+      "path": "/reports/368df690-6894-4b67-9aab-2651a9c4fad9/review",
+      "body": {
+        "expectedVersion": 5,
+        "expectedReportVersion": 1,
+        "decision": "accepted",
+        "comment": "Synthetic DEMO acceptance"
+      }
+    },
+    {
+      "path": "/sites/site-osm-1568405606",
+      "method": "PATCH",
+      "body": {
+        "expectedVersion": 2,
+        "name": "Synthetic DEMO denied update"
+      }
+    },
+    {
+      "path": "/outcomes/cohorts",
+      "body": {
+        "id": "release-738f96b2-denied",
+        "siteId": "site-osm-1568405606",
+        "plantIds": [
+          "f0bc1152-1013-40ab-aba3-4ecff4764824",
+          "746d404f-6729-4190-a365-d9002b1053f4",
+          "2c94dd99-d26a-451b-864c-ba65cbf019fc",
+          "9fcd9a03-467a-4c04-9af4-a1c82dcd7258"
+        ],
+        "plantedOn": null,
+        "snapshotId": null,
+        "evidenceIds": [
+          "7414e1fa-ad32-4d5e-be4c-e606244f09cc"
+        ],
+        "expectedVersion": 0
+      }
+    }
+  ],
+  "csrf": {
+    "path": "/tasks",
+    "body": {
+      "objectType": "plant",
+      "objectId": "a7128064-818c-4671-8ecd-952b2131078e",
+      "action": "inspect",
+      "description": "Synthetic DEMO denied write",
+      "estimatedMinutes": 30,
+      "evidenceIds": [
+        "7414e1fa-ad32-4d5e-be4c-e606244f09cc"
+      ]
+    }
+  },
+  "crewId": "13a40778-776f-46a6-93f9-c7f361bc1737",
+  "workerId": "a1d3d1e8-d046-4511-bb48-ee5be5fc3905",
+  "handoffNote": "Existing synthetic baseline, not a new QA result. verify sends mutation replays and expected-denial requests. cloud-qa-access.mjs only reads domain data and creates/revokes its own sessions."
+}

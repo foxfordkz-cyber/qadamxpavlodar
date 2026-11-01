@@ -1,0 +1,18 @@
+{
+  "checkedAt": "2026-11-01T05:21:53.759Z",
+  "scope": "Diagnostic GET only; no cookies or authentication",
+  "results": [
+    {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "path": "/index.html",
+      "status": 308,
+      "canonicalRootRedirect": true
+    },
+    {
+      "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "path": "/index.html",
+      "status": 308,
+      "canonicalRootRedirect": true
+    }
+  ]
+}

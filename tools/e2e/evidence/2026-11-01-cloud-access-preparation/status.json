@@ -1,0 +1,74 @@
+{
+  "recordedAt": "2026-11-01T05:23:05.149Z",
+  "status": "BLOCKED_ACCESS",
+  "qaHead": "2efc91ed5ffea33a0f208f9fb84aabe53a7dcc9e",
+  "handoff": {
+    "source": "https://github.com/foxfordkz-cyber/qadamxpavlodar/pull/39#issuecomment-6553505660",
+    "sourceSha": "804a3bc9a5edbd43e8eea9dd03c82a31d7917661",
+    "baselineReceived": true,
+    "independentBaselineRead": false
+  },
+  "passwordSource": {
+    "requestedFile": "qadamxpavlodar-codex-coordinator/apps/web/.env.example",
+    "parsedKeyNames": [
+      "VITE_API_PROXY",
+      "VITE_DATA_SOURCE",
+      "VITE_ENABLE_KK"
+    ],
+    "cloudPasswordPresent": false,
+    "secretValuesRecorded": false
+  },
+  "counts": {
+    "offlineWrapperTests": {
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "fixme": 0,
+      "flaky": 0,
+      "source": "Observed Node24 node --test output this session; raw log was not retained"
+    },
+    "staticFiles": {
+      "passed": 68,
+      "failed": 0
+    },
+    "anonymousHttp": {
+      "passed": 2,
+      "failed": 0
+    },
+    "authorizedCloud": {
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "fixme": 0,
+      "flaky": 0,
+      "status": "NOT_RUN_BLOCKED_ACCESS"
+    }
+  },
+  "localLauncher": {
+    "state": "PREPARED_NOT_INTERACTIVELY_RUN",
+    "input": "Read-Host -AsSecureString; password injected only into Node child process environment",
+    "secretFileCreated": false,
+    "powershellSyntaxValidated": true,
+    "node24PathExists": true,
+    "gitMetadataValidation": "Initial sandbox process recorded qaHead:null. Unchanged runner in an approved normal process with the indicated password-free web config recorded actual QA2efc91e; both attempts remained BLOCKED_ACCESS with zero requests. Initial record preserved as process-access-sandbox.json."
+  },
+  "initialHttpToolingIssue": {
+    "artifact": "public-readonly-initial.json",
+    "assetPassed": 66,
+    "assetRequestErrors": 2,
+    "diagnosticArtifact": "public-index-redirects.json",
+    "reason": "Initial helper requested /index.html while redirect:error was enabled; both URLs independently confirmed HTTP308 to /. The existing publication guard uses canonical /. Corrected only URL mapping, preserved initial result and reran unchanged digest assertions.",
+    "applicationDefectClaimed": false
+  },
+  "notRun": [
+    "Four real role logins and seven baseline GET/hash checks",
+    "Authenticated private photo bytes",
+    "Browser worker report/photo -> coordinator acceptance -> viewer workflow",
+    "Independent Outcomes unknown/summary/snapshot checks",
+    "Restart/redeploy persistence",
+    "Cloud assistant candidate/provider calls"
+  ],
+  "noBusinessWrites": true,
+  "noRestart": true,
+  "scope": "Local access preparation and anonymous HTTP/static verification only. Existing full local and public-browser results were not rerun or relabelled."
+}

@@ -1,0 +1,576 @@
+{
+  "startedAt": "2026-11-01T05:15:54.678Z",
+  "endedAt": "2026-11-01T05:16:08.303Z",
+  "qaHead": "2efc91ed5ffea33a0f208f9fb84aabe53a7dcc9e",
+  "scope": "Unauthenticated HTTP and static assets only; no login, business writes, browser E2E or restart",
+  "frontend": {
+    "sha": "c970264919de2f7a62d0e1ea8a28cc70c95a3864",
+    "deployment": "a26bd214-1c78-4a83-9536-74a35c85b49f",
+    "publisherManifestSha256": "d8b042398be87fc8c7283a82499dda317ee2d6e77f8d4979f55c226d93b67f60"
+  },
+  "backend": {
+    "ownerReportedSha": "3b14927def04b35bf97782eae6b550da276c779f",
+    "ownerReportedDeployment": "dep-dbj223h42hec73bqnttg",
+    "independentlyAttested": false
+  },
+  "assets": [
+    {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "path": "assets/contract-v2-G6MTd3pU.js",
+      "status": 200,
+      "bytes": 70154,
+      "sha256": "6328948954bf614f545fdb03495ba0605895af1b41d5818fa4cd0c765bc6c308",
+      "match": true
+    },
+    {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "path": "assets/demo-gateway-CKVE_G9B.js",
+      "status": 200,
+      "bytes": 27491,
+      "sha256": "307eca6ad39e1b6eacfce89c745ab613ea7f1df65a99a7d4d7179fa337561193",
+      "match": true
+    },
+    {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "path": "assets/DevPanel-yx8zWPqu.js",
+      "status": 200,
+      "bytes": 2442,
+      "sha256": "98e57a60c0f45726e97634903cbc75319c3fb5534fa7b68310794c92d8d278e9",
+      "match": true
+    },
+    {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "path": "assets/HeroMap-rzf7Z0z2.js",
+      "status": 200,
+      "bytes": 2982,
+      "sha256": "f74873bf13fd5b8a306a0f34f459b4f44f9108921e99c5504cf6fcb816ee3042",
+      "match": true
+    },
+    {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "path": "assets/index-BEjYqV9f.js",
+      "status": 200,
+      "bytes": 987378,
+      "sha256": "f435641fbaf87e00a982ae0caa00f8c669b67d4603752060142e112ed027ba45",
+      "match": true
+    },
+    {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "path": "assets/index-D-QkwvwB.css",
+      "status": 200,
+      "bytes": 84650,
+      "sha256": "d76f3e7862bdac8850d58ea16283745530f32b2356ff8a86612bb8790d599f12",
+      "match": true
+    },
+    {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "path": "assets/journal-DUiVZ3Jx.css",
+      "status": 200,
+      "bytes": 28323,
+      "sha256": "1f628101378a4d324955e84cff516f62990004c0970dbfe2b1c673398f08048e",
+      "match": true
+    },
+    {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "path": "assets/loadMemo-CD6TAO6h.js",
+      "status": 200,
+      "bytes": 637,
+      "sha256": "0e9eb0e4fcad2c9bef4319b2db9600ebbfe6330dd6bac92ad957794832bbc1bc",
+      "match": true
+    },
+    {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "path": "assets/lora-cyrillic-ext-wght-normal-YcVxMP-u.woff2",
+      "status": 200,
+      "bytes": 23636,
+      "sha256": "0e523e4bc3c6308f002a3208ea2990cb4f64282d4fbb67c12f5726d13b66eef6",
+      "match": true
+    },
+    {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "path": "assets/lora-cyrillic-wght-normal-UWPuZLjM.woff2",
+      "status": 200,
+      "bytes": 21232,
+      "sha256": "c57d9ca3bd42e6bc093badc7744dd2059a78f66a3a4dc6ca40574480c870f553",
+      "match": true
+    },
+    {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "path": "assets/lora-latin-ext-wght-normal-C2Wlntb9.woff2",
+      "status": 200,
+      "bytes": 20088,
+      "sha256": "2a2d9c22c9863086a23f5013fede1428585321812b25f2662542c39d02967c5e",
+      "match": true
+    },
+    {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "path": "assets/lora-latin-wght-normal-BiLcIKcI.woff2",
+      "status": 200,
+      "bytes": 37788,
+      "sha256": "ddb8c66035104e233fc024669183aad3738b6daa16deee2ebb1241bd0f98ace1",
+      "match": true
+    },
+    {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "path": "assets/lora-math-wght-normal-sOy7rEfW.woff2",
+      "status": 200,
+      "bytes": 29240,
+      "sha256": "a8c4cb778ab6202d22bdea2ccc8d7e7caf802cfe0a7ce37df7b212f82341468f",
+      "match": true
+    },
+    {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "path": "assets/lora-symbols-wght-normal-DQ5VrUkH.woff2",
+      "status": 200,
+      "bytes": 17248,
+      "sha256": "2df52199eac56e2ec7a735e609bb151bdab79422c3e73948f4b6580c66bb5a50",
+      "match": true
+    },
+    {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "path": "assets/lora-vietnamese-wght-normal-CfJ7gtf3.woff2",
+      "status": 200,
+      "bytes": 8992,
+      "sha256": "98c22de85f6e83bcd6ae1a443e12e256fbc8de7142bec4f76b059f8ff9c2797e",
+      "match": true
+    },
+    {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "path": "assets/mapFlags-KArXQfJZ.js",
+      "status": 200,
+      "bytes": 203,
+      "sha256": "7be91119586dd5e482676ee9daf7276bd60ca59617953d84a2df1b5be897244b",
+      "match": true
+    },
+    {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "path": "assets/maplibre-gl-qdodsIIj.js",
+      "status": 200,
+      "bytes": 1033029,
+      "sha256": "f79f4edfa86b9c76b92fdac87e45cfe00cf38ac384909017b39bc3de37c7b306",
+      "match": true
+    },
+    {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "path": "assets/maplibre-gl-RZO-t2LB.css",
+      "status": 200,
+      "bytes": 83127,
+      "sha256": "3c3faf7116e0ea3f4dd664bc9d6207bebf71dda2f9d3108b65527615011f2b2b",
+      "match": true
+    },
+    {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "path": "assets/maplibre-gl-worker-DYHVkJJJ.js",
+      "status": 200,
+      "bytes": 508793,
+      "sha256": "2d7087f4c4bf47b51da6498b27f32c287a4c01dbf9aa0f90446a50b13a9677f6",
+      "match": true
+    },
+    {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "path": "assets/memo-CxIq-lHk.js",
+      "status": 200,
+      "bytes": 17325,
+      "sha256": "18abbd488140620fac8ef1934f7c84a2fe328e70fc3e9fba9dcb78af65b140b0",
+      "match": true
+    },
+    {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "path": "assets/memoData-mJ3ORfy0.js",
+      "status": 200,
+      "bytes": 276,
+      "sha256": "28d821cacfd97c3e4f4c6f25c8e326de85347b17c05fbc88ebbd7a2c07724afd",
+      "match": true
+    },
+    {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "path": "assets/onest-cyrillic-ext-wght-normal-DOFToQv1.woff2",
+      "status": 200,
+      "bytes": 10540,
+      "sha256": "268f03691b3d06e57abcf20f9277e314ea8784298983aab5b40c1b91965027e1",
+      "match": true
+    },
+    {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "path": "assets/onest-cyrillic-wght-normal-DayYxulF.woff2",
+      "status": 200,
+      "bytes": 15860,
+      "sha256": "68e5e01d6265bd68967746d4f5a9d18d0e6cbb5d15583c7082d6384ab1229b27",
+      "match": true
+    },
+    {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "path": "assets/onest-latin-ext-wght-normal-QAhDxQuo.woff2",
+      "status": 200,
+      "bytes": 28452,
+      "sha256": "14e7d3079b75860e2ab50efc6c318c398fdb46ede9b56e625f12ae70a3c5d9a4",
+      "match": true
+    },
+    {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "path": "assets/onest-latin-wght-normal-Dun_Rd-l.woff2",
+      "status": 200,
+      "bytes": 33760,
+      "sha256": "052df74533250c2e0ca0c4bdd32de594e107d99c1648e63820ef9c6142067828",
+      "match": true
+    },
+    {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "path": "assets/onest-math-wght-normal-Bl4ZGkZl.woff2",
+      "status": 200,
+      "bytes": 25480,
+      "sha256": "c74952a8c0c8c558c4f879f83773cf529d11350609f7073f5b2c5999dec46041",
+      "match": true
+    },
+    {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "path": "assets/onest-symbols-wght-normal-DxQzqQfC.woff2",
+      "status": 200,
+      "bytes": 18168,
+      "sha256": "2ec2d45d2ec0770e2c18cba2dba5126cf2dcff181d23ad192e9fffeb4af4b0b6",
+      "match": true
+    },
+    {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "path": "assets/onest-vietnamese-wght-normal-BBxOatbv.woff2",
+      "status": 200,
+      "bytes": 12400,
+      "sha256": "d852d4d094a3a46d701d16245deb7ca83b16b5bd69e20aa0aba089392ad69474",
+      "match": true
+    },
+    {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "path": "assets/ProjectMap3D-HQ-qct6i.js",
+      "status": 200,
+      "bytes": 3558,
+      "sha256": "2a29e70c72727e0e5611a517aafc1957d1b7e09dce138fd566b5359b18d16261",
+      "match": true
+    },
+    {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "path": "assets/scene3d-CfNo1vOD.js",
+      "status": 200,
+      "bytes": 567196,
+      "sha256": "3c120aae1b882518d0ee0cfd59b8945a6fd41840e71b3e6d19ef1131432a3ac8",
+      "match": true
+    },
+    {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "path": "assets/server-C5_4mzYg.js",
+      "status": 200,
+      "bytes": 1976966,
+      "sha256": "71262ea95e61c7b884db80f878b5523a6f98b79b393f59a259e7b67e6610800c",
+      "match": true
+    },
+    {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "path": "assets/SiteMap-Dnxi0ZSb.js",
+      "status": 200,
+      "bytes": 16642,
+      "sha256": "5a0adcd2170bffe6a9d8849b5b880054f0854f1b1a6aecd6442cfa74eb0b70b8",
+      "match": true
+    },
+    {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "path": "assets/WorkerPage-CmIElRSj.js",
+      "status": 200,
+      "bytes": 60729,
+      "sha256": "4f97c6722491c6eef6175cd94fbef68f105b2298ce2a02da86905a7d94f3bc69",
+      "match": true
+    },
+    {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "path": "index.html",
+      "match": false,
+      "error": "REQUEST_FAILED"
+    },
+    {
+      "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "path": "assets/contract-v2-G6MTd3pU.js",
+      "status": 200,
+      "bytes": 70154,
+      "sha256": "6328948954bf614f545fdb03495ba0605895af1b41d5818fa4cd0c765bc6c308",
+      "match": true
+    },
+    {
+      "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "path": "assets/demo-gateway-CKVE_G9B.js",
+      "status": 200,
+      "bytes": 27491,
+      "sha256": "307eca6ad39e1b6eacfce89c745ab613ea7f1df65a99a7d4d7179fa337561193",
+      "match": true
+    },
+    {
+      "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "path": "assets/DevPanel-yx8zWPqu.js",
+      "status": 200,
+      "bytes": 2442,
+      "sha256": "98e57a60c0f45726e97634903cbc75319c3fb5534fa7b68310794c92d8d278e9",
+      "match": true
+    },
+    {
+      "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "path": "assets/HeroMap-rzf7Z0z2.js",
+      "status": 200,
+      "bytes": 2982,
+      "sha256": "f74873bf13fd5b8a306a0f34f459b4f44f9108921e99c5504cf6fcb816ee3042",
+      "match": true
+    },
+    {
+      "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "path": "assets/index-BEjYqV9f.js",
+      "status": 200,
+      "bytes": 987378,
+      "sha256": "f435641fbaf87e00a982ae0caa00f8c669b67d4603752060142e112ed027ba45",
+      "match": true
+    },
+    {
+      "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "path": "assets/index-D-QkwvwB.css",
+      "status": 200,
+      "bytes": 84650,
+      "sha256": "d76f3e7862bdac8850d58ea16283745530f32b2356ff8a86612bb8790d599f12",
+      "match": true
+    },
+    {
+      "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "path": "assets/journal-DUiVZ3Jx.css",
+      "status": 200,
+      "bytes": 28323,
+      "sha256": "1f628101378a4d324955e84cff516f62990004c0970dbfe2b1c673398f08048e",
+      "match": true
+    },
+    {
+      "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "path": "assets/loadMemo-CD6TAO6h.js",
+      "status": 200,
+      "bytes": 637,
+      "sha256": "0e9eb0e4fcad2c9bef4319b2db9600ebbfe6330dd6bac92ad957794832bbc1bc",
+      "match": true
+    },
+    {
+      "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "path": "assets/lora-cyrillic-ext-wght-normal-YcVxMP-u.woff2",
+      "status": 200,
+      "bytes": 23636,
+      "sha256": "0e523e4bc3c6308f002a3208ea2990cb4f64282d4fbb67c12f5726d13b66eef6",
+      "match": true
+    },
+    {
+      "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "path": "assets/lora-cyrillic-wght-normal-UWPuZLjM.woff2",
+      "status": 200,
+      "bytes": 21232,
+      "sha256": "c57d9ca3bd42e6bc093badc7744dd2059a78f66a3a4dc6ca40574480c870f553",
+      "match": true
+    },
+    {
+      "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "path": "assets/lora-latin-ext-wght-normal-C2Wlntb9.woff2",
+      "status": 200,
+      "bytes": 20088,
+      "sha256": "2a2d9c22c9863086a23f5013fede1428585321812b25f2662542c39d02967c5e",
+      "match": true
+    },
+    {
+      "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "path": "assets/lora-latin-wght-normal-BiLcIKcI.woff2",
+      "status": 200,
+      "bytes": 37788,
+      "sha256": "ddb8c66035104e233fc024669183aad3738b6daa16deee2ebb1241bd0f98ace1",
+      "match": true
+    },
+    {
+      "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "path": "assets/lora-math-wght-normal-sOy7rEfW.woff2",
+      "status": 200,
+      "bytes": 29240,
+      "sha256": "a8c4cb778ab6202d22bdea2ccc8d7e7caf802cfe0a7ce37df7b212f82341468f",
+      "match": true
+    },
+    {
+      "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "path": "assets/lora-symbols-wght-normal-DQ5VrUkH.woff2",
+      "status": 200,
+      "bytes": 17248,
+      "sha256": "2df52199eac56e2ec7a735e609bb151bdab79422c3e73948f4b6580c66bb5a50",
+      "match": true
+    },
+    {
+      "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "path": "assets/lora-vietnamese-wght-normal-CfJ7gtf3.woff2",
+      "status": 200,
+      "bytes": 8992,
+      "sha256": "98c22de85f6e83bcd6ae1a443e12e256fbc8de7142bec4f76b059f8ff9c2797e",
+      "match": true
+    },
+    {
+      "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "path": "assets/mapFlags-KArXQfJZ.js",
+      "status": 200,
+      "bytes": 203,
+      "sha256": "7be91119586dd5e482676ee9daf7276bd60ca59617953d84a2df1b5be897244b",
+      "match": true
+    },
+    {
+      "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "path": "assets/maplibre-gl-qdodsIIj.js",
+      "status": 200,
+      "bytes": 1033029,
+      "sha256": "f79f4edfa86b9c76b92fdac87e45cfe00cf38ac384909017b39bc3de37c7b306",
+      "match": true
+    },
+    {
+      "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "path": "assets/maplibre-gl-RZO-t2LB.css",
+      "status": 200,
+      "bytes": 83127,
+      "sha256": "3c3faf7116e0ea3f4dd664bc9d6207bebf71dda2f9d3108b65527615011f2b2b",
+      "match": true
+    },
+    {
+      "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "path": "assets/maplibre-gl-worker-DYHVkJJJ.js",
+      "status": 200,
+      "bytes": 508793,
+      "sha256": "2d7087f4c4bf47b51da6498b27f32c287a4c01dbf9aa0f90446a50b13a9677f6",
+      "match": true
+    },
+    {
+      "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "path": "assets/memo-CxIq-lHk.js",
+      "status": 200,
+      "bytes": 17325,
+      "sha256": "18abbd488140620fac8ef1934f7c84a2fe328e70fc3e9fba9dcb78af65b140b0",
+      "match": true
+    },
+    {
+      "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "path": "assets/memoData-mJ3ORfy0.js",
+      "status": 200,
+      "bytes": 276,
+      "sha256": "28d821cacfd97c3e4f4c6f25c8e326de85347b17c05fbc88ebbd7a2c07724afd",
+      "match": true
+    },
+    {
+      "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "path": "assets/onest-cyrillic-ext-wght-normal-DOFToQv1.woff2",
+      "status": 200,
+      "bytes": 10540,
+      "sha256": "268f03691b3d06e57abcf20f9277e314ea8784298983aab5b40c1b91965027e1",
+      "match": true
+    },
+    {
+      "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "path": "assets/onest-cyrillic-wght-normal-DayYxulF.woff2",
+      "status": 200,
+      "bytes": 15860,
+      "sha256": "68e5e01d6265bd68967746d4f5a9d18d0e6cbb5d15583c7082d6384ab1229b27",
+      "match": true
+    },
+    {
+      "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "path": "assets/onest-latin-ext-wght-normal-QAhDxQuo.woff2",
+      "status": 200,
+      "bytes": 28452,
+      "sha256": "14e7d3079b75860e2ab50efc6c318c398fdb46ede9b56e625f12ae70a3c5d9a4",
+      "match": true
+    },
+    {
+      "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "path": "assets/onest-latin-wght-normal-Dun_Rd-l.woff2",
+      "status": 200,
+      "bytes": 33760,
+      "sha256": "052df74533250c2e0ca0c4bdd32de594e107d99c1648e63820ef9c6142067828",
+      "match": true
+    },
+    {
+      "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "path": "assets/onest-math-wght-normal-Bl4ZGkZl.woff2",
+      "status": 200,
+      "bytes": 25480,
+      "sha256": "c74952a8c0c8c558c4f879f83773cf529d11350609f7073f5b2c5999dec46041",
+      "match": true
+    },
+    {
+      "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "path": "assets/onest-symbols-wght-normal-DxQzqQfC.woff2",
+      "status": 200,
+      "bytes": 18168,
+      "sha256": "2ec2d45d2ec0770e2c18cba2dba5126cf2dcff181d23ad192e9fffeb4af4b0b6",
+      "match": true
+    },
+    {
+      "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "path": "assets/onest-vietnamese-wght-normal-BBxOatbv.woff2",
+      "status": 200,
+      "bytes": 12400,
+      "sha256": "d852d4d094a3a46d701d16245deb7ca83b16b5bd69e20aa0aba089392ad69474",
+      "match": true
+    },
+    {
+      "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "path": "assets/ProjectMap3D-HQ-qct6i.js",
+      "status": 200,
+      "bytes": 3558,
+      "sha256": "2a29e70c72727e0e5611a517aafc1957d1b7e09dce138fd566b5359b18d16261",
+      "match": true
+    },
+    {
+      "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "path": "assets/scene3d-CfNo1vOD.js",
+      "status": 200,
+      "bytes": 567196,
+      "sha256": "3c120aae1b882518d0ee0cfd59b8945a6fd41840e71b3e6d19ef1131432a3ac8",
+      "match": true
+    },
+    {
+      "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "path": "assets/server-C5_4mzYg.js",
+      "status": 200,
+      "bytes": 1976966,
+      "sha256": "71262ea95e61c7b884db80f878b5523a6f98b79b393f59a259e7b67e6610800c",
+      "match": true
+    },
+    {
+      "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "path": "assets/SiteMap-Dnxi0ZSb.js",
+      "status": 200,
+      "bytes": 16642,
+      "sha256": "5a0adcd2170bffe6a9d8849b5b880054f0854f1b1a6aecd6442cfa74eb0b70b8",
+      "match": true
+    },
+    {
+      "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "path": "assets/WorkerPage-CmIElRSj.js",
+      "status": 200,
+      "bytes": 60729,
+      "sha256": "4f97c6722491c6eef6175cd94fbef68f105b2298ce2a02da86905a7d94f3bc69",
+      "match": true
+    },
+    {
+      "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "path": "index.html",
+      "match": false,
+      "error": "REQUEST_FAILED"
+    }
+  ],
+  "checks": [
+    {
+      "path": "/api/v1/ready",
+      "status": 200,
+      "pass": true
+    },
+    {
+      "path": "/api/v1/auth/me",
+      "status": 401,
+      "pass": true
+    }
+  ],
+  "counts": {
+    "assetPass": 66,
+    "assetFail": 2,
+    "httpPass": 2,
+    "httpFail": 0
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "schema": 1,
+  "recordedAt": "2026-11-01T05:23:05.149Z",
+  "status": "BLOCKED_ACCESS",
+  "qaHead": "2efc91ed5ffea33a0f208f9fb84aabe53a7dcc9e",
+  "files": [
+    {
+      "path": "Start-Cloud-QA.cmd",
+      "bytes": 92,
+      "sha256": "46c4008ff8bbd365b8b22f070f46a87fa9f531b8b5ff5f8f1f2661c0500df5ec"
+    },
+    {
+      "path": "Start-Cloud-QA.ps1",
+      "bytes": 3518,
+      "sha256": "497588cae4ec323043033673c7bb186c61a3eb2722661ca06b4496fcf0d1b756"
+    },
+    {
+      "path": "check-public.mjs",
+      "bytes": 3010,
+      "sha256": "4e9e95678319fd05eb3aa32bcef59c1e37452e97fa54764033830c90d4b04e29"
+    },
+    {
+      "path": "check-redirects.mjs",
+      "bytes": 796,
+      "sha256": "6f7f6a1f3f4eed5c47637ea0e66bcc5b14d26750d46cc1a0922e3144e8c491b8"
+    },
+    {
+      "path": "cloud-qa-access.mjs",
+      "bytes": 4499,
+      "sha256": "4dbb495766da4d32b151dc9637ffbb8d8cd6e8d5e56651ac205535ca68380a98"
+    },
+    {
+      "path": "download-manifest.json",
+      "bytes": 1035,
+      "sha256": "6c603332cc98306c4bbb6ea7bf0e815b102de32579496c4c285c7419d306b783"
+    },
+    {
+      "path": "process-access-sandbox.json",
+      "bytes": 1339,
+      "sha256": "6703ec44005ca537dc7442db644b36f27630455ca9c2d4d257a1ec5e393892c0"
+    },
+    {
+      "path": "process-access.json",
+      "bytes": 1377,
+      "sha256": "8b1f60d580a32d14ca4753a8134cb25caa2bb6f232c89cbe4cb6f2420ae32554"
+    },
+    {
+      "path": "public-index-redirects.json",
+      "bytes": 448,
+      "sha256": "7a5cef9263222f9cae19a261bbd38b7b1ee80f6e9e4256d7558cf5276b241b98"
+    },
+    {
+      "path": "public-readonly-initial.json",
+      "bytes": 19399,
+      "sha256": "bed6ed11f4025f7c8ee6e4afae97161ee8d29e9d4ddbb68dfcfea507bab0b0a8"
+    },
+    {
+      "path": "public-readonly.json",
+      "bytes": 19581,
+      "sha256": "f17950487f6bcb54e2dc90fbc0527f14603258e6fb6da5cf6161f5446fa9a0de"
+    },
+    {
+      "path": "release-738f96b2.json",
+      "bytes": 7270,
+      "sha256": "1f85a4cab1981addd7c54bdbbdefca5dd41b2a0f10ce41a23003ba03468027af"
+    },
+    {
+      "path": "run-preflight.mjs",
+      "bytes": 9911,
+      "sha256": "cb5a919eda30f0b94eb58e4c411b927acf7b9bc00e945d65524ee01e91af9ea1"
+    },
+    {
+      "path": "run-preflight.test.mjs",
+      "bytes": 7385,
+      "sha256": "031d4abd858696872ee183cf51cfcba4b0382aa0003fab014c5b3f1b8ba015c9"
+    },
+    {
+      "path": "status.json",
+      "bytes": 2850,
+      "sha256": "d63a53cd7099adfd3817b094013b7735dff9d2c0f88a571638f9f06edf7125c3"
+    }
+  ]
+}
