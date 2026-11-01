@@ -13,7 +13,7 @@
     "build": "tsc -p tsconfig.build.json",
     "start": "node --env-file-if-exists=.env --import ./scripts/local-network-guard.mjs --import tsx src/server.ts",
     "seed": "node --env-file-if-exists=.env --import tsx src/seed-cli.ts",
-    "test": "node --import ./scripts/local-network-guard.mjs --import ./tests/setup-env.mjs --import tsx --test --test-concurrency=2 tests/*.test.ts",
+    "test": "node --import ./scripts/local-network-guard.mjs --import ./tests/setup-env.mjs --import tsx --test --test-concurrency=2 tests/*.test.ts tests/*.test.mjs",
     "smoke": "node --import ./scripts/local-network-guard.mjs scripts/smoke.mjs",
     "demo:integration": "pwsh -NoProfile -File scripts/demo-integration.ps1",
     "seed:v2": "node --env-file-if-exists=.env --import ./scripts/local-network-guard.mjs --import tsx src/v2-seed-cli.ts",
