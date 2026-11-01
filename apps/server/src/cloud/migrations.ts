@@ -1,3 +1,4 @@
+import { migration6 } from './assistant-migration.js';
 import { migration5 } from './outcomes-migration.js';
 import { createHash } from 'node:crypto';
 import { PostgresDatabase } from './database.js';
@@ -47,7 +48,7 @@ CREATE TABLE gp_cloud.idempotency (
 );
 REVOKE ALL ON ALL TABLES IN SCHEMA gp_cloud FROM PUBLIC;
 `;
-export const migrations = [migration1, migration2, migration3, migration4, migration5] as const;
+export const migrations = [migration1, migration2, migration3, migration4, migration5, migration6] as const;
 export const schemaVersion = migrations.length;
 export async function migrate(db: PostgresDatabase) {
   if ((await db.pool.query('SHOW server_encoding')).rows[0].server_encoding !== 'UTF8')

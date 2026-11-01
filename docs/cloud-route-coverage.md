@@ -1,7 +1,7 @@
 # Cloud route coverage — final release candidate, PR #39
 
 Reviewed from the actual source in this worktree (PR #39 plus normal coordinator merge
-`599a738`, incorporating `fdc6e75`), not from the
+`28d90f4`, incorporating coordinator `21edf5761d689a3678545f15d4ad70b2c0d2448a`), not from the
 public mock: [DataProvider](../apps/web/src/shared/api/DataProvider.tsx),
 [createApi](../apps/web/src/shared/api/api.ts),
 [V2 compatibility transport](../apps/web/src/shared/api/v2compat.ts),
@@ -76,7 +76,7 @@ verification of every listed method; full HTTP traces are retained with the suit
 | POST /imports/preview; POST /imports/:id/commit | Yes | No | D denial | Yes | GIS preview/commit unavailable; repeat-import cloud acceptance NOT RUN |
 | GET /imports/:id | Yes | No | Source reviewed, no separate HTTP case | Yes | Import status backlog |
 | GET /reference/facts | Yes | Persisted verified references | A | No | Not live weather |
-| POST /assistant; GET /assistant/history | SQLite rules / optional LLM | No | D denial | Yes | No cloud assistant/history, no hidden fallback |
+| POST /assistant; GET /assistant/history | SQLite rules / optional LLM | PR candidate: PostgreSQL snapshot + per-user v6 history | assistant HTTP suite; controlled providers are not real Gemini/Groq | Live 3b14927: yes; candidate: implemented | Approved deployment/real provider calls/independent QA pending; see updated contract |
 | POST /observations/interpret | Local adapter/rules | No | D denial | Yes | Optional worker AI analysis unavailable; raw note/report remains usable |
 | POST /outcomes/snapshots | Yes | Shared immutable full forecast | D | No | Input restrictions remain; forecast is an estimate |
 | GET /outcomes/sites/:id | Yes | Full saved read model | D + web adapter | No | Manager/viewer only |

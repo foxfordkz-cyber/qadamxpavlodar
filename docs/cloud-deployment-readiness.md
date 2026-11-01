@@ -1,4 +1,20 @@
-# Real cloud DEMO deployment — evidence, 31 October 2026
+# Real cloud DEMO deployment — dated evidence
+
+## 1 November candidate, not deployed
+
+The assistant candidate adds append-only migration v6 and two routes. The live Render
+Dashboard still reports `3b14927def04b35bf97782eae6b550da276c779f` /
+`dep-dbj223h42hec73bqnttg`. No redeploy, restart, seed or password change in this pass.
+[New candidate checks and rollout gates](cloud-assistant-acceptance-2026-11-01.md);
+[QA process handoff](cloud-qa-access-2026-11-01.md). The historical evidence below
+belongs to v5/A–D; it does not establish cloud acceptance of the new assistant.
+
+After v6, direct rollback to old 3b14927 will fail migration validation. Use a tested
+v6-compatible runtime with CLOUD_ASSISTANT_ENABLED=0 for immediate mitigation.
+Captain approval plus an agreed QA window is mandatory before migration/deployment.
+Real Gemini/Groq calls and cloud v6 persistence remain NOT RUN.
+
+## 31 October deployed A/B/C/D evidence
 
 **Render + Supabase deployment and HTTPS acceptance PASS for the A/B/C/D DEMO slice.**
 Repository: foxfordkz-cyber/qadamxpavlodar; branch codex/cloud-api-persistence; existing Draft #39.

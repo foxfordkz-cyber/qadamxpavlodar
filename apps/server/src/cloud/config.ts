@@ -1,9 +1,10 @@
+import { llmProviders, type LlmConfig } from '../tz/llm.js';
 import { readFileSync } from 'node:fs';
 import type { PoolConfig } from 'pg';
 import type { StorageConfig } from './private-storage.js';
 
 export type CloudConfig = { database: PoolConfig; allowedHosts: string[]; frontendOrigins: string[];
-  port: number; host: string; secureCookies: boolean; proxyHops: 0 | 1; localTest: boolean; storage?:StorageConfig };
+  port: number; host: string; secureCookies: boolean; proxyHops: 0 | 1; localTest: boolean; storage?:StorageConfig; llm?:LlmConfig[]; assistantEnabled?:boolean };
 export function cloudConfig(env: NodeJS.ProcessEnv = process.env): CloudConfig {
   const localTest = env.CLOUD_LOCAL_TEST === '1';
   if (!env.DATABASE_URL) throw Error('DATABASE_URL is required');
@@ -35,7 +36,12 @@ export function cloudConfig(env: NodeJS.ProcessEnv = process.env): CloudConfig {
     if(origin.protocol!=='https:'&&!(localTest&&origin.protocol==='http:'&&['127.0.0.1','localhost','[::1]'].includes(origin.hostname)))throw Error('Storage requires HTTPS outside explicit loopback tests');
     storage={origin:origin.origin,bucket:env.SUPABASE_STORAGE_BUCKET,serviceKey:env.SUPABASE_SERVICE_ROLE_KEY,allowedHosts:allowed,localTest};
   }
-  return { database: { connectionString: env.DATABASE_URL, ssl: localTest ? false : {
+  if(env.CLOUD_LLM_ENABLED && !['0','1'].includes(env.CLOUD_LLM_ENABLED))throw Error('CLOUD_LLM_ENABLED must be 0 or 1');
+  const llm=env.CLOUD_LLM_ENABLED==='1'?llmProviders(env):[];
+  const llmHosts=(env.LLM_ALLOWED_HOSTS??'').split(',').map(v=>v.trim());
+  for(const p of llm){const u=new URL(p.baseUrl);if(!llmHosts.includes(u.hostname)||(!localTest&&u.protocol!=='https:')||p.timeoutMs>30000)throw Error('Cloud LLM needs exact allowed HTTPS host and timeout <=30000 ms');}
+  if(env.CLOUD_ASSISTANT_ENABLED && !['0','1'].includes(env.CLOUD_ASSISTANT_ENABLED))throw Error('CLOUD_ASSISTANT_ENABLED must be 0 or 1');
+  return { assistantEnabled:env.CLOUD_ASSISTANT_ENABLED!=='0',llm, database: { connectionString: env.DATABASE_URL, ssl: localTest ? false : {
     rejectUnauthorized: true, ...(env.PG_CA_FILE ? { ca: readFileSync(env.PG_CA_FILE,'utf8') } : {}) } },
     storage, allowedHosts, frontendOrigins, port, host: localTest?'127.0.0.1':'0.0.0.0', secureCookies: !localTest,
     proxyHops: env.CLOUD_TRUST_PROXY_HOPS === '1' ? 1 : 0, localTest };

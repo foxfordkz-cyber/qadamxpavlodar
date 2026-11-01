@@ -8,7 +8,7 @@ credentials are installed on Aidana's machine or that independent QA has passed.
 - API: https://green-pavlodar-api.pages.dev/?source=api . Owner-confirmed frontend
   `c970264919de2f7a62d0e1ea8a28cc70c95a3864`, deployment
   `a26bd214-1c78-4a83-9536-74a35c85b49f`, frozen since 00:04 UTC+5.
-- Backend: https://green-pavlodar-api-demo.onrender.com . Last verified deployed
+- Backend: https://green-pavlodar-api-demo.onrender.com . Dashboard rechecked on 1 November: deployed
   `3b14927def04b35bf97782eae6b550da276c779f`, `dep-dbj223h42hec73bqnttg`.
   No backend deploy/restart in this pass. Readiness alone cannot attest a SHA.
 - [Publication record](cloud-publication-handoff-2026-11-01.md).
@@ -59,8 +59,16 @@ reads PASS, private photo hash PASS; sessions revoked. This run used direct Rend
 not the new Pages browser, not Aidana's process. No previous browser result is
 relabelled as acceptance of c970264.
 
+At **09:02:32 UTC+5**, the same operator preflight also passed through production
+Pages on c970264: four logins, seven baseline reads and private WebP hash; logout
+completed. [Sanitized evidence](evidence/cloud-pages-20261101/operator-pages-access.json).
+This is HTTP transport acceptance from the operator process, not browser E2E or Aidana QA.
+
 The existing `cloud-https-acceptance.mjs verify` also sends POST/PATCH replay and
 expected-denial checks. It is **not GET-only**. Coordinate its run separately.
+The candidate runner now requires the candidate's schema version (v6); do not run it
+against unchanged live v5. The scoped `cloud-qa-access.mjs` preflight above supports
+the current baseline without applying migrations or requiring the new assistant.
 Before/after a separately agreed restart, use the same manifest, photo hash, versions,
 history/forecast and unknown/null values. Never seed/reset/recreate the baseline.
 
@@ -88,12 +96,13 @@ or external disclosures cannot be ruled out. If an actual key was pasted elsewhe
 its owner must revoke/replace that key privately; no credential rotation was performed.
 
 The owner confirmed Damir's instruction to implement assistant in #39 during this run.
-Development is authorized; deployment still requires captain approval and a QA window. SQLite `src/tz/llm.ts` already contains
-provider chain/tool execution, but depends on synchronous Store/data functions.
-Porting requires an asynchronous PostgreSQL tool/data boundary reusing shared analytics,
-per-user bounded history in a new migration after v5, and auth/CSRF/ownership/failure tests.
-Merely setting Render keys does not implement these routes. No new formula, SQLite
-fallback, hidden mock or successful placeholder response is introduced here.
+The candidate now has the PostgreSQL data boundary, shared provider chain/rules and
+per-user v6 history. See [candidate acceptance](cloud-assistant-acceptance-2026-11-01.md)
+and [transport/DTO contract](cloud-api-contract.md). It is not deployed or independently
+accepted. Live Render still runs v5 on 3b14927; no environment/deploy changes were made.
+The Render environment was inspected by variable name only: no LLM_API_KEY,
+LLM2_API_KEY, LLM3_API_KEY or CLOUD_LLM_ENABLED; no linked environment group.
+Do not create paid provider accounts or send test prompts without approved credentials.
 
-The assistant remains unfinished, not accepted. Scope confirmation and an approved
-deployment window are separate gates; neither is implied by this QA access preparation.
+Development approval does not authorize deployment. Captain approval and an explicit
+QA window are still required; do not restart the shared DEMO during active QA.

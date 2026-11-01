@@ -1,3 +1,4 @@
+import {schemaVersion} from '../src/cloud/migrations.ts';
 // Operator-only synthetic acceptance. No provider control, migrations, seed, or automatic retries.
 import assert from 'node:assert/strict';
 import { createHash, randomUUID } from 'node:crypto';
@@ -71,7 +72,7 @@ export async function runAcceptance({mode, manifestPath, origin, browserOrigin, 
   try {
     const health=await http('/health','GET',{});assert.equal(health.status,200);await health.body?.cancel();
     const ready = await http('/ready','GET',{}), readiness=await ready.json();
-    assert.equal(ready.status,200);assert.equal(readiness.schemaVersion,5);assert.equal(readiness.database,'ok');
+    assert.equal(ready.status,200);assert.equal(readiness.schemaVersion,schemaVersion);assert.equal(readiness.database,'ok');
     assert.equal(readiness.photos,'private-storage-configured');assert(readiness.capabilities.includes('outcomes'));
     for(const role of ['admin','coordinator','viewer']) await login(role);
     if (mode === 'create') {

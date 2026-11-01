@@ -1,3 +1,4 @@
+import {migrations} from '../../src/cloud/migrations.js';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { checkDeployment } from '../../src/cloud/deployment-check.js';
@@ -15,7 +16,7 @@ test('operator preflight reads real PostgreSQL and private test HTTP storage wit
   assert.equal(pass.environment, 'local-test');
   assert.equal(pass.privateStorage, 'PASS');
   assert.equal(pass.renderHttpsWorkflow, 'NOT RUN');
-  assert.deepEqual(pass.appliedVersions, [1,2,3,4,5]);
+  assert.deepEqual(pass.appliedVersions, migrations.map((_,i)=>i+1));
   await assert.rejects(checkDeployment(env, 'ready'), {stage:'configuration'});
   storage.setPublic(true);
   await assert.rejects(checkDeployment(env, 'ready', true), {stage:'private-storage'});

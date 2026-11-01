@@ -24,8 +24,10 @@ export async function postgresFixture(t:TestContext,backendEnv:Record<string,str
  const ajv=new Ajv2020({strict:false,validateFormats:false}),validators=new Map<string,ReturnType<typeof ajv.compile>>();let spec:any;const trace:{method:string;path:string;role:string;status:number}[]=[];
  async function stop(){if(child&&child.exitCode===null){const end=once(child,'exit');child.kill();await end;}child=undefined;}
  async function start(extra:Record<string,string>={}){
-   child=spawn(process.execPath,['--import','./scripts/local-network-guard.mjs','--import','tsx','dist/cloud/server.js'],{windowsHide:true,stdio:['ignore','ignore','pipe'],env:{...process.env,DATABASE_URL:connectionString,CLOUD_LOCAL_TEST:'1',PORT:String(port),ALLOWED_HOSTS:'127.0.0.1',FRONTEND_ORIGINS:`http://127.0.0.1:${port}`,...backendEnv,...extra}});child.stderr?.resume();
-   for(let i=0;i<600;i++){if(child.exitCode!==null)throw Error('Compiled cloud backend exited (configuration redacted)');try{const response=await fetch(base+'/ready',{signal:AbortSignal.timeout(2000)});await response.arrayBuffer();if(response.status===200)return;}catch{}await new Promise(r=>setTimeout(r,100));}throw Error('Backend readiness timeout');
+   let startupCode='redacted';
+   child=spawn(process.execPath,['--import','./scripts/local-network-guard.mjs','--import','tsx','dist/cloud/server.js'],{windowsHide:true,stdio:['ignore','ignore','pipe'],env:{...process.env,DATABASE_URL:connectionString,CLOUD_LOCAL_TEST:'1',PORT:String(port),ALLOWED_HOSTS:'127.0.0.1',FRONTEND_ORIGINS:`http://127.0.0.1:${port}`,...backendEnv,...extra}});
+   child.stderr?.on('data',(b:Buffer)=>{const code=b.toString().match(/\b(EADDRINUSE|ECONNREFUSED|ETIMEDOUT|ENOTFOUND|MODULE_NOT_FOUND)\b/)?.[1];if(code)startupCode=code;});
+   for(let i=0;i<600;i++){if(child.exitCode!==null)throw Error('Compiled cloud backend exited ('+startupCode+'; configuration redacted)');try{const response=await fetch(base+'/ready',{signal:AbortSignal.timeout(2000)});await response.arrayBuffer();if(response.status===200)return;}catch{}await new Promise(r=>setTimeout(r,100));}throw Error('Backend readiness timeout');
  }
  t.after(async()=>{writeFileSync(join(dir,'http-trace.json'),JSON.stringify(trace,null,2));t.diagnostic('Retained isolated evidence: '+dir);await stop();await db.close();if(started)await cluster.stop();});
  await cluster.initialise();await cluster.start();started=true;await migrate(db);await seedCloudDemo(db,password);await seedCloudPlanning(db);await start();

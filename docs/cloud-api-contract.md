@@ -1,5 +1,53 @@
 # Cloud API contract — PostgreSQL planning and workflow
 
+## 1 November candidate: assistant (not yet deployed)
+
+The PR candidate adds `POST /api/v1/assistant` and `GET /api/v1/assistant/history`.
+The live Render `3b14927` still returns unsupported 503 for them until an approved rollout.
+Frontend production has moved to owner-published `c970264` / `a26bd214`; older browser
+evidence below retains its original version. [Current QA handoff](cloud-qa-access-2026-11-01.md).
+
+POST body: `{message: string, siteId?: string|null, history?: [{role:'user'|'assistant',text:string}], view?: {lat:number,lng:number}|null}`.
+Message 1–2000 characters; history at most six entries, each at most 2000 characters.
+Auth roles: admin/coordinator/viewer; worker/foreman denied. Existing session cookie and
+`X-CSRF-Token` are required. No new frontend build or DTO change is required.
+This conversational POST is not an idempotent domain mutation: retries add history;
+do not automatically retry an ambiguous response. It does not create tasks/plants/reports.
+
+Response `{data: AssistantReply}` retains `text`, `method` (`rules` or `model`), `model`
+(configured model name, omitted for rules), `sources`, `toolCalls`, `zones`, `fallbackReason`,
+plus the existing `intent`/optional fields. A controlled test model is never a real Gemini/Groq claim.
+GET history returns `{data:[{at,q,intent,method,zones}]}` in chronological order,
+matching SQLite, for the authenticated user only;
+query parameters selecting another user are rejected. At most 50 entries are retained,
+question prefixes at most 300 characters; no session, provider key or full provider transcript.
+
+Data comes from one PostgreSQL planning snapshot with shared analytics. No SQLite Store
+is constructed for cloud answers. Private photos, sessions and employee profiles are not
+in the tool data source. Reference search uses persisted facts/evidence. Address lookup
+is explicitly unavailable; no new geocode/Stage E route is included. Missing measured
+zones return a structured limitation/error, not zero or invented success.
+
+Controls: 4 active requests per process, 1 per user, 10 persisted answers/minute/user;
+50 retained history rows/user; provider chain <=30 seconds total, <=3 tool rounds/provider,
+<=8 calls/round, 800 output tokens/request, 64 KiB response cap, 32 KiB tool result cap.
+Provider errors/429/timeout/invalid JSON fall back to the next configured provider, then
+shared rules, with an explicit reason. These are per-process provider/concurrency bounds,
+not an account-level billing quota or proof of numerical correctness of arbitrary model prose.
+
+Migration v6 adds private per-user history. Published migration SQL/checksums 1–5 are unchanged.
+`CLOUD_ASSISTANT_ENABLED=0` disables the two routes while retaining history/schema and workflow.
+`CLOUD_LLM_ENABLED=0` (default) keeps rules only. Models require explicit `CLOUD_LLM_ENABLED=1`,
+`LLM_ALLOWED_HOSTS`, `LLM_TIMEOUT_MS` (1000–30000), `LLM_API_KEY`, `LLM_BASE_URL`, `LLM_MODEL`;
+optional reserves use `LLM2_*`/`LLM3_*`. Keys remain server-side. No paid call is authorized here.
+
+After migration v6 **do not redeploy old 3b14927 directly**: its migration registry rejects
+unknown v6. Safe immediate mitigation is this v6-compatible runtime with the assistant
+disabled; any older-code rollback must first be built/tested with the unchanged v6 registry.
+No down migration, table reset or credential reset. Captain approval and a separate QA
+window remain mandatory before runtime deployment; real Gemini/Groq and cloud v6 restart
+acceptance are NOT RUN while those gates/credentials remain unavailable.
+
 Status, 31 October 2026: **the A/B/C/D DEMO slice is deployed on real Render + Supabase**.
 Origin: https://green-pavlodar-api-demo.onrender.com.
 Recorded provider baseline SHA: `3b14927def04b35bf97782eae6b550da276c779f`.

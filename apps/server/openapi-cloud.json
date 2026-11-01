@@ -2,8 +2,8 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Green Pavlodar — PostgreSQL workflow, photos and Outcomes API",
-    "version": "2.5.0-cloud-outcomes",
-    "description": "Auth, reference data, planning, crews, profiles, designs, tasks and reports are supported. Private photos require configured storage. Outcomes cohorts, immutable forecasts and inspections are supported. Other domains return 503 CLOUD_ENDPOINT_UNSUPPORTED. Secure HttpOnly SameSite=Strict sessions; CSRF and idempotency required on writes. No SQLite or mock fallback."
+    "version": "2.6.0-cloud-assistant",
+    "description": "Auth, reference data, planning, crews, profiles, designs, tasks and reports are supported. Private photos require configured storage. Outcomes cohorts, immutable forecasts and inspections are supported. Assistant reads PostgreSQL and persists private per-user history; explicitly enabled model providers fall back to shared rules. Other domains return 503 CLOUD_ENDPOINT_UNSUPPORTED. Secure HttpOnly SameSite=Strict sessions; CSRF and idempotency required on writes. No SQLite or mock fallback."
   },
   "servers": [
     {
@@ -5527,6 +5527,524 @@
                 "schema": {
                   "type": "string",
                   "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/assistant/history": {
+      "get": {
+        "summary": "Current authenticated user assistant history, last 50",
+        "tags": [
+          "Contract V2 / local DEMO"
+        ],
+        "security": [
+          {
+            "SessionCookie": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$schema": "https://json-schema.org/draft/2020-12/schema",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "at": {
+                            "type": "string"
+                          },
+                          "q": {
+                            "type": "string"
+                          },
+                          "intent": {
+                            "type": "string"
+                          },
+                          "method": {
+                            "type": "string",
+                            "enum": [
+                              "rules",
+                              "model"
+                            ]
+                          },
+                          "zones": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "required": [
+                          "at",
+                          "q",
+                          "intent",
+                          "method",
+                          "zones"
+                        ]
+                      }
+                    },
+                    "meta": {
+                      "type": "object"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/assistant": {
+      "post": {
+        "summary": "PostgreSQL assistant: bounded provider chain or explicit shared-rules fallback",
+        "tags": [
+          "Contract V2 / local DEMO"
+        ],
+        "security": [
+          {
+            "SessionCookie": [],
+            "CsrfToken": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2000
+                  },
+                  "siteId": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 160
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "history": {
+                    "maxItems": 6,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "role": {
+                          "type": "string",
+                          "enum": [
+                            "user",
+                            "assistant"
+                          ]
+                        },
+                        "text": {
+                          "type": "string",
+                          "maxLength": 2000
+                        }
+                      },
+                      "required": [
+                        "role",
+                        "text"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "view": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "lat": {
+                            "type": "number",
+                            "minimum": -90,
+                            "maximum": 90
+                          },
+                          "lng": {
+                            "type": "number",
+                            "minimum": -180,
+                            "maximum": 180
+                          }
+                        },
+                        "required": [
+                          "lat",
+                          "lng"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "message"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$schema": "https://json-schema.org/draft/2020-12/schema",
+                      "type": "object",
+                      "properties": {
+                        "text": {
+                          "type": "string"
+                        },
+                        "zones": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name"
+                            ]
+                          }
+                        },
+                        "method": {
+                          "type": "string",
+                          "enum": [
+                            "rules",
+                            "model"
+                          ]
+                        },
+                        "intent": {
+                          "type": "string"
+                        },
+                        "data": {},
+                        "sources": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "label": {
+                                "type": "string"
+                              },
+                              "url": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "label"
+                            ]
+                          }
+                        },
+                        "toolCalls": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "args": {
+                                "type": "object",
+                                "propertyNames": {
+                                  "type": "string"
+                                },
+                                "additionalProperties": {}
+                              }
+                            },
+                            "required": [
+                              "name",
+                              "args"
+                            ]
+                          }
+                        },
+                        "model": {
+                          "type": "string"
+                        },
+                        "fallbackReason": {
+                          "type": "string"
+                        },
+                        "reserveReason": {
+                          "type": "string"
+                        },
+                        "lang": {
+                          "type": "string",
+                          "enum": [
+                            "ru",
+                            "kk"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "text",
+                        "zones",
+                        "method",
+                        "intent"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object"
+                    }
+                  },
+                  "additionalProperties": false
                 }
               }
             }
