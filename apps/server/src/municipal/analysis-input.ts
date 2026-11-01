@@ -1,0 +1,3 @@
+import { z } from 'zod';
+export const options=z.object({variant:z.enum(['econom','optimal','max']).optional(),purpose:z.enum(['park','square','yard','street','sanitary','school']).optional(),careYears:z.union([z.literal(1),z.literal(2),z.literal(3)]).optional(),excluded:z.array(z.string().max(100)).max(100).optional(),locked:z.array(z.string().max(100)).max(100).optional(),replacements:z.record(z.string().max(100),z.string().max(100)).optional(),watering:z.enum(['regular','rare','none']).optional(),improveSoil:z.boolean().optional(),maxSpeciesShare:z.number().min(.05).max(1).optional()}).strict();
+export const analysisInput=z.object({options:options.default({})}).strict();

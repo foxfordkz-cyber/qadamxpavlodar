@@ -1,3 +1,5 @@
+import * as workflow from "./flows/data.js";
+import { runSync, queries } from "./flow.js";
 import { randomUUID } from 'node:crypto';
 import { z } from 'zod';
 import { Store } from '../db.js';
@@ -23,30 +25,15 @@ export const catalogInput=z.object({displayName:shortText,botanicalName:shortTex
 export const catalogPatch=z.object(catalogInput.shape).partial().extend({expectedVersion:version}).strict();
 export const evidenceInput=z.object({sourceType:z.enum(['municipal','field_report','weather','care_reference','manual','fixture','map_data','catalog','source_photo']),sourceLabel:shortText,sourceUrl:z.url().nullable().default(null),observedAt:timestamp.nullable().default(null),validUntil:timestamp.nullable().default(null),dataClass:z.enum(['demo','estimate']),note:text.nullable().default(null)}).strict();
 export const carePolicyInput=z.object({label:shortText,applicableKinds:z.array(z.enum(['tree','shrub','flowerbed'])).min(1),allowedActions:z.array(z.enum(['inspect','water','weed'])).min(1),intervals:z.partialRecord(z.enum(['inspect','water','weed']),z.number().positive()).default({}),waterLiters:z.number().positive().nullable().default(null),constraints:z.array(text).default([]),sourceEvidenceIds:uniqueIds.min(1),isDemo:z.literal(true).default(true)}).strict();
-export function validateReferences(s:Store,body:Record<string,any>) {
-  if(body.evidenceIds)evidence(s,body.evidenceIds);
-  if(body.sourceEvidenceIds)evidence(s,body.sourceEvidenceIds);
-  if(body.carePolicyId)getDoc(s,'care_policy',body.carePolicyId);
-  if(body.ownerCrewId&&!s.get('SELECT id FROM v2_crews WHERE id=?',body.ownerCrewId))fail('INVALID_REFERENCE','Owner crew not found',400);
+export function validateReferences(s:Store,body:Record<string,any>): void { return runSync(s, workflow.validateReferences(queries, body)); }
+export function newDocument(kind:Kind,body:Record<string,any>):Doc {
+  return {...body,id:randomUUID(),version:1,createdAt:now(),updatedAt:now(),...(kind==='plant'?{lastVerifiedCareAt:null}:{})};
 }
-export function createData(s:Store,a:User,kind:Kind,body:Record<string,any>) {
-  validateReferences(s,body);const result=insertDoc(s,kind,{...body,id:randomUUID(),version:1,createdAt:now(),updatedAt:now(),...(kind==='plant'?{lastVerifiedCareAt:null}:{})});audit(s,a,kind,result.id,'create',null,result);return result;
+export function updatedDocument(before:Doc,patch:Record<string,any>):Doc {
+  return {...before,...patch,version:before.version+1,updatedAt:now()};
 }
-export function patchData(s:Store,a:User,kind:Kind,objectId:string,body:Record<string,any>) {
-  const before=getDoc(s,kind,objectId);matchVersion(before,body.expectedVersion);const{expectedVersion,...patch}=body;validateReferences(s,patch);
-  if(kind==='site'&&patch.checks){patch.checks={...before.checks,...Object.fromEntries(Object.entries(patch.checks).map(([key,value])=>[key,{...(value as object),reviewedBy:a.id,reviewedByName:a.displayName,reviewedAt:now()}]))};}
-  if(kind==='site'&&patch.waterAvailability){
-    const{value,note}=patch.waterAvailability;delete patch.waterAvailability;
-    const ev=insertDoc(s,'evidence',{id:randomUUID(),sourceType:'manual',sourceLabel:`Внесено: ${a.displayName}`,sourceUrl:null,observedAt:now(),validUntil:null,dataClass:'real',note,version:1});
-    patch.factors={...before.factors,waterAvailability:{value,evidenceIds:value===null?[]:[ev.id],method:`Указано специалистом: ${note}`}};
-    patch.missingData=(before.missingData??[]).filter((m:any)=>m?.field!=='factors.waterAvailability');
-    if(value===null)patch.missingData.push({field:'factors.waterAvailability',reason:'Специалист отметил значение как неизвестное.'});
-  }
-  const after:Doc={...before,...patch,version:before.version+1,updatedAt:now()};
-  if(kind==='catalog')catalogInput.parse(Object.fromEntries(Object.entries(after).filter(([k])=>!['id','version','createdAt','updatedAt','reviewedBy'].includes(k))));
-  if(kind==='site'&&after.isIntersection&&after.checks.trafficVisibility.status==='not_applicable')fail('TRAFFIC_CHECK_REQUIRED','Intersection visibility cannot be not_applicable',400);
-  updateDoc(s,kind,after,before.version);audit(s,a,kind,objectId,'update',before,after);return after;
-}
+export function createData(s:Store,a:User,kind:Kind,body:Record<string,any>): Doc { return runSync(s, workflow.createData(queries, a, kind, body)); }
+export function patchData(s:Store,a:User,kind:Kind,objectId:string,body:Record<string,any>): Doc { return runSync(s, workflow.patchData(queries, a, kind, objectId, body)); }
 export function requireSiteCleared(site:Doc) {
   for(const key of checkNames){const c=site.checks[key];if(!c||!['cleared','not_applicable'].includes(c.status)||!c.comment||!c.reviewedBy||!c.reviewedAt)fail('SITE_CHECKS_INCOMPLETE',`Site check ${key} is not cleared`);
     if(key==='trafficVisibility'&&site.isIntersection&&c.status!=='cleared')fail('SITE_CHECKS_INCOMPLETE','Intersection visibility must be cleared');}

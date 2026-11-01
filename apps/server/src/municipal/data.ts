@@ -38,25 +38,32 @@ export function sites(s:Store):CandidateSite[]{
 export function site(s:Store,id:string){const value=sites(s).find(x=>x.id===id);if(!value)fail('NOT_FOUND','Zone not found',404);return value;}
 export function catalog(s:Store){const persisted=s.all('SELECT data FROM tz_species ORDER BY id').map(r=>JSON.parse(String(r.data)));return [...new Map([...web.species,...persisted,...state(s,'species',[]).data,...features(s,'catalog').map(f=>f.properties)].map(x=>[x.id,x])).values()] as typeof species;}
 export function evidence(s:Store){return [...state(s,'evidence',[]).data,speciesEvidence,priceEvidence,contextEvidence,...pavlodarEvidence,...s.all('SELECT id,data,committed_at FROM municipal_imports WHERE committed_at IS NOT NULL').map(r=>{const d=JSON.parse(String(r.data));return{id:`import-${r.id}`,sourceType:'manual',sourceLabel:d.source,sourceUrl:d.sourceUrl,observedAt:d.observedAt,dataClass:d.dataClass,note:`Imported ${r.committed_at}; user-declared provenance, not independently verified`};})];}
-export function withSoil(s:Store,site:CandidateSite){
-  const zone=structuredClone(site),soil=features(s,'soils').find(f=>['Polygon','MultiPolygon'].includes(f.geometry.type)&&booleanPointInPolygon(point([zone.centroid!.lng,zone.centroid!.lat]),f));
+export function withSoil(s:Store,site:CandidateSite){return withSoilInputs(site,features(s,'soils'));}
+export function withSoilInputs(site:CandidateSite,soils:any[]){
+  const zone=structuredClone(site),soil=soils.find(f=>['Polygon','MultiPolygon'].includes(f.geometry.type)&&booleanPointInPolygon(point([zone.centroid!.lng,zone.centroid!.lat]),f));
   if(soil)(zone as any).soilOverride={cellId:soil.properties.id,type:String(soil.properties.type??'Imported soil'),ph:Number(soil.properties.ph),salinity:soil.properties.salinity,moisture:String(soil.properties.moisture??'unknown'),fertility:String(soil.properties.fertility??'unknown'),synthetic:soil.properties.dataClass!=='real'};
   return{zone,soil};
 }
 export const analysisSites=(s:Store)=>sites(s).map(x=>withSoil(s,x).zone);
 export const calculationSites=(s:Store)=>analysisSites(s).filter(x=>x.areaM2!==null&&x.areaM2!==undefined&&x.areaM2>0);
-export function calculationRates(s:Store){const current=rates(s);
+export function calculationRates(s:Store){return checkedRates(rates(s));}
+export function checkedRates(current:ReturnType<typeof rates>){
   // Never convert an unknown mandatory rate into a zero-cost or certain prediction.
   const missing=current.rates.filter(r=>r.value===null&&!['eff.dust.tree','eff.population'].includes(r.key)).map(r=>r.key);
   if(missing.length)fail('MISSING_RATES',`Supply mandatory coefficients before calculation: ${missing.join(', ')}`,422);
   return current;
 }
 export function analyze(s:Store,id:string,options:Partial<PlanOptions>){
-  const {zone,soil}=withSoil(s,site(s,id)),current=calculationRates(s);
+  return analyzeInputs({...withSoil(s,site(s,id)),current:calculationRates(s),catalog:catalog(s),sources:evidence(s)},options);
+}
+/** Same calculation for SQLite and PostgreSQL; repositories supply the complete persisted input. */
+type AnalysisInputs={zone:CandidateSite;soil?:any;current:ReturnType<typeof rates>;catalog:ReturnType<typeof catalog>;sources:ReturnType<typeof evidence>};
+export function analyzeInputs(input:AnalysisInputs,options:Partial<PlanOptions>){
+  const {zone,soil,catalog,sources}=input,current=checkedRates(input.current);
   if(zone.areaM2===null||zone.areaM2===undefined||zone.areaM2<=0)fail('MISSING_AREA','A measured positive area is required; import a polygon before calculating costs or effects',422);
-  const known=new Set(catalog(s).map(x=>x.id));for(const x of [...(options.locked??[]),...(options.excluded??[]),...Object.keys(options.replacements??{}),...Object.values(options.replacements??{})])if(!known.has(x))fail('UNKNOWN_SPECIES','Unknown species in options',400);
-  const result=cachedAnalysis(zone,{species:catalog(s),rates:current.rates,map:web.ratesMap(current.rates),version:current.version},options) as ReturnType<typeof analyzeZone> & {survivalModel?:Record<string,unknown>};
-  return {...result,inputSnapshot:{zone,catalog:catalog(s),rates:current,options},provenance:{method:'shared-team-analytics',survivalMethod:result.survivalModel?'synthetic-logistic-regression':'expert-rules',calibrated:false,estimated:true,ratesVersion:current.version,inputHash:hash({zone,catalog:catalog(s),rates:current,options}),generatedAt:now(),soilSource:soil?.properties??'synthetic demo soil',sources:evidence(s)},assumptions:[...result.assumptions,'Forecasts use shared estimates and a synthetic survival model, not calibrated municipal measurements.']};
+  const known=new Set(catalog.map(x=>x.id));for(const x of [...(options.locked??[]),...(options.excluded??[]),...Object.keys(options.replacements??{}),...Object.values(options.replacements??{})])if(!known.has(x))fail('UNKNOWN_SPECIES','Unknown species in options',400);
+  const result=cachedAnalysis(zone,{species:catalog,rates:current.rates,map:web.ratesMap(current.rates),version:current.version},options) as ReturnType<typeof analyzeZone> & {survivalModel?:Record<string,unknown>};
+  return {...result,inputSnapshot:{zone,catalog:catalog,rates:current,options},provenance:{method:'shared-team-analytics',survivalMethod:result.survivalModel?'synthetic-logistic-regression':'expert-rules',calibrated:false,estimated:true,ratesVersion:current.version,inputHash:hash({zone,catalog:catalog,rates:current,options}),generatedAt:now(),soilSource:soil?.properties??'synthetic demo soil',sources:sources},assumptions:[...result.assumptions,'Forecasts use shared estimates and a synthetic survival model, not calibrated municipal measurements.']};
 }
 export async function seedMunicipal(s:Store){
   const adminRow=s.get("SELECT id FROM v2_users WHERE role='admin' LIMIT 1");if(!adminRow)fail('SEED_ORDER','Run seed:v2 first',400);

@@ -1,3 +1,5 @@
+import * as workflow from "./flows/core.js";
+import { runSync, queries } from "./flow.js";
 import { createHash, randomUUID } from 'node:crypto';
 import { z } from 'zod';
 import { Store, type Row } from '../db.js';
@@ -23,28 +25,20 @@ export function allow(user: User, ...accepted: Role[]) { if (!accepted.includes(
 export function userDto(row: Row): User {
   return { id: String(row.id),displayName: String(row.display_name),role: canonicalRole((row.municipal_role ?? row.role) as Role),active: row.active===1,version: Number(row.version) };
 }
-export function getUser(s: Store, userId: string) { const row = s.get('SELECT u.*,r.role AS municipal_role FROM v2_users u LEFT JOIN municipal_roles r ON r.user_id=u.id WHERE u.id=?',userId); if (!row) fail('NOT_FOUND','User not found',404); return userDto(row!); }
-export function fresh(s: Store, actor: User) {
-  const current = getUser(s,actor.id);
-  if (!current.active || current.role !== actor.role || current.version !== actor.version) fail('SESSION_REVOKED','Sign in again',401);
-}
+export function getUser(s: Store, userId: string): User { return runSync(s, workflow.getUser(queries, userId)); }
+export function fresh(s: Store, actor: User): void { return runSync(s, workflow.fresh(queries, actor)); }
 export function matchVersion(current: {version: number}, input: number) { if (current.version !== input) fail('VERSION_CONFLICT','Read the latest version and retry with a new key'); }
 export function parseRow(row: Row | undefined, label = 'Object'): Doc {
   if (!row) fail('NOT_FOUND',`${label} not found`,404);
   return JSON.parse(String(row!.data)) as Doc;
 }
 export type Kind = 'plant'|'site'|'catalog'|'context'|'resource'|'care_policy'|'evidence'|'visualization'|'plan';
-export function getDoc(s: Store, kind: Kind, objectId: string) { return parseRow(s.get('SELECT data FROM v2_documents WHERE kind=? AND id=?',kind,objectId),kind); }
-export function maybeDoc(s: Store, kind: Kind, objectId: string) { const r=s.get('SELECT data FROM v2_documents WHERE kind=? AND id=?',kind,objectId); return r ? parseRow(r) : undefined; }
-export function listDocs(s: Store, kind: Kind) { return s.all('SELECT data FROM v2_documents WHERE kind=? ORDER BY id',kind).map(r=>parseRow(r)); }
-export function insertDoc(s: Store, kind: Kind, doc: Doc) { s.run('INSERT INTO v2_documents VALUES (?,?,?,?)',kind,doc.id,JSON.stringify(doc),doc.version); return doc; }
-export function updateDoc(s: Store, kind: Kind, doc: Doc, previous: number) {
-  if (s.run('UPDATE v2_documents SET data=?,version=? WHERE kind=? AND id=? AND version=?',JSON.stringify(doc),doc.version,kind,doc.id,previous).changes !== 1) fail('VERSION_CONFLICT','Object changed');
-  return doc;
-}
-export function audit(s: Store, actor: User, type: string, objectId: string, action: string, before: unknown, after: unknown) {
-  s.run('INSERT INTO v2_history VALUES (?,?,?,?,?,?,?,?)',randomUUID(),type,objectId,actor.id,action,before===null?null:JSON.stringify(before),JSON.stringify(after),now());
-}
+export function getDoc(s: Store, kind: Kind, objectId: string): Doc { return runSync(s, workflow.getDoc(queries, kind, objectId)); }
+export function maybeDoc(s: Store, kind: Kind, objectId: string): Doc | undefined { return runSync(s, workflow.maybeDoc(queries, kind, objectId)); }
+export function listDocs(s: Store, kind: Kind): Doc[] { return runSync(s, workflow.listDocs(queries, kind)); }
+export function insertDoc(s: Store, kind: Kind, doc: Doc): Doc { return runSync(s, workflow.insertDoc(queries, kind, doc)); }
+export function updateDoc(s: Store, kind: Kind, doc: Doc, previous: number): Doc { return runSync(s, workflow.updateDoc(queries, kind, doc, previous)); }
+export function audit(s: Store, actor: User, type: string, objectId: string, action: string, before: unknown, after: unknown): void { return runSync(s, workflow.audit(queries, actor, type, objectId, action, before, after)); }
 export function replay(s: Store, actor: User, method: string, path: string, key: string|undefined, body: unknown) {
   if (!key || !/^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$/.test(key)) fail('INVALID_IDEMPOTENCY_KEY','Supply Idempotency-Key',400);
   const old=s.get('SELECT * FROM v2_idempotency WHERE actor_id=? AND method=? AND path=? AND key=?',actor.id,method,path,key!);
@@ -68,4 +62,4 @@ export const intervals = z.array(interval).max(60);
 export const overlap = (a: {start:string;end:string},b:{start:string;end:string}) => a.start<b.end && b.start<a.end;
 export const inside = (a: {start:string;end:string},b:{start:string;end:string}) => a.start>=b.start && a.end<=b.end;
 export const uniqueIds = z.array(id).max(100).refine(xs=>new Set(xs).size===xs.length,'Duplicate IDs');
-export function evidence(s: Store, ids: string[]) { for(const evidenceId of ids) getDoc(s,'evidence',evidenceId); }
+export function evidence(s: Store, ids: string[]): void { return runSync(s, workflow.evidence(queries, ids)); }

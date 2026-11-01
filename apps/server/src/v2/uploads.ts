@@ -1,3 +1,6 @@
+import type { Doc } from "./core.js";
+import * as workflow from "./flows/uploads.js";
+import { runSync, queries } from "./flow.js";
 import { randomUUID,createHash } from 'node:crypto';
 import { writeFileSync,readFileSync,linkSync,unlinkSync,lstatSync,readdirSync } from 'node:fs';
 import { join } from 'node:path';
@@ -11,7 +14,7 @@ export const uploadFields=z.object({taskId:id}).strict();
 export const multipart=multer({storage:multer.memoryStorage(),limits:{fileSize:MAX_PHOTO_BYTES,files:1,fields:1,fieldSize:100,parts:2}}).single('file');
 const sha=(b:Buffer)=>createHash('sha256').update(b).digest('hex');
 export const uploadDto=(r:Row)=>({id:r.id,taskId:r.task_id,ownerId:r.owner_id,reportId:r.report_id,sha256:r.sha256,byteSize:r.byte_size,mediaType:'image/webp',createdAt:r.created_at,contentUrl:`/api/v1/uploads/${r.id}`});
-export function uploadActor(s:Store,a:User,taskId:string){allow(a,'worker','foreman');const t=task(s,a,taskId);if(a.role==='foreman')authorizeForeman(s,a,t);return t;}
+export function uploadActor(s:Store,a:User,taskId:string): Doc { return runSync(s, workflow.uploadActor(queries, a, taskId)); }
 export class Uploads {
   readonly files:PhotoStorage;
   constructor(root:string){this.files=new PhotoStorage(root);}
@@ -49,8 +52,4 @@ export class Uploads {
     }
   }
 }
-export function validatePhotos(s:Store,a:User,taskId:string,photoIds:string[],allowedOwners:string[]=[a.id]){
-  for(const photoId of photoIds){const row=s.get('SELECT * FROM v2_uploads WHERE id=?',photoId);
-    if(!row||row.task_id!==taskId||!allowedOwners.includes(String(row.owner_id)))fail('INVALID_PHOTO_REFERENCE','Photo must belong to this task and its contributors',400);
-    if(row.report_id!==null)fail('PHOTO_ALREADY_ATTACHED','Photo is already attached to a submitted report');}
-}
+export function validatePhotos(s:Store,a:User,taskId:string,photoIds:string[],allowedOwners:string[]=[a.id]): void { return runSync(s, workflow.validatePhotos(queries, a, taskId, photoIds, allowedOwners)); }

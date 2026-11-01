@@ -8,7 +8,11 @@ import { syncBuiltinESMExports } from 'node:module';
 const llmHosts = (process.env.LLM_ALLOWED_HOSTS ?? '').split(',').map(h => h.trim().toLowerCase()).filter(Boolean);
 // Точные имена: api.x.ai или имя сервиса в docker compose (ollama). IP-адреса и шаблоны не принимаются.
 for (const h of llmHosts) if (!/^[a-z0-9-]+(\.[a-z0-9-]+)*$/.test(h) || /^[\d.]+$/.test(h)) throw new Error(`LLM_ALLOWED_HOSTS: use exact DNS names, got ${h}`);
-const allowed = new Set(['127.0.0.1','localhost','::1','[::1]',...llmHosts]);
+const cloudHosts = (process.env.CLOUD_ALLOWED_HOSTS ?? '').split(',').map(h=>h.trim().toLowerCase()).filter(Boolean);
+for (const h of cloudHosts) if (!/^[a-z0-9-]+(\.[a-z0-9-]+)*$/.test(h) || /^[\d.]+$/.test(h)) throw new Error('CLOUD_ALLOWED_HOSTS requires exact DNS names');
+const storageHosts = (process.env.STORAGE_ALLOWED_HOSTS ?? '').split(',').map(h=>h.trim().toLowerCase()).filter(Boolean);
+for (const h of storageHosts) if ((!/^[a-z0-9-]+(\.[a-z0-9-]+)*$/.test(h) || /^[\d.]+$/.test(h)) && !(process.env.CLOUD_LOCAL_TEST==='1'&&h==='127.0.0.1')) throw new Error('STORAGE_ALLOWED_HOSTS requires exact DNS names');
+const allowed = new Set(['127.0.0.1','localhost','::1','[::1]',...llmHosts,...cloudHosts,...storageHosts]);
 // Адреса «все интерфейсы» (HOST=0.0.0.0 в Docker): server.listen проверяет их через dns.lookup.
 // Это входящие соединения, поэтому разрешены только в lookup, не в connect.
 const listenOnly = new Set(['0.0.0.0','::']);

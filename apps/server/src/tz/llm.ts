@@ -85,28 +85,40 @@ type Zone = { id: string; name: string };
 type Ctx = { zones: Zone[]; evidence: Set<string>; view?: { lat: number; lng: number } | null };
 
 /** Функции, которые вызывает модель. Выполняются сервером теми же модулями, что экраны. */
-export function createTools(s: Store) {
-  const spName = () => new Map(speciesList(s).map((x) => [x.id, x.nameRu as string]));
+export type AssistantData = {
+  disabledTools?: string[];
+  species: () => Json[]; rates: () => Json[]; facts: () => Json[]; evidence: () => Json[];
+  site: (id: string) => Json | undefined; candidate: (id: string) => Json;
+  candidates: () => Json[]; reference: () => ReturnType<typeof reference>;
+};
+const sqliteAssistantData = (s: Store): AssistantData => ({
+  species: () => speciesList(s), rates: () => ratesList(s), facts: () => web.pavlodarFacts,
+  evidence: () => listDocs(s, 'evidence'), site: id => maybeDoc(s, 'site', id),
+  candidate: id => candidate(s,id), candidates: () => candidates(s), reference: () => reference(s),
+});
+export function createTools(s: Store) { return createDataTools(sqliteAssistantData(s)); }
+export function createDataTools(data: AssistantData) {
+  const spName = () => new Map(data.species().map((x) => [x.id, x.nameRu as string]));
   const zoneOf = (id: string, ctx: Ctx): Zone => {
-    const z = { id, name: String(maybeDoc(s, 'site', id)?.name ?? id) };
+    const z = { id, name: String(data.site(id)?.name ?? id) };
     if (!ctx.zones.some((x) => x.id === id)) ctx.zones.push(z);
     return z;
   };
   const elig = (c: Json) => { const st = web.CHECKS.map((k) => c.checks[k].state); return st.includes('blocked') ? 'есть ограничение' : st.every((x) => x === 'cleared') ? 'проверки завершены' : 'нужна проверка'; };
   const run: Record<string, (a: Json, ctx: Ctx) => Json> = {
     find_place: (a, ctx) => {
-      const p = web.placeZones(String(a.query ?? ''), candidates(s), ctx.view);
+      const p = web.placeZones(String(a.query ?? ''), data.candidates(), ctx.view);
       if (!p.zones.length) return { found: false, note: 'Места нет в снимке OSM района прототипа (центр Павлодара), центр карты неизвестен: попросите выбрать зону на карте, найти адрес строкой над картой или нарисовать контур.' };
       return { found: p.from === 'address', place: p.place, basedOn: p.from === 'address' ? 'адрес из снимка OSM' : 'центр карты: такого адреса нет в снимке района',
         zones: p.zones.map((x) => ({ ...zoneOf(String(x.site.id), ctx), distanceM: x.distanceM, areaM2: x.site.areaM2 ?? null, checks: elig(x.site) })) };
     },
     search_zones: (a, ctx) => {
       const keys = stems(String(a.query ?? ''));
-      const found = candidates(s).map((c) => ({ c, n: score(norm(`${c.name} ${c.id}`), keys) })).filter((x) => x.n > 0).sort((x, y) => y.n - x.n).slice(0, 8);
+      const found = data.candidates().map((c) => ({ c, n: score(norm(`${c.name} ${c.id}`), keys) })).filter((x) => x.n > 0).sort((x, y) => y.n - x.n).slice(0, 8);
       return { zones: found.map(({ c }) => ({ ...zoneOf(c.id, ctx), areaM2: c.areaM2 ?? null, checks: elig(c) })), note: found.length ? undefined : 'Совпадений нет: уточните улицу.' };
     },
     analyze_zone: (a, ctx) => {
-      const site = candidate(s, String(a.zoneId)); const ref = reference(s); const names = spName();
+      const site = data.candidate(String(a.zoneId)); const ref = data.reference(); const names = spName();
       const opts: Json = {};
       for (const k of ['variant', 'careYears', 'excluded', 'replacements']) if (a[k] !== undefined) opts[k] = a[k];
       const r = analyze(site, ref, opts);
@@ -122,23 +134,23 @@ export function createTools(s: Store) {
       };
     },
     compare_variants: (a, ctx) => {
-      const site = candidate(s, String(a.zoneId)); const ref = reference(s);
+      const site = data.candidate(String(a.zoneId)); const ref = data.reference();
       return { zone: zoneOf(site.id, ctx), variants: web.variantSummaries({}, (o) => analyze(site, ref, o)) };
     },
     top_priorities: (a, ctx) => {
-      const items = priorities(candidates(s), reference(s), a.weights ?? web.DEFAULT_PRIORITY_WEIGHTS);
+      const items = priorities(data.candidates(), data.reference(), a.weights ?? web.DEFAULT_PRIORITY_WEIGHTS);
       return { items: items.slice(0, Math.min(20, Number(a.limit ?? 5))).map((x) => ({ zone: zoneOf(x.siteId, ctx), index: x.index, explanation: x.explanation.slice(0, 2), costKzt: Math.round(x.cost), co2t20: x.co2t20 })),
         note: 'Плотность населения заменена плотностью застройки: данных о населении нет.' };
     },
     budget_roadmap: (a, ctx) => {
       const budget = Number(a.budgetKzt);
       if (!Number.isFinite(budget) || budget <= 0) return { error: 'budgetKzt должен быть положительным числом в тенге' };
-      const rm = web.roadmap(priorities(candidates(s), reference(s), web.DEFAULT_PRIORITY_WEIGHTS), budget);
+      const rm = web.roadmap(priorities(data.candidates(), data.reference(), web.DEFAULT_PRIORITY_WEIGHTS), budget);
       return { budgetKzt: budget, zonesCount: rm.chosen.length, spentKzt: Math.round(rm.spent), leftKzt: Math.round(rm.left), co2t20: rm.co2t20, method: rm.method,
         zones: rm.chosen.slice(0, 8).map((x: Json) => ({ zone: zoneOf(x.siteId, ctx), index: x.index, costKzt: Math.round(x.cost) })) };
     },
     find_problems: (a, ctx) => {
-      const { problems, notDetectable } = web.detectProblems(candidates(s));
+      const { problems, notDetectable } = web.detectProblems(data.candidates());
       const list = problems.filter((p) => (!a.type || p.type === a.type) && (!a.severity || p.severity === a.severity));
       const counts = Object.fromEntries(['deficit', 'soil', 'heat', 'unprotected'].map((t) => [t, problems.filter((p) => p.type === t).length]));
       return { total: problems.length, countsByType: counts, matched: list.length, notDetectable,
@@ -147,10 +159,10 @@ export function createTools(s: Store) {
     search_knowledge: (a, ctx) => {
       const keys = stems(String(a.query ?? ''));
       const docs: { id: string; kind: string; title: string; text: string; sourceIds: string[] }[] = [
-        ...speciesList(s).map((x) => ({ id: x.id, kind: 'вид', title: `${x.nameRu} (${x.latin})`, text: [...(x.notes ?? []), ...(x.benefits ?? []), ...(x.beauty ?? [])].join(' '), sourceIds: [...(x.evidenceIds ?? []), ...(x.pavlodarEvidenceId ? [x.pavlodarEvidenceId] : [])] })),
-        ...ratesList(s).map((x) => ({ id: x.key, kind: 'расценка', title: x.label, text: `${x.value ?? 'нет данных'} ${x.unit}. Источник: ${x.source}`, sourceIds: [] as string[] })),
-        ...web.pavlodarFacts.map((x) => ({ id: x.id, kind: x.gap ? 'нет данных' : 'факт о Павлодаре', title: x.title, text: x.text, sourceIds: x.evidenceIds as string[] })),
-        ...listDocs(s, 'evidence').map((x) => ({ id: x.id, kind: 'источник', title: String(x.sourceLabel), text: String(x.note ?? ''), sourceIds: [x.id] })),
+        ...data.species().map((x) => ({ id: x.id, kind: 'вид', title: `${x.nameRu} (${x.latin})`, text: [...(x.notes ?? []), ...(x.benefits ?? []), ...(x.beauty ?? [])].join(' '), sourceIds: [...(x.evidenceIds ?? []), ...(x.pavlodarEvidenceId ? [x.pavlodarEvidenceId] : [])] })),
+        ...data.rates().map((x) => ({ id: x.key, kind: 'расценка', title: x.label, text: `${x.value ?? 'нет данных'} ${x.unit}. Источник: ${x.source}`, sourceIds: [] as string[] })),
+        ...data.facts().map((x) => ({ id: x.id, kind: x.gap ? 'нет данных' : 'факт о Павлодаре', title: x.title, text: x.text, sourceIds: x.evidenceIds as string[] })),
+        ...data.evidence().map((x) => ({ id: x.id, kind: 'источник', title: String(x.sourceLabel), text: String(x.note ?? ''), sourceIds: [x.id] })),
       ];
       const hits = docs.map((d) => ({ d, n: score(norm(`${d.title} ${d.text}`), keys) * 2 + score(norm(d.title), keys) })).filter((x) => x.n > 0).sort((x, y) => y.n - x.n).slice(0, Math.min(8, Number(a.limit ?? 5)));
       for (const { d } of hits) d.sourceIds.forEach((id) => ctx.evidence.add(id));
@@ -158,6 +170,7 @@ export function createTools(s: Store) {
     },
   };
   return (name: string, args: Json, ctx: Ctx): Json => {
+    if (data.disabledTools?.includes(name)) return { error: 'This tool is not available in the cloud release; select an existing zone.' };
     const fn = run[name];
     if (!fn) return { error: `Нет функции ${name}` };
     try { return fn(args, ctx); } catch (e) { return { error: e instanceof Error ? e.message : 'Ошибка расчёта' }; }
@@ -174,7 +187,7 @@ async function chat(cfg: LlmConfig, messages: Json[], deadline: number, toolChoi
   let res: Response;
   try {
     res = await fetch(`${cfg.baseUrl}/chat/completions`, {
-      method: 'POST', signal: AbortSignal.timeout(left),
+      method: 'POST', redirect: 'error', signal: AbortSignal.timeout(left),
       headers: { Authorization: `Bearer ${cfg.apiKey}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({ model: cfg.model, messages, tools: TOOLS, tool_choice: toolChoice, temperature: 0.2, max_tokens: 800 }),
     });
@@ -185,9 +198,15 @@ async function chat(cfg: LlmConfig, messages: Json[], deadline: number, toolChoi
     const retry = Number(res.headers.get('retry-after'));
     throw new LlmError(res.status === 429 ? 'rate limit' : `HTTP ${res.status}`, res.status, Number.isFinite(retry) && retry > 0 ? Math.min(retry, 600) * 1000 : undefined);
   }
-  const json = (await res.json()) as Json;
+  const reader = res.body?.getReader();
+  if (!reader) throw new LlmError('empty response');
+  const chunks: Uint8Array[] = []; let size = 0;
+  try { for (;;) { const part = await reader.read(); if (part.done) break;
+    size += part.value.byteLength; if (size > 65536) throw new LlmError('oversized response'); chunks.push(part.value);
+  } } finally { await reader.cancel(); }
+  const json = JSON.parse(Buffer.concat(chunks).toString('utf8')) as Json;
   const msg = json.choices?.[0]?.message;
-  if (!msg) throw new LlmError('empty response');
+  if (!msg || (msg.content != null && typeof msg.content !== 'string') || (msg.tool_calls && (!Array.isArray(msg.tool_calls) || msg.tool_calls.length > 8))) throw new LlmError('invalid response');
   return msg as { content?: string | null; tool_calls?: { id: string; function: { name: string; arguments: string } }[] };
 }
 
@@ -199,24 +218,28 @@ const reasonText = (e: unknown) => (e instanceof LlmError ? REASON[e.message] ??
  * Модели пробуются по порядку; у каждой — своя доля общего лимита LLM_TIMEOUT_MS, чтобы резерву хватило времени.
  */
 export function createLlmAssistant(s: Store, providers: LlmConfig | LlmConfig[]): AssistantAdapter {
+  return createDataLlmAssistant(() => sqliteAssistantData(s),providers);
+}
+/** Data boundary also accepts a consistent PostgreSQL snapshot; no Store is created. */
+export function createDataLlmAssistant(load: () => Promise<AssistantData> | AssistantData, providers: LlmConfig | LlmConfig[]) {
   const list = Array.isArray(providers) ? providers : [providers];
-  const exec = createTools(s);
   const coolUntil = new Map<string, number>();
-  return async (input) => {
+  return async (input: AskInput, snapshot?: AssistantData) => {
+    const data = snapshot ?? await load(), exec = createDataTools(data);
     const total = list[0]!.timeoutMs, end = Date.now() + total;
     const failures: string[] = [];
     const ready = list.filter((p) => (coolUntil.get(p.name) ?? 0) <= Date.now());
     for (const [i, cfg] of ready.entries()) {
       const share = Math.max(1000, Math.floor((end - Date.now()) / (ready.length - i)));
       try {
-        const reply = await askOne(s, exec, cfg, input, Math.min(end, Date.now() + share));
+        const reply = await askOne(data, exec, cfg, input, Math.min(end, Date.now() + share));
         const skipped = list.filter((p) => !ready.includes(p)).map((p) => `${p.model}: лимит запросов, пропущена`);
         const notes = [...skipped, ...failures];
         return notes.length ? { ...reply, reserveReason: `Ответила резервная модель (${notes.join('; ')}).` } : reply;
       } catch (e) {
         if (e instanceof LlmError && e.status === 429) coolUntil.set(cfg.name, Date.now() + (e.retryAfterMs ?? 60000));
         failures.push(`${cfg.model}: ${reasonText(e)}`);
-        console.warn(`Assistant model ${cfg.name} (${cfg.model}) failed: ${e instanceof Error ? e.message : 'error'}`);
+        console.warn(`Assistant model ${cfg.name} (${cfg.model}) failed: ${reasonText(e)}`);
       }
     }
     throw new LlmError(failures.length ? `all models failed: ${failures.join('; ')}` : 'all models are cooling down after rate limits');
@@ -225,10 +248,10 @@ export function createLlmAssistant(s: Store, providers: LlmConfig | LlmConfig[])
 
 type AskInput = Parameters<AssistantAdapter>[0];
 
-async function askOne(s: Store, exec: ReturnType<typeof createTools>, cfg: LlmConfig, { message, siteId, history = [], view = null }: AskInput, deadline: number) {
+async function askOne(data: AssistantData, exec: ReturnType<typeof createTools>, cfg: LlmConfig, { message, siteId, history = [], view = null }: AskInput, deadline: number) {
   const ctx: Ctx = { zones: [], evidence: new Set(), view };
-  const selected = siteId ? maybeDoc(s, 'site', siteId) : undefined;
-  const where = selected && analyzable(selected) ? `Выбранная на карте зона: ${selected.id} «${selected.name}».` : `Зона на карте не выбрана.${view ? ' find_place без query вернёт зоны у центра карты, которую видит специалист.' : ''}`;
+  const selected = siteId ? data.site(siteId) : undefined;
+  const where = selected && selected.geometry?.type === 'Polygon' && !!selected.centroid ? `Выбранная на карте зона: ${selected.id} «${selected.name}».` : `Зона на карте не выбрана.${view ? ' find_place без query вернёт зоны у центра карты, которую видит специалист.' : ''}`;
   const lang = questionLang(message);
   // Прошлые реплики — только текст: короткий ответ пользователя продолжает его прошлый вопрос.
   const turns = history.slice(-6).map((h) => ({ role: h.role, content: clip(h.text, 600) }));
@@ -241,18 +264,24 @@ async function askOne(s: Store, exec: ReturnType<typeof createTools>, cfg: LlmCo
     messages.push({ role: 'assistant', content: msg.content ?? null, tool_calls: msg.tool_calls });
     for (const call of msg.tool_calls) {
       let args: Json = {};
-      try { args = JSON.parse(call.function.arguments || '{}'); } catch { /* пустые аргументы */ }
+      try { args = JSON.parse(call.function.arguments || '{}'); } catch { throw new LlmError('invalid tool arguments'); }
+      if (!args || typeof args !== 'object' || Array.isArray(args)) throw new LlmError('invalid tool arguments');
       toolCalls.push({ name: call.function.name, args });
-      messages.push({ role: 'tool', tool_call_id: call.id, content: JSON.stringify(exec(call.function.name, args, ctx)) });
+      const value = exec(call.function.name, args, ctx), content = JSON.stringify(value);
+      // Tool failures are part of the existing contract: let the model explain
+      // missing data, rather than turn a recoverable lookup into provider failure.
+      if (content.length > 32768) throw new LlmError('tool result rejected');
+      messages.push({ role: 'tool', tool_call_id: call.id, content });
     }
   }
   // Модели иногда пишут Markdown вопреки правилу 8 — в чате это звёздочки и решётки; оставляем простой текст.
   text = plainText(text);
   if (!text) throw new LlmError('empty answer');
+  if (text.length > 12000) throw new LlmError('oversized answer');
   // Цифры без вызова функций — значит, модель их придумала: такой ответ не показываем (резерв или правила).
   if (!toolCalls.length && /\d/.test(text)) throw new LlmError('numbers without tool calls');
   const named = ctx.zones.filter((z) => text.includes(z.name));
-  const sources = [...ctx.evidence].map((id) => maybeDoc(s, 'evidence', id)).filter(Boolean).slice(0, 6)
+  const sources = [...ctx.evidence].map((id) => data.evidence().find(e => e.id === id)).filter(Boolean).slice(0, 6)
     .map((e) => ({ id: e!.id, label: String(e!.sourceLabel), ...(e!.sourceUrl ? { url: String(e!.sourceUrl) } : {}) }));
   return { text, zones: (named.length ? named : ctx.zones).slice(0, 8), method: 'model', intent: toolCalls[0]?.name ?? 'chat', model: cfg.model, sources, toolCalls, lang } as Json;
 }

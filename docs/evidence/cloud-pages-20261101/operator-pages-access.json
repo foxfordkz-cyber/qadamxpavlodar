@@ -1,0 +1,28 @@
+{
+  "at": "2026-11-01T04:02:32.377Z",
+  "frontendOwnerReportedSha": "c970264919de2f7a62d0e1ea8a28cc70c95a3864",
+  "transportOrigin": "https://green-pavlodar-api.pages.dev",
+  "backendDashboardVerifiedSha": "3b14927def04b35bf97782eae6b550da276c779f",
+  "scope": "this process only; not proof of another machine access",
+  "result": "PASS",
+  "checks": [
+    {
+      "role": "coordinator",
+      "login": "PASS"
+    },
+    {
+      "role": "viewer",
+      "login": "PASS"
+    },
+    {
+      "role": "worker",
+      "login": "PASS"
+    },
+    {
+      "role": "foreman",
+      "login": "PASS"
+    }
+  ],
+  "baselineReads": 7,
+  "privatePhoto": "PASS"
+}

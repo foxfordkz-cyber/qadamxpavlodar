@@ -33,33 +33,8 @@ export function readReport(store: Store, actor: Actor, reportId: string, experim
     .map(row => photoDto(row, experimental)) };
 }
 
-export class PhotoStorage {
-  readonly root: string;
-  readonly temporary: string;
+export class ImageNormalizer {
   private processing = 0;
-  constructor(root: string) {
-    mkdirSync(root, { recursive: true });
-    if (lstatSync(root).isSymbolicLink()) throw new Error('Uploads root must not be a symbolic link');
-    this.root = realpathSync(root);
-    this.temporary = join(this.root, '.tmp');
-    mkdirSync(this.temporary, { recursive: true });
-    if (lstatSync(this.temporary).isSymbolicLink()) throw new Error('Uploads temporary directory must not be a symbolic link');
-  }
-  private safePath(name: string, temporary = false) {
-    if (!/^[0-9a-f-]{36}\.(webp|tmp)$/.test(name)) throw new ApiError(500, 'INVALID_STORAGE_NAME', 'Invalid stored photo name');
-    const root = temporary ? this.temporary : this.root;
-    const path = resolve(root, name);
-    if (path !== join(root, name)) throw new ApiError(500, 'INVALID_STORAGE_NAME', 'Invalid stored photo path');
-    return path;
-  }
-  private remove(name: string, temporary = false) {
-    const path = this.safePath(name, temporary);
-    try {
-      if (lstatSync(path).isFile()) unlinkSync(path);
-    } catch (error) {
-      if (!(error instanceof Error && 'code' in error && error.code === 'ENOENT')) throw error;
-    }
-  }
   async normalize(input: Buffer) {
     if (input.length > MAX_PHOTO_BYTES) throw new ApiError(413, 'PHOTO_TOO_LARGE', 'Photo exceeds 5 MiB');
     if (this.processing >= 2) throw new ApiError(429, 'PHOTO_BUSY', 'Two images are already processing; retry later');
@@ -85,6 +60,35 @@ export class PhotoStorage {
       if (error instanceof ApiError) throw error;
       throw new ApiError(415, 'INVALID_PHOTO', 'Image could not be safely decoded');
     } finally { this.processing--; }
+  }
+}
+
+export class PhotoStorage extends ImageNormalizer {
+  readonly root: string;
+  readonly temporary: string;
+  constructor(root: string) {
+    super();
+    mkdirSync(root, { recursive: true });
+    if (lstatSync(root).isSymbolicLink()) throw new Error('Uploads root must not be a symbolic link');
+    this.root = realpathSync(root);
+    this.temporary = join(this.root, '.tmp');
+    mkdirSync(this.temporary, { recursive: true });
+    if (lstatSync(this.temporary).isSymbolicLink()) throw new Error('Uploads temporary directory must not be a symbolic link');
+  }
+  private safePath(name: string, temporary = false) {
+    if (!/^[0-9a-f-]{36}\.(webp|tmp)$/.test(name)) throw new ApiError(500, 'INVALID_STORAGE_NAME', 'Invalid stored photo name');
+    const root = temporary ? this.temporary : this.root;
+    const path = resolve(root, name);
+    if (path !== join(root, name)) throw new ApiError(500, 'INVALID_STORAGE_NAME', 'Invalid stored photo path');
+    return path;
+  }
+  private remove(name: string, temporary = false) {
+    const path = this.safePath(name, temporary);
+    try {
+      if (lstatSync(path).isFile()) unlinkSync(path);
+    } catch (error) {
+      if (!(error instanceof Error && 'code' in error && error.code === 'ENOENT')) throw error;
+    }
   }
   async save(store: Store, actor: Actor, reportId: string, file: Express.Multer.File | undefined,
     fields: unknown, key: string | undefined, experimental = false) {

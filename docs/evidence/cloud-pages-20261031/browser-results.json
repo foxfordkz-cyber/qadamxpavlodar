@@ -1,0 +1,267 @@
+{
+  "at": "2026-10-31T17:36:00.026Z",
+  "frontendSourceSha": "aee7242ee899f1f596a704adba6e1279c37af9df",
+  "frontendShaSource": "Frontend owner deployment record in PR35",
+  "backendSourceSha": "3b14927def04b35bf97782eae6b550da276c779f",
+  "origin": "https://green-pavlodar-api.pages.dev",
+  "synthetic": true,
+  "taskId": "1679a62e-260e-4044-bf9c-f4cad6782cfc",
+  "reportId": "d7d8b67f-85c4-4664-bb32-37e3f64f6c16",
+  "photoId": "1529edd4-1601-48ab-8902-df462d4d0bde",
+  "setup": "API provision and assignment; browser worker start/upload/report, coordinator review, viewer reads",
+  "roleCycle": "PASS",
+  "matrix": [
+    {
+      "role": "worker",
+      "lang": "ru",
+      "width": 1280,
+      "layout": {
+        "clientHeight": 900,
+        "clientWidth": 1265,
+        "scrollWidth": 1265
+      },
+      "submitEnabled": true,
+      "noteRetained": true
+    },
+    {
+      "role": "worker",
+      "lang": "kk",
+      "width": 1280,
+      "layout": {
+        "clientHeight": 900,
+        "clientWidth": 1265,
+        "scrollWidth": 1265
+      },
+      "submitEnabled": true,
+      "noteRetained": true,
+      "limitation": "Shell KK but mounted worker form remains RU after language switch"
+    },
+    {
+      "role": "worker",
+      "lang": "kk",
+      "width": 375,
+      "layout": {
+        "clientHeight": 812,
+        "clientWidth": 360,
+        "scrollWidth": 360
+      },
+      "submitEnabled": true,
+      "noteRetained": true,
+      "limitation": "Shell KK but mounted worker form remains RU after language switch"
+    },
+    {
+      "role": "worker",
+      "lang": "ru",
+      "width": 375,
+      "layout": {
+        "clientHeight": 812,
+        "clientWidth": 360,
+        "scrollWidth": 360
+      },
+      "submitEnabled": true,
+      "noteRetained": true
+    },
+    {
+      "role": "worker",
+      "lang": "kk",
+      "width": 375,
+      "afterReload": true,
+      "limitation": "KK shell remains selected but worker cabinet remains RU after full reload"
+    },
+    {
+      "role": "viewer-report",
+      "lang": "kk",
+      "width": 375,
+      "layout": {
+        "clientHeight": 812,
+        "clientWidth": 360,
+        "scrollWidth": 360
+      },
+      "privatePhoto": [
+        {
+          "loaded": true,
+          "sameOrigin": true
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "role": "viewer-report",
+      "lang": "ru",
+      "width": 375,
+      "layout": {
+        "clientHeight": 812,
+        "clientWidth": 360,
+        "scrollWidth": 360
+      },
+      "privatePhoto": [
+        {
+          "loaded": true,
+          "sameOrigin": true
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "role": "viewer-report",
+      "lang": "ru",
+      "width": 1280,
+      "layout": {
+        "clientHeight": 900,
+        "clientWidth": 1265,
+        "scrollWidth": 1265
+      },
+      "privatePhoto": [
+        {
+          "loaded": true,
+          "sameOrigin": true
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "role": "viewer-report",
+      "lang": "kk",
+      "width": 1280,
+      "layout": {
+        "clientHeight": 900,
+        "clientWidth": 1265,
+        "scrollWidth": 1265
+      },
+      "privatePhoto": [
+        {
+          "loaded": true,
+          "sameOrigin": true
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "role": "viewer-outcomes",
+      "lang": "kk",
+      "width": 1280,
+      "values": [
+        {
+          "label": "Тірі",
+          "value": "1"
+        },
+        {
+          "label": "Жай-күйі белгісіз",
+          "value": "3"
+        },
+        {
+          "label": "Бүкіл партияның жерсіну үлесі",
+          "value": "Дерек жоқ"
+        }
+      ],
+      "layout": {
+        "clientWidth": 1265,
+        "scrollWidth": 1265
+      },
+      "result": "PASS"
+    },
+    {
+      "role": "viewer-outcomes",
+      "lang": "kk",
+      "width": 375,
+      "values": [
+        {
+          "label": "Тірі",
+          "value": "1"
+        },
+        {
+          "label": "Жай-күйі белгісіз",
+          "value": "3"
+        },
+        {
+          "label": "Бүкіл партияның жерсіну үлесі",
+          "value": "Дерек жоқ"
+        }
+      ],
+      "layout": {
+        "clientWidth": 360,
+        "scrollWidth": 360
+      },
+      "result": "PASS"
+    },
+    {
+      "role": "viewer-outcomes",
+      "lang": "ru",
+      "width": 375,
+      "values": [
+        {
+          "label": "Живых",
+          "value": "1"
+        },
+        {
+          "label": "Состояние неизвестно",
+          "value": "3"
+        },
+        {
+          "label": "Приживаемость всей партии",
+          "value": "Нет данных"
+        }
+      ],
+      "layout": {
+        "clientWidth": 360,
+        "scrollWidth": 360
+      },
+      "result": "PASS"
+    },
+    {
+      "role": "viewer-outcomes",
+      "lang": "ru",
+      "width": 1280,
+      "values": [
+        {
+          "label": "Живых",
+          "value": "1"
+        },
+        {
+          "label": "Состояние неизвестно",
+          "value": "3"
+        },
+        {
+          "label": "Приживаемость всей партии",
+          "value": "Нет данных"
+        }
+      ],
+      "layout": {
+        "clientWidth": 1265,
+        "scrollWidth": 1265
+      },
+      "result": "PASS"
+    }
+  ],
+  "workerKkLocalization": "FAIL: shell KK; worker cabinet/form RU, persists across reload and a new KK login",
+  "independentFullUiAndOtherDevice": "NOT RUN",
+  "loggedOut": true,
+  "viewportRestored": true,
+  "screenshots": [
+    {
+      "path": "docs/evidence/cloud-pages-20261031/browser-worker-submitted-ru-375.jpg",
+      "bytes": 36003,
+      "sha256": "1ac17cfd72b74c2c56966cc7aaa8f6f96b38c4719ecff7c405a2a0a660652e08"
+    },
+    {
+      "path": "docs/evidence/cloud-pages-20261031/browser-coordinator-accepted-kk-375.jpg",
+      "bytes": 36494,
+      "sha256": "9f5eae75bcf8d8819a9c72aba2f4ba71c69d9cc0a0a6dcb435f8af2d80cc1196"
+    },
+    {
+      "path": "docs/evidence/cloud-pages-20261031/browser-viewer-ru-1280.jpg",
+      "bytes": 92746,
+      "sha256": "20036565b7736a5079308f5fd7d59df942e1d58a68fa5413cf6f8128e7e76a2e"
+    },
+    {
+      "path": "docs/evidence/cloud-pages-20261031/browser-outcomes-kk-1280.jpg",
+      "bytes": 83699,
+      "sha256": "a5fde8b6bb7bfb64c346c72a885870b2fd36bdff2b43d64e5f0326602d8ddc84"
+    },
+    {
+      "path": "docs/evidence/cloud-pages-20261031/browser-worker-kk-defect-375.jpg",
+      "bytes": 33257,
+      "sha256": "b2110804b96ca54010c9ca959b7861f4c44af975ce59c8149af347ae0d0d3d99"
+    }
+  ]
+}

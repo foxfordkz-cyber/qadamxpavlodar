@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-31",
+  "backendSha": "3b14927def04b35bf97782eae6b550da276c779f",
+  "frontendSha": "aee7242ee899f1f596a704adba6e1279c37af9df",
+  "taskId": "9050ea3c-369b-4864-b30b-caede24c96f2",
+  "result": "UI login / existing site estimate / create inspection task / crew assignment PASS",
+  "workersAssigned": false,
+  "newProjectCreated": false,
+  "restartAfterThisTask": "NOT RUN",
+  "syntheticDemo": true,
+  "screenshots": [
+    {
+      "file": "browser-task-assigned-ui.jpg",
+      "bytes": 93967,
+      "sha256": "5445b9f6930749f1d048494487222caf527e248d69c3e2a202fd40e0ac429086"
+    },
+    {
+      "file": "browser-existing-site-estimate.jpg",
+      "bytes": 110731,
+      "sha256": "0d38c21e401cc61c5e6035e07b05b5a995189d154244faee0b84ab0ad04b74d8"
+    }
+  ]
+}
