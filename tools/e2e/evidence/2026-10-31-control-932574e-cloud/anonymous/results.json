@@ -1,0 +1,172 @@
+{
+  "kind": "independent-cloud-anonymous-browser-entry",
+  "startedAt": "2026-10-31T18:01:28.817Z",
+  "testSHA": "cdc3ec257726ef937b0bbf953253a755f2e225a9",
+  "dirty": false,
+  "target": "https://green-pavlodar-api.pages.dev",
+  "applicationSHA": null,
+  "deploymentId": null,
+  "handoffRef": "05bc92492f72cc909ee6ae94d18d5b9bf1a3d54b",
+  "ownerReportedFrontendSHA": "aee7242ee899f1f596a704adba6e1279c37af9df",
+  "ownerReportedBackendSHA": "3b14927def04b35bf97782eae6b550da276c779f",
+  "scope": "Four anonymous entry scenarios only: translated sign-in, language persistence, viewport fit and JSON 401. No sign-in, account, task, report, photo, cloud writes, restart or full API acceptance.",
+  "environment": {
+    "node": "24.22.2",
+    "browser": "Chromium",
+    "workers": 1,
+    "retries": 0,
+    "scenarioTimeoutMs": 45000,
+    "expectTimeoutMs": 12000,
+    "navigationTimeoutMs": 30000,
+    "browserVersion": "156.0.8078.4"
+  },
+  "results": [
+    {
+      "language": "ru",
+      "width": 1280,
+      "height": 800,
+      "startedAt": "2026-10-31T18:01:30.403Z",
+      "status": "passed",
+      "step": "complete",
+      "blockedRequests": [],
+      "readErrors": [],
+      "pageErrorCount": 0,
+      "anonymousAuth": {
+        "status": 401,
+        "contentType": "application/json; charset=utf-8",
+        "errorCode": "AUTH_REQUIRED"
+      },
+      "externalReadErrors": [],
+      "screenshot": {
+        "file": "anonymous-ru-1280.png",
+        "sha256": "2ed852cde3172cd324798261bc0112d9b1adbca21c716debcbd0efd068950b42",
+        "inputsEmpty": true,
+        "reviewed": false
+      },
+      "endedAt": "2026-10-31T18:01:35.283Z"
+    },
+    {
+      "language": "kk",
+      "width": 1280,
+      "height": 800,
+      "startedAt": "2026-10-31T18:01:35.283Z",
+      "status": "passed",
+      "step": "complete",
+      "blockedRequests": [],
+      "readErrors": [],
+      "pageErrorCount": 0,
+      "anonymousAuth": {
+        "status": 401,
+        "contentType": "application/json; charset=utf-8",
+        "errorCode": "AUTH_REQUIRED"
+      },
+      "externalReadErrors": [],
+      "screenshot": {
+        "file": "anonymous-kk-1280.png",
+        "sha256": "9af23db2dfbfd6e4bf3bce68e7e03a6e2e64f9fdaddb90f8704fd8e8da817c89",
+        "inputsEmpty": true,
+        "reviewed": false
+      },
+      "endedAt": "2026-10-31T18:01:38.677Z"
+    },
+    {
+      "language": "ru",
+      "width": 375,
+      "height": 812,
+      "startedAt": "2026-10-31T18:01:38.678Z",
+      "status": "passed",
+      "step": "complete",
+      "blockedRequests": [],
+      "readErrors": [],
+      "pageErrorCount": 0,
+      "anonymousAuth": {
+        "status": 401,
+        "contentType": "application/json; charset=utf-8",
+        "errorCode": "AUTH_REQUIRED"
+      },
+      "externalReadErrors": [],
+      "screenshot": {
+        "file": "anonymous-ru-375.png",
+        "sha256": "2a4220da3fa9c24962657cf840ff1f077c24fac4cc72899c7f25c963c86f237f",
+        "inputsEmpty": true,
+        "reviewed": false
+      },
+      "endedAt": "2026-10-31T18:01:42.163Z"
+    },
+    {
+      "language": "kk",
+      "width": 375,
+      "height": 812,
+      "startedAt": "2026-10-31T18:01:42.163Z",
+      "status": "passed",
+      "step": "complete",
+      "blockedRequests": [],
+      "readErrors": [],
+      "pageErrorCount": 0,
+      "anonymousAuth": {
+        "status": 401,
+        "contentType": "application/json; charset=utf-8",
+        "errorCode": "AUTH_REQUIRED"
+      },
+      "externalReadErrors": [],
+      "screenshot": {
+        "file": "anonymous-kk-375.png",
+        "sha256": "df9c161229a00ed0580454f5095bcf29d10c914074ebd7f37e0512900f025e61",
+        "inputsEmpty": true,
+        "reviewed": false
+      },
+      "endedAt": "2026-10-31T18:01:45.571Z"
+    }
+  ],
+  "entryBefore": {
+    "observedAt": "2026-10-31T18:01:29.813Z",
+    "files": [
+      {
+        "path": "/",
+        "bytes": 609,
+        "sha256": "ca4b5d0761a10ba88133ede27145498ddc3142780da08287df20c5684f480175"
+      },
+      {
+        "path": "/assets/index-DELWlLwL.js",
+        "bytes": 984985,
+        "sha256": "37666ddc1b4e617a9b1cc227f535618f202a923fdc178e0f687d85847a66ad0a"
+      },
+      {
+        "path": "/assets/index-B2HVvz9V.css",
+        "bytes": 83538,
+        "sha256": "db6b09c91df317ad939fbdee1546505806d7be6df14137371ee9722a6899fd42"
+      }
+    ]
+  },
+  "entryAfter": {
+    "observedAt": "2026-10-31T18:01:47.377Z",
+    "files": [
+      {
+        "path": "/",
+        "bytes": 609,
+        "sha256": "ca4b5d0761a10ba88133ede27145498ddc3142780da08287df20c5684f480175"
+      },
+      {
+        "path": "/assets/index-DELWlLwL.js",
+        "bytes": 984985,
+        "sha256": "37666ddc1b4e617a9b1cc227f535618f202a923fdc178e0f687d85847a66ad0a"
+      },
+      {
+        "path": "/assets/index-B2HVvz9V.css",
+        "bytes": 83538,
+        "sha256": "db6b09c91df317ad939fbdee1546505806d7be6df14137371ee9722a6899fd42"
+      }
+    ]
+  },
+  "entryAssetsStable": true,
+  "endedAt": "2026-10-31T18:01:47.377Z",
+  "counts": {
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "fixme": 0,
+    "flaky": 0,
+    "notRun": 0
+  },
+  "artifactPolicy": "Only intentional screenshots after empty-input and signed-out checks; no trace, video, error-context, login credentials or raw DOM."
+}

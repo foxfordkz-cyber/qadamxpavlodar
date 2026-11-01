@@ -1,0 +1,9 @@
+{
+  "applicationBase": "fdc6e756be99dc5ba3a7a48ca1df17c4bfbef5ef",
+  "testSHA": "f0c1f43eb424408ef0db7fad6e263bb17e34f995",
+  "appsTree": "f19500893c20ee19c170c393f2a8414b95e19255",
+  "dirty": false,
+  "finishedAt": "2026-10-31T17:16:28.270Z",
+  "exitCode": 0,
+  "command": "docker compose -p gp-aidana-postmerge-build-f0c1f43 -f docker-compose.yml -f tools/e2e/test-results/postmerge-docker/compose.override.yml build"
+}

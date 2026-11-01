@@ -1,0 +1,54 @@
+{
+  "profile": "mock",
+  "available": true,
+  "current": true,
+  "meta": {
+    "runId": "ecaa4d53-908c-4fe9-a23b-dd3fc59cdc27",
+    "state": "finished",
+    "startedAt": "2026-10-31T18:19:28.083Z",
+    "endedAt": "2026-10-31T18:20:00.080Z",
+    "exitCode": 1,
+    "revision": "5db953cd770c4fe0ef31f835a7f19a8e044c97b8",
+    "dirty": false,
+    "selection": "subset",
+    "capturesScreens": false,
+    "command": "node scripts/run.mjs mock",
+    "environment": {
+      "node": "24.22.2",
+      "playwright": "1.64.1",
+      "platform": "win32",
+      "arch": "x64",
+      "workers": 2,
+      "retries": 0
+    },
+    "target": "http://localhost:5176"
+  },
+  "tests": [
+    {
+      "title": "E2E-11: note and synthetic photo survive language repaint and reload with mock role re-entry",
+      "project": "desktop",
+      "status": "failed",
+      "outOfScope": false,
+      "note": "",
+      "durationMs": 25323
+    },
+    {
+      "title": "E2E-11: note and synthetic photo survive language repaint and reload with mock role re-entry",
+      "project": "mobile",
+      "status": "failed",
+      "outOfScope": false,
+      "note": "",
+      "durationMs": 24907
+    }
+  ],
+  "counts": {
+    "passed": 0,
+    "failed": 2,
+    "fixme": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "notRun": 0
+  },
+  "runnerFailed": false,
+  "durationMs": 30597.12
+}

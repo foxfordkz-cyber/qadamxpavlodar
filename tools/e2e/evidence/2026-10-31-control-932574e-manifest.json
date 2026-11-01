@@ -1,0 +1,513 @@
+{
+  "schemaVersion": 1,
+  "applicationBase": "932574e630621a6bc9aeacc46703e6ade5e7bdfc",
+  "appsTree": "72b065f072e006dc35600da693036ccedefed265",
+  "status": "CONTROL_BUILD_NOT_FINAL",
+  "fullSuiteTestSHA": "cdc3ec257726ef937b0bbf953253a755f2e225a9",
+  "latestRegressionTestSHA": "5db953cd770c4fe0ef31f835a7f19a8e044c97b8",
+  "archive": {
+    "path": "2026-10-31-control-932574e.zip",
+    "bytes": 4867417,
+    "sha256": "fc7415e57ae11fc2f4a8b1b774bf9335fd1228c53ec5d1cbe0d6fa6118cad92f",
+    "entries": 33,
+    "pngCount": 30,
+    "packageKind": "diagnostic-not-accepted",
+    "scope": "Only completed cdc3ec2 full control mock/API and 30 reviewed captures from run316395a6; later E2E-11 and interrupted run are separate evidence."
+  },
+  "runs": [
+    {
+      "scope": "full mock",
+      "meta": {
+        "runId": "316395a6-3c9e-4b36-84d7-2d6a0652bf5f",
+        "state": "finished",
+        "startedAt": "2026-10-31T17:39:26.501Z",
+        "endedAt": "2026-10-31T17:53:34.909Z",
+        "exitCode": 1,
+        "revision": "cdc3ec257726ef937b0bbf953253a755f2e225a9",
+        "dirty": false,
+        "selection": "full",
+        "capturesScreens": true,
+        "command": "node scripts/run.mjs mock",
+        "environment": {
+          "node": "24.22.2",
+          "playwright": "1.64.1",
+          "platform": "win32",
+          "arch": "x64",
+          "workers": 2,
+          "retries": 0
+        },
+        "target": "http://localhost:5176"
+      },
+      "counts": {
+        "passed": 283,
+        "failed": 1,
+        "fixme": 0,
+        "skipped": 2,
+        "flaky": 0,
+        "notRun": 0
+      }
+    },
+    {
+      "scope": "full isolated API",
+      "meta": {
+        "runId": "98c7f1fa-6623-48ae-9c59-090713e4811d",
+        "state": "finished",
+        "startedAt": "2026-10-31T17:53:47.716Z",
+        "endedAt": "2026-10-31T17:57:24.429Z",
+        "exitCode": 0,
+        "browserExitCode": 0,
+        "privacyScan": "passed",
+        "revision": "cdc3ec257726ef937b0bbf953253a755f2e225a9",
+        "dirty": false,
+        "selection": "full",
+        "capturesScreens": false,
+        "command": "node scripts/run.mjs api",
+        "environment": {
+          "node": "24.22.2",
+          "playwright": "1.64.1",
+          "platform": "win32",
+          "arch": "x64",
+          "workers": 1,
+          "retries": 0
+        },
+        "target": "http://localhost:5177"
+      },
+      "counts": {
+        "passed": 74,
+        "failed": 0,
+        "fixme": 0,
+        "skipped": 0,
+        "flaky": 0,
+        "notRun": 0
+      }
+    },
+    {
+      "scope": "E2E-11 corrected mock matrix; one readiness setup error recorded separately",
+      "meta": {
+        "runId": "5f4059b3-dbd0-4edd-8f87-6793a9d0690a",
+        "state": "finished",
+        "startedAt": "2026-10-31T18:13:12.847Z",
+        "endedAt": "2026-10-31T18:15:37.395Z",
+        "exitCode": 1,
+        "revision": "916b0f700c91bb44d509d44f3607cfe1eaf047f1",
+        "dirty": false,
+        "selection": "subset",
+        "capturesScreens": false,
+        "command": "node scripts/run.mjs mock",
+        "environment": {
+          "node": "24.22.2",
+          "playwright": "1.64.1",
+          "platform": "win32",
+          "arch": "x64",
+          "workers": 2,
+          "retries": 0
+        },
+        "target": "http://localhost:5176"
+      },
+      "counts": {
+        "passed": 0,
+        "failed": 8,
+        "fixme": 0,
+        "skipped": 0,
+        "flaky": 0,
+        "notRun": 0
+      }
+    },
+    {
+      "scope": "E2E-11 authenticated local API",
+      "meta": {
+        "runId": "fd0e4244-6e55-48d1-a413-29cbebb9c8c7",
+        "state": "finished",
+        "startedAt": "2026-10-31T18:15:49.020Z",
+        "endedAt": "2026-10-31T18:17:58.303Z",
+        "exitCode": 1,
+        "browserExitCode": 1,
+        "privacyScan": "passed",
+        "revision": "af240b79b991af4a1f3804afcfef955e022191e5",
+        "dirty": false,
+        "selection": "subset",
+        "capturesScreens": false,
+        "command": "node scripts/run.mjs api",
+        "environment": {
+          "node": "24.22.2",
+          "playwright": "1.64.1",
+          "platform": "win32",
+          "arch": "x64",
+          "workers": 1,
+          "retries": 0
+        },
+        "target": "http://localhost:5177"
+      },
+      "counts": {
+        "passed": 0,
+        "failed": 4,
+        "fixme": 0,
+        "skipped": 0,
+        "flaky": 0,
+        "notRun": 0
+      }
+    },
+    {
+      "scope": "E2E-11 final draft subset only",
+      "meta": {
+        "runId": "ecaa4d53-908c-4fe9-a23b-dd3fc59cdc27",
+        "state": "finished",
+        "startedAt": "2026-10-31T18:19:28.083Z",
+        "endedAt": "2026-10-31T18:20:00.080Z",
+        "exitCode": 1,
+        "revision": "5db953cd770c4fe0ef31f835a7f19a8e044c97b8",
+        "dirty": false,
+        "selection": "subset",
+        "capturesScreens": false,
+        "command": "node scripts/run.mjs mock",
+        "environment": {
+          "node": "24.22.2",
+          "playwright": "1.64.1",
+          "platform": "win32",
+          "arch": "x64",
+          "workers": 2,
+          "retries": 0
+        },
+        "target": "http://localhost:5176"
+      },
+      "counts": {
+        "passed": 0,
+        "failed": 2,
+        "fixme": 0,
+        "skipped": 0,
+        "flaky": 0,
+        "notRun": 0
+      }
+    }
+  ],
+  "cloud": {
+    "scope": "Anonymous entry only",
+    "target": "https://green-pavlodar-api.pages.dev",
+    "counts": {
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "fixme": 0,
+      "flaky": 0,
+      "notRun": 0
+    },
+    "startedAt": "2026-10-31T18:01:28.817Z",
+    "endedAt": "2026-10-31T18:01:47.377Z",
+    "entryAssetsStable": true,
+    "ownerReportedFrontendSHA": "aee7242ee899f1f596a704adba6e1279c37af9df",
+    "ownerReportedBackendSHA": "3b14927def04b35bf97782eae6b550da276c779f",
+    "authenticatedExistingData": "BLOCKED: process credentials and baseline manifest absent",
+    "mutations": "NOT RUN: requires agreed scenario in shared team DEMO",
+    "restart": "NOT RUN: Bekzat operates in agreed window",
+    "ownerReportedFrontendDeployment": "ff01f45d-69ed-45a9-af1c-ad1d26b8983a",
+    "ownerReportedBackendDeployment": "dep-dbj223h42hec73bqnttg",
+    "project": "green-pavlodar-demo / dpkffzawhtbtlldckjhy",
+    "existingDataset": "release-738f96b2"
+  },
+  "unverified": [
+    "Final merged release and publication freeze",
+    "Authenticated cloud role/photo/report/outcomes workflow",
+    "Cloud persistence across owner restart",
+    "Docker on 932574e; previous16 belongs to fdc6e75",
+    "Native Microsoft Word on control build",
+    "Send-button Kazakh assertion after blocking photo-label assertion"
+  ],
+  "files": [
+    {
+      "path": "2026-10-31-control-932574e.zip",
+      "bytes": 4867417,
+      "sha256": "fc7415e57ae11fc2f4a8b1b774bf9335fd1228c53ec5d1cbe0d6fa6118cad92f"
+    },
+    {
+      "path": "2026-10-31-control-932574e.json",
+      "bytes": 114872,
+      "sha256": "04fea35f1c9ab330fbebd0d5d26a205da74f00ce1f6feca232ff6aca4cdaa43d"
+    },
+    {
+      "path": "2026-10-31-control-932574e-visual-review.json",
+      "bytes": 26778,
+      "sha256": "c8398805d3de9f9e921782bd72ddc655e2ff16c1f68cab66b6ed7e3ea5a13e12"
+    },
+    {
+      "path": "2026-10-31-control-932574e-mock-full.json",
+      "bytes": 64686,
+      "sha256": "825e145bcda077e34e6ca99b4928e2cb8d6d20b60f24a51c01c0988e121fbe87"
+    },
+    {
+      "path": "2026-10-31-control-932574e-mock-startup-diagnostic.json",
+      "bytes": 16948,
+      "sha256": "3540449d9ec46893a4297dba852d7193fbcf1349a1e40440e794a03a9381b045"
+    },
+    {
+      "path": "2026-10-31-control-932574e-api-full.json",
+      "bytes": 17502,
+      "sha256": "be978333272eed674595069c3073bace87fdfc6270fb9539d08b5a637329190a"
+    },
+    {
+      "path": "2026-10-31-control-932574e-interrupted-repeat.json",
+      "bytes": 732,
+      "sha256": "22de5634ce6a461c1875ac7e6cd8c3ad1bed3569c57a28005bb1f9e2fc40dd9f"
+    },
+    {
+      "path": "2026-10-31-control-932574e-archive-check.json",
+      "bytes": 660,
+      "sha256": "6fe16c8cad2df9f36687a7ca1e238b58f304f71a01b763e40611b969570c74cc"
+    },
+    {
+      "path": "2026-10-31-control-932574e-environment.json",
+      "bytes": 581,
+      "sha256": "8c96647c0c08b487a5ce81b732f524305d08ee0ac90d75d1454a49d98edc7787"
+    },
+    {
+      "path": "2026-10-31-control-932574e-E2E-11/fixture-attempt.json",
+      "bytes": 2810,
+      "sha256": "f2d5f888970968c7caa332dcfb6bedd081f30d24535835cee4508c31fad1fd52"
+    },
+    {
+      "path": "2026-10-31-control-932574e-cloud/source-metadata.json",
+      "bytes": 835,
+      "sha256": "d5b2d01fbf1d1bb6f24b95e5991a933a9bf01b6ba1a6b5b4621756b335fff525"
+    },
+    {
+      "path": "2026-10-31-control-932574e-cloud/readiness-and-public-index.json",
+      "bytes": 2810,
+      "sha256": "49cdca4da94fb0d568df8577764a1589913474ed20e14cb17d84c1e6a22dd5d8"
+    },
+    {
+      "path": "2026-10-31-control-932574e-cloud/access-presence.json",
+      "bytes": 1616,
+      "sha256": "78036c4774a88f6dff761938d5a2449d6effa89d6cd2dcf611c0fde445445e2f"
+    },
+    {
+      "path": "2026-10-31-control-932574e-cloud/readonly-existing-plan.json",
+      "bytes": 2723,
+      "sha256": "ac48a97b4abc1c022df4f03390cff04809887cee0d8c413e472fa3e14b375b8f"
+    },
+    {
+      "path": "2026-10-31-control-932574e-cloud/anonymous-browser.mjs",
+      "bytes": 11118,
+      "sha256": "683eecdaaa4de6551b2edb1f1a9acf72c6585257b4a1d0dc933114fb2653acb8"
+    },
+    {
+      "path": "2026-10-31-control-932574e-cloud/anonymous/anonymous-kk-1280.png",
+      "bytes": 30651,
+      "sha256": "9af23db2dfbfd6e4bf3bce68e7e03a6e2e64f9fdaddb90f8704fd8e8da817c89"
+    },
+    {
+      "path": "2026-10-31-control-932574e-cloud/anonymous/anonymous-kk-375.png",
+      "bytes": 24552,
+      "sha256": "df9c161229a00ed0580454f5095bcf29d10c914074ebd7f37e0512900f025e61"
+    },
+    {
+      "path": "2026-10-31-control-932574e-cloud/anonymous/anonymous-ru-1280.png",
+      "bytes": 31563,
+      "sha256": "2ed852cde3172cd324798261bc0112d9b1adbca21c716debcbd0efd068950b42"
+    },
+    {
+      "path": "2026-10-31-control-932574e-cloud/anonymous/anonymous-ru-375.png",
+      "bytes": 25688,
+      "sha256": "2a4220da3fa9c24962657cf840ff1f077c24fac4cc72899c7f25c963c86f237f"
+    },
+    {
+      "path": "2026-10-31-control-932574e-cloud/anonymous/results.json",
+      "bytes": 5248,
+      "sha256": "1a85f080ab18edf411a618fe44c38825c8ba105f95735f7051642daea5ba861f"
+    },
+    {
+      "path": "2026-10-31-control-932574e-cloud/anonymous/visual-review.json",
+      "bytes": 2642,
+      "sha256": "8a5d6b234d28c5899b7844b0cfb7a68f9ef8cd92b0736846b85165342f97c78f"
+    },
+    {
+      "path": "2026-10-31-control-932574e-methodology/capture-result.json",
+      "bytes": 5472,
+      "sha256": "77de60d928f70a95f1b498b625058a35a4fd670d36592d6e8ac420f96de80429"
+    },
+    {
+      "path": "2026-10-31-control-932574e-methodology/methodology-kk-1280-collapsed.png",
+      "bytes": 15259,
+      "sha256": "6d2cf67cd53ff3769da6d12af426ecd95aea317df8099d12b023533fdf32de9d"
+    },
+    {
+      "path": "2026-10-31-control-932574e-methodology/methodology-kk-1280-expanded.png",
+      "bytes": 56468,
+      "sha256": "b3696c9a7d75d6efa713b50098f6c8ef51596c0501880a3479e2a7ca7692cbf8"
+    },
+    {
+      "path": "2026-10-31-control-932574e-methodology/methodology-kk-375-collapsed.png",
+      "bytes": 15615,
+      "sha256": "e4fabe1d25319a24da02f5959168d798670ec5be3750c2b8e5fa0ca09fb48b8e"
+    },
+    {
+      "path": "2026-10-31-control-932574e-methodology/methodology-kk-375-expanded.png",
+      "bytes": 59094,
+      "sha256": "b3b95a046e923c1c808c8f19165a170ba0df50ec3d6168cb965472b7b8c7c010"
+    },
+    {
+      "path": "2026-10-31-control-932574e-methodology/methodology-ru-1280-collapsed.png",
+      "bytes": 12274,
+      "sha256": "6dc6767604283218f7a246eb4fe21102aa759060c6e1a7c32022cb0a919a1979"
+    },
+    {
+      "path": "2026-10-31-control-932574e-methodology/methodology-ru-1280-expanded.png",
+      "bytes": 53946,
+      "sha256": "7c583db741a5db5ef6d9788988d6b04c861dc1173d11e634a30566fe2aa66620"
+    },
+    {
+      "path": "2026-10-31-control-932574e-methodology/methodology-ru-375-collapsed.png",
+      "bytes": 12699,
+      "sha256": "e841367dd33bda12e3339433504d27439a1324c68791e96611b4baa1179e523f"
+    },
+    {
+      "path": "2026-10-31-control-932574e-methodology/methodology-ru-375-expanded.png",
+      "bytes": 55436,
+      "sha256": "171c3eae9ebac82a1839b1d34a74f8ea213531ea6d35a1842941740934c3bdbf"
+    },
+    {
+      "path": "2026-10-31-control-932574e-methodology/visual-review.json",
+      "bytes": 7084,
+      "sha256": "a8c3e323420fd1a224123a2a7991a1e07420c8d8c6da4897a4ab744c9c3f5480"
+    },
+    {
+      "path": "2026-10-31-control-932574e-methodology/capture-methodology.mjs",
+      "bytes": 6622,
+      "sha256": "45a4f0448cbe4ce6cb99a4915d8a9aa6cc8c7846acd5eed5aed684dd2f861498"
+    },
+    {
+      "path": "2026-10-31-control-932574e-E2E-11/mock-matrix.json",
+      "bytes": 2885,
+      "sha256": "04f726e70dc67d0549c28684f9fb9184f312ea3a84518ef4613ff1b05bfb21de"
+    },
+    {
+      "path": "2026-10-31-control-932574e-E2E-11/api-matrix.json",
+      "bytes": 8647,
+      "sha256": "174a7e7efcb1930abd0aba5504bdc4caf820b0dab2aecfb2e2e9f9f20aac804b"
+    },
+    {
+      "path": "2026-10-31-control-932574e-E2E-11/draft-final.json",
+      "bytes": 1338,
+      "sha256": "b9c91ef5f7cdcefbd06e4953ac9cf5e095c29fb5d2e28039f7d7353136c316ad"
+    },
+    {
+      "path": "2026-10-31-control-932574e-E2E-11/mock-matrix-diagnostic.json",
+      "bytes": 17495,
+      "sha256": "ae15a50519f1e355c4af0491e8ec69007396b3b328b73a6a725bb8ed23f971bd"
+    },
+    {
+      "path": "2026-10-31-control-932574e-E2E-11/draft-final-diagnostic.json",
+      "bytes": 13139,
+      "sha256": "565686ce33bf659c896a9900e3517bc124e4264dcc40c33a5708197c5f497bda"
+    },
+    {
+      "path": "2026-10-31-control-932574e-E2E-11/visual-review.json",
+      "bytes": 2409,
+      "sha256": "bba854e03bc34b5c7c46619b17e580a0988f631811e2e5f510f08373902a4213"
+    },
+    {
+      "path": "2026-10-31-control-932574e-E2E-11/desktop-draft-language-failure.png",
+      "bytes": 70060,
+      "sha256": "d9542916d46571ea2d0360e3b3a714cf94635ac14d6999f3fcbc8d7e0773d13c"
+    },
+    {
+      "path": "2026-10-31-control-932574e-E2E-11/mobile-draft-language-failure.png",
+      "bytes": 39556,
+      "sha256": "1634c52e2f3ba04e74035db7db9107080ceafef92778dca16e11a87be5a7f42f"
+    },
+    {
+      "path": "2026-10-31-control-932574e-checks.json",
+      "bytes": 1281,
+      "sha256": "b1c6490f2f61adb65fd83e6d418fddc4955b39cfdac180bc6b4bc6b20254d296"
+    }
+  ],
+  "earlierFixtureAttempt": {
+    "scope": "Initial E2E-11 test setup assumed mock role persistence; corrected, not counted as eight product bugs",
+    "meta": {
+      "runId": "b74d7ccc-6ae0-433c-89c2-a02de0a7560a",
+      "state": "finished",
+      "startedAt": "2026-10-31T18:05:32.634Z",
+      "endedAt": "2026-10-31T18:07:12.113Z",
+      "exitCode": 1,
+      "revision": "d90650ce3821c1dc9a35b569daaf096f1f58482e",
+      "dirty": false,
+      "selection": "subset",
+      "capturesScreens": false,
+      "command": "node scripts/run.mjs mock",
+      "environment": {
+        "node": "24.22.2",
+        "playwright": "1.64.1",
+        "platform": "win32",
+        "arch": "x64",
+        "workers": 2,
+        "retries": 0
+      },
+      "target": "http://localhost:5176"
+    },
+    "counts": {
+      "passed": 0,
+      "failed": 8,
+      "fixme": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "notRun": 0
+    }
+  },
+  "interruptedFullRepeat": {
+    "schemaVersion": 1,
+    "runId": "754d6d48-9fbb-4874-bbb7-cd251d7cab14",
+    "testSHA": "cdc3ec257726ef937b0bbf953253a755f2e225a9",
+    "applicationBase": "932574e630621a6bc9aeacc46703e6ade5e7bdfc",
+    "startedAt": "2026-10-31T17:57:28.300Z",
+    "lastLogAt": "2026-10-31T17:57:50.839Z",
+    "terminationVerifiedAt": "2026-10-31T18:00:03.341Z",
+    "status": "interrupted-by-user-steering",
+    "reason": "User requested no new full run on control build; queued repeat had started before message was processed and was interrupted immediately.",
+    "completedFullRun": false,
+    "completedCounts": null,
+    "runnerProcessesRemain": false,
+    "rawMetaState": "running (process interrupted before reporter finalized)",
+    "notIncludedAsPassed": true
+  },
+  "checks": {
+    "schemaVersion": 1,
+    "applicationBase": "932574e630621a6bc9aeacc46703e6ade5e7bdfc",
+    "checks": [
+      {
+        "name": "check:tools",
+        "testSHA": "d90650ce3821c1dc9a35b569daaf096f1f58482e",
+        "passed": 24,
+        "failed": 0,
+        "skipped": 0,
+        "fixme": 0,
+        "flaky": 0,
+        "logSha256": "00ceb8e5d2e050f1114bc325663a30f5ab7cca1f5660c6e40a23d43de8a3041d"
+      },
+      {
+        "name": "check:report on first targeted diagnostic report",
+        "testSHA": "d90650ce3821c1dc9a35b569daaf096f1f58482e",
+        "passed": 3,
+        "failed": 0,
+        "skipped": 0,
+        "fixme": 0,
+        "flaky": 0
+      },
+      {
+        "name": "Frozen control ZIP, same report validator with path-only adaptation",
+        "sourceTestSHA": "cdc3ec257726ef937b0bbf953253a755f2e225a9",
+        "passed": 3,
+        "failed": 0,
+        "skipped": 0,
+        "fixme": 0,
+        "flaky": 0
+      }
+    ],
+    "gate": {
+      "command": "node scripts/summary.mjs --strict",
+      "executedAt": "2026-10-31T18:22:46.819Z",
+      "head": "5db953cd770c4fe0ef31f835a7f19a8e044c97b8",
+      "exitCode": 1,
+      "expectedReady": false,
+      "reason": "Active E2E-11 failures and subset runs; no final full acceptance"
+    },
+    "notClaimed": "No final accepted archive or new full suite after user control-build instruction"
+  }
+}

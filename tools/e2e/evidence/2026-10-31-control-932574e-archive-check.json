@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-31T18:12:09.848Z",
+  "applicationBase": "932574e630621a6bc9aeacc46703e6ade5e7bdfc",
+  "sourceTestSHA": "cdc3ec257726ef937b0bbf953253a755f2e225a9",
+  "command": "node --test test-results/survival42/control-report.browser.mjs",
+  "sourceValidator": "scripts/tests/report.browser.mjs",
+  "onlyAdaptations": [
+    "folder points to frozen control-summary",
+    "ZIP filename green-pavlodar-control.zip",
+    "absolute imports to same support modules"
+  ],
+  "passed": 3,
+  "failed": 0,
+  "skipped": 0,
+  "fixme": 0,
+  "flaky": 0,
+  "archiveEntries": 33,
+  "pngCount": 30,
+  "packageKind": "diagnostic-not-accepted"
+}

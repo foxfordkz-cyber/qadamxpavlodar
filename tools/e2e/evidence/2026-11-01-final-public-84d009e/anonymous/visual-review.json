@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root/survival42_visual_review",
+  "reviewedAt": "2026-10-31T19:22:41.773Z",
+  "status": "approved-for-anonymous-entry-evidence",
+  "testSHA": "c7f15755c80292509aaeeb9f9e4638f62c8b6810",
+  "target": "https://green-pavlodar-api.pages.dev",
+  "frontendSha": "c970264919de2f7a62d0e1ea8a28cc70c95a3864",
+  "deploymentId": "a26bd214-1c78-4a83-9536-74a35c85b49f",
+  "manifestSha256": "d8b042398be87fc8c7283a82499dda317ee2d6e77f8d4979f55c226d93b67f60",
+  "backendIdentityVerification": "Owner-reported only; not independently certified by screenshot review.",
+  "scope": "Visual inspection of four anonymous sign-in frames only. No authenticated role flow, private photographs, reports, storage persistence, cloud writes/restarts, or full cloud API acceptance is certified.",
+  "method": "Each exact PNG opened individually with view_image; SHA256 and image dimensions independently matched results.json afterwards.",
+  "captures": [
+    {
+      "file": "anonymous-ru-1280.png",
+      "language": "ru",
+      "width": 1280,
+      "height": 800,
+      "bytes": 31225,
+      "sha256": "da2c162ed9459af63dd459f09c31c7d8eee347ad05f511eb5870144d3979e36e",
+      "hashMatches": true,
+      "dimensionsMatch": true,
+      "viewed": true,
+      "assessment": "approved",
+      "privacy": "Login and password fields visibly empty; no name, session, credential or personal photograph visible.",
+      "notes": "Translated heading/required labels/sign-in action and language selector fit the viewport. Server /api/v1 source indicator visible. Narrow status strip may continue horizontally; sign-in form remains fully visible."
+    },
+    {
+      "file": "anonymous-kk-1280.png",
+      "language": "kk",
+      "width": 1280,
+      "height": 800,
+      "bytes": 30836,
+      "sha256": "2ed84be93e359e37f0062302b43f9c1dbe35ee828cd6f19438aa8759f877a9be",
+      "hashMatches": true,
+      "dimensionsMatch": true,
+      "viewed": true,
+      "assessment": "approved",
+      "privacy": "Login and password fields visibly empty; no name, session, credential or personal photograph visible.",
+      "notes": "Translated heading/required labels/sign-in action and language selector fit the viewport. Server /api/v1 source indicator visible. Narrow status strip may continue horizontally; sign-in form remains fully visible."
+    },
+    {
+      "file": "anonymous-ru-375.png",
+      "language": "ru",
+      "width": 375,
+      "height": 812,
+      "bytes": 25439,
+      "sha256": "322cf8226dd9a34a5a607ef191ef37cabe9925b81bb07d0d5980a38c8ab03f2b",
+      "hashMatches": true,
+      "dimensionsMatch": true,
+      "viewed": true,
+      "assessment": "approved",
+      "privacy": "Login and password fields visibly empty; no name, session, credential or personal photograph visible.",
+      "notes": "Translated heading/required labels/sign-in action and language selector fit the viewport. Server /api/v1 source indicator visible. Narrow status strip may continue horizontally; sign-in form remains fully visible."
+    },
+    {
+      "file": "anonymous-kk-375.png",
+      "language": "kk",
+      "width": 375,
+      "height": 812,
+      "bytes": 24659,
+      "sha256": "6451bc04059bcd1949887fe4f6bb594115e4c9d28ae29d45c6c6782ecdf239b6",
+      "hashMatches": true,
+      "dimensionsMatch": true,
+      "viewed": true,
+      "assessment": "approved",
+      "privacy": "Login and password fields visibly empty; no name, session, credential or personal photograph visible.",
+      "notes": "Translated heading/required labels/sign-in action and language selector fit the viewport. Server /api/v1 source indicator visible. Narrow status strip may continue horizontally; sign-in form remains fully visible."
+    }
+  ],
+  "findings": []
+}

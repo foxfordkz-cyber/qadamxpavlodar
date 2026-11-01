@@ -1,0 +1,634 @@
+{
+  "applicationBase": "932574e630621a6bc9aeacc46703e6ade5e7bdfc",
+  "testSHA": "cdc3ec257726ef937b0bbf953253a755f2e225a9",
+  "profile": "api",
+  "available": true,
+  "current": true,
+  "meta": {
+    "runId": "98c7f1fa-6623-48ae-9c59-090713e4811d",
+    "state": "finished",
+    "startedAt": "2026-10-31T17:53:47.716Z",
+    "endedAt": "2026-10-31T17:57:24.429Z",
+    "exitCode": 0,
+    "browserExitCode": 0,
+    "privacyScan": "passed",
+    "revision": "cdc3ec257726ef937b0bbf953253a755f2e225a9",
+    "dirty": false,
+    "selection": "full",
+    "capturesScreens": false,
+    "command": "node scripts/run.mjs api",
+    "environment": {
+      "node": "24.22.2",
+      "playwright": "1.64.1",
+      "platform": "win32",
+      "arch": "x64",
+      "workers": 1,
+      "retries": 0
+    },
+    "target": "http://localhost:5177"
+  },
+  "tests": [
+    {
+      "title": "defence API: ru/1280, real site → analysis → growth → DOCX/XML",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 4111,
+      "diagnostics": []
+    },
+    {
+      "title": "defence API: ru/375, real site → analysis → growth → DOCX/XML",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 5105,
+      "diagnostics": []
+    },
+    {
+      "title": "defence API: kk/1280, real site → analysis → growth → DOCX/XML",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 2899,
+      "diagnostics": []
+    },
+    {
+      "title": "defence API: kk/375, real site → analysis → growth → DOCX/XML",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 3594,
+      "diagnostics": []
+    },
+    {
+      "title": "API lab: coordinator, ru/1280, real plans and frozen stress/rebuild",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 4933,
+      "diagnostics": []
+    },
+    {
+      "title": "API lab: coordinator, ru/375, real plans and frozen stress/rebuild",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 2763,
+      "diagnostics": []
+    },
+    {
+      "title": "API lab: coordinator, kk/1280, real plans and frozen stress/rebuild",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 2866,
+      "diagnostics": []
+    },
+    {
+      "title": "API lab: coordinator, kk/375, real plans and frozen stress/rebuild",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 3238,
+      "diagnostics": []
+    },
+    {
+      "title": "API lab: viewer, ru/1280, real plans and frozen stress/rebuild",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 3559,
+      "diagnostics": []
+    },
+    {
+      "title": "API lab: viewer, ru/375, real plans and frozen stress/rebuild",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 3145,
+      "diagnostics": []
+    },
+    {
+      "title": "API lab: viewer, kk/1280, real plans and frozen stress/rebuild",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 3274,
+      "diagnostics": []
+    },
+    {
+      "title": "API lab: viewer, kk/375, real plans and frozen stress/rebuild",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 3062,
+      "diagnostics": []
+    },
+    {
+      "title": "API lab: errors remain API errors; retry recovers without mock data",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 1921,
+      "diagnostics": []
+    },
+    {
+      "title": "API lab: displayed explanations and totals match independent cost, water and survival arithmetic",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 4135,
+      "diagnostics": []
+    },
+    {
+      "title": "E2E-06 API: worker1, 375px, ru, direct route/reload and keyboard",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 2567,
+      "diagnostics": []
+    },
+    {
+      "title": "E2E-06 API: foreman1, 375px, ru, direct route/reload and keyboard",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 2533,
+      "diagnostics": []
+    },
+    {
+      "title": "E2E-06 API: worker1, 375px, kk, direct route/reload and keyboard",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 2899,
+      "diagnostics": []
+    },
+    {
+      "title": "E2E-06 API: foreman1, 375px, kk, direct route/reload and keyboard",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 2619,
+      "diagnostics": []
+    },
+    {
+      "title": "E2E-06 API: worker1, 800px, ru, direct route/reload and keyboard",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 2753,
+      "diagnostics": []
+    },
+    {
+      "title": "E2E-06 API: foreman1, 800px, ru, direct route/reload and keyboard",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 2851,
+      "diagnostics": []
+    },
+    {
+      "title": "E2E-06 API: worker1, 800px, kk, direct route/reload and keyboard",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 2523,
+      "diagnostics": []
+    },
+    {
+      "title": "E2E-06 API: foreman1, 800px, kk, direct route/reload and keyboard",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 2357,
+      "diagnostics": []
+    },
+    {
+      "title": "E2E-06 API: worker1, 801px, ru, direct route/reload and keyboard",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 2240,
+      "diagnostics": []
+    },
+    {
+      "title": "E2E-06 API: foreman1, 801px, ru, direct route/reload and keyboard",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 2134,
+      "diagnostics": []
+    },
+    {
+      "title": "E2E-06 API: worker1, 801px, kk, direct route/reload and keyboard",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 2664,
+      "diagnostics": []
+    },
+    {
+      "title": "E2E-06 API: foreman1, 801px, kk, direct route/reload and keyboard",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 2294,
+      "diagnostics": []
+    },
+    {
+      "title": "E2E-06 API: worker1, 1280px, ru, direct route/reload and keyboard",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 2575,
+      "diagnostics": []
+    },
+    {
+      "title": "E2E-06 API: foreman1, 1280px, ru, direct route/reload and keyboard",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 2446,
+      "diagnostics": []
+    },
+    {
+      "title": "E2E-06 API: worker1, 1280px, kk, direct route/reload and keyboard",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 2351,
+      "diagnostics": []
+    },
+    {
+      "title": "E2E-06 API: foreman1, 1280px, kk, direct route/reload and keyboard",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 2459,
+      "diagnostics": []
+    },
+    {
+      "title": "outcomes final API: ru/1280 identical tree inputs have identical mock/API estimates and independent sums",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 7998,
+      "diagnostics": []
+    },
+    {
+      "title": "outcomes final API: ru/1280 identical P4 observations match mock, HTTP and visible history",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 8087,
+      "diagnostics": []
+    },
+    {
+      "title": "outcomes final API: kk/375 identical tree inputs have identical mock/API estimates and independent sums",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 8141,
+      "diagnostics": []
+    },
+    {
+      "title": "outcomes final API: kk/375 identical P4 observations match mock, HTTP and visible history",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 6286,
+      "diagnostics": []
+    },
+    {
+      "title": "outcomes API: ru/1280, today's partial demo is not an annual result",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 1843,
+      "diagnostics": []
+    },
+    {
+      "title": "outcomes API: kk/1280, today's partial demo is not an annual result",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 2625,
+      "diagnostics": []
+    },
+    {
+      "title": "outcomes API: ru/375, today's partial demo is not an annual result",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 1981,
+      "diagnostics": []
+    },
+    {
+      "title": "outcomes API: kk/375, today's partial demo is not an annual result",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 2679,
+      "diagnostics": []
+    },
+    {
+      "title": "outcomes API: viewer is read-only in UI and HTTP",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 2329,
+      "diagnostics": []
+    },
+    {
+      "title": "outcomes API: save/reload, identical replay, conflicts, and immutable forecast after rate edit",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 5670,
+      "diagnostics": []
+    },
+    {
+      "title": "outcomes API: read failure stays an API error and retry restores real partial data",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 2154,
+      "diagnostics": []
+    },
+    {
+      "title": "outcomes API: P4 I01 uses real registry/HTTP, independent counts, no duplicate saves",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 2039,
+      "diagnostics": []
+    },
+    {
+      "title": "outcomes API: P4 I02 uses real registry/HTTP, independent counts, no duplicate saves",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 3127,
+      "diagnostics": []
+    },
+    {
+      "title": "outcomes API: P4 I03 uses real registry/HTTP, independent counts, no duplicate saves",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 2656,
+      "diagnostics": []
+    },
+    {
+      "title": "outcomes API: P4 I04 uses real registry/HTTP, independent counts, no duplicate saves",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 2418,
+      "diagnostics": []
+    },
+    {
+      "title": "outcomes API: P4 I05 uses real registry/HTTP, independent counts, no duplicate saves",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 2684,
+      "diagnostics": []
+    },
+    {
+      "title": "outcomes API: P4 I06 uses real registry/HTTP, independent counts, no duplicate saves",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 3078,
+      "diagnostics": []
+    },
+    {
+      "title": "outcomes API: P4 I07 uses real registry/HTTP, independent counts, no duplicate saves",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 2567,
+      "diagnostics": []
+    },
+    {
+      "title": "final viewer API: /tasks returns existing authorized records",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 1479,
+      "diagnostics": []
+    },
+    {
+      "title": "final viewer API: /reports returns existing authorized records",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 1476,
+      "diagnostics": []
+    },
+    {
+      "title": "final viewer API: /crews returns existing authorized records",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 1386,
+      "diagnostics": []
+    },
+    {
+      "title": "final viewer API: /workers returns existing authorized records",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 1308,
+      "diagnostics": []
+    },
+    {
+      "title": "final viewer API UI: ru/1280, work and report navigation remains available",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 1666,
+      "diagnostics": []
+    },
+    {
+      "title": "final viewer API UI: ru/1280, tasks, crews and people are readable without writes",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 1019,
+      "diagnostics": []
+    },
+    {
+      "title": "final viewer API UI: ru/1280, report detail remains readable without review controls",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 979,
+      "diagnostics": []
+    },
+    {
+      "title": "final viewer API UI: kk/1280, work and report navigation remains available",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 1803,
+      "diagnostics": []
+    },
+    {
+      "title": "final viewer API UI: kk/1280, tasks, crews and people are readable without writes",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 1303,
+      "diagnostics": []
+    },
+    {
+      "title": "final viewer API UI: kk/1280, report detail remains readable without review controls",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 1106,
+      "diagnostics": []
+    },
+    {
+      "title": "final viewer API UI: ru/375, work and report navigation remains available",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 1412,
+      "diagnostics": []
+    },
+    {
+      "title": "final viewer API UI: ru/375, tasks, crews and people are readable without writes",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 1275,
+      "diagnostics": []
+    },
+    {
+      "title": "final viewer API UI: ru/375, report detail remains readable without review controls",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 930,
+      "diagnostics": []
+    },
+    {
+      "title": "final viewer API UI: kk/375, work and report navigation remains available",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 1743,
+      "diagnostics": []
+    },
+    {
+      "title": "final viewer API UI: kk/375, tasks, crews and people are readable without writes",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 1029,
+      "diagnostics": []
+    },
+    {
+      "title": "final viewer API UI: kk/375, report detail remains readable without review controls",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 972,
+      "diagnostics": []
+    },
+    {
+      "title": "final viewer API: valid task, crew and report mutations are rejected with 403",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 1553,
+      "diagnostics": []
+    },
+    {
+      "title": "final worker API: 1280px, browser submits a real report and reload retains one server record",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 2842,
+      "diagnostics": []
+    },
+    {
+      "title": "final worker API: 375px, browser submits a real report and reload retains one server record",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 2776,
+      "diagnostics": []
+    },
+    {
+      "title": "API: coordinator login, server data indicator, map, estimate, priorities, logout",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 4443,
+      "diagnostics": []
+    },
+    {
+      "title": "API: worker1 login opens shift cabinet and cabinet logout ends the session",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 1649,
+      "diagnostics": []
+    },
+    {
+      "title": "API: foreman1 login opens the crew shift cabinet",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 1217,
+      "diagnostics": []
+    },
+    {
+      "title": "API: viewer reads the map, cannot draw or enter a crew cabinet, and logs out",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 2313,
+      "diagnostics": []
+    },
+    {
+      "title": "API: admin reads the map, cannot draw or enter a crew cabinet, and logs out",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 2168,
+      "diagnostics": []
+    },
+    {
+      "title": "API: coordinator cannot open the worker route and returns home",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 1053,
+      "diagnostics": []
+    },
+    {
+      "title": "API: worker1 header logout clears identity and remains signed out after reload",
+      "project": "api",
+      "status": "passed",
+      "note": "",
+      "durationMs": 2123,
+      "diagnostics": []
+    }
+  ],
+  "counts": {
+    "passed": 74,
+    "failed": 0,
+    "fixme": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "notRun": 0
+  },
+  "runnerFailed": false,
+  "durationMs": 200255
+}

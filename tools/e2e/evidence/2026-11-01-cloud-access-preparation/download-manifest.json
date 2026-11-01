@@ -1,0 +1,27 @@
+{
+  "downloadedAt": "2026-11-01T05:11:38.532Z",
+  "handoffComment": "https://github.com/foxfordkz-cyber/qadamxpavlodar/pull/39#issuecomment-6553505660",
+  "files": [
+    {
+      "sourcePath": "apps/server/scripts/cloud-qa-access.mjs",
+      "sourceSha": "804a3bc9a5edbd43e8eea9dd03c82a31d7917661",
+      "file": "cloud-qa-access.mjs",
+      "bytes": 4499,
+      "sha256": "4dbb495766da4d32b151dc9637ffbb8d8cd6e8d5e56651ac205535ca68380a98"
+    },
+    {
+      "sourcePath": "docs/evidence/cloud-pages-20261101/release-738f96b2.json",
+      "sourceSha": "804a3bc9a5edbd43e8eea9dd03c82a31d7917661",
+      "file": "release-738f96b2.json",
+      "bytes": 7270,
+      "sha256": "1f85a4cab1981addd7c54bdbbdefca5dd41b2a0f10ce41a23003ba03468027af"
+    },
+    {
+      "sourcePath": "docs/cloud-qa-access-2026-11-01.md",
+      "sourceSha": "804a3bc9a5edbd43e8eea9dd03c82a31d7917661",
+      "file": "cloud-qa-access-2026-11-01.md",
+      "bytes": 6522,
+      "sha256": "e425ccd638c4321045042ddcb592eda6937075d60516affc730a89f8f58976c8"
+    }
+  ]
+}

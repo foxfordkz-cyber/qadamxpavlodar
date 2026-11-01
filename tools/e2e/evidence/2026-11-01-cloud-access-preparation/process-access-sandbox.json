@@ -1,0 +1,32 @@
+{
+  "schema": "green-pavlodar-independent-cloud-access-v1",
+  "startedAt": "2026-11-01T05:18:39.289Z",
+  "endedAt": "2026-11-01T05:18:39.405Z",
+  "qaHead": null,
+  "runnerSha256": "cb5a919eda30f0b94eb58e4c411b927acf7b9bc00e945d65524ee01e91af9ea1",
+  "expectedHandoffDigests": {
+    "checker": "4dbb495766da4d32b151dc9637ffbb8d8cd6e8d5e56651ac205535ca68380a98",
+    "manifest": "1f85a4cab1981addd7c54bdbbdefca5dd41b2a0f10ce41a23003ba03468027af"
+  },
+  "handoffDigestsVerified": false,
+  "identity": {
+    "frontendShaOwnerReported": "c970264919de2f7a62d0e1ea8a28cc70c95a3864",
+    "frontendDeploymentOwnerReported": "a26bd214-1c78-4a83-9536-74a35c85b49f",
+    "backendShaOwnerReported": "3b14927def04b35bf97782eae6b550da276c779f",
+    "backendDeploymentOwnerReported": "dep-dbj223h42hec73bqnttg",
+    "deployedSourceIndependentlyVerified": false,
+    "frontendAssetsCheckedByThisRunner": false
+  },
+  "scope": "Pages HTTP login and unchanged synthetic baseline only; no browser workflow or restart acceptance",
+  "businessWritesPermitted": false,
+  "retries": 0,
+  "exchanges": [],
+  "result": "BLOCKED_ACCESS",
+  "reason": "REQUIRED_PROCESS_VALUES_MISSING",
+  "presence": {
+    "CLOUD_ACCEPTANCE_DEMO": false,
+    "CLOUD_ACCEPTANCE_ORIGIN": false,
+    "CLOUD_ACCEPTANCE_BROWSER_ORIGIN": false,
+    "CLOUD_ACCEPTANCE_PASSWORD": false
+  }
+}

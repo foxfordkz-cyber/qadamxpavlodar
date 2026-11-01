@@ -1,0 +1,217 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-31T19:15:07.630Z",
+  "applicationBase": "84d009e3b72c4fe637ef30607e29701054b6c621",
+  "appsTree": "2fd878cfbec10d93942afeb5add57a39a230304f",
+  "testSHA": "c7f15755c80292509aaeeb9f9e4638f62c8b6810",
+  "status": "ACCEPTED_LOCAL_BUILD_ONLY",
+  "cloudReady": false,
+  "dockerVerifiedOnThisSHA": false,
+  "nativeWordVerified": false,
+  "sourceMockRunId": "edac9af4-ca6c-470e-ad80-e9949e8cf7fc",
+  "sourceApiRunId": "5f339aba-5858-4a52-b5d6-f90520c143c9",
+  "countsByScope": [
+    {
+      "profile": "mock",
+      "passed": 292,
+      "failed": 0,
+      "fixme": 0,
+      "skipped": 2,
+      "flaky": 0,
+      "notRun": 0,
+      "meta": {
+        "runId": "edac9af4-ca6c-470e-ad80-e9949e8cf7fc",
+        "state": "finished",
+        "startedAt": "2026-10-31T18:54:28.672Z",
+        "endedAt": "2026-10-31T19:09:13.592Z",
+        "exitCode": 0,
+        "revision": "c7f15755c80292509aaeeb9f9e4638f62c8b6810",
+        "dirty": false,
+        "selection": "full",
+        "capturesScreens": true,
+        "command": "node scripts/run.mjs mock",
+        "environment": {
+          "node": "24.22.2",
+          "playwright": "1.64.1",
+          "platform": "win32",
+          "arch": "x64",
+          "workers": 2,
+          "retries": 0
+        },
+        "target": "http://localhost:5176"
+      }
+    },
+    {
+      "profile": "api",
+      "passed": 78,
+      "failed": 0,
+      "fixme": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "notRun": 0,
+      "meta": {
+        "runId": "5f339aba-5858-4a52-b5d6-f90520c143c9",
+        "state": "finished",
+        "startedAt": "2026-10-31T19:10:19.852Z",
+        "endedAt": "2026-10-31T19:13:28.871Z",
+        "exitCode": 0,
+        "browserExitCode": 0,
+        "privacyScan": "passed",
+        "revision": "c7f15755c80292509aaeeb9f9e4638f62c8b6810",
+        "dirty": false,
+        "selection": "full",
+        "capturesScreens": false,
+        "command": "node scripts/run.mjs api",
+        "environment": {
+          "node": "24.22.2",
+          "playwright": "1.64.1",
+          "platform": "win32",
+          "arch": "x64",
+          "workers": 1,
+          "retries": 0
+        },
+        "target": "http://localhost:5177"
+      }
+    }
+  ],
+  "orchestration": {
+    "firstWrapperExit": 1,
+    "stage": "snapshot after completed mock",
+    "mockSuiteExit": 0,
+    "mockRerun": false,
+    "correction": "Snapshot exact actual capture path and continue API only",
+    "applicationOrTestEdits": false,
+    "note": "The original wrapper failed after the completed successful mock, while copying a nonexistent optional screens directory. Exact current screen-review captures were preserved; API continued separately. This ancillary failure is not relabelled as a successful original wrapper."
+  },
+  "archive": {
+    "path": "2026-11-01-final-local-84d009e.zip",
+    "bytes": 4879220,
+    "sha256": "f87089999c6bcf6c384f7d7344a169e199a23e1a5071d9b309ef5f85bcd4102b",
+    "entries": 33,
+    "png": 30,
+    "sourceMockRunId": "edac9af4-ca6c-470e-ad80-e9949e8cf7fc"
+  },
+  "summaryIsExactPublishedBytes": true,
+  "nonAcceptanceSummaryProfiles": [
+    {
+      "profile": "smoke",
+      "revision": null,
+      "available": false,
+      "countedForThisAcceptance": false,
+      "reason": "Exact generated summary may retain explicitly identified optional-profile history; only current full mock/API and current approved captures are accepted"
+    },
+    {
+      "profile": "screens",
+      "revision": null,
+      "available": false,
+      "countedForThisAcceptance": false,
+      "reason": "Exact generated summary may retain explicitly identified optional-profile history; only current full mock/API and current approved captures are accepted"
+    },
+    {
+      "profile": "bugs",
+      "revision": null,
+      "available": false,
+      "countedForThisAcceptance": false,
+      "reason": "Exact generated summary may retain explicitly identified optional-profile history; only current full mock/API and current approved captures are accepted"
+    }
+  ],
+  "unverified": [
+    "Authenticated public API worker/report/photo/outcomes flow",
+    "Public deployment SHA and freeze",
+    "Cloud persistence after owner restart",
+    "Docker on this application SHA",
+    "Native Microsoft Word and presentation machine"
+  ],
+  "files": [
+    {
+      "path": "2026-11-01-final-local-84d009e.json",
+      "bytes": 115835,
+      "sha256": "9fc8db8d15243915a30b2e188a580ba17067ace5773d15adcecac4070f60d598"
+    },
+    {
+      "path": "2026-11-01-final-local-84d009e.zip",
+      "bytes": 4879220,
+      "sha256": "f87089999c6bcf6c384f7d7344a169e199a23e1a5071d9b309ef5f85bcd4102b"
+    },
+    {
+      "path": "2026-11-01-final-local-84d009e.zip.sha256",
+      "bytes": 101,
+      "sha256": "0c89dd69005bb861315416c37387bbc6dfdf05a1a78a4d52b0e1c333d8ca4935"
+    },
+    {
+      "path": "2026-11-01-final-local-84d009e-local-runs.json",
+      "bytes": 97291,
+      "sha256": "aa0d928e6d709db25fa780681755c8a84cd14b9a574d79ee592a33d03772688d"
+    },
+    {
+      "path": "2026-11-01-final-local-84d009e-checks.json",
+      "bytes": 3043,
+      "sha256": "5016d24d777438d3591e77bc55e085b9ead48696135b449378fba3ad535023f8"
+    },
+    {
+      "path": "2026-11-01-final-local-84d009e-visual-review.json",
+      "bytes": 4145,
+      "sha256": "50f08ece02155f6266db11999da4d9d8e929e80dd2437eef2a084270e072ff7d"
+    },
+    {
+      "path": "2026-11-01-final-local-84d009e-capture-manifests.json",
+      "bytes": 18727,
+      "sha256": "b682885b82b720db3d4e27ba17d478678aa48fe1e98040dc48ac0414a156e4cf"
+    },
+    {
+      "path": "2026-11-01-final-local-84d009e-run-control.json",
+      "bytes": 1266,
+      "sha256": "fafa422a3f6700ff602a9a364577a054e08cc01ba4e92a3c76d76a8b3d79c2fc"
+    },
+    {
+      "path": "2026-11-01-final-local-84d009e-orchestration-note.json",
+      "bytes": 442,
+      "sha256": "41da8bf6adc02f77872e9fd36289c7eee14dc533e58c34072aa249604d8a62f5"
+    },
+    {
+      "path": "2026-11-01-final-local-84d009e-wrapper-initial.mjs",
+      "bytes": 1917,
+      "sha256": "466ad777ca33b1948e35cb5c0546cb589b878b9740125df233191a130e73b691"
+    },
+    {
+      "path": "2026-11-01-final-local-84d009e-wrapper-api-continuation.mjs",
+      "bytes": 2848,
+      "sha256": "13a00112d066c0e9a73a2cf1cafb4a0a0fe8690586bf129b8601d821f674a0a1"
+    },
+    {
+      "path": "2026-11-01-final-local-84d009e-environment.json",
+      "bytes": 924,
+      "sha256": "07eb45433736aac3e95f2fbfe6f9b9e3b5232ed25ac55d09d97351a058234f0c"
+    },
+    {
+      "path": "2026-11-01-final-local-84d009e-access-presence.json",
+      "bytes": 549,
+      "sha256": "c563f7cb7570d11decd1e1e9ccc8746095f0f79dba061fe11e67dc1b2994dc48"
+    },
+    {
+      "path": "2026-11-01-final-local-84d009e-coordination.json",
+      "bytes": 1359,
+      "sha256": "e69672a511f8ddb21e083a579f74abf1c41745b025bcd4c6ed7f0e904d7b6e5d"
+    },
+    {
+      "path": "2026-11-01-final-local-84d009e-window-note.md",
+      "bytes": 1459,
+      "sha256": "f20cb6a5e034171907a2415756212817a0513119e7238af268c6ffc97b7918bb"
+    },
+    {
+      "path": "2026-11-01-final-local-84d009e-access-request.md",
+      "bytes": 2351,
+      "sha256": "e39a46dd8baddbe531020303ca0419b2c8aeeb4c48342b8a4dcd9200802a4ac4"
+    },
+    {
+      "path": "2026-11-01-final-local-84d009e-visual-notes.json",
+      "bytes": 27092,
+      "sha256": "17c39d9249aa5cebe165ea30e4705a48ab7f8d29387ddaf40df901af9804bba0"
+    },
+    {
+      "path": "2026-11-01-final-local-84d009e-export-method.mjs",
+      "bytes": 18038,
+      "sha256": "a8e9315596e4feed83ce600e484fb9cb0d9953c324ba6c748c177d5d626878f4"
+    }
+  ]
+}

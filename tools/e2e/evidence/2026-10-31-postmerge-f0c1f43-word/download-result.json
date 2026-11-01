@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-10-31T17:11:42.072Z",
+  "testSHA": "f0c1f43eb424408ef0db7fad6e263bb17e34f995",
+  "applicationBase": "fdc6e756be99dc5ba3a7a48ca1df17c4bfbef5ef",
+  "appsTree": "f19500893c20ee19c170c393f2a8414b95e19255",
+  "dirty": false,
+  "source": "mock",
+  "siteId": "site-osm-1569993037",
+  "options": {
+    "variant": "optimal",
+    "careYears": 2,
+    "watering": "regular"
+  },
+  "baseURL": "http://127.0.0.1:5178",
+  "scope": "Fresh UI DOCX exports and ZIP/XML validation only; native Microsoft Word review is separate.",
+  "nativeMicrosoftWordOpened": false,
+  "nativeMicrosoftWordVisualCheck": false,
+  "environment": {
+    "node": "24.22.2",
+    "platform": "win32",
+    "browser": "Chromium headless, SwiftShader",
+    "viewport": {
+      "width": 1280,
+      "height": 800
+    }
+  },
+  "documents": [
+    {
+      "language": "ru",
+      "file": "memo-ru-f0c1f43.docx",
+      "suggestedFilename": "green-pavlodar-memo-ru-2026-10-31.docx",
+      "bytes": 9372,
+      "sha256": "839990e5d9f74f9cbc36f00b509a6277a333f717f1250f5b31890b57378f538c",
+      "documentXmlSha256": "2a176af12bfc9f1630aa2284bc4e3aa8f1149c0dec383d1321caf79e8f0196ea",
+      "zipSignature": "PK",
+      "requiredEntriesPresent": true,
+      "validDocumentXml": true,
+      "expectedTitle": "СЛУЖЕБНАЯ ЗАПИСКА",
+      "expectedTitlePresent": true,
+      "tables": 5,
+      "nativeMicrosoftWordOpened": false,
+      "nativeMicrosoftWordVisualCheck": false
+    },
+    {
+      "language": "kk",
+      "file": "memo-kk-f0c1f43.docx",
+      "suggestedFilename": "green-pavlodar-memo-kk-2026-10-31.docx",
+      "bytes": 9485,
+      "sha256": "3a39bb2c10eb19de014424d319a12956382741ddf82acbcf1fbcdca1ce173dc4",
+      "documentXmlSha256": "abe35b220283e1a57c2287b8ba943e36c9672e90d670ec62e9a32e9bf4cf971b",
+      "zipSignature": "PK",
+      "requiredEntriesPresent": true,
+      "validDocumentXml": true,
+      "expectedTitle": "ҚЫЗМЕТТІК ЖАЗБА",
+      "expectedTitlePresent": true,
+      "tables": 5,
+      "nativeMicrosoftWordOpened": false,
+      "nativeMicrosoftWordVisualCheck": false
+    }
+  ],
+  "status": "downloaded-and-structure-checked",
+  "route": "/?source=mock&lang=ru#/report?site=site-osm-1569993037&o=eyJ2YXJpYW50Ijoib3B0aW1hbCIsImNhcmVZZWFycyI6Miwid2F0ZXJpbmciOiJyZWd1bGFyIn0%3D",
+  "reportDescription": "Сформирован 31.10.2026 22:11 (UTC+5). Зона site-osm-1569993037, вариант «Оптимальный», уход 2 г. Все значения оценочные и носят рекомендательный характер; решение принимает специалист акимата.",
+  "uiTotalKzt": 9970478,
+  "numericTablesIdentical": true,
+  "endedAt": "2026-10-31T17:11:49.662Z"
+}

@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "recordedAt": "2026-11-01T05:44:52.230Z",
+  "qaHead": "88347df80f00cb0eb02cf96d354d16a6a8ebc72b",
+  "status": "HTTP_PREFLIGHT_PASS",
+  "files": [
+    {
+      "path": "acceptance.json",
+      "bytes": 3107,
+      "sha256": "eae36671f6c3fb6494c8d33a7b5ea38ff0bbeef5948b1e56ddbb9bd639425701"
+    },
+    {
+      "path": "audit.json",
+      "bytes": 662,
+      "sha256": "0da9ebde0b5d770aa4305c1fa6ec55e164630267fcd8128364978cee23ea2970"
+    },
+    {
+      "path": "preflight.json",
+      "bytes": 3515,
+      "sha256": "7e709923936dd7747192e5e78407894eba8725b97cbc3780f2c42fdd237fdd94"
+    },
+    {
+      "path": "public-after.json",
+      "bytes": 19581,
+      "sha256": "2bbf72c82e69daaaac803e39a60ffe8b76c8fdf75b543ead73ac27d0c4aa06cd"
+    }
+  ]
+}

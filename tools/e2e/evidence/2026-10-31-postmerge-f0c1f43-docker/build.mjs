@@ -1,0 +1,14 @@
+import {spawn,spawnSync} from 'node:child_process';
+import {writeFileSync,readFileSync} from 'node:fs';
+import {fileURLToPath} from 'node:url';
+import {resolve} from 'node:path';
+import {randomBytes} from 'node:crypto';
+const root=resolve(fileURLToPath(new URL('.',import.meta.url)),'../../../..');
+const git=args=>spawnSync('git',args,{cwd:root,encoding:'utf8',windowsHide:true}).stdout.trim();
+if(git(['rev-parse','HEAD'])!=='f0c1f43eb424408ef0db7fad6e263bb17e34f995'||git(['rev-parse','HEAD:apps'])!=='f19500893c20ee19c170c393f2a8414b95e19255'||git(['status','--porcelain','--untracked-files=normal']))throw new Error('Expected exact clean postmerge QA source');
+const secret=randomBytes(32).toString('hex');
+const args=['compose','-p','gp-aidana-postmerge-build-f0c1f43','-f','docker-compose.yml','-f','tools/e2e/test-results/postmerge-docker/compose.override.yml','build'];
+const child=spawn('docker',args,{cwd:root,env:{...process.env,DEMO_PASSWORD:secret,WEB_PORT:'18084'},windowsHide:true,stdio:['ignore','pipe','pipe']});
+let output=''; for(const pipe of [child.stdout,child.stderr]) pipe.on('data',b=>{output+=b;});
+child.on('error',()=>{console.error('Docker build process could not start');process.exitCode=1;});
+child.on('exit',code=>{const clean=output.split(secret).join('[redacted]');writeFileSync(new URL('./build.log',import.meta.url),clean);writeFileSync(new URL('./build.json',import.meta.url),JSON.stringify({applicationBase:'fdc6e756be99dc5ba3a7a48ca1df17c4bfbef5ef',testSHA:'f0c1f43eb424408ef0db7fad6e263bb17e34f995',appsTree:'f19500893c20ee19c170c393f2a8414b95e19255',dirty:false,finishedAt:new Date().toISOString(),exitCode:code,command:'docker compose -p gp-aidana-postmerge-build-f0c1f43 -f docker-compose.yml -f tools/e2e/test-results/postmerge-docker/compose.override.yml build'},null,2)); console.log(JSON.stringify({stage:'docker-build',exitCode:code,log:'test-results/postmerge-docker/build.log'}));process.exitCode=code??1;});

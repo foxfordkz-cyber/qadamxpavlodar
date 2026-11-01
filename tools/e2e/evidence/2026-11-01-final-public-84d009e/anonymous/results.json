@@ -1,0 +1,1763 @@
+{
+  "kind": "post-publication-anonymous-api-four",
+  "startedAt": "2026-10-31T19:20:33.926Z",
+  "testSHA": "c7f15755c80292509aaeeb9f9e4638f62c8b6810",
+  "dirty": false,
+  "target": "https://green-pavlodar-api.pages.dev",
+  "binding": {
+    "mode": "api",
+    "publication": {
+      "origin": "https://green-pavlodar-api.pages.dev",
+      "frontendSha": "c970264919de2f7a62d0e1ea8a28cc70c95a3864",
+      "deploymentId": "a26bd214-1c78-4a83-9536-74a35c85b49f",
+      "immutableOrigin": "https://a26bd214.green-pavlodar-api.pages.dev",
+      "manifestSha256": "d8b042398be87fc8c7283a82499dda317ee2d6e77f8d4979f55c226d93b67f60",
+      "manifestVerification": "hash-and-schema-verified",
+      "manifestVerified": true,
+      "manifestSchema": "green-pavlodar-pages-api-build-v1",
+      "manifestTotalEntries": 36,
+      "files": [
+        {
+          "path": "assets/contract-v2-G6MTd3pU.js",
+          "bytes": 70154,
+          "sha256": "6328948954bf614f545fdb03495ba0605895af1b41d5818fa4cd0c765bc6c308"
+        },
+        {
+          "path": "assets/demo-gateway-CKVE_G9B.js",
+          "bytes": 27491,
+          "sha256": "307eca6ad39e1b6eacfce89c745ab613ea7f1df65a99a7d4d7179fa337561193"
+        },
+        {
+          "path": "assets/DevPanel-yx8zWPqu.js",
+          "bytes": 2442,
+          "sha256": "98e57a60c0f45726e97634903cbc75319c3fb5534fa7b68310794c92d8d278e9"
+        },
+        {
+          "path": "assets/HeroMap-rzf7Z0z2.js",
+          "bytes": 2982,
+          "sha256": "f74873bf13fd5b8a306a0f34f459b4f44f9108921e99c5504cf6fcb816ee3042"
+        },
+        {
+          "path": "assets/index-BEjYqV9f.js",
+          "bytes": 987378,
+          "sha256": "f435641fbaf87e00a982ae0caa00f8c669b67d4603752060142e112ed027ba45"
+        },
+        {
+          "path": "assets/index-D-QkwvwB.css",
+          "bytes": 84650,
+          "sha256": "d76f3e7862bdac8850d58ea16283745530f32b2356ff8a86612bb8790d599f12"
+        },
+        {
+          "path": "assets/journal-DUiVZ3Jx.css",
+          "bytes": 28323,
+          "sha256": "1f628101378a4d324955e84cff516f62990004c0970dbfe2b1c673398f08048e"
+        },
+        {
+          "path": "assets/loadMemo-CD6TAO6h.js",
+          "bytes": 637,
+          "sha256": "0e9eb0e4fcad2c9bef4319b2db9600ebbfe6330dd6bac92ad957794832bbc1bc"
+        },
+        {
+          "path": "assets/lora-cyrillic-ext-wght-normal-YcVxMP-u.woff2",
+          "bytes": 23636,
+          "sha256": "0e523e4bc3c6308f002a3208ea2990cb4f64282d4fbb67c12f5726d13b66eef6"
+        },
+        {
+          "path": "assets/lora-cyrillic-wght-normal-UWPuZLjM.woff2",
+          "bytes": 21232,
+          "sha256": "c57d9ca3bd42e6bc093badc7744dd2059a78f66a3a4dc6ca40574480c870f553"
+        },
+        {
+          "path": "assets/lora-latin-ext-wght-normal-C2Wlntb9.woff2",
+          "bytes": 20088,
+          "sha256": "2a2d9c22c9863086a23f5013fede1428585321812b25f2662542c39d02967c5e"
+        },
+        {
+          "path": "assets/lora-latin-wght-normal-BiLcIKcI.woff2",
+          "bytes": 37788,
+          "sha256": "ddb8c66035104e233fc024669183aad3738b6daa16deee2ebb1241bd0f98ace1"
+        },
+        {
+          "path": "assets/lora-math-wght-normal-sOy7rEfW.woff2",
+          "bytes": 29240,
+          "sha256": "a8c4cb778ab6202d22bdea2ccc8d7e7caf802cfe0a7ce37df7b212f82341468f"
+        },
+        {
+          "path": "assets/lora-symbols-wght-normal-DQ5VrUkH.woff2",
+          "bytes": 17248,
+          "sha256": "2df52199eac56e2ec7a735e609bb151bdab79422c3e73948f4b6580c66bb5a50"
+        },
+        {
+          "path": "assets/lora-vietnamese-wght-normal-CfJ7gtf3.woff2",
+          "bytes": 8992,
+          "sha256": "98c22de85f6e83bcd6ae1a443e12e256fbc8de7142bec4f76b059f8ff9c2797e"
+        },
+        {
+          "path": "assets/mapFlags-KArXQfJZ.js",
+          "bytes": 203,
+          "sha256": "7be91119586dd5e482676ee9daf7276bd60ca59617953d84a2df1b5be897244b"
+        },
+        {
+          "path": "assets/maplibre-gl-qdodsIIj.js",
+          "bytes": 1033029,
+          "sha256": "f79f4edfa86b9c76b92fdac87e45cfe00cf38ac384909017b39bc3de37c7b306"
+        },
+        {
+          "path": "assets/maplibre-gl-RZO-t2LB.css",
+          "bytes": 83127,
+          "sha256": "3c3faf7116e0ea3f4dd664bc9d6207bebf71dda2f9d3108b65527615011f2b2b"
+        },
+        {
+          "path": "assets/maplibre-gl-worker-DYHVkJJJ.js",
+          "bytes": 508793,
+          "sha256": "2d7087f4c4bf47b51da6498b27f32c287a4c01dbf9aa0f90446a50b13a9677f6"
+        },
+        {
+          "path": "assets/memo-CxIq-lHk.js",
+          "bytes": 17325,
+          "sha256": "18abbd488140620fac8ef1934f7c84a2fe328e70fc3e9fba9dcb78af65b140b0"
+        },
+        {
+          "path": "assets/memoData-mJ3ORfy0.js",
+          "bytes": 276,
+          "sha256": "28d821cacfd97c3e4f4c6f25c8e326de85347b17c05fbc88ebbd7a2c07724afd"
+        },
+        {
+          "path": "assets/onest-cyrillic-ext-wght-normal-DOFToQv1.woff2",
+          "bytes": 10540,
+          "sha256": "268f03691b3d06e57abcf20f9277e314ea8784298983aab5b40c1b91965027e1"
+        },
+        {
+          "path": "assets/onest-cyrillic-wght-normal-DayYxulF.woff2",
+          "bytes": 15860,
+          "sha256": "68e5e01d6265bd68967746d4f5a9d18d0e6cbb5d15583c7082d6384ab1229b27"
+        },
+        {
+          "path": "assets/onest-latin-ext-wght-normal-QAhDxQuo.woff2",
+          "bytes": 28452,
+          "sha256": "14e7d3079b75860e2ab50efc6c318c398fdb46ede9b56e625f12ae70a3c5d9a4"
+        },
+        {
+          "path": "assets/onest-latin-wght-normal-Dun_Rd-l.woff2",
+          "bytes": 33760,
+          "sha256": "052df74533250c2e0ca0c4bdd32de594e107d99c1648e63820ef9c6142067828"
+        },
+        {
+          "path": "assets/onest-math-wght-normal-Bl4ZGkZl.woff2",
+          "bytes": 25480,
+          "sha256": "c74952a8c0c8c558c4f879f83773cf529d11350609f7073f5b2c5999dec46041"
+        },
+        {
+          "path": "assets/onest-symbols-wght-normal-DxQzqQfC.woff2",
+          "bytes": 18168,
+          "sha256": "2ec2d45d2ec0770e2c18cba2dba5126cf2dcff181d23ad192e9fffeb4af4b0b6"
+        },
+        {
+          "path": "assets/onest-vietnamese-wght-normal-BBxOatbv.woff2",
+          "bytes": 12400,
+          "sha256": "d852d4d094a3a46d701d16245deb7ca83b16b5bd69e20aa0aba089392ad69474"
+        },
+        {
+          "path": "assets/ProjectMap3D-HQ-qct6i.js",
+          "bytes": 3558,
+          "sha256": "2a29e70c72727e0e5611a517aafc1957d1b7e09dce138fd566b5359b18d16261"
+        },
+        {
+          "path": "assets/scene3d-CfNo1vOD.js",
+          "bytes": 567196,
+          "sha256": "3c120aae1b882518d0ee0cfd59b8945a6fd41840e71b3e6d19ef1131432a3ac8"
+        },
+        {
+          "path": "assets/server-C5_4mzYg.js",
+          "bytes": 1976966,
+          "sha256": "71262ea95e61c7b884db80f878b5523a6f98b79b393f59a259e7b67e6610800c"
+        },
+        {
+          "path": "assets/SiteMap-Dnxi0ZSb.js",
+          "bytes": 16642,
+          "sha256": "5a0adcd2170bffe6a9d8849b5b880054f0854f1b1a6aecd6442cfa74eb0b70b8"
+        },
+        {
+          "path": "assets/WorkerPage-CmIElRSj.js",
+          "bytes": 60729,
+          "sha256": "4f97c6722491c6eef6175cd94fbef68f105b2298ce2a02da86905a7d94f3bc69"
+        },
+        {
+          "path": "index.html",
+          "bytes": 609,
+          "sha256": "b6fb8af09ee6b01e55a24cfa4c48a2eec049dc127baed9da39e9e82d7ddcfb65"
+        }
+      ],
+      "excludedFromHttp": [
+        {
+          "path": "_routes.json",
+          "bytes": 81,
+          "sha256": "513f89787b83f3e2df460f9a9bcfe265c2356fdb9c2a123eaa6a6218506a06f7",
+          "reason": "Cloudflare Pages routing configuration: deployment control artifact, not a static HTTP target.",
+          "httpVerified": false
+        },
+        {
+          "path": "_worker.js",
+          "bytes": 5008,
+          "sha256": "7ef0668f901910dc2ffba7618c6636f163cae1a3e19d6988cf82cd811b3e4423",
+          "reason": "Cloudflare Pages executable worker: uploaded runtime artifact, not a publicly servable static file.",
+          "httpVerified": false
+        }
+      ],
+      "buildArtifactRuntimeStatus": "not-deployed"
+    },
+    "handoffSha256": "501dd62ad5293e99515c6012f1a108ff5248aa6bcaec4707ff50725d3bcbabba",
+    "otherPublication": {
+      "origin": "https://green-pavlodar-mock.pages.dev",
+      "frontendSha": "84d009e3b72c4fe637ef30607e29701054b6c621",
+      "deploymentId": "d0e985d1-bbd0-4f8c-b1c1-31d20d164ef7",
+      "immutableOrigin": "https://d0e985d1.green-pavlodar-mock.pages.dev",
+      "manifestVerification": "pending-unverified",
+      "manifestSha256Reported": null,
+      "manifestVerified": false,
+      "reason": "This run validates only its own publication manifest; the other frontend is not accepted by these results."
+    },
+    "manifestDigests": {
+      "api": "d8b042398be87fc8c7283a82499dda317ee2d6e77f8d4979f55c226d93b67f60"
+    },
+    "backendReported": {
+      "origin": "https://green-pavlodar-api-demo.onrender.com",
+      "applicationSha": "3b14927def04b35bf97782eae6b550da276c779f",
+      "deploymentId": "dep-dbj223h42hec73bqnttg",
+      "verification": "Owner-reported identity only; anonymous browser checks do not independently verify deployed backend source."
+    },
+    "releaseSha": "84d009e3b72c4fe637ef30607e29701054b6c621",
+    "qaSha": "c7f15755c80292509aaeeb9f9e4638f62c8b6810",
+    "appsTree": "2fd878cfbec10d93942afeb5add57a39a230304f",
+    "publicationCompletedConfirmedAt": "2026-10-31T19:05:09Z",
+    "sourceIdentityEvidence": {
+      "acceptedApplicationSha": "84d009e3b72c4fe637ef30607e29701054b6c621",
+      "apiFrontendSha": "c970264919de2f7a62d0e1ea8a28cc70c95a3864",
+      "qaSha": "c7f15755c80292509aaeeb9f9e4638f62c8b6810",
+      "paths": [
+        {
+          "path": "apps/web",
+          "acceptedApplicationTree": "1690174760f23f4ba0d297771073b838360b32a6",
+          "apiFrontendTree": "1690174760f23f4ba0d297771073b838360b32a6",
+          "qaTree": "1690174760f23f4ba0d297771073b838360b32a6",
+          "identical": true
+        },
+        {
+          "path": "apps/web/src/features/worker",
+          "acceptedApplicationTree": "3d26ea7b4e61667e5a1efb58f8f639b5b8966d47",
+          "apiFrontendTree": "3d26ea7b4e61667e5a1efb58f8f639b5b8966d47",
+          "qaTree": "3d26ea7b4e61667e5a1efb58f8f639b5b8966d47",
+          "identical": true
+        },
+        {
+          "path": "tools/worker-demo",
+          "acceptedApplicationTree": "22569488f8e728ebb2971a1ddb3d48e58ac77f0f",
+          "apiFrontendTree": "22569488f8e728ebb2971a1ddb3d48e58ac77f0f",
+          "qaTree": "22569488f8e728ebb2971a1ddb3d48e58ac77f0f",
+          "identical": true
+        },
+        {
+          "path": "cloudflare",
+          "acceptedApplicationTree": "f899444993055bce5d130717ffb6af90a78d6bc2",
+          "apiFrontendTree": "f899444993055bce5d130717ffb6af90a78d6bc2",
+          "qaTree": "f899444993055bce5d130717ffb6af90a78d6bc2",
+          "identical": true
+        }
+      ],
+      "scope": "Independent local Git tree equality for these build inputs only; source commit identities remain distinct."
+    }
+  },
+  "provenance": "Publisher-reported frontend/backend SHA and deployment IDs; static HTTP bytes are compared to supplied manifests before/after. Anonymous access does not establish authenticated cloud workflow, backend source identity or durable storage.",
+  "scope": "Four anonymous entry scenarios: translated empty sign-in, language persistence, viewport fit and JSON 401. No sign-in, account, task, report, photo, cloud write, restart or full API acceptance.",
+  "environment": {
+    "node": "24.22.2",
+    "browser": "Chromium",
+    "workers": 1,
+    "retries": 0,
+    "scenarioTimeoutMs": 45000,
+    "expectTimeoutMs": 12000,
+    "navigationTimeoutMs": 30000,
+    "browserVersion": "156.0.8078.4"
+  },
+  "results": [
+    {
+      "language": "ru",
+      "width": 1280,
+      "height": 800,
+      "startedAt": "2026-10-31T19:20:47.376Z",
+      "status": "passed",
+      "step": "complete",
+      "blockedRequests": [],
+      "readErrors": [],
+      "pageErrorCount": 0,
+      "anonymousAuth": {
+        "status": 401,
+        "contentType": "application/json; charset=utf-8",
+        "errorCode": "AUTH_REQUIRED"
+      },
+      "externalReadErrors": [],
+      "screenshot": {
+        "file": "anonymous-ru-1280.png",
+        "sha256": "da2c162ed9459af63dd459f09c31c7d8eee347ad05f511eb5870144d3979e36e",
+        "inputsEmpty": true,
+        "reviewed": false
+      },
+      "endedAt": "2026-10-31T19:20:52.227Z"
+    },
+    {
+      "language": "kk",
+      "width": 1280,
+      "height": 800,
+      "startedAt": "2026-10-31T19:20:52.227Z",
+      "status": "passed",
+      "step": "complete",
+      "blockedRequests": [],
+      "readErrors": [],
+      "pageErrorCount": 0,
+      "anonymousAuth": {
+        "status": 401,
+        "contentType": "application/json; charset=utf-8",
+        "errorCode": "AUTH_REQUIRED"
+      },
+      "externalReadErrors": [],
+      "screenshot": {
+        "file": "anonymous-kk-1280.png",
+        "sha256": "2ed84be93e359e37f0062302b43f9c1dbe35ee828cd6f19438aa8759f877a9be",
+        "inputsEmpty": true,
+        "reviewed": false
+      },
+      "endedAt": "2026-10-31T19:20:58.090Z"
+    },
+    {
+      "language": "ru",
+      "width": 375,
+      "height": 812,
+      "startedAt": "2026-10-31T19:20:58.090Z",
+      "status": "passed",
+      "step": "complete",
+      "blockedRequests": [],
+      "readErrors": [],
+      "pageErrorCount": 0,
+      "anonymousAuth": {
+        "status": 401,
+        "contentType": "application/json; charset=utf-8",
+        "errorCode": "AUTH_REQUIRED"
+      },
+      "externalReadErrors": [],
+      "screenshot": {
+        "file": "anonymous-ru-375.png",
+        "sha256": "322cf8226dd9a34a5a607ef191ef37cabe9925b81bb07d0d5980a38c8ab03f2b",
+        "inputsEmpty": true,
+        "reviewed": false
+      },
+      "endedAt": "2026-10-31T19:21:00.962Z"
+    },
+    {
+      "language": "kk",
+      "width": 375,
+      "height": 812,
+      "startedAt": "2026-10-31T19:21:00.962Z",
+      "status": "passed",
+      "step": "complete",
+      "blockedRequests": [],
+      "readErrors": [],
+      "pageErrorCount": 0,
+      "anonymousAuth": {
+        "status": 401,
+        "contentType": "application/json; charset=utf-8",
+        "errorCode": "AUTH_REQUIRED"
+      },
+      "externalReadErrors": [],
+      "screenshot": {
+        "file": "anonymous-kk-375.png",
+        "sha256": "6451bc04059bcd1949887fe4f6bb594115e4c9d28ae29d45c6c6782ecdf239b6",
+        "inputsEmpty": true,
+        "reviewed": false
+      },
+      "endedAt": "2026-10-31T19:21:03.846Z"
+    }
+  ],
+  "entryBefore": {
+    "observedAt": "2026-10-31T19:20:46.814Z",
+    "files": [
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/contract-v2-G6MTd3pU.js",
+        "status": 200,
+        "bytes": 70154,
+        "sha256": "6328948954bf614f545fdb03495ba0605895af1b41d5818fa4cd0c765bc6c308",
+        "expectedBytes": 70154,
+        "expectedSha256": "6328948954bf614f545fdb03495ba0605895af1b41d5818fa4cd0c765bc6c308",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/demo-gateway-CKVE_G9B.js",
+        "status": 200,
+        "bytes": 27491,
+        "sha256": "307eca6ad39e1b6eacfce89c745ab613ea7f1df65a99a7d4d7179fa337561193",
+        "expectedBytes": 27491,
+        "expectedSha256": "307eca6ad39e1b6eacfce89c745ab613ea7f1df65a99a7d4d7179fa337561193",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/DevPanel-yx8zWPqu.js",
+        "status": 200,
+        "bytes": 2442,
+        "sha256": "98e57a60c0f45726e97634903cbc75319c3fb5534fa7b68310794c92d8d278e9",
+        "expectedBytes": 2442,
+        "expectedSha256": "98e57a60c0f45726e97634903cbc75319c3fb5534fa7b68310794c92d8d278e9",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/HeroMap-rzf7Z0z2.js",
+        "status": 200,
+        "bytes": 2982,
+        "sha256": "f74873bf13fd5b8a306a0f34f459b4f44f9108921e99c5504cf6fcb816ee3042",
+        "expectedBytes": 2982,
+        "expectedSha256": "f74873bf13fd5b8a306a0f34f459b4f44f9108921e99c5504cf6fcb816ee3042",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/index-BEjYqV9f.js",
+        "status": 200,
+        "bytes": 987378,
+        "sha256": "f435641fbaf87e00a982ae0caa00f8c669b67d4603752060142e112ed027ba45",
+        "expectedBytes": 987378,
+        "expectedSha256": "f435641fbaf87e00a982ae0caa00f8c669b67d4603752060142e112ed027ba45",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/index-D-QkwvwB.css",
+        "status": 200,
+        "bytes": 84650,
+        "sha256": "d76f3e7862bdac8850d58ea16283745530f32b2356ff8a86612bb8790d599f12",
+        "expectedBytes": 84650,
+        "expectedSha256": "d76f3e7862bdac8850d58ea16283745530f32b2356ff8a86612bb8790d599f12",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/journal-DUiVZ3Jx.css",
+        "status": 200,
+        "bytes": 28323,
+        "sha256": "1f628101378a4d324955e84cff516f62990004c0970dbfe2b1c673398f08048e",
+        "expectedBytes": 28323,
+        "expectedSha256": "1f628101378a4d324955e84cff516f62990004c0970dbfe2b1c673398f08048e",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/loadMemo-CD6TAO6h.js",
+        "status": 200,
+        "bytes": 637,
+        "sha256": "0e9eb0e4fcad2c9bef4319b2db9600ebbfe6330dd6bac92ad957794832bbc1bc",
+        "expectedBytes": 637,
+        "expectedSha256": "0e9eb0e4fcad2c9bef4319b2db9600ebbfe6330dd6bac92ad957794832bbc1bc",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/lora-cyrillic-ext-wght-normal-YcVxMP-u.woff2",
+        "status": 200,
+        "bytes": 23636,
+        "sha256": "0e523e4bc3c6308f002a3208ea2990cb4f64282d4fbb67c12f5726d13b66eef6",
+        "expectedBytes": 23636,
+        "expectedSha256": "0e523e4bc3c6308f002a3208ea2990cb4f64282d4fbb67c12f5726d13b66eef6",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/lora-cyrillic-wght-normal-UWPuZLjM.woff2",
+        "status": 200,
+        "bytes": 21232,
+        "sha256": "c57d9ca3bd42e6bc093badc7744dd2059a78f66a3a4dc6ca40574480c870f553",
+        "expectedBytes": 21232,
+        "expectedSha256": "c57d9ca3bd42e6bc093badc7744dd2059a78f66a3a4dc6ca40574480c870f553",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/lora-latin-ext-wght-normal-C2Wlntb9.woff2",
+        "status": 200,
+        "bytes": 20088,
+        "sha256": "2a2d9c22c9863086a23f5013fede1428585321812b25f2662542c39d02967c5e",
+        "expectedBytes": 20088,
+        "expectedSha256": "2a2d9c22c9863086a23f5013fede1428585321812b25f2662542c39d02967c5e",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/lora-latin-wght-normal-BiLcIKcI.woff2",
+        "status": 200,
+        "bytes": 37788,
+        "sha256": "ddb8c66035104e233fc024669183aad3738b6daa16deee2ebb1241bd0f98ace1",
+        "expectedBytes": 37788,
+        "expectedSha256": "ddb8c66035104e233fc024669183aad3738b6daa16deee2ebb1241bd0f98ace1",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/lora-math-wght-normal-sOy7rEfW.woff2",
+        "status": 200,
+        "bytes": 29240,
+        "sha256": "a8c4cb778ab6202d22bdea2ccc8d7e7caf802cfe0a7ce37df7b212f82341468f",
+        "expectedBytes": 29240,
+        "expectedSha256": "a8c4cb778ab6202d22bdea2ccc8d7e7caf802cfe0a7ce37df7b212f82341468f",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/lora-symbols-wght-normal-DQ5VrUkH.woff2",
+        "status": 200,
+        "bytes": 17248,
+        "sha256": "2df52199eac56e2ec7a735e609bb151bdab79422c3e73948f4b6580c66bb5a50",
+        "expectedBytes": 17248,
+        "expectedSha256": "2df52199eac56e2ec7a735e609bb151bdab79422c3e73948f4b6580c66bb5a50",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/lora-vietnamese-wght-normal-CfJ7gtf3.woff2",
+        "status": 200,
+        "bytes": 8992,
+        "sha256": "98c22de85f6e83bcd6ae1a443e12e256fbc8de7142bec4f76b059f8ff9c2797e",
+        "expectedBytes": 8992,
+        "expectedSha256": "98c22de85f6e83bcd6ae1a443e12e256fbc8de7142bec4f76b059f8ff9c2797e",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/mapFlags-KArXQfJZ.js",
+        "status": 200,
+        "bytes": 203,
+        "sha256": "7be91119586dd5e482676ee9daf7276bd60ca59617953d84a2df1b5be897244b",
+        "expectedBytes": 203,
+        "expectedSha256": "7be91119586dd5e482676ee9daf7276bd60ca59617953d84a2df1b5be897244b",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/maplibre-gl-qdodsIIj.js",
+        "status": 200,
+        "bytes": 1033029,
+        "sha256": "f79f4edfa86b9c76b92fdac87e45cfe00cf38ac384909017b39bc3de37c7b306",
+        "expectedBytes": 1033029,
+        "expectedSha256": "f79f4edfa86b9c76b92fdac87e45cfe00cf38ac384909017b39bc3de37c7b306",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/maplibre-gl-RZO-t2LB.css",
+        "status": 200,
+        "bytes": 83127,
+        "sha256": "3c3faf7116e0ea3f4dd664bc9d6207bebf71dda2f9d3108b65527615011f2b2b",
+        "expectedBytes": 83127,
+        "expectedSha256": "3c3faf7116e0ea3f4dd664bc9d6207bebf71dda2f9d3108b65527615011f2b2b",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/maplibre-gl-worker-DYHVkJJJ.js",
+        "status": 200,
+        "bytes": 508793,
+        "sha256": "2d7087f4c4bf47b51da6498b27f32c287a4c01dbf9aa0f90446a50b13a9677f6",
+        "expectedBytes": 508793,
+        "expectedSha256": "2d7087f4c4bf47b51da6498b27f32c287a4c01dbf9aa0f90446a50b13a9677f6",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/memo-CxIq-lHk.js",
+        "status": 200,
+        "bytes": 17325,
+        "sha256": "18abbd488140620fac8ef1934f7c84a2fe328e70fc3e9fba9dcb78af65b140b0",
+        "expectedBytes": 17325,
+        "expectedSha256": "18abbd488140620fac8ef1934f7c84a2fe328e70fc3e9fba9dcb78af65b140b0",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/memoData-mJ3ORfy0.js",
+        "status": 200,
+        "bytes": 276,
+        "sha256": "28d821cacfd97c3e4f4c6f25c8e326de85347b17c05fbc88ebbd7a2c07724afd",
+        "expectedBytes": 276,
+        "expectedSha256": "28d821cacfd97c3e4f4c6f25c8e326de85347b17c05fbc88ebbd7a2c07724afd",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/onest-cyrillic-ext-wght-normal-DOFToQv1.woff2",
+        "status": 200,
+        "bytes": 10540,
+        "sha256": "268f03691b3d06e57abcf20f9277e314ea8784298983aab5b40c1b91965027e1",
+        "expectedBytes": 10540,
+        "expectedSha256": "268f03691b3d06e57abcf20f9277e314ea8784298983aab5b40c1b91965027e1",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/onest-cyrillic-wght-normal-DayYxulF.woff2",
+        "status": 200,
+        "bytes": 15860,
+        "sha256": "68e5e01d6265bd68967746d4f5a9d18d0e6cbb5d15583c7082d6384ab1229b27",
+        "expectedBytes": 15860,
+        "expectedSha256": "68e5e01d6265bd68967746d4f5a9d18d0e6cbb5d15583c7082d6384ab1229b27",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/onest-latin-ext-wght-normal-QAhDxQuo.woff2",
+        "status": 200,
+        "bytes": 28452,
+        "sha256": "14e7d3079b75860e2ab50efc6c318c398fdb46ede9b56e625f12ae70a3c5d9a4",
+        "expectedBytes": 28452,
+        "expectedSha256": "14e7d3079b75860e2ab50efc6c318c398fdb46ede9b56e625f12ae70a3c5d9a4",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/onest-latin-wght-normal-Dun_Rd-l.woff2",
+        "status": 200,
+        "bytes": 33760,
+        "sha256": "052df74533250c2e0ca0c4bdd32de594e107d99c1648e63820ef9c6142067828",
+        "expectedBytes": 33760,
+        "expectedSha256": "052df74533250c2e0ca0c4bdd32de594e107d99c1648e63820ef9c6142067828",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/onest-math-wght-normal-Bl4ZGkZl.woff2",
+        "status": 200,
+        "bytes": 25480,
+        "sha256": "c74952a8c0c8c558c4f879f83773cf529d11350609f7073f5b2c5999dec46041",
+        "expectedBytes": 25480,
+        "expectedSha256": "c74952a8c0c8c558c4f879f83773cf529d11350609f7073f5b2c5999dec46041",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/onest-symbols-wght-normal-DxQzqQfC.woff2",
+        "status": 200,
+        "bytes": 18168,
+        "sha256": "2ec2d45d2ec0770e2c18cba2dba5126cf2dcff181d23ad192e9fffeb4af4b0b6",
+        "expectedBytes": 18168,
+        "expectedSha256": "2ec2d45d2ec0770e2c18cba2dba5126cf2dcff181d23ad192e9fffeb4af4b0b6",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/onest-vietnamese-wght-normal-BBxOatbv.woff2",
+        "status": 200,
+        "bytes": 12400,
+        "sha256": "d852d4d094a3a46d701d16245deb7ca83b16b5bd69e20aa0aba089392ad69474",
+        "expectedBytes": 12400,
+        "expectedSha256": "d852d4d094a3a46d701d16245deb7ca83b16b5bd69e20aa0aba089392ad69474",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/ProjectMap3D-HQ-qct6i.js",
+        "status": 200,
+        "bytes": 3558,
+        "sha256": "2a29e70c72727e0e5611a517aafc1957d1b7e09dce138fd566b5359b18d16261",
+        "expectedBytes": 3558,
+        "expectedSha256": "2a29e70c72727e0e5611a517aafc1957d1b7e09dce138fd566b5359b18d16261",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/scene3d-CfNo1vOD.js",
+        "status": 200,
+        "bytes": 567196,
+        "sha256": "3c120aae1b882518d0ee0cfd59b8945a6fd41840e71b3e6d19ef1131432a3ac8",
+        "expectedBytes": 567196,
+        "expectedSha256": "3c120aae1b882518d0ee0cfd59b8945a6fd41840e71b3e6d19ef1131432a3ac8",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/server-C5_4mzYg.js",
+        "status": 200,
+        "bytes": 1976966,
+        "sha256": "71262ea95e61c7b884db80f878b5523a6f98b79b393f59a259e7b67e6610800c",
+        "expectedBytes": 1976966,
+        "expectedSha256": "71262ea95e61c7b884db80f878b5523a6f98b79b393f59a259e7b67e6610800c",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/SiteMap-Dnxi0ZSb.js",
+        "status": 200,
+        "bytes": 16642,
+        "sha256": "5a0adcd2170bffe6a9d8849b5b880054f0854f1b1a6aecd6442cfa74eb0b70b8",
+        "expectedBytes": 16642,
+        "expectedSha256": "5a0adcd2170bffe6a9d8849b5b880054f0854f1b1a6aecd6442cfa74eb0b70b8",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/WorkerPage-CmIElRSj.js",
+        "status": 200,
+        "bytes": 60729,
+        "sha256": "4f97c6722491c6eef6175cd94fbef68f105b2298ce2a02da86905a7d94f3bc69",
+        "expectedBytes": 60729,
+        "expectedSha256": "4f97c6722491c6eef6175cd94fbef68f105b2298ce2a02da86905a7d94f3bc69",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "index.html",
+        "status": 200,
+        "bytes": 609,
+        "sha256": "b6fb8af09ee6b01e55a24cfa4c48a2eec049dc127baed9da39e9e82d7ddcfb65",
+        "expectedBytes": 609,
+        "expectedSha256": "b6fb8af09ee6b01e55a24cfa4c48a2eec049dc127baed9da39e9e82d7ddcfb65",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/contract-v2-G6MTd3pU.js",
+        "status": 200,
+        "bytes": 70154,
+        "sha256": "6328948954bf614f545fdb03495ba0605895af1b41d5818fa4cd0c765bc6c308",
+        "expectedBytes": 70154,
+        "expectedSha256": "6328948954bf614f545fdb03495ba0605895af1b41d5818fa4cd0c765bc6c308",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/demo-gateway-CKVE_G9B.js",
+        "status": 200,
+        "bytes": 27491,
+        "sha256": "307eca6ad39e1b6eacfce89c745ab613ea7f1df65a99a7d4d7179fa337561193",
+        "expectedBytes": 27491,
+        "expectedSha256": "307eca6ad39e1b6eacfce89c745ab613ea7f1df65a99a7d4d7179fa337561193",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/DevPanel-yx8zWPqu.js",
+        "status": 200,
+        "bytes": 2442,
+        "sha256": "98e57a60c0f45726e97634903cbc75319c3fb5534fa7b68310794c92d8d278e9",
+        "expectedBytes": 2442,
+        "expectedSha256": "98e57a60c0f45726e97634903cbc75319c3fb5534fa7b68310794c92d8d278e9",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/HeroMap-rzf7Z0z2.js",
+        "status": 200,
+        "bytes": 2982,
+        "sha256": "f74873bf13fd5b8a306a0f34f459b4f44f9108921e99c5504cf6fcb816ee3042",
+        "expectedBytes": 2982,
+        "expectedSha256": "f74873bf13fd5b8a306a0f34f459b4f44f9108921e99c5504cf6fcb816ee3042",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/index-BEjYqV9f.js",
+        "status": 200,
+        "bytes": 987378,
+        "sha256": "f435641fbaf87e00a982ae0caa00f8c669b67d4603752060142e112ed027ba45",
+        "expectedBytes": 987378,
+        "expectedSha256": "f435641fbaf87e00a982ae0caa00f8c669b67d4603752060142e112ed027ba45",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/index-D-QkwvwB.css",
+        "status": 200,
+        "bytes": 84650,
+        "sha256": "d76f3e7862bdac8850d58ea16283745530f32b2356ff8a86612bb8790d599f12",
+        "expectedBytes": 84650,
+        "expectedSha256": "d76f3e7862bdac8850d58ea16283745530f32b2356ff8a86612bb8790d599f12",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/journal-DUiVZ3Jx.css",
+        "status": 200,
+        "bytes": 28323,
+        "sha256": "1f628101378a4d324955e84cff516f62990004c0970dbfe2b1c673398f08048e",
+        "expectedBytes": 28323,
+        "expectedSha256": "1f628101378a4d324955e84cff516f62990004c0970dbfe2b1c673398f08048e",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/loadMemo-CD6TAO6h.js",
+        "status": 200,
+        "bytes": 637,
+        "sha256": "0e9eb0e4fcad2c9bef4319b2db9600ebbfe6330dd6bac92ad957794832bbc1bc",
+        "expectedBytes": 637,
+        "expectedSha256": "0e9eb0e4fcad2c9bef4319b2db9600ebbfe6330dd6bac92ad957794832bbc1bc",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/lora-cyrillic-ext-wght-normal-YcVxMP-u.woff2",
+        "status": 200,
+        "bytes": 23636,
+        "sha256": "0e523e4bc3c6308f002a3208ea2990cb4f64282d4fbb67c12f5726d13b66eef6",
+        "expectedBytes": 23636,
+        "expectedSha256": "0e523e4bc3c6308f002a3208ea2990cb4f64282d4fbb67c12f5726d13b66eef6",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/lora-cyrillic-wght-normal-UWPuZLjM.woff2",
+        "status": 200,
+        "bytes": 21232,
+        "sha256": "c57d9ca3bd42e6bc093badc7744dd2059a78f66a3a4dc6ca40574480c870f553",
+        "expectedBytes": 21232,
+        "expectedSha256": "c57d9ca3bd42e6bc093badc7744dd2059a78f66a3a4dc6ca40574480c870f553",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/lora-latin-ext-wght-normal-C2Wlntb9.woff2",
+        "status": 200,
+        "bytes": 20088,
+        "sha256": "2a2d9c22c9863086a23f5013fede1428585321812b25f2662542c39d02967c5e",
+        "expectedBytes": 20088,
+        "expectedSha256": "2a2d9c22c9863086a23f5013fede1428585321812b25f2662542c39d02967c5e",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/lora-latin-wght-normal-BiLcIKcI.woff2",
+        "status": 200,
+        "bytes": 37788,
+        "sha256": "ddb8c66035104e233fc024669183aad3738b6daa16deee2ebb1241bd0f98ace1",
+        "expectedBytes": 37788,
+        "expectedSha256": "ddb8c66035104e233fc024669183aad3738b6daa16deee2ebb1241bd0f98ace1",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/lora-math-wght-normal-sOy7rEfW.woff2",
+        "status": 200,
+        "bytes": 29240,
+        "sha256": "a8c4cb778ab6202d22bdea2ccc8d7e7caf802cfe0a7ce37df7b212f82341468f",
+        "expectedBytes": 29240,
+        "expectedSha256": "a8c4cb778ab6202d22bdea2ccc8d7e7caf802cfe0a7ce37df7b212f82341468f",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/lora-symbols-wght-normal-DQ5VrUkH.woff2",
+        "status": 200,
+        "bytes": 17248,
+        "sha256": "2df52199eac56e2ec7a735e609bb151bdab79422c3e73948f4b6580c66bb5a50",
+        "expectedBytes": 17248,
+        "expectedSha256": "2df52199eac56e2ec7a735e609bb151bdab79422c3e73948f4b6580c66bb5a50",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/lora-vietnamese-wght-normal-CfJ7gtf3.woff2",
+        "status": 200,
+        "bytes": 8992,
+        "sha256": "98c22de85f6e83bcd6ae1a443e12e256fbc8de7142bec4f76b059f8ff9c2797e",
+        "expectedBytes": 8992,
+        "expectedSha256": "98c22de85f6e83bcd6ae1a443e12e256fbc8de7142bec4f76b059f8ff9c2797e",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/mapFlags-KArXQfJZ.js",
+        "status": 200,
+        "bytes": 203,
+        "sha256": "7be91119586dd5e482676ee9daf7276bd60ca59617953d84a2df1b5be897244b",
+        "expectedBytes": 203,
+        "expectedSha256": "7be91119586dd5e482676ee9daf7276bd60ca59617953d84a2df1b5be897244b",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/maplibre-gl-qdodsIIj.js",
+        "status": 200,
+        "bytes": 1033029,
+        "sha256": "f79f4edfa86b9c76b92fdac87e45cfe00cf38ac384909017b39bc3de37c7b306",
+        "expectedBytes": 1033029,
+        "expectedSha256": "f79f4edfa86b9c76b92fdac87e45cfe00cf38ac384909017b39bc3de37c7b306",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/maplibre-gl-RZO-t2LB.css",
+        "status": 200,
+        "bytes": 83127,
+        "sha256": "3c3faf7116e0ea3f4dd664bc9d6207bebf71dda2f9d3108b65527615011f2b2b",
+        "expectedBytes": 83127,
+        "expectedSha256": "3c3faf7116e0ea3f4dd664bc9d6207bebf71dda2f9d3108b65527615011f2b2b",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/maplibre-gl-worker-DYHVkJJJ.js",
+        "status": 200,
+        "bytes": 508793,
+        "sha256": "2d7087f4c4bf47b51da6498b27f32c287a4c01dbf9aa0f90446a50b13a9677f6",
+        "expectedBytes": 508793,
+        "expectedSha256": "2d7087f4c4bf47b51da6498b27f32c287a4c01dbf9aa0f90446a50b13a9677f6",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/memo-CxIq-lHk.js",
+        "status": 200,
+        "bytes": 17325,
+        "sha256": "18abbd488140620fac8ef1934f7c84a2fe328e70fc3e9fba9dcb78af65b140b0",
+        "expectedBytes": 17325,
+        "expectedSha256": "18abbd488140620fac8ef1934f7c84a2fe328e70fc3e9fba9dcb78af65b140b0",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/memoData-mJ3ORfy0.js",
+        "status": 200,
+        "bytes": 276,
+        "sha256": "28d821cacfd97c3e4f4c6f25c8e326de85347b17c05fbc88ebbd7a2c07724afd",
+        "expectedBytes": 276,
+        "expectedSha256": "28d821cacfd97c3e4f4c6f25c8e326de85347b17c05fbc88ebbd7a2c07724afd",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/onest-cyrillic-ext-wght-normal-DOFToQv1.woff2",
+        "status": 200,
+        "bytes": 10540,
+        "sha256": "268f03691b3d06e57abcf20f9277e314ea8784298983aab5b40c1b91965027e1",
+        "expectedBytes": 10540,
+        "expectedSha256": "268f03691b3d06e57abcf20f9277e314ea8784298983aab5b40c1b91965027e1",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/onest-cyrillic-wght-normal-DayYxulF.woff2",
+        "status": 200,
+        "bytes": 15860,
+        "sha256": "68e5e01d6265bd68967746d4f5a9d18d0e6cbb5d15583c7082d6384ab1229b27",
+        "expectedBytes": 15860,
+        "expectedSha256": "68e5e01d6265bd68967746d4f5a9d18d0e6cbb5d15583c7082d6384ab1229b27",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/onest-latin-ext-wght-normal-QAhDxQuo.woff2",
+        "status": 200,
+        "bytes": 28452,
+        "sha256": "14e7d3079b75860e2ab50efc6c318c398fdb46ede9b56e625f12ae70a3c5d9a4",
+        "expectedBytes": 28452,
+        "expectedSha256": "14e7d3079b75860e2ab50efc6c318c398fdb46ede9b56e625f12ae70a3c5d9a4",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/onest-latin-wght-normal-Dun_Rd-l.woff2",
+        "status": 200,
+        "bytes": 33760,
+        "sha256": "052df74533250c2e0ca0c4bdd32de594e107d99c1648e63820ef9c6142067828",
+        "expectedBytes": 33760,
+        "expectedSha256": "052df74533250c2e0ca0c4bdd32de594e107d99c1648e63820ef9c6142067828",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/onest-math-wght-normal-Bl4ZGkZl.woff2",
+        "status": 200,
+        "bytes": 25480,
+        "sha256": "c74952a8c0c8c558c4f879f83773cf529d11350609f7073f5b2c5999dec46041",
+        "expectedBytes": 25480,
+        "expectedSha256": "c74952a8c0c8c558c4f879f83773cf529d11350609f7073f5b2c5999dec46041",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/onest-symbols-wght-normal-DxQzqQfC.woff2",
+        "status": 200,
+        "bytes": 18168,
+        "sha256": "2ec2d45d2ec0770e2c18cba2dba5126cf2dcff181d23ad192e9fffeb4af4b0b6",
+        "expectedBytes": 18168,
+        "expectedSha256": "2ec2d45d2ec0770e2c18cba2dba5126cf2dcff181d23ad192e9fffeb4af4b0b6",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/onest-vietnamese-wght-normal-BBxOatbv.woff2",
+        "status": 200,
+        "bytes": 12400,
+        "sha256": "d852d4d094a3a46d701d16245deb7ca83b16b5bd69e20aa0aba089392ad69474",
+        "expectedBytes": 12400,
+        "expectedSha256": "d852d4d094a3a46d701d16245deb7ca83b16b5bd69e20aa0aba089392ad69474",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/ProjectMap3D-HQ-qct6i.js",
+        "status": 200,
+        "bytes": 3558,
+        "sha256": "2a29e70c72727e0e5611a517aafc1957d1b7e09dce138fd566b5359b18d16261",
+        "expectedBytes": 3558,
+        "expectedSha256": "2a29e70c72727e0e5611a517aafc1957d1b7e09dce138fd566b5359b18d16261",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/scene3d-CfNo1vOD.js",
+        "status": 200,
+        "bytes": 567196,
+        "sha256": "3c120aae1b882518d0ee0cfd59b8945a6fd41840e71b3e6d19ef1131432a3ac8",
+        "expectedBytes": 567196,
+        "expectedSha256": "3c120aae1b882518d0ee0cfd59b8945a6fd41840e71b3e6d19ef1131432a3ac8",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/server-C5_4mzYg.js",
+        "status": 200,
+        "bytes": 1976966,
+        "sha256": "71262ea95e61c7b884db80f878b5523a6f98b79b393f59a259e7b67e6610800c",
+        "expectedBytes": 1976966,
+        "expectedSha256": "71262ea95e61c7b884db80f878b5523a6f98b79b393f59a259e7b67e6610800c",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/SiteMap-Dnxi0ZSb.js",
+        "status": 200,
+        "bytes": 16642,
+        "sha256": "5a0adcd2170bffe6a9d8849b5b880054f0854f1b1a6aecd6442cfa74eb0b70b8",
+        "expectedBytes": 16642,
+        "expectedSha256": "5a0adcd2170bffe6a9d8849b5b880054f0854f1b1a6aecd6442cfa74eb0b70b8",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/WorkerPage-CmIElRSj.js",
+        "status": 200,
+        "bytes": 60729,
+        "sha256": "4f97c6722491c6eef6175cd94fbef68f105b2298ce2a02da86905a7d94f3bc69",
+        "expectedBytes": 60729,
+        "expectedSha256": "4f97c6722491c6eef6175cd94fbef68f105b2298ce2a02da86905a7d94f3bc69",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "index.html",
+        "status": 200,
+        "bytes": 609,
+        "sha256": "b6fb8af09ee6b01e55a24cfa4c48a2eec049dc127baed9da39e9e82d7ddcfb65",
+        "expectedBytes": 609,
+        "expectedSha256": "b6fb8af09ee6b01e55a24cfa4c48a2eec049dc127baed9da39e9e82d7ddcfb65",
+        "passed": true
+      }
+    ],
+    "matchesHandoff": true
+  },
+  "entryAfter": {
+    "observedAt": "2026-10-31T19:21:17.021Z",
+    "files": [
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/contract-v2-G6MTd3pU.js",
+        "status": 200,
+        "bytes": 70154,
+        "sha256": "6328948954bf614f545fdb03495ba0605895af1b41d5818fa4cd0c765bc6c308",
+        "expectedBytes": 70154,
+        "expectedSha256": "6328948954bf614f545fdb03495ba0605895af1b41d5818fa4cd0c765bc6c308",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/demo-gateway-CKVE_G9B.js",
+        "status": 200,
+        "bytes": 27491,
+        "sha256": "307eca6ad39e1b6eacfce89c745ab613ea7f1df65a99a7d4d7179fa337561193",
+        "expectedBytes": 27491,
+        "expectedSha256": "307eca6ad39e1b6eacfce89c745ab613ea7f1df65a99a7d4d7179fa337561193",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/DevPanel-yx8zWPqu.js",
+        "status": 200,
+        "bytes": 2442,
+        "sha256": "98e57a60c0f45726e97634903cbc75319c3fb5534fa7b68310794c92d8d278e9",
+        "expectedBytes": 2442,
+        "expectedSha256": "98e57a60c0f45726e97634903cbc75319c3fb5534fa7b68310794c92d8d278e9",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/HeroMap-rzf7Z0z2.js",
+        "status": 200,
+        "bytes": 2982,
+        "sha256": "f74873bf13fd5b8a306a0f34f459b4f44f9108921e99c5504cf6fcb816ee3042",
+        "expectedBytes": 2982,
+        "expectedSha256": "f74873bf13fd5b8a306a0f34f459b4f44f9108921e99c5504cf6fcb816ee3042",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/index-BEjYqV9f.js",
+        "status": 200,
+        "bytes": 987378,
+        "sha256": "f435641fbaf87e00a982ae0caa00f8c669b67d4603752060142e112ed027ba45",
+        "expectedBytes": 987378,
+        "expectedSha256": "f435641fbaf87e00a982ae0caa00f8c669b67d4603752060142e112ed027ba45",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/index-D-QkwvwB.css",
+        "status": 200,
+        "bytes": 84650,
+        "sha256": "d76f3e7862bdac8850d58ea16283745530f32b2356ff8a86612bb8790d599f12",
+        "expectedBytes": 84650,
+        "expectedSha256": "d76f3e7862bdac8850d58ea16283745530f32b2356ff8a86612bb8790d599f12",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/journal-DUiVZ3Jx.css",
+        "status": 200,
+        "bytes": 28323,
+        "sha256": "1f628101378a4d324955e84cff516f62990004c0970dbfe2b1c673398f08048e",
+        "expectedBytes": 28323,
+        "expectedSha256": "1f628101378a4d324955e84cff516f62990004c0970dbfe2b1c673398f08048e",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/loadMemo-CD6TAO6h.js",
+        "status": 200,
+        "bytes": 637,
+        "sha256": "0e9eb0e4fcad2c9bef4319b2db9600ebbfe6330dd6bac92ad957794832bbc1bc",
+        "expectedBytes": 637,
+        "expectedSha256": "0e9eb0e4fcad2c9bef4319b2db9600ebbfe6330dd6bac92ad957794832bbc1bc",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/lora-cyrillic-ext-wght-normal-YcVxMP-u.woff2",
+        "status": 200,
+        "bytes": 23636,
+        "sha256": "0e523e4bc3c6308f002a3208ea2990cb4f64282d4fbb67c12f5726d13b66eef6",
+        "expectedBytes": 23636,
+        "expectedSha256": "0e523e4bc3c6308f002a3208ea2990cb4f64282d4fbb67c12f5726d13b66eef6",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/lora-cyrillic-wght-normal-UWPuZLjM.woff2",
+        "status": 200,
+        "bytes": 21232,
+        "sha256": "c57d9ca3bd42e6bc093badc7744dd2059a78f66a3a4dc6ca40574480c870f553",
+        "expectedBytes": 21232,
+        "expectedSha256": "c57d9ca3bd42e6bc093badc7744dd2059a78f66a3a4dc6ca40574480c870f553",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/lora-latin-ext-wght-normal-C2Wlntb9.woff2",
+        "status": 200,
+        "bytes": 20088,
+        "sha256": "2a2d9c22c9863086a23f5013fede1428585321812b25f2662542c39d02967c5e",
+        "expectedBytes": 20088,
+        "expectedSha256": "2a2d9c22c9863086a23f5013fede1428585321812b25f2662542c39d02967c5e",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/lora-latin-wght-normal-BiLcIKcI.woff2",
+        "status": 200,
+        "bytes": 37788,
+        "sha256": "ddb8c66035104e233fc024669183aad3738b6daa16deee2ebb1241bd0f98ace1",
+        "expectedBytes": 37788,
+        "expectedSha256": "ddb8c66035104e233fc024669183aad3738b6daa16deee2ebb1241bd0f98ace1",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/lora-math-wght-normal-sOy7rEfW.woff2",
+        "status": 200,
+        "bytes": 29240,
+        "sha256": "a8c4cb778ab6202d22bdea2ccc8d7e7caf802cfe0a7ce37df7b212f82341468f",
+        "expectedBytes": 29240,
+        "expectedSha256": "a8c4cb778ab6202d22bdea2ccc8d7e7caf802cfe0a7ce37df7b212f82341468f",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/lora-symbols-wght-normal-DQ5VrUkH.woff2",
+        "status": 200,
+        "bytes": 17248,
+        "sha256": "2df52199eac56e2ec7a735e609bb151bdab79422c3e73948f4b6580c66bb5a50",
+        "expectedBytes": 17248,
+        "expectedSha256": "2df52199eac56e2ec7a735e609bb151bdab79422c3e73948f4b6580c66bb5a50",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/lora-vietnamese-wght-normal-CfJ7gtf3.woff2",
+        "status": 200,
+        "bytes": 8992,
+        "sha256": "98c22de85f6e83bcd6ae1a443e12e256fbc8de7142bec4f76b059f8ff9c2797e",
+        "expectedBytes": 8992,
+        "expectedSha256": "98c22de85f6e83bcd6ae1a443e12e256fbc8de7142bec4f76b059f8ff9c2797e",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/mapFlags-KArXQfJZ.js",
+        "status": 200,
+        "bytes": 203,
+        "sha256": "7be91119586dd5e482676ee9daf7276bd60ca59617953d84a2df1b5be897244b",
+        "expectedBytes": 203,
+        "expectedSha256": "7be91119586dd5e482676ee9daf7276bd60ca59617953d84a2df1b5be897244b",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/maplibre-gl-qdodsIIj.js",
+        "status": 200,
+        "bytes": 1033029,
+        "sha256": "f79f4edfa86b9c76b92fdac87e45cfe00cf38ac384909017b39bc3de37c7b306",
+        "expectedBytes": 1033029,
+        "expectedSha256": "f79f4edfa86b9c76b92fdac87e45cfe00cf38ac384909017b39bc3de37c7b306",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/maplibre-gl-RZO-t2LB.css",
+        "status": 200,
+        "bytes": 83127,
+        "sha256": "3c3faf7116e0ea3f4dd664bc9d6207bebf71dda2f9d3108b65527615011f2b2b",
+        "expectedBytes": 83127,
+        "expectedSha256": "3c3faf7116e0ea3f4dd664bc9d6207bebf71dda2f9d3108b65527615011f2b2b",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/maplibre-gl-worker-DYHVkJJJ.js",
+        "status": 200,
+        "bytes": 508793,
+        "sha256": "2d7087f4c4bf47b51da6498b27f32c287a4c01dbf9aa0f90446a50b13a9677f6",
+        "expectedBytes": 508793,
+        "expectedSha256": "2d7087f4c4bf47b51da6498b27f32c287a4c01dbf9aa0f90446a50b13a9677f6",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/memo-CxIq-lHk.js",
+        "status": 200,
+        "bytes": 17325,
+        "sha256": "18abbd488140620fac8ef1934f7c84a2fe328e70fc3e9fba9dcb78af65b140b0",
+        "expectedBytes": 17325,
+        "expectedSha256": "18abbd488140620fac8ef1934f7c84a2fe328e70fc3e9fba9dcb78af65b140b0",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/memoData-mJ3ORfy0.js",
+        "status": 200,
+        "bytes": 276,
+        "sha256": "28d821cacfd97c3e4f4c6f25c8e326de85347b17c05fbc88ebbd7a2c07724afd",
+        "expectedBytes": 276,
+        "expectedSha256": "28d821cacfd97c3e4f4c6f25c8e326de85347b17c05fbc88ebbd7a2c07724afd",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/onest-cyrillic-ext-wght-normal-DOFToQv1.woff2",
+        "status": 200,
+        "bytes": 10540,
+        "sha256": "268f03691b3d06e57abcf20f9277e314ea8784298983aab5b40c1b91965027e1",
+        "expectedBytes": 10540,
+        "expectedSha256": "268f03691b3d06e57abcf20f9277e314ea8784298983aab5b40c1b91965027e1",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/onest-cyrillic-wght-normal-DayYxulF.woff2",
+        "status": 200,
+        "bytes": 15860,
+        "sha256": "68e5e01d6265bd68967746d4f5a9d18d0e6cbb5d15583c7082d6384ab1229b27",
+        "expectedBytes": 15860,
+        "expectedSha256": "68e5e01d6265bd68967746d4f5a9d18d0e6cbb5d15583c7082d6384ab1229b27",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/onest-latin-ext-wght-normal-QAhDxQuo.woff2",
+        "status": 200,
+        "bytes": 28452,
+        "sha256": "14e7d3079b75860e2ab50efc6c318c398fdb46ede9b56e625f12ae70a3c5d9a4",
+        "expectedBytes": 28452,
+        "expectedSha256": "14e7d3079b75860e2ab50efc6c318c398fdb46ede9b56e625f12ae70a3c5d9a4",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/onest-latin-wght-normal-Dun_Rd-l.woff2",
+        "status": 200,
+        "bytes": 33760,
+        "sha256": "052df74533250c2e0ca0c4bdd32de594e107d99c1648e63820ef9c6142067828",
+        "expectedBytes": 33760,
+        "expectedSha256": "052df74533250c2e0ca0c4bdd32de594e107d99c1648e63820ef9c6142067828",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/onest-math-wght-normal-Bl4ZGkZl.woff2",
+        "status": 200,
+        "bytes": 25480,
+        "sha256": "c74952a8c0c8c558c4f879f83773cf529d11350609f7073f5b2c5999dec46041",
+        "expectedBytes": 25480,
+        "expectedSha256": "c74952a8c0c8c558c4f879f83773cf529d11350609f7073f5b2c5999dec46041",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/onest-symbols-wght-normal-DxQzqQfC.woff2",
+        "status": 200,
+        "bytes": 18168,
+        "sha256": "2ec2d45d2ec0770e2c18cba2dba5126cf2dcff181d23ad192e9fffeb4af4b0b6",
+        "expectedBytes": 18168,
+        "expectedSha256": "2ec2d45d2ec0770e2c18cba2dba5126cf2dcff181d23ad192e9fffeb4af4b0b6",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/onest-vietnamese-wght-normal-BBxOatbv.woff2",
+        "status": 200,
+        "bytes": 12400,
+        "sha256": "d852d4d094a3a46d701d16245deb7ca83b16b5bd69e20aa0aba089392ad69474",
+        "expectedBytes": 12400,
+        "expectedSha256": "d852d4d094a3a46d701d16245deb7ca83b16b5bd69e20aa0aba089392ad69474",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/ProjectMap3D-HQ-qct6i.js",
+        "status": 200,
+        "bytes": 3558,
+        "sha256": "2a29e70c72727e0e5611a517aafc1957d1b7e09dce138fd566b5359b18d16261",
+        "expectedBytes": 3558,
+        "expectedSha256": "2a29e70c72727e0e5611a517aafc1957d1b7e09dce138fd566b5359b18d16261",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/scene3d-CfNo1vOD.js",
+        "status": 200,
+        "bytes": 567196,
+        "sha256": "3c120aae1b882518d0ee0cfd59b8945a6fd41840e71b3e6d19ef1131432a3ac8",
+        "expectedBytes": 567196,
+        "expectedSha256": "3c120aae1b882518d0ee0cfd59b8945a6fd41840e71b3e6d19ef1131432a3ac8",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/server-C5_4mzYg.js",
+        "status": 200,
+        "bytes": 1976966,
+        "sha256": "71262ea95e61c7b884db80f878b5523a6f98b79b393f59a259e7b67e6610800c",
+        "expectedBytes": 1976966,
+        "expectedSha256": "71262ea95e61c7b884db80f878b5523a6f98b79b393f59a259e7b67e6610800c",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/SiteMap-Dnxi0ZSb.js",
+        "status": 200,
+        "bytes": 16642,
+        "sha256": "5a0adcd2170bffe6a9d8849b5b880054f0854f1b1a6aecd6442cfa74eb0b70b8",
+        "expectedBytes": 16642,
+        "expectedSha256": "5a0adcd2170bffe6a9d8849b5b880054f0854f1b1a6aecd6442cfa74eb0b70b8",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "assets/WorkerPage-CmIElRSj.js",
+        "status": 200,
+        "bytes": 60729,
+        "sha256": "4f97c6722491c6eef6175cd94fbef68f105b2298ce2a02da86905a7d94f3bc69",
+        "expectedBytes": 60729,
+        "expectedSha256": "4f97c6722491c6eef6175cd94fbef68f105b2298ce2a02da86905a7d94f3bc69",
+        "passed": true
+      },
+      {
+        "origin": "https://green-pavlodar-api.pages.dev",
+        "path": "index.html",
+        "status": 200,
+        "bytes": 609,
+        "sha256": "b6fb8af09ee6b01e55a24cfa4c48a2eec049dc127baed9da39e9e82d7ddcfb65",
+        "expectedBytes": 609,
+        "expectedSha256": "b6fb8af09ee6b01e55a24cfa4c48a2eec049dc127baed9da39e9e82d7ddcfb65",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/contract-v2-G6MTd3pU.js",
+        "status": 200,
+        "bytes": 70154,
+        "sha256": "6328948954bf614f545fdb03495ba0605895af1b41d5818fa4cd0c765bc6c308",
+        "expectedBytes": 70154,
+        "expectedSha256": "6328948954bf614f545fdb03495ba0605895af1b41d5818fa4cd0c765bc6c308",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/demo-gateway-CKVE_G9B.js",
+        "status": 200,
+        "bytes": 27491,
+        "sha256": "307eca6ad39e1b6eacfce89c745ab613ea7f1df65a99a7d4d7179fa337561193",
+        "expectedBytes": 27491,
+        "expectedSha256": "307eca6ad39e1b6eacfce89c745ab613ea7f1df65a99a7d4d7179fa337561193",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/DevPanel-yx8zWPqu.js",
+        "status": 200,
+        "bytes": 2442,
+        "sha256": "98e57a60c0f45726e97634903cbc75319c3fb5534fa7b68310794c92d8d278e9",
+        "expectedBytes": 2442,
+        "expectedSha256": "98e57a60c0f45726e97634903cbc75319c3fb5534fa7b68310794c92d8d278e9",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/HeroMap-rzf7Z0z2.js",
+        "status": 200,
+        "bytes": 2982,
+        "sha256": "f74873bf13fd5b8a306a0f34f459b4f44f9108921e99c5504cf6fcb816ee3042",
+        "expectedBytes": 2982,
+        "expectedSha256": "f74873bf13fd5b8a306a0f34f459b4f44f9108921e99c5504cf6fcb816ee3042",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/index-BEjYqV9f.js",
+        "status": 200,
+        "bytes": 987378,
+        "sha256": "f435641fbaf87e00a982ae0caa00f8c669b67d4603752060142e112ed027ba45",
+        "expectedBytes": 987378,
+        "expectedSha256": "f435641fbaf87e00a982ae0caa00f8c669b67d4603752060142e112ed027ba45",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/index-D-QkwvwB.css",
+        "status": 200,
+        "bytes": 84650,
+        "sha256": "d76f3e7862bdac8850d58ea16283745530f32b2356ff8a86612bb8790d599f12",
+        "expectedBytes": 84650,
+        "expectedSha256": "d76f3e7862bdac8850d58ea16283745530f32b2356ff8a86612bb8790d599f12",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/journal-DUiVZ3Jx.css",
+        "status": 200,
+        "bytes": 28323,
+        "sha256": "1f628101378a4d324955e84cff516f62990004c0970dbfe2b1c673398f08048e",
+        "expectedBytes": 28323,
+        "expectedSha256": "1f628101378a4d324955e84cff516f62990004c0970dbfe2b1c673398f08048e",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/loadMemo-CD6TAO6h.js",
+        "status": 200,
+        "bytes": 637,
+        "sha256": "0e9eb0e4fcad2c9bef4319b2db9600ebbfe6330dd6bac92ad957794832bbc1bc",
+        "expectedBytes": 637,
+        "expectedSha256": "0e9eb0e4fcad2c9bef4319b2db9600ebbfe6330dd6bac92ad957794832bbc1bc",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/lora-cyrillic-ext-wght-normal-YcVxMP-u.woff2",
+        "status": 200,
+        "bytes": 23636,
+        "sha256": "0e523e4bc3c6308f002a3208ea2990cb4f64282d4fbb67c12f5726d13b66eef6",
+        "expectedBytes": 23636,
+        "expectedSha256": "0e523e4bc3c6308f002a3208ea2990cb4f64282d4fbb67c12f5726d13b66eef6",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/lora-cyrillic-wght-normal-UWPuZLjM.woff2",
+        "status": 200,
+        "bytes": 21232,
+        "sha256": "c57d9ca3bd42e6bc093badc7744dd2059a78f66a3a4dc6ca40574480c870f553",
+        "expectedBytes": 21232,
+        "expectedSha256": "c57d9ca3bd42e6bc093badc7744dd2059a78f66a3a4dc6ca40574480c870f553",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/lora-latin-ext-wght-normal-C2Wlntb9.woff2",
+        "status": 200,
+        "bytes": 20088,
+        "sha256": "2a2d9c22c9863086a23f5013fede1428585321812b25f2662542c39d02967c5e",
+        "expectedBytes": 20088,
+        "expectedSha256": "2a2d9c22c9863086a23f5013fede1428585321812b25f2662542c39d02967c5e",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/lora-latin-wght-normal-BiLcIKcI.woff2",
+        "status": 200,
+        "bytes": 37788,
+        "sha256": "ddb8c66035104e233fc024669183aad3738b6daa16deee2ebb1241bd0f98ace1",
+        "expectedBytes": 37788,
+        "expectedSha256": "ddb8c66035104e233fc024669183aad3738b6daa16deee2ebb1241bd0f98ace1",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/lora-math-wght-normal-sOy7rEfW.woff2",
+        "status": 200,
+        "bytes": 29240,
+        "sha256": "a8c4cb778ab6202d22bdea2ccc8d7e7caf802cfe0a7ce37df7b212f82341468f",
+        "expectedBytes": 29240,
+        "expectedSha256": "a8c4cb778ab6202d22bdea2ccc8d7e7caf802cfe0a7ce37df7b212f82341468f",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/lora-symbols-wght-normal-DQ5VrUkH.woff2",
+        "status": 200,
+        "bytes": 17248,
+        "sha256": "2df52199eac56e2ec7a735e609bb151bdab79422c3e73948f4b6580c66bb5a50",
+        "expectedBytes": 17248,
+        "expectedSha256": "2df52199eac56e2ec7a735e609bb151bdab79422c3e73948f4b6580c66bb5a50",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/lora-vietnamese-wght-normal-CfJ7gtf3.woff2",
+        "status": 200,
+        "bytes": 8992,
+        "sha256": "98c22de85f6e83bcd6ae1a443e12e256fbc8de7142bec4f76b059f8ff9c2797e",
+        "expectedBytes": 8992,
+        "expectedSha256": "98c22de85f6e83bcd6ae1a443e12e256fbc8de7142bec4f76b059f8ff9c2797e",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/mapFlags-KArXQfJZ.js",
+        "status": 200,
+        "bytes": 203,
+        "sha256": "7be91119586dd5e482676ee9daf7276bd60ca59617953d84a2df1b5be897244b",
+        "expectedBytes": 203,
+        "expectedSha256": "7be91119586dd5e482676ee9daf7276bd60ca59617953d84a2df1b5be897244b",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/maplibre-gl-qdodsIIj.js",
+        "status": 200,
+        "bytes": 1033029,
+        "sha256": "f79f4edfa86b9c76b92fdac87e45cfe00cf38ac384909017b39bc3de37c7b306",
+        "expectedBytes": 1033029,
+        "expectedSha256": "f79f4edfa86b9c76b92fdac87e45cfe00cf38ac384909017b39bc3de37c7b306",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/maplibre-gl-RZO-t2LB.css",
+        "status": 200,
+        "bytes": 83127,
+        "sha256": "3c3faf7116e0ea3f4dd664bc9d6207bebf71dda2f9d3108b65527615011f2b2b",
+        "expectedBytes": 83127,
+        "expectedSha256": "3c3faf7116e0ea3f4dd664bc9d6207bebf71dda2f9d3108b65527615011f2b2b",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/maplibre-gl-worker-DYHVkJJJ.js",
+        "status": 200,
+        "bytes": 508793,
+        "sha256": "2d7087f4c4bf47b51da6498b27f32c287a4c01dbf9aa0f90446a50b13a9677f6",
+        "expectedBytes": 508793,
+        "expectedSha256": "2d7087f4c4bf47b51da6498b27f32c287a4c01dbf9aa0f90446a50b13a9677f6",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/memo-CxIq-lHk.js",
+        "status": 200,
+        "bytes": 17325,
+        "sha256": "18abbd488140620fac8ef1934f7c84a2fe328e70fc3e9fba9dcb78af65b140b0",
+        "expectedBytes": 17325,
+        "expectedSha256": "18abbd488140620fac8ef1934f7c84a2fe328e70fc3e9fba9dcb78af65b140b0",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/memoData-mJ3ORfy0.js",
+        "status": 200,
+        "bytes": 276,
+        "sha256": "28d821cacfd97c3e4f4c6f25c8e326de85347b17c05fbc88ebbd7a2c07724afd",
+        "expectedBytes": 276,
+        "expectedSha256": "28d821cacfd97c3e4f4c6f25c8e326de85347b17c05fbc88ebbd7a2c07724afd",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/onest-cyrillic-ext-wght-normal-DOFToQv1.woff2",
+        "status": 200,
+        "bytes": 10540,
+        "sha256": "268f03691b3d06e57abcf20f9277e314ea8784298983aab5b40c1b91965027e1",
+        "expectedBytes": 10540,
+        "expectedSha256": "268f03691b3d06e57abcf20f9277e314ea8784298983aab5b40c1b91965027e1",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/onest-cyrillic-wght-normal-DayYxulF.woff2",
+        "status": 200,
+        "bytes": 15860,
+        "sha256": "68e5e01d6265bd68967746d4f5a9d18d0e6cbb5d15583c7082d6384ab1229b27",
+        "expectedBytes": 15860,
+        "expectedSha256": "68e5e01d6265bd68967746d4f5a9d18d0e6cbb5d15583c7082d6384ab1229b27",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/onest-latin-ext-wght-normal-QAhDxQuo.woff2",
+        "status": 200,
+        "bytes": 28452,
+        "sha256": "14e7d3079b75860e2ab50efc6c318c398fdb46ede9b56e625f12ae70a3c5d9a4",
+        "expectedBytes": 28452,
+        "expectedSha256": "14e7d3079b75860e2ab50efc6c318c398fdb46ede9b56e625f12ae70a3c5d9a4",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/onest-latin-wght-normal-Dun_Rd-l.woff2",
+        "status": 200,
+        "bytes": 33760,
+        "sha256": "052df74533250c2e0ca0c4bdd32de594e107d99c1648e63820ef9c6142067828",
+        "expectedBytes": 33760,
+        "expectedSha256": "052df74533250c2e0ca0c4bdd32de594e107d99c1648e63820ef9c6142067828",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/onest-math-wght-normal-Bl4ZGkZl.woff2",
+        "status": 200,
+        "bytes": 25480,
+        "sha256": "c74952a8c0c8c558c4f879f83773cf529d11350609f7073f5b2c5999dec46041",
+        "expectedBytes": 25480,
+        "expectedSha256": "c74952a8c0c8c558c4f879f83773cf529d11350609f7073f5b2c5999dec46041",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/onest-symbols-wght-normal-DxQzqQfC.woff2",
+        "status": 200,
+        "bytes": 18168,
+        "sha256": "2ec2d45d2ec0770e2c18cba2dba5126cf2dcff181d23ad192e9fffeb4af4b0b6",
+        "expectedBytes": 18168,
+        "expectedSha256": "2ec2d45d2ec0770e2c18cba2dba5126cf2dcff181d23ad192e9fffeb4af4b0b6",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/onest-vietnamese-wght-normal-BBxOatbv.woff2",
+        "status": 200,
+        "bytes": 12400,
+        "sha256": "d852d4d094a3a46d701d16245deb7ca83b16b5bd69e20aa0aba089392ad69474",
+        "expectedBytes": 12400,
+        "expectedSha256": "d852d4d094a3a46d701d16245deb7ca83b16b5bd69e20aa0aba089392ad69474",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/ProjectMap3D-HQ-qct6i.js",
+        "status": 200,
+        "bytes": 3558,
+        "sha256": "2a29e70c72727e0e5611a517aafc1957d1b7e09dce138fd566b5359b18d16261",
+        "expectedBytes": 3558,
+        "expectedSha256": "2a29e70c72727e0e5611a517aafc1957d1b7e09dce138fd566b5359b18d16261",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/scene3d-CfNo1vOD.js",
+        "status": 200,
+        "bytes": 567196,
+        "sha256": "3c120aae1b882518d0ee0cfd59b8945a6fd41840e71b3e6d19ef1131432a3ac8",
+        "expectedBytes": 567196,
+        "expectedSha256": "3c120aae1b882518d0ee0cfd59b8945a6fd41840e71b3e6d19ef1131432a3ac8",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/server-C5_4mzYg.js",
+        "status": 200,
+        "bytes": 1976966,
+        "sha256": "71262ea95e61c7b884db80f878b5523a6f98b79b393f59a259e7b67e6610800c",
+        "expectedBytes": 1976966,
+        "expectedSha256": "71262ea95e61c7b884db80f878b5523a6f98b79b393f59a259e7b67e6610800c",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/SiteMap-Dnxi0ZSb.js",
+        "status": 200,
+        "bytes": 16642,
+        "sha256": "5a0adcd2170bffe6a9d8849b5b880054f0854f1b1a6aecd6442cfa74eb0b70b8",
+        "expectedBytes": 16642,
+        "expectedSha256": "5a0adcd2170bffe6a9d8849b5b880054f0854f1b1a6aecd6442cfa74eb0b70b8",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "assets/WorkerPage-CmIElRSj.js",
+        "status": 200,
+        "bytes": 60729,
+        "sha256": "4f97c6722491c6eef6175cd94fbef68f105b2298ce2a02da86905a7d94f3bc69",
+        "expectedBytes": 60729,
+        "expectedSha256": "4f97c6722491c6eef6175cd94fbef68f105b2298ce2a02da86905a7d94f3bc69",
+        "passed": true
+      },
+      {
+        "origin": "https://a26bd214.green-pavlodar-api.pages.dev",
+        "path": "index.html",
+        "status": 200,
+        "bytes": 609,
+        "sha256": "b6fb8af09ee6b01e55a24cfa4c48a2eec049dc127baed9da39e9e82d7ddcfb65",
+        "expectedBytes": 609,
+        "expectedSha256": "b6fb8af09ee6b01e55a24cfa4c48a2eec049dc127baed9da39e9e82d7ddcfb65",
+        "passed": true
+      }
+    ],
+    "matchesHandoff": true
+  },
+  "entryAssetsStable": true,
+  "endedAt": "2026-10-31T19:21:17.022Z",
+  "counts": {
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "fixme": 0,
+    "flaky": 0,
+    "notRun": 0
+  },
+  "artifactPolicy": "Only intentional screenshots after empty-input and signed-out checks; no trace, video, error-context, login credentials or raw DOM."
+}

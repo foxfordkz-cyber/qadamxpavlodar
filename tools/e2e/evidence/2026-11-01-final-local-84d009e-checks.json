@@ -1,0 +1,89 @@
+{
+  "applicationBase": "84d009e3b72c4fe637ef30607e29701054b6c621",
+  "testSHA": "c7f15755c80292509aaeeb9f9e4638f62c8b6810",
+  "checks": [
+    {
+      "id": "check:tools",
+      "command": "node --test scripts/tests/tooling.test.mjs scripts/tests/api-privacy.browser.mjs",
+      "testSHA": "c7f15755c80292509aaeeb9f9e4638f62c8b6810",
+      "startedAt": "2026-10-31T19:14:01.110Z",
+      "endedAt": "2026-10-31T19:14:04.646Z",
+      "exitCode": 0,
+      "counts": {
+        "passed": 24,
+        "failed": 0,
+        "skipped": 0,
+        "fixme": 0,
+        "flaky": 0
+      },
+      "provenance": "Observed process result supplied by the root QA operator; export does not rerun this check",
+      "logEvidence": {
+        "localFile": "check-tools.log",
+        "bytes": 2367,
+        "sha256": "df7b0cde85350f0d5ae116334fef386fd87ba4117d1faa9f0ad94ce6d0952070",
+        "copied": false
+      }
+    },
+    {
+      "id": "check:report-before-pack",
+      "command": "node --test scripts/tests/report.browser.mjs",
+      "testSHA": "c7f15755c80292509aaeeb9f9e4638f62c8b6810",
+      "startedAt": "2026-10-31T19:14:34.831Z",
+      "endedAt": "2026-10-31T19:14:39.853Z",
+      "exitCode": 0,
+      "counts": {
+        "passed": 3,
+        "failed": 0,
+        "skipped": 0,
+        "fixme": 0,
+        "flaky": 0
+      },
+      "provenance": "Observed process result supplied by the root QA operator; export does not rerun this check",
+      "logEvidence": {
+        "localFile": "check-report-before.log",
+        "bytes": 392,
+        "sha256": "7607372512fb46ce2e8ccef0833f92ecf545b005944eba10479f7a3a14c0e1db",
+        "copied": false
+      }
+    },
+    {
+      "id": "check:report-after-pack",
+      "command": "node --test scripts/tests/report.browser.mjs",
+      "testSHA": "c7f15755c80292509aaeeb9f9e4638f62c8b6810",
+      "startedAt": "2026-10-31T19:14:40.724Z",
+      "endedAt": "2026-10-31T19:14:44.221Z",
+      "exitCode": 0,
+      "counts": {
+        "passed": 3,
+        "failed": 0,
+        "skipped": 0,
+        "fixme": 0,
+        "flaky": 0
+      },
+      "provenance": "Observed process result supplied by the root QA operator; export does not rerun this check",
+      "logEvidence": {
+        "localFile": "check-report-after.log",
+        "bytes": 392,
+        "sha256": "279d2283806411895304730ba56ab4b66cade0bf3f439a1c59efb99e4ae9521b",
+        "copied": false
+      }
+    },
+    {
+      "id": "e2e:gate",
+      "command": "node scripts/summary.mjs --strict",
+      "testSHA": "c7f15755c80292509aaeeb9f9e4638f62c8b6810",
+      "startedAt": "2026-10-31T19:14:44.223Z",
+      "endedAt": "2026-10-31T19:14:44.804Z",
+      "exitCode": 0,
+      "counts": null,
+      "provenance": "Observed process result supplied by the root QA operator; export does not rerun this check",
+      "logEvidence": {
+        "localFile": "gate.log",
+        "bytes": 171,
+        "sha256": "591a4111c402464b642ae0245ecf424d10c4d72bbb8085786aefc6815bf498db",
+        "copied": false
+      }
+    }
+  ],
+  "independentReadOnlyExportGatePassed": true
+}

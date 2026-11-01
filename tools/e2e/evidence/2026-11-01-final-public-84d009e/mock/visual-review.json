@@ -1,0 +1,444 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root/survival42_visual_review",
+  "reviewedAt": "2026-10-31T19:26:53.957Z",
+  "status": "reviewed-with-minor-layout-and-framing-limitations",
+  "testSHA": "c7f15755c80292509aaeeb9f9e4638f62c8b6810",
+  "frontendSha": "84d009e3b72c4fe637ef30607e29701054b6c621",
+  "deploymentId": "d0e985d1-bbd0-4f8c-b1c1-31d20d164ef7",
+  "target": "https://green-pavlodar-mock.pages.dev",
+  "scope": "Visual/privacy review of the 20 successful public mock workflow attachments only. These remain separate from the 30 formal presentation frames. This does not certify authenticated API roles, private photos, server persistence or native Word opening.",
+  "method": "Opened all 20 actual PNGs individually using view_image; independently matched each to its browser-results.json attachment SHA256 and recorded dimensions.",
+  "count": 20,
+  "findings": [
+    {
+      "id": "V-01",
+      "severity": "minor",
+      "area": "375px ordinary-mode status strip",
+      "role": "specialist (mock demo)",
+      "urls": [
+        "https://green-pavlodar-mock.pages.dev/?source=mock&lang=ru#/lab",
+        "https://green-pavlodar-mock.pages.dev/?source=mock&lang=kk#/lab"
+      ],
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "steps": [
+        "Open the laboratory in ordinary mode at 375×812.",
+        "Leave the page at the top and inspect the status strip immediately below the header.",
+        "Repeat with lang=kk."
+      ],
+      "expected": "The data-source label can be read; its wording identifies browser/mock data.",
+      "actual": "The right edge clips the RU label «Тестовый источник в браузере» and KK label «Браузердегі сынақ деректері»; the final words are not fully visible in the default viewport.",
+      "documentOverflow": "Both corresponding lab tests passed document.scrollWidth <= document.clientWidth; this observation is clipping inside the strip, not demonstrated page overflow.",
+      "impact": "Budget/water/goal controls remain visible; calculations are not implicated. Recoverability by strip scrolling/title was not independently inspected.",
+      "evidence": [
+        {
+          "file": "screens/09-public-ru-375-public-completed-lab.png",
+          "sha256": "677f32f3d717e04aa5aeaf3f2e77c957c52c0877ab2f2bf7c4fc2f89051a1b90"
+        },
+        {
+          "file": "screens/10-public-kk-375-public-completed-lab.png",
+          "sha256": "be5a0a2e4adb54d01e2d39b2523754e74d59a701ffb318c569def51128bd3470"
+        }
+      ]
+    },
+    {
+      "severity": "artifact-framing",
+      "area": "public laboratory and mobile Outcomes screenshots",
+      "observation": "Screenshots are taken near page top; lab result cards and mobile Outcomes numerical values are below the viewport.",
+      "impact": "Usable as completed workflow/control evidence alongside assertions, but not as presentation images proving fully visible calculated plans. Keep formal 30-frame result-focused archive separate."
+    }
+  ],
+  "privacy": "Only synthetic demo session labels and public OSM source names are visible; no passwords, private person data, tokens or real report photographs.",
+  "captures": [
+    {
+      "file": "screens/01-public-kk-1280-public-completed-lab.png",
+      "sha256": "3d6889615b43500206371ef5dc746dc88446bd1f3baf8e7882f056cfd5d01920",
+      "reviewed": true,
+      "project": "public-kk-1280",
+      "testTitle": "public mock: complete menu and three calculated laboratory plans",
+      "width": 1280,
+      "height": 800,
+      "bytes": 114382,
+      "hashMatches": true,
+      "assessment": "safe-workflow-evidence",
+      "slideshowBaseline": false,
+      "sourceBadgeClipped": false,
+      "notes": [
+        "Settled laboratory controls visible without a loading shell. The three result cards are below this viewport; this image is not a slide showing completed plan metrics."
+      ],
+      "usableForDefense": false,
+      "defenseExclusionReason": "Plan result cards are below the viewport."
+    },
+    {
+      "file": "screens/02-public-ru-1280-public-completed-lab.png",
+      "sha256": "bf6b82940c9c4fe614b3c6465c34bd7532897b5602d93deedd5c4e93c54be7f8",
+      "reviewed": true,
+      "project": "public-ru-1280",
+      "testTitle": "public mock: complete menu and three calculated laboratory plans",
+      "width": 1280,
+      "height": 800,
+      "bytes": 117734,
+      "hashMatches": true,
+      "assessment": "safe-workflow-evidence",
+      "slideshowBaseline": false,
+      "sourceBadgeClipped": false,
+      "notes": [
+        "Settled laboratory controls visible without a loading shell. The three result cards are below this viewport; this image is not a slide showing completed plan metrics."
+      ],
+      "usableForDefense": false,
+      "defenseExclusionReason": "Plan result cards are below the viewport."
+    },
+    {
+      "file": "screens/03-public-kk-1280-public-completed-report.png",
+      "sha256": "ec27ea2f988f2da9e049368f342af003dcf687fdda1cc4156c58c55474c41008",
+      "reviewed": true,
+      "project": "public-kk-1280",
+      "testTitle": "public mock: site → recommendation/estimate → growth → RU/KK DOCX XML",
+      "width": 1280,
+      "height": 800,
+      "bytes": 116008,
+      "hashMatches": true,
+      "assessment": "safe-workflow-evidence",
+      "slideshowBaseline": false,
+      "sourceBadgeClipped": false,
+      "notes": [
+        "Memo panel shows download-ready confirmation and/or settled report content; source street/place names may remain Russian in KK. Screenshot does not certify native Word opening."
+      ],
+      "usableForDefense": false,
+      "defenseExclusionReason": "Supplementary public workflow evidence; use the separately reviewed 30 presentation frames for the defence archive."
+    },
+    {
+      "file": "screens/04-public-ru-1280-public-completed-report.png",
+      "sha256": "40b91b4e6a2cf79b7475a69690651612a8c54f2718a03204092fd5be3ef9d680",
+      "reviewed": true,
+      "project": "public-ru-1280",
+      "testTitle": "public mock: site → recommendation/estimate → growth → RU/KK DOCX XML",
+      "width": 1280,
+      "height": 800,
+      "bytes": 110413,
+      "hashMatches": true,
+      "assessment": "safe-workflow-evidence",
+      "slideshowBaseline": false,
+      "sourceBadgeClipped": false,
+      "notes": [
+        "Memo panel shows download-ready confirmation and/or settled report content; source street/place names may remain Russian in KK. Screenshot does not certify native Word opening."
+      ],
+      "usableForDefense": false,
+      "defenseExclusionReason": "Supplementary public workflow evidence; use the separately reviewed 30 presentation frames for the defence archive."
+    },
+    {
+      "file": "screens/05-public-ru-1280-public-completed-outcomes.png",
+      "sha256": "fc778c16dafb6882066ad48fffb98cf8a868ce9ba09967541c79da6b4a9135f0",
+      "reviewed": true,
+      "project": "public-ru-1280",
+      "testTitle": "public mock: Outcomes variants and inspection retain demonstration labels",
+      "width": 1280,
+      "height": 800,
+      "bytes": 123643,
+      "hashMatches": true,
+      "assessment": "safe-workflow-evidence",
+      "slideshowBaseline": false,
+      "sourceBadgeClipped": false,
+      "notes": [
+        "Three demo-labelled forecast card tops and numerical prices visible; lower card details continue below viewport."
+      ],
+      "usableForDefense": false,
+      "defenseExclusionReason": "Supplementary public workflow evidence; use the separately reviewed 30 presentation frames for the defence archive."
+    },
+    {
+      "file": "screens/06-public-kk-1280-public-completed-outcomes.png",
+      "sha256": "5eae873626a5bd162aa78f94161b14200a530f3c5aa7b9e50d679f82bf9580ce",
+      "reviewed": true,
+      "project": "public-kk-1280",
+      "testTitle": "public mock: Outcomes variants and inspection retain demonstration labels",
+      "width": 1280,
+      "height": 800,
+      "bytes": 121132,
+      "hashMatches": true,
+      "assessment": "safe-workflow-evidence",
+      "slideshowBaseline": false,
+      "sourceBadgeClipped": false,
+      "notes": [
+        "Three demo-labelled forecast card tops and numerical prices visible; lower card details continue below viewport."
+      ],
+      "usableForDefense": false,
+      "defenseExclusionReason": "Supplementary public workflow evidence; use the separately reviewed 30 presentation frames for the defence archive."
+    },
+    {
+      "file": "screens/07-public-ru-1280-public-priorities-normal.png",
+      "sha256": "a649eb481399d7deab68da64f8d9d0ffaccc5725a27a33c6d5f297b7cbcfbf35",
+      "reviewed": true,
+      "project": "public-ru-1280",
+      "testTitle": "public mock E2E-09: weight controls and values remain accessible in normal/presentation modes",
+      "width": 1280,
+      "height": 800,
+      "bytes": 163491,
+      "hashMatches": true,
+      "assessment": "safe-workflow-evidence",
+      "slideshowBaseline": false,
+      "sourceBadgeClipped": false,
+      "notes": [
+        "Weight controls and labels rendered; assistant in header does not cover them. Presentation frames show the exit control in header."
+      ],
+      "usableForDefense": false,
+      "defenseExclusionReason": "Supplementary public workflow evidence; use the separately reviewed 30 presentation frames for the defence archive."
+    },
+    {
+      "file": "screens/07-public-ru-1280-public-priorities-presentation.png",
+      "sha256": "887ad457af67e422813690294bfc790fca42f4846c8dd9576d5639f2c87decc7",
+      "reviewed": true,
+      "project": "public-ru-1280",
+      "testTitle": "public mock E2E-09: weight controls and values remain accessible in normal/presentation modes",
+      "width": 1280,
+      "height": 800,
+      "bytes": 165185,
+      "hashMatches": true,
+      "assessment": "safe-workflow-evidence",
+      "slideshowBaseline": false,
+      "sourceBadgeClipped": false,
+      "notes": [
+        "Weight controls and labels rendered; assistant in header does not cover them. Presentation frames show the exit control in header."
+      ],
+      "usableForDefense": false,
+      "defenseExclusionReason": "Supplementary public workflow evidence; use the separately reviewed 30 presentation frames for the defence archive."
+    },
+    {
+      "file": "screens/08-public-kk-1280-public-priorities-normal.png",
+      "sha256": "5b681f4d5005b1cfbb2770ab5339e001a70a30b49ff45010ba25620ee4bb5d02",
+      "reviewed": true,
+      "project": "public-kk-1280",
+      "testTitle": "public mock E2E-09: weight controls and values remain accessible in normal/presentation modes",
+      "width": 1280,
+      "height": 800,
+      "bytes": 155075,
+      "hashMatches": true,
+      "assessment": "safe-workflow-evidence",
+      "slideshowBaseline": false,
+      "sourceBadgeClipped": false,
+      "notes": [
+        "Weight controls and labels rendered; assistant in header does not cover them. Presentation frames show the exit control in header."
+      ],
+      "usableForDefense": false,
+      "defenseExclusionReason": "Supplementary public workflow evidence; use the separately reviewed 30 presentation frames for the defence archive."
+    },
+    {
+      "file": "screens/08-public-kk-1280-public-priorities-presentation.png",
+      "sha256": "2704e5b0b499cac0931309f1b94dedcc8c881d5966e3f7bc67041bac2adccf53",
+      "reviewed": true,
+      "project": "public-kk-1280",
+      "testTitle": "public mock E2E-09: weight controls and values remain accessible in normal/presentation modes",
+      "width": 1280,
+      "height": 800,
+      "bytes": 167754,
+      "hashMatches": true,
+      "assessment": "safe-workflow-evidence",
+      "slideshowBaseline": false,
+      "sourceBadgeClipped": false,
+      "notes": [
+        "Weight controls and labels rendered; assistant in header does not cover them. Presentation frames show the exit control in header."
+      ],
+      "usableForDefense": false,
+      "defenseExclusionReason": "Supplementary public workflow evidence; use the separately reviewed 30 presentation frames for the defence archive."
+    },
+    {
+      "file": "screens/09-public-ru-375-public-completed-lab.png",
+      "sha256": "677f32f3d717e04aa5aeaf3f2e77c957c52c0877ab2f2bf7c4fc2f89051a1b90",
+      "reviewed": true,
+      "project": "public-ru-375",
+      "testTitle": "public mock: complete menu and three calculated laboratory plans",
+      "width": 375,
+      "height": 812,
+      "bytes": 66195,
+      "hashMatches": true,
+      "assessment": "safe-workflow-evidence",
+      "slideshowBaseline": false,
+      "sourceBadgeClipped": true,
+      "notes": [
+        "Settled laboratory controls visible without a loading shell. The three result cards are below this viewport; this image is not a slide showing completed plan metrics.",
+        "Minor visible limitation: browser-source badge is cut off at the right edge of the narrow status strip."
+      ],
+      "usableForDefense": false,
+      "defenseExclusionReason": "Plan result cards are below the viewport."
+    },
+    {
+      "file": "screens/10-public-kk-375-public-completed-lab.png",
+      "sha256": "be5a0a2e4adb54d01e2d39b2523754e74d59a701ffb318c569def51128bd3470",
+      "reviewed": true,
+      "project": "public-kk-375",
+      "testTitle": "public mock: complete menu and three calculated laboratory plans",
+      "width": 375,
+      "height": 812,
+      "bytes": 68142,
+      "hashMatches": true,
+      "assessment": "safe-workflow-evidence",
+      "slideshowBaseline": false,
+      "sourceBadgeClipped": true,
+      "notes": [
+        "Settled laboratory controls visible without a loading shell. The three result cards are below this viewport; this image is not a slide showing completed plan metrics.",
+        "Minor visible limitation: browser-source badge is cut off at the right edge of the narrow status strip."
+      ],
+      "usableForDefense": false,
+      "defenseExclusionReason": "Plan result cards are below the viewport."
+    },
+    {
+      "file": "screens/11-public-kk-375-public-completed-report.png",
+      "sha256": "6cced63f0ca848255495f790f97b17af636e9d60745b4efe5ff34c889f7c6e1d",
+      "reviewed": true,
+      "project": "public-kk-375",
+      "testTitle": "public mock: site → recommendation/estimate → growth → RU/KK DOCX XML",
+      "width": 375,
+      "height": 812,
+      "bytes": 66206,
+      "hashMatches": true,
+      "assessment": "safe-workflow-evidence",
+      "slideshowBaseline": false,
+      "sourceBadgeClipped": false,
+      "notes": [
+        "Memo panel shows download-ready confirmation and/or settled report content; source street/place names may remain Russian in KK. Screenshot does not certify native Word opening."
+      ],
+      "usableForDefense": false,
+      "defenseExclusionReason": "Supplementary public workflow evidence; use the separately reviewed 30 presentation frames for the defence archive."
+    },
+    {
+      "file": "screens/12-public-ru-375-public-completed-report.png",
+      "sha256": "e5286fca11ba579204d94ded8244000dc8e72e8bbc42f5e29c5921412cc21744",
+      "reviewed": true,
+      "project": "public-ru-375",
+      "testTitle": "public mock: site → recommendation/estimate → growth → RU/KK DOCX XML",
+      "width": 375,
+      "height": 812,
+      "bytes": 64792,
+      "hashMatches": true,
+      "assessment": "safe-workflow-evidence",
+      "slideshowBaseline": false,
+      "sourceBadgeClipped": true,
+      "notes": [
+        "Memo panel shows download-ready confirmation and/or settled report content; source street/place names may remain Russian in KK. Screenshot does not certify native Word opening.",
+        "Minor visible limitation: browser-source badge is cut off at the right edge of the narrow status strip."
+      ],
+      "usableForDefense": false,
+      "defenseExclusionReason": "Supplementary public workflow evidence; use the separately reviewed 30 presentation frames for the defence archive."
+    },
+    {
+      "file": "screens/13-public-kk-375-public-completed-outcomes.png",
+      "sha256": "c49c65dbcaabb368f8ed8ba4fa45d0f5adad74ca7cd3a1d2edabd407981748ec",
+      "reviewed": true,
+      "project": "public-kk-375",
+      "testTitle": "public mock: Outcomes variants and inspection retain demonstration labels",
+      "width": 375,
+      "height": 812,
+      "bytes": 67053,
+      "hashMatches": true,
+      "assessment": "safe-workflow-evidence",
+      "slideshowBaseline": false,
+      "sourceBadgeClipped": true,
+      "notes": [
+        "Page and demo-labelled first card visible; numerical result is below this viewport. Not sufficient alone to illustrate calculated outcomes.",
+        "Minor visible limitation: browser-source badge is cut off at the right edge of the narrow status strip."
+      ],
+      "usableForDefense": false,
+      "defenseExclusionReason": "Numerical outcomes are below the viewport."
+    },
+    {
+      "file": "screens/14-public-ru-375-public-completed-outcomes.png",
+      "sha256": "89fb6817f80510e73309405c3016b6bcbe202caca572b48401784b3711353db7",
+      "reviewed": true,
+      "project": "public-ru-375",
+      "testTitle": "public mock: Outcomes variants and inspection retain demonstration labels",
+      "width": 375,
+      "height": 812,
+      "bytes": 64563,
+      "hashMatches": true,
+      "assessment": "safe-workflow-evidence",
+      "slideshowBaseline": false,
+      "sourceBadgeClipped": true,
+      "notes": [
+        "Page and demo-labelled first card visible; numerical result is below this viewport. Not sufficient alone to illustrate calculated outcomes.",
+        "Minor visible limitation: browser-source badge is cut off at the right edge of the narrow status strip."
+      ],
+      "usableForDefense": false,
+      "defenseExclusionReason": "Numerical outcomes are below the viewport."
+    },
+    {
+      "file": "screens/15-public-kk-375-public-priorities-normal.png",
+      "sha256": "ced53626cf738cd96de9a8409f0faa9d72befc01f14fac17ea98c6bc7051cf32",
+      "reviewed": true,
+      "project": "public-kk-375",
+      "testTitle": "public mock E2E-09: weight controls and values remain accessible in normal/presentation modes",
+      "width": 375,
+      "height": 812,
+      "bytes": 66652,
+      "hashMatches": true,
+      "assessment": "safe-workflow-evidence",
+      "slideshowBaseline": false,
+      "sourceBadgeClipped": true,
+      "notes": [
+        "Weight controls and labels rendered; assistant in header does not cover them. Presentation frames show the exit control in header.",
+        "Minor visible limitation: browser-source badge is cut off at the right edge of the narrow status strip."
+      ],
+      "usableForDefense": false,
+      "defenseExclusionReason": "Supplementary public workflow evidence; use the separately reviewed 30 presentation frames for the defence archive."
+    },
+    {
+      "file": "screens/15-public-kk-375-public-priorities-presentation.png",
+      "sha256": "b6f2e48d3f5d28c863bfc468f856aefbaf3ae555674169c6a9ccebc03da2379a",
+      "reviewed": true,
+      "project": "public-kk-375",
+      "testTitle": "public mock E2E-09: weight controls and values remain accessible in normal/presentation modes",
+      "width": 375,
+      "height": 812,
+      "bytes": 62669,
+      "hashMatches": true,
+      "assessment": "safe-workflow-evidence",
+      "slideshowBaseline": false,
+      "sourceBadgeClipped": false,
+      "notes": [
+        "Weight controls and labels rendered; assistant in header does not cover them. Presentation frames show the exit control in header."
+      ],
+      "usableForDefense": false,
+      "defenseExclusionReason": "Supplementary public workflow evidence; use the separately reviewed 30 presentation frames for the defence archive."
+    },
+    {
+      "file": "screens/16-public-ru-375-public-priorities-normal.png",
+      "sha256": "9df6495ae55733abf714e6cc86c50c7d55157a8e030737813a2196218405d64f",
+      "reviewed": true,
+      "project": "public-ru-375",
+      "testTitle": "public mock E2E-09: weight controls and values remain accessible in normal/presentation modes",
+      "width": 375,
+      "height": 812,
+      "bytes": 66820,
+      "hashMatches": true,
+      "assessment": "safe-workflow-evidence",
+      "slideshowBaseline": false,
+      "sourceBadgeClipped": true,
+      "notes": [
+        "Weight controls and labels rendered; assistant in header does not cover them. Presentation frames show the exit control in header.",
+        "Minor visible limitation: browser-source badge is cut off at the right edge of the narrow status strip."
+      ],
+      "usableForDefense": false,
+      "defenseExclusionReason": "Supplementary public workflow evidence; use the separately reviewed 30 presentation frames for the defence archive."
+    },
+    {
+      "file": "screens/16-public-ru-375-public-priorities-presentation.png",
+      "sha256": "02664b4c53995b2b720396d726143900bf3a5031c07f7fae034e7b1fd206da38",
+      "reviewed": true,
+      "project": "public-ru-375",
+      "testTitle": "public mock E2E-09: weight controls and values remain accessible in normal/presentation modes",
+      "width": 375,
+      "height": 812,
+      "bytes": 64675,
+      "hashMatches": true,
+      "assessment": "safe-workflow-evidence",
+      "slideshowBaseline": false,
+      "sourceBadgeClipped": false,
+      "notes": [
+        "Weight controls and labels rendered; assistant in header does not cover them. Presentation frames show the exit control in header."
+      ],
+      "usableForDefense": false,
+      "defenseExclusionReason": "Supplementary public workflow evidence; use the separately reviewed 30 presentation frames for the defence archive."
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "observedAt": "2026-10-31T16:31:48.342Z",
+  "testSHA": "f0c1f43eb424408ef0db7fad6e263bb17e34f995",
+  "applicationBase": "fdc6e756be99dc5ba3a7a48ca1df17c4bfbef5ef",
+  "mockRunId": "4fe73fc8-dfd4-4e8d-aa24-a89fc0e641d8",
+  "apiRunId": "4051f137-404f-4183-afb4-e6b0065d43fe",
+  "concurrentScopes": [
+    "full local mock (2 workers)",
+    "isolated API (1 worker)",
+    "public mock (2 workers)"
+  ],
+  "memory": {
+    "totalBytes": 16450961408,
+    "freeBytes": 1132879872
+  },
+  "note": "Resource sample after one 45s test timeout. This observation alone does not prove a cause; unchanged tests must be repeated after concurrent runs stop."
+}

@@ -1,0 +1,634 @@
+{
+  "schema": 1,
+  "applicationSha": "932574e630621a6bc9aeacc46703e6ade5e7bdfc",
+  "testSha": "916b0f700c91bb44d509d44f3607cfe1eaf047f1",
+  "runId": "5f4059b3-dbd0-4edd-8f87-6793a9d0690a",
+  "scope": "Offline diagnostic of test.trace actions, not a new run. No DOM, auth values, note contents or image bytes included.",
+  "cases": [
+    {
+      "caseDirectory": "worker-locale-regression.m-00ba8-explicit-mock-role-re-entry-desktop",
+      "tracePath": "tools/e2e/test-results/mock/worker-locale-regression.m-00ba8-explicit-mock-role-re-entry-desktop/trace.zip",
+      "failures": [
+        {
+          "callId": "dgcn@82",
+          "category": "KK_REFRESH_LABEL_STILL_RUSSIAN",
+          "sourceLine": 42
+        },
+        {
+          "callId": "dgcn@86",
+          "category": "KK_CURRENT_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        },
+        {
+          "callId": "dgcn@89",
+          "category": "KK_SUBMITTED_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        },
+        {
+          "callId": "dgcn@92",
+          "category": "KK_CONFIRMED_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        },
+        {
+          "callId": "dgcn@126",
+          "category": "KK_REFRESH_LABEL_STILL_RUSSIAN",
+          "sourceLine": 42
+        },
+        {
+          "callId": "dgcn@130",
+          "category": "KK_CURRENT_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        },
+        {
+          "callId": "dgcn@133",
+          "category": "KK_SUBMITTED_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        },
+        {
+          "callId": "dgcn@136",
+          "category": "KK_CONFIRMED_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        }
+      ],
+      "localeCheckPasses": [
+        {
+          "callId": "dgcn@82",
+          "completed": true,
+          "passed": false
+        },
+        {
+          "callId": "dgcn@126",
+          "completed": true,
+          "passed": false
+        }
+      ],
+      "reloads": [
+        {
+          "callId": "dgcn@96",
+          "passed": true
+        }
+      ],
+      "photoPreservationPhases": []
+    },
+    {
+      "caseDirectory": "worker-locale-regression.m-00ba8-explicit-mock-role-re-entry-mobile",
+      "tracePath": "tools/e2e/test-results/mock/worker-locale-regression.m-00ba8-explicit-mock-role-re-entry-mobile/trace.zip",
+      "failures": [
+        {
+          "callId": "zjjv@80",
+          "category": "KK_REFRESH_LABEL_STILL_RUSSIAN",
+          "sourceLine": 42
+        },
+        {
+          "callId": "zjjv@84",
+          "category": "KK_CURRENT_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        },
+        {
+          "callId": "zjjv@87",
+          "category": "KK_SUBMITTED_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        },
+        {
+          "callId": "zjjv@90",
+          "category": "KK_CONFIRMED_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        },
+        {
+          "callId": "zjjv@124",
+          "category": "KK_REFRESH_LABEL_STILL_RUSSIAN",
+          "sourceLine": 42
+        },
+        {
+          "callId": "zjjv@128",
+          "category": "KK_CURRENT_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        },
+        {
+          "callId": "zjjv@131",
+          "category": "KK_SUBMITTED_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        },
+        {
+          "callId": "zjjv@134",
+          "category": "KK_CONFIRMED_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        }
+      ],
+      "localeCheckPasses": [
+        {
+          "callId": "zjjv@80",
+          "completed": true,
+          "passed": false
+        },
+        {
+          "callId": "zjjv@124",
+          "completed": true,
+          "passed": false
+        }
+      ],
+      "reloads": [
+        {
+          "callId": "zjjv@94",
+          "passed": true
+        }
+      ],
+      "photoPreservationPhases": []
+    },
+    {
+      "caseDirectory": "worker-locale-regression.m-28ae1-explicit-mock-role-re-entry-desktop",
+      "tracePath": "tools/e2e/test-results/mock/worker-locale-regression.m-28ae1-explicit-mock-role-re-entry-desktop/trace.zip",
+      "failures": [
+        {
+          "callId": "jrrq@82",
+          "category": "KK_REFRESH_LABEL_STILL_RUSSIAN",
+          "sourceLine": 42
+        },
+        {
+          "callId": "jrrq@86",
+          "category": "KK_CURRENT_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        },
+        {
+          "callId": "jrrq@89",
+          "category": "KK_SUBMITTED_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        },
+        {
+          "callId": "jrrq@92",
+          "category": "KK_CONFIRMED_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        },
+        {
+          "callId": "jrrq@126",
+          "category": "KK_REFRESH_LABEL_STILL_RUSSIAN",
+          "sourceLine": 42
+        },
+        {
+          "callId": "jrrq@130",
+          "category": "KK_CURRENT_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        },
+        {
+          "callId": "jrrq@133",
+          "category": "KK_SUBMITTED_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        },
+        {
+          "callId": "jrrq@136",
+          "category": "KK_CONFIRMED_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        }
+      ],
+      "localeCheckPasses": [
+        {
+          "callId": "jrrq@82",
+          "completed": true,
+          "passed": false
+        },
+        {
+          "callId": "jrrq@126",
+          "completed": true,
+          "passed": false
+        }
+      ],
+      "reloads": [
+        {
+          "callId": "jrrq@96",
+          "passed": true
+        }
+      ],
+      "photoPreservationPhases": []
+    },
+    {
+      "caseDirectory": "worker-locale-regression.m-28ae1-explicit-mock-role-re-entry-mobile",
+      "tracePath": "tools/e2e/test-results/mock/worker-locale-regression.m-28ae1-explicit-mock-role-re-entry-mobile/trace.zip",
+      "failures": [
+        {
+          "callId": "ngyn@80",
+          "category": "KK_REFRESH_LABEL_STILL_RUSSIAN",
+          "sourceLine": 42
+        },
+        {
+          "callId": "ngyn@84",
+          "category": "KK_CURRENT_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        },
+        {
+          "callId": "ngyn@87",
+          "category": "KK_SUBMITTED_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        },
+        {
+          "callId": "ngyn@90",
+          "category": "KK_CONFIRMED_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        },
+        {
+          "callId": "ngyn@124",
+          "category": "KK_REFRESH_LABEL_STILL_RUSSIAN",
+          "sourceLine": 42
+        },
+        {
+          "callId": "ngyn@128",
+          "category": "KK_CURRENT_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        },
+        {
+          "callId": "ngyn@131",
+          "category": "KK_SUBMITTED_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        },
+        {
+          "callId": "ngyn@134",
+          "category": "KK_CONFIRMED_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        }
+      ],
+      "localeCheckPasses": [
+        {
+          "callId": "ngyn@80",
+          "completed": true,
+          "passed": false
+        },
+        {
+          "callId": "ngyn@124",
+          "completed": true,
+          "passed": false
+        }
+      ],
+      "reloads": [
+        {
+          "callId": "ngyn@94",
+          "passed": true
+        }
+      ],
+      "photoPreservationPhases": []
+    },
+    {
+      "caseDirectory": "worker-locale-regression.m-cba5c-oad-with-mock-role-re-entry-desktop",
+      "tracePath": "tools/e2e/test-results/mock/worker-locale-regression.m-cba5c-oad-with-mock-role-re-entry-desktop/trace.zip",
+      "failures": [
+        {
+          "callId": "jhta@100",
+          "category": "PHOTO_INPUT_NOT_MOUNTED_AFTER_REPORT_CLICK",
+          "sourceLine": 106
+        }
+      ],
+      "localeCheckPasses": [],
+      "reloads": [],
+      "photoPreservationPhases": [
+        {
+          "phase": "initial",
+          "entered": false,
+          "assertions": []
+        },
+        {
+          "phase": "after RU to KK",
+          "entered": false,
+          "assertions": []
+        },
+        {
+          "phase": "after KK to RU",
+          "entered": false,
+          "assertions": []
+        },
+        {
+          "phase": "after reload and mock role re-entry",
+          "entered": false,
+          "assertions": []
+        }
+      ]
+    },
+    {
+      "caseDirectory": "worker-locale-regression.m-cba5c-oad-with-mock-role-re-entry-mobile",
+      "tracePath": "tools/e2e/test-results/mock/worker-locale-regression.m-cba5c-oad-with-mock-role-re-entry-mobile/trace.zip",
+      "failures": [
+        {
+          "callId": "dxqb@219",
+          "category": "KK_PHOTO_LABEL_STILL_RUSSIAN",
+          "sourceLine": 124
+        }
+      ],
+      "localeCheckPasses": [],
+      "reloads": [
+        {
+          "callId": "dxqb@169",
+          "passed": true
+        }
+      ],
+      "photoPreservationPhases": [
+        {
+          "phase": "initial",
+          "entered": true,
+          "assertions": [
+            {
+              "callId": "dxqb@106",
+              "sourceLine": 51,
+              "complete": true,
+              "passed": true
+            },
+            {
+              "callId": "dxqb@108",
+              "sourceLine": 53,
+              "complete": true,
+              "passed": true
+            },
+            {
+              "callId": "dxqb@110",
+              "sourceLine": 54,
+              "complete": true,
+              "passed": true
+            },
+            {
+              "callId": "dxqb@115",
+              "sourceLine": 54,
+              "complete": true,
+              "passed": true
+            },
+            {
+              "callId": "dxqb@116",
+              "sourceLine": 55,
+              "complete": true,
+              "passed": true
+            },
+            {
+              "callId": "dxqb@122",
+              "sourceLine": 57,
+              "complete": true,
+              "passed": true
+            }
+          ]
+        },
+        {
+          "phase": "after RU to KK",
+          "entered": true,
+          "assertions": [
+            {
+              "callId": "dxqb@127",
+              "sourceLine": 51,
+              "complete": true,
+              "passed": true
+            },
+            {
+              "callId": "dxqb@129",
+              "sourceLine": 53,
+              "complete": true,
+              "passed": true
+            },
+            {
+              "callId": "dxqb@131",
+              "sourceLine": 54,
+              "complete": true,
+              "passed": true
+            },
+            {
+              "callId": "dxqb@136",
+              "sourceLine": 54,
+              "complete": true,
+              "passed": true
+            },
+            {
+              "callId": "dxqb@137",
+              "sourceLine": 55,
+              "complete": true,
+              "passed": true
+            },
+            {
+              "callId": "dxqb@143",
+              "sourceLine": 57,
+              "complete": true,
+              "passed": true
+            }
+          ]
+        },
+        {
+          "phase": "after KK to RU",
+          "entered": true,
+          "assertions": [
+            {
+              "callId": "dxqb@148",
+              "sourceLine": 51,
+              "complete": true,
+              "passed": true
+            },
+            {
+              "callId": "dxqb@150",
+              "sourceLine": 53,
+              "complete": true,
+              "passed": true
+            },
+            {
+              "callId": "dxqb@152",
+              "sourceLine": 54,
+              "complete": true,
+              "passed": true
+            },
+            {
+              "callId": "dxqb@157",
+              "sourceLine": 54,
+              "complete": true,
+              "passed": true
+            },
+            {
+              "callId": "dxqb@158",
+              "sourceLine": 55,
+              "complete": true,
+              "passed": true
+            },
+            {
+              "callId": "dxqb@164",
+              "sourceLine": 57,
+              "complete": true,
+              "passed": true
+            }
+          ]
+        },
+        {
+          "phase": "after reload and mock role re-entry",
+          "entered": true,
+          "assertions": [
+            {
+              "callId": "dxqb@199",
+              "sourceLine": 51,
+              "complete": true,
+              "passed": true
+            },
+            {
+              "callId": "dxqb@201",
+              "sourceLine": 53,
+              "complete": true,
+              "passed": true
+            },
+            {
+              "callId": "dxqb@203",
+              "sourceLine": 54,
+              "complete": true,
+              "passed": true
+            },
+            {
+              "callId": "dxqb@208",
+              "sourceLine": 54,
+              "complete": true,
+              "passed": true
+            },
+            {
+              "callId": "dxqb@209",
+              "sourceLine": 55,
+              "complete": true,
+              "passed": true
+            },
+            {
+              "callId": "dxqb@215",
+              "sourceLine": 57,
+              "complete": true,
+              "passed": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "caseDirectory": "worker-locale-regression.m-d9643-de-after-mock-role-re-entry-desktop",
+      "tracePath": "tools/e2e/test-results/mock/worker-locale-regression.m-d9643-de-after-mock-role-re-entry-desktop/trace.zip",
+      "failures": [
+        {
+          "callId": "rghp@96",
+          "category": "KK_REFRESH_LABEL_STILL_RUSSIAN",
+          "sourceLine": 42
+        },
+        {
+          "callId": "rghp@100",
+          "category": "KK_CURRENT_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        },
+        {
+          "callId": "rghp@103",
+          "category": "KK_SUBMITTED_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        },
+        {
+          "callId": "rghp@106",
+          "category": "KK_CONFIRMED_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        },
+        {
+          "callId": "rghp@140",
+          "category": "KK_REFRESH_LABEL_STILL_RUSSIAN",
+          "sourceLine": 42
+        },
+        {
+          "callId": "rghp@144",
+          "category": "KK_CURRENT_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        },
+        {
+          "callId": "rghp@147",
+          "category": "KK_SUBMITTED_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        },
+        {
+          "callId": "rghp@150",
+          "category": "KK_CONFIRMED_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        }
+      ],
+      "localeCheckPasses": [
+        {
+          "callId": "rghp@96",
+          "completed": true,
+          "passed": false
+        },
+        {
+          "callId": "rghp@140",
+          "completed": true,
+          "passed": false
+        }
+      ],
+      "reloads": [
+        {
+          "callId": "rghp@160",
+          "passed": true
+        }
+      ],
+      "photoPreservationPhases": []
+    },
+    {
+      "caseDirectory": "worker-locale-regression.m-d9643-de-after-mock-role-re-entry-mobile",
+      "tracePath": "tools/e2e/test-results/mock/worker-locale-regression.m-d9643-de-after-mock-role-re-entry-mobile/trace.zip",
+      "failures": [
+        {
+          "callId": "lfvl@94",
+          "category": "KK_REFRESH_LABEL_STILL_RUSSIAN",
+          "sourceLine": 42
+        },
+        {
+          "callId": "lfvl@98",
+          "category": "KK_CURRENT_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        },
+        {
+          "callId": "lfvl@101",
+          "category": "KK_SUBMITTED_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        },
+        {
+          "callId": "lfvl@104",
+          "category": "KK_CONFIRMED_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        },
+        {
+          "callId": "lfvl@138",
+          "category": "KK_REFRESH_LABEL_STILL_RUSSIAN",
+          "sourceLine": 42
+        },
+        {
+          "callId": "lfvl@142",
+          "category": "KK_CURRENT_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        },
+        {
+          "callId": "lfvl@145",
+          "category": "KK_SUBMITTED_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        },
+        {
+          "callId": "lfvl@148",
+          "category": "KK_CONFIRMED_FILTER_STILL_RUSSIAN",
+          "sourceLine": 45
+        }
+      ],
+      "localeCheckPasses": [
+        {
+          "callId": "lfvl@94",
+          "completed": true,
+          "passed": false
+        },
+        {
+          "callId": "lfvl@138",
+          "completed": true,
+          "passed": false
+        }
+      ],
+      "reloads": [
+        {
+          "callId": "lfvl@158",
+          "passed": true
+        }
+      ],
+      "photoPreservationPhases": []
+    }
+  ],
+  "readinessFinding": {
+    "case": "desktop draft",
+    "observation": "Start completed visually before its final busy guard cleared. Report click returned, but the photo field never mounted. This attempt does not establish a photo persistence failure.",
+    "sourceEvidence": "worker.mjs action start awaits refresh before finally clearing busy; refresh renders report action, while render disables navigation during busy.",
+    "proposedSynchronization": "After start, wait for the visible task navigation control to become enabled before opening report. Preserve all existing assertions and timeouts."
+  },
+  "classification": {
+    "localeCases": 6,
+    "mobileLocaleWithPreservationPassed": 1,
+    "desktopDraftReadinessFailure": 1,
+    "unexplainedFailureCategories": 0
+  }
+}

@@ -1,0 +1,387 @@
+{
+  "schemaVersion": 1,
+  "testedSHA": "f0c1f43eb424408ef0db7fad6e263bb17e34f995",
+  "applicationBase": "fdc6e756be99dc5ba3a7a48ca1df17c4bfbef5ef",
+  "appsTree": "f19500893c20ee19c170c393f2a8414b95e19255",
+  "archive": {
+    "path": "2026-10-31-postmerge-f0c1f43.zip",
+    "bytes": 4843745,
+    "sha256": "f17e9c48a13c6847ec66945c162dca314252fe86258d26f12b0a766f8943904c",
+    "entries": 33,
+    "pngCount": 30,
+    "scope": "Current local mock/API report plus 30 reviewed mock captures; separate public, Docker, onboarding, Word and cloud evidence are not inserted into the slideshow archive."
+  },
+  "local": [
+    {
+      "profile": "mock",
+      "meta": {
+        "runId": "7a204c44-ee17-4a09-99db-02b8223d5ed1",
+        "state": "finished",
+        "startedAt": "2026-10-31T16:47:37.897Z",
+        "endedAt": "2026-10-31T17:01:49.255Z",
+        "exitCode": 0,
+        "revision": "f0c1f43eb424408ef0db7fad6e263bb17e34f995",
+        "dirty": false,
+        "selection": "full",
+        "capturesScreens": true,
+        "command": "node scripts/run.mjs mock",
+        "environment": {
+          "node": "24.22.2",
+          "playwright": "1.64.1",
+          "platform": "win32",
+          "arch": "x64",
+          "workers": 2,
+          "retries": 0
+        },
+        "target": "http://localhost:5176"
+      },
+      "counts": {
+        "passed": 276,
+        "failed": 0,
+        "fixme": 0,
+        "skipped": 2,
+        "flaky": 0,
+        "notRun": 0
+      }
+    },
+    {
+      "profile": "api",
+      "meta": {
+        "runId": "4051f137-404f-4183-afb4-e6b0065d43fe",
+        "state": "finished",
+        "startedAt": "2026-10-31T16:27:12.093Z",
+        "endedAt": "2026-10-31T16:37:42.046Z",
+        "exitCode": 0,
+        "browserExitCode": 0,
+        "privacyScan": "passed",
+        "revision": "f0c1f43eb424408ef0db7fad6e263bb17e34f995",
+        "dirty": false,
+        "selection": "full",
+        "capturesScreens": false,
+        "command": "node scripts/run.mjs api",
+        "environment": {
+          "node": "24.22.2",
+          "playwright": "1.64.1",
+          "platform": "win32",
+          "arch": "x64",
+          "workers": 1,
+          "retries": 0
+        },
+        "target": "http://localhost:5177"
+      },
+      "counts": {
+        "passed": 74,
+        "failed": 0,
+        "fixme": 0,
+        "skipped": 0,
+        "flaky": 0,
+        "notRun": 0
+      }
+    }
+  ],
+  "checks": {
+    "schemaVersion": 1,
+    "testSHA": "f0c1f43eb424408ef0db7fad6e263bb17e34f995",
+    "applicationBase": "fdc6e756be99dc5ba3a7a48ca1df17c4bfbef5ef",
+    "node": "24.22.2",
+    "checks": [
+      {
+        "name": "check:tools",
+        "passed": 24,
+        "failed": 0,
+        "skipped": 0,
+        "fixme": 0,
+        "flaky": 0,
+        "finishedAt": "2026-10-31T17:04:26.352Z",
+        "logSha256": "7e615c80e7806f73912640cde18efd8059362d4ee619fa78830a79efb192eaf2"
+      },
+      {
+        "name": "check:report before pack",
+        "passed": 3,
+        "failed": 0,
+        "skipped": 0,
+        "fixme": 0,
+        "flaky": 0,
+        "finishedAt": "2026-10-31T17:04:48.583Z",
+        "logSha256": "02abb5871a0a439aecb43b4aaab51177b602fb386b3c3b4139858867fca7edad"
+      },
+      {
+        "name": "check:report after pack",
+        "passed": 3,
+        "failed": 0,
+        "skipped": 0,
+        "fixme": 0,
+        "flaky": 0,
+        "finishedAt": "2026-10-31T17:05:04.262Z",
+        "logSha256": "55bbf1b643a74e99cf7436ce786e3719c564ddda6bc3a1e1412333925712676a"
+      }
+    ],
+    "summaryExit": 0,
+    "packExit": 0,
+    "gateExit": 0
+  },
+  "formalCaptureApproval": "2026-10-31-postmerge-f0c1f43-capture-approval.json",
+  "visualReview": "2026-10-31-postmerge-f0c1f43-visual-review.json",
+  "docker": {
+    "result": "2026-10-31-postmerge-f0c1f43-docker/result.json",
+    "resultSha256": "a6b6a91ed88035d069c43ab53b8cc2f25c17b3ff10ef97270805f7ecf6f7803f",
+    "runnerSha256": "f47c729d17e7ff59112dc9e8dbe3adf5064a05c587b1e32455449e1c463b427d",
+    "counts": {
+      "passed": 16,
+      "failed": 0,
+      "skipped": 0,
+      "fixme": 0,
+      "flaky": 0
+    },
+    "images": [
+      "sha256:1001bd53feb7dc9e4907950ee2c60ffb1623fa0e454d6154405f40f165d84c20",
+      "sha256:94de19c53605ff4f2cb8092bb8e9680b8a944528702c073e5e118e66f51542b1"
+    ],
+    "project": "gp-aidana-postmerge-1793466996871",
+    "volume": "gp-aidana-postmerge-1793466996871_gp-data",
+    "baseURL": "http://localhost:18084",
+    "stopped": true
+  },
+  "publicMock": {
+    "result": "2026-10-31-postmerge-f0c1f43-public/public-acceptance-fdc6e75.json",
+    "counts": {
+      "passed": 16,
+      "failed": 0,
+      "skipped": 0,
+      "fixme": 0,
+      "flaky": 0
+    },
+    "applicationSHA": "fdc6e756be99dc5ba3a7a48ca1df17c4bfbef5ef",
+    "deploymentId": null,
+    "provenance": "Independent clean local static mock build from the pinned QA commit, whose app source matches fdc6e75. All 34 production files matched local bytes/hashes immediately before and after the browser run. Provider deployment ID is not known."
+  },
+  "cloudApi": {
+    "status": "READINESS_ONLY_PASS; FULL_BROWSER_ACCEPTANCE_BLOCKED",
+    "result": "2026-10-31-postmerge-f0c1f43-cloud/readiness.json",
+    "reason": "Backend public GETs pass. No accepted same-origin API frontend and isolated cloud QA authentication/write handoff supplied. Cloud app differs from coordinator; owner reports search/geocode/new zones/GIS import/care calendar/assistant return503."
+  },
+  "nativeWord": {
+    "status": "BLOCKED_ENVIRONMENT",
+    "result": "2026-10-31-postmerge-f0c1f43-word/native-word-attempt.json",
+    "downloaded": 2,
+    "zipXmlAndNumbersPassed": true,
+    "nativeDocumentsOpened": false
+  },
+  "earlierAttempts": {
+    "mock": {
+      "passed": 275,
+      "failed": 1,
+      "skipped": 2,
+      "fixme": 0,
+      "flaky": 0,
+      "note": "Global45s limit expired near final assistant click; no slider assertion failed. All tests unchanged in successful standalone repeat; resource cause is plausible, not proven."
+    },
+    "public": [
+      {
+        "passed": 15,
+        "failed": 1,
+        "note": "KK375 card remained on loading after12s; initial concurrent run."
+      },
+      {
+        "passed": 16,
+        "failed": 0,
+        "note": "Publication changed; this middle run lacks contemporaneous content binding."
+      }
+    ]
+  },
+  "unverified": [
+    "Full same-origin cloud browser workflow, cloud role/photo/redeploy acceptance independent of owner",
+    "Native Microsoft Word document opening/layout",
+    "Presentation computer, physical second device, video/audio and slide playback"
+  ],
+  "files": [
+    {
+      "path": "2026-10-31-postmerge-f0c1f43.zip",
+      "sha256": "f17e9c48a13c6847ec66945c162dca314252fe86258d26f12b0a766f8943904c"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43.json",
+      "sha256": "f042feff379b4d5f10821fe252226be17addc9d82d13ee4826b8de80d7185cca"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-visual-review.json",
+      "sha256": "3b1df46fef8b1b984a16a8fa4237d3e7a95a5aa983ead59a014f0e3fef2c332b"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-capture-approval.json",
+      "sha256": "202f140b3c25b7dc9a545e218d3a7da940f451d0d10963da0bfc4209e665351d"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43.zip.sha256",
+      "sha256": "58777b177158f986eca7ebf3f4d8bedc670ad52fef92ee52e4d39d8e9f1dcda5"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-docker/result.json",
+      "sha256": "a6b6a91ed88035d069c43ab53b8cc2f25c17b3ff10ef97270805f7ecf6f7803f"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-docker/build.json",
+      "sha256": "a1225e5abb5da7cb66323c1bab66c108e5bac3c5a7ea15baf025679e72689b51"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-docker/build.mjs",
+      "sha256": "c758cd59045f5335cc9ae34b2439593af1b565bbc2d3db738b251326cb70c477"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-docker/acceptance.mjs",
+      "sha256": "f47c729d17e7ff59112dc9e8dbe3adf5064a05c587b1e32455449e1c463b427d"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-docker/compose.override.yml",
+      "sha256": "3e589b09754d824820cc2546b5b95d894354bad3967539fca08b669e8b060da7"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-docker/prepared.json",
+      "sha256": "c2f450401bcaf9ea2fea64c7f436f62d90516e970297fe059e6864d02ebdcfa4"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-docker/environment-blocked.json",
+      "sha256": "471efcda577c796db72ff27791a8c488bcef5fd6b9d7c4559e7a66fd649d76f5"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-docker/visual-review.json",
+      "sha256": "21465bc0696ea8426971d4ba48d4d100cdbd0647e36d331ad55cdc87aa209e23"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-docker/runtime-and-cleanup.json",
+      "sha256": "b7ceb3044bd48e25d2669708c3c17c21c57263e277eaf19695883197d6b8d305"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-docker/worker-submitted-375.png",
+      "sha256": "7c1b858ed60a6c70e4dd2c963f218026a171f645e58d713f3fcb5842d8b0b9a8"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-docker/viewer-preserved-photo-1280.png",
+      "sha256": "ffdce7b0b078b08a083da3519e12648bcd8a4deb9c99aad6b7dcdfaca6bd322e"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-docker/renamed-zone-1280.png",
+      "sha256": "73198d78a4b2a8a82bafafca22fabe59af0f07fe62de173ecab5609fa26ca774"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-docker/worker-preserved-1280.png",
+      "sha256": "a830ce9748d5e0d28c0e71343a5ab7530b1da98dcc95200db95acfd372919f61"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-docker/worker-preserved-375.png",
+      "sha256": "e653e9e929ce73a9b4a8e94316ed349e95f9c834a6930159a67a40693b2e4624"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-public/public-acceptance-fdc6e75.json",
+      "sha256": "970399d18fd9f553ab199690003d8dab5755da3135e091b8f7608b386428ce27"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-public/browser-attempt-03/results.json",
+      "sha256": "c98f0fd4fb3d747758b774aee4d2d4f57262fa871de1e55b1e5a6562871d34ad"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-public/browser-attempt-03/assistant-hit-tests.json",
+      "sha256": "14985f4dda9f2b068a293168d453e938ee12808643567c202009b26e9789f2e8"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-public/local-fdc6e75-build-manifest.json",
+      "sha256": "a8bdf11b5d4945c72c7506cf30939cdd955bd6fbaf99dad735d637358b50d84c"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-public/production-own-build-before-attempt03.json",
+      "sha256": "9297732de78e386f07802f6e7a2b1ad6e0ed45945eb685433de8fd56409e1ffb"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-public/production-own-build-after-attempt03.json",
+      "sha256": "54c580db6a72df0de9cfb2ea9e8df3e0be4e733b6d38ee1d8f4aa8d4b3dfc89a"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-public/browser-attempt-01/results.json",
+      "sha256": "7ca5249b5631f99fe57f083fec133730525ad4a4ea0955b185c7d96054ed9123"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-public/browser-attempt-02/results.json",
+      "sha256": "c0116e3094e75de8feee5e75d4822ad233571d79add06d35a969349fbb5d5168"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-public/public-kk-375-failure-attempt-01.png",
+      "sha256": "33b5c2269ffac4edb0b73531313a37434f8860bf6ae14abf572d9d21e9fd9940"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-public/index-drift.json",
+      "sha256": "f463610c8277b60b985eeaf876fb016efd99f470a7ba5029d521c839e4487973"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-public/http-provenance-after-sequential-repeat-drift.json",
+      "sha256": "227366bc69766f6574d8cf5c88793d52cf1a31f3998090adfd52e25f7cf31550"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-word/download.mjs",
+      "sha256": "1892e699e5337c193584be2ff4ec4655c8d59cf1c75a980b37eec5ea47313a33"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-word/download-result.json",
+      "sha256": "306e60219e945d356e071010f59ce06a2735b9d4b0400a684bb3fa0b2275d48e"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-word/native-word-attempt.json",
+      "sha256": "44790c235af12f92801028551295b92abb5c9ec6f9c1f30f10a2e9611ca8012c"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-word/memo-ru-f0c1f43.docx",
+      "sha256": "839990e5d9f74f9cbc36f00b509a6277a333f717f1250f5b31890b57378f538c"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-word/memo-kk-f0c1f43.docx",
+      "sha256": "3a39bb2c10eb19de014424d319a12956382741ddf82acbcf1fbcdca1ce173dc4"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-cloud/readiness.json",
+      "sha256": "bad3c7978ed7b3b79b3d7d6102e5f3f723381ac70a9625217bf431ca6c2e5665"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-attempts/mock-first-result.json",
+      "sha256": "27c692dbd5b565ad90a17f1112ed0aa855d4735a30c6c3a33f73385e16095846"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-attempts/mock-first-environment-sample.json",
+      "sha256": "1ea9dbb2b09afad55493cea2d7ae5b0fc6e3fe1c1602cfe34ccc7ea6d559c57f"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-attempts/mock-first-trace-diagnostic.json",
+      "sha256": "d8d35e7f418fca1a70def52af5424a926006325127b5d905b4c910357c6a7da1"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-attempts/mock-first-timeout.png",
+      "sha256": "0e270fdd012028b9ecf5bac2d00d229cd825f4e1b012c854c7e3b8cfe96d603d"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-attempts/before-sequential-mock.json",
+      "sha256": "374ca747c51dba9f1c04c59c9dc65bd0888ac324e01582bf52dc0bd814e152aa"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-onboarding/onboarding-ru-1280.png",
+      "sha256": "6cc58aa4e9641a5ffc6265cc5080d28d8129f54b08c312a8360fc582a13d608d"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-onboarding/onboarding-kk-1280.png",
+      "sha256": "962ac4c6b8ca491ce6ea0c6abafb21eff52619ed688f253fac1213edbe54f35c"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-onboarding/onboarding-ru-375.png",
+      "sha256": "9bca74f6fc2c94961f4f732340897c1b7bec17f85a37e46ca9034029e18f39f6"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-onboarding/onboarding-kk-375.png",
+      "sha256": "b1a4086fc71e6239b49d7f07fa0108fecc0f90933e946d66bd4295f334c29f03"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-onboarding/review.json",
+      "sha256": "f9044db78066ac2087ccc6244b6a9659f97b77862d4a93e0d4d2991a7183d720"
+    },
+    {
+      "path": "2026-10-31-postmerge-f0c1f43-checks.json",
+      "sha256": "20d2a4103e46d2ee7546a27741c90a08bd11e3d8ed8ac7860c3418413e2674c7"
+    }
+  ]
+}

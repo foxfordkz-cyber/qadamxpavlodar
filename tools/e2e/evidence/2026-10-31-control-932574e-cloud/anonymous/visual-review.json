@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root/survival42_visual_review",
+  "reviewedAt": "2026-10-31T18:04:13.117Z",
+  "status": "approved-for-anonymous-entry-evidence",
+  "testSHA": "cdc3ec257726ef937b0bbf953253a755f2e225a9",
+  "target": "https://green-pavlodar-api.pages.dev",
+  "applicationSHA": null,
+  "ownerReportedFrontendSHA": "aee7242ee899f1f596a704adba6e1279c37af9df",
+  "ownerReportedBackendSHA": "3b14927def04b35bf97782eae6b550da276c779f",
+  "scope": "Visual inspection of four anonymous cloud sign-in frames only; this is not authenticated cloud/API acceptance and not evidence for local coordinator 932574e.",
+  "method": "Each exact PNG opened using view_image, then independently verified against metadata hash and dimensions.",
+  "captures": [
+    {
+      "file": "anonymous-ru-1280.png",
+      "language": "ru",
+      "width": 1280,
+      "height": 800,
+      "sha256": "2ed852cde3172cd324798261bc0112d9b1adbca21c716debcbd0efd068950b42",
+      "hashMatches": true,
+      "viewed": true,
+      "assessment": "approved",
+      "notes": "Empty login and password fields, translated service/sign-in labels and language switcher; form fits viewport with no overlay. No credentials or user session visible."
+    },
+    {
+      "file": "anonymous-kk-1280.png",
+      "language": "kk",
+      "width": 1280,
+      "height": 800,
+      "sha256": "9af23db2dfbfd6e4bf3bce68e7e03a6e2e64f9fdaddb90f8704fd8e8da817c89",
+      "hashMatches": true,
+      "viewed": true,
+      "assessment": "approved",
+      "notes": "Empty login and password fields, translated service/sign-in labels and language switcher; form fits viewport with no overlay. No credentials or user session visible."
+    },
+    {
+      "file": "anonymous-ru-375.png",
+      "language": "ru",
+      "width": 375,
+      "height": 812,
+      "sha256": "2a4220da3fa9c24962657cf840ff1f077c24fac4cc72899c7f25c963c86f237f",
+      "hashMatches": true,
+      "viewed": true,
+      "assessment": "approved",
+      "notes": "Empty login and password fields, translated service/sign-in labels and language switcher; form fits viewport with no overlay. No credentials or user session visible."
+    },
+    {
+      "file": "anonymous-kk-375.png",
+      "language": "kk",
+      "width": 375,
+      "height": 812,
+      "sha256": "df9c161229a00ed0580454f5095bcf29d10c914074ebd7f37e0512900f025e61",
+      "hashMatches": true,
+      "viewed": true,
+      "assessment": "approved",
+      "notes": "Empty login and password fields, translated service/sign-in labels and language switcher; form fits viewport with no overlay. No credentials or user session visible."
+    }
+  ],
+  "findings": []
+}

@@ -1,0 +1,171 @@
+{
+  "schema": 1,
+  "recordedAt": "2026-11-01T06:38:25.100Z",
+  "status": "UI_SEGMENT_PASS_FULL_CLOUD_ACCEPTANCE_INCOMPLETE",
+  "identity": {
+    "frontendSha": "c970264919de2f7a62d0e1ea8a28cc70c95a3864",
+    "frontendDeployment": "a26bd214-1c78-4a83-9536-74a35c85b49f",
+    "backendOwnerConfirmedSha": "3b14927def04b35bf97782eae6b550da276c779f",
+    "backendDeployment": "dep-dbj223h42hec73bqnttg"
+  },
+  "environment": {
+    "os": "Windows x64",
+    "node": "24.22.2",
+    "playwright": "1.64.1",
+    "chromium": "headless; software WebGL",
+    "origin": "https://green-pavlodar-api.pages.dev",
+    "backendShaEvidence": "Owner Render Dashboard confirmation in PR39 issuecomment-6554168897; not attested by readiness"
+  },
+  "counts": {
+    "unit": "Two separate QA process attempts, not event count or full local test suite",
+    "passed": 1,
+    "failed": 1,
+    "skipped": 0,
+    "fixme": 0,
+    "flaky": 0,
+    "retries": 0,
+    "explanation": "Original worker business actions succeeded; new QA logout assertion failed. Exact existing-report continuation passed after correction. Original failure retained, no worker writes repeated."
+  },
+  "runs": [
+    {
+      "file": "worker-original.json",
+      "id": "run-2026-11-01T06-22-53-822Z-af6e67",
+      "qaHead": "636664e581c8c74e1029319b0fb0573759ea8241",
+      "status": "FAIL",
+      "startedAt": "2026-11-01T06:22:53.822Z",
+      "endedAt": "2026-11-01T06:23:33.779Z",
+      "businessMutations": 3,
+      "browserErrors": 0,
+      "blockedRequests": 0
+    },
+    {
+      "file": "review-continuation.json",
+      "id": "run-2026-11-01T06-30-35-696Z-0599a6",
+      "qaHead": "eaaf3d1c2180f0520ec6df9c34a7854872f1d6cc",
+      "status": "PASS",
+      "startedAt": "2026-11-01T06:30:35.696Z",
+      "endedAt": "2026-11-01T06:31:21.552Z",
+      "businessMutations": 1,
+      "browserErrors": 0,
+      "blockedRequests": 0
+    }
+  ],
+  "commands": [
+    "Start-Cloud-Workflow.cmd -> run.mjs",
+    "Start-Cloud-Review.cmd -> run.mjs --resume-review",
+    "node --test scripts/cloud-workflow/network-guard.offline-test.mjs",
+    "node --test scripts/tests/tooling.test.mjs scripts/tests/api-privacy.browser.mjs"
+  ],
+  "offlineGuard": {
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "fixme": 0,
+    "flaky": 0
+  },
+  "toolingChecks": {
+    "passed": 24,
+    "failed": 0,
+    "skipped": 0,
+    "fixme": 0,
+    "flaky": 0,
+    "scope": "Existing offline tooling/privacy tests, including local browser privacy failure regression; no cloud mutation"
+  },
+  "reportChecks": {
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "fixme": 0,
+    "flaky": 0,
+    "command": "node --test scripts/tests/report.browser.mjs",
+    "scope": "Existing local report browser checks after evidence preparation"
+  },
+  "finalRecords": {
+    "taskId": "9050ea3c-369b-4864-b30b-caede24c96f2",
+    "taskVersion": 6,
+    "taskStatus": "verified",
+    "reportId": "6fabe731-ea10-410e-82e3-99f3ee1a911a",
+    "reportVersion": 2,
+    "reviewStatus": "accepted",
+    "reportSha256": "925dc67b3c458457ec7e103eeaab5690bff84bd7aa073e68836f764d62456331",
+    "taskSha256": "23d25e78e7457261cda4032366cf9db4b3ca8a16b8c16a9e44e32253ae587f5e"
+  },
+  "newPhoto": {
+    "id": "bcc645e2-ffef-40af-b05b-8abebf6600b5",
+    "taskId": "9050ea3c-369b-4864-b30b-caede24c96f2",
+    "ownerId": "a1d3d1e8-d046-4511-bb48-ee5be5fc3905",
+    "reportId": "6fabe731-ea10-410e-82e3-99f3ee1a911a",
+    "sha256": "aa608655c2891eb87660dbaeed52877153d459abd82757f8a4ce902820d6dcb4",
+    "byteSize": 4436,
+    "mediaType": "image/webp",
+    "createdAt": "2026-11-01T06:23:20.914Z",
+    "contentUrl": "/api/v1/uploads/bcc645e2-ffef-40af-b05b-8abebf6600b5"
+  },
+  "actualPhotoReads": [
+    {
+      "role": "coordinator",
+      "id": "bcc645e2-ffef-40af-b05b-8abebf6600b5",
+      "sha256": "aa608655c2891eb87660dbaeed52877153d459abd82757f8a4ce902820d6dcb4",
+      "bytes": 4436,
+      "method": "Authenticated HTTP GET of actual normalized WebP; displayed photo checked separately in UI"
+    },
+    {
+      "role": "viewer",
+      "id": "bcc645e2-ffef-40af-b05b-8abebf6600b5",
+      "sha256": "aa608655c2891eb87660dbaeed52877153d459abd82757f8a4ce902820d6dcb4",
+      "bytes": 4436,
+      "method": "Authenticated HTTP GET of actual normalized WebP; displayed photo checked separately in UI"
+    }
+  ],
+  "outcomesBefore": {
+    "historySha256": "5227a9a17d196980e3d4dccd564618429df6ebc29657941d190dbdd606cdd1d4",
+    "forecastSha256": "fdedbe0615f7f2cffabf11a798aeebb0bdfc2e2e3845dd846da521046749e0b7",
+    "cohortSha256": "c9c534f1ad1e9e4d6dbc1ba7c9a279e5ce8afe41f4c04d267c519566f0340919",
+    "asOf": "2026-11-01"
+  },
+  "outcomesAfter": {
+    "historySha256": "5227a9a17d196980e3d4dccd564618429df6ebc29657941d190dbdd606cdd1d4",
+    "forecastSha256": "fdedbe0615f7f2cffabf11a798aeebb0bdfc2e2e3845dd846da521046749e0b7",
+    "cohortSha256": "c9c534f1ad1e9e4d6dbc1ba7c9a279e5ce8afe41f4c04d267c519566f0340919",
+    "asOf": "2026-11-01",
+    "unchanged": true
+  },
+  "workflow": {
+    "worker": "One approved start, new synthetic WebP upload and report submitted via UI; RU/KK x375/1280 draft and navigation checked",
+    "coordinator": "Accepted exact report via UI; reload; actual photo GET hash verified",
+    "viewer": "RU/KK x375/1280 accepted report/photo and baseline Outcomes; no modifying controls; session/reload and logout checked",
+    "apiPreparation": "Bekzat assigned exact worker via API before UI; not counted as browser action",
+    "newLinkedInspection": "NOT RUN; separate owner API handoff requested",
+    "restartRedeploy": "NOT RUN; not authorized by this result"
+  },
+  "QAFailure": {
+    "sourceRun": "run-2026-11-01T06-22-53-822Z-af6e67",
+    "category": "QA assertion defect, not application defect",
+    "actual": "Logout returned200 then auth/me401; Shell retains an empty nav container",
+    "correction": "Require no nav links/buttons, identity, role or logout button; login remains after reload",
+    "proof": "Established support/session.ts contract; corrected independent worker login/logout passed in continuation",
+    "originalRecordPreserved": true
+  },
+  "limitations": [
+    "New linked inspection creation/read and after-restart persistence still pending separate agreement",
+    "Viewer HTTP403 and HTTP idempotency replay not performed on shared cloud environment",
+    "No unauthorized-photo access test in this UI segment",
+    "Coordinator acceptance covered RU1280; worker and viewer matrix RU/KK x375/1280",
+    "Screenshots are reviewed element/fullcontent captures, not new presentation baselines",
+    "Original failed attempt has no post-fingerprint; continuation before/after production34 files all match same c970264 manifest",
+    "No full local/mock/API reruns in this segment; previous results keep their own SHAs",
+    "No cloud assistant804a3bc deployment or acceptance claimed"
+  ],
+  "privacy": {
+    "trace": false,
+    "HAR": false,
+    "errorContext": false,
+    "passwordStored": false,
+    "cookiesStored": false,
+    "rawDtoStored": false,
+    "structuralArtifactScan": "PASS",
+    "screenshotsReviewed": 4
+  },
+  "pr43": "Draft",
+  "ownerHandoffRequest": "https://github.com/foxfordkz-cyber/qadamxpavlodar/pull/39#issuecomment-6554473810"
+}

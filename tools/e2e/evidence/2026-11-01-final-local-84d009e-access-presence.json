@@ -1,0 +1,13 @@
+{
+  "checkedAt": "2026-10-31T19:15:07.624Z",
+  "method": "Presence booleans only; values neither read into evidence nor printed",
+  "processPresence": {
+    "CLOUD_ACCEPTANCE_DEMO": false,
+    "CLOUD_ACCEPTANCE_ORIGIN": false,
+    "CLOUD_ACCEPTANCE_BROWSER_ORIGIN": false,
+    "CLOUD_ACCEPTANCE_PASSWORD": false
+  },
+  "baselineManifestPresentAtDefaultPath": false,
+  "authenticatedCloudAcceptanceRun": false,
+  "note": "Presence does not prove valid credentials, baseline identity, authorization for shared writes or successful cloud acceptance"
+}

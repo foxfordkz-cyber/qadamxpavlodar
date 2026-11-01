@@ -1,0 +1,56 @@
+{
+  "checkedAt": "2026-10-31T18:00:55.711Z",
+  "scope": "Current QA worktree and inherited process only; operator machines and other worktrees not inspected. Values are neither printed nor loaded.",
+  "process": {
+    "CLOUD_ACCEPTANCE_DEMO": false,
+    "CLOUD_ACCEPTANCE_ORIGIN": false,
+    "CLOUD_ACCEPTANCE_BROWSER_ORIGIN": false,
+    "CLOUD_ACCEPTANCE_PASSWORD": false
+  },
+  "files": [
+    {
+      "path": "../../apps/server/.env.cloud-acceptance",
+      "exists": false,
+      "keysPresent": {
+        "CLOUD_ACCEPTANCE_DEMO": false,
+        "CLOUD_ACCEPTANCE_ORIGIN": false,
+        "CLOUD_ACCEPTANCE_BROWSER_ORIGIN": false,
+        "CLOUD_ACCEPTANCE_PASSWORD": false
+      }
+    },
+    {
+      "path": "../../apps/server/.env",
+      "exists": false,
+      "keysPresent": {
+        "CLOUD_ACCEPTANCE_DEMO": false,
+        "CLOUD_ACCEPTANCE_ORIGIN": false,
+        "CLOUD_ACCEPTANCE_BROWSER_ORIGIN": false,
+        "CLOUD_ACCEPTANCE_PASSWORD": false
+      }
+    },
+    {
+      "path": "../../.env",
+      "exists": false,
+      "keysPresent": {
+        "CLOUD_ACCEPTANCE_DEMO": false,
+        "CLOUD_ACCEPTANCE_ORIGIN": false,
+        "CLOUD_ACCEPTANCE_BROWSER_ORIGIN": false,
+        "CLOUD_ACCEPTANCE_PASSWORD": false
+      }
+    },
+    {
+      "path": "./.env",
+      "exists": false,
+      "keysPresent": {
+        "CLOUD_ACCEPTANCE_DEMO": false,
+        "CLOUD_ACCEPTANCE_ORIGIN": false,
+        "CLOUD_ACCEPTANCE_BROWSER_ORIGIN": false,
+        "CLOUD_ACCEPTANCE_PASSWORD": false
+      }
+    }
+  ],
+  "manifest": {
+    "path": "apps/server/data/cloud-release-acceptance.json",
+    "exists": false
+  }
+}

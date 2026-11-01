@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "applicationBase": "84d009e3b72c4fe637ef30607e29701054b6c621",
+  "appsTree": "2fd878cfbec10d93942afeb5add57a39a230304f",
+  "status": "E2E11_LOCAL_FIX_VERIFIED_FINAL_RELEASE_PENDING",
+  "fullMockRun": false,
+  "fullApiRun": false,
+  "cloudWorkerFlowRun": false,
+  "countsByScope": [
+    {
+      "scope": "E2E-11 mock",
+      "testSHA": "4644378264efd3a751462050f55b11f07f7c5ff0",
+      "runId": "f037fed1-6b07-438e-a7b6-5fa57f36c19a",
+      "passed": 8,
+      "failed": 0,
+      "fixme": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "notRun": 0
+    },
+    {
+      "scope": "E2E-11 api",
+      "testSHA": "4644378264efd3a751462050f55b11f07f7c5ff0",
+      "runId": "6c6d7b8c-ce4e-430f-a490-20f1aa77bb52",
+      "passed": 4,
+      "failed": 0,
+      "fixme": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "notRun": 0
+    },
+    {
+      "scope": "navigation mock",
+      "testSHA": "8a67f5eb90058ff36fa7ecb3ccbbe55430e2e219",
+      "runId": "17b3d32e-2129-4dde-bbec-7429207655ff",
+      "passed": 8,
+      "failed": 0,
+      "fixme": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "notRun": 0
+    },
+    {
+      "scope": "navigation api",
+      "testSHA": "8a67f5eb90058ff36fa7ecb3ccbbe55430e2e219",
+      "runId": "29548ceb-2aac-4811-9ba1-c9fd596263fd",
+      "passed": 16,
+      "failed": 0,
+      "fixme": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "notRun": 0
+    }
+  ],
+  "allPassedUniqueTargetedCases": 36,
+  "files": [
+    {
+      "path": "2026-10-31-worker-locale-84d009e-locale.json",
+      "bytes": 5759,
+      "sha256": "d5a7eb5a8a2502429c8d382314c86b033e1ad9c82638b3dbf509345f231c75e8"
+    },
+    {
+      "path": "2026-10-31-worker-locale-84d009e-navigation.json",
+      "bytes": 8455,
+      "sha256": "08879cbc0eb656f7752ffd696e1871270cc456231db4ba944b475ebc5a633f55"
+    }
+  ],
+  "unverified": [
+    "Full final suite on frozen release SHA",
+    "Published worker locale and authenticated cloud report/photo/outcomes scenario",
+    "Cloud restart/redeploy persistence in agreed window"
+  ],
+  "historicalControl": {
+    "applicationBase": "932574e630621a6bc9aeacc46703e6ade5e7bdfc",
+    "archive": "2026-10-31-control-932574e.zip",
+    "result": "mock283/1/2, API74/0; not transferred to84d009e"
+  }
+}

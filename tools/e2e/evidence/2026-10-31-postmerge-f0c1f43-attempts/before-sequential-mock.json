@@ -1,0 +1,8 @@
+{
+  "observedAt": "2026-10-31T16:47:32.627Z",
+  "testSHA": "f0c1f43eb424408ef0db7fad6e263bb17e34f995",
+  "concurrentBrowserSuites": 0,
+  "freeMemoryBytes": 4709580800,
+  "totalMemoryBytes": 16450961408,
+  "note": "All previous local API/public/mock runners have finished. Next fullmock uses unchanged2workers/retries0/timeouts45s."
+}

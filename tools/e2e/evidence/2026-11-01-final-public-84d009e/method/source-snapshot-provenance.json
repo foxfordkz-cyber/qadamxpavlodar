@@ -1,0 +1,15 @@
+{
+  "capturedAt": "2026-10-31T19:30:01.402Z",
+  "testSHA": "c7f15755c80292509aaeeb9f9e4638f62c8b6810",
+  "trackedSuites": "Exact tracked c7 test files; per-run suiteSha256 checked for both mock runs",
+  "configs": "Both mock config hashes checked against their run records",
+  "anonymousMethod": "Prepared helper snapshot preserved after the run; anonymous report does not record a helper hash",
+  "guard": {
+    "currentSha256": "1d9fdc25c43fccd263ab9eca0aeb84df546281a40b6ba674685847051aae4646",
+    "exactAnonymousExecutedBytesPreserved": false,
+    "note": "Root reports guard.mjs was changed after the anonymous run to support the independent mock build. This current snapshot is not claimed to be the exact anonymous runtime guard.",
+    "mockTiming": "Root reports the current guard was unchanged during both mock runs; the per-run reports do not record a guard hash. Runtime binding and exact manifest digests remain the authoritative per-run evidence.",
+    "exactModificationTimestampKnown": false
+  },
+  "offlineInspectionExcluded": "Earlier API manifest schema-inspection hash came from a noncanonical file serialization. Current evidence instead binds exact Git blob d8b04239; the older ignored inspection is preserved but is not exported as proof."
+}

@@ -1,0 +1,63 @@
+{
+  "reviewedAt": "2026-11-01T06:38:25.106Z",
+  "images": [
+    {
+      "file": "worker-submitted-kk-375.png",
+      "sha256": "6c08045aa5d5585665092baa4d3bd90b5d09bb5d6b886d86882f54f07e4350c0",
+      "bytes": 121232,
+      "reviewed": true,
+      "method": "Independent agent viewed actual PNG with view_image",
+      "result": "PASS",
+      "privacy": "Synthetic DEMO note/photo and public IDs only; no visible credentials or real personal data",
+      "scope": "Worker submission before logout only"
+    },
+    {
+      "file": "coordinator-accepted-ru-1280.png",
+      "sha256": "470c9e7b8ed53314e8e83accb239c15a3e65cfc790eecba542bda038cc929975",
+      "bytes": 93616,
+      "reviewed": true,
+      "method": "Independent agent viewed actual PNG with view_image",
+      "result": "PASS",
+      "privacy": "Synthetic DEMO note/photo and public IDs only; no visible credentials or real personal data",
+      "scope": "Accepted report and loaded photo; element crop, not entire viewport"
+    },
+    {
+      "file": "viewer-accepted-kk-375.png",
+      "sha256": "fc048d08368f223e11b9905ffe3cf33b919ce83f1233063fe8982e73be126557",
+      "bytes": 97187,
+      "reviewed": true,
+      "method": "Independent agent viewed actual PNG with view_image",
+      "result": "PASS",
+      "privacy": "Synthetic DEMO note/photo and public IDs only; no visible credentials or real personal data",
+      "scope": "Accepted report and loaded photo; element crop, not entire viewport"
+    },
+    {
+      "file": "viewer-outcomes-kk-375.png",
+      "sha256": "b0122e760344f535ae3b7d0ab0a94c43d8939d5de5881805ac5571b7ac52aafd",
+      "bytes": 456690,
+      "reviewed": true,
+      "method": "Independent agent viewed actual PNG with view_image",
+      "result": "PASS",
+      "privacy": "Synthetic DEMO note/photo and public IDs only; no visible credentials or real personal data",
+      "scope": "Baseline Outcomes and saved forecast, not new linked inspection"
+    }
+  ],
+  "dimensions": {
+    "worker-submitted-kk-375.png": [
+      375,
+      1954
+    ],
+    "coordinator-accepted-ru-1280.png": [
+      830,
+      702
+    ],
+    "viewer-accepted-kk-375.png": [
+      317,
+      1202
+    ],
+    "viewer-outcomes-kk-375.png": [
+      375,
+      6013
+    ]
+  }
+}

@@ -1,0 +1,281 @@
+{
+  "schemaVersion": 1,
+  "applicationBase": "84d009e3b72c4fe637ef30607e29701054b6c621",
+  "appsTree": "2fd878cfbec10d93942afeb5add57a39a230304f",
+  "testSHA": "8a67f5eb90058ff36fa7ecb3ccbbe55430e2e219",
+  "scope": "Affected worker navigation only; mock8 KK and API16 RU/KK, not a full suite",
+  "fullRun": false,
+  "expectations": "One exact language; keyboard, aria-current, profile role, footer overlap and overflow preserved",
+  "runs": [
+    {
+      "profile": "mock",
+      "available": true,
+      "current": true,
+      "meta": {
+        "runId": "17b3d32e-2129-4dde-bbec-7429207655ff",
+        "state": "finished",
+        "startedAt": "2026-10-31T18:38:40.374Z",
+        "endedAt": "2026-10-31T18:39:17.925Z",
+        "exitCode": 0,
+        "revision": "8a67f5eb90058ff36fa7ecb3ccbbe55430e2e219",
+        "dirty": false,
+        "selection": "subset",
+        "capturesScreens": false,
+        "command": "node scripts/run.mjs mock",
+        "environment": {
+          "node": "24.22.2",
+          "playwright": "1.64.1",
+          "platform": "win32",
+          "arch": "x64",
+          "workers": 2,
+          "retries": 0
+        },
+        "target": "http://localhost:5176"
+      },
+      "tests": [
+        {
+          "title": "E2E-06: Работник keyboard navigation with Kazakh shell",
+          "project": "crew-375",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5958
+        },
+        {
+          "title": "E2E-06: Бригадир keyboard navigation with Kazakh shell",
+          "project": "crew-375",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 6541
+        },
+        {
+          "title": "E2E-06: Работник keyboard navigation with Kazakh shell",
+          "project": "crew-800",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 5866
+        },
+        {
+          "title": "E2E-06: Бригадир keyboard navigation with Kazakh shell",
+          "project": "crew-800",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 6891
+        },
+        {
+          "title": "E2E-06: Работник keyboard navigation with Kazakh shell",
+          "project": "crew-801",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 6593
+        },
+        {
+          "title": "E2E-06: Бригадир keyboard navigation with Kazakh shell",
+          "project": "crew-801",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 7280
+        },
+        {
+          "title": "E2E-06: Работник keyboard navigation with Kazakh shell",
+          "project": "crew-1280",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 6581
+        },
+        {
+          "title": "E2E-06: Бригадир keyboard navigation with Kazakh shell",
+          "project": "crew-1280",
+          "status": "passed",
+          "outOfScope": false,
+          "note": "",
+          "durationMs": 6575
+        }
+      ],
+      "counts": {
+        "passed": 8,
+        "failed": 0,
+        "fixme": 0,
+        "skipped": 0,
+        "flaky": 0,
+        "notRun": 0
+      },
+      "runnerFailed": false,
+      "durationMs": 36563.061
+    },
+    {
+      "profile": "api",
+      "available": true,
+      "current": true,
+      "meta": {
+        "runId": "29548ceb-2aac-4811-9ba1-c9fd596263fd",
+        "state": "finished",
+        "startedAt": "2026-10-31T18:39:26.102Z",
+        "endedAt": "2026-10-31T18:40:07.079Z",
+        "exitCode": 0,
+        "browserExitCode": 0,
+        "privacyScan": "passed",
+        "revision": "8a67f5eb90058ff36fa7ecb3ccbbe55430e2e219",
+        "dirty": false,
+        "selection": "subset",
+        "capturesScreens": false,
+        "command": "node scripts/run.mjs api",
+        "environment": {
+          "node": "24.22.2",
+          "playwright": "1.64.1",
+          "platform": "win32",
+          "arch": "x64",
+          "workers": 1,
+          "retries": 0
+        },
+        "target": "http://localhost:5177"
+      },
+      "tests": [
+        {
+          "title": "E2E-06 API: worker1, 375px, ru, direct route/reload and keyboard",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2072,
+          "diagnostics": []
+        },
+        {
+          "title": "E2E-06 API: foreman1, 375px, ru, direct route/reload and keyboard",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2045,
+          "diagnostics": []
+        },
+        {
+          "title": "E2E-06 API: worker1, 375px, kk, direct route/reload and keyboard",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 1896,
+          "diagnostics": []
+        },
+        {
+          "title": "E2E-06 API: foreman1, 375px, kk, direct route/reload and keyboard",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2422,
+          "diagnostics": []
+        },
+        {
+          "title": "E2E-06 API: worker1, 800px, ru, direct route/reload and keyboard",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2449,
+          "diagnostics": []
+        },
+        {
+          "title": "E2E-06 API: foreman1, 800px, ru, direct route/reload and keyboard",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 1945,
+          "diagnostics": []
+        },
+        {
+          "title": "E2E-06 API: worker1, 800px, kk, direct route/reload and keyboard",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2419,
+          "diagnostics": []
+        },
+        {
+          "title": "E2E-06 API: foreman1, 800px, kk, direct route/reload and keyboard",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2382,
+          "diagnostics": []
+        },
+        {
+          "title": "E2E-06 API: worker1, 801px, ru, direct route/reload and keyboard",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2123,
+          "diagnostics": []
+        },
+        {
+          "title": "E2E-06 API: foreman1, 801px, ru, direct route/reload and keyboard",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2458,
+          "diagnostics": []
+        },
+        {
+          "title": "E2E-06 API: worker1, 801px, kk, direct route/reload and keyboard",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 1903,
+          "diagnostics": []
+        },
+        {
+          "title": "E2E-06 API: foreman1, 801px, kk, direct route/reload and keyboard",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2061,
+          "diagnostics": []
+        },
+        {
+          "title": "E2E-06 API: worker1, 1280px, ru, direct route/reload and keyboard",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 1942,
+          "diagnostics": []
+        },
+        {
+          "title": "E2E-06 API: foreman1, 1280px, ru, direct route/reload and keyboard",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 1932,
+          "diagnostics": []
+        },
+        {
+          "title": "E2E-06 API: worker1, 1280px, kk, direct route/reload and keyboard",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 2371,
+          "diagnostics": []
+        },
+        {
+          "title": "E2E-06 API: foreman1, 1280px, kk, direct route/reload and keyboard",
+          "project": "api",
+          "status": "passed",
+          "note": "",
+          "durationMs": 1912,
+          "diagnostics": []
+        }
+      ],
+      "counts": {
+        "passed": 16,
+        "failed": 0,
+        "fixme": 0,
+        "skipped": 0,
+        "flaky": 0,
+        "notRun": 0
+      },
+      "runnerFailed": false,
+      "durationMs": 34332
+    }
+  ]
+}

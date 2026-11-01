@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "testSHA": "c7f15755c80292509aaeeb9f9e4638f62c8b6810",
+  "frontendSha": "84d009e3b72c4fe637ef30607e29701054b6c621",
+  "deploymentId": "d0e985d1-bbd0-4f8c-b1c1-31d20d164ef7",
+  "recordedAt": "2026-10-31T19:28:02.022Z",
+  "id": "V-01",
+  "severity": "minor",
+  "area": "375px ordinary-mode status strip",
+  "role": "specialist (mock demo)",
+  "urls": [
+    "https://green-pavlodar-mock.pages.dev/?source=mock&lang=ru#/lab",
+    "https://green-pavlodar-mock.pages.dev/?source=mock&lang=kk#/lab"
+  ],
+  "viewport": {
+    "width": 375,
+    "height": 812
+  },
+  "steps": [
+    "Open the laboratory in ordinary mode at 375×812.",
+    "Leave the page at the top and inspect the status strip immediately below the header.",
+    "Repeat with lang=kk."
+  ],
+  "expected": "The data-source label can be read; its wording identifies browser/mock data.",
+  "actual": "The right edge clips the RU label «Тестовый источник в браузере» and KK label «Браузердегі сынақ деректері»; the final words are not fully visible in the default viewport.",
+  "documentOverflow": "Both corresponding lab tests passed document.scrollWidth <= document.clientWidth; this observation is clipping inside the strip, not demonstrated page overflow.",
+  "impact": "Budget/water/goal controls remain visible; calculations are not implicated. Recoverability by strip scrolling/title was not independently inspected.",
+  "evidence": [
+    {
+      "file": "screens/09-public-ru-375-public-completed-lab.png",
+      "sha256": "677f32f3d717e04aa5aeaf3f2e77c957c52c0877ab2f2bf7c4fc2f89051a1b90"
+    },
+    {
+      "file": "screens/10-public-kk-375-public-completed-lab.png",
+      "sha256": "be5a0a2e4adb54d01e2d39b2523754e74d59a701ffb318c569def51128bd3470"
+    }
+  ]
+}

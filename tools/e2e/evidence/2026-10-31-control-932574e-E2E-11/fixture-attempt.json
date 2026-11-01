@@ -1,0 +1,102 @@
+{
+  "profile": "mock",
+  "available": true,
+  "current": true,
+  "meta": {
+    "runId": "b74d7ccc-6ae0-433c-89c2-a02de0a7560a",
+    "state": "finished",
+    "startedAt": "2026-10-31T18:05:32.634Z",
+    "endedAt": "2026-10-31T18:07:12.113Z",
+    "exitCode": 1,
+    "revision": "d90650ce3821c1dc9a35b569daaf096f1f58482e",
+    "dirty": false,
+    "selection": "subset",
+    "capturesScreens": false,
+    "command": "node scripts/run.mjs mock",
+    "environment": {
+      "node": "24.22.2",
+      "playwright": "1.64.1",
+      "platform": "win32",
+      "arch": "x64",
+      "workers": 2,
+      "retries": 0
+    },
+    "target": "http://localhost:5176"
+  },
+  "tests": [
+    {
+      "title": "E2E-11: Работник, direct Kazakh entry and reload translate available service controls",
+      "project": "desktop",
+      "status": "failed",
+      "outOfScope": false,
+      "note": "",
+      "durationMs": 17910
+    },
+    {
+      "title": "E2E-11: Бригадир, direct Kazakh entry and reload translate available service controls",
+      "project": "desktop",
+      "status": "failed",
+      "outOfScope": false,
+      "note": "",
+      "durationMs": 18357
+    },
+    {
+      "title": "E2E-11: switching RU/KK updates cabinet and persists without a language URL override",
+      "project": "desktop",
+      "status": "failed",
+      "outOfScope": false,
+      "note": "",
+      "durationMs": 29987
+    },
+    {
+      "title": "E2E-11: language repaint preserves the unsent note and synthetic photo, including reload",
+      "project": "desktop",
+      "status": "failed",
+      "outOfScope": false,
+      "note": "",
+      "durationMs": 20214
+    },
+    {
+      "title": "E2E-11: Работник, direct Kazakh entry and reload translate available service controls",
+      "project": "mobile",
+      "status": "failed",
+      "outOfScope": false,
+      "note": "",
+      "durationMs": 16575
+    },
+    {
+      "title": "E2E-11: Бригадир, direct Kazakh entry and reload translate available service controls",
+      "project": "mobile",
+      "status": "failed",
+      "outOfScope": false,
+      "note": "",
+      "durationMs": 16558
+    },
+    {
+      "title": "E2E-11: switching RU/KK updates cabinet and persists without a language URL override",
+      "project": "mobile",
+      "status": "failed",
+      "outOfScope": false,
+      "note": "",
+      "durationMs": 29389
+    },
+    {
+      "title": "E2E-11: language repaint preserves the unsent note and synthetic photo, including reload",
+      "project": "mobile",
+      "status": "failed",
+      "outOfScope": false,
+      "note": "",
+      "durationMs": 18161
+    }
+  ],
+  "counts": {
+    "passed": 0,
+    "failed": 8,
+    "fixme": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "notRun": 0
+  },
+  "runnerFailed": false,
+  "durationMs": 98214.768
+}

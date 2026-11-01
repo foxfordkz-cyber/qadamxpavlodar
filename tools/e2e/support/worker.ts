@@ -20,18 +20,33 @@ export async function workerProfileButton(page: Page) {
   return button;
 }
 
-export async function crewKeyboardNavigation(page: Page, foreman = false) {
+// Reviewed labels from the merged worker dictionary. Choose exactly one language:
+// allowing either RU or KK would hide a regression where the shell and cabinet differ.
+const crewWords = {
+  ru: { shift: 'Смена', journal: 'Журнал', profile: 'Профиль', journalHeading: 'Журнал работ',
+    profileHeading: 'Карточка сотрудника', workerHeading: 'Моя смена', foremanHeading: 'Смена бригады',
+    workerRole: 'Работник', foremanRole: 'Бригадир' },
+  kk: { shift: 'Ауысым', journal: 'Журнал', profile: 'Профиль', journalHeading: 'Жұмыстар журналы',
+    profileHeading: 'Қызметкер карточкасы', workerHeading: 'Менің ауысымым', foremanHeading: 'Бригада ауысымы',
+    workerRole: 'Жұмысшы', foremanRole: 'Бригадир' },
+} as const;
+
+export async function crewKeyboardNavigation(page: Page, foreman = false, language: 'ru' | 'kk' = 'ru') {
   await workerReady(page);
   const cabinet = page.locator('green-worker');
+  const words = crewWords[language];
   for (const [name, heading, key] of [
-    ['Журнал', 'Журнал работ', 'Enter'], ['Профиль', 'Карточка сотрудника', 'Space'],
-    ['Смена', foreman ? 'Смена бригады' : 'Моя смена', 'Enter'],
+    [words.journal, words.journalHeading, 'Enter'], [words.profile, words.profileHeading, 'Space'],
+    [words.shift, foreman ? words.foremanHeading : words.workerHeading, 'Enter'],
   ]) {
     const button = cabinet.getByRole('button', { name: new RegExp(`${name}$`) }).filter({ visible: true });
     await expect(button).toHaveCount(1);
     await button.focus();
     await page.keyboard.press(key);
     await expect(cabinet.getByRole('heading', { name: heading, exact: true })).toBeVisible();
+    if (heading === words.profileHeading) {
+      await expect(cabinet.locator('.profile-role')).toHaveText(foreman ? words.foremanRole : words.workerRole);
+    }
     await workerReady(page);
     await expect(button).toHaveAttribute('aria-current', 'page');
     await cabinet.locator('.page-footer').scrollIntoViewIfNeeded();

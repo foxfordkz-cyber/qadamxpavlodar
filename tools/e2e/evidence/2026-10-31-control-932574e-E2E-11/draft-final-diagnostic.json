@@ -1,0 +1,468 @@
+{
+  "schema": 1,
+  "applicationSha": "932574e630621a6bc9aeacc46703e6ade5e7bdfc",
+  "testSha": "5db953cd770c4fe0ef31f835a7f19a8e044c97b8",
+  "runId": "ecaa4d53-908c-4fe9-a23b-dd3fc59cdc27",
+  "source": "Offline analysis of existing Playwright test.trace; no new browser run",
+  "mode": "mock",
+  "target": "http://localhost:5176",
+  "environment": {
+    "node": "24.22.2",
+    "platform": "win32",
+    "arch": "x64",
+    "playwright": "1.64.1",
+    "workers": 2,
+    "retries": 0
+  },
+  "result": {
+    "passed": 0,
+    "failed": 2,
+    "skipped": 0,
+    "fixme": 0,
+    "flaky": 0,
+    "classification": "Both failures reproduce E2E-11 at the photo accessible name only. All note/photo preservation phases passed."
+  },
+  "limits": [
+    "Mock role is deliberately re-entered after reload; this is not authenticated session persistence.",
+    "Only existing KK-draft service phrases are required. No claim of complete worker translation.",
+    "No send-button locale conclusion: its assertion was not reached."
+  ],
+  "cases": [
+    {
+      "caseDirectory": "worker-locale-regression.m-cba5c-oad-with-mock-role-re-entry-desktop",
+      "width": 1280,
+      "tracePath": "tools/e2e/test-results/mock/worker-locale-regression.m-cba5c-oad-with-mock-role-re-entry-desktop/trace.zip",
+      "photoPreservation": [
+        {
+          "phase": "initial RU draft",
+          "checks": [
+            "note unchanged",
+            "preview visible",
+            "decoded width 96",
+            "filename unchanged",
+            "exact synthetic photo bytes unchanged"
+          ],
+          "passed": true,
+          "assertions": [
+            {
+              "callId": "kmsn@110",
+              "sourceLine": 51,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "kmsn@112",
+              "sourceLine": 53,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "kmsn@114",
+              "sourceLine": 54,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "kmsn@119",
+              "sourceLine": 54,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "kmsn@120",
+              "sourceLine": 55,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "kmsn@126",
+              "sourceLine": 57,
+              "completed": true,
+              "passed": true
+            }
+          ]
+        },
+        {
+          "phase": "after RU to KK",
+          "checks": [
+            "note unchanged",
+            "preview visible",
+            "decoded width 96",
+            "filename unchanged",
+            "exact synthetic photo bytes unchanged"
+          ],
+          "passed": true,
+          "assertions": [
+            {
+              "callId": "kmsn@131",
+              "sourceLine": 51,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "kmsn@133",
+              "sourceLine": 53,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "kmsn@135",
+              "sourceLine": 54,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "kmsn@140",
+              "sourceLine": 54,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "kmsn@141",
+              "sourceLine": 55,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "kmsn@147",
+              "sourceLine": 57,
+              "completed": true,
+              "passed": true
+            }
+          ]
+        },
+        {
+          "phase": "after KK to RU",
+          "checks": [
+            "note unchanged",
+            "preview visible",
+            "decoded width 96",
+            "filename unchanged",
+            "exact synthetic photo bytes unchanged"
+          ],
+          "passed": true,
+          "assertions": [
+            {
+              "callId": "kmsn@152",
+              "sourceLine": 51,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "kmsn@154",
+              "sourceLine": 53,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "kmsn@156",
+              "sourceLine": 54,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "kmsn@161",
+              "sourceLine": 54,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "kmsn@162",
+              "sourceLine": 55,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "kmsn@168",
+              "sourceLine": 57,
+              "completed": true,
+              "passed": true
+            }
+          ]
+        },
+        {
+          "phase": "after reload and explicit mock role re-entry with KK selected",
+          "checks": [
+            "note unchanged",
+            "preview visible",
+            "decoded width 96",
+            "filename unchanged",
+            "exact synthetic photo bytes unchanged"
+          ],
+          "passed": true,
+          "assertions": [
+            {
+              "callId": "kmsn@203",
+              "sourceLine": 51,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "kmsn@205",
+              "sourceLine": 53,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "kmsn@207",
+              "sourceLine": 54,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "kmsn@212",
+              "sourceLine": 54,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "kmsn@213",
+              "sourceLine": 55,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "kmsn@219",
+              "sourceLine": 57,
+              "completed": true,
+              "passed": true
+            }
+          ]
+        }
+      ],
+      "onlyFailure": {
+        "defect": "E2E-11",
+        "assertion": "Preserved form photo selector follows chosen KK language",
+        "callId": "kmsn@223",
+        "sourceLine": 128,
+        "expectedAccessibleName": "Фото таңдау",
+        "actualAccessibleName": "Выбрать фото"
+      },
+      "notReached": [
+        {
+          "assertion": "Send report button uses Kazakh",
+          "sourceLine": 129,
+          "reason": "Prior photo-label assertion failed; no conclusion about send label from this run"
+        }
+      ]
+    },
+    {
+      "caseDirectory": "worker-locale-regression.m-cba5c-oad-with-mock-role-re-entry-mobile",
+      "width": 375,
+      "tracePath": "tools/e2e/test-results/mock/worker-locale-regression.m-cba5c-oad-with-mock-role-re-entry-mobile/trace.zip",
+      "photoPreservation": [
+        {
+          "phase": "initial RU draft",
+          "checks": [
+            "note unchanged",
+            "preview visible",
+            "decoded width 96",
+            "filename unchanged",
+            "exact synthetic photo bytes unchanged"
+          ],
+          "passed": true,
+          "assertions": [
+            {
+              "callId": "ozwt@108",
+              "sourceLine": 51,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "ozwt@110",
+              "sourceLine": 53,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "ozwt@112",
+              "sourceLine": 54,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "ozwt@117",
+              "sourceLine": 54,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "ozwt@118",
+              "sourceLine": 55,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "ozwt@124",
+              "sourceLine": 57,
+              "completed": true,
+              "passed": true
+            }
+          ]
+        },
+        {
+          "phase": "after RU to KK",
+          "checks": [
+            "note unchanged",
+            "preview visible",
+            "decoded width 96",
+            "filename unchanged",
+            "exact synthetic photo bytes unchanged"
+          ],
+          "passed": true,
+          "assertions": [
+            {
+              "callId": "ozwt@129",
+              "sourceLine": 51,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "ozwt@131",
+              "sourceLine": 53,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "ozwt@133",
+              "sourceLine": 54,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "ozwt@138",
+              "sourceLine": 54,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "ozwt@139",
+              "sourceLine": 55,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "ozwt@145",
+              "sourceLine": 57,
+              "completed": true,
+              "passed": true
+            }
+          ]
+        },
+        {
+          "phase": "after KK to RU",
+          "checks": [
+            "note unchanged",
+            "preview visible",
+            "decoded width 96",
+            "filename unchanged",
+            "exact synthetic photo bytes unchanged"
+          ],
+          "passed": true,
+          "assertions": [
+            {
+              "callId": "ozwt@150",
+              "sourceLine": 51,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "ozwt@152",
+              "sourceLine": 53,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "ozwt@154",
+              "sourceLine": 54,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "ozwt@159",
+              "sourceLine": 54,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "ozwt@160",
+              "sourceLine": 55,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "ozwt@166",
+              "sourceLine": 57,
+              "completed": true,
+              "passed": true
+            }
+          ]
+        },
+        {
+          "phase": "after reload and explicit mock role re-entry with KK selected",
+          "checks": [
+            "note unchanged",
+            "preview visible",
+            "decoded width 96",
+            "filename unchanged",
+            "exact synthetic photo bytes unchanged"
+          ],
+          "passed": true,
+          "assertions": [
+            {
+              "callId": "ozwt@201",
+              "sourceLine": 51,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "ozwt@203",
+              "sourceLine": 53,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "ozwt@205",
+              "sourceLine": 54,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "ozwt@210",
+              "sourceLine": 54,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "ozwt@211",
+              "sourceLine": 55,
+              "completed": true,
+              "passed": true
+            },
+            {
+              "callId": "ozwt@217",
+              "sourceLine": 57,
+              "completed": true,
+              "passed": true
+            }
+          ]
+        }
+      ],
+      "onlyFailure": {
+        "defect": "E2E-11",
+        "assertion": "Preserved form photo selector follows chosen KK language",
+        "callId": "ozwt@221",
+        "sourceLine": 128,
+        "expectedAccessibleName": "Фото таңдау",
+        "actualAccessibleName": "Выбрать фото"
+      },
+      "notReached": [
+        {
+          "assertion": "Send report button uses Kazakh",
+          "sourceLine": 129,
+          "reason": "Prior photo-label assertion failed; no conclusion about send label from this run"
+        }
+      ]
+    }
+  ]
+}

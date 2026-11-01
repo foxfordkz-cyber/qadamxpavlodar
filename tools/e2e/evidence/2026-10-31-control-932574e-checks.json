@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "applicationBase": "932574e630621a6bc9aeacc46703e6ade5e7bdfc",
+  "checks": [
+    {
+      "name": "check:tools",
+      "testSHA": "d90650ce3821c1dc9a35b569daaf096f1f58482e",
+      "passed": 24,
+      "failed": 0,
+      "skipped": 0,
+      "fixme": 0,
+      "flaky": 0,
+      "logSha256": "00ceb8e5d2e050f1114bc325663a30f5ab7cca1f5660c6e40a23d43de8a3041d"
+    },
+    {
+      "name": "check:report on first targeted diagnostic report",
+      "testSHA": "d90650ce3821c1dc9a35b569daaf096f1f58482e",
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "fixme": 0,
+      "flaky": 0
+    },
+    {
+      "name": "Frozen control ZIP, same report validator with path-only adaptation",
+      "sourceTestSHA": "cdc3ec257726ef937b0bbf953253a755f2e225a9",
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "fixme": 0,
+      "flaky": 0
+    }
+  ],
+  "gate": {
+    "command": "node scripts/summary.mjs --strict",
+    "executedAt": "2026-10-31T18:22:46.819Z",
+    "head": "5db953cd770c4fe0ef31f835a7f19a8e044c97b8",
+    "exitCode": 1,
+    "expectedReady": false,
+    "reason": "Active E2E-11 failures and subset runs; no final full acceptance"
+  },
+  "notClaimed": "No final accepted archive or new full suite after user control-build instruction"
+}

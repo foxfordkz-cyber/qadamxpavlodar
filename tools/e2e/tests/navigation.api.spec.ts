@@ -22,17 +22,17 @@ test.beforeAll(async ({ browser, baseURL }) => {
   }
 });
 
-for (const width of [375, 800, 801, 1280]) for (const lang of ['ru', 'kk']) for (const role of ['worker1', 'foreman1']) {
+for (const width of [375, 800, 801, 1280]) for (const lang of ['ru', 'kk'] as const) for (const role of ['worker1', 'foreman1']) {
   test(`E2E-06 API: ${role}, ${width}px, ${lang}, direct route/reload and keyboard`, async ({ page }) => {
     await page.setViewportSize({ width, height: width === 1280 ? 900 : 812 });
     await page.context().addCookies(sessions[role]);
     // Real session survives navigation/reload. Mock role reset is not used as a substitute.
     await page.goto(`/?source=api&lang=${lang}#/worker`, { waitUntil: 'domcontentloaded' });
     await expect(page).toHaveURL(/#\/worker$/);
-    await crewKeyboardNavigation(page, role === 'foreman1');
+    await crewKeyboardNavigation(page, role === 'foreman1', lang);
     await page.reload({ waitUntil: 'domcontentloaded' });
     await expect(page.locator('.gp-login')).toHaveCount(0);
     await expect(page).toHaveURL(/#\/worker$/);
-    await crewKeyboardNavigation(page, role === 'foreman1');
+    await crewKeyboardNavigation(page, role === 'foreman1', lang);
   });
 }

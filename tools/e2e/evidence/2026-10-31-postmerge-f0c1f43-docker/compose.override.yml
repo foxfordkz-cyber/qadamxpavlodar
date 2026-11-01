@@ -1,0 +1,19 @@
+services:
+  web:
+    image: gp-aidana-qa-postmerge-f0c1f43-web
+    build:
+      args:
+        DATA_SOURCE: mock
+      labels:
+        org.opencontainers.image.revision: f0c1f43eb424408ef0db7fad6e263bb17e34f995
+        org.green-pavlodar.application-base: fdc6e756be99dc5ba3a7a48ca1df17c4bfbef5ef
+  server:
+    image: gp-aidana-qa-postmerge-f0c1f43-server
+    env_file: !reset []
+    build:
+      labels:
+        org.opencontainers.image.revision: f0c1f43eb424408ef0db7fad6e263bb17e34f995
+        org.green-pavlodar.application-base: fdc6e756be99dc5ba3a7a48ca1df17c4bfbef5ef
+    environment:
+      DEMO_PASSWORD: ${DEMO_PASSWORD:?QA process password required}
+      FRONTEND_ORIGINS: http://localhost:18084,http://127.0.0.1:18084

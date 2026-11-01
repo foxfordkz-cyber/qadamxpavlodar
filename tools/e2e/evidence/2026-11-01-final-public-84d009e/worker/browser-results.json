@@ -1,0 +1,101 @@
+{
+  "counts": {
+    "passed": 8,
+    "failed": 0,
+    "skipped": 0,
+    "fixme": 0,
+    "flaky": 0
+  },
+  "globalErrors": 0,
+  "tests": [
+    {
+      "title": "E2E-11: Бригадир, Kazakh document and reload translate controls after explicit mock role re-entry",
+      "project": "desktop",
+      "status": "passed",
+      "retry": 0,
+      "durationMs": 6075,
+      "fixme": false,
+      "failure": null,
+      "screenshots": [],
+      "hitTests": []
+    },
+    {
+      "title": "E2E-11: Работник, Kazakh document and reload translate controls after explicit mock role re-entry",
+      "project": "desktop",
+      "status": "passed",
+      "retry": 0,
+      "durationMs": 6837,
+      "fixme": false,
+      "failure": null,
+      "screenshots": [],
+      "hitTests": []
+    },
+    {
+      "title": "E2E-11: switching RU/KK persists without a language URL override after mock role re-entry",
+      "project": "desktop",
+      "status": "passed",
+      "retry": 0,
+      "durationMs": 8393,
+      "fixme": false,
+      "failure": null,
+      "screenshots": [],
+      "hitTests": []
+    },
+    {
+      "title": "E2E-11: note and synthetic photo survive language repaint and reload with mock role re-entry",
+      "project": "desktop",
+      "status": "passed",
+      "retry": 0,
+      "durationMs": 8588,
+      "fixme": false,
+      "failure": null,
+      "screenshots": [],
+      "hitTests": []
+    },
+    {
+      "title": "E2E-11: Работник, Kazakh document and reload translate controls after explicit mock role re-entry",
+      "project": "mobile",
+      "status": "passed",
+      "retry": 0,
+      "durationMs": 5268,
+      "fixme": false,
+      "failure": null,
+      "screenshots": [],
+      "hitTests": []
+    },
+    {
+      "title": "E2E-11: Бригадир, Kazakh document and reload translate controls after explicit mock role re-entry",
+      "project": "mobile",
+      "status": "passed",
+      "retry": 0,
+      "durationMs": 5627,
+      "fixme": false,
+      "failure": null,
+      "screenshots": [],
+      "hitTests": []
+    },
+    {
+      "title": "E2E-11: note and synthetic photo survive language repaint and reload with mock role re-entry",
+      "project": "mobile",
+      "status": "passed",
+      "retry": 0,
+      "durationMs": 6966,
+      "fixme": false,
+      "failure": null,
+      "screenshots": [],
+      "hitTests": []
+    },
+    {
+      "title": "E2E-11: switching RU/KK persists without a language URL override after mock role re-entry",
+      "project": "mobile",
+      "status": "passed",
+      "retry": 0,
+      "durationMs": 7674,
+      "fixme": false,
+      "failure": null,
+      "screenshots": [],
+      "hitTests": []
+    }
+  ],
+  "privacy": "No raw errors, DOM snapshots, trace, video, cookies or credentials retained."
+}
