@@ -1,0 +1,99 @@
+{
+  "schema": "green-pavlodar-independent-cloud-evidence-audit/v1",
+  "auditedOn": "2026-11-01",
+  "method": "Independent read-only review of saved sanitized results and versioned runner source; no network, credentials, or environment access",
+  "verdict": "PASS_WITH_EXPLICIT_SCOPE_LIMITATIONS",
+  "identity": {
+    "frontendSha": "c970264919de2f7a62d0e1ea8a28cc70c95a3864",
+    "frontendDeployment": "a26bd214-1c78-4a83-9536-74a35c85b49f",
+    "backendOwnerConfirmedSha": "3b14927def04b35bf97782eae6b550da276c779f",
+    "backendDeployment": "dep-dbj223h42hec73bqnttg"
+  },
+  "originalRun": {
+    "id": "run-2026-11-01T06-22-53-822Z-af6e67",
+    "qaSha": "636664e581c8c74e1029319b0fb0573759ea8241",
+    "resultSha256": "9430c78b4efa4c78a32f5f9f487108a5bacbd4c07f7dcf122ae9080545960a8e",
+    "status": "FAIL",
+    "preservedUnchanged": true,
+    "networkResponseCount": 94,
+    "blockedRequestCount": 0,
+    "businessMutations": [
+      { "operation": "start", "status": 200 },
+      { "operation": "upload", "status": 201 },
+      { "operation": "submit", "status": 201 }
+    ],
+    "failureAssessment": "Worker submission succeeded. The runner then incorrectly required the always-rendered empty navigation container to be absent after logout. The application contract requires its links, controls and signed-in identity to disappear. The original FAIL remains a failed run, not retrospectively a pass.",
+    "logoutEvidence": "UI POST /auth/logout returned 200 and subsequent GET /auth/me returned 401. The fallback cleanup NOT_CONFIRMED record followed the assertion failure and does not negate the observed UI logout."
+  },
+  "continuationRun": {
+    "id": "run-2026-11-01T06-30-35-696Z-0599a6",
+    "qaSha": "eaaf3d1c2180f0520ec6df9c34a7854872f1d6cc",
+    "resultSha256": "b6414ccef617abcfb56c37b4ded720d57f934f2105317f2eec1bf494667052b8",
+    "status": "PASS",
+    "sourceResultHashVerified": true,
+    "sameReportAndPhotoAsOriginal": true,
+    "currentMethodHashesMatchRecordedMethods": 4,
+    "networkResponseCount": 91,
+    "http200Count": 81,
+    "http401Count": 10,
+    "blockedRequestCount": 0,
+    "browserErrorCount": 0,
+    "businessMutations": [
+      {
+        "operation": "review",
+        "role": "coordinator",
+        "path": "/reports/6fabe731-ea10-410e-82e3-99f3ee1a911a/review",
+        "status": 200
+      }
+    ],
+    "authPostCount": 6,
+    "newStartUploadOrReportCreation": false,
+    "frontendFilesBefore": { "checked": 34, "mismatches": 0 },
+    "frontendFilesAfter": { "checked": 34, "mismatches": 0 },
+    "screenshots": 3,
+    "countsAreRecordedRequestsAndArtifactsNotIndependentTestCaseTotals": true,
+    "resumeGuard": "Before the only review write, authenticated GETs checked the exact existing report, task, site, worker, demo flag, inspect action, minimum one worker, task submitted/version5, report pending/version1, note, photo and empty planting items. Resume skipped worker start, upload and report creation."
+  },
+  "finalRecords": {
+    "taskId": "9050ea3c-369b-4864-b30b-caede24c96f2",
+    "taskVersion": 6,
+    "taskStatus": "verified",
+    "reportId": "6fabe731-ea10-410e-82e3-99f3ee1a911a",
+    "reportVersion": 2,
+    "reviewStatus": "accepted",
+    "photoId": "bcc645e2-ffef-40af-b05b-8abebf6600b5",
+    "normalizedPhotoSha256": "aa608655c2891eb87660dbaeed52877153d459abd82757f8a4ce902820d6dcb4",
+    "normalizedPhotoBytes": 4436,
+    "coordinatorAndViewerDownloadedPhotoHashesEqual": true
+  },
+  "outcomes": {
+    "historyBeforeAfterSha256": "5227a9a17d196980e3d4dccd564618429df6ebc29657941d190dbdd606cdd1d4",
+    "forecastBeforeAfterSha256": "fdedbe0615f7f2cffabf11a798aeebb0bdfc2e2e3845dd846da521046749e0b7",
+    "cohortBeforeAfterSha256": "c9c534f1ad1e9e4d6dbc1ba7c9a279e5ce8afe41f4c04d267c519566f0340919",
+    "allThreeBeforeAfterHashesVerifiedEqual": true,
+    "viewerLanguages": ["ru", "kk"],
+    "viewerWidths": [375, 1280],
+    "allFourCombinationsRecorded": true,
+    "demoLabel": true,
+    "total": 4,
+    "inspected": 2,
+    "assessed": 1,
+    "alive": 1,
+    "dead": 0,
+    "unknown": 3,
+    "notInspected": 2,
+    "inspectionCoveragePct": 50,
+    "assessmentCoveragePct": 25,
+    "wholeCohortSurvivalPct": null,
+    "annualComparisonShown": false,
+    "newLinkedInspectionCreatedOrVerified": false
+  },
+  "logoutCompletionOrderLimitation": "The continuation records worker logout200 followed by four GET /reports401, one GET /reports200 and GET /auth/me401. Records capture response completion order, not request start times. Worker task hydration launches parallel object/report reads; a late authenticated response can finish after logout. This evidence does not establish a new authorized request after logout or session persistence. Signed-out identity/navigation checks and reload passed for all three roles. No new business writes occurred.",
+  "notEstablished": [
+    "A fresh single uninterrupted end-to-end pass: evidence is the preserved original failed run plus its exact-bound successful continuation.",
+    "A new Outcomes inspection linked to the newly accepted report: only baseline history was checked.",
+    "Restart, redeploy, reseed or durability across process replacement.",
+    "Live denied-write API checks for viewer, unauthenticated photo denial or idempotency replay checks in this UI continuation.",
+    "Independent backend deployment introspection: backend identity is explicitly owner-confirmed."
+  ]
+}

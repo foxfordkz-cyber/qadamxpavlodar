@@ -1,3 +1,31 @@
+# Cloud browser: отчёт принят, viewer и baseline Outcomes проверены — 01.11.2026
+
+**Согласованный UI-сегмент выполнен. Полная облачная приёмка ещё не завершена:** ожидается отдельный API-шаг новой связанной inspection и согласованный restart с независимым чтением после него. PR #43 остаётся Draft. Новые browser-доказательства не заменяют предыдущие локальные наборы.
+
+Проверяемая публикация: frontend **c970264919de2f7a62d0e1ea8a28cc70c95a3864**, Pages **a26bd214-1c78-4a83-9536-74a35c85b49f**; backend **3b14927def04b35bf97782eae6b550da276c779f**, Render **dep-dbj223h42hec73bqnttg** — freeze подтверждён владельцем в Dashboard, не через readiness. Windows x64, Node24.22.2, Playwright1.64.1, headless Chromium, software WebGL. Перед и после продолжения **34/34** production-файла совпали с манифестом c970264. Таймаут assertion12000ms, action/navigation30000ms, retries0, mock-подмены нет.
+
+| Отдельный запуск | Test SHA | Passed | Failed | Skipped | Fixme | Flaky |
+|---|---|---:|---:|---:|---:|---:|
+| Worker UI, 11:22:53–11:23:33 UTC+5 |636664e581c8c74e1029319b0fb0573759ea8241|0|1|0|0|0|
+| Продолжение существующего отчёта, 11:30:35–11:31:21 |eaaf3d1c2180f0520ec6df9c34a7854872f1d6cc|1|0|0|0|0|
+| Offline-защита допустимых запросов |eaaf3d1|4|0|0|0|0|
+| check:tools / локальная privacy-регрессия |eaaf3d1 + новые отчёты|24|0|0|0|0|
+| check:report после подготовки доказательств |eaaf3d1 + новые отчёты|3|0|0|0|0|
+
+Это два запуска сценария, не количество внутренних событий и не новый полный mock/API. Первый FAIL сохранён: worker успешно выполнил start/upload/submit, но новый QA-helper ошибочно потребовал удаления пустого nav-контейнера после logout. Приложение вернуло logout200 → auth/me401. Исправлена проверка по существующему `support/session.ts`: отсутствие навигационных ссылок, identity/роли/выхода, форма входа после reload. Ожидания продукта не ослаблены. Повторные start/upload/create **не выполнялись**; продолжение приняло строго прежний pending report1/task5. Повторная проверка выхода worker прошла.
+
+Подготовка назначения работника выполнена Бекзатом **через API**, не браузером. Далее UI: worker RU/KK×375/1280 — клавиатурная навигация, язык/сессия, сохранение текста и фото черновика при переключении/reload, один новый inspect report; coordinator RU1280 — приёмка/reload; viewer RU/KK×375/1280 — принятый отчёт, фото, отсутствие изменяющих кнопок, reload. Выход/reload проверен у всех трёх ролей. Business writes:3 в первом запуске +1 review в продолжении; blocked requests0, pageerrors0.
+
+Новые объекты: task **9050ea3c-369b-4864-b30b-caede24c96f2**, verified/version6; report **6fabe731-ea10-410e-82e3-99f3ee1a911a**, accepted/version2; photo **bcc645e2-ffef-40af-b05b-8abebf6600b5**. Фактически прочитанные coordinator и viewer WebP-байты:4436B, SHA256 **aa608655c2891eb87660dbaeed52877153d459abd82757f8a4ce902820d6dcb4**. HTTP-чтение байтов/хэша отмечено отдельно от загрузки фото интерфейсом. Отчёт создан06:23:21.136Z, принят06:30:51.852Z.
+
+Outcomes **старой baseline inspection**, RU/KK×375/1280: total4, inspected2, assessed1, alive1, dead0, unknown3, notInspected2; охват50%, доля оценённых25%, живых среди оценённых100%, вся партия — «нет данных». Demo виден, годовое сравнение не показано. Forecast/history/cohort совпали до/после приёмки. История SHA256 **5227a9a17d196980e3d4dccd564618429df6ebc29657941d190dbdd606cdd1d4**, forecast **fdedbe0615f7f2cffabf11a798aeebb0bdfc2e2e3845dd846da521046749e0b7**. Новая связанная inspection этим результатом **не подтверждена**.
+
+[Сводка и ограничения](evidence/2026-11-01-cloud-browser-workflow/acceptance.json), [исходный FAIL](evidence/2026-11-01-cloud-browser-workflow/worker-original.json), [продолжение PASS](evidence/2026-11-01-cloud-browser-workflow/review-continuation.json), [просмотр четырёх новых кадров](evidence/2026-11-01-cloud-browser-workflow/visual-review.json), [архив](evidence/2026-11-01-cloud-browser-workflow.zip), [хэши](evidence/2026-11-01-cloud-browser-workflow/manifest.json). Кадры содержат синтетические данные, просмотрены; element/fullcontent captures не выдаются за viewport-слайды. Trace/HAR/error-context, cookies, секреты и сырые DTO не сохранялись. Пароль вводился локально и жил только в QA-процессе.
+
+Команды: `Start-Cloud-Workflow.cmd`, затем после исправления helper **`Start-Cloud-Review.cmd`** (`run.mjs --resume-review`); offline `node --test scripts/cloud-workflow/network-guard.offline-test.mjs`. Исходный процесс не перезапускался. [Бекзату переданы ID и запрос отдельного API-шагa](https://github.com/foxfordkz-cyber/qadamxpavlodar/pull/39#issuecomment-6554473810). UI остановлен, сессии закрыты; **это ещё не подтверждение полного baseline и не разрешение на restart/redeploy**. Не выполнены новая связанная inspection, viewer HTTP403/idempotency на новых объектах, запрет чужого фото, persistence и облачный assistant804a3bc.
+
+---
+
 # Независимый cloud HTTP preflight — PASS, 01.11.2026
 
 **Вход и чтение существующего облачного baseline подтверждены из отдельного QA-процесса.** 01.11 **10:41:54–10:42:02 UTC+5**, QA **88347df80f00cb0eb02cf96d354d16a6a8ebc72b**, Windows x64 / Node24.22.2. Пользователь ввёл пароль локально в подготовленное окно; launcher передал его только дочернему Node-процессу. Секрет не копировался в команды инструментов, Git или QA-артефакты. Постоянный secret store и автоматический доступ следующего процесса не заявляются.

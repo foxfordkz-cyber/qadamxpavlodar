@@ -1,3 +1,13 @@
+# Cloud browser — 01.11.2026, 11:31 UTC+5
+
+На frontend **c970264/a26bd214** и backend **3b14927/dep-dbj223h42hec73bqnttg** выполнены worker submission, coordinator acceptance, viewer RU/KK×375/1280 и чтение исходного Outcomes. Новых дефектов приложения в этом сегменте не подтверждено; V-01 остаётся отдельным minor. [Доказательства и ограничения](evidence/2026-11-01-cloud-browser-workflow/acceptance.json).
+
+**QA-CLOUD-01 — исправлена ошибка helper, исходный FAIL сохранён.** Роль worker; `https://green-pavlodar-api.pages.dev/?source=api&lang=kk#/worker`,375px. Шаги: отправить синтетический inspect report → выйти. Ожидалось: форма входа, прежние identity/роль/ссылки навигации исчезли, reload сохраняет выход. Факт приложения: logout200 и auth/me401, пустой nav-контейнер остаётся по контракту Shell. Helper QA636664e ошибочно ожидал `nav` count0. Исправление QAeaaf3d1 проверяет содержимое/identity по существующему `support/session.ts`, затем reload; worker/coordinator/viewer проходят. Это не изменение приложения и не отключение реального дефекта. [Исходный FAIL](evidence/2026-11-01-cloud-browser-workflow/worker-original.json), [продолжение без повторной отправки](evidence/2026-11-01-cloud-browser-workflow/review-continuation.json).
+
+**Непроверенное:** новая связанная inspection через отдельно согласованный API-шаг, UI-чтение её истории и сравнение после same-SHA restart/redeploy, cloud HTTP viewer403/idempotency и запрет доступа к чужим фотографиям. Исходный forecast/history сохранились при принятии нового отчёта; это не проверка перезапуска. [Запрос следующего handoff Бекзату](https://github.com/foxfordkz-cyber/qadamxpavlodar/pull/39#issuecomment-6554473810). PR #43 остаётся Draft до завершения согласованной приёмки.
+
+---
+
 # Cloud QA — вход и baseline PASS, 01.11.2026, 10:42 UTC+5
 
 **BLOCKED_ACCESS снят для завершённого отдельного QA-процесса.** На QA88347df реальный Pages HTTP preflight прошёл: четыре роли, семь хэшей baseline, hash существующей приватной фотографии, четыре logout200; 21 HTTP200, business writes0. Это не браузерный workflow и не проверка сохранности после restart. [Результат](evidence/2026-11-01-cloud-access-pass/preflight.json), [границы](evidence/2026-11-01-cloud-access-pass/acceptance.json).
