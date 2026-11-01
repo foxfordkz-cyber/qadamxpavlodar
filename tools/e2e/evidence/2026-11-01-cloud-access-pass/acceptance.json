@@ -1,0 +1,70 @@
+{
+  "recordedAt": "2026-11-01T05:44:52.230Z",
+  "status": "HTTP_PREFLIGHT_PASS",
+  "fullCloudAcceptance": false,
+  "qaHead": "88347df80f00cb0eb02cf96d354d16a6a8ebc72b",
+  "startedAt": "2026-11-01T05:41:54.744Z",
+  "endedAt": "2026-11-01T05:42:02.791Z",
+  "localTime": "01.11.2026 10:41:54–10:42:02 UTC+5",
+  "node": "24.22.2",
+  "platform": "Windows x64",
+  "invocation": "Start-Cloud-QA.cmd -> masked local input -> separate Node child -> pinned run-preflight.mjs",
+  "credentialBoundary": "Password entered locally by user into the prepared launcher; not copied into tool command arguments, test artifacts or Git. No credential store or future-process injection is established by this run.",
+  "counts": {
+    "preflight": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "fixme": 0,
+      "flaky": 0
+    },
+    "httpRequests": {
+      "total": 21,
+      "status200": 21
+    },
+    "roles": 4,
+    "baselineHashes": 7,
+    "privatePhotoHashes": 1,
+    "logoutStatus200": 4,
+    "postRunStaticFiles": {
+      "passed": 68,
+      "failed": 0
+    },
+    "postRunAnonymousHttp": {
+      "passed": 2,
+      "failed": 0
+    }
+  },
+  "identity": {
+    "frontendShaOwnerReported": "c970264919de2f7a62d0e1ea8a28cc70c95a3864",
+    "frontendDeploymentOwnerReported": "a26bd214-1c78-4a83-9536-74a35c85b49f",
+    "backendShaOwnerReported": "3b14927def04b35bf97782eae6b550da276c779f",
+    "backendDeploymentOwnerReported": "dep-dbj223h42hec73bqnttg",
+    "deployedSourceIndependentlyVerified": false,
+    "frontendAssetsCheckedByThisRunner": false
+  },
+  "provenance": {
+    "checkerSha256": "4dbb495766da4d32b151dc9637ffbb8d8cd6e8d5e56651ac205535ca68380a98",
+    "baselineManifestSha256": "1f85a4cab1981addd7c54bdbbdefca5dd41b2a0f10ce41a23003ba03468027af",
+    "runnerSha256": "cb5a919eda30f0b94eb58e4c411b927acf7b9bc00e945d65524ee01e91af9ea1",
+    "runnerCommittedBlobVerified": true,
+    "earlierFrontendSnapshot": "../2026-11-01-cloud-access-preparation/public-readonly.json",
+    "earlierSnapshotTime": "2026-11-01T05:16:57.520Z–2026-11-01T05:17:03.307Z",
+    "afterFrontendSnapshot": "public-after.json",
+    "bindingLimit": "Static files match the same publisher manifest at these distinct checkpoints; readiness does not independently attest backend SHA."
+  },
+  "scope": "Four role logins and identities, seven existing baseline DTO hashes, authorized viewer private WebP hash, four logout responses. One HTTP preflight, not 21 browser tests.",
+  "businessWrites": 0,
+  "retries": 0,
+  "restart": false,
+  "reseeding": false,
+  "passwordChanges": false,
+  "notRun": [
+    "Browser task start/photo/report submission/coordinator acceptance/viewer workflow",
+    "Independent Outcomes summary/unknown-state numerical expectations",
+    "Unauthorized/private-photo denial checks",
+    "Persistence after restart/redeploy",
+    "Published assistant/model/provider validation"
+  ],
+  "nextGate": "Agree exact task/site/worker assignment and window with Bekzat before business writes. A later process needs fresh private credential injection. PR43 remains Draft; no merge/restart is implied."
+}

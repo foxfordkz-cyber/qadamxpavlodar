@@ -1,0 +1,151 @@
+{
+  "schema": "green-pavlodar-independent-cloud-access-v1",
+  "startedAt": "2026-11-01T05:41:54.744Z",
+  "endedAt": "2026-11-01T05:42:02.791Z",
+  "qaHead": "88347df80f00cb0eb02cf96d354d16a6a8ebc72b",
+  "runnerSha256": "cb5a919eda30f0b94eb58e4c411b927acf7b9bc00e945d65524ee01e91af9ea1",
+  "expectedHandoffDigests": {
+    "checker": "4dbb495766da4d32b151dc9637ffbb8d8cd6e8d5e56651ac205535ca68380a98",
+    "manifest": "1f85a4cab1981addd7c54bdbbdefca5dd41b2a0f10ce41a23003ba03468027af"
+  },
+  "handoffDigestsVerified": true,
+  "identity": {
+    "frontendShaOwnerReported": "c970264919de2f7a62d0e1ea8a28cc70c95a3864",
+    "frontendDeploymentOwnerReported": "a26bd214-1c78-4a83-9536-74a35c85b49f",
+    "backendShaOwnerReported": "3b14927def04b35bf97782eae6b550da276c779f",
+    "backendDeploymentOwnerReported": "dep-dbj223h42hec73bqnttg",
+    "deployedSourceIndependentlyVerified": false,
+    "frontendAssetsCheckedByThisRunner": false
+  },
+  "scope": "Pages HTTP login and unchanged synthetic baseline only; no browser workflow or restart acceptance",
+  "businessWritesPermitted": false,
+  "retries": 0,
+  "exchanges": [
+    {
+      "method": "GET",
+      "path": "/ready",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/auth/me",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/auth/me",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/auth/me",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/auth/me",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/tasks/2f64e988-97f9-4970-9dcf-1ca016f66cb2",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/tasks/2f64e988-97f9-4970-9dcf-1ca016f66cb2/history",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/reports/368df690-6894-4b67-9aab-2651a9c4fad9",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/tasks/1abe0f0e-88ff-4c66-a7ce-fef3b0347f19/history",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/reports/32bf4fed-c476-4cf6-81f2-aec7813939bb",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/outcomes/cohorts/release-738f96b2-cohort",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/outcomes/cohorts/release-738f96b2-cohort/inspections",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/uploads/12ff65e8-d13d-49ca-bb9f-437baf3377bf",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/auth/logout",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/auth/logout",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/auth/logout",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/auth/logout",
+      "status": 200
+    }
+  ],
+  "result": "PASS",
+  "checks": [
+    {
+      "role": "coordinator",
+      "login": "PASS"
+    },
+    {
+      "role": "viewer",
+      "login": "PASS"
+    },
+    {
+      "role": "worker",
+      "login": "PASS"
+    },
+    {
+      "role": "foreman",
+      "login": "PASS"
+    }
+  ],
+  "baselineReads": 7,
+  "privatePhoto": "PASS"
+}

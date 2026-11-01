@@ -1,0 +1,19 @@
+{
+  "audit": "Independent static review by cloud_preflight_review agent",
+  "result": "PASS",
+  "qaHead": "88347df80f00cb0eb02cf96d354d16a6a8ebc72b",
+  "runnerMatchesCommittedBlob": true,
+  "rolesDistinct": true,
+  "baselineReads": 7,
+  "privatePhoto": "PASS",
+  "logoutResponses200": 4,
+  "totalHttp200": 21,
+  "businessWrites": 0,
+  "limitations": [
+    "Browser task start/photo/report submission/coordinator acceptance/viewer workflow",
+    "Independent Outcomes summary/unknown-state numerical expectations",
+    "Unauthorized/private-photo denial checks",
+    "Persistence after restart/redeploy",
+    "Published assistant/model/provider validation"
+  ]
+}
